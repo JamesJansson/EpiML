@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<p>This example starts up a file system to store persistent storage on the hard drive (for saving sims)</p>
+
+<p id="FileSystemTestButton">Click here to test file system</p>
+
+<script>
+document.getElementById("FileSystemTestButton").addEventListener("click", FileSystemTest);
+
+function FileSystemTest() {
+
+	// Handle vendor prefixes (allow all browsers to use window.requestFileSystem)
+	window.requestFileSystem = window.requestFileSystem || 
+                           window.webkitRequestFileSystem;
+
+	// Check for support.
+	if (window.requestFileSystem) {
+	  // FileSystem Supported
+	  console.log("File system support detected");
+	} else {
+	  // FileSystem Not Supported
+	  alert("Saving files is not supported in this browser.");
+	}
+}
+</script>
+
+</body>
+</html>
