@@ -10,7 +10,6 @@ function  PersonObject(Sex, YearOfBirth)
 
 }
 
-PersonObject.prototype.Age = function (Year){
+PersonObject.prototype.Age= function (Year){//using prototyping for speed
 	return Year-this.YearOfBirth;
 };
-
