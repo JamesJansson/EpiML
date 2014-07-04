@@ -4,11 +4,32 @@
 
 <p>This example starts up a file system to store persistent storage on the hard drive (for saving sims)</p>
 
-<p id="FileSystemTestButton">Click here to test file system</p>
+<p id="FileSystemTestButton">Click here to test file system (see console for output)</p>
 
 <script>
+//Testing document specifc scripts
+//Add button behaviour
 document.getElementById("FileSystemTestButton").addEventListener("click", FileSystemTest);
 
+
+
+
+
+
+//File system specific code
+// Create a global variable that will store a reference to the FileSystem.
+var filesystem = null;
+
+
+// Start the FileSystem (if the browser supports the API)
+if (window.FileSystemTest) {
+  initFileSystem();
+} else {
+  alert('Sorry! Your browser doesn\'t support the FileSystem API :(');
+}
+
+
+// Test that the file system works
 function FileSystemTest() {
 
 	// Handle vendor prefixes (allow all browsers to use window.requestFileSystem)
@@ -24,6 +45,53 @@ function FileSystemTest() {
 	  alert("Saving files is not supported in this browser.");
 	}
 }
+
+
+
+// A simple error handler 
+function FileSystemErrorHandler(error) {
+  var message = '';
+
+  switch (error.code) {
+    case FileError.SECURITY_ERR:
+      message = 'FileSystem: Security Error';
+      break;
+    case FileError.NOT_FOUND_ERR:
+      message = 'FileSystem: Not Found Error';
+      break;
+    case FileError.QUOTA_EXCEEDED_ERR:
+      message = 'FileSystem: Quota Exceeded Error';
+      break;
+    case FileError.INVALID_MODIFICATION_ERR:
+      message = 'FileSystem: Invalid Modification Error';
+      break;
+    case FileError.INVALID_STATE_ERR:
+      message = 'FileSystem: Invalid State Error';
+      break;
+    default:
+      message = 'FileSystem: Unknown Error';
+      break;
+  }
+
+  console.log(message);
+}
+
+// Request a FileSystem and set the filesystem variable.
+function initFileSystem() {
+	navigator.webkitPersistentStorage.requestQuota(1024 * 1024 * 5,
+		function(grantedSize) {
+			// Request a file system with the new size.
+			window.requestFileSystem(window.PERSISTENT, grantedSize, function(fs) {
+			// Set the filesystem variable.
+			filesystem = fs;
+			// Setup event listeners on the form.
+			setupFormEventListener();
+			// Update the file browser.
+			listFiles();
+			}, FileSystemErrorHandler);
+		}, FileSystemErrorHandler);
+}
+
 </script>
 
 </body>
