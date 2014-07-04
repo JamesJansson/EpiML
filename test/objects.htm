@@ -2,6 +2,8 @@
 <html>
 <head>
 <script>
+var BigPopulation = [];//create an array
+
 
 function  HCVObject(Infected, Diagnosed)
 {
@@ -51,8 +53,11 @@ function myFunction() {
 }
 
 function setLots() {
-	var BigPopulation = [];//create an array
 	
+	for (i=0; i<10000000; i++)
+	{
+		BigPopulation[i]=new Person(3, 1985.5, 4);
+	}
 	document.getElementById("resultsSetLots").innerHTML = "Done";
 }
 
