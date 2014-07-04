@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script>
+
+function  HCVObject(Infected, Diagnosed)
+{
+	this.Infected=Infected;
+	this.Diagnosed=Diagnosed;
+}
+
+function  Person(Sex, YearOfBirth, Infected)
+{
+	this.Sex=Sex;
+	this.YearOfBirth=YearOfBirth;
+	this.HCV = new HCVObject(Infected, 0);
+}
+
+var PatientA = new Person(1, 1979.5, 1);
+
+var Population = [];//create an array
+Population[0]=new Person(3, 1985.5, 4);
+Population[1]=new Person(4, 1985.5, 5);
+Population[4]=new Person(4, 1985.5, 5);
+
+</script>
+</head>
+
+
+
+<body>
+
+<p>This example creates a new object and assigns some values</p>
+
+<p id="button">Click here to display PatientA.</p>
+
+<p id="resultsp">Results displayed here</p>
+
+<p id="button2">Click here to display PatientA.</p>
+
+<p id="resultsSetLots">Results displayed here</p>
+
+<script>
+//Add listeners
+document.getElementById("button").addEventListener("click", myFunction);
+document.getElementById("button2").addEventListener("click", setLots);
+
+//Functions
+function myFunction() {
+	document.getElementById("resultsp").innerHTML = PatientA.YearOfBirth + " " + PatientA.HCV.Infected;
+}
+
+function setLots() {
+	var BigPopulation = [];//create an array
+	
+	document.getElementById("resultsSetLots").innerHTML = "Done";
+}
+
+
+
+</script>
+
+</body>
+</html>
