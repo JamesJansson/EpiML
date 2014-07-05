@@ -1,3 +1,6 @@
+
+
+
 function  SimObject(SimSize)
 {
 	this.Infected=SimSize;

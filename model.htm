@@ -12,11 +12,11 @@
 
 
 <!-- Loading model javascript -->
-<script type="text/javascript" src="model/sim.js"></script>
+<script type="text/javascript" src="model/simulation.js"></script>
 <script type="text/javascript" src="model/person.js"></script>
 <script type="text/javascript" src="model/hcv.js"></script>
 
-
+<script type="text/javascript" src="model/hcvtest.js"></script>
 
 <script>
 
@@ -61,7 +61,7 @@
 		<h1>HCV</h1>
 		<div style="position: absolute; top:40px;">
 			<div id="TestHCVButton" class="SolidButton"> Set up population </div>
-			<div id="TestHCVButton" class="SolidButton"> Run simulation </div>
+			<div id="TestHCVButton" class="SolidButton" onClick="HCVTest();"> Run simulation </div>
 		</div>
 		<div style="position: absolute; top:40px;left:200px;">
 			Chart area
