@@ -26,7 +26,7 @@ function TimeUntilEvent(Probability)
 	// p=e^(ln(r)t)
 	// t=ln(p)/ln(r)
 	
-	return (Math.log(Math.random())/Math.log(Probability));
+	return (Math.log(Math.random())/Math.log(1-Probability));
 }
 
 for (var i=1; i<10000; i++)
