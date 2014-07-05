@@ -1,13 +1,19 @@
 <!DOCTYPE html>
 <html>
 <head>
+<!-- Loading interface javascript -->
+<script type="text/javascript" src="interface/mainscreen.js"></script>
+<script type="text/javascript" src="interface/initialise.js"></script>
+
+<!-- Loading model javascript -->
+<script type="text/javascript" src="model/sim.js"></script>
 <script type="text/javascript" src="model/person.js"></script>
 <script type="text/javascript" src="model/hcv.js"></script>
 
-<script type="text/javascript" src="interface/mainscreen.js"></script>
+
 
 <script>
-var Person = [];//create a global array to store all people
+
 
 </script>
 </head>
@@ -26,12 +32,38 @@ var Person = [];//create a global array to store all people
 
 <p id="resultsCalculateAge">Results displayed here</p>
 
+<p id="WebworkerButton">Click above then here to calculate age.</p>
+
+<p id="resultsCalculateAge">Results displayed here</p>
+
+
+
+
 <script>
 //Add listeners
 document.getElementById("SetUpPopButton").addEventListener("click", SetUpPop);
 document.getElementById("CalculateAgeButton").addEventListener("click", CalculateAge);
+document.getElementById("WebworkerButton").addEventListener("click", SingleWebWorker);
+
+
 
 //Functions
+
+function SingleWebWorker()
+{
+	if(typeof(Worker) !== "undefined") {
+        if(typeof(w) == "undefined") {
+            w = new Worker("model/singlewebworker.js");
+        }
+        w.onmessage = function(event) {
+            document.getElementById("result").innerHTML = event.data;
+        };
+    } else {
+        console.log("Web workers not supported in this browser...");
+    }
+}
+
+
 
 
 function SetUpPop() {
