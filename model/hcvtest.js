@@ -1,6 +1,6 @@
 
 var onResultReturned = function (e) {
-	console.log(e.data.Message);
+	console.log(e.data.result);
 
 
 
