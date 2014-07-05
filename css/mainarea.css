@@ -1,0 +1,11 @@
+
+* {
+	font-family: Sans-serif;
+}
+
+
+#mainarea {
+	position: absolute;
+	left: 250px;
+    top: 100px;
+}
