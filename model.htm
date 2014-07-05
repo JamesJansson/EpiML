@@ -2,9 +2,10 @@
 <html>
 <head>
 <!-- Loading interface CSS -->
+<link rel="stylesheet" type="text/css" href="css/button.css">
+<link rel="stylesheet" type="text/css" href="css/menu.css">
 
 
-<link rel="stylesheet" type="text/css" href="css/model.css">
 <!-- Loading interface javascript -->
 <script type="text/javascript" src="interface/mainscreen.js"></script>
 <script type="text/javascript" src="interface/initialise.js"></script>
@@ -27,6 +28,18 @@
 
 <body>
 
+<img src="img/logo.png">
+
+
+
+<div id="menu">
+<ul>
+<li><level1 href="" onclick="dostuff();return false;">Home</level1></li>
+<li><level1 href="" onclick="dostuff();return false;">Parameters</level1></li>
+<li><level1 href="" onclick="dostuff();return false;">Data</level1></li>
+</ul>
+</div>
+
 <p>This example creates objects and assigns some values</p>
 
 <p id="SetUpPopButton">Click here to display PatientA.</p>
@@ -40,6 +53,8 @@
 <p id="WebworkerButton">Click above then here to calculate age.</p>
 
 <p id="resultsCalculateAge">Results displayed here</p>
+
+
 
 
 

@@ -1,0 +1,23 @@
+#menu ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  width: 250px;
+}
+#menu level1 {
+  text-decoration: none;
+  display: block;
+  padding: 5px 10px 5px 10px;
+  background-color: #acf;
+  color: #03a;
+  border: 1px solid #fff;
+}
+
+#menu level1:hover {
+  text-decoration: none;
+  display: block;
+  padding: 5px 10px 5px 10px;
+  background-color: #bdf;
+  color: #03a;
+  border: 1px solid #fff;
+}
