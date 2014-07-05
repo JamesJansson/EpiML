@@ -11,7 +11,7 @@
 	right: 0px;
 }
 
-#MainArea div{
+.Content{
 	position: absolute;
 	left: 0px;
     top: 0px;
