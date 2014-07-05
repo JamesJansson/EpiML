@@ -11,7 +11,7 @@ self.onmessage = function (e) {
 	ReturnMessage=WhatsGiven+SimNumber;
 	
 	var PP=[];
-	for (i=0; i<10000000; i++)
+	for (i=0; i<5000000; i++)
 	{
 		PP[i]=new PersonObject(2, 1985.1);
 	}
