@@ -34,32 +34,45 @@
 
 <div id="menu">
 <ul>
-<li><level1 href="" onclick="dostuff();return false;">Home</level1></li>
-<li><level1 href="" onclick="dostuff();return false;">Parameters</level1></li>
-<li><level1 href="" onclick="dostuff();return false;">Data</level1></li>
-<li><level1 href="" onclick="dostuff();return false;">Other</level1></li>
+<li><level1 id="HomeMenuItem"  onclick="ShowMenu(HomeContent);return false;">Home</level1></li>
+<li><level1 id="ParameterMenuItem" onclick="dostuff();return false;">Parameters</level1></li>
+<li><level1 id="DataMenuItem" onclick="dostuff();return false;">Data</level1></li>
+<li><level1 onclick="ShowMenu(OtherContent);return false;">Other</level1></li>
 
 
 </ul>
 </div>
 
-<div id="mainarea">This is where the main area is.
+<div id="MainArea">
+	<div id="HomeContent" class="Content">
+		Home
+	</div>
+
+	<div id="ParameterContent" class="Content">
+		Parameter
+	</div>
+	<div id="DataContent" class="Content">
+		Data
+	</div>
+	
+	
+	<div id="OtherContent" class="Content">
+		<p>This example creates objects and assigns some values.</p>
+
+		<p id="SetUpPopButton">Click here to display PatientA.</p>
+
+		<p id="resultsSetUpPop">Results displayed here</p>
+
+		<p id="CalculateAgeButton">Click above then here to calculate age.</p>
+
+		<p id="resultsCalculateAge">Results displayed here</p>
+
+		<p id="WebworkerButton">Click above then here to calculate age.</p>
+
+		<p id="resultsCalculateAge">Results displayed here</p>
+	</div>
 
 
-
-<p>This example creates objects and assigns some values</p>
-
-<p id="SetUpPopButton">Click here to display PatientA.</p>
-
-<p id="resultsSetUpPop">Results displayed here</p>
-
-<p id="CalculateAgeButton">Click above then here to calculate age.</p>
-
-<p id="resultsCalculateAge">Results displayed here</p>
-
-<p id="WebworkerButton">Click above then here to calculate age.</p>
-
-<p id="resultsCalculateAge">Results displayed here</p>
 
 </div>
 
@@ -106,6 +119,7 @@ function CalculateAge() {
 
 
 </script>
+<script type="text/javascript" src="interface/menu.js"></script>
 
 </body>
 </html>

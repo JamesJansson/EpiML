@@ -4,8 +4,16 @@
 }
 
 
-#mainarea {
+#MainArea {
 	position: absolute;
 	left: 250px;
     top: 100px;
+	width=100%;
+}
+
+#MainArea div{
+	position: absolute;
+	left: 0px;
+    top: 0px;
+	right=500px;
 }

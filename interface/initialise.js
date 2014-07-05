@@ -10,9 +10,6 @@ alert("Webworkers are not supported in this browser. EpiML requires webworkers t
 
 
 
-
-
-
 // scripts 
 var Person = [];//create a global array to store all people
 
