@@ -1,6 +1,6 @@
-﻿importScripts("model/simulation.js");
-importScripts("model/person.js");
-importScripts("model/HCV.js");
+﻿importScripts("simulation.js");
+importScripts("person.js");
+importScripts("HCV.js");
 
 self.onmessage = function (e) {
     var SimNumber = e.data.SimNumber;
