@@ -20,7 +20,7 @@ function HCVTest(){
 	
 	for (var SimNumber = 0; SimNumber < NoCores; SimNumber++) {
         var worker = new Worker("model/runsimulation.js");
-        worker.onmessage = onWorkEnded;
+        worker.onmessage = onResultReturned;
 		
 		DataGiven.a="yay ";
 		
