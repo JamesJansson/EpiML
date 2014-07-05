@@ -8,7 +8,7 @@ self.onmessage = function (e) {
 	
 
 
-	ReturnMessage=WhatsGiven.a+SimNumber;
+	ReturnMessage=WhatsGivenSimNumber;
 	
     self.postMessage({SimNumber: SimNumber, result: ReturnMessage });
 };

@@ -22,7 +22,7 @@ function HCVTest(){
         var worker = new Worker("model/runsimulation.js");
         worker.onmessage = onResultReturned;
 		
-		DataGiven.a="yay ";
+		DataGiven="yay ";
 		
         // Sending canvas data to the worker using a copy memory operation
         worker.postMessage({ SimNumber: SimNumber, SimData: DataGiven });
