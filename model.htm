@@ -37,6 +37,7 @@
 <li><level1 id="HomeMenuItem"  		onclick="ShowMenu(HomeContent);"		>Home</level1></li>
 <li><level1 id="ParameterMenuItem" 	onclick="ShowMenu(ParameterContent);"	>Parameters</level1></li>
 <li><level1 id="DataMenuItem" 		onclick="ShowMenu(DataContent);"		>Data</level1></li>
+<li><level1 id="HCVMenuItem" 		onclick="ShowMenu(HCVContent);"			>HCV</level1></li>
 <li><level1 id="OtherMenuItem" 		onclick="ShowMenu(OtherContent);"		>Other</level1></li>
 
 
@@ -45,32 +46,34 @@
 
 <div id="MainArea">
 	<div id="HomeContent" class="Content">
-		Home
+		<h1>Home</h1>
 	</div>
 
 	<div id="ParameterContent" class="Content">
-		Parameter
+		<h1>Parameter</h1>
 	</div>
 	
 	<div id="DataContent" class="Content">
-		Data
+		<h1>Data</h1>
 	</div>
 	
+	<div id="HCVContent" class="Content">
+		<h1>HCV</h1>
+		<div style="position: absolute; top:40px;">
+			<div id="TestHCVButton" class="SolidButton"> Set up population </div>
+		</div>
+		<div style="position: absolute; top:40px;left:200px;">
+			Chart area
+		</div>
+	</div>
 	
 	<div id="OtherContent" class="Content">
-
-		
 		This example creates objects and assigns some values.
 		<div id="SetUpPopButton" class="SolidButton"> Set up population </div>
-
 		<p id="resultsSetUpPop">Results displayed here</p>
 		<div id="CalculateAgeButton" class="SolidButton"> Calculate age </div>
-
-
 		<p id="resultsCalculateAge">Results displayed here</p>
-
 		<p id="WebworkerButton">Click above then here to calculate age.</p>
-
 		<p id="resultsCalculateAge">Results displayed here</p>
 	</div>
 
