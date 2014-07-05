@@ -10,5 +10,14 @@ self.onmessage = function (e) {
 
 	ReturnMessage=WhatsGiven+SimNumber;
 	
+
+	for (i=0; i<1000000; i++)
+	{
+		PP[i]=new PersonObject(2, 1985.1);
+	}
+	
+	
+	
+	
     self.postMessage({SimNumber: SimNumber, result: ReturnMessage });
 };
