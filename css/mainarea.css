@@ -8,6 +8,16 @@ h1{
 }
 
 
+progress[value] {
+position: absolute;
+	/* Reset the default appearance */
+	right: 0px;
+	width: 300px;
+	height: 20px;
+	right: 7px;
+}
+
+
 #MainArea {
 	position: absolute;
 	left: 250px;
