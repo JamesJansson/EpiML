@@ -1,4 +1,11 @@
 
+var onResultReturned = function (e) {
+	console.log(e.data.Message);
+
+
+
+}
+
 
 function HCVTest(){
 	//Check that nothing else is running
@@ -11,15 +18,14 @@ function HCVTest(){
 
 	// Start a webworker
 	
-	for (var index = 0; index < NoCores; index++) {
+	for (var SimNumber = 0; SimNumber < NoCores; SimNumber++) {
         var worker = new Worker("model/runsimulation.js");
         worker.onmessage = onWorkEnded;
-
-        // Getting the picture
-        var canvasData = tempContext.getImageData(0, blockSize * index, canvas.width, blockSize);
-
+		
+		DataGiven.a="yay ";
+		
         // Sending canvas data to the worker using a copy memory operation
-        worker.postMessage({ data: canvasData, index: index, length: segmentLength });
+        worker.postMessage({ SimNumber: SimNumber, SimData: DataGiven });
     }
 
 }
