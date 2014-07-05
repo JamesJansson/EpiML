@@ -9,7 +9,7 @@
 	
 // Setting up flags
 	var SimulationRunning=0;//set to 1 if running
-	var NoCores=8;
+	var NoCores=4;
 
 
 
