@@ -30,3 +30,12 @@
 	color: #03a;
 	border: 1px solid #fff;
 }
+
+#menu level1:selected {
+	text-decoration: none;
+	display: block;
+	padding: 5px 10px 5px 10px;
+	background-color: #79f;
+	color: #03a;
+	border: 1px solid #fff;
+}

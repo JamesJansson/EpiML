@@ -8,12 +8,12 @@
 	position: absolute;
 	left: 250px;
     top: 100px;
-	width=100%;
+	right: 0px;
 }
 
 #MainArea div{
 	position: absolute;
 	left: 0px;
     top: 0px;
-	right=500px;
+	right: 0px;
 }
