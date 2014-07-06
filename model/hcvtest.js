@@ -23,6 +23,7 @@ function HCVTest(){
 	// Load information from form into population
 
 	// Set progress bar to zero
+	MainProgress.value=0;
 
 	// Create a simulation object
 
