@@ -5,6 +5,12 @@ function  SimObject(SimSize)
 {
 	this.Infected=SimSize;
 	this.Diagnosed=Diagnosed;
+	
+	//intervention start
+		//keep simulating as normal until this date
+	//intervention instructions
+		//at this date, change the parameters accordingly
+	//optimisation
 }
 
 
@@ -29,7 +35,3 @@ function TimeUntilEvent(Probability)
 	return (Math.log(Math.random())/Math.log(1-Probability));
 }
 
-for (var i=1; i<10000; i++)
-{
-	console.log(TimeUntilEvent(0.3));
-}

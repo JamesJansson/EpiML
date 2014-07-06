@@ -17,6 +17,11 @@ self.onmessage = function (e) {
 	}
 	
 	
+	var Rarray=[];
+	for (var i=1; i<10000000; i++)
+	{
+		Rarray=TimeUntilEvent(0.3);
+	}
 	
 	
     self.postMessage({SimNumber: SimNumber, result: ReturnMessage });

@@ -2,9 +2,6 @@
 //Clean up tabs
 ShowMenu(HomeContent)
 
-
-
-
 function ShowMenu(ToShow){
 	HideAllMainArea();
 	ToShow.style.visibility = 'visible';
