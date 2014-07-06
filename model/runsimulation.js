@@ -52,12 +52,14 @@ self.onmessage = function (e) {
 	FibrosisMatrix[4]=[];
 	FibrosisMatrix[5]=[];
 	
+	FibrosisMatrix=ZeroMatrix(6, 100);
+	
 	self.postMessage({ConsoleMessage: "Starting to HCV progression"});
 	YearCount=0;
 	for (GraphYear=Year-1; GraphYear<Year+40; Year++){
 		for (i=0; i<SimData.NoPeople; i++){
 			FibrosisLevel=PP[i].HCV.Fibrosis.Get();
-			
+			FibrosisMatrix[FibrosisLevel][YearCount]++;
 		}
 		YearCount++;
 	}
