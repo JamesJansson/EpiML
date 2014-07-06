@@ -86,6 +86,7 @@ EventVector.prototype.Get= function (Time){
 			if (this.Time[i]<=Time&&Time<this.Time[i+1]){
 				Current.Value=this.Value[i];
 				Current.Time=this.Time[i];
+				Current.Pos=i;
 				return Current;
 			}
 		}

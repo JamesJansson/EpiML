@@ -68,11 +68,15 @@ HCVObject.prototype.Infection= function (Year, GenotypeValue, Age, Sex, Alcohol,
 		TimeUntilF2=TimeUntilF1+TimeUntilEvent(HCVParam.F1F2);
 		TimeUntilF3=TimeUntilF2+TimeUntilEvent(HCVParam.F2F3);
 		TimeUntilF4=TimeUntilF3+TimeUntilEvent(HCVParam.F3F4);
-		TimeUntilF5=TimeUntilF4+TimeUntilEvent(HCVParam.F4LF);
+		TimeUntilLF=TimeUntilF4+TimeUntilEvent(HCVParam.F4LF);
 		
 
 		
-		this.Fibrosis.Set(Year+TimeUntilF1);
+		this.Fibrosis.Set(1, Year+TimeUntilF1);
+		this.Fibrosis.Set(2, Year+TimeUntilF2);
+		this.Fibrosis.Set(3, Year+TimeUntilF3);
+		this.Fibrosis.Set(4, Year+TimeUntilF4);
+		this.Fibrosis.Set(5, Year+TimeUntilLF);
 		
 	}
 	
