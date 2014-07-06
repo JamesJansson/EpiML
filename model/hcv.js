@@ -64,11 +64,15 @@ HCVObject.prototype.Infection= function (Year, GenotypeValue, Age, Sex, Alcohol,
 		
 		//Determine time until Fibrosis
 		//F0-F4-LF are mutually exclusive, HCC is not mutually exclusive to the other states
-		TimeUntilEvent(HCVParam.F0F1);
+		TimeUntilF1=TimeUntilEvent(HCVParam.F0F1);
+		
 		TimeUntilEvent(HCVParam.F1F2);
 		TimeUntilEvent(HCVParam.F3F4);
 		TimeUntilEvent(HCVParam.F4HCC);
 		TimeUntilEvent(HCVParam.F4LF);
+		
+		this.Fibrosis.Set(Year+TimeUntilF1);
+		
 	}
 	
 	

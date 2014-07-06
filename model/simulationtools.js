@@ -9,6 +9,24 @@ function TimeUntilEvent(Probability)
 	return (Math.log(Math.random())/Math.log(1-Probability));
 }
 
+// Zero matrix
+function ZeroMatrix(xsize, ysize){
+	ReturnMatrix=[]
+	ZeroVector=[];
+	for (i=0; i<ysize; i++){
+		ZeroVector[i]=0;
+	}
+	for (i=0; i<xsize; i++){
+		ReturnMatrix[i]=ZeroVector;
+	}
+	return ReturnMatrix;
+}
+
+
+
+
+
+
 // Event vector
 function EventVector(){
 	this.Value=[];
