@@ -33,10 +33,6 @@ function TimeUntilEvent(Probability)
 	return (Math.log(Math.random())/Math.log(1-Probability));
 }
 
-
-
-
-
 // Event vector
 function EventVector(){
 	this.Value=[];
@@ -101,9 +97,3 @@ EventVector.prototype.Get= function (Time){
 		}
 	}
 }
-
-
-
-
-
-
