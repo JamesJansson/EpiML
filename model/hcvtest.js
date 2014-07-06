@@ -1,4 +1,6 @@
 
+var HCVTestResult={};
+
 var WorkerMessageHandler = function (e) {
 	//console.log(e.data.result);
 
@@ -6,7 +8,7 @@ var WorkerMessageHandler = function (e) {
 	// Messages to the console
 	// Messages to the StatusText
 	// Messages to the ProgressBar
-	// Message to indicate completeness
+	// Message to return result/indicate completeness
 	
 	// Messages to the console
 	if (typeof e.data.ConsoleMessage != 'undefined'){
@@ -15,6 +17,9 @@ var WorkerMessageHandler = function (e) {
 	// Messages to the ProgressBar
 	if (typeof e.data.ProgressBarValue != 'undefined'){
 		MainProgress.value=e.data.ProgressBarValue;
+	}
+	if (typeof e.data.Result != 'undefined'){
+		HCVTestResult=e.data.Result;
 	}
 
 
