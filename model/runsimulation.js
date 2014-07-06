@@ -8,7 +8,7 @@ self.onmessage = function (e) {
 	
 
 
-	ReturnMessage=WhatsGiven+SimNumber;
+	
 	
 	var PP=[];
 	for (i=0; i<5000000; i++)
@@ -16,12 +16,18 @@ self.onmessage = function (e) {
 		PP[i]=new PersonObject(2, 1985.1);
 	}
 	
-	
 	var Rarray=[];
-	for (var i=1; i<10000000; i++)
+	TotalLoops=10000000;
+    var seconds1 = new Date().getTime() / 1000;
+	for (var i=1; i<TotalLoops; i++)
 	{
 		Rarray=TimeUntilEvent(0.3);
 	}
+	var seconds2 = new Date().getTime() / 1000;
+    TotalTime=seconds2 -seconds1;
+	CalcsPerSec=TotalLoops/TotalTime;
+	
+	ReturnMessage=WhatsGiven+SimNumber+" "+CalcsPerSec;
 	
 	
     self.postMessage({SimNumber: SimNumber, result: ReturnMessage });
