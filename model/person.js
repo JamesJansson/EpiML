@@ -5,8 +5,9 @@ function  PersonObject(Sex, YearOfBirth)
 	this.Sex=Sex;
 	this.YearOfBirth=YearOfBirth;
 	this.YearOfDeath=3E9;
-	this.HCV = new HCVObject(0, 0);
+	this.HCV = new HCVObject(YearOfBirth);
 	
+	//Simulate general mortality
 
 }
 

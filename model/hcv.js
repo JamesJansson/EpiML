@@ -25,6 +25,7 @@ function  HCVObject(YearOfBirth)
 	this.Infected.Set(0, YearOfBirth);//note: to set an infection from birth, call HCV.Infection(YearOfBirth,...
 	this.Fibrosis.Set(0, YearOfBirth);
 	this.HCC.Set(0, YearOfBirth);
+	this.Genotype=[];
 	this.Genotype[0].Set(0, YearOfBirth);
 	this.Genotype[1].Set(0, YearOfBirth);
 	this.Genotype[2].Set(0, YearOfBirth);
@@ -39,7 +40,7 @@ HCVObject.prototype.Age= function (Year){//using prototyping for speed
 };
 
 
-HCVObject.prototype.Infection= function (Year, GenotypeValue, Age, Alcohol, HCVParam ){
+HCVObject.prototype.Infection= function (Year, GenotypeValue, Age, Sex, Alcohol, HCVParam ){
 	//Special note about recalculating Fibrosis: if fibrosis needs to be recalculated, care should be taken to avoid extending time until Fibrosis, as a person who is late F3 would  
 	//This will become especially important in cases where alcoholism begins. In such cases, the remaining time (e.g. 3.5 years to F4) should be shortened accordingly, not recalculated from scratch)
 	
