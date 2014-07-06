@@ -23,6 +23,9 @@ self.onmessage = function (e) {
 	for (var i=1; i<TotalLoops; i++)
 	{
 		Rarray=TimeUntilEvent(0.3);
+		if (i%10000==0)
+			self.postMessage({ConsoleMessage: i});
+		}
 	}
 	var seconds2 = new Date().getTime() / 1000;
     TotalTime=seconds2 -seconds1;
@@ -31,5 +34,5 @@ self.onmessage = function (e) {
 	ReturnMessage=WhatsGiven+SimNumber+" "+CalcsPerSec;
 	
 	
-    self.postMessage({SimNumber: SimNumber, result: ReturnMessage });
+    //self.postMessage({SimNumber: SimNumber, result: ReturnMessage });
 };

@@ -1,7 +1,17 @@
 
-var onResultReturned = function (e) {
-	console.log(e.data.result);
+var WorkerMessageHandler = function (e) {
+	//console.log(e.data.result);
 
+	// There are 3 main 
+	// Messages to the console
+	// Messages to the StatusText
+	// Messages to the ProgressBar
+	// Message to indicate completeness
+	
+	//console
+	if (typeof e.data.ConsoleMessage != 'undefined'){
+		console.log(e.data.ConsoleMessage);
+	}
 
 
 }
@@ -20,7 +30,7 @@ function HCVTest(){
 	
 	for (var SimNumber = 0; SimNumber < NoCores; SimNumber++) {
         var worker = new Worker("model/runsimulation.js");
-        worker.onmessage = onResultReturned;
+        worker.onmessage = WorkerMessageHandler;
 		
 		DataGiven="yay ";
 		
