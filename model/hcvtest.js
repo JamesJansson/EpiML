@@ -1,5 +1,5 @@
 
-var HCVTestResult={};
+var HCVTestResult;
 
 var WorkerMessageHandler = function (e) {
 	//console.log(e.data.result);
@@ -20,6 +20,7 @@ var WorkerMessageHandler = function (e) {
 	}
 	if (typeof e.data.Result != 'undefined'){
 		HCVTestResult=e.data.Result;
+		console.log(HCVTestResult);
 	}
 
 

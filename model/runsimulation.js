@@ -78,4 +78,5 @@ self.onmessage = function (e) {
 	
 	
 	self.postMessage({ConsoleMessage: "Finished simulation in "+TotalTime+" seconds"});
+	self.postMessage({Result: FibrosisMatrix});
 };
