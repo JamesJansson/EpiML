@@ -1,10 +1,9 @@
 
 function MakeTableHTML(InputMatrix){
 TableHTML="<table>";
-
-for (i=0; i<InputMatrix.length; i++){
+for (j=0; j<InputMatrix[0].length; j++){
 	TableHTML+="<tr>";
-	for (j=0; j<InputMatrix[i].length; j++){
+	for (i=0; i<InputMatrix.length; i++){
 		TableHTML+="<td>"+ InputMatrix[i][j]+"</td>";
 	}
 	TableHTML+="</tr>";
