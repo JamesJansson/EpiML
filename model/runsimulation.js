@@ -19,12 +19,12 @@ self.onmessage = function (e) {
 	Alcohol=0;
 	
 	HCVParam={};
-	HCVParam.F0F1=0.2;
-	HCVParam.F1F2=0.1;
-	HCVParam.F2F3=0.15;
-	HCVParam.F3F4=0.3;
-	HCVParam.F4LF=0.5;
-	HCVParam.F4HCC=0.4;
+	HCVParam.F0F1=0.117;
+	HCVParam.F1F2=0.085;
+	HCVParam.F2F3=0.12;
+	HCVParam.F3F4=0.116;
+	HCVParam.F4LF=0.0001;//not real
+	HCVParam.F4HCC=0.4;//not real
 
 
 	self.postMessage({ConsoleMessage: "Starting to load Person object"});
