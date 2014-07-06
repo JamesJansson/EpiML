@@ -40,6 +40,7 @@
 <li><level1 id="HCVMenuItem" 		onclick="ShowMenu(HCVContent);"			>HCV</level1></li>
 <li><level1 id="DataMenuItem" 		onclick="ShowMenu(DataContent);"		>Data</level1></li>
 <li><level1 id="PlotsMenuItem" 		onclick="ShowMenu(PlotsContent);"			>Plots</level1></li>
+<li><level1 id="SettingssMenuItem" 		onclick="ShowMenu(SettingsContent);"			>Settings</level1></li>
 <li><level1 id="OtherMenuItem" 		onclick="ShowMenu(OtherContent);"		>Other</level1></li>
 
 
@@ -75,6 +76,21 @@
 	<div id="PlotsContent" class="Content">
 		<h1>Plots</h1>
 	</div>
+	
+	<div id="SettingsContent" class="Content">
+		<h1>Settings</h1>
+		<form>
+			Number of cores to uses for simulations<br>
+			<input type="radio" name="CoreSelector" value="1" onClick="NoCores=1;">1<br>
+			<input type="radio" name="CoreSelector" value="2" onClick="NoCores=2;">2<br>
+			<input type="radio" name="CoreSelector" value="3" onClick="NoCores=3;">3<br>
+			<input type="radio" name="CoreSelector" value="4" onClick="NoCores=4;">4<br>
+			<input type="radio" name="CoreSelector" value="5" onClick="NoCores=5;">5<br>
+			<input type="radio" name="CoreSelector" value="6" onClick="NoCores=6;">6<br>
+		</form>
+
+	</div>
+	
 	
 	<div id="OtherContent" class="Content">
 		This example creates objects and assigns some values.
