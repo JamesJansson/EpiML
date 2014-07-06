@@ -13,7 +13,7 @@ self.onmessage = function (e) {
 	
 	var PP=[];
 	for (i=0; i<300000; i++){
-		PP[i]=PersonObject(2, 1985.1);
+		PP.Push(new PersonObject(2, 1985.1));
 		if (i%10000==0){
 			self.postMessage({ConsoleMessage: i+" of 300000"});
 		}
