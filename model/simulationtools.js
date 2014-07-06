@@ -17,7 +17,7 @@ function ZeroMatrix(xsize, ysize){
 		ZeroVector[i]=0;
 	}
 	for (i=0; i<xsize; i++){
-		ReturnMatrix[i]=ZeroVector;
+		ReturnMatrix[i]=ZeroVector.slice();//used to copy array, rather than copy a pointer to the array
 	}
 	return ReturnMatrix;
 }
