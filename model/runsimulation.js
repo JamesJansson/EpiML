@@ -44,13 +44,7 @@ self.onmessage = function (e) {
 	}
 	
 	//Determine fibrosis levels with year
-	FibrosisMatrix=[];
-	FibrosisMatrix[0]=[];
-	FibrosisMatrix[1]=[];
-	FibrosisMatrix[2]=[];
-	FibrosisMatrix[3]=[];
-	FibrosisMatrix[4]=[];
-	FibrosisMatrix[5]=[];
+
 	
 	FibrosisMatrix=ZeroMatrix(6, 100);
 	
@@ -59,6 +53,7 @@ self.onmessage = function (e) {
 	for (GraphYear=Year-1; GraphYear<Year+40; Year++){
 		for (i=0; i<SimData.NoPeople; i++){
 			FibrosisLevel=PP[i].HCV.Fibrosis.Get();
+			self.postMessage({ConsoleMessage: "FibrosisLevel "+ FibrosisLevel+ " YearCount" + "YearCount"});
 			FibrosisMatrix[FibrosisLevel][YearCount]++;
 		}
 		YearCount++;
