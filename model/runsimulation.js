@@ -52,8 +52,8 @@ self.onmessage = function (e) {
 	YearCount=0;
 	for (GraphYear=Year-1; GraphYear<Year+40; Year++){
 		for (i=0; i<SimData.NoPeople; i++){
-			FibrosisLevel=PP[i].HCV.Fibrosis.Get();
-			self.postMessage({ConsoleMessage: "FibrosisLevel "+ FibrosisLevel+ " YearCount" + "YearCount"});
+			FibrosisLevel=PP[i].HCV.Fibrosis.Get(GraphYear);
+			self.postMessage({ConsoleMessage: "FibrosisLevel "+ FibrosisLevel+ " YearCount" + YearCount});
 			FibrosisMatrix[FibrosisLevel][YearCount]++;
 		}
 		YearCount++;
