@@ -19,9 +19,10 @@ self.onmessage = function (e) {
 	HCVParam={};
 	HCVParam.F0F1=0.2;
 	HCVParam.F1F2=0.1;
+	HCVParam.F2F3=0.15;
 	HCVParam.F3F4=0.3;
-	HCVParam.F4HCC=0.4;
 	HCVParam.F4LF=0.5;
+	HCVParam.F4HCC=0.4;
 
 
 	self.postMessage({ConsoleMessage: "Starting to load Person object"});
