@@ -17,8 +17,10 @@
 <script type="text/javascript" src="model/person.js"></script>
 <script type="text/javascript" src="model/hcv.js"></script>
 
+<!-- Loading HCVTest stuff javascript -->
 <script type="text/javascript" src="model/hcvtest.js"></script>
 <script type="text/javascript" src="model/hcvtestgraph.js"></script>
+<link rel="stylesheet" type="text/css" href="css/mainarea.css">
 
 
 <script>
@@ -65,7 +67,7 @@
 			<div id="TestHCVButton" class="SolidButton" onClick="HCVTest();"> Run simulation </div>
 		</div>
 		<div style="position: absolute; top:40px;left:200px;">
-			<canvas id="graph"></canvas>
+			<div id="graph" class="aGraph" style="position:absolute;top:0px;left:0; float:left;"></div>
 		</div>
 	</div>
 	
