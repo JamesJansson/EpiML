@@ -70,6 +70,7 @@ EventVector.prototype.Get= function (Time){
 	//Current.Value=Value at this time
 	//Current.Time=Time when this value first started
 	//Current.Pos=Position in the array that this time occurred
+	var Current;
 	if (this.NumberOfEvents==0){// if no times are set
 		Current.Value=Number.NaN;
 		Current.Time=Number.NaN;
