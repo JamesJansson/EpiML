@@ -21,7 +21,7 @@ var WorkerMessageHandler = function (e) {
 	if (typeof e.data.Result != 'undefined'){
 		HCVTestResult=e.data.Result;
 		console.log(HCVTestResult);
-		HCVResultsSection.innerHTML=HCVMakeTableHTML(HCVTestResult);
+		HCVResultsSection.innerHTML=MakeTableHTML(HCVTestResult);
 	}
 
 
