@@ -5,17 +5,17 @@ importScripts("hcv.js");
 
 self.onmessage = function (e) {
     var SimNumber = e.data.SimNumber;
-    var WhatsGiven = e.data.SimData;
+    var SimData = e.data.SimData;
 	
 
 
 	self.postMessage({ConsoleMessage: "Starting to load Person object"});
 	
 	var PP=[];
-	for (i=0; i<100000; i++){
+	for (i=0; i<SimData.NoPeople; i++){
 		PP.push(new PersonObject(2, 1985.1));
-		if (i%10000==0){
-			self.postMessage({ProgressBarValue: i/300000});
+		if (i%1000==0){
+			self.postMessage({ProgressBarValue: i/SimData.NoPeople});
 		}
 	}
 	

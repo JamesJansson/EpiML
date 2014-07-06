@@ -25,7 +25,8 @@ function HCVTest(){
 	//Check that nothing else is running
 
 	// Load information from form into population
-
+	var SimData={};
+	SimData.NoPeople=100000;
 	// Set progress bar to zero
 	MainProgress.value=0;
 
@@ -37,10 +38,11 @@ function HCVTest(){
         var worker = new Worker("model/runsimulation.js");
         worker.onmessage = WorkerMessageHandler;
 		
-		DataGiven="yay ";
+		
+		
 		
         // Sending canvas data to the worker using a copy memory operation
-        worker.postMessage({ SimNumber: SimNumber, SimData: DataGiven });
+        worker.postMessage({ SimNumber: SimNumber, SimData: SimData });
     }
 
 }
