@@ -13,6 +13,7 @@ function  HCVObject(YearOfBirth)
 	//AntibodyDiagnosis
 	this.Fibrosis=new EventVector;//including liver failure
 	this.HCC=new EventVector;
+	this.Genotype=[];
 	this.Genotype[0]=new EventVector;
 	this.Genotype[1]=new EventVector;
 	this.Genotype[2]=new EventVector;
@@ -25,7 +26,6 @@ function  HCVObject(YearOfBirth)
 	this.Infected.Set(0, YearOfBirth);//note: to set an infection from birth, call HCV.Infection(YearOfBirth,...
 	this.Fibrosis.Set(0, YearOfBirth);
 	this.HCC.Set(0, YearOfBirth);
-	this.Genotype=[];
 	this.Genotype[0].Set(0, YearOfBirth);
 	this.Genotype[1].Set(0, YearOfBirth);
 	this.Genotype[2].Set(0, YearOfBirth);
