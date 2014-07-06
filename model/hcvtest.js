@@ -8,9 +8,13 @@ var WorkerMessageHandler = function (e) {
 	// Messages to the ProgressBar
 	// Message to indicate completeness
 	
-	//console
+	// Messages to the console
 	if (typeof e.data.ConsoleMessage != 'undefined'){
 		console.log(e.data.ConsoleMessage);
+	}
+	// Messages to the ProgressBar
+	if (typeof e.data.ProgressBarValue != 'undefined'){
+		MainProgress.value=e.data.ProgressBarValue;
 	}
 
 

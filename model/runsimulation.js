@@ -15,7 +15,7 @@ self.onmessage = function (e) {
 	for (i=0; i<300000; i++){
 		PP.push(new PersonObject(2, 1985.1));
 		if (i%10000==0){
-			self.postMessage({ConsoleMessage: i+" of 300000"});
+			self.postMessage({ProgressBarValue: i/300000});
 		}
 	}
 	
@@ -28,7 +28,7 @@ self.onmessage = function (e) {
 	for (var i=1; i<TotalLoops; i++){
 		Rarray=TimeUntilEvent(0.3);
 		if (i%10000==0){
-			self.postMessage({ConsoleMessage: i});
+			self.postMessage({ProgressBarValue: i/TotalLoops});
 		}
 	}
 	var seconds2 = new Date().getTime() / 1000;
