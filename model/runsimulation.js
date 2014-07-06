@@ -20,10 +20,9 @@ self.onmessage = function (e) {
 	var Rarray=[];
 	TotalLoops=10000000;
     var seconds1 = new Date().getTime() / 1000;
-	for (var i=1; i<TotalLoops; i++)
-	{
+	for (var i=1; i<TotalLoops; i++){
 		Rarray=TimeUntilEvent(0.3);
-		if (i%10000==0)
+		if (i%10000==0){
 			self.postMessage({ConsoleMessage: i});
 		}
 	}
