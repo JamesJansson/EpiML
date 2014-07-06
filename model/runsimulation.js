@@ -12,7 +12,7 @@ self.onmessage = function (e) {
 	self.postMessage({ConsoleMessage: "Starting to load Person object"});
 	
 	var PP=[];
-	for (i=0; i<300000; i++){
+	for (i=0; i<100000; i++){
 		PP.push(new PersonObject(2, 1985.1));
 		if (i%10000==0){
 			self.postMessage({ProgressBarValue: i/300000});
