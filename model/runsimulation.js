@@ -60,7 +60,7 @@ self.onmessage = function (e) {
 			FibrosisMatrix[FibrosisLevel][YearCount]=FibrosisMatrix[FibrosisLevel][YearCount]+1;;
 		}
 		YearCount++;
-		self.postMessage({ConsoleMessage: "FibrosisLevel "+ FibrosisLevel+ " YearCount" + YearCount});
+		self.postMessage({ProgressBarValue: YearCount/SimData.NoPeople});
 	}
 	
 	var seconds2 = new Date().getTime() / 1000;

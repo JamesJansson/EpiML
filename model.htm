@@ -66,12 +66,12 @@
 	<div id="HCVContent" class="Content">
 		<h1>HCV</h1>
 		<div style="position: absolute; top:40px;">
-			<div id="TestHCVButton" class="SolidButton"> Set up population </div>
-			<div id="TestHCVButton" class="SolidButton" onClick="HCVTest();"> Run simulation </div>
+			<div id="HCVTestSimButton" class="SolidButton" onClick="HCVTest();"> Run simulation </div>
+			<div id="HCVTestPlotButton" class="SolidButton" onClick="HCVTestPlot();"> Plot result </div>
 		</div>
 		<div id="HCVResultsSection" style="position: absolute; top:40px;left:200px;">
 			<div class="plot-container">
-				<div id="placeholder" class="plot-placeholder"></div>
+				<div id="HCVTestPlotHolder" class="plot-placeholder"></div>
 			</div>
 			<div id="HCVResultsTable"></div>
 		</div>
@@ -122,25 +122,7 @@ document.getElementById("SetUpPopButton").addEventListener("click", SetUpPop);
 document.getElementById("CalculateAgeButton").addEventListener("click", CalculateAge);
 document.getElementById("WebworkerButton").addEventListener("click", SingleWebWorker);
 
-$(function() {
 
-		var d1 = [];
-		for (var i = 0; i < 14; i += 0.5) {
-			d1.push([i, Math.sin(i)]);
-		}
-
-		var d2 = [[0, 3], [4, 8], [8, 5], [9, 13]];
-
-		// A null signifies separate line segments
-
-		var d3 = [[0, 12], [7, 12], null, [7, 2.5], [12, 2.5]];
-
-		$.plot("#placeholder", [ d1, d2, d3 ]);
-
-		// Add the Flot version string to the footer
-
-		$("#footer").prepend("Flot " + $.plot.version + " &ndash; ");
-	});
 
 //Functions
 
