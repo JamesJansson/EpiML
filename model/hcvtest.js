@@ -1,5 +1,5 @@
 
-var HCVTestResult;
+var SimResult;
 
 var WorkerMessageHandler = function (e) {
 	//console.log(e.data.result);
@@ -19,16 +19,14 @@ var WorkerMessageHandler = function (e) {
 		MainProgress.value=e.data.ProgressBarValue;
 	}
 	if (typeof e.data.Result != 'undefined'){
-		HCVTestResult=e.data.Result;
-		console.log(HCVTestResult);
+		SimResult.HCVTestResult=e.data.Result;
+		console.log(SimResult.HCVTestResult);
 		
 		RowLabel=[];
-		for (i=0; i<HCVTestResult[0].length; i++){RowLabel[i]=i;}
+		for (i=0; i<SimResult.HCVTestResult[0].length; i++){RowLabel[i]=i;}
 		
-		HCVResultsTable.innerHTML=MakeTableHTML(HCVTestResult, ["F0", "F1", "F2", "F3", "F4", "LF"], RowLabel);
+		HCVResultsTable.innerHTML=MakeTableHTML(SimResult.HCVTestResult, ["F0", "F1", "F2", "F3", "F4", "LF"], RowLabel);
 	}
-
-
 }
 
 
