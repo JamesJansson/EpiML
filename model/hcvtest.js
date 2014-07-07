@@ -68,7 +68,12 @@ function HCVTestPlot(){
 	// convert to a form that plot will accept
 	PlotData=ConvertDataToLinePlot(TimeAxis, HCVTestResult);
 	//Set up plot appearance // http://www.pikemere.co.uk/blog/flot-tutorial-how-to-create-area-charts/ 
-	PlotSettings={series: {stack: true}};
+	PlotSettings={series: {
+					lines: {
+            			show: true,
+            			fill: true
+					},
+					stack: true}};
 	
 	
 	//plot of HCVTestPlotHolder
