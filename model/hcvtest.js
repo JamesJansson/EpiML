@@ -19,7 +19,7 @@ var WorkerMessageHandler = function (e) {
 		MainProgress.value=e.data.ProgressBarValue;
 	}
 	if (typeof e.data.Result != 'undefined'){
-		SimResult.HCVTestResult=e.data.Result;
+		SimResult=e.data.Result;
 		console.log(SimResult.HCVTestResult);
 		
 		RowLabel=[];
