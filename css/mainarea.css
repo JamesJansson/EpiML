@@ -17,6 +17,9 @@ position: absolute;
 	right: 7px;
 }
 
+td {
+    border: 1px solid #cccccc;
+}
 
 #MainArea {
 	position: absolute;
