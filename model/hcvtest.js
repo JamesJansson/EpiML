@@ -23,13 +23,11 @@ var WorkerMessageHandler = function (e) {
 		SimResult[SimNumber]=e.data.Result;
 		
 		//prompt a function that determines if all simulations are complete or not, then cleans up all remaining informations
+		
 		HCVTestResult=SimResult[SimNumber].HCVTestResult;
-		
 		console.log(HCVTestResult);
-		
 		RowLabel=[];
 		for (i=0; i<HCVTestResult[0].length; i++){RowLabel[i]=i;}
-		
 		HCVResultsTable.innerHTML=MakeTableHTML(HCVTestResult, ["F0", "F1", "F2", "F3", "F4", "LF"], RowLabel);
 	}
 }
@@ -62,21 +60,24 @@ function HCVTest(){
 }
 
 function HCVTestPlot(){
-	PlotData=ConvertDataToPlot(TimeAxis, SimResult[0].HCV);
+	HCVTestResult=SimResult[0].HCVTestResult;
+	PlotData=ConvertDataToPlot(TimeAxis, HCVTestResult);
 	$.plot("#HCVTestPlotHolder", PlotData);
-	var d1 = [];
-	for (var i = 0; i < 14; i += 0.5) {
-		d1.push([i, Math.sin(i)]);
-	}
+	
+	
+	//var d1 = [];
+	//for (var i = 0; i < 14; i += 0.5) {
+	//	d1.push([i, Math.sin(i)]);
+	//}
 
-	var d2 = [[0, 3], [4, 8], [8, 5], [9, 13]];
+	//var d2 = [[0, 3], [4, 8], [8, 5], [9, 13]];
 
 	// A null signifies separate line segments
 
-	var d3 = [[0, 12], [7, 12], null, [7, 2.5], [12, 2.5]];
+	//var d3 = [[0, 12], [7, 12], null, [7, 2.5], [12, 2.5]];
 
-	$.plot("#HCVTestPlotHolder", [ d1, d2, d3 ]);
-	console.log([d1, d2, d3 ]);
+	//$.plot("#HCVTestPlotHolder", [ d1, d2, d3 ]);
+	//console.log([d1, d2, d3 ]);
 }
 
 function ConvertDataToLinearPlot(InputMatrix){//Accepts [param][time] or [y][x]. Future systems will accept [param][time][sim]
