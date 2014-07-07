@@ -60,8 +60,14 @@ function HCVTest(){
 }
 
 function HCVTestPlot(){
+	// Get the relevant data
 	HCVTestResult=SimResult[0].HCVTestResult;
-	PlotData=ConvertDataToPlot(TimeAxis, HCVTestResult);
+	//create an x axis
+	TimeAxis=[];
+	for (i=0; i<HCVTestResult[0].length; i++){TimeAxis[i]=i;}
+	// convert to a form that plot will accept
+	PlotData=ConvertDataToLinePlot(TimeAxis, HCVTestResult);
+	//plot of HCVTestPlotHolder
 	$.plot("#HCVTestPlotHolder", PlotData);
 	
 	
@@ -80,6 +86,15 @@ function HCVTestPlot(){
 	//console.log([d1, d2, d3 ]);
 }
 
-function ConvertDataToLinearPlot(InputMatrix){//Accepts [param][time] or [y][x]. Future systems will accept [param][time][sim]
-	return 
+function ConvertDataToLinePlot(x, InputMatrix){//Accepts [param][time] or [y][x]. Future systems will accept [param][time][sim]
+	LinePlotData=[];
+	NumberOfLines=InputMatrix.length;
+	for (i=0; i<NumberOfLines; i++){
+		ThisLine=[];
+		for (var j = 0; j < InputMatrix[i].length; j++) {
+			ThisLine.push([x[j], InputMatrix[i][j]]);
+		}
+		LinePlotData.push(ThisLine);
+	}
+	return LinePlotData;
 }
