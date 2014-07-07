@@ -5,7 +5,7 @@ TableHTML="<table>";
 TableHTML+="<tr>";
 TableHTML+="<td></td>";//Add a space at the top
 for (i=0; i<ColumnHeading.length; i++){
-	TableHTML+="<td><b>"+ InputMatrix[i][j]+"</b></td>";
+	TableHTML+="<td><b>"+ ColumnHeading[i]+"</b></td>";
 }
 TableHTML+="</tr>";
 
