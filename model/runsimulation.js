@@ -67,6 +67,7 @@ self.onmessage = function (e) {
     TotalTime=seconds2 -seconds1;
 
 	self.postMessage({ConsoleMessage: "Finished simulation in "+TotalTime+" seconds"});
+	ver SimResult={};
 	SimResult.HCVTestResult=FibrosisMatrix;
 	self.postMessage({Result: SimResult});
 };
