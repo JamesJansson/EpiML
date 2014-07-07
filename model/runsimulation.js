@@ -52,7 +52,7 @@ self.onmessage = function (e) {
 	
 	FibrosisMatrix=new ZeroMatrix(6, YearsToSimulate+1);
 	
-	self.postMessage({ConsoleMessage: "Starting to HCV progression"});
+	self.postMessage({ConsoleMessage: "Extracting results"});
 	YearCount=0;
 	for (GraphYear=Year; GraphYear<Year+YearsToSimulate+1; GraphYear++){
 		for (i=0; i<SimData.NoPeople; i++){
@@ -61,7 +61,7 @@ self.onmessage = function (e) {
 			FibrosisMatrix[FibrosisLevel][YearCount]=FibrosisMatrix[FibrosisLevel][YearCount]+1;;
 		}
 		YearCount++;
-		self.postMessage({ProgressBarValue: YearCount/YearsToSimulate+1});
+		self.postMessage({ProgressBarValue: (YearCount/(YearsToSimulate+1))});
 	}
 	
 	var seconds2 = new Date().getTime() / 1000;
