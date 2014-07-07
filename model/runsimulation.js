@@ -17,6 +17,7 @@ self.onmessage = function (e) {
 	Age=29;
 	Sex=1;
 	Alcohol=0;
+	YearsToSimulate=40;
 	
 	HCVParam={};
 	HCVParam.F0F1=0.117;
@@ -49,18 +50,18 @@ self.onmessage = function (e) {
 	//Determine fibrosis levels with year
 
 	
-	FibrosisMatrix=new ZeroMatrix(6, 41);
+	FibrosisMatrix=new ZeroMatrix(6, YearsToSimulate+1);
 	
 	self.postMessage({ConsoleMessage: "Starting to HCV progression"});
 	YearCount=0;
-	for (GraphYear=Year; GraphYear<Year+41; GraphYear++){
+	for (GraphYear=Year; GraphYear<Year+YearsToSimulate+1; GraphYear++){
 		for (i=0; i<SimData.NoPeople; i++){
 			FibrosisLevel=PP[i].HCV.Fibrosis.Get(GraphYear).Value;
 			//self.postMessage({ConsoleMessage: "FibrosisLevel "+ FibrosisLevel+ " YearCount" + YearCount});
 			FibrosisMatrix[FibrosisLevel][YearCount]=FibrosisMatrix[FibrosisLevel][YearCount]+1;;
 		}
 		YearCount++;
-		self.postMessage({ProgressBarValue: YearCount/SimData.NoPeople});
+		self.postMessage({ProgressBarValue: YearCount/YearsToSimulate+1});
 	}
 	
 	var seconds2 = new Date().getTime() / 1000;
