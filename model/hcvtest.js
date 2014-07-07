@@ -21,7 +21,11 @@ var WorkerMessageHandler = function (e) {
 	if (typeof e.data.Result != 'undefined'){
 		HCVTestResult=e.data.Result;
 		console.log(HCVTestResult);
-		HCVResultsTable.innerHTML=MakeTableHTML(HCVTestResult);
+		
+		RowLabel=[];
+		for (i=0; i<HCVTestResult[0].length; i++){RowLabel[i]=i;}
+		
+		HCVResultsTable.innerHTML=MakeTableHTML(HCVTestResult, ["F0", "F1", "F2", "F3", "F4", "LF"], RowLabel);
 	}
 
 
