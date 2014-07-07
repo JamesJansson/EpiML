@@ -23,13 +23,14 @@ var WorkerMessageHandler = function (e) {
 		SimResult[SimNumber]=e.data.Result;
 		
 		//prompt a function that determines if all simulations are complete or not, then cleans up all remaining informations
+		HCVTestResult=SimResult[SimNumber].HCVTestResult;
 		
-		console.log(SimResult[SimNumber].HCVTestResult);
+		console.log(HCVTestResult);
 		
 		RowLabel=[];
-		for (i=0; i<SimResult[SimNumber].HCVTestResult[0].length; i++){RowLabel[i]=i;}
+		for (i=0; i<HCVTestResult[0].length; i++){RowLabel[i]=i;}
 		
-		HCVResultsTable.innerHTML=MakeTableHTML(SimResult.HCVTestResult, ["F0", "F1", "F2", "F3", "F4", "LF"], RowLabel);
+		HCVResultsTable.innerHTML=MakeTableHTML(HCVTestResult, ["F0", "F1", "F2", "F3", "F4", "LF"], RowLabel);
 	}
 }
 
