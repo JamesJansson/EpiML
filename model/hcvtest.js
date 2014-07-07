@@ -68,13 +68,31 @@ function HCVTestPlot(){
 	// convert to a form that plot will accept
 	PlotData=ConvertDataToLinePlot(TimeAxis, HCVTestResult);
 	//Set up plot appearance // http://www.pikemere.co.uk/blog/flot-tutorial-how-to-create-area-charts/ 
-	PlotSettings={series: {
+	PlotSettings={xaxis: {
+					axisLabel: 'Time (years)',
+					axisLabelUseCanvas: true,
+					axisLabelFontSizePixels: 12,
+					axisLabelFontFamily: 'Verdana, Arial, Helvetica, Tahoma, sans-serif',
+					axisLabelPadding: 5,
+					tickLength: 0
+				},
+				yaxis: {
+					min: 0,
+					max: 100000,
+					axisLabel: 'Number of people',
+					axisLabelUseCanvas: true,
+					axisLabelFontSizePixels: 12,
+					axisLabelFontFamily: 'Verdana, Arial, Helvetica, Tahoma, sans-serif',
+					axisLabelPadding: 5
+				},
+				series: {
 					lines: {
             			show: true,
             			fill: true
 					},
-					stack: true}};
-	
+					stack: true
+				}
+			};
 	
 	//plot of HCVTestPlotHolder
 	$.plot("#HCVTestPlotHolder", PlotData, PlotSettings);
