@@ -84,7 +84,7 @@ MulticoreSim.prototype.RampUpSims=function() {
 			console.log("Started sim: "+SimID);
 			
 			this.Worker= new Worker(this.ScriptName);
-			this.Worker.onmessage = this.MessageHandler;
+			this.Worker.onmessage = function (e){MulticoreSimMessageHandler(this, e);
 			this.Worker.postMessage({ SimNumber: SimID, CommonData: this.CommonData, SimData: this.SimDataArray[SimID]});
 			
 		}
@@ -97,15 +97,12 @@ MulticoreSim.prototype.RampUpSims=function() {
 }
 
 
-MulticoreSim.prototype.MessageHandler=function(e) {
+MulticoreSimMessageHandler=function(MulticoreSimObject, e) {
 	// There are 3 main message types that are handled
 	// Messages to the StatusText (to be put somewhere on screen to indicate what is currently occurring)
 	// Messages to the ProgressBar
 	// Message to return result/indicate completeness
 	
-	
-	
-	console.log(this);
 	
 	// Messages to the StatusText
 	if (typeof e.data.StatusText != 'undefined'){
@@ -113,21 +110,21 @@ MulticoreSim.prototype.MessageHandler=function(e) {
 	}
 	// Messages to the ProgressBar
 	if (typeof e.data.ProgressBarValue != 'undefined'){
-		if (this.UseSimProgressBar==true){
-			document.getElementById(this.WithinSimProgressBarID).value=e.data.ProgressBarValue;
+		if (MulticoreSimObject.UseSimProgressBar==true){
+			document.getElementById(MulticoreSimObject.WithinSimProgressBarID).value=e.data.ProgressBarValue;
 		}
 	}
 	if (typeof e.data.Result != 'undefined'){
-		this.NoSimsCurrentlyRunning--;
+		MulticoreSimObject.NoSimsCurrentlyRunning--;
 		SimNumber=e.data.SimNumber;
-		this.Result[SimNumber]=e.data.Result;//Store the results of the simulation
-		this.SimsComplete++;
+		MulticoreSimObject.Result[SimNumber]=e.data.Result;//Store the results of the simulation
+		MulticoreSimObject.SimsComplete++;
 		
-		this.RampUpSims();//Try to run more sims
+		MulticoreSimObject.RampUpSims();//Try to run more sims
 		
 		//Update the progress bar about completion
-		if (this.UseSimProgressBar==true){
-			document.getElementById(this.NoSimsCompleteProgressBarID).value=this.SimsComplete;
+		if (MulticoreSimObject.UseSimProgressBar==true){
+			document.getElementById(MulticoreSimObject.NoSimsCompleteProgressBarID).value=MulticoreSimObject.SimsComplete/MulticoreSimObject.NoSims;
 		}
 	}
 };
