@@ -11,6 +11,9 @@ self.onmessage = function (e) {
 	
 	var SimNumber = e.data.SimNumber;
     var SimData = e.data.SimData;
+	//var SimData = e.data.SimSpecificData;
+	//var SimData = e.data.GeneralData;
+	
 	
 	console.log("This should not appear");
 	

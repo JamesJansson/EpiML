@@ -1,18 +1,19 @@
 
 var SimResult=[];
+var TotalSimsForMulticore;
+
 
 var WorkerMessageHandler = function (e) {
 	//console.log(e.data.result);
 
-	// There are 4 main message types that are handled
-	// Messages to the console
-	// Messages to the StatusText
+	// There are 3 main message types that are handled
+	// Messages to the WorkerStatusText (to be put somewhere on screen to indicate what is currently occurring)
 	// Messages to the ProgressBar
 	// Message to return result/indicate completeness
 	
 	// Messages to the console
-	if (typeof e.data.ConsoleMessage != 'undefined'){
-		console.log(e.data.ConsoleMessage);
+	if (typeof e.data.WorkerStatusText != 'undefined'){
+		console.log(e.data.WorkerStatusText);
 	}
 	// Messages to the ProgressBar
 	if (typeof e.data.ProgressBarValue != 'undefined'){
@@ -56,7 +57,7 @@ function HCVTest(){
         // Sending canvas data to the worker using a copy memory operation
         worker.postMessage({ SimNumber: SimNumber, SimData: SimData });
     }
-
+	//worker.terminate();
 }
 
 function HCVTestPlot(){
