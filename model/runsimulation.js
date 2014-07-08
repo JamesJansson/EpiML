@@ -11,8 +11,6 @@ self.onmessage = function (e) {
 	
 	var SimNumber = e.data.SimNumber;
     var SimData = e.data.SimData;
-	//var SimData = e.data.SimSpecificData;
-	//var SimData = e.data.GeneralData;
 	
 	
 	console.log("This should not appear");
@@ -36,7 +34,7 @@ self.onmessage = function (e) {
 	HCVParam.F4HCC=0.4;//not real
 
 
-	self.postMessage({ConsoleMessage: "Starting to load Person object"});
+	sconsole.log("Starting to load Person object");
 	
 	var PP=[];
 	for (i=0; i<SimData.NoPeople; i++){
@@ -46,7 +44,7 @@ self.onmessage = function (e) {
 		}
 	}
 	
-	self.postMessage({ConsoleMessage: "Starting to HCV progression"});
+	console.log("Starting to HCV progression");
 	
 	for (i=0; i<SimData.NoPeople; i++){
 		PP[i].HCV.Infection(Year, GenotypeValue, Age, Sex, Alcohol, HCVParam );
@@ -60,7 +58,7 @@ self.onmessage = function (e) {
 	
 	FibrosisMatrix=new ZeroMatrix(6, YearsToSimulate+1);
 	
-	self.postMessage({ConsoleMessage: "Extracting results"});
+	console.log("Extracting results");
 	YearCount=0;
 	for (GraphYear=Year; GraphYear<Year+YearsToSimulate+1; GraphYear++){
 		for (i=0; i<SimData.NoPeople; i++){
@@ -75,7 +73,7 @@ self.onmessage = function (e) {
 	var seconds2 = new Date().getTime() / 1000;
     TotalTime=seconds2 -seconds1;
 
-	self.postMessage({ConsoleMessage: "Finished simulation in "+TotalTime+" seconds"});
+	console.log("Finished simulation in "+TotalTime+" seconds");
 	var SimResult={};
 	SimResult.HCVTestResult=FibrosisMatrix;
 	
