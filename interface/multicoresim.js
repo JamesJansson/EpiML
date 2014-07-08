@@ -73,9 +73,12 @@ MulticoreSim.prototype.Start=function() {
 };
 
 MulticoreSim.prototype.RampUpSims=function() {
+	console.log("Started rampup");
 	while (this.NoSimsCurrentlyRunning<this.NoCores){//there are spare cores available
 		if (this.SimsStarted<this.NoSims){//if there are sims that have yet to be started
 			SimID=this.SimsStarted++;//run this sim, increment by 1
+			console.log("Started sim: "+SimID);
+			
 			this.Worker= new Worker(this.ScriptName);
 			this.Worker.onmessage = this.MessageHandler;
 			this.Worker.postMessage({ SimNumber: SimID, CommonData: this.CommonData, SimData: this.SimDataArray[SimID]});
