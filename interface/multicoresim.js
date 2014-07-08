@@ -35,8 +35,12 @@ function MulticoreSim(ScriptName, CommonData, SimSpecificData, NoCores){
 	this.SimSpecificData=SimSpecificData;//an array of values or objects to be passed to the specified script
 	this.NoCores=NoCores;
 	this.Worker=[];//An array of workers
-	
 	this.NoSims=SimSpecificData.length;
+	
+	this.CurrentlyRunning=false;
+	this.Complete=false;
+	this.NoSimsCurrentlyRunning=0;
+	
 	this.SimsStarted=0;
 	this.SimsComplete=0;
 	this.Result=[];
@@ -44,8 +48,7 @@ function MulticoreSim(ScriptName, CommonData, SimSpecificData, NoCores){
 	this.NoSimsCompleteProgressBarID="SimsCompleteProgressBar";//To allow a progress bar to be installed into the page
 	this.SimSpecificProgessBarID="SimSpecificProgessBar";
 	
-	this.CurrentlyRunning=false;
-	this.Complete=false;
+	
 
 }
 
@@ -56,26 +59,32 @@ MulticoreSim.prototype.Start=function() {
 		return 0;
 	};
 	this.CurrentlyRunning=true;
+	this.NoSimsCurrentlyRunning=0;
 	
 	// Set progress bar to zero
-	MainProgress.value=0;
+	document.getElementById(this.NoSimsCompleteProgressBarID).value=0;
 	
 	//Create workers	
-	for (var CoreID = 0; CoreID < this.NoCores; CoreID++) {
-		this.SimsStarted++;
-        this.Worker[CoreID] = new Worker(this.ScriptName);
-        this.Worker[CoreID].onmessage = this.MessageHandler;
-		//Start the first sim on this core running
-		this.Worker[CoreID].postMessage({ SimNumber: CoreID, CommonData: CommonData, SimSpecificData: SimSpecificData[CoreID]});
-    }
+	
+	
+	this.RampUpSims();
 };
 
-MulticoreSim.prototype.Terminate=function() {//close down all workers
-	for (var CoreID = 0; CoreID < this.NoCores; CoreID++) {
-		this.Worker[CoreID].terminate();
+MulticoreSim.prototype.RampUpSims=function() {
+	while (this.NoSimsCurrentlyRunning<this.NoCores){//there are spare cores available
+		if (this.SimsStarted<this.NoSims){//if there are sims that have yet to be started
+			SimID=this.SimsStarted++;//run this sim, increment by 1
+			this.Worker[CoreID] = new Worker(this.ScriptName);
+			this.Worker[CoreID].onmessage = this.MessageHandler;
+			this.Worker[CoreID].postMessage({ SimNumber: CoreID, this.CommonData: CommonData, this.SimSpecificData[CoreID]: this.SimSpecificData[CoreID]});
+		}
 	}
-	this.CurrentlyRunning==false;
-};
+	
+	//Determine if this is the last sim to complete
+	if (this.SimsComplete>=this.NoSims){
+		this.Terminate();//close all the workers
+	}
+}
 
 
 MulticoreSim.prototype.MessageHandler=function(e) {
@@ -95,28 +104,21 @@ MulticoreSim.prototype.MessageHandler=function(e) {
 		document.getElementById().value=e.data.ProgressBarValue;
 	}
 	if (typeof e.data.Result != 'undefined'){
+		this.NoSimsCurrentlyRunning--;
 		SimNumber=e.data.SimNumber;
-		Result[SimNumber]=e.data.Result;
+		Result[SimNumber]=e.data.Result;//Store the results of the simulation
 		this.SimsComplete++;
-		//Determine if more sims need to be run
 		
-		if (this.SimsStarted<this.NoSims){
-			//increment immediately
-			this.SimsStarted++;
-			SimToRun=this.SimsStarted-1;//Seems odd to do it this way, but it is designed to prevent overlap in simulations.
-			//Run another sim
-			this.Worker[CoreID].postMessage({ SimNumber: SimNumber, CommonData: CommonData, SimSpecificData: SimSpecificData});
-		}
-		
-		
-		
-		//Determine if this is the last sim to complete
-		if (this.SimsComplete>=this.NoSims){
-			this.Terminate();//close all the workers
-		}
+		this.RampUpSims();//Try to run more sims
 	}
 };
 
+MulticoreSim.prototype.Terminate=function() {//close down all workers
+	for (var CoreID = 0; CoreID < this.NoCores; CoreID++) {
+		this.Worker[CoreID].terminate();
+	}
+	this.CurrentlyRunning==false;
+};
 
 
 
