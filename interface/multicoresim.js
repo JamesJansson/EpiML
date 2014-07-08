@@ -66,7 +66,7 @@ MulticoreSim.prototype.Start=function() {
         this.Worker[CoreID] = new Worker(this.ScriptName);
         this.Worker[CoreID].onmessage = this.MessageHandler;
 		//Start the first sim on this core running
-		this.Worker[CoreID].postMessage({ SimNumber: SimNumber, CommonData: CommonData, SimSpecificData: SimSpecificData});
+		this.Worker[CoreID].postMessage({ SimNumber: CoreID, CommonData: CommonData, SimSpecificData: SimSpecificData[CoreID]});
     }
 };
 
@@ -83,6 +83,8 @@ MulticoreSim.prototype.MessageHandler=function(e) {
 	// Messages to the StatusText (to be put somewhere on screen to indicate what is currently occurring)
 	// Messages to the ProgressBar
 	// Message to return result/indicate completeness
+	
+	console.log(this);
 	
 	// Messages to the StatusText
 	if (typeof e.data.StatusText != 'undefined'){
