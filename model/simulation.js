@@ -1,4 +1,5 @@
-
+//This file specifies the generalised components of a simulation object.
+ 
 
 
 function  SimObject(SimSize)

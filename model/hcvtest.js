@@ -4,7 +4,7 @@ var SimResult=[];
 var WorkerMessageHandler = function (e) {
 	//console.log(e.data.result);
 
-	// There are 3 main 
+	// There are 4 main message types that are handled
 	// Messages to the console
 	// Messages to the StatusText
 	// Messages to the ProgressBar

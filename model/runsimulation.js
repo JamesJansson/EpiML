@@ -1,7 +1,10 @@
-﻿importScripts("simulation.js");
+﻿//Specify files to be included in the simulation
+importScripts("simulation.js");
 importScripts("simulationtools.js");
 importScripts("person.js");
 importScripts("hcv.js");
+
+
 
 self.onmessage = function (e) {
     var seconds1 = new Date().getTime() / 1000;
@@ -9,8 +12,10 @@ self.onmessage = function (e) {
 	var SimNumber = e.data.SimNumber;
     var SimData = e.data.SimData;
 	
-	IncrementSize=Math.round(SimData.NoPeople/100);
+	console.log("This should not appear");
 	
+	
+	IncrementSize=Math.round(SimData.NoPeople/100);//used to deliver progress rates back to the progress bar
 	
 	Year=2014.5;
 	GenotypeValue=0;
@@ -70,5 +75,6 @@ self.onmessage = function (e) {
 	self.postMessage({ConsoleMessage: "Finished simulation in "+TotalTime+" seconds"});
 	var SimResult={};
 	SimResult.HCVTestResult=FibrosisMatrix;
+	
 	self.postMessage({SimNumber: e.data.SimNumber, Result: SimResult});//All simulation will end with this line
 };
