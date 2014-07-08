@@ -6,11 +6,12 @@
 // CommonData=[InfoBlock];//All sims will have access to this information
 // SimSpecificData=[67, 33, 99, 55, 88];//can be an array of any type (including other classes). Uses array length to determine the number of simulations to run.
 // NoCores=6;//The number of cores you want the simulation to run over
-// SimulationObject=new MulticoreSim(ScriptName, CommonData, SimSpecificData, NoCores)
+// SimulationObject=new MulticoreSim(ScriptName, CommonData, SimSpecificData, NoCores); // getting it ready
+// SimulationObject.Start(); // Start the simulations running
 
 // Sample set up of SimulationToRun.js
 // ----------------------------------------------------------
-// importScripts("usefulscripts1.js", "usefulscripts2.js");//Scripts your function needs to use
+// importScripts("usefulscripts1.js", "usefulscripts2.js");//Scripts your function needs to use (note; only scripts in the same folder can be used)
 //
 // self.onmessage = function (e) {
 // 		var SimNumber = e.data.SimNumber;
@@ -28,6 +29,7 @@
 
 
 function MulticoreSim(ScriptName, CommonData, SimSpecificData, NoCores){
+
 	this.ScriptName=ScriptName;
 	this.CommonData=CommonData;
 	this.SimSpecificData=SimSpecificData;//an array of values or objects to be passed to the specified script
@@ -47,7 +49,7 @@ function MulticoreSim(ScriptName, CommonData, SimSpecificData, NoCores){
 
 }
 
-MulticoreWorker.prototype.Start() {
+MulticoreSim.prototype.Start=function() {
 	//Check that nothing else is running
 	if (this.CurrentlyRunning==true){
 		console.log("Warning: worker currently running");
@@ -64,11 +66,11 @@ MulticoreWorker.prototype.Start() {
         this.Worker[CoreID] = new Worker(this.ScriptName);
         this.Worker[CoreID].onmessage = this.MessageHandler;
 		//Start the first sim on this core running
-		this.Worker[CoreID].postMessage({ SimNumber: SimNumber, CommonData:, CommonData SimSpecificData: SimSpecificData});
+		this.Worker[CoreID].postMessage({ SimNumber: SimNumber, CommonData: CommonData, SimSpecificData: SimSpecificData});
     }
 };
 
-MulticoreWorker.prototype.Terminate() {//close down all workers
+MulticoreSim.prototype.Terminate=function() {//close down all workers
 	for (var CoreID = 0; CoreID < this.NoCores; CoreID++) {
 		this.Worker[CoreID].terminate();
 	}
@@ -76,7 +78,7 @@ MulticoreWorker.prototype.Terminate() {//close down all workers
 };
 
 
-MulticoreWorker.prototype.MessageHandler(e) {
+MulticoreSim.prototype.MessageHandler=function(e) {
 	// There are 3 main message types that are handled
 	// Messages to the StatusText (to be put somewhere on screen to indicate what is currently occurring)
 	// Messages to the ProgressBar
@@ -101,7 +103,7 @@ MulticoreWorker.prototype.MessageHandler(e) {
 			this.SimsStarted++;
 			SimToRun=this.SimsStarted-1;//Seems odd to do it this way, but it is designed to prevent overlap in simulations.
 			//Run another sim
-			this.Worker[CoreID].postMessage({ SimNumber: SimNumber, CommonData:, CommonData SimSpecificData: SimSpecificData});
+			this.Worker[CoreID].postMessage({ SimNumber: SimNumber, CommonData: CommonData, SimSpecificData: SimSpecificData});
 		}
 		
 		

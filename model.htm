@@ -14,7 +14,7 @@
 <script type="text/javascript" src="interface/jquery.flot.js"></script>
 <script type="text/javascript" src="interface/jquery.flot.axislabels.js"></script> <!-- http://www.pikemere.co.uk/blog/flot-tutorial-how-to-create-area-charts/ -->
 <script type="text/javascript" src="interface/jquery.flot.stack.js"></script>
-
+<script type="text/javascript" src="interface/multicoresim.js"></script>
 
 
 <!-- Loading model javascript -->
@@ -104,7 +104,8 @@
 	
 	
 	<div id="OtherContent" class="Content">
-
+		<p>Testing the multicoresim system</p>
+		<div id="HCVTestSimButton" 	class="SolidButton" onClick="SimulationObject=new MulticoreSim('runsimulation.js', 22, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 4);SimulationObject.Start();return 0;"> Run simulation </div>
 	</div>
 
 

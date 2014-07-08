@@ -88,8 +88,8 @@ function HCVTestPlot(){
 				},
 				series: {
 					lines: {
-            			show: true,
-            			fill: true
+						show: true,
+						fill: true
 					},
 					stack: true
 				}
