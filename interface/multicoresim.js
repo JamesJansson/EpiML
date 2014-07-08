@@ -29,7 +29,8 @@
 
 
 function MulticoreSim(ScriptName, CommonData, SimDataArray, NoCores){
-
+	console.log("Creating MulticoreSim object");
+	
 	this.ScriptName=ScriptName;
 	this.CommonData=CommonData;
 	this.SimDataArray=SimDataArray;//an array of values or objects to be passed to the specified script
@@ -55,6 +56,8 @@ function MulticoreSim(ScriptName, CommonData, SimDataArray, NoCores){
 }
 
 MulticoreSim.prototype.Start=function() {
+	console.log("Starting MulticoreSim object");
+
 	//Check that nothing else is running
 	if (this.CurrentlyRunning==true){
 		console.log("Warning: worker currently running");
@@ -98,6 +101,8 @@ MulticoreSim.prototype.MessageHandler=function(e) {
 	// Messages to the StatusText (to be put somewhere on screen to indicate what is currently occurring)
 	// Messages to the ProgressBar
 	// Message to return result/indicate completeness
+	
+	console.log("Entered message handler");
 	
 	console.log(this);
 	
