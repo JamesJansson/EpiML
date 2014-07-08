@@ -69,7 +69,7 @@
 	<div id="HCVContent" class="Content">
 		<h1>HCV</h1>
 		<div style="position: absolute; top:40px;">
-			<div id="HCVTestSimButton" class="SolidButton" onClick="HCVTest();"> Run simulation </div>
+			<div id="HCVTestSimButton" 	class="SolidButton" onClick="HCVTest();"> Run simulation </div>
 			<div id="HCVTestPlotButton" class="SolidButton" onClick="HCVTestPlot();"> Plot result </div>
 		</div>
 		<div id="HCVResultsSection" style="position: absolute; top:40px;left:200px;">
@@ -104,13 +104,7 @@
 	
 	
 	<div id="OtherContent" class="Content">
-		This example creates objects and assigns some values.
-		<div id="SetUpPopButton" class="SolidButton"> Set up population </div>
-		<p id="resultsSetUpPop">Results displayed here</p>
-		<div id="CalculateAgeButton" class="SolidButton"> Calculate age </div>
-		<p id="resultsCalculateAge">Results displayed here</p>
-		<p id="WebworkerButton">Click above then here to calculate age.</p>
-		<p id="resultsCalculateAge">Results displayed here</p>
+
 	</div>
 
 
@@ -120,43 +114,7 @@
 
 
 <script>
-//Add listeners
-document.getElementById("SetUpPopButton").addEventListener("click", SetUpPop);
-document.getElementById("CalculateAgeButton").addEventListener("click", CalculateAge);
-document.getElementById("WebworkerButton").addEventListener("click", SingleWebWorker);
 
-
-
-//Functions
-
-function SingleWebWorker()
-{
-	if(typeof(Worker) !== "undefined") {
-        if(typeof(w) == "undefined") {
-            w = new Worker("model/singlewebworker.js");
-        }
-        w.onmessage = function(event) {
-            document.getElementById("result").innerHTML = event.data;
-        };
-    } else {
-        console.log("Web workers not supported in this browser...");
-    }
-}
-
-
-
-
-function SetUpPop() {
-	for (i=0; i<300000; i++)
-	{
-		Person[i]=new PersonObject(2, 1985.1);
-	}
-	document.getElementById("resultsSetUpPop").innerHTML = "Done";
-}
-
-function CalculateAge() {
-	document.getElementById("resultsCalculateAge").innerHTML = Person[0].Age(2013);
-}
 
 
 </script>
