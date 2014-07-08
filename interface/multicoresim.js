@@ -87,7 +87,7 @@ MulticoreSim.prototype.RampUpSims=function() {
 			
 			var BoundMessage=MulticoreSimMessageHandler.bind(this);
 			this.Worker.onmessage = BoundMessage;
-			//this.Worker.onmessage = function (e){MulticoreSimMessageHandler(e, this)};
+			
 			this.Worker.postMessage({ SimNumber: SimID, CommonData: this.CommonData, SimData: this.SimDataArray[SimID]});
 			
 		}
