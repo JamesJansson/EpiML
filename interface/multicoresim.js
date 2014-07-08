@@ -29,7 +29,6 @@
 
 
 function MulticoreSim(ScriptName, CommonData, SimDataArray, NoCores){
-	console.log("Creating MulticoreSim object");
 	
 	this.ScriptName=ScriptName;
 	this.CommonData=CommonData;
@@ -56,7 +55,6 @@ function MulticoreSim(ScriptName, CommonData, SimDataArray, NoCores){
 }
 
 MulticoreSim.prototype.Start=function() {
-	console.log("Starting MulticoreSim object");
 
 	//Check that nothing else is running
 	if (this.CurrentlyRunning==true){
@@ -77,13 +75,12 @@ MulticoreSim.prototype.Start=function() {
 };
 
 MulticoreSim.prototype.RampUpSims=function() {
-	console.log("Started rampup");
+
 	MoreSimsToRun=true;//flag to prevent continually trying to run more sims
 	while (this.NoSimsCurrentlyRunning<this.NoCores &&  MoreSimsToRun==true){//there are spare cores available
 		if (this.SimsStarted<this.NoSims){//if there are sims that have yet to be started
 			SimID=this.SimsStarted++;//run this sim, increment by 1
 			this.NoSimsCurrentlyRunning++;//indicate that another core has become used
-			console.log("Started sim: "+SimID);
 			
 			this.Worker= new Worker(this.ScriptName);
 			
@@ -138,8 +135,6 @@ MulticoreSimMessageHandler=function(e) {
 };
 
 MulticoreSim.prototype.Terminate=function() {//close down all workers
-	console.log("Termination called");
-
 	this.Worker.terminate();
 	this.CurrentlyRunning==false;
 };
