@@ -4,9 +4,9 @@
 // Example usage:
 // ScriptName="SimulationToRun.js"; 
 // CommonData=[InfoBlock];//All sims will have access to this information
-// SimSpecificData=[67, 33, 99, 55, 88];//can be an array of any type (including other classes). Uses array length to determine the number of simulations to run.
+// SimSpecificDataArray=[67, 33, 99, 55, 88];//can be an array of any type (including other classes). Uses array length to determine the number of simulations to run.
 // NoCores=6;//The number of cores you want the simulation to run over
-// SimulationObject=new MulticoreSim(ScriptName, CommonData, SimSpecificData, NoCores); // getting it ready
+// SimulationObject=new MulticoreSim(ScriptName, CommonData, SimSpecificDataArray, NoCores); // getting it ready
 // SimulationObject.Start(); // Start the simulations running
 
 // Sample set up of SimulationToRun.js
@@ -15,7 +15,7 @@
 //
 // self.onmessage = function (e) {
 // 		var SimNumber = e.data.SimNumber;
-// 		var SimSpecificData = e.data.SimSpecificData;
+// 		var SimData = e.data.SimData;
 // 		var CommonData = e.data.CommonData;
 //
 //		...//Where you do the calculations
@@ -28,14 +28,14 @@
 
 
 
-function MulticoreSim(ScriptName, CommonData, SimSpecificData, NoCores){
+function MulticoreSim(ScriptName, CommonData, SimDataArray, NoCores){
 
 	this.ScriptName=ScriptName;
 	this.CommonData=CommonData;
-	this.SimSpecificData=SimSpecificData;//an array of values or objects to be passed to the specified script
+	this.SimDataArray=SimDataArray;//an array of values or objects to be passed to the specified script
 	this.NoCores=NoCores;
 	this.Worker=[];//An array of workers
-	this.NoSims=SimSpecificData.length;
+	this.NoSims=SimDataArray.length;
 	
 	this.CurrentlyRunning=false;
 	this.Complete=false;
@@ -45,8 +45,10 @@ function MulticoreSim(ScriptName, CommonData, SimSpecificData, NoCores){
 	this.SimsComplete=0;
 	this.Result=[];
 	
-	this.NoSimsCompleteProgressBarID="SimsCompleteProgressBar";//To allow a progress bar to be installed into the page
-	this.SimSpecificProgessBarID="SimSpecificProgessBar";
+	this.UseSimProgressBar=false;
+	this.SimProgressBarID="SimProgressBar";//To allow a progress bar to be installed into the page
+	this.UseWithinSimProgressBar=false;
+	this.WithinSimProgressBarID="WithinSimProgressBar";
 	
 	
 
@@ -62,11 +64,11 @@ MulticoreSim.prototype.Start=function() {
 	this.NoSimsCurrentlyRunning=0;
 	
 	// Set progress bar to zero
-	document.getElementById(this.NoSimsCompleteProgressBarID).value=0;
+	if (this.UseSimProgressBar==true){
+		document.getElementById(this.NoSimsCompleteProgressBarID).value=0;
+	}
 	
 	//Create workers	
-	
-	
 	this.RampUpSims();
 };
 
@@ -74,9 +76,10 @@ MulticoreSim.prototype.RampUpSims=function() {
 	while (this.NoSimsCurrentlyRunning<this.NoCores){//there are spare cores available
 		if (this.SimsStarted<this.NoSims){//if there are sims that have yet to be started
 			SimID=this.SimsStarted++;//run this sim, increment by 1
-			this.Worker[CoreID] = new Worker(this.ScriptName);
-			this.Worker[CoreID].onmessage = this.MessageHandler;
-			this.Worker[CoreID].postMessage({ SimNumber: CoreID, this.CommonData: CommonData, this.SimSpecificData[CoreID]: this.SimSpecificData[CoreID]});
+			this.Worker= new Worker(this.ScriptName);
+			this.Worker.onmessage = this.MessageHandler;
+			this.Worker.postMessage({ SimNumber: CoreID, CommonData: this.CommonData, SimData: this.SimDataArray[CoreID]});
+			
 		}
 	}
 	
@@ -101,7 +104,9 @@ MulticoreSim.prototype.MessageHandler=function(e) {
 	}
 	// Messages to the ProgressBar
 	if (typeof e.data.ProgressBarValue != 'undefined'){
-		document.getElementById().value=e.data.ProgressBarValue;
+		if (this.UseSimProgressBar==true){
+			document.getElementById(this.WithinSimProgressBarID).value=e.data.ProgressBarValue;
+		}
 	}
 	if (typeof e.data.Result != 'undefined'){
 		this.NoSimsCurrentlyRunning--;
@@ -110,13 +115,16 @@ MulticoreSim.prototype.MessageHandler=function(e) {
 		this.SimsComplete++;
 		
 		this.RampUpSims();//Try to run more sims
+		
+		//Update the progress bar about completion
+		if (this.UseSimProgressBar==true){
+			document.getElementById(this.NoSimsCompleteProgressBarID).value=this.SimsComplete;
+		}
 	}
 };
 
 MulticoreSim.prototype.Terminate=function() {//close down all workers
-	for (var CoreID = 0; CoreID < this.NoCores; CoreID++) {
-		this.Worker[CoreID].terminate();
-	}
+	this.Worker.terminate();
 	this.CurrentlyRunning==false;
 };
 
