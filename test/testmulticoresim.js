@@ -1,3 +1,5 @@
+var SimulationObject;
+
 function TestMulticoreSim(){
 
 ScriptToRun='model/runsimulation.js';
