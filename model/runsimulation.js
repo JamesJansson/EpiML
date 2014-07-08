@@ -12,10 +12,6 @@ self.onmessage = function (e) {
 	var SimNumber = e.data.SimNumber;
     var SimData = e.data.SimData;
 	
-	
-	console.log("This should not appear");
-	
-	
 	IncrementSize=Math.round(SimData.NoPeople/100);//used to deliver progress rates back to the progress bar
 	
 	Year=2014.5;
@@ -34,7 +30,7 @@ self.onmessage = function (e) {
 	HCVParam.F4HCC=0.4;//not real
 
 
-	sconsole.log("Starting to load Person object");
+	console.log("Starting to load Person object");
 	
 	var PP=[];
 	for (i=0; i<SimData.NoPeople; i++){
