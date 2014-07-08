@@ -132,6 +132,8 @@ MulticoreSimMessageHandler=function(e) {
 };
 
 MulticoreSim.prototype.Terminate=function() {//close down all workers
+	console.log("Termination called");
+
 	this.Worker.terminate();
 	this.CurrentlyRunning==false;
 };
