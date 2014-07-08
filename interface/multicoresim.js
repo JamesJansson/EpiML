@@ -99,14 +99,14 @@ MulticoreSim.prototype.RampUpSims=function() {
 }
 
 
-MulticoreSimMessageHandler=function(MulticoreSimObject, e) {
+MulticoreSimMessageHandler=function(e) {
 	// There are 3 main message types that are handled
 	// Messages to the StatusText (to be put somewhere on screen to indicate what is currently occurring)
 	// Messages to the ProgressBar
 	// Message to return result/indicate completeness
 	
 	console.log("Mulit");
-	console.log(MulticoreSimObject);
+	console.log(this);
 	
 	// Messages to the StatusText
 	if (typeof e.data.StatusText != 'undefined'){
@@ -114,21 +114,21 @@ MulticoreSimMessageHandler=function(MulticoreSimObject, e) {
 	}
 	// Messages to the ProgressBar
 	if (typeof e.data.ProgressBarValue != 'undefined'){
-		if (MulticoreSimObject.UseSimProgressBar==true){
-			document.getElementById(MulticoreSimObject.WithinSimProgressBarID).value=e.data.ProgressBarValue;
+		if (this.UseSimProgressBar==true){
+			document.getElementById(this.WithinSimProgressBarID).value=e.data.ProgressBarValue;
 		}
 	}
 	if (typeof e.data.Result != 'undefined'){
-		MulticoreSimObject.NoSimsCurrentlyRunning--;
+		this.NoSimsCurrentlyRunning--;
 		SimNumber=e.data.SimNumber;
-		MulticoreSimObject.Result[SimNumber]=e.data.Result;//Store the results of the simulation
-		MulticoreSimObject.SimsComplete++;
+		this.Result[SimNumber]=e.data.Result;//Store the results of the simulation
+		this.SimsComplete++;
 		
-		MulticoreSimObject.RampUpSims();//Try to run more sims
+		this.RampUpSims();//Try to run more sims
 		
 		//Update the progress bar about completion
-		if (MulticoreSimObject.UseSimProgressBar==true){
-			document.getElementById(MulticoreSimObject.NoSimsCompleteProgressBarID).value=MulticoreSimObject.SimsComplete/MulticoreSimObject.NoSims;
+		if (this.UseSimProgressBar==true){
+			document.getElementById(this.NoSimsCompleteProgressBarID).value=this.SimsComplete/this.NoSims;
 		}
 	}
 };
