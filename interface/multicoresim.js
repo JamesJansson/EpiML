@@ -65,6 +65,7 @@ MulticoreSim.prototype.Start=function() {
 	};
 	this.CurrentlyRunning=true;
 	this.NoSimsCurrentlyRunning=0;
+	this.Complete=false;
 	
 	// Set progress bar to zero
 	if (this.UseSimProgressBar==true){
@@ -77,7 +78,8 @@ MulticoreSim.prototype.Start=function() {
 
 MulticoreSim.prototype.RampUpSims=function() {
 	console.log("Started rampup");
-	while (this.NoSimsCurrentlyRunning<this.NoCores){//there are spare cores available
+	MoreSimsToRun=true;//flag to prevent continually trying to run more sims
+	while (this.NoSimsCurrentlyRunning<this.NoCores &&  MoreSimsToRun==true){//there are spare cores available
 		if (this.SimsStarted<this.NoSims){//if there are sims that have yet to be started
 			SimID=this.SimsStarted++;//run this sim, increment by 1
 			this.NoSimsCurrentlyRunning++;//indicate that another core has become used
@@ -89,12 +91,16 @@ MulticoreSim.prototype.RampUpSims=function() {
 			this.Worker.onmessage = BoundMessage;
 			
 			this.Worker.postMessage({ SimNumber: SimID, CommonData: this.CommonData, SimData: this.SimDataArray[SimID]});
-			
 		}
+		else{ //there are no more sims to run
+			MoreSimsToRun=false;
+		}
+		
 	}
 	
 	//Determine if this is the last sim to complete
 	if (this.SimsComplete>=this.NoSims){
+		this.Complete=true;
 		this.Terminate();//close all the workers
 	}
 }
