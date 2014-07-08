@@ -106,9 +106,6 @@ MulticoreSimMessageHandler=function(e) {
 	// Messages to the ProgressBar
 	// Message to return result/indicate completeness
 	
-	console.log("Mulit");
-	console.log(this);
-	
 	// Messages to the StatusText
 	if (typeof e.data.StatusText != 'undefined'){
 		console.log(e.data.WorkerStatusText);
