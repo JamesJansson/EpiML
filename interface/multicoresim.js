@@ -120,7 +120,7 @@ MulticoreSim.prototype.MessageHandler=function(e) {
 	if (typeof e.data.Result != 'undefined'){
 		this.NoSimsCurrentlyRunning--;
 		SimNumber=e.data.SimNumber;
-		Result[SimNumber]=e.data.Result;//Store the results of the simulation
+		this.Result[SimNumber]=e.data.Result;//Store the results of the simulation
 		this.SimsComplete++;
 		
 		this.RampUpSims();//Try to run more sims
