@@ -84,7 +84,7 @@ MulticoreSim.prototype.RampUpSims=function() {
 			console.log("Started sim: "+SimID);
 			
 			this.Worker= new Worker(this.ScriptName);
-			this.Worker.onmessage = function (e){MulticoreSimMessageHandler(this, e)};
+			this.Worker.onmessage = function (e){MulticoreSimMessageHandler(e, this)};
 			this.Worker.postMessage({ SimNumber: SimID, CommonData: this.CommonData, SimData: this.SimDataArray[SimID]});
 			
 		}
@@ -97,7 +97,7 @@ MulticoreSim.prototype.RampUpSims=function() {
 }
 
 
-MulticoreSimMessageHandler=function(MulticoreSimObject, e) {
+MulticoreSimMessageHandler=function(e, MulticoreSimObject) {
 	// There are 3 main message types that are handled
 	// Messages to the StatusText (to be put somewhere on screen to indicate what is currently occurring)
 	// Messages to the ProgressBar
