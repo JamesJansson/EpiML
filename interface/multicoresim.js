@@ -103,7 +103,7 @@ MulticoreSim.prototype.MessageHandler=function(e) {
 	// Messages to the ProgressBar
 	// Message to return result/indicate completeness
 	
-	console.log("Entered message handler");
+	
 	
 	console.log(this);
 	
