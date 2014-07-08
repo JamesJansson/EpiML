@@ -80,6 +80,7 @@ MulticoreSim.prototype.RampUpSims=function() {
 	while (this.NoSimsCurrentlyRunning<this.NoCores){//there are spare cores available
 		if (this.SimsStarted<this.NoSims){//if there are sims that have yet to be started
 			SimID=this.SimsStarted++;//run this sim, increment by 1
+			this.NoSimsCurrentlyRunning++;//indicate that another core has become used
 			console.log("Started sim: "+SimID);
 			
 			this.Worker= new Worker(this.ScriptName);
