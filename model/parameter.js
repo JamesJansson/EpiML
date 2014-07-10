@@ -1,7 +1,11 @@
-function ParameterClass
+function ParameterClass(ParameterID, CategoryID, 
+
+this.ParameterID=ParameterID;
+this.CategoryID=CategoryID;
 
 this.MedianEstimate=
 this.StandardError=
+this.
 this.distributionType=
 //normal
 //lognormal
@@ -33,7 +37,14 @@ ParameterClass.prototype.CreateDistribution= function (){
 	
 	else if (this.distributionType=="lognormal"){
 		//log
+		logmedian=Math.log(this.MedianEstimate);
 		//calculate
+		Math.random//NOTE!!! Math.random is platform dependent, meaning we need to create or use a platform independent method 
+		//discussed here http://bocoup.com/weblog/random-numbers/
+		//some code here https://gist.github.com/Protonk/5367430
+		//Linear congruential generator
+		
+		
 		//delog
 	}	
 	
