@@ -10,9 +10,7 @@ self.onmessage = function (e) {
     var seconds1 = new Date().getTime() / 1000;
 	
 	var SimNumber = e.data.SimNumber;
-    var SimData = e.data.SimData;
-	
-	e.data.SimData.NoPeople=24;
+    var SimData = e.data.SimData;//creates a pointer
 	
 	IncrementSize=Math.round(SimData.NoPeople/100);//used to deliver progress rates back to the progress bar
 	
