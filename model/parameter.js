@@ -45,6 +45,15 @@ ParameterClass.prototype.CreateDistribution= function (){
 		//Linear congruential generator
 		
 		
+		//http://stackoverflow.com/questions/20160827/when-generating-normally-distributed-random-values-what-is-the-most-efficient-w 
+		// To get approximately normally distributed random numbers, add 12 rands, minus 6, divide 
+		//
+		
+		// Possibly the best method will be to use the ziggurat algorithm
+		//https://github.com/jamesbloomer/node-ziggurat/blob/master/index.js
+		
+		
+		
 		//delog
 	}	
 	
