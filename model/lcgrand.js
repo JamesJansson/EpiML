@@ -3,9 +3,12 @@
 // The code below was found here https://gist.github.com/Protonk/5367430
 // LCG is the standard method used in many C++ compilers http://en.wikipedia.org/wiki/Linear_congruential_generator#Parameters_in_common_use 
 		
-//Linear congruential generator
-
+// Linear congruential generator code found here:
 // https://gist.github.com/Protonk/5367430
+
+// Usage:
+// lcg.setSeed(34658437);
+// RandomVariable=lcg.rand();
 
 
 // Linear Congruential Generator

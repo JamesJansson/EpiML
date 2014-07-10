@@ -39,8 +39,7 @@ ParameterClass.prototype.CreateDistribution= function (){
 		//log
 		logmedian=Math.log(this.MedianEstimate);
 		//calculate
-		Math.random//NOTE!!! Math.random is platform dependent, meaning we need to create or use a platform independent method 
-		//discussed here http://bocoup.com/weblog/random-numbers/
+		Math.random
 		//some code here https://gist.github.com/Protonk/5367430
 		//Linear congruential generator
 		
@@ -49,8 +48,7 @@ ParameterClass.prototype.CreateDistribution= function (){
 		// To get approximately normally distributed random numbers, add 12 rands, minus 6, divide 
 		//
 		
-		// Possibly the best method will be to use the ziggurat algorithm
-		//https://github.com/jamesbloomer/node-ziggurat/blob/master/index.js
+		
 		
 		
 		

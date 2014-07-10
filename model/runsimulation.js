@@ -12,6 +12,8 @@ self.onmessage = function (e) {
 	var SimNumber = e.data.SimNumber;
     var SimData = e.data.SimData;
 	
+	e.data.SimData=24;
+	
 	IncrementSize=Math.round(SimData.NoPeople/100);//used to deliver progress rates back to the progress bar
 	
 	Year=2014.5;
