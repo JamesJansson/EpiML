@@ -75,7 +75,8 @@ self.onmessage = function (e) {
 	
 	//Copying into global storage
 	seconds1 = new Date().getTime() / 1000;
-	SimStorage[SimNumber].PP=PP;
+	document.SimStorage[SimNumber]={};
+	document.SimStorage[SimNumber].PP=PP;
 	seconds2 = new Date().getTime() / 1000;
 	TotalTime=seconds2 -seconds1;
 	console.log("Finished copying in "+TotalTime+" seconds");

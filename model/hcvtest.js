@@ -1,7 +1,7 @@
 
 var SimResult=[];
 var TotalSimsForMulticore;
-var SimStorage=[];
+var document.SimStorage=[];//create a global storage in document, that the workers should be able to access
 
 var WorkerMessageHandler = function (e) {
 	//console.log(e.data.result);
