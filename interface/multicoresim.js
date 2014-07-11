@@ -26,7 +26,7 @@
 //		self.postMessage({SimNumber: e.data.SimNumber, Result: Result});//All simulations should end with this line
 //}
 
-
+// To use transferable objects http://stackoverflow.com/questions/16071211/using-transferable-objects-from-a-web-worker/16766758#16766758 
 
 function MulticoreSim(ScriptName, CommonData, SimDataArray, NoCores){
 	
