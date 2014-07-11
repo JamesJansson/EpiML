@@ -15,8 +15,8 @@ TMCSSimulationObject=new MulticoreSim(ScriptToRun, 22, TMCSSimData, Cores);
 TMCSSimulationObject.Start();
 
 
-//Note: TMCSSimData[.].PP[.] is an object, but does not contain a prototype
-// TMCSSimData[.].PP[.].__proto__=PersonObject.prototype;
+//Note: TMCSSimData[a].PP[b] is an object, but does not contain a prototype
+// TMCSSimData[a].PP[b].__proto__=PersonObject.prototype;
 // this will also be useful in saving and reloading data
 
 return 0;
