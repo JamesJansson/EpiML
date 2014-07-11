@@ -34,11 +34,15 @@ self.onmessage = function (e) {
 	
 	var PP=[];
 	for (i=0; i<SimData.NoPeople; i++){
-		PP.push(new PersonObject(2, 1985.1));
+		PP.push(new PersonObject);
 		if (i%IncrementSize==0){
 			self.postMessage({ProgressBarValue: i/SimData.NoPeople});
 		}
 	}
+	
+	var seconds2 = new Date().getTime() / 1000;
+    TotalTime=seconds2 -seconds1;
+	console.log("Memory allocation stopped after "+TotalTime+" seconds");
 	
 	console.log("Starting to HCV progression");
 	
@@ -66,7 +70,7 @@ self.onmessage = function (e) {
 		self.postMessage({ProgressBarValue: (YearCount/(YearsToSimulate+1))});
 	}
 	
-	var seconds2 = new Date().getTime() / 1000;
+	seconds2 = new Date().getTime() / 1000;
     TotalTime=seconds2 -seconds1;
 
 	console.log("Finished simulation in "+TotalTime+" seconds");

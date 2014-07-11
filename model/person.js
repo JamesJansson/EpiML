@@ -1,5 +1,8 @@
-function  PersonObject(Sex, YearOfBirth)
+function  PersonObject//(Sex, YearOfBirth)
 {
+	YearOfBirth=1985;
+	Sex=1;
+	
 	this.Active=1;
 	this.Alive=1;
 	this.Sex=Sex;

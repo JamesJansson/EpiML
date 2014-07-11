@@ -39,7 +39,7 @@ function HCVTest(){
 
 	// Load information from form into population
 	var SimData={};
-	SimData.NoPeople=1000000;
+	SimData.NoPeople=100000;
 	// Set progress bar to zero
 	MainProgress.value=0;
 
