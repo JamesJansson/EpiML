@@ -72,7 +72,13 @@ self.onmessage = function (e) {
 	console.log("Finished simulation in "+TotalTime+" seconds");
 	var SimResult={};
 	SimResult.HCVTestResult=FibrosisMatrix;
-	SimResult.PP=PP;
+	
+	//Copying into global storage
+	seconds1 = new Date().getTime() / 1000;
+	SimStorage[SimNumber].PP=PP;
+	seconds2 = new Date().getTime() / 1000;
+	TotalTime=seconds2 -seconds1;
+	console.log("Finished copying in "+TotalTime+" seconds");
 	
 	self.postMessage({SimNumber: e.data.SimNumber, Result: SimResult});//All simulation will end with this line
 };

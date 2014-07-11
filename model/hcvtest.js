@@ -1,7 +1,7 @@
 
 var SimResult=[];
 var TotalSimsForMulticore;
-
+var SimStorage=[];
 
 var WorkerMessageHandler = function (e) {
 	//console.log(e.data.result);
