@@ -69,7 +69,7 @@ MulticoreSim.prototype.Start=function() {
 	
 	// Set progress bar to zero
 	if (this.UseSimProgressBar==true){
-		document.getElementById(this.NoSimsCompleteProgressBarID).value=0;
+		document.getElementById(this.SimProgressBarID).value=0;
 	}
 	
 	//Create workers	
@@ -120,7 +120,7 @@ MulticoreSimMessageHandler=function(e) {
 	}
 	// Messages to the ProgressBar
 	if (typeof e.data.ProgressBarValue != 'undefined'){
-		if (this.UseSimProgressBar==true){
+		if (this.UseWithinSimProgressBar==true){
 			document.getElementById(this.WithinSimProgressBarID).value=e.data.ProgressBarValue;
 		}
 	}
@@ -134,7 +134,7 @@ MulticoreSimMessageHandler=function(e) {
 		
 		//Update the progress bar about completion
 		if (this.UseSimProgressBar==true){
-			document.getElementById(this.NoSimsCompleteProgressBarID).value=this.SimsComplete/this.NoSims;
+			document.getElementById(this.SimProgressBarID).value=this.SimsComplete/this.NoSims;
 		}
 	}
 };

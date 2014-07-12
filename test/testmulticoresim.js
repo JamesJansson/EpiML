@@ -13,6 +13,8 @@ for (i=0; i<NumberOfSimsToRun; i++){
 }
 
 TMCSSimulationObject=new MulticoreSim(ScriptToRun, 22, TMCSSimData, NoCores); 
+TMCSSimulationObject.UseSimProgressBar=true;
+TMCSSimulationObject.SimProgressBarID="MainProgress";
 TMCSSimulationObject.Start();
 
 
