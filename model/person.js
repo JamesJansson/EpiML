@@ -10,6 +10,9 @@ function  PersonObject()//(Sex, YearOfBirth)
 	this.YearOfDeath=3E9;
 	this.HCV = new HCVObject(YearOfBirth);
 	
+	//this.HIV
+	//this.QALY
+	
 	//Simulate general mortality
 
 }

@@ -140,7 +140,9 @@ MulticoreSimMessageHandler=function(e) {
 };
 
 MulticoreSim.prototype.Terminate=function() {//close down all workers
-	this.Worker.terminate();
+	for (SimID=0; SimID<this.NoSims; SimID++){
+		this.Worker[SimID].terminate();
+	}	
 	this.CurrentlyRunning==false;
 };
 
