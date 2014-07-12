@@ -26,7 +26,9 @@
 //		self.postMessage({SimNumber: e.data.SimNumber, Result: Result});//All simulations should end with this line
 //}
 
-// To use transferable objects http://stackoverflow.com/questions/16071211/using-transferable-objects-from-a-web-worker/16766758#16766758 
+// To use transferable objects 
+// http://stackoverflow.com/questions/16071211/using-transferable-objects-from-a-web-worker/16766758#16766758 
+// http://updates.html5rocks.com/2011/12/Transferable-Objects-Lightning-Fast 
 
 function MulticoreSim(ScriptName, CommonData, SimDataArray, NoCores){
 	
