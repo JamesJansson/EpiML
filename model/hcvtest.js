@@ -57,7 +57,7 @@ function HCVTest(){
         // Sending canvas data to the worker using a copy memory operation
         worker.postMessage({ SimNumber: SimNumber, SimData: SimData });
     }
-	//worker.terminate();
+	worker.terminate();//clean up memory
 }
 
 function HCVTestPlot(){
