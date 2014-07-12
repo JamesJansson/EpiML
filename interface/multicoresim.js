@@ -84,12 +84,14 @@ MulticoreSim.prototype.RampUpSims=function() {
 			SimID=this.SimsStarted++;//run this sim, increment by 1
 			this.NoSimsCurrentlyRunning++;//indicate that another core has become used
 			
-			this.Worker= new Worker(this.ScriptName);
+			this.Worker[SimID]= new Worker(this.ScriptName);
 			
 			var BoundMessage=MulticoreSimMessageHandler.bind(this);
-			this.Worker.onmessage = BoundMessage;
+			this.Worker[SimID].onmessage = BoundMessage;
 			
-			this.Worker.postMessage({ SimNumber: SimID, CommonData: this.CommonData, SimData: this.SimDataArray[SimID]});
+			
+			//Post message will soon become a handler for many commands, including starting the simulation, optimising the simulation, and requesting data
+			this.Worker[SimID].postMessage({ SimNumber: SimID, CommonData: this.CommonData, SimData: this.SimDataArray[SimID]});
 		}
 		else{ //there are no more sims to run
 			MoreSimsToRun=false;
@@ -100,16 +102,17 @@ MulticoreSim.prototype.RampUpSims=function() {
 	//Determine if this is the last sim to complete
 	if (this.SimsComplete>=this.NoSims){
 		this.Complete=true;
-		this.Terminate();//close all the workers
+		//this.Terminate();//close all the workers
 	}
 }
 
 
 MulticoreSimMessageHandler=function(e) {
-	// There are 3 main message types that are handled
+	// There are 4 main message types that are handled
 	// Messages to the StatusText (to be put somewhere on screen to indicate what is currently occurring)
 	// Messages to the ProgressBar
 	// Message to return result/indicate completeness
+	// Receiving data from the Sim after a data request
 	
 	// Messages to the StatusText
 	if (typeof e.data.StatusText != 'undefined'){

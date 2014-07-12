@@ -3,15 +3,16 @@ var TMCSSimData;
 
 function TestMulticoreSim(){
 
+NumberOfSimsToRun=10;
+
 ScriptToRun='model/runsimulation.js';
 TMCSSimData=[];
-for (i=0; i<10; i++){
+for (i=0; i<NumberOfSimsToRun; i++){
 	TMCSSimData[i]={};
-	TMCSSimData[i].NoPeople=100000;
-	TMCSSimData[i].Person=new PersonObject(3, 1989);
+	TMCSSimData[i].NoPeople=30000;
 }
-Cores=3;
-TMCSSimulationObject=new MulticoreSim(ScriptToRun, 22, TMCSSimData, Cores); 
+
+TMCSSimulationObject=new MulticoreSim(ScriptToRun, 22, TMCSSimData, NoCores); 
 TMCSSimulationObject.Start();
 
 

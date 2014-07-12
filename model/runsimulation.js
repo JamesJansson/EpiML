@@ -4,8 +4,8 @@ importScripts("simulationtools.js");
 importScripts("person.js");
 importScripts("hcv.js");
 
-
-
+var Param={};
+var PP=[];
 self.onmessage = function (e) {
     var seconds1 = new Date().getTime() / 1000;
 	
@@ -32,7 +32,7 @@ self.onmessage = function (e) {
 
 	console.log("Starting to load Person object");
 	
-	var PP=[];
+	
 	for (i=0; i<SimData.NoPeople; i++){
 		PP.push(new PersonObject);
 		if (i%IncrementSize==0){
