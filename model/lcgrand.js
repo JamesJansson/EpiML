@@ -39,3 +39,6 @@ var lcg = (function() {
     }
   };
 }());
+
+
+lcg.setSeed();//Here we set a standard seed, just in case we forget to in the code

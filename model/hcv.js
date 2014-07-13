@@ -23,15 +23,15 @@ function  HCVObject(YearOfBirth)
 	
 	
 	//Initialise history variables
-	this.Infected.Set(0, YearOfBirth);//note: to set an infection from birth, call HCV.Infection(YearOfBirth,...
+	this.Infected.Set(0, YearOfBirth);
 	this.Fibrosis.Set(0, YearOfBirth);
 	this.HCC.Set(0, YearOfBirth);
-	this.Genotype[0].Set(0, YearOfBirth);
-	this.Genotype[1].Set(0, YearOfBirth);
-	this.Genotype[2].Set(0, YearOfBirth);
-	this.Genotype[3].Set(0, YearOfBirth);
-	this.Genotype[4].Set(0, YearOfBirth);
-	this.Genotype[5].Set(0, YearOfBirth);
+	//this.Genotype[0].Set(0, YearOfBirth);
+	//this.Genotype[1].Set(0, YearOfBirth);
+	//this.Genotype[2].Set(0, YearOfBirth);
+	//this.Genotype[3].Set(0, YearOfBirth);
+	//this.Genotype[4].Set(0, YearOfBirth);
+	//this.Genotype[5].Set(0, YearOfBirth);
 	
 }
 
@@ -47,6 +47,9 @@ HCVObject.prototype.Infection= function (Year, GenotypeValue, Age, Sex, Alcohol,
 	this.GenotypeState[GenotypeValue]=1;
 	this.Genotype[GenotypeValue].Set(1, Year);
 	
+	
+	
+	//Pre-Calculate fibrosis
 	if (this.InfectedState==0){//if not already infected (don't want to start fibrosis from f1)
 		//State variables
 		this.InfectedState=1;
@@ -57,8 +60,8 @@ HCVObject.prototype.Infection= function (Year, GenotypeValue, Age, Sex, Alcohol,
 		this.AntiBodiesYear=Year;
 		
 		//Determine if spontaneous clearance occurs
-		if (HCVParam.SpontaneousClearance>Math.random()){
-			Math.random
+		if (HCVParam.SpontaneousClearance>lcg.rand()){
+			lcg.rand();
 		}
 		
 		
@@ -91,7 +94,12 @@ HCVObject.prototype.Infection= function (Year, GenotypeValue, Age, Sex, Alcohol,
 // determine time until fibrosis recovery
 
 
-
+HCVObject.prototype.FirstInfected= function (Year){//returns a 
+	if (typeof this.Infected=="undefined"){
+		return NaN;
+	}
+	return this.Infected.Time[0];
+};
 
 
 HCVObject.prototype.CurrentlyInfected= function (Year){

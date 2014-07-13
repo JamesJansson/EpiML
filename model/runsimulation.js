@@ -3,11 +3,16 @@ importScripts("simulation.js");
 importScripts("simulationtools.js");
 importScripts("person.js");
 importScripts("hcv.js");
+importScripts("lcgrand.js");
+
+
 
 var Param={};
 var PP=[];
 self.onmessage = function (e) {
-    var seconds1 = new Date().getTime() / 1000;
+    lcg.setSeed();//note that this is an extremely important step to allow random numbers to be generated
+	
+	var seconds1 = new Date().getTime() / 1000;
 	
 	var SimNumber = e.data.SimNumber;
     var SimData = e.data.SimData;//creates a pointer
@@ -16,6 +21,7 @@ self.onmessage = function (e) {
 	
 	Year=2014.5;
 	GenotypeValue=0;
+	YearOfBirth=1985.1;
 	Age=29;
 	Sex=1;
 	Alcohol=0;
@@ -34,7 +40,7 @@ self.onmessage = function (e) {
 	
 	
 	for (i=0; i<SimData.NoPeople; i++){
-		PP.push(new PersonObject);
+		PP[i]=new PersonObject(YearOfBirth, Sex);
 		if (i%IncrementSize==0){
 			self.postMessage({ProgressBarValue: i/SimData.NoPeople});
 		}
