@@ -10,6 +10,16 @@ importScripts("lcgrand.js");
 var Param={};
 var PP=[];
 self.onmessage = function (e) {
+	//In this section will be a message handler that allows calls
+	// Initialise (set data and parameters)
+	// Optimise (find unknown parameters)
+	// Initialise with optimised data
+	// Extrapolate (with current settings)
+	// Intervention (with changed settings)
+	// Get data
+	// Save
+
+
     lcg.setSeed();//note that this is an extremely important step to allow random numbers to be generated
 	
 	var seconds1 = new Date().getTime() / 1000;
