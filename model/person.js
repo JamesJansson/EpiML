@@ -19,7 +19,7 @@ function  PersonObject(YearOfBirth, Sex)
 	
 	
 	
-	this.HCV = new HCVObject(YearOfBirth);//may need to declare this in function
+	this.HCV = new HCVObject(YearOfBirth);//may need to declare this in function to reduce the size of the memory footprint
 	
 	//this.HIV = new HCVObject();
 	this.HIV={};
