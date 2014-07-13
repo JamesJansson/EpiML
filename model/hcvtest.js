@@ -51,7 +51,7 @@ function HCVTest(){
         var worker = new Worker("model/runsimulation.js");
         worker.onmessage = WorkerMessageHandler;
 		
-		
+		console.log("Running a simulation");
 		
 		
         // Sending canvas data to the worker using a copy memory operation
