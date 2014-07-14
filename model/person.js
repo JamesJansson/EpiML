@@ -13,7 +13,8 @@ function  PersonObject(YearOfBirth, Sex)
 	this.HCVDeath=3E9;
 	this.HIVDeath=3E9;
 	//Location
-	this.location=new EventVector;
+	this.Location=new EventVector;
+	this.Location.Set(1, YearOfBirth);
 	//Alcohol
 	this.Alcohol=3E9;//Date of alcoholism (increases linearly with time, probability 
 	

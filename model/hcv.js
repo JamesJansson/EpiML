@@ -1,5 +1,7 @@
 function  HCVObject(YearOfBirth)
 {
+	//this.Active={};//indicates whether the HCV module is active or not 
+	
 	//State variables
 	this.InfectedState=0;
 	this.AntiBodyState=0;
