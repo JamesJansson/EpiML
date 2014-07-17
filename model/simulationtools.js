@@ -23,7 +23,18 @@ function ZeroMatrix(xsize, ysize){
 }
 
 
-
+function MultiplyArr(Array1, Array2){
+	if (Array1.length!=Array2.length){
+		error("Arrays are incorrect length");
+	}
+	ArrayResult=new Array(Array1.length);
+	
+	for (i=0; i<Array1.length;i++){
+		ArrayResult[i]=Array1[i]*Array2[i];
+	}
+	
+	return ArrayResult;
+}
 
 
 

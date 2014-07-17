@@ -45,6 +45,7 @@ PersonObject.prototype.Age= function (Year){//using prototyping for speed
 
 function Mortality(DateOfBirth, Year, Sex){
 	//Linear or proportion change in mortality
+	
 	//Read in year 1
 	//Read in year 2
 	//Determine per year percentage change
@@ -67,3 +68,5 @@ function Mortality(DateOfBirth, Year, Sex){
 	// Disease stage probability of testing
 	// 
 }
+
+
