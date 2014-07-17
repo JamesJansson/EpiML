@@ -51,5 +51,19 @@ function Mortality(DateOfBirth, Year, Sex){
 	//Determine mortality rate for all years under consideration
 
 	//Save into matrix Probability[Year][Age]
-	//
+	//IndexYearRef=
+	//MaxYearRef=sizeofthematrix
+	
+	
+	//.Date(DateOfBirth, Year)
+	// Work out year
+	// YearRef=Year-IndexYearRef;
+	// if (YearRef<0){YearRef=0;}
+	// perform a cumulative mortality calculation
+	// RandVal=Rand()
+	// for 
+	
+	
+	// Disease stage probability of testing
+	// 
 }
