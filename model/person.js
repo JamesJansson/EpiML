@@ -1,4 +1,4 @@
-function  PersonObject(YearOfBirth, Sex)
+function  PersonObject(YearOfBirth, Sex)//, YearOfObservation Param)
 {
 	//Active
 	this.Active=0;
@@ -35,9 +35,21 @@ function  PersonObject(YearOfBirth, Sex)
 	//this.QALY(this.HCV, this.IDU, this.HIV, this.Age)//
 	
 	//Simulate general mortality
-
+	
+	
 }
 
 PersonObject.prototype.Age= function (Year){//using prototyping for speed
 	return Year-this.YearOfBirth;
 };
+
+function Mortality(DateOfBirth, Year, Sex){
+	//Linear or proportion change in mortality
+	//Read in year 1
+	//Read in year 2
+	//Determine per year percentage change
+	//Determine mortality rate for all years under consideration
+
+	//Save into matrix Probability[Year][Age]
+	//
+}
