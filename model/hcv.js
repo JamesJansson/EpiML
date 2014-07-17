@@ -35,6 +35,11 @@ function  HCVObject(YearOfBirth)
 	//this.Genotype[4].Set(0, YearOfBirth);
 	//this.Genotype[5].Set(0, YearOfBirth);
 	
+	//Cascade of care
+    this.Assessment=new EventVector;//
+    this.Fibroscan=new EventVector;
+	this.Biopsy=new EventVector;
+	this.Treatment=new EventVector;
 }
 
 HCVObject.prototype.Age= function (Year){//using prototyping for speed

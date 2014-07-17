@@ -7,11 +7,11 @@ function  PersonObject(YearOfBirth, Sex)
 	//Alive
 	this.Alive=1;
 	this.Birth=0;
-	this.Death=3E9;
-	this.GeneralDeath=3E9;
-	this.IDUDeath=3E9;
-	this.HCVDeath=3E9;
-	this.HIVDeath=3E9;
+	this.Death=NaN;
+	this.GeneralDeath=NaN;
+	this.IDUDeath=NaN;
+	this.HCVDeath=NaN;
+	this.HIVDeath=NaN;
 	//Location
 	this.Location=new EventVector;
 	this.Location.Set(1, YearOfBirth);
