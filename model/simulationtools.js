@@ -22,8 +22,31 @@ function ZeroMatrix(xsize, ysize){
 	return ReturnMatrix;
 }
 
+function AddArrays(Array1, Array2){
+	if (Array1.length!=Array2.length){
+		error("Arrays are incorrect length");
+	}
+	ArrayResult=new Array(Array1.length);
+	
+	for (i=0; i<Array1.length;i++){
+		ArrayResult[i]=Array1[i]+Array2[i];
+	}
+	return ArrayResult;
+}
 
-function MultiplyArr(Array1, Array2){
+function MinusArrays(Array1, Array2){
+	if (Array1.length!=Array2.length){
+		error("Arrays are incorrect length");
+	}
+	ArrayResult=new Array(Array1.length);
+	
+	for (i=0; i<Array1.length;i++){
+		ArrayResult[i]=Array1[i]-Array2[i];
+	}
+	return ArrayResult;
+}
+
+function MultiplyArrays(Array1, Array2){
 	if (Array1.length!=Array2.length){
 		error("Arrays are incorrect length");
 	}
@@ -32,7 +55,18 @@ function MultiplyArr(Array1, Array2){
 	for (i=0; i<Array1.length;i++){
 		ArrayResult[i]=Array1[i]*Array2[i];
 	}
+	return ArrayResult;
+}
+
+function DivideArrays(Array1, Array2){
+	if (Array1.length!=Array2.length){
+		error("Arrays are incorrect length");
+	}
+	ArrayResult=new Array(Array1.length);
 	
+	for (i=0; i<Array1.length;i++){
+		ArrayResult[i]=Array1[i]/Array2[i];
+	}
 	return ArrayResult;
 }
 
