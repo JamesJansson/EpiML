@@ -23,7 +23,6 @@ function  HCVObject(YearOfBirth)
 	this.Genotype[4]=new EventVector;
 	this.Genotype[5]=new EventVector;
 	
-	
 	//Initialise history variables
 	this.Infected.Set(0, YearOfBirth);
 	this.Fibrosis.Set(0, YearOfBirth);
@@ -41,6 +40,8 @@ function  HCVObject(YearOfBirth)
 	this.Biopsy=new EventVector;
 	this.UltraSound=new EventVector;
 	this.Treatment=new EventVector;
+	
+	this.HIVCoinfectionTreatment=0;
 }
 
 HCVObject.prototype.Age= function (Year){//using prototyping for speed

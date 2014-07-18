@@ -49,7 +49,9 @@ PersonObject.prototype.YearsOfLifeLost= function (){//using prototyping for spee
 	return this.GeneralDeath-Math.min(this.GeneralDeath, this.IDUDeath, this.HCVDeath, this.HIVDeath);
 };
 
-
+// Text output of the individual
+// 0: born
+// 
 
 function Mortality(DateOfBirth, Year, Sex){
 	//Linear or proportion change in mortality
