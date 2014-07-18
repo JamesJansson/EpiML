@@ -39,6 +39,7 @@ function  HCVObject(YearOfBirth)
     this.Assessment=new EventVector;//
     this.Fibroscan=new EventVector;
 	this.Biopsy=new EventVector;
+	this.UltraSound=new EventVector;
 	this.Treatment=new EventVector;
 }
 

@@ -43,6 +43,14 @@ PersonObject.prototype.Age= function (Year){//using prototyping for speed
 	return Year-this.YearOfBirth;
 };
 
+PersonObject.prototype.YearsOfLifeLost= function (){//using prototyping for speed
+	// This is a general function that describes the difference between general death date and 
+	// the earliest described death date.
+	return this.GeneralDeath-min(this.GeneralDeath, this.IDUDeath, this.HCVDeath, this.HIVDeath);
+};
+
+
+
 function Mortality(DateOfBirth, Year, Sex){
 	//Linear or proportion change in mortality
 	
