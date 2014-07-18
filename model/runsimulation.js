@@ -3,6 +3,7 @@ importScripts("simulation.js");
 importScripts("simulationtools.js");
 importScripts("person.js");
 importScripts("hcv.js");
+importScripts("hiv.js");
 importScripts("lcgrand.js");
 
 

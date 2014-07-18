@@ -22,11 +22,7 @@ function  PersonObject(YearOfBirth, Sex)//, YearOfObservation Param)
 	
 	this.HCV = new HCVObject(YearOfBirth);//may need to declare this in function to reduce the size of the memory footprint
 	
-	//this.HIV = new HCVObject();
-	this.HIV={};
-	this.HIV.Infected=false;
-	this.HIV.Time=0;
-	this.HIV.Treatment=false;
+	this.HIV = new HIVObject();
 	//this.IDU
 	this.IDU={};
 	
