@@ -1,4 +1,4 @@
-function ParameterClass(ParameterID, CategoryID, 
+function ParameterClass(ParameterID, CategoryID){
 
 this.ParameterID=ParameterID;
 this.CategoryID=CategoryID;
@@ -17,8 +17,12 @@ this.Upper95Range=
 this.Lower95Range=
 
 this.NumberOfSamples
-this.val=[];
+this.Val=[];//
 
+//These variables are used to describe what the variables are and where they are from 
+this.Description=[];//
+this.Ref=[];//An array of URLs that describe 
+}
 
 ParameterClass.prototype.CalculateUncertaintyBounds= function (){
 	if (this.distributionType=="normal"){
