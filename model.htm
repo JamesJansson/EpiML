@@ -89,22 +89,37 @@
 	
 	<div id="HCVContent" class="Content">
 		<h1>HCV</h1>
-		<div class="ParamContainer" id="F0F1"> 
+		<p>Fibrosis Progression</p>
+		<form class="ParamContainer" id="F0F1"> 
 			F0 to F1
 			<select name="DistributionType" onchange=";">
 				<option value="Normal">Normal</option>
 				<option value="LogNormal">Log Normal</option>
+				<option value="NormalProbability">Normal Probability</option>
 			</select>
 			Median <input type="text" name="Median"> 
 			SD <input type="text" name="SD"> 
 			<a onClick="ToggleDisplay(this, 'ParamInfoBox');">+ More info</a>
-			<div class="ParamInfoBox"> Some info to display </div>
-		</div>
+			<div class="ParamInfoBox" style="display: none;"> Some info to display </div>
+		</form>
+		
+		<form class="ParamContainer" id="F1F2"> 
+			F1 to F2
+			<select name="DistributionType" onchange=";">
+				<option value="Normal">Normal</option>
+				<option value="LogNormal">Log Normal</option>
+				<option value="NormalProbability">Normal Probability</option>
+			</select>
+			Median <input type="text" name="Median"> 
+			SD <input type="text" name="SD"> 
+			<a onClick="ToggleDisplay(this, 'ParamInfoBox');">+ More info</a>
+			<div class="ParamInfoBox" style="display: none;"> Some info to display </div>
+		</form>
 		
 		
 		
 		<div class="SolidButton" onClick="ToggleDisplay(this, 'HCVPlotArea');">Show plot</div>
-		<div class="HCVPlotArea" style="position:relative;">
+		<div class="HCVPlotArea" style="position:relative; display: none;">
 			<div id="HCVTestSimButton" 	class="SolidButton" onClick="HCVTest();"> Run simulation </div>
 			<div id="HCVTestPlotButton" class="SolidButton" onClick="HCVTestPlot();"> Plot result </div>
 			<div id="HCVResultsSection"  style="float:left; position:absolute; left:200px; top: 0px;">
