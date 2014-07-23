@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<title>EpiML - HCV model</title>
 <!-- Loading interface CSS -->
 <link rel="stylesheet" type="text/css" href="css/button.css">
 <link rel="stylesheet" type="text/css" href="css/menu.css">
@@ -8,10 +9,7 @@
 <link rel="stylesheet" type="text/css" href="css/plot.css">
 
 <!-- Loading interface javascript -->
-<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css">
-<script src="http://code.jquery.com/jquery-1.10.2.js"></script>
-<script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
-<script type="text/javascript" src="interface/mainscreen.js"></script>
+<script type="text/javascript" src="interface/paramdisplay.js"></script>
 <script type="text/javascript" src="interface/initialise.js"></script>
 <script type="text/javascript" src="interface/jquery.js"></script>
 <script type="text/javascript" src="interface/jquery.flot.js"></script>
@@ -42,13 +40,7 @@
 
 
 <script>
-document.getElementById("HomeContent").style.display="none";
-$(document).ready(
-	function(){
-	$("#HomeMenuItem").click(function(){
-    $("#HomeContent").slideDown("slow");
-	});
-});
+
 
 </script>
 </head>
@@ -83,21 +75,19 @@ $(document).ready(
 	</div>
 
 	<div id="ParameterContent" class="Content">
-		
-		
-	</div>
-	
-	<div id="HCVContent" class="Content">
-		<h1>HCV</h1>
 		<div class="ParamContainer" id="F0F1"> 
-			Name: Dropdown: Median: SD: 95CI : info <div id="morebutton" onClick="console.log(this.parentNode.childNodes);">More info</div>
-			<div id="infobox"> Some info to display </div>
+			Name: Dropdown: Median: SD: 95CI : info <div id="morebutton" onClick="ToggleDisplay(this, 'infobox');">More info</div>
+			<div class="infobox"> Some info to display </div>
 		</div>
 		<div class="ParamContainer" id="F1F2"> 
 			Name: Dropdown: Median: SD: 95CI : info
 			
 		</div>
 		
+	</div>
+	
+	<div id="HCVContent" class="Content">
+		<h1>HCV</h1>
 		
 		<div style="top:40px;">
 			<div id="HCVTestSimButton" 	class="SolidButton" onClick="HCVTest();"> Run simulation </div>
