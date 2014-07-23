@@ -6,6 +6,7 @@
 <link rel="stylesheet" type="text/css" href="css/button.css">
 <link rel="stylesheet" type="text/css" href="css/menu.css">
 <link rel="stylesheet" type="text/css" href="css/mainarea.css">
+<link rel="stylesheet" type="text/css" href="css/parameter.css">
 <link rel="stylesheet" type="text/css" href="css/plot.css">
 
 <!-- Loading interface javascript -->
@@ -88,16 +89,31 @@
 	
 	<div id="HCVContent" class="Content">
 		<h1>HCV</h1>
+		<div class="ParamContainer" id="F0F1"> 
+			F0 to F1
+			<select name="DistributionType" onchange=";">
+				<option value="Normal">Normal</option>
+				<option value="LogNormal">Log Normal</option>
+			</select>
+			Median <input type="text" name="Median"> 
+			SD <input type="text" name="SD"> 
+			<a onClick="ToggleDisplay(this, 'ParamInfoBox');">+ More info</a>
+			<div class="ParamInfoBox"> Some info to display </div>
+		</div>
 		
-		<div style="top:40px;">
+		
+		
+		<div class="SolidButton" onClick="ToggleDisplay(this, 'HCVPlotArea');">Show plot</div>
+		<div class="HCVPlotArea" style="position:relative;">
 			<div id="HCVTestSimButton" 	class="SolidButton" onClick="HCVTest();"> Run simulation </div>
 			<div id="HCVTestPlotButton" class="SolidButton" onClick="HCVTestPlot();"> Plot result </div>
-		</div>
-		<div id="HCVResultsSection" style="position: absolute; top:40px;left:200px;">
-			<div class="plot-container">
-				<div id="HCVTestPlotHolder" class="plot-placeholder"></div>
-			</div>
+			<div id="HCVResultsSection"  style="float:left; position:absolute; left:200px; top: 0px;">
+			
+				<div class="plot-container">
+					<div id="HCVTestPlotHolder" class="plot-placeholder"></div>
+				</div>
 			<div id="HCVResultsTable"></div>
+			</div>
 		</div>
 	</div>
 	
