@@ -42,9 +42,15 @@
 
 
 <script>
+//This is testing for various code that will be used very soon
 var TestObject={"name":"binchen"};
 TestString=JSON.stringify(TestObject);
 NewTestObject=JSON.parse(TestString);
+
+//Testing the Papa.parse
+var ResultsHolder;
+Papa.parse("data/testdata.csv", {download: true, complete: function(results) {ResultsHolder=results;}});
+
 </script>
 </head>
 
