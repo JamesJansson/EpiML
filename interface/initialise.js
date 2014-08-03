@@ -9,12 +9,10 @@
 	
 // Setting up flags
 	var SimulationRunning=0;//set to 1 if running
+
+// Settings
 	var NoCores=1;
 
-
-
-
-// scripts 
-var Person = [];//create a global array to store all people
-
-
+	//LoadData();
+	//LoadSettings();
+	//LoadParameters();
