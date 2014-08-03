@@ -8,3 +8,10 @@ function ToggleDisplay(SectionRef, ClassToToggle){
 	}
 
 }
+
+
+//Update parameter display (used when loading the parameters from file or after optimisation)
+
+
+
+//Load parameter value into the Param holder for use in the simulation

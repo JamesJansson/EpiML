@@ -1,7 +1,8 @@
-function ParameterClass(ParameterID, CategoryID){
+function ParameterClass(CategoryID, ParameterID){
 
-this.ParameterID=ParameterID;
-this.CategoryID=CategoryID;
+this.CategoryID=CategoryID;//e.g. HCV
+this.ParameterID=ParameterID;// e.g. HCCProbability
+
 
 this.MedianEstimate=
 this.StandardError=
