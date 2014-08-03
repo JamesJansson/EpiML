@@ -2,16 +2,16 @@
 // The purpose of this file is to make it straight forward to open and extract information from CSV files. It is a wrapper for papaparse
 
 function CSVFile(FileName){//file name in this instance is the URL
-	var TempOpenCSVHolder;
-	this.Data=[];
-	//Papa.parse(FileName, {download: true, complete: function(PapaResults) {console.log("Finished");console.log(PapaResults); TempOpenCSVHolder=PapaResults.data;}});//download informs Papa that it is an external CSV (http request), and the function
-	Papa.parse(FileName, {download: true, complete: function(PapaResults)(this.RecieveData(PapaResults);) });//download informs Papa that it is an external CSV (http request), and the function
+	var TempOpenCSVHolder=this;
+
+
+	Papa.parse(FileName, {download: true, complete: function(PapaResults){TempOpenCSVHolder.Data=PapaResults;} });
+	//download informs Papa that it is an external CSV (http request), and the function is a handler to run when the file is ready
 	
 
-	this.results=TempOpenCSVHolder;
 }
 
-CSVFile.prototype.RecieveData= function (PapaResults){//using prototyping for speed
+CSVFile.prototype.GetValues= function (x1, y1, x2, y2){//using prototyping for speed
 	this.Something=1; 
 	console.log("Finished");
 	console.log(PapaResults); 
@@ -19,9 +19,4 @@ CSVFile.prototype.RecieveData= function (PapaResults){//using prototyping for sp
 };
 
 
-//function GetValues(String){
-	//convert text to  
-
-
-//};
 

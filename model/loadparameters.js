@@ -12,6 +12,7 @@ function LoadParameters(){
 function LoadData(){
 	
 	
+	
 	// Load the notifications
 	Data.HCV.Notifications.File="data/summarynotifications.csv";
 	
