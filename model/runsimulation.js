@@ -1,6 +1,7 @@
 ﻿//Specify files to be included in the simulation
 importScripts("simulation.js");
 importScripts("simulationtools.js");
+importScripts("mathtools.js");
 importScripts("person.js");
 importScripts("hcv.js");
 importScripts("hiv.js");

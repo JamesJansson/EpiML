@@ -24,6 +24,7 @@
 
 <!-- Loading methods that are used in the model -->
 <script type="text/javascript" src="model/simulationtools.js"></script>
+<script type="text/javascript" src="model/mathtools.js"></script>
 <script type="text/javascript" src="model/lcgrand.js"></script> <!-- random number generator to ensure platform independence -->
 
 <!-- Loading model javascript -->
@@ -127,7 +128,7 @@ Papa.parse("data/summarynotifications.csv", {download: true, complete: function(
 		<div class="HCVPlotArea" style="position:relative; display: none;">
 			<div id="HCVTestSimButton" 	class="SolidButton" onClick="HCVTest();"> Run simulation </div>
 			<div id="HCVTestPlotButton" class="SolidButton" onClick="HCVTestPlot();"> Plot result </div>
-			<div id="GeneralisedButtonForPlots" class="SolidButton" onClick="StackedLinePlot('#HCVTestPlotHolder', TimeAxis, SimResult[0].HCVTestResult, 'Number Of People', 'Time (years)');"> Plot result </div>
+			<div id="GeneralisedButtonForPlots" class="SolidButton" onClick="StackedLinePlot('#HCVTestPlotHolder', TimeAxis, SimResult[0].HCVTestResult, 'Time (years)','Number Of People');"> Plot result </div>
 			<div id="HCVResultsSection"  style="float:left; position:absolute; left:200px; top: 0px;">
 			
 				<div class="plot-container">
