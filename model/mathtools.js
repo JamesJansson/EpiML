@@ -1,4 +1,29 @@
 
+// Sort numerically
+function SortNumerically(SNInputVector){
+	// this function sorts the vector as given and returns the index of sorting
+	SNInputVector.sort(function(a, b) {return a - b;});
+		//var b = a.slice();
+
+}
+
+function ApplyIndex(AIInputVector, AIIndex){
+	if (AIInputVector.length!=AIIndex.length){
+		console.error("Arrays incorrect length");
+	}
+	//Back up the array
+	Temp= AIInputVector.slice();
+	//Apply the array
+	for (i=0; i<AIInputVector.length; i++){
+		if (AIIndex[i]>=AIInputVector.length){
+			console.error("Index exceeds size of array.");
+		}
+		AIInputVector[i]=Temp[AIIndex[i]];
+	}
+}
+
+
+
 //Create an array of values
 function AscendingArray(StartValue, EndValue, IncrementBy){
     ReturnArray=[];

@@ -35,7 +35,7 @@ function DetermineDistributionPlotPosition(Value.X, MinDistance){
 				for each element of the xcoord
 			// if the distance is shortest 
 				// set the shortest distance to this distance
-				//stor
+				//store
 
 		}
 		Level++;
