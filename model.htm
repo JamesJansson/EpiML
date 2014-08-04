@@ -127,7 +127,7 @@ Papa.parse("data/summarynotifications.csv", {download: true, complete: function(
 		<div class="HCVPlotArea" style="position:relative; display: none;">
 			<div id="HCVTestSimButton" 	class="SolidButton" onClick="HCVTest();"> Run simulation </div>
 			<div id="HCVTestPlotButton" class="SolidButton" onClick="HCVTestPlot();"> Plot result </div>
-			<div id="GeneralisedButtonForPlots" class="SolidButton" onClick="StackedPlot('#HCVTestPlotHolder', TimeAxis, SimResult[0].HCVTestResult, 'Number Of People', 'Time (years)');"> Plot result </div>
+			<div id="GeneralisedButtonForPlots" class="SolidButton" onClick="StackedLinePlot('#HCVTestPlotHolder', TimeAxis, SimResult[0].HCVTestResult, 'Number Of People', 'Time (years)');"> Plot result </div>
 			<div id="HCVResultsSection"  style="float:left; position:absolute; left:200px; top: 0px;">
 			
 				<div class="plot-container">
@@ -141,8 +141,10 @@ Papa.parse("data/summarynotifications.csv", {download: true, complete: function(
 	<div id="DataContent" class="Content">
 		<h1>Data</h1>
 		<div class="SolidButton" onClick="SummaryNotificationsCSV=new CSVFile('data/summarynotifications.csv');">Load Notification Data</div>
-		<div class="SolidButton" onClick="SummaryNotificationsTable=SummaryNotificationsCSV.GetValues(1, 2, 5, 12); TimeAxis=[];for(i=0; i<5; i++){TimeAxis[i]=2008+i;}">Extract data</div>
-		<div class="SolidButton" onClick="StackedPlot('#NotificationPlotHolder', TimeAxis, SummaryNotificationsTable,  'Year','Number of notifications');">Plot</div>
+		<div class="SolidButton" onClick="SummaryNotificationsTable=SummaryNotificationsCSV.GetValues(1, 2, 5, 10); TimeAxis=[];for(i=0; i<5; i++){TimeAxis[i]=2008+i;}">Extract data</div>
+		<div class="SolidButton" onClick="StackedLinePlot('#NotificationPlotHolder', TimeAxis, SummaryNotificationsTable,  'Year','Number of notifications');">Line Plot</div>
+		<div class="SolidButton" onClick="StackedBarPlot('#NotificationPlotHolder', TimeAxis, SummaryNotificationsTable,  'Year','Number of notifications');">Bar Plot</div>
+		
 		
 		<div style="float:left; position:absolute; left:200px; top: 0px;">
 			<div class="plot-container">
