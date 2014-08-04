@@ -40,7 +40,7 @@
 <script type="text/javascript" src="interface/tablemaker.js"></script>
 
 
-<!-- Loading testing functions (to be deleted quickly) -->
+<!-- Loading testing functions (to be deleted) -->
 <script type="text/javascript" src="test/testmulticoresim.js"></script>
 
 
@@ -74,7 +74,7 @@ Papa.parse("data/summarynotifications.csv", {download: true, complete: function(
 <li><level1 id="PlotsMenuItem" 		onclick="ShowMenu(PlotsContent);"		>Plots</level1></li>
 <li><level1 id="SettingssMenuItem" 	onclick="ShowMenu(SettingsContent);"	>Settings</level1></li>
 <li><level1 id="OtherMenuItem" 		onclick="ShowMenu(OtherContent);"		>Other</level1></li>
-
+<li><level1 id="HelpMenuItem" 		onclick="ShowMenu(HelpContent);"		>Help</level1></li>
 
 </ul>
 </div>
@@ -183,6 +183,11 @@ Papa.parse("data/summarynotifications.csv", {download: true, complete: function(
 		<div id="HCVTestSimButton" 	class="SolidButton" onClick="TestMulticoreSim()"> Run simulation </div>
 	</div>
 
+	<div id="HelpContent" class="Content">
+		<h1>Help</h1>
+		<p>This system can be used either through the internet or locally. To get this to work locally on your browser, you need to install a local http server. One suggestion is <a href="https://code.google.com/p/mongoose/">Mongoose</a>. A list of executable files can be found <a href="https://code.google.com/p/mongoose/downloads/list?can=4&q=windows">here</a>.</p>
+		
+	</div>
 
 
 </div>
