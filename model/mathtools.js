@@ -101,3 +101,31 @@ function DivideArrays(Array1, Array2){
 
 // Normal distribution function
 // Note that in order to work, this function requires the random number generator lcgrand.js
+function NormalRand(Mean, SD){
+	// Create the distribution around zero
+	// Using the Box-Muller transform
+	Z=Math.sqrt(-2*Math.log(lcg.rand()))*Math.cos(2*Math.PI*lcg.rand());
+	// Using central limit theorem
+	//Z=lcg.rand()+lcg.rand()+lcg.rand()+lcg.rand()+lcg.rand()+lcg.rand()+lcg.rand()+lcg.rand()+lcg.rand()+lcg.rand()+lcg.rand()+lcg.rand()-6;
+	//Z=Math.random()+Math.random()+Math.random()+Math.random()+Math.random()+Math.random()+Math.random()+Math.random()+Math.random()+Math.random()+Math.random()+Math.random()-6;
+	// Increase the deviation to the standard deviation specified amount, adjust such that the distribution is centred about the mean
+	Z=Mean+Z*SD;
+	return Z;
+}
+
+function NormalRandArray(Mean, SD, Num){
+	// Create the distribution around zero
+	// Using the Box-Muller transform
+	var Z=[];
+	for (var i=0; i<Num; i++){
+		Z[i]=Math.sqrt(-2*Math.log(lcg.rand()))*Math.cos(2*Math.PI*lcg.rand());
+		// Using central limit theorem
+		//Z[i]=lcg.rand()+lcg.rand()+lcg.rand()+lcg.rand()+lcg.rand()+lcg.rand()+lcg.rand()+lcg.rand()+lcg.rand()+lcg.rand()+lcg.rand()+lcg.rand()-6;
+		//Z[i]=Math.random()+Math.random()+Math.random()+Math.random()+Math.random()+Math.random()+Math.random()+Math.random()+Math.random()+Math.random()+Math.random()+Math.random()-6;
+		// Increase the deviation to the standard deviation specified amount, adjust such that the distribution is centred about the mean
+		Z[i]=Mean+Z[i]*SD;
+	}
+	return Z;
+}
+
+
