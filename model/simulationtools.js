@@ -1,6 +1,7 @@
 // General mathematical functions that are used during simulations
-function TimeUntilEvent(Probability)
-{
+
+// Determines the time between now and an event which occurs on a probabilistic basis
+function TimeUntilEvent(Probability){
 	// r=annual probability
 	// p=random number between 0 and 1
 	// p=r^t

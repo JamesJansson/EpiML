@@ -116,6 +116,7 @@ function NormalRand(Mean, SD){
 function NormalRandArray(Mean, SD, Num){
 	// Create the distribution around zero
 	// Using the Box-Muller transform
+	//StartTime = new Date().getTime();
 	var Z=[];
 	for (var i=0; i<Num; i++){
 		Z[i]=Math.sqrt(-2*Math.log(lcg.rand()))*Math.cos(2*Math.PI*lcg.rand());
@@ -125,7 +126,39 @@ function NormalRandArray(Mean, SD, Num){
 		// Increase the deviation to the standard deviation specified amount, adjust such that the distribution is centred about the mean
 		Z[i]=Mean+Z[i]*SD;
 	}
+	//StopTime = new Date().getTime();
+	//console.log(StopTime-StartTime);
 	return Z;
 }
+
+function NormalRandFillUp(Mean, SD, Array){
+	// Create the distribution around zero
+	// Using the Box-Muller transform
+	//StartTime = new Date().getTime();
+	for (var i=0; i<Array.length; i++){
+		Array[i]=Math.sqrt(-2*Math.log(lcg.rand()))*Math.cos(2*Math.PI*lcg.rand());
+		// Using central limit theorem
+		//Z[i]=lcg.rand()+lcg.rand()+lcg.rand()+lcg.rand()+lcg.rand()+lcg.rand()+lcg.rand()+lcg.rand()+lcg.rand()+lcg.rand()+lcg.rand()+lcg.rand()-6;
+		//Z[i]=Math.random()+Math.random()+Math.random()+Math.random()+Math.random()+Math.random()+Math.random()+Math.random()+Math.random()+Math.random()+Math.random()+Math.random()-6;
+		// Increase the deviation to the standard deviation specified amount, adjust such that the distribution is centred about the mean
+		Array[i]=Mean+Array[i]*SD;
+	}
+	//StopTime = new Date().getTime();
+	//console.log(StopTime-StartTime);
+}
+
+function TestRandSpeed(){
+	StartTime = new Date().getTime();
+	t=0;
+	for (var i=0; i<10000000; i++){
+		t=t+Math.random()-0.5;
+	}
+	StopTime = new Date().getTime();
+	console.log(StopTime-StartTime);
+}
+
+
+
+
 
 
