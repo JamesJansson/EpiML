@@ -8,6 +8,7 @@ function SortNumerically(SNInputVector){
 }
 
 function ApplyIndex(AIInputVector, AIIndex){
+	// Applies the index AIIndex to AIInputVector. Note that this function does not return the index, it simply operates on AIInputVector
 	if (AIInputVector.length!=AIIndex.length){
 		console.error("Arrays incorrect length");
 	}
@@ -49,6 +50,7 @@ function ZeroMatrix(xsize, ysize){
 	return ReturnMatrix;
 }
 
+// Array operations
 function AddArrays(Array1, Array2){
 	if (Array1.length!=Array2.length){
 		error("Arrays are incorrect length");
@@ -96,3 +98,6 @@ function DivideArrays(Array1, Array2){
 	}
 	return ArrayResult;
 }
+
+// Normal distribution function
+// Note that in order to work, this function requires the random number generator lcgrand.js
