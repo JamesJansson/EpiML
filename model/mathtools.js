@@ -158,6 +158,13 @@ function TestRandSpeed(){
 }
 
 
+function Logistic(x){//
+	return (1/(1+Math.exp(-x)));
+}
+function Logit(x){//inverse of logistic. Must take value on(0,1)
+	return (-Math.log(1/x-1));
+}
+
 
 
 
