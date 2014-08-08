@@ -73,7 +73,8 @@ Papa.parse("data/summarynotifications.csv", {download: true, complete: function(
 <li><level1 id="HCVMenuItem" 		onclick="ShowMenu(HCVContent);"			>HCV</level1></li>
 <li><level1 id="DataMenuItem" 		onclick="ShowMenu(DataContent);"		>Data</level1></li>
 <li><level1 id="PlotsMenuItem" 		onclick="ShowMenu(PlotsContent);"		>Plots</level1></li>
-<li><level1 id="SettingssMenuItem" 	onclick="ShowMenu(SettingsContent);"	>Settings</level1></li>
+<li><level1 id="SensitivityMenuItem"onclick="ShowMenu(SensitivityContent);"	>Sensitivity Analysis</level1></li>
+<li><level1 id="SettingsMenuItem" 	onclick="ShowMenu(SettingsContent);"	>Settings</level1></li>
 <li><level1 id="OtherMenuItem" 		onclick="ShowMenu(OtherContent);"		>Other</level1></li>
 <li><level1 id="HelpMenuItem" 		onclick="ShowMenu(HelpContent);"		>Help</level1></li>
 
@@ -157,6 +158,13 @@ Papa.parse("data/summarynotifications.csv", {download: true, complete: function(
 	<div id="PlotsContent" class="Content">
 		<h1>Plots</h1>
 	</div>
+	
+	<div id="SensitivityContent" class="Content">
+		<h1>Sensitivity Analysis</h1>
+		<p>The purpose of this section is to demonstrate the correlation between input parameters and output aggregate statistics.</p>
+		<p>The the user will select the input and the output. Scatter plot will be produced, and a correlation plot will be super imposed.</p>
+	</div>
+	
 	
 	<div id="SettingsContent" class="Content">
 		<h1>Settings</h1>

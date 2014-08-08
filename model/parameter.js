@@ -8,10 +8,14 @@ this.MedianEstimate=
 this.StandardError=
 this.
 this.distributionType=
-//normal
-//lognormal
-//sqrnormal
-//uniform
+//0: uniform
+//1: normal
+//2: exponential
+//3: lognormal
+//4: logitnormal   // used for probability distributions (on [0,1]). Note sigma<1 to avoid strange edge effects
+//5: Poisson
+//6: sqrnormal
+
 //optimisedsample//used in a case where the parameters is unknown and an algorithm decides the 
 
 this.Upper95Range=
@@ -22,7 +26,8 @@ this.Val=[];//
 
 //These variables are used to describe what the variables are and where they are from 
 this.Description=[];//
-this.Ref=[];//An array of URLs that describe 
+this.URL=[];//An array of URLs that are sources for the parameter in question [Link] Jansson et al., 2003, Title of paper
+this.URLText=[];//Text to be displayed in lieu of the 
 }
 
 ParameterClass.prototype.CalculateUncertaintyBounds= function (){
