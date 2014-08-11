@@ -124,8 +124,27 @@ jStat.corrcoeff = function corrcoeff(arr1, arr2) {
 // Sort numerically
 function SortNumerically(SNInputVector){
 	// this function sorts the vector as given and returns the index of sorting
-	SNInputVector.sort(function(a, b) {return a - b;});
-	//return index
+	//SNInputVector.sort(function(a, b) {return a - b;});//this sorting mechanism does a simple numerical sort
+	
+	// The below is inspired from the lessons of this tutorial http://www.sitepoint.com/sophisticated-sorting-in-javascript/ 
+	// Create a multidimensional vector
+	var MultiVec=[];
+	var i;
+	for (i=0; i<SNInputVector.length; i++){
+		MultiVec[i]=[];
+		MultiVec[i][0]=i;// the index that will be sorted at the same time
+		MultiVec[i][1]=SNInputVector[i];
+	} 
+	//Sort the structure
+	MultiVec.sort(function(a, b) {return a[1] - b[1];});//this sorting mechanism does a simple numerical sort
+	//Separate the structure
+	var IndexVector=[];
+	for (i=0; i<SNInputVector.length; i++){
+		SNInputVector[i]=MultiVec[i][1];
+		IndexVector[i]=MultiVec[i][0];
+	} 
+	
+	return IndexVector;
 }
 
 function ApplyIndex(AIInputVector, AIIndex){
