@@ -124,10 +124,11 @@ jStat.corrcoeff = function corrcoeff(arr1, arr2) {
 // Generates data that can be used in a histogram
 
 function HistogramData(Data, BinBoundaries){
-	var HistData;
+	var HistData=[];
 	HistData.Data=Data.slice();//Copy the data into the object
 	
 	NumBins=BinBoundaries.length-1;
+	console.log(NumBins);
 	HistData.BinLower=[];//
 	HistData.BinUpper=[];
 	HistData.Count=[];
@@ -137,6 +138,7 @@ function HistogramData(Data, BinBoundaries){
 		HistData.Count[i]=0;
 	}
 	
+	console.log(HistData);
 	
 	HistData.DataOutsideBoundaries=[];
 	PointsOutideBoundaries=0;
@@ -160,12 +162,9 @@ function HistogramData(Data, BinBoundaries){
 	}
 	
 	return HistData;
-	
+	//TestHist=HistogramData([1.5, 1.0, 1.6, 0.5, 2.0, 2.5, 2.6, 2.6, 2.7, 3.1, 3.2, 6], [1, 2, 3, 4]); 
 	//HistData.Width=
 	//HistData.Height=Count/Width
-	//HistData.DataOutsideBoundaries=//remaining data points
-
-
 }
 
 
