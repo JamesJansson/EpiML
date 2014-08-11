@@ -268,7 +268,7 @@ function DivideArrays(Array1, Array2){
 function NormalRand(Mean, SD){
 	// Create the distribution around zero
 	// Using the Box-Muller transform
-	var Z=Math.sqrt(-2*Math.log(lcg.rand()))*Math.cos(2*Math.PI*lcg.rand());
+	var Z=Math.sqrt(-2*Math.log(Rand.Value()))*Math.cos(2*Math.PI*Rand.Value());
 	// Using central limit theorem
 	//Z=lcg.rand()+lcg.rand()+lcg.rand()+lcg.rand()+lcg.rand()+lcg.rand()+lcg.rand()+lcg.rand()+lcg.rand()+lcg.rand()+lcg.rand()+lcg.rand()-6;
 	//Z=Math.random()+Math.random()+Math.random()+Math.random()+Math.random()+Math.random()+Math.random()+Math.random()+Math.random()+Math.random()+Math.random()+Math.random()-6;
@@ -283,7 +283,7 @@ function NormalRandArray(Mean, SD, Num){
 	//StartTime = new Date().getTime();
 	var Z=[];
 	for (var i=0; i<Num; i++){
-		Z[i]=Math.sqrt(-2*Math.log(lcg.rand()))*Math.cos(2*Math.PI*lcg.rand());
+		Z[i]=Math.sqrt(-2*Math.log(Rand.Value()))*Math.cos(2*Math.PI*Rand.Value());
 		// Using central limit theorem
 		//Z[i]=lcg.rand()+lcg.rand()+lcg.rand()+lcg.rand()+lcg.rand()+lcg.rand()+lcg.rand()+lcg.rand()+lcg.rand()+lcg.rand()+lcg.rand()+lcg.rand()-6;
 		//Z[i]=Math.random()+Math.random()+Math.random()+Math.random()+Math.random()+Math.random()+Math.random()+Math.random()+Math.random()+Math.random()+Math.random()+Math.random()-6;
@@ -300,7 +300,7 @@ function NormalRandFillUp(Mean, SD, Array){
 	// Using the Box-Muller transform
 	//StartTime = new Date().getTime();
 	for (var i=0; i<Array.length; i++){
-		Array[i]=Math.sqrt(-2*Math.log(lcg.rand()))*Math.cos(2*Math.PI*lcg.rand());
+		Array[i]=Math.sqrt(-2*Math.log(Rand.Value()))*Math.cos(2*Math.PI*Rand.Value());
 		// Using central limit theorem
 		//Z[i]=lcg.rand()+lcg.rand()+lcg.rand()+lcg.rand()+lcg.rand()+lcg.rand()+lcg.rand()+lcg.rand()+lcg.rand()+lcg.rand()+lcg.rand()+lcg.rand()-6;
 		//Z[i]=Math.random()+Math.random()+Math.random()+Math.random()+Math.random()+Math.random()+Math.random()+Math.random()+Math.random()+Math.random()+Math.random()+Math.random()-6;
@@ -330,6 +330,52 @@ function Logit(x){//inverse of logistic. Must take value on(0,1)
 }
 
 
+
+
+// Math.random is platform dependent, meaning we need to create or use a platform independent method 
+// This topic is discussed here http://bocoup.com/weblog/random-numbers/
+// The code below was found here https://gist.github.com/Protonk/5367430
+// LCG is the standard method used in many C++ compilers http://en.wikipedia.org/wiki/Linear_congruential_generator#Parameters_in_common_use 
+		
+// Linear congruential generator code found here:
+// https://gist.github.com/Protonk/5367430
+
+// Usage:
+// Rand.SetSeed(34658437);
+// RandomVariable=Rand.Value();
+
+
+// Linear Congruential Generator
+// Variant of a Lehman Generator 
+var Rand = (function() {
+  // Set to values from http://en.wikipedia.org/wiki/Numerical_Recipes
+      // m is basically chosen to be large (as it is the max period)
+      // and for its relationships to a and c
+  var m = 4294967296,
+      // a - 1 should be divisible by m's prime factors
+      a = 1664525,
+      // c and m should be co-prime
+      c = 1013904223,
+      seed, z;
+  return {
+    SetSeed : function(seedval) {
+      z = seed = seedval || Math.round(Math.random() * m);
+    },
+    getSeed : function() {
+      return seed;
+    },
+    Value : function() {
+      // define the recurrence relationship
+      z = (a * z + c) % m;
+      // return a float in [0, 1) 
+      // if z = m then z / m = 0 therefore (z % m) / m < 1 always
+      return z / m;
+    }
+  };
+}());
+
+
+Rand.SetSeed();//Here we set a standard seed, just in case we forget to in the code
 
 
 
