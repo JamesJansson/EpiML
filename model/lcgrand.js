@@ -31,6 +31,7 @@ var lcg = (function() {
       return seed;
     },
     rand : function() {
+		console.log("This function was renamed Rand.Value() and rolled into mathtools. Please change this code to the new name");
       // define the recurrence relationship
       z = (a * z + c) % m;
       // return a float in [0, 1) 

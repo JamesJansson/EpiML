@@ -5,6 +5,8 @@
 // Code is especially ripped from https://github.com/jstat/jstat/blob/master/src/vector.js
 // As such, this library is licensed using the MIT license 
 
+// STATISTICAL FUNCTIONS
+
 // Sum of an array
 function Sum(arr) {
   var sum = 0;
@@ -119,7 +121,7 @@ jStat.corrcoeff = function corrcoeff(arr1, arr2) {
 
 
 
-
+// ARRAY FUNCTIONS
 
 // Sort numerically
 function SortNumerically(SNInputVector){
@@ -175,10 +177,6 @@ function Select(InputVector, IndexToSelect){
 	}
 	return ReturnArray;
 }
-
-
-
-
 
 
 //Create an array of values
@@ -262,6 +260,10 @@ function DivideArrays(Array1, Array2){
 	}
 	return ArrayResult;
 }
+
+
+
+// RANDOM FUNCTIONS
 
 // Normal distribution function
 // Note that in order to work, this function requires the random number generator lcgrand.js
