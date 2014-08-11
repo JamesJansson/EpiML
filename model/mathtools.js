@@ -148,14 +148,14 @@ function SortNumerically(SNInputVector){
 }
 
 function ApplyIndex(AIInputVector, AIIndex){
-	// Applies the index AIIndex to AIInputVector. Note that this function does not return the index, it simply operates on AIInputVector
+	// Applies the index AIIndex to AIInputVector. Note that this function does not return the array, it simply operates on AIInputVector
 	if (AIInputVector.length!=AIIndex.length){
 		console.error("Arrays incorrect length");
 	}
 	//Back up the array
-	Temp= AIInputVector.slice();
+	var Temp= AIInputVector.slice();
 	//Apply the array
-	for (i=0; i<AIInputVector.length; i++){
+	for (var i=0; i<AIInputVector.length; i++){
 		if (AIIndex[i]>=AIInputVector.length){
 			console.error("Index exceeds size of array.");
 		}
@@ -163,15 +163,29 @@ function ApplyIndex(AIInputVector, AIIndex){
 	}
 }
 
+function Select(InputVector, IndexToSelect){
+	// Returns an array of the selected indices
+	//Apply the array
+	var ReturnArray=[];
+	for (i=0; i<IndexToSelect.length; i++){
+		if (IndexToSelect[i]>=InputVector.length){
+			console.error("Index exceeds size of array.");
+		}
+		ReturnArray[i]=InputVector[IndexToSelect[i]];
+	}
+	return ReturnArray;
+}
+
+
 
 
 
 
 //Create an array of values
 function AscendingArray(StartValue, EndValue, IncrementBy){
-    ReturnArray=[];
+    var ReturnArray=[];
 
-    for (i=StartValue; i<=EndValue; i=i+IncrementBy){
+    for (var i=StartValue; i<=EndValue; i=i+IncrementBy){
         ReturnArray.push(i);
     }
     return ReturnArray;
@@ -179,8 +193,8 @@ function AscendingArray(StartValue, EndValue, IncrementBy){
 
 //Create an array of zeros
 function ZeroArray(Length){
-    ReturnArray=[];
-	for (i=0; i<Length; i++){
+    var ReturnArray=[];
+	for (var i=0; i<Length; i++){
 		ReturnArray[i]=0;
 	}
     return ReturnArray;
@@ -189,12 +203,12 @@ function ZeroArray(Length){
 
 // Zero matrix
 function ZeroMatrix(xsize, ysize){
-	ReturnMatrix=[]
-	ZeroVector=[];
-	for (i=0; i<ysize; i++){
+	var ReturnMatrix=[]
+	var ZeroVector=[];
+	for (var i=0; i<ysize; i++){
 		ZeroVector[i]=0;
 	}
-	for (i=0; i<xsize; i++){
+	for (var i=0; i<xsize; i++){
 		ReturnMatrix[i]=ZeroVector.slice();//used to copy array, rather than copy a pointer to the array
 	}
 	return ReturnMatrix;
@@ -205,9 +219,9 @@ function AddArrays(Array1, Array2){
 	if (Array1.length!=Array2.length){
 		error("Arrays are incorrect length");
 	}
-	ArrayResult=new Array(Array1.length);
+	var ArrayResult=new Array(Array1.length);
 	
-	for (i=0; i<Array1.length;i++){
+	for (var i=0; i<Array1.length;i++){
 		ArrayResult[i]=Array1[i]+Array2[i];
 	}
 	return ArrayResult;
@@ -217,9 +231,9 @@ function MinusArrays(Array1, Array2){
 	if (Array1.length!=Array2.length){
 		error("Arrays are incorrect length");
 	}
-	ArrayResult=new Array(Array1.length);
+	var ArrayResult=new Array(Array1.length);
 	
-	for (i=0; i<Array1.length;i++){
+	for (var i=0; i<Array1.length;i++){
 		ArrayResult[i]=Array1[i]-Array2[i];
 	}
 	return ArrayResult;
@@ -229,9 +243,9 @@ function MultiplyArrays(Array1, Array2){
 	if (Array1.length!=Array2.length){
 		error("Arrays are incorrect length");
 	}
-	ArrayResult=new Array(Array1.length);
+	var ArrayResult=new Array(Array1.length);
 	
-	for (i=0; i<Array1.length;i++){
+	for (var i=0; i<Array1.length;i++){
 		ArrayResult[i]=Array1[i]*Array2[i];
 	}
 	return ArrayResult;
@@ -241,9 +255,9 @@ function DivideArrays(Array1, Array2){
 	if (Array1.length!=Array2.length){
 		error("Arrays are incorrect length");
 	}
-	ArrayResult=new Array(Array1.length);
+	var ArrayResult=new Array(Array1.length);
 	
-	for (i=0; i<Array1.length;i++){
+	for (var i=0; i<Array1.length;i++){
 		ArrayResult[i]=Array1[i]/Array2[i];
 	}
 	return ArrayResult;
@@ -254,7 +268,7 @@ function DivideArrays(Array1, Array2){
 function NormalRand(Mean, SD){
 	// Create the distribution around zero
 	// Using the Box-Muller transform
-	Z=Math.sqrt(-2*Math.log(lcg.rand()))*Math.cos(2*Math.PI*lcg.rand());
+	var Z=Math.sqrt(-2*Math.log(lcg.rand()))*Math.cos(2*Math.PI*lcg.rand());
 	// Using central limit theorem
 	//Z=lcg.rand()+lcg.rand()+lcg.rand()+lcg.rand()+lcg.rand()+lcg.rand()+lcg.rand()+lcg.rand()+lcg.rand()+lcg.rand()+lcg.rand()+lcg.rand()-6;
 	//Z=Math.random()+Math.random()+Math.random()+Math.random()+Math.random()+Math.random()+Math.random()+Math.random()+Math.random()+Math.random()+Math.random()+Math.random()-6;
@@ -298,12 +312,12 @@ function NormalRandFillUp(Mean, SD, Array){
 }
 
 function TestRandSpeed(){
-	StartTime = new Date().getTime();
-	t=0;
+	var StartTime = new Date().getTime();
+	var t=0;
 	for (var i=0; i<10000000; i++){
 		t=t+Math.random()-0.5;
 	}
-	StopTime = new Date().getTime();
+	var StopTime = new Date().getTime();
 	console.log(StopTime-StartTime);
 }
 
