@@ -120,6 +120,46 @@ jStat.corrcoeff = function corrcoeff(arr1, arr2) {
 };*/
 
 
+// Histogram data
+// Generates data that can be used in a histogram
+
+function HistogramData(Data, BinBoundaries){
+	var HistData;
+	HistData.Data=Data.slice();//Copy the data into the object
+	
+	NumBins=BinBoundaries.length-1;
+	HistData.BinLower=[];//
+	HistData.BinUpper=[];
+	HistData.Count=[];
+	for (var i=0; i<NumBins; i++){
+		HistData.BinLower[i]=BinBoundaries[i];
+		HistData.BinUpper[i]=BinBoundaries[i+1];
+		HistData.Count[i]=0;
+	}
+	
+	
+	HistData.DataOutsideBoundaries=[];
+	PointsOutideBoundaries=0;
+	for (var i=0; i<Data.length; i++){//each point in the data set
+		//Check if the value is in the range
+		if (Data[i]>=HistData.BinLower[0]){//if it is in this range, do the check
+			while(){
+			
+			}
+		}
+		 
+	}
+	
+	
+	
+	HistData.Width=
+	HistData.Height=Count/Width
+	HistData.DataOutsideBoundaries=//remaining data points
+
+
+}
+
+
 
 // ARRAY FUNCTIONS
 
