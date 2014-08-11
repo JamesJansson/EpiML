@@ -142,19 +142,28 @@ function HistogramData(Data, BinBoundaries){
 	PointsOutideBoundaries=0;
 	for (var i=0; i<Data.length; i++){//each point in the data set
 		//Check if the value is in the range
+		BinFound=false;
 		if (Data[i]>=HistData.BinLower[0]){//if it is in this range, do the check
-			while(){
-			
+			BinNum=0;
+			while(BinNum<NumBins && BinFound==false){
+				if (HistData.BinLower[BinNum]<=Data[i] && Data[i]<HistData.BinUpper[BinNum] ){// the item should be placed here
+					BinFound=true;
+					HistData.Count[BinNum]++;
+				}
+				BinNum++;
 			}
 		}
-		 
+		if (BinFound==false){
+			HistData.DataOutsideBoundaries[PointsOutideBoundaries]=Data[i];
+			PointsOutideBoundaries++;
+		}
 	}
 	
+	return HistData;
 	
-	
-	HistData.Width=
-	HistData.Height=Count/Width
-	HistData.DataOutsideBoundaries=//remaining data points
+	//HistData.Width=
+	//HistData.Height=Count/Width
+	//HistData.DataOutsideBoundaries=//remaining data points
 
 
 }
