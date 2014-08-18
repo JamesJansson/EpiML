@@ -73,10 +73,10 @@ MulticoreSim.prototype.Start=function() {
 	}
 	
 	//Create workers	
-	this.RampUpSims();
+	this.StartNextSim();
 };
 
-MulticoreSim.prototype.RampUpSims=function() {
+MulticoreSim.prototype.StartNextSim=function() {
 
 	MoreSimsToRun=true;//flag to prevent continually trying to run more sims
 	while (this.NoSimsCurrentlyRunning<this.NoCores &&  MoreSimsToRun==true){//there are spare cores available
@@ -130,7 +130,7 @@ MulticoreSimMessageHandler=function(e) {
 		this.Result[SimNumber]=e.data.Result;//Store the results of the simulation
 		this.SimsComplete++;
 		
-		this.RampUpSims();//Try to run more sims
+		this.StartNextSim();//Try to run more sims
 		
 		//Update the progress bar about completion
 		if (this.UseSimProgressBar==true){

@@ -69,8 +69,8 @@ HCVObject.prototype.Infection= function (Year, GenotypeValue, Age, Sex, Alcohol,
 		this.AntiBodiesYear=Year;
 		
 		//Determine if spontaneous clearance occurs
-		if (HCVParam.SpontaneousClearance>lcg.rand()){
-			lcg.rand();
+		if (HCVParam.SpontaneousClearance>Rand.Value()){
+			Rand.Value();
 		}
 		
 		

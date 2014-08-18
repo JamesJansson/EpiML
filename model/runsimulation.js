@@ -5,7 +5,7 @@ importScripts("mathtools.js");
 importScripts("person.js");
 importScripts("hcv.js");
 importScripts("hiv.js");
-importScripts("lcgrand.js");
+
 
 
 
@@ -22,9 +22,16 @@ self.onmessage = function (e) {
 	// Save
 
 
-    lcg.setSeed();//note that this is an extremely important step to allow random numbers to be generated
+	
+	Rand.SetSeed();//note that this is an extremely important step to allow random numbers to be generated
+	
 	
 	var seconds1 = new Date().getTime() / 1000;
+	
+	//Load the notification data
+	
+	
+	
 	
 	var SimNumber = e.data.SimNumber;
     var SimData = e.data.SimData;//creates a pointer

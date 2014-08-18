@@ -7,7 +7,7 @@ function TimeUntilEvent(Probability){
 	// p=r^t
 	// p=e^(ln(r)t)
 	// t=ln(p)/ln(r)
-	return (Math.log(lcg.rand())/Math.log(1-Probability));
+	return (Math.log(Rand.Value())/Math.log(1-Probability));
 }
 
 
