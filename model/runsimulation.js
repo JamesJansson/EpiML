@@ -36,17 +36,17 @@ self.onmessage = function (e) {
 	var SimNumber = e.data.SimNumber;
     var SimData = e.data.SimData;//creates a pointer
 	
-	IncrementSize=Math.round(SimData.NoPeople/100);//used to deliver progress rates back to the progress bar
+	var IncrementSize=Math.round(SimData.NoPeople/100);//used to deliver progress rates back to the progress bar
 	
-	Year=2014.5;
-	GenotypeValue=0;
-	YearOfBirth=1985.1;
-	Age=29;
-	Sex=1;
-	Alcohol=0;
-	YearsToSimulate=40;
+	var Year=2014.5;
+	var GenotypeValue=0;
+	var YearOfBirth=1985.1;
+	var Age=29;
+	var Sex=1;
+	var Alcohol=0;
+	var YearsToSimulate=40;
 	
-	HCVParam={};
+	var HCVParam={};
 	HCVParam.F0F1=0.117;
 	HCVParam.F1F2=0.085;
 	HCVParam.F2F3=0.12;
@@ -58,7 +58,7 @@ self.onmessage = function (e) {
 	console.log("Starting to load Person object");
 	
 	
-	for (i=0; i<SimData.NoPeople; i++){
+	for (var i=0; i<SimData.NoPeople; i++){
 		PP[i]=new PersonObject(YearOfBirth, Sex);
 		if (i%IncrementSize==0){
 			self.postMessage({ProgressBarValue: i/SimData.NoPeople});
@@ -66,12 +66,12 @@ self.onmessage = function (e) {
 	}
 	
 	var seconds2 = new Date().getTime() / 1000;
-    TotalTime=seconds2 -seconds1;
+    var TotalTime=seconds2 -seconds1;
 	console.log("Memory allocation stopped after "+TotalTime+" seconds");
 	
 	console.log("Starting to HCV progression");
 	
-	for (i=0; i<SimData.NoPeople; i++){
+	for (var i=0; i<SimData.NoPeople; i++){
 		PP[i].HCV.Infection(Year, GenotypeValue, Age, Sex, Alcohol, HCVParam );
 		if (i%IncrementSize==0){
 			self.postMessage({ProgressBarValue: i/SimData.NoPeople});
@@ -81,12 +81,12 @@ self.onmessage = function (e) {
 	//Determine fibrosis levels with year
 
 	
-	FibrosisMatrix=new ZeroMatrix(6, YearsToSimulate+1);
+	var FibrosisMatrix=new ZeroMatrix(6, YearsToSimulate+1);
 	
 	console.log("Extracting results");
-	YearCount=0;
-	for (GraphYear=Year; GraphYear<Year+YearsToSimulate+1; GraphYear++){
-		for (i=0; i<SimData.NoPeople; i++){
+	var YearCount=0;
+	for (var GraphYear=Year; GraphYear<Year+YearsToSimulate+1; GraphYear++){
+		for (var i=0; i<SimData.NoPeople; i++){
 			FibrosisLevel=PP[i].HCV.Fibrosis.Get(GraphYear).Value;
 			//self.postMessage({ConsoleMessage: "FibrosisLevel "+ FibrosisLevel+ " YearCount" + YearCount});
 			FibrosisMatrix[FibrosisLevel][YearCount]=FibrosisMatrix[FibrosisLevel][YearCount]+1;;
@@ -95,8 +95,8 @@ self.onmessage = function (e) {
 		self.postMessage({ProgressBarValue: (YearCount/(YearsToSimulate+1))});
 	}
 	
-	seconds2 = new Date().getTime() / 1000;
-    TotalTime=seconds2 -seconds1;
+	var seconds2 = new Date().getTime() / 1000;
+    var TotalTime=seconds2 -seconds1;
 
 	console.log("Finished simulation in "+TotalTime+" seconds");
 	var SimResult={};
