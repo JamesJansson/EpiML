@@ -39,6 +39,11 @@ function MulticoreSim(ScriptName, CommonData, SimDataArray, NoCores){
 	this.Worker=[];//An array of workers
 	this.NoSims=SimDataArray.length;
 	
+	this.TerminateOnFinish=false;//This flag is used to indicate that following the  return of a 'result', the simulation should terminate.
+	this.WorkerComplete=[];
+	this.WorkerTerminated=[];
+	
+	
 	this.CurrentlyRunning=false;
 	this.Complete=false;
 	this.NoSimsCurrentlyRunning=0;
@@ -72,11 +77,19 @@ MulticoreSim.prototype.Start=function() {
 		document.getElementById(this.SimProgressBarID).value=0;
 	}
 	
+	// Set up the 'WorkerComplete' and 'WorkerTerminated' arrays
+	for (var i=0; i<this.NoSims; i++){
+		this.WorkerComplete[i]=false;
+		this.WorkerTerminated[i]=false;
+	}
+	
 	//Create workers	
 	this.StartNextSim();
 };
 
 MulticoreSim.prototype.StartNextSim=function() {
+	//Work out 
+	//this.Worker[SimID].terminate();
 
 	MoreSimsToRun=true;//flag to prevent continually trying to run more sims
 	while (this.NoSimsCurrentlyRunning<this.NoCores &&  MoreSimsToRun==true){//there are spare cores available

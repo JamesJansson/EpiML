@@ -1,9 +1,13 @@
+// This file contains the scripts that are called when the buttons on the interface are pressed.
+
 var TMCSSimulationObject;
 var TMCSSimData;
 
-function SetUp(){
+function RunNotificationSim(){
 
-NumberOfSimsToRun=10;
+var NumberOfSimsToRun=10;//this will later be set by the preferences in the interface
+
+//
 
 ScriptToRun='model/runsimulation.js';
 TMCSSimData=[];
