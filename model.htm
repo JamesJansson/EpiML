@@ -173,7 +173,7 @@ Papa.parse("data/summarynotifications.csv", {download: true, complete: function(
 		<form>
 			Number of cores to use for simulations<br>
 			
-			<select name="CoresDropdown" onchange="NoCores=this.value;">
+			<select name="NoCoresDropdown" onchange="NoCores=this.value;">
 				<option value="1">1</option>
 				<option value="2">2</option>
 				<option value="3">3</option>
@@ -185,6 +185,16 @@ Papa.parse("data/summarynotifications.csv", {download: true, complete: function(
 			</select>
 			
 			<p>Number of simulations to maintain concurrently.</p>
+			<select name="ConcurrentSimsDropdown" onchange="ConcurrentSims=this.value;">
+				<option value="1">1</option>
+				<option value="2">2</option>
+				<option value="3">3</option>
+				<option value="4">4</option>
+				<option value="5">5</option>
+				<option value="6">6</option>
+				<option value="7">7</option>
+				<option value="8">8</option>
+			</select>
 			
 		</form>
 
