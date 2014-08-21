@@ -90,7 +90,7 @@ Papa.parse("data/summarynotifications.csv", {download: true, complete: function(
 
 	<div id="ParameterContent" class="Content">
 		<h1>Parameters</h1>
-
+		In this section, parameters are built up. 
 		
 	</div>
 	
@@ -98,7 +98,7 @@ Papa.parse("data/summarynotifications.csv", {download: true, complete: function(
 		<h1>HCV</h1>
 		<p>Fibrosis Progression</p>
 		<form class="ParamContainer" id="F0F1"> 
-			F0 to F1
+			<input type="text" name="paramname" value="F0F1"> 
 			<select name="DistributionType" onchange=";">
 				<option value="Normal">Normal</option>
 				<option value="LogNormal">Log Normal</option>
@@ -111,7 +111,7 @@ Papa.parse("data/summarynotifications.csv", {download: true, complete: function(
 		</form>
 		
 		<form class="ParamContainer" id="F1F2"> 
-			F1 to F2
+			<input type="text" name="paramname" value="F1F2"> 
 			<select name="DistributionType" onchange=";">
 				<option value="Normal">Normal</option>
 				<option value="LogNormal">Log Normal</option>
@@ -138,6 +138,7 @@ Papa.parse("data/summarynotifications.csv", {download: true, complete: function(
 			<div id="HCVResultsTable"></div>
 			</div>
 		</div>
+		<div class="SolidButton" onClick="ToggleDisplay(this, 'HCVPlotArea');">Show plot</div>
 	</div>
 	
 	<div id="DataContent" class="Content">
@@ -162,7 +163,8 @@ Papa.parse("data/summarynotifications.csv", {download: true, complete: function(
 	<div id="SensitivityContent" class="Content">
 		<h1>Sensitivity Analysis</h1>
 		<p>The purpose of this section is to demonstrate the correlation between input parameters and output aggregate statistics.</p>
-		<p>The the user will select the input and the output. Scatter plot will be produced, and a correlation plot will be super imposed.</p>
+		<p>The user will select the parameter to inspect and the result to compare with. Scatter plot will be produced, and a correlation plot will be super imposed.</p>
+		<p>There will also be the option to select an output and get a comparison of many different parameters to inspect. A cyclone plot will indicate the impact that the 95% range has on the outcome of the variable.</p>
 	</div>
 	
 	
@@ -181,6 +183,9 @@ Papa.parse("data/summarynotifications.csv", {download: true, complete: function(
 				<option value="7">7</option>
 				<option value="8">8</option>
 			</select>
+			
+			<p>Number of simulations to maintain concurrently.</p>
+			
 		</form>
 
 	</div>
@@ -196,7 +201,7 @@ Papa.parse("data/summarynotifications.csv", {download: true, complete: function(
 
 	<div id="HelpContent" class="Content">
 		<h1>Help</h1>
-		<p>This system can be used either through the internet or locally. To get this to work locally on your browser, you need to install a local http server. One suggestion is <a href="https://code.google.com/p/mongoose/">Mongoose</a>. A list of executable files can be found <a href="https://code.google.com/p/mongoose/downloads/list?can=4&q=windows">here</a>.</p>
+		<p>This system can be used either through the internet or locally through the Chrome browser. To get this to work locally on your browser, you need to install a local http server. One suggestion is <a href="https://code.google.com/p/mongoose/">Mongoose</a>. A list of executable files can be found <a href="https://code.google.com/p/mongoose/downloads/list?can=4&q=windows">here</a>.</p>
 		
 	</div>
 

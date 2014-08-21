@@ -1,4 +1,5 @@
-
+// ToggleDisplay is used to show or hide the first child element of the parent of SectionRef
+// Essentially, SectionRef->ParentOfSectionRef->FirstChildOfParentRefCalledClassToToggle
 function ToggleDisplay(SectionRef, ClassToToggle){
 	if (SectionRef.parentNode.getElementsByClassName(ClassToToggle)[0].style.display=='none'){
 		SectionRef.parentNode.getElementsByClassName(ClassToToggle)[0].style.display='';

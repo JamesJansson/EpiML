@@ -1,13 +1,12 @@
-function ParameterClass(CategoryID, ParameterID){
+function ParameterClass{
 
-this.CategoryID=CategoryID;//e.g. HCV
-this.ParameterID=ParameterID;// e.g. HCCProbability
+this.CategoryID=NaN;//e.g. HCV
+this.ParameterID=NaN;// e.g. HCCProbability
+this.InterfaceID=NaN;
 
-
-this.MedianEstimate=
-this.StandardError=
-this.
-this.distributionType=
+this.MedianEstimate=NaN;
+this.StandardError=NaN;
+this.distributionType=NaN;
 //0: uniform
 //1: normal
 //2: exponential
@@ -18,10 +17,10 @@ this.distributionType=
 
 //optimisedsample//used in a case where the parameters is unknown and an algorithm decides the 
 
-this.Upper95Range=
-this.Lower95Range=
+this.Upper95Range=NaN;
+this.Lower95Range=NaN;
 
-this.NumberOfSamples
+this.NumberOfSamples=NaN;
 this.Val=[];//
 
 //These variables are used to describe what the variables are and where they are from 
@@ -29,6 +28,13 @@ this.Description=[];//
 this.URL=[];//An array of URLs that are sources for the parameter in question [Link] Jansson et al., 2003, Title of paper
 this.URLText=[];//Text to be displayed in lieu of the 
 }
+
+//Load the parameter from text
+	//or maybe simply bind a JSON object
+//Load the parameter from interface
+	//This requires that the 
+//Save this interface as 
+
 
 ParameterClass.prototype.CalculateUncertaintyBounds= function (){
 	if (this.distributionType=="normal"){
