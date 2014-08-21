@@ -15,7 +15,7 @@ this.distributionType=NaN;
 //5: Poisson
 //6: sqrnormal
 
-//optimisedsample//used in a case where the parameters is unknown and an algorithm decides the 
+//optimisedsample //used in a case where the parameters is unknown and an algorithm decides the 
 
 this.Upper95Range=NaN;
 this.Lower95Range=NaN;
