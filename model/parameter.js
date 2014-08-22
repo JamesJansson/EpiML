@@ -1,8 +1,4 @@
-//Set up the interface
-// for each subgroup
-//   put data in <div id="HCVParams">
-//	 for each parameter in each subgroup
-//   create a new 'form' element 
+
 
 
 //CreateNewVariable
@@ -15,7 +11,7 @@ this.InterfaceID=NaN;// e.g. HCV_LFHCCProbability
 
 this.MedianEstimate=NaN;
 this.StandardError=NaN;
-this.distributionType=NaN;
+this.DistributionType=NaN;
 //0: uniform
 //1: normal
 //2: exponential
@@ -64,17 +60,15 @@ this.URLText=[];//Text to be displayed in lieu of the
 
 
 ParameterClass.prototype.CalculateUncertaintyBounds= function (){
-	if (this.distributionType=="normal"){
+	if (this.DistributionType=="normal"){
 		this.Upper95Range=this.MedianEstimate+1.96*this.StandardError;
 		this.Lower95Range=this.MedianEstimate-1.96*this.StandardError;
 	} 
-	else if (this.distributionType=="lognormal"){
+	else if (this.DistributionType=="lognormal"){
 		//log
 		//calculate
 		//delog
 	}
-	
-	
 }
 
 ParameterClass.prototype.CreateDistribution= function (){
