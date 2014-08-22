@@ -1,8 +1,17 @@
+//Set up the interface
+// for each subgroup
+//   put data in <div id="HCVParams">
+//	 for each parameter in each subgroup
+//   create a new 'form' element 
+
+
+//CreateNewVariable
+
 function ParameterClass{
 
 this.CategoryID=NaN;//e.g. HCV
-this.ParameterID=NaN;// e.g. HCCProbability
-this.InterfaceID=NaN;
+this.ParameterID=NaN;// e.g. LFHCCProbability
+this.InterfaceID=NaN;// e.g. HCV_LFHCCProbability
 
 this.MedianEstimate=NaN;
 this.StandardError=NaN;
@@ -25,12 +34,30 @@ this.Val=[];//
 
 //These variables are used to describe what the variables are and where they are from 
 this.Description=[];//
-this.URL=[];//An array of URLs that are sources for the parameter in question [Link] Jansson et al., 2003, Title of paper
+this.URL=[];//An array of URLs that are sources for the parameter in question [Link] Jansson et al., 2013, Title of paper
 this.URLText=[];//Text to be displayed in lieu of the 
 }
 
 //Load the parameter from text
 	//or maybe simply bind a JSON object
+	
+
+	//
+	//document.getElementById()
+	//.SetInnerHTML
+	//
+	//		<input type="text" name="paramname" value="F0F1"> 
+	//		<select name="DistributionType" onchange=";">
+	//			<option value="Normal">Normal</option>
+	//			<option value="LogNormal">Log Normal</option>
+	//			<option value="NormalProbability">Normal Probability</option>
+	//		</select>
+	//		Median <input type="text" name="Median"> 
+	//		SD <input type="text" name="SD"> 
+	//		<a onClick="ToggleDisplay(this, 'ParamInfoBox');">+ More info</a>
+	//		<div class="ParamInfoBox" style="display: none;"> Some info to display </div>
+	// 
+	
 //Load the parameter from interface
 	//This requires that the 
 //Save this interface as 
@@ -47,6 +74,7 @@ ParameterClass.prototype.CalculateUncertaintyBounds= function (){
 		//delog
 	}
 	
+	
 }
 
 ParameterClass.prototype.CreateDistribution= function (){
@@ -55,7 +83,7 @@ ParameterClass.prototype.CreateDistribution= function (){
 		//log
 		logmedian=Math.log(this.MedianEstimate);
 		//calculate
-		Math.random
+		Rand.Value
 		//some code here https://gist.github.com/Protonk/5367430
 		//Linear congruential generator
 		
