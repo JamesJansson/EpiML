@@ -43,9 +43,9 @@ this.URL=[];//An array of URLs that are sources for the parameter in question [L
 //Load the parameter from text
 	//or maybe simply bind a JSON object
 	
-ParameterClass.prototype.UpdateTypeDisplay()= function (){
+ParameterClass.prototype.UpdateTypeDisplay= function (){
 	//
-	ParameterHTML=
+	ParameterHTML="";
 	"<input type='text' name='paramname' value='F0F1'>"+ 
 	"<select name='DistributionType' onchange=';'>"+
 	"	<option value='uniform'>Uniform</option>"+
@@ -69,7 +69,7 @@ ParameterClass.prototype.UpdateTypeDisplay()= function (){
 	//		<div class="ParamInfoBox" style="display: none;"> Some info to display </div>
 	// 
 	
-	document.getElementById(this.InterfaceID).SetInnerHTML=
+	document.getElementById(this.InterfaceID).SetInnerHTML=ParameterHTML;
 	
 }
 	
@@ -92,11 +92,11 @@ ParameterClass.prototype.CalculateUncertaintyBounds= function (){
 
 ParameterClass.prototype.CreateDistribution= function (){
 	
-	else if (this.distributionType=="lognormal"){
+	if (this.distributionType=="lognormal"){
 		//log
 		logmedian=Math.log(this.MedianEstimate);
 		//calculate
-		Rand.Value
+		Rand.Value();
 		//some code here https://gist.github.com/Protonk/5367430
 		//Linear congruential generator
 		
