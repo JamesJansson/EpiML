@@ -11,6 +11,9 @@ this.InterfaceID=NaN;// e.g. HCV_LFHCCProbability
 
 this.MedianEstimate=NaN;
 this.StandardError=NaN;
+this.LowerRange=NaN;//used for normal distributions
+this.UpperRange=NaN;//used for normal distributions
+
 this.DistributionType=NaN;
 //0: uniform
 //1: normal
@@ -30,8 +33,9 @@ this.Val=[];//
 
 //These variables are used to describe what the variables are and where they are from 
 this.Description=[];//
+this.RefText=[];//Text to be displayed in lieu of the 
 this.URL=[];//An array of URLs that are sources for the parameter in question [Link] Jansson et al., 2013, Title of paper
-this.URLText=[];//Text to be displayed in lieu of the 
+
 }
 
 //Load the parameter from text

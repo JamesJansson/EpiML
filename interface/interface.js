@@ -2,10 +2,10 @@
 // for each subgroup
 //   put data in <div id="HCVParams">
 //	 for each parameter in each subgroup
-// Code inspired by http://stackoverflow.com/questions/208016/how-to-list-the-properties-of-a-javascript-object
+
 function LoadParameterPages(ParamGroup, ParamGroupDivId){
 	var BuildText="";
-	for (var key in ParamGroup) {
+	for (var key in ParamGroup) {// Code inspired by http://stackoverflow.com/questions/208016/how-to-list-the-properties-of-a-javascript-object
 		if (ParamGroup.hasOwnProperty(key)) {
 			//maybe also check here that the parameter is not an array, other wise use a different function 
 			ParamGroup[key].InterfaceID=ParamGroupDivId+key;
@@ -24,7 +24,11 @@ function LoadParameterPages(ParamGroup, ParamGroupDivId){
 }
 
 
+function AddNewParameter(ParamGroup, ParamGroupDivId){
+	
 
+
+}
 
 
 
