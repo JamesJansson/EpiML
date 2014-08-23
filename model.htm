@@ -96,6 +96,28 @@ Papa.parse("data/summarynotifications.csv", {download: true, complete: function(
 	
 	<div id="HCVContent" class="Content">
 		<h1>HCV</h1>
+		<div class="SolidButton" onClick="BuildParameterPage(HCV, ParamGroupDivId);">Fill parameters</div>
+		<div id="HCVParamHolder"> </div>
+	</div>
+	
+	<div id="DataContent" class="Content">
+		<h1>Data</h1>
+		<div class="SolidButton" onClick="SummaryNotificationsCSV=new CSVFile('data/summarynotifications.csv');">Load Notification Data</div>
+		<div class="SolidButton" onClick="SummaryNotificationsTable=SummaryNotificationsCSV.GetValues(1, 2, 5, 10); TimeAxis=[];for(i=0; i<5; i++){TimeAxis[i]=2008+i;}">Extract data</div>
+		<div class="SolidButton" onClick="StackedLinePlot('#NotificationPlotHolder', TimeAxis, SummaryNotificationsTable,  'Year','Number of notifications');">Line Plot</div>
+		<div class="SolidButton" onClick="StackedBarPlot('#NotificationPlotHolder', TimeAxis, SummaryNotificationsTable,  'Year','Number of notifications');">Bar Plot</div>
+		
+		
+		<div style="float:left; position:absolute; left:200px; top: 0px;">
+			<div class="plot-container">
+				<div id="NotificationPlotHolder" class="plot-placeholder"></div>
+			</div>
+		</div>
+	</div>
+	
+	<div id="PlotsContent" class="Content">
+		<h1>Plots</h1>
+		
 		<p>Fibrosis Progression</p>
 		<form class="ParamContainer" id="F0F1"> 
 			<input type="text" name="paramname" value="F0F1"> 
@@ -139,25 +161,6 @@ Papa.parse("data/summarynotifications.csv", {download: true, complete: function(
 			</div>
 		</div>
 		<div class="SolidButton" onClick="ToggleDisplay(this, 'HCVPlotArea');">Show plot</div>
-	</div>
-	
-	<div id="DataContent" class="Content">
-		<h1>Data</h1>
-		<div class="SolidButton" onClick="SummaryNotificationsCSV=new CSVFile('data/summarynotifications.csv');">Load Notification Data</div>
-		<div class="SolidButton" onClick="SummaryNotificationsTable=SummaryNotificationsCSV.GetValues(1, 2, 5, 10); TimeAxis=[];for(i=0; i<5; i++){TimeAxis[i]=2008+i;}">Extract data</div>
-		<div class="SolidButton" onClick="StackedLinePlot('#NotificationPlotHolder', TimeAxis, SummaryNotificationsTable,  'Year','Number of notifications');">Line Plot</div>
-		<div class="SolidButton" onClick="StackedBarPlot('#NotificationPlotHolder', TimeAxis, SummaryNotificationsTable,  'Year','Number of notifications');">Bar Plot</div>
-		
-		
-		<div style="float:left; position:absolute; left:200px; top: 0px;">
-			<div class="plot-container">
-				<div id="NotificationPlotHolder" class="plot-placeholder"></div>
-			</div>
-		</div>
-	</div>
-	
-	<div id="PlotsContent" class="Content">
-		<h1>Plots</h1>
 	</div>
 	
 	<div id="SensitivityContent" class="Content">
