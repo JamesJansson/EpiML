@@ -47,7 +47,7 @@ ParameterClass.prototype.UpdateTypeDisplay= function (){
 	// Set up the name and parameter type
 	var ParameterHTML=""+
 	"<input type='text' name='ParameterID' value='" + this.ParameterID + "'>\n"+ 
-	"<select name='DistributionType' onchange=';'>\n"+
+	"<select name='DistributionType' onchange=';'>\n"+//set on change here to call this.UpdateTypeDisplay
 	"	<option value='uniform'>Uniform</option>\n"+
 	"	<option value='normal'>Normal</option>\n"+
 	"	<option value='exponential'>Exponential</option>\n"+
