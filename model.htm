@@ -62,7 +62,7 @@ Papa.parse("data/summarynotifications.csv", {download: true, complete: function(
 
 
 
-<body>
+<body onload="InitialisePage()">
 
 <img src="img/logo.png">
 
@@ -93,12 +93,12 @@ Papa.parse("data/summarynotifications.csv", {download: true, complete: function(
 	<div id="ParameterContent" class="Content">
 		<h1>Parameters</h1>
 		In this section, parameters are built up. 
-		
+		<div class="SolidButton" onClick="alert('Function will use JSON to save Param');">Save parameters</div>
 	</div>
 	
 	<div id="HCVContent" class="Content">
 		<h1>HCV</h1>
-		<div class="SolidButton" onClick="BuildParameterPage(HCV, ParamGroupDivId);">Fill parameters</div>
+		<div class="SolidButton" onClick="BuildParameterPage(Param.HCV, 'HCVParamHolder');">Fill parameters</div>
 		<div id="HCVParamHolder"> </div>
 	</div>
 	
@@ -162,7 +162,7 @@ Papa.parse("data/summarynotifications.csv", {download: true, complete: function(
 			<div id="HCVResultsTable"></div>
 			</div>
 		</div>
-		<div class="SolidButton" onClick="ToggleDisplay(this, 'HCVPlotArea');">Show plot</div>
+		
 	</div>
 	
 	<div id="SensitivityContent" class="Content">

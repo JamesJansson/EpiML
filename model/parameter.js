@@ -3,10 +3,10 @@
 
 //CreateNewVariable
 
-function ParameterClass(){
+function ParameterClass(ParameterID){
 
 this.CategoryID=NaN;//e.g. HCV
-this.ParameterID=NaN;// e.g. LFHCCProbability
+this.ParameterID=ParameterID;// e.g. LFHCCProbability
 this.InterfaceID=NaN;// e.g. HCV_LFHCCProbability
 
 
@@ -22,8 +22,8 @@ this.DistributionType="uniform";
 
 this.MedianEstimate=NaN;
 this.StandardError=NaN;
-this.LowerRange=NaN;//used for normal distributions
-this.UpperRange=NaN;//used for normal distributions
+this.LowerBound=NaN;//used for uniform distributions
+this.UpperBound=NaN;//used for uniform distributions
 
 
 
@@ -44,20 +44,25 @@ this.URL=[];//An array of URLs that are sources for the parameter in question [L
 	//or maybe simply bind a JSON object
 	
 ParameterClass.prototype.UpdateTypeDisplay= function (){
-	//
-	ParameterHTML="";
-	"<input type='text' name='paramname' value='F0F1'>"+ 
-	"<select name='DistributionType' onchange=';'>"+
-	"	<option value='uniform'>Uniform</option>"+
-	"	<option value='normal'>Normal</option>"+
-	"	<option value='exponential'>Exponential</option>"+
-	"	<option value='lognormal'>Log Normal</option>"+
-	"</select>";
+	// Set up the name and parameter type
+	var ParameterHTML=""+
+	"<input type='text' name='ParameterID' value='" + this.ParameterID + "'>\n"+ 
+	"<select name='DistributionType' onchange=';'>\n"+
+	"	<option value='uniform'>Uniform</option>\n"+
+	"	<option value='normal'>Normal</option>\n"+
+	"	<option value='exponential'>Exponential</option>\n"+
+	"	<option value='lognormal'>Log Normal</option>\n"+
+	"</select>\n";
 	
 	if (this.DistributionType=="uniform"){
-		
-	
-	
+		ParameterHTML=ParameterHTML+
+		"Lower Bound <input type='text' name='LowerBound' value='" + this.LowerBound + "'>\n"+
+		"Upper Bound <input type='text' name='UpperBound' value='" + this.UpperBound + "'>\n";
+		//Set the display type
+		console.log(ParameterHTML);
+		document.getElementById(this.InterfaceID).innerHTML=ParameterHTML;
+		//document.getElementById(this.InterfaceID).LowerBound=this.LowerBound;
+		//document.getElementById(this.InterfaceID).UpperBound=this.UpperBound;
 	}
 	//
 	//		
@@ -69,7 +74,7 @@ ParameterClass.prototype.UpdateTypeDisplay= function (){
 	//		<div class="ParamInfoBox" style="display: none;"> Some info to display </div>
 	// 
 	
-	document.getElementById(this.InterfaceID).SetInnerHTML=ParameterHTML;
+	
 	
 }
 	
@@ -136,6 +141,7 @@ function BuildParameterPage(ParamGroup, ParamGroupDivId){
 	for (var key in ParamGroup) {
 		if (ParamGroup.hasOwnProperty(key)) {
 			//Update display of parameter
+			console.log(key);
 			ParamGroup[key].UpdateTypeDisplay();
 		}
 	}
