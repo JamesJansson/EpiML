@@ -3,18 +3,29 @@
 //   put data in <div id="HCVParams">
 //	 for each parameter in each subgroup
 // Code inspired by http://stackoverflow.com/questions/208016/how-to-list-the-properties-of-a-javascript-object
-function DisplayParameters(ParamGroup, ParamGroupDivName){
-	BuildText="";
+function LoadParameterPages(ParamGroup, ParamGroupDivId){
+	var BuildText="";
 	for (var key in ParamGroup) {
 		if (ParamGroup.hasOwnProperty(key)) {
 			//maybe also check here that the parameter is not an array, other wise use a different function 
-			console.log(ParamGroup[key]);
-			//
+			ParamGroup[key].InterfaceID=ParamGroupDivId+key;
 			BuildText=BuildText+"                <form class=\"ParamContainer\" id=\""+ParamGroup[key].InterfaceID+"\"></form>\n";
 		}
 	}
-	console.log(BuildText);
+	document.getElementById(ParamGroupDivId).innerHTML = BuildText;
+	
+	//Load each of the holders with the parameters that should be held
+	for (var key in ParamGroup) {
+		if (ParamGroup.hasOwnProperty(key)) {
+			//Update display of parameter
+			//ParamGroup[key].UpdateDisplay();
+		}
+	}
 }
+
+
+
+
 
 
 //   create a new 'form' element 

@@ -3,7 +3,7 @@
 
 //CreateNewVariable
 
-function ParameterClass{
+function ParameterClass(){
 
 this.CategoryID=NaN;//e.g. HCV
 this.ParameterID=NaN;// e.g. LFHCCProbability
