@@ -1,7 +1,7 @@
 // This file contains the scripts that are called when the buttons on the interface are pressed.
 
-var TMCSSimulationObject;
-var TMCSSimData;
+var NSSimulationObject;
+var NSSimData;
 
 function RunNotificationSim(){
 
@@ -9,17 +9,17 @@ var NumberOfSimsToRun=10;//this will later be set by the preferences in the inte
 
 //
 
-ScriptToRun='model/runsimulation.js';
+ScriptToRun='model/runnotificationsimulation.js';
 TMCSSimData=[];
 for (i=0; i<NumberOfSimsToRun; i++){
 	TMCSSimData[i]={};
 	TMCSSimData[i].NoPeople=30000;
 }
 
-TMCSSimulationObject=new MulticoreSim(ScriptToRun, 22, TMCSSimData, NoCores); 
-TMCSSimulationObject.UseSimProgressBar=true;
-TMCSSimulationObject.SimProgressBarID="MainProgress";
-TMCSSimulationObject.Start();
+NSSimulationObject=new MulticoreSim(ScriptToRun, 22, TMCSSimData, NoCores); 
+NSSimulationObject.UseSimProgressBar=true;
+NSSimulationObject.SimProgressBarID="MainProgress";
+NSSimulationObject.Start();
 
 
 //Note: TMCSSimData[a].PP[b] is an object, but does not contain a prototype
