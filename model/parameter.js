@@ -58,17 +58,15 @@ ParameterClass.prototype.UpdateTypeDisplay= function (){
 	"	<option value='normal'>Normal</option>\n"+
 	"	<option value='exponential'>Exponential</option>\n"+
 	"	<option value='lognormal'>Log Normal</option>\n"+
-	"</select>\n";
+	"</select>\n ";
 	
 	if (this.DistributionType=="uniform"){
-		ParameterHTML=ParameterHTML+
-		"Lower Bound <input type='text' name='LowerBound' value='" + this.LowerBound + "'>\n"+
-		"Upper Bound <input type='text' name='UpperBound' value='" + this.UpperBound + "'>\n";
-		
-		
-		//document.getElementById(this.InterfaceID).LowerBound=this.LowerBound;
-		//document.getElementById(this.InterfaceID).UpperBound=this.UpperBound;
+		ParameterHTML=ParameterHTML+"Lower Bound <input type='text' name='LowerBound' value='" + this.LowerBound + " '>\n"+
+		" Upper Bound <input type='text' name='UpperBound' value='" + this.UpperBound + " '>\n";
 	}
+	
+	
+	
 	//
 	//		
 	//		
@@ -79,30 +77,23 @@ ParameterClass.prototype.UpdateTypeDisplay= function (){
 	//		<div class="ParamInfoBox" style="display: none;"> Some info to display </div>
 	// 
 	
+	//
 	ParameterHTML=ParameterHTML+
 		"<a onClick=\"ToggleDisplay(this, 'ParamInfoBox');\">+ More info</a>\n"+
 		"<div class='ParamInfoBox' style='display: none;'>\n"+
 		"<p>Description</p>"+
 		"<textarea name='Description' cols='100' rows='5'>"+this.Description+"</textarea>";
-		
 	//For each of the references, add a link, a box for the title, and the link
-	
-	
+	// 
 	//Add a "add ref button"
+	//
 	
-	
-	
-	//Close off the div
+	//Close off the references div
 	ParameterHTML=ParameterHTML+"</div>";
+	
+	// Set the parameter
 	document.getElementById(this.InterfaceID).innerHTML=ParameterHTML;
 	document.getElementById(this.InterfaceID).DistributionType.value=this.DistributionType;
-	
-		//console.log(ParameterHTML);
-		
-	
-	//console.log(this);
-	
-	
 }
 	
 //Load the parameter from interface
@@ -152,7 +143,7 @@ ParameterClass.prototype.CreateDistribution= function (){
 
 function BuildParameterPage(ParamGroup, ParamGroupDivId, GroupName){
 
-	//Firstly, ensure that the parameters in the group have the proper GroupName e.g. Param.HIV
+	//Firstly, ensure that each of the parameters in the group have the proper GroupName e.g. Param.HIV
 	//This allows the object to be able to write code that allows it to execute itself, e.g. Param.HIV.CalculateAndDisplayMedian()
 	for (var key in ParamGroup) {// Code inspired by http://stackoverflow.com/questions/208016/how-to-list-the-properties-of-a-javascript-object
 		if (ParamGroup.hasOwnProperty(key)) {
@@ -170,7 +161,8 @@ function BuildParameterPage(ParamGroup, ParamGroupDivId, GroupName){
 		}
 	}
 	
-	//BuildText=BuildText+"<div class="SolidButton" onClick="ToggleDisplay(this, 'HCVPlotArea');">Show plot</div>"
+	//This next section is very naughty, because it breaks the div by setting the inner HTML. It will probably break.
+	BuildText=BuildText+"<div class='SolidButton' onClick='AddNewParameter("+GroupName+", \""+ParamGroupDivId+"\"); '>Add parameter</div>"
 	
 	document.getElementById(ParamGroupDivId).innerHTML = BuildText;
 	
