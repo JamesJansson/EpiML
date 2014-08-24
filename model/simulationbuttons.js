@@ -10,21 +10,21 @@ var NumberOfSimsToRun=10;//this will later be set by the preferences in the inte
 //
 
 ScriptToRun='model/runnotificationsimulation.js';
-TMCSSimData=[];
+
+//Creating the data to be used in the simualtions
+NSSimData=[];
 for (i=0; i<NumberOfSimsToRun; i++){
-	TMCSSimData[i]={};
-	TMCSSimData[i].NoPeople=30000;
+	NSSimData[i]={};
+	NSSimData[i].NoPeople=30000;
 }
 
-NSSimulationObject=new MulticoreSim(ScriptToRun, 22, TMCSSimData, NoCores); 
+NSSimulationObject=new MulticoreSim(ScriptToRun, 22, NSSimData, NoCores); 
 NSSimulationObject.UseSimProgressBar=true;
 NSSimulationObject.SimProgressBarID="MainProgress";
 NSSimulationObject.Start();
 
 
-//Note: TMCSSimData[a].PP[b] is an object, but does not contain a prototype
-// TMCSSimData[a].PP[b].__proto__=PersonObject.prototype;
-// this will also be useful in saving and reloading data
+
 
 return 0;
 }

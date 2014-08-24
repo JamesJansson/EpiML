@@ -5,12 +5,12 @@ importScripts("mathtools.js");
 importScripts("person.js");
 importScripts("hcv.js");
 importScripts("hiv.js");
+importScripts("assignpopulation.js");
 
 
 
-
-var Param={};
-var PP=[];
+var Param={};//This is the parameter holder for the simulation
+var PP=[];//This is the array that holds the population
 self.onmessage = function (e) {
 	//In this section will be a message handler that allows calls
 	// Initialise (set data and parameters)
@@ -58,12 +58,7 @@ self.onmessage = function (e) {
 	console.log("Starting to load Person object");
 	
 	
-	for (var i=0; i<SimData.NoPeople; i++){
-		PP[i]=new PersonObject(YearOfBirth, Sex);
-		if (i%IncrementSize==0){
-			self.postMessage({ProgressBarValue: i/SimData.NoPeople});
-		}
-	}
+	AssignPopulation();
 	
 	var seconds2 = new Date().getTime() / 1000;
     var TotalTime=seconds2 -seconds1;
