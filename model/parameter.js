@@ -58,9 +58,8 @@ ParameterClass.prototype.UpdateTypeDisplay= function (){
 		ParameterHTML=ParameterHTML+
 		"Lower Bound <input type='text' name='LowerBound' value='" + this.LowerBound + "'>\n"+
 		"Upper Bound <input type='text' name='UpperBound' value='" + this.UpperBound + "'>\n";
-		//Set the display type
-		console.log(ParameterHTML);
-		document.getElementById(this.InterfaceID).innerHTML=ParameterHTML;
+		
+		
 		//document.getElementById(this.InterfaceID).LowerBound=this.LowerBound;
 		//document.getElementById(this.InterfaceID).UpperBound=this.UpperBound;
 	}
@@ -73,6 +72,13 @@ ParameterClass.prototype.UpdateTypeDisplay= function (){
 	//		<a onClick="ToggleDisplay(this, 'ParamInfoBox');">+ More info</a>
 	//		<div class="ParamInfoBox" style="display: none;"> Some info to display </div>
 	// 
+	
+	ParameterHTML=ParameterHTML+
+		"<a onClick=\"ToggleDisplay(this, 'ParamInfoBox');\">+ More info</a>\n"+
+		"<div class='ParamInfoBox' style='display: none;'> Some info to display </div>";
+		
+		console.log(ParameterHTML);
+		document.getElementById(this.InterfaceID).innerHTML=ParameterHTML;
 	
 	
 	
