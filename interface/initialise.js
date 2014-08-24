@@ -22,7 +22,8 @@ function InitialisePage(){
 	Param={};
 	Param.HCV={};
 	Param.HCV.AAA=new ParameterClass('AAA');
+	Param.HCV.AAA.Description="This is what will appear in the textarea box";
 	Param.HCV.BBB=new ParameterClass('BBB');
 	//Initialise interface
-	BuildParameterPage(Param.HCV, "HCVParamHolder");
+	BuildParameterPage(Param.HCV, "HCVParamHolder", "Param.HCV");
 }

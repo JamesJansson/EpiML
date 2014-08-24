@@ -5,10 +5,12 @@
 
 function ParameterClass(ParameterID){
 
-this.CategoryID=NaN;//e.g. HCV
+
 this.ParameterID=ParameterID;// e.g. LFHCCProbability
 this.InterfaceID=NaN;// e.g. HCV_LFHCCProbability
-
+// Note that GroupName is primarily used for interface design. It is updated at load to represent the true structure of the objects in which it resides, so it cannot be relied upon to be consistent between builds.
+this.GroupName=NaN;//e.g. HCV, or in the case of it being a struct of a struct, Param.HCV
+//GroupName+'.'+ParameterID gives the full name that the function can call. 
 
 this.DistributionType="uniform";
 //0: uniform
@@ -47,7 +49,7 @@ ParameterClass.prototype.UpdateTypeDisplay= function (){
 	// Set up the name and parameter type
 	var ParameterHTML=""+
 	"<input type='text' name='ParameterID' value='" + this.ParameterID + "'>\n"+ 
-	"<select name='DistributionType' onchange=';'>\n"+//set on change here to call this.UpdateTypeDisplay
+	"<select name='DistributionType' onchange='" + this.ParameterID + ".UpdateTypeDisplay();'>\n"+//set on change here to call this.UpdateTypeDisplay
 	"	<option value='uniform'>Uniform</option>\n"+
 	"	<option value='normal'>Normal</option>\n"+
 	"	<option value='exponential'>Exponential</option>\n"+
@@ -75,11 +77,24 @@ ParameterClass.prototype.UpdateTypeDisplay= function (){
 	
 	ParameterHTML=ParameterHTML+
 		"<a onClick=\"ToggleDisplay(this, 'ParamInfoBox');\">+ More info</a>\n"+
-		"<div class='ParamInfoBox' style='display: none;'> Some info to display </div>";
+		"<div class='ParamInfoBox' style='display: none;'>\n"+
+		"<p>Description</p>"+
+		"<textarea name='Description' cols='100' rows='5'>"+this.Description+"</textarea>";
+		
+	//For each of the references, add a link, a box for the title, and the link
+	
+	
+	//Add a "add ref button"
+	
+	
+	
+	//Close off the div
+	ParameterHTML=ParameterHTML+"</div>";
 		
 		console.log(ParameterHTML);
 		document.getElementById(this.InterfaceID).innerHTML=ParameterHTML;
 	
+	console.log(this);
 	
 	
 }
@@ -129,7 +144,17 @@ ParameterClass.prototype.CreateDistribution= function (){
 //**************************************************************************************************************************
 // From this point, the code is no longer dealing with individual parameters, but with displaying groups of parameters in a page
 
-function BuildParameterPage(ParamGroup, ParamGroupDivId){
+function BuildParameterPage(ParamGroup, ParamGroupDivId, GroupName){
+
+	//Firstly, ensure that the parameters in the group have the proper GroupName e.g. Param.HIV
+	//This allows the object to be able to write code that allows it to execute itself, e.g. Param.HIV.CalculateAndDisplayMedian()
+	for (var key in ParamGroup) {// Code inspired by http://stackoverflow.com/questions/208016/how-to-list-the-properties-of-a-javascript-object
+		if (ParamGroup.hasOwnProperty(key)) {
+			ParamGroup[key].GroupName=GroupName;
+		}
+	}
+
+
 	var BuildText="";
 	for (var key in ParamGroup) {// Code inspired by http://stackoverflow.com/questions/208016/how-to-list-the-properties-of-a-javascript-object
 		if (ParamGroup.hasOwnProperty(key)) {
