@@ -45,11 +45,15 @@ this.URL=[];//An array of URLs that are sources for the parameter in question [L
 //Load the parameter from text
 	//or maybe simply bind a JSON object
 	
+ParameterClass.prototype.Name= function (){
+	return (this.GroupName+'.'+this.ParameterID);
+}	
+	
 ParameterClass.prototype.UpdateTypeDisplay= function (){
 	// Set up the name and parameter type
 	var ParameterHTML=""+
 	"<input type='text' name='ParameterID' value='" + this.ParameterID + "'>\n"+ 
-	"<select name='DistributionType' onchange='" + this.ParameterID + ".UpdateTypeDisplay();'>\n"+//set on change here to call this.UpdateTypeDisplay
+	"<select id='DistributionType'  onchange='"+this.Name()+".DistributionType=this.value;"+this.Name()+".UpdateTypeDisplay();'>\n"+//change the type, then redisplay
 	"	<option value='uniform'>Uniform</option>\n"+
 	"	<option value='normal'>Normal</option>\n"+
 	"	<option value='exponential'>Exponential</option>\n"+
@@ -90,11 +94,13 @@ ParameterClass.prototype.UpdateTypeDisplay= function (){
 	
 	//Close off the div
 	ParameterHTML=ParameterHTML+"</div>";
-		
-		console.log(ParameterHTML);
-		document.getElementById(this.InterfaceID).innerHTML=ParameterHTML;
+	document.getElementById(this.InterfaceID).innerHTML=ParameterHTML;
+	document.getElementById(this.InterfaceID).DistributionType.value=this.DistributionType;
 	
-	console.log(this);
+		//console.log(ParameterHTML);
+		
+	
+	//console.log(this);
 	
 	
 }
