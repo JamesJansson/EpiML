@@ -29,14 +29,14 @@ function RunSim(){
 	
 	
 	
-	/*
-	Data.SummaryNotificationsTable=DataFile.StateNotificationsCSV.GetValues(1, 2, 5, 10);
+	
 	
 	
 	
 	// Save into the CommonData holder
 	var CommonData={};//
 	CommonData.Data=Data;
+	/*
 	CommonData.Param=Param;
 	
 	
