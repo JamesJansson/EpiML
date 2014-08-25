@@ -29,7 +29,3 @@ function RunNotificationSim(){
 	return 0;
 }
 
-function LoadNotificationData(){
-	SummaryNotificationsCSV=new CSVFile('data/summarynotifications.csv');
-	SummaryNotificationsTable=SummaryNotificationsCSV.GetValues(1, 2, 5, 10);
-}

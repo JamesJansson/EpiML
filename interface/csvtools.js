@@ -38,6 +38,11 @@ CSVFile.prototype.GetValues= function (x1, y1, x2, y2){
 	return ReturnArray;
 };
 
+console.log("To do: make column reader in csv tools");
+console.log("To do: make row reader in csv tools");
+
+
+
 CSVFile.prototype.Entries= function (x1, y1, x2, y2){
 	//checking input is good
 	if (x1>x2 || y1>y2 || x1<0 || y1<0 || this.IsNaturalNumber(x1)==false || this.IsNaturalNumber(x2)==false || this.IsNaturalNumber(y1)==false || this.IsNaturalNumber(y2)==false ){

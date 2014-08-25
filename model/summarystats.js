@@ -7,9 +7,22 @@
 // 1) The name of the variable that you want to observe
 // 2) The particular status of the variable you want to observe
 // 3) The conditions on the person to be included. All people are included unless otherwise stated
+// 3.1) An array of set values or
+// 3.2) A range of values (inclusive)
 // 4) The year that you want to observe it
 
 // e.g. Summary stats request structure
 RecentTeenageHCVInfections=new StatRequest();
 RecentTeenageHCVInfections.VariableName="";
+
+
+// Continuous variable range, instantaneous value
+RecentTeenageHCVInfections.FunctionChooserString[0] = "function (PersonUnderInspecion, Time){return PersonUnderInspecion.Age(Time);}";// this will be evaled on the other side of the webworker
+RecentTeenageHCVInfections.Lower[0] = 25;
+RecentTeenageHCVInfections.Upper[0] = 35;
+// Categorical variable value, instantaneous value
+RecentTeenageHCVInfections.FunctionChooserString[1] = "function (PersonUnderInspecion, Time){return PersonUnderInspecion.HCV.FibrosisStage(Time);};"
+RecentTeenageHCVInfections.Values[0] = [];
+RecentTeenageHCVInfections.Values[0][0] = 3;//If the fibrosis stages are either 3 or 4 (but nothing else 
+RecentTeenageHCVInfections.Values[0][1] = 4;//
 
