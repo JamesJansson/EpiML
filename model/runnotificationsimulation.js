@@ -58,7 +58,7 @@ self.onmessage = function (e) {
 	console.log("Starting to load Person object");
 	
 	
-	AssignPopulation();
+	PPNotification=AssignPopulation(Data);
 	
 	var seconds2 = new Date().getTime() / 1000;
     var TotalTime=seconds2 -seconds1;
