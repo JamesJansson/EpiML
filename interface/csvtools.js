@@ -37,7 +37,7 @@ CSVFile.prototype.GetValues= function (y1, y2, x1, x2){//Changing to (row1, row2
 	return ReturnArray;
 };
 
-console.log("Test that the maximum isn't read in");
+
 
 console.log("To do: make column reader in csv tools");
 CSVFile.prototype.GetColumn= function (ColumnNum, StartRow, EndRow){//
@@ -45,11 +45,11 @@ CSVFile.prototype.GetColumn= function (ColumnNum, StartRow, EndRow){//
 		console.error("The range of values requested is invalid");
 	}
 	
-	var TempVec this.GetValues(StartRow, EndRow, ColumnNum, ColumnNum);
+	var TempVec=this.GetValues(StartRow, EndRow, ColumnNum, ColumnNum);
 	var ReturnVec=[];
 	var Count=0;
-	for Val in TempVec{
-		ReturnVec[Count]=Val[Count][0];//Refactor the vector into a proper vector
+	for (var Val in TempVec){
+		ReturnVec[Count]=Val[0];//Refactor the vector into a proper vector
 		Count++;
 	}
 	return ReturnVec;
