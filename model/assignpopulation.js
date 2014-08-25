@@ -13,12 +13,12 @@ function AssignPopulation(Data){
 		Data.AgeSexNotifications
 		// Choose the state from the remaining population
 		StateNotificationCount[SomeReference]=StateNotificationCount[SomeReference]-1;
-		PP[i]=new PersonObject(YearOfBirth, Sex);
+		PNotification[i]=new PersonObject(YearOfBirth, Sex);
 		
 		
 		
 	}
 
 
-	return PP;
+	return PNotification;
 }

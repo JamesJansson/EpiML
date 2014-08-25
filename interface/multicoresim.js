@@ -56,9 +56,6 @@ function MulticoreSim(ScriptName, CommonData, SimDataArray, NoCores){
 	this.SimProgressBarID="SimProgressBar";//To allow a progress bar to be installed into the page
 	this.UseWithinSimProgressBar=false;
 	this.WithinSimProgressBarID="WithinSimProgressBar";
-	
-	
-
 }
 
 MulticoreSim.prototype.Start=function() {
