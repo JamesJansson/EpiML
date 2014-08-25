@@ -12,7 +12,7 @@ function CSVFile(FileName){//file name in this instance is the URL
 
 }
 
-CSVFile.prototype.GetValues= function (y1, y2, x1, x2){//Changing to (row1, row2, column1, column2)
+CSVFile.prototype.GetValues= function (y1, y2, x1, x2){//Changing to (row1, row2, column1, column2), as is expected in a CSV file
 	//checking input is good
 	if (x1>x2 || y1>y2 || x1<0 || y1<0 || this.IsNaturalNumber(x1)==false || this.IsNaturalNumber(x2)==false || this.IsNaturalNumber(y1)==false || this.IsNaturalNumber(y2)==false ){
 		console.error("The range of values requested is invalid");
@@ -46,19 +46,25 @@ CSVFile.prototype.GetColumn= function (ColumnNum, StartRow, EndRow){//
 	}
 	
 	var TempVec=this.GetValues(StartRow, EndRow, ColumnNum, ColumnNum);
+	console.log(TempVec);
 	var ReturnVec=[];
-	var Count=0;
-	for (var Val in TempVec){
-		ReturnVec[Count]=Val[0];//Refactor the vector into a proper vector
-		Count++;
+	for (var i=0; i<TempVec.length; i++ ){
+		ReturnVec[i]=TempVec[i][0];//Refactor the vector into a proper vector
 	}
 	return ReturnVec;
 }
 
 
 
-console.log("To do: make row reader in csv tools");
 
+CSVFile.prototype.GetRow= function (RowNum, StartColumn, EndColumn){//
+	if (StartColumn>EndColumn || RowNum<0 || StartColumn<0 || this.IsNaturalNumber(RowNum)==false || this.IsNaturalNumber(StartColumn)==false || this.IsNaturalNumber(EndColumn)==false){
+		console.error("The range of values requested is invalid");
+	}
+	
+	var ReturnVec=this.GetValues(RowNum, RowNum, StartColumn, EndColumn);
+	return ReturnVec[0];
+}
 
 
 CSVFile.prototype.Entries= function (y1, y2, x1, x2){
