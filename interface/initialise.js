@@ -13,7 +13,7 @@
 // Settings
 	var NoCores=1;
 
-	
+var Settings={};
 	
 function InitialisePage(){
 	//LoadData();
@@ -26,4 +26,12 @@ function InitialisePage(){
 	Param.HCV.BBB=new ParameterClass('BBB');
 	//Initialise interface
 	BuildParameterPage(Param.HCV, "HCVParamHolder", "Param.HCV");
+}
+
+function LoadSettings(){
+	Settings.NoCores=1;// number of cores to use at a times
+	Settings.ConcurrentSims=10;// number of sims to keep active at once (for interface playing)
+	
+
+
 }

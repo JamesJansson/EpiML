@@ -6,11 +6,11 @@ importScripts("person.js");
 importScripts("hcv.js");
 importScripts("hiv.js");
 importScripts("assignpopulation.js");
-
+importScripts("standardsummarystats.js");
 
 
 var Param={};//This is the parameter holder for the simulation
-var PP=[];//This is the array that holds the population
+var PP=[];//This is the global array that holds the population
 self.onmessage = function (e) {
 	//In this section will be a message handler that allows calls
 	// Initialise (set data and parameters)
@@ -33,7 +33,7 @@ self.onmessage = function (e) {
 	
 	
 	
-	var SimNumber = e.data.SimNumber;
+	var SimID = e.data.SimNumber; // this value is used to select the appropriate parameter value
     var SimData = e.data.SimData;//creates a pointer
 	
 	var IncrementSize=Math.round(SimData.NoPeople/100);//used to deliver progress rates back to the progress bar
