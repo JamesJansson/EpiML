@@ -109,7 +109,7 @@ Papa.parse("data/summarynotifications.csv", {download: true, complete: function(
 		The buttons below currently are only a testing are for the CSV read
 		<div class="SolidButton" onClick="LoadNotificationData();">Load Notification Data</div>
 		<div class="SolidButton" onClick="SummaryNotificationsCSV=new CSVFile('data/summarynotifications.csv');">OLD Load Notification Data</div>
-		<div class="SolidButton" onClick="SummaryNotificationsTable=SummaryNotificationsCSV.GetValues(1, 2, 5, 10); TimeAxis=[];for(i=0; i<5; i++){TimeAxis[i]=2008+i;}">Extract data</div>
+		<div class="SolidButton" onClick="SummaryNotificationsTable=SummaryNotificationsCSV.GetValues(2, 10, 1, 5); TimeAxis=[];for(i=0; i<5; i++){TimeAxis[i]=2008+i;}">Extract data</div>
 		<div class="SolidButton" onClick="StackedLinePlot('#NotificationPlotHolder', TimeAxis, SummaryNotificationsTable,  'Year','Number of notifications');">Line Plot</div>
 		<div class="SolidButton" onClick="StackedBarPlot('#NotificationPlotHolder', TimeAxis, SummaryNotificationsTable,  'Year','Number of notifications');">Bar Plot</div>
 		

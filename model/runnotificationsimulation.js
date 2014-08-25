@@ -59,6 +59,10 @@ self.onmessage = function (e) {
 	
 	
 	PPNotification=AssignPopulation(Data);
+	// For each person in the simulation 
+	// Determine a random time that they have been infected for (lognormally distributed about 5 years previously, SD 2.5 years)
+	
+	
 	
 	var seconds2 = new Date().getTime() / 1000;
     var TotalTime=seconds2 -seconds1;
