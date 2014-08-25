@@ -15,6 +15,7 @@
 
 var Settings={};
 var Data={};
+var DataFile={};
 	
 function InitialisePage(){
 	LoadDataFiles();
@@ -47,17 +48,11 @@ function LoadParametersFiles(){
 }
 
 function LoadDataFiles(){
-	var AgeSexNotificationsCSV=new CSVFile('data/agesexnotifications.csv');
-	var StateNotificationsCSV=new CSVFile('data/statenotifications.csv');
+	DataFile.AgeSexNotifications=new CSVFile('data/agesexnotifications.csv');
+	DataFile.StateNotifications=new CSVFile('data/statenotifications.csv');
 	
 	
-	//Data.MaleNotifications.Table=AgeSexNotificationsCSV.GetValues(1, 2, 5, 10);//get table indicates the range [rows][columns]
-	//Data.MaleNotifications.Age=AgeSexNotificationsCSV.GetColumn(1, 2, 5, 10);//GetColumn
-	//Data.MaleNotifications.Year=AgeSexNotificationsCSV.GetRow(1, 2, 5, 10);//GetRow
-	
-	
-	
-	//Data.SummaryNotificationsTable=StateNotificationsCSV.GetValues(1, 2, 5, 10);
+
 }
 
 

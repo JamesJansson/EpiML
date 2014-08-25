@@ -46,10 +46,11 @@ CSVFile.prototype.GetColumn= function (ColumnNum, StartRow, EndRow){//
 	}
 	
 	var TempVec=this.GetValues(StartRow, EndRow, ColumnNum, ColumnNum);
-	console.log(TempVec);
+	
+	//Refactor the vector into a proper vector
 	var ReturnVec=[];
 	for (var i=0; i<TempVec.length; i++ ){
-		ReturnVec[i]=TempVec[i][0];//Refactor the vector into a proper vector
+		ReturnVec[i]=TempVec[i][0];
 	}
 	return ReturnVec;
 }
