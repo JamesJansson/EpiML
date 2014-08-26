@@ -37,9 +37,6 @@ CSVFile.prototype.GetValues= function (y1, y2, x1, x2){//Changing to (row1, row2
 	return ReturnArray;
 };
 
-
-
-console.log("To do: make column reader in csv tools");
 CSVFile.prototype.GetColumn= function (ColumnNum, StartRow, EndRow){//
 	if (StartRow>EndRow || ColumnNum<0 || StartRow<0 || this.IsNaturalNumber(ColumnNum)==false || this.IsNaturalNumber(StartRow)==false || this.IsNaturalNumber(EndRow)==false){
 		console.error("The range of values requested is invalid");
@@ -54,8 +51,6 @@ CSVFile.prototype.GetColumn= function (ColumnNum, StartRow, EndRow){//
 	}
 	return ReturnVec;
 }
-
-
 
 
 CSVFile.prototype.GetRow= function (RowNum, StartColumn, EndColumn){//
