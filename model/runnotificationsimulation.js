@@ -11,7 +11,12 @@ importScripts("assignpopulation.js");
 
 var Param={};//This is the parameter holder for the simulation
 var PP=[];//This is the global array that holds the population
+var SimID;//This value is a global, used to reference the correct simulation in the Param structure
+
+
 self.onmessage = function (e) {
+
+	
 	//In this section will be a message handler that allows calls
 	// Initialise (set data and parameters)
 	// Optimise (find unknown parameters)
@@ -25,10 +30,11 @@ self.onmessage = function (e) {
 	
 	Rand.SetSeed();//note that this is an extremely important step to allow random numbers to be generated
 	
-	
 	var TimerStart = new Date().getTime() / 1000;
 	
+	
 	//Load the notification data
+	
 	
 	
 	

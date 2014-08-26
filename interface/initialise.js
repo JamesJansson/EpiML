@@ -22,13 +22,21 @@ function InitialisePage(){
 	//Wait?
 	
 	
-	Param={};
+	
 	Param.HCV={};
 	Param.HCV.AAA=new ParameterClass('AAA');
 	Param.HCV.AAA.Description="This is what will appear in the textarea box";
 	Param.HCV.BBB=new ParameterClass('BBB');
+	
+	//Param.HCV.F0F1;
+	
+	
+	
 	//Initialise interface
 	BuildParameterPage(Param.HCV, "HCVParamHolder", "Param.HCV");
+	
+	
+	console.log("It might be a good idea to compress simulation output to save on time using LZAA in lz-string http://pieroxy.net/blog/pages/lz-string/demo.html");
 }
 
 function TestingPageRequirements(){
