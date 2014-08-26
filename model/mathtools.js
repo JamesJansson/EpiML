@@ -380,6 +380,24 @@ function Logit(x){//inverse of logistic. Must take value on(0,1)
 }
 
 
+// Fisher–Yates shuffle
+// This code is copied from : http://bost.ocks.org/mike/shuffle/
+function Shuffle(array) {
+	var m = array.length, t, i;
+	// While there remain elements to shuffle…
+	while (m) {
+		// Pick a remaining element…
+		i = Math.floor(Rand.Value() * m--);
+		// And swap it with the current element.
+		t = array[m];
+		array[m] = array[i];
+		array[i] = t;
+	}
+	return array;
+}
+
+
+
 
 
 // Math.random is platform dependent, meaning we need to create or use a platform independent method 
