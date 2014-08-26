@@ -25,6 +25,7 @@ function  HCVObject(YearOfBirth)
 	
 	//Initialise history variables
 	this.Infected.Set(0, YearOfBirth);
+	this.Diagnosed.Set(0, YearOfBirth);
 	this.Fibrosis.Set(0, YearOfBirth);
 	this.HCC.Set(0, YearOfBirth);
 	//this.Genotype[0].Set(0, YearOfBirth);

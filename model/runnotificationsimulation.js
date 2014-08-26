@@ -21,16 +21,12 @@ self.onmessage = function (e) {
 	// Get data
 	// Save
 
-	p={};
-	p.aaa=1;
-	p.bbb=2;
-	console.log(e);
-	self.postMessage({Console: e.data});//This is 
+	self.postMessage({Console: e.data});//This passes the data back to the console so we can look at it
 	
 	Rand.SetSeed();//note that this is an extremely important step to allow random numbers to be generated
 	
 	
-	var seconds1 = new Date().getTime() / 1000;
+	var TimerStart = new Date().getTime() / 1000;
 	
 	//Load the notification data
 	
@@ -68,14 +64,18 @@ self.onmessage = function (e) {
 	
 	
 	
-	var seconds2 = new Date().getTime() / 1000;
-    var TotalTime=seconds2 -seconds1;
+	var TimerFinish = new Date().getTime() / 1000;
+    var TotalTime=TimerFinish -TimerStart;
 	console.log("Memory allocation stopped after "+TotalTime+" seconds");
 	
 	console.log("Starting to HCV progression");
 	
+	var YearOfInfection;
 	for (var i=0; i<SimData.NoPeople; i++){
-		PP[i].HCV.Infection(Year, GenotypeValue, Age, Sex, Alcohol, HCVParam );
+		 
+		YearOfInfection=PPNotification[i].HCV.Infection
+		
+		PP[i].HCV.Infection(Year, GenotypeValue, Age, Sex, Alcohol, HCVParam );//In future iterations, HCVParam will become Param.HCV
 		if (i%IncrementSize==0){
 			self.postMessage({ProgressBarValue: i/SimData.NoPeople});
 		}

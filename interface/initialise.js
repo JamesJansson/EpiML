@@ -50,10 +50,11 @@ function LoadSettingsFiles(){
 	// if Settings.NoCores=
 	Settings.NoCores=1;// number of cores to use at a time
 	Settings.ConcurrentSims=10;// number of sims to keep active at once (for interface playing)
+	Settings.SampleFactor=10;// This value is the number of people each person in the simulation represents. Probably a good idea to set this to 1, 10 or 100
 }
 
 function LoadParametersFiles(){
-	Param.SampleFactor=10;// This value is the number of people each person in the simulation represents. Probably a good idea to set this to 1, 10 or 100
+	Param.SampleFactor=Settings.SampleFactor;// This value is the number of people each person in the simulation represents. Probably a good idea to set this to 1, 10 or 100
 }
 
 function LoadDataFiles(){
