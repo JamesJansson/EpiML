@@ -372,7 +372,7 @@ function TestRandSpeed(){
 }
 
 
-function Win(p){//Given a probability p of winning, return true or false 
+function Win(p){//Given a probability p of winning, return true or false. Note, no error checking occurs in this function
 	if (Rand.Value()<p){
 		return true;
 	}

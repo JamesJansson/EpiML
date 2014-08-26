@@ -14,16 +14,17 @@ function AssignPopulation(Data, Param){
 	
 	var StateVector;
 	var CountingTotal;
+	var EstimateInThisGroup, EstimateInThisGroup1, EstimateInThisGroup2, InThisGroup;
 
 	// Choose the age and sex from the notifications table
 	// For each of the sexes
 	var Sex=[];
 	Sex[0]={};
 	Sex[0].Notifications={};
-	Sex[0].Notifications=Data.MaleNotifications;
+	Sex[0].Notifications=Data.MaleNotifications.Table;
 	Sex[1]={};
 	Sex[1].Notifications={};
-	Sex[1].Notifications=Data.FemaleNotifications;
+	Sex[1].Notifications=Data.FemaleNotifications.Table;
 	
 	console.log("Starting to assign");
 	
@@ -67,16 +68,19 @@ function AssignPopulation(Data, Param){
 		
 		// For each age group
 		for (var AgeIndex=0; AgeIndex<NumAgeGroups; AgeIndex++){
-			for (var SexIndex=0; SexIndex<2; Sex++){
-				//EstimateInThisGroup=Math.round(Data.MaleNotifications/Param.SampleFactor
+			//self.postMessage({Console: Sex[0]});
+			for (var SexIndex=0; SexIndex<2; SexIndex++){
 				
-				EstimateInThisGroup=Sex[SexIndex].Notifications[AgeIndex][SexIndex];
+				EstimateInThisGroup=Sex[SexIndex].Notifications[AgeIndex][YearIndex];
 				//Compensating for using a representative sample
 				//note that Math.round() will not give the full picture (groups with <0.5 people will always have less, and groups with >0.5 will always have more than they should
 				//To compensate, the algorithm adds a person with a probability based on the remainder
 				// e.g. and entry with 3.4 people will give 3 people plus one extra person with 40% probability 
-				EstimateInThisGroup1=floor(EstimateInThisGroup);
-				EstimateInThisGroup2=EstimateInThisGroup-EstimateInThisGroup1;
+				EstimateInThisGroup=EstimateInThisGroup*(1-Param.DuplicateFactor)/Param.SampleFactor;
+				EstimateInThisGroup1=Math.floor(EstimateInThisGroup);
+				EstimateInThisGroup2=EstimateInThisGroup-EstimateInThisGroup1;// Some value between 0 and 1
+				InThisGroup=EstimateInThisGroup1+Win(EstimateInThisGroup2);
+				
 				
 			}
 		}
