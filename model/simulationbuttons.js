@@ -1,7 +1,7 @@
 // This file contains the scripts that are called when the buttons on the interface are pressed.
 
 var SimulationObject;
-var SimData;
+var SimData=[];
 var Data={};
 var Param={};
 
@@ -33,30 +33,29 @@ function RunSim(){
 	
 	
 	
-	// Save into the CommonData holder
-	var CommonData={};//
-	CommonData.Data=Data;
-	/*
-	CommonData.Param=Param;
+	// Save into the Common holder
+	var Common={};//
+	Common.Data=Data;
+	
+	//Common.Param=Param;
 	
 	
 	
 
 	//Creating the data to be used in the simulations
-	NSSimData=[];
+	SimData=[];
 	for (i=0; i<NumberOfSimsToRun; i++){
-		NSSimData[i]={};
-		NSSimData[i].NoPeople=30000;
+		SimData[i]={};
 	}
 
 	//Creating the parameter
 	
-	SimulationObject=new MulticoreSim(ScriptToRun, CommonData, SimData, NoCores); //CommonData is the same between all sims
+	SimulationObject=new MulticoreSim(ScriptToRun, Common, SimData, NoCores); //Common is the same between all sims
 	SimulationObject.UseSimProgressBar=true;
 	SimulationObject.SimProgressBarID="MainProgress";
 	SimulationObject.Start();
 
-	*/
+
 
 
 	return 0;

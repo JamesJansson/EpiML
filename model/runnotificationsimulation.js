@@ -6,7 +6,7 @@ importScripts("person.js");
 importScripts("hcv.js");
 importScripts("hiv.js");
 importScripts("assignpopulation.js");
-importScripts("standardsummarystats.js");
+//importScripts("standardsummarystats.js");
 
 
 var Param={};//This is the parameter holder for the simulation
@@ -21,7 +21,11 @@ self.onmessage = function (e) {
 	// Get data
 	// Save
 
-
+	p={};
+	p.aaa=1;
+	p.bbb=2;
+	console.log(e);
+	self.postMessage({Console: e.data});//This is 
 	
 	Rand.SetSeed();//note that this is an extremely important step to allow random numbers to be generated
 	

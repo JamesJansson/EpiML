@@ -3,10 +3,10 @@
 
 // Example usage:
 // ScriptName="SimulationToRun.js"; 
-// CommonData=[InfoBlock];//All sims will have access to this information
+// Common=[InfoBlock];//All sims will have access to this information
 // SimSpecificDataArray=[67, 33, 99, 55, 88];//can be an array of any type (including other classes). Uses array length to determine the number of simulations to run.
 // NoCores=6;//The number of cores you want the simulation to run over
-// SimulationObject=new MulticoreSim(ScriptName, CommonData, SimSpecificDataArray, NoCores); // getting it ready
+// SimulationObject=new MulticoreSim(ScriptName, Common, SimSpecificDataArray, NoCores); // getting it ready
 // SimulationObject.Start(); // Start the simulations running
 
 // Sample set up of SimulationToRun.js
@@ -16,7 +16,7 @@
 // self.onmessage = function (e) {
 // 		var SimNumber = e.data.SimNumber;
 // 		var SimData = e.data.SimData;
-// 		var CommonData = e.data.CommonData;
+// 		var Common = e.data.Common;
 //
 //		...//Where you do the calculations
 //		
@@ -30,10 +30,10 @@
 // http://stackoverflow.com/questions/16071211/using-transferable-objects-from-a-web-worker/16766758#16766758 
 // http://updates.html5rocks.com/2011/12/Transferable-Objects-Lightning-Fast 
 
-function MulticoreSim(ScriptName, CommonData, SimDataArray, NoCores){
+function MulticoreSim(ScriptName, Common, SimDataArray, NoCores){
 	
 	this.ScriptName=ScriptName;
-	this.CommonData=CommonData;
+	this.Common=Common;
 	this.SimDataArray=SimDataArray;//an array of values or objects to be passed to the specified script
 	this.NoCores=NoCores;
 	this.Worker=[];//An array of workers
@@ -99,7 +99,7 @@ MulticoreSim.prototype.StartNextSim=function() {
 			
 			
 			//Post message will soon become a handler for many commands, including starting the simulation, optimising the simulation, and requesting data
-			this.Worker[SimID].postMessage({ SimNumber: SimID, CommonData: this.CommonData, SimData: this.SimDataArray[SimID]});
+			this.Worker[SimID].postMessage({ SimNumber: SimID, Common: this.Common, SimData: this.SimDataArray[SimID]});
 		}
 		else{ //there are no more sims to run
 			MoreSimsToRun=false;
@@ -124,7 +124,10 @@ MulticoreSimMessageHandler=function(e) {
 	
 	// Messages to the StatusText
 	if (typeof e.data.StatusText != 'undefined'){
-		console.log(e.data.WorkerStatusText);
+		console.log(e.data.StatusText);
+	}
+	if (typeof e.data.Console != 'undefined'){//used to pass structured data to the console
+		console.log(e.data.Console);
 	}
 	// Messages to the ProgressBar
 	if (typeof e.data.ProgressBarValue != 'undefined'){
