@@ -162,8 +162,8 @@ function BuildParameterPage(ParamGroup, ParamGroupDivId, GroupName){
 	}
 	
 	//This next section is very naughty, because it breaks the div by setting the inner HTML. It will probably break.
-	BuildText=BuildText+"<div class='SolidButton' onClick='AddNewParameter("+GroupName+", \""+ParamGroupDivId+"\"); '>Add parameter</div>"
-	
+	BuildText=BuildText+"<div class='SolidButton' onClick='AddNewParameter("+GroupName+", \""+GroupName+"\", \""+ParamGroupDivId+"\"); '>Add parameter</div>"
+	BuildText=BuildText+"<p>Unsaved parameters <\p>";
 	document.getElementById(ParamGroupDivId).innerHTML = BuildText;
 	
 	//Load each of the holders with the parameters that should be held
@@ -177,7 +177,7 @@ function BuildParameterPage(ParamGroup, ParamGroupDivId, GroupName){
 }
 
 
-function AddNewParameter(ParamGroup, ParamGroupDivId){
+function AddNewParameter(ParamGroup, GroupName, ParamGroupDivId){
 	//Count number of current 
 	var NumParams=1;
 	for (var key in ParamGroup) {
@@ -185,10 +185,19 @@ function AddNewParameter(ParamGroup, ParamGroupDivId){
 	}
 	var ParamName="NewParam"+NumParams;//The new parameter will be called e.g. NewParam12
 	ParamGroup[ParamName]=new ParameterClass(ParamName);
+	// Add the GroupName
+	ParamGroup[ParamName].GroupName=GroupName;
+	
+	
 	// Name the interface
 	ParamGroup[ParamName].InterfaceID=ParamGroupDivId+ParamName;
-	document.getElementById(ParamGroupDivId).innerHTML = document.getElementById(ParamGroupDivId).innerHTML + ParamGroup[ParamName].InterfaceID;
+	HTMLToAdd="\n                <form class=\"ParamContainer\" id=\""+ParamGroup[ParamName].InterfaceID+"\"></form>";
+	document.getElementById(ParamGroupDivId).innerHTML = document.getElementById(ParamGroupDivId).innerHTML + HTMLToAdd;
 	
+	console.log(ParamGroup[ParamName].Name());
+	console.log(ParamGroup[ParamName].GroupName);
+	
+	ParamGroup[ParamName].UpdateTypeDisplay();
 }
 
 
