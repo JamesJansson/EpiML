@@ -49,8 +49,8 @@ function AssignPopulation(Data, Param){
 		StateVector=Shuffle(StateVector);
 		
 		//post back a sample of the StateVector
-		console.log("The year "+Year+" had" + CountingTotal + " people. Sample:");
-		self.postMessage({Console: StateVector});
+		//console.log("The year "+Year+" had" + CountingTotal + " people. Sample:");
+		//self.postMessage({Console: StateVector});
 		//for (var i=0; i<100; i++){
 		//	console.log(StateVector[i]);
 		//}
@@ -75,8 +75,8 @@ function AssignPopulation(Data, Param){
 				//note that Math.round() will not give the full picture (groups with <0.5 people will always have less, and groups with >0.5 will always have more than they should
 				//To compensate, the algorithm adds a person with a probability based on the remainder
 				// e.g. and entry with 3.4 people will give 3 people plus one extra person with 40% probability 
-				EstimateInThisGroup=EstimateInThisGroup
-				
+				EstimateInThisGroup1=floor(EstimateInThisGroup);
+				EstimateInThisGroup2=EstimateInThisGroup-EstimateInThisGroup1;
 				
 			}
 		}
