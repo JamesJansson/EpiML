@@ -35,9 +35,10 @@ self.onmessage = function (e) {
 	
 	//Load the notification data
 	var Data=e.data.Common.Data;
+	//Load the parameters data
+	var Param=e.data.Common.Param;
 	
-	
-	
+	console.log("Param "+ Param);
 	
 	var SimID = e.data.SimNumber; // this value is used to select the appropriate parameter value
     var SimData = e.data.SimData;//creates a pointer

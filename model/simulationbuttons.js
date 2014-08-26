@@ -37,7 +37,7 @@ function RunSim(){
 	var Common={};//
 	Common.Data=Data;
 	
-	//Common.Param=Param;
+	Common.Param=Param;
 	
 	
 	

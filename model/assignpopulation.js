@@ -26,7 +26,7 @@ function AssignPopulation(Data, Param){
 	Sex[1].Notifications={};
 	Sex[1].Notifications=Data.FemaleNotifications.Table;
 	
-	console.log("Starting to assign");
+	console.log("Starting to assign people");
 	
 	// For each year
 	for (var YearIndex=0; YearIndex<Data.StateNotifications.Year.length; YearIndex++){
@@ -74,9 +74,14 @@ function AssignPopulation(Data, Param){
 				//To compensate, the algorithm adds a person with a probability based on the remainder
 				// e.g. and entry with 3.4 people will give 3 people plus one extra person with 40% probability 
 				EstimateInThisGroup=EstimateInThisGroup*(1-Param.DuplicateFactor)/Param.SampleFactor;
+				console.log("Param.SampleFactor "+ Param.SampleFactor);
 				EstimateInThisGroup1=Math.floor(EstimateInThisGroup);
+				console.log("EstimateInThisGroup1 "+ EstimateInThisGroup1);
 				EstimateInThisGroup2=EstimateInThisGroup-EstimateInThisGroup1;// Some value between 0 and 1
+				console.log("EstimateInThisGroup2 "+ EstimateInThisGroup2);
 				InThisGroup=EstimateInThisGroup1+Win(EstimateInThisGroup2);
+				
+				console.log("In this group "+ InThisGroup);
 				
 				for (var CountInThisGroup=0; CountInThisGroup<InThisGroup; CountInThisGroup++){
 					YearOfDiagnosis=YearThisStep+Rand.Value();
@@ -86,23 +91,25 @@ function AssignPopulation(Data, Param){
 					PNotification[PCount]=new PersonObject(YearOfBirth, SexIndex);
 					
 					// Set the diagnosis date for the individual
-					PNotification[i].HCV.Diagnosed.Set(Year+Rand.Value());
+					PNotification[PCount].HCV.Diagnosed.Set(YearOfDiagnosis);
 					
 					//Set the state value
 					PNotification[PCount].Location.Set(StateVector[PCount], YearOfBirth);
 					
-					PCount=PCount+1;
+					PCount++;
 				}
 			}
+			console.log("Total people "+ PCount);
 		}
 		// Choose the state from the remaining population
-
+		
 		
 		
 		
 		
 	}
 
+	console.log("Total people "+ PCount);
 
 	return PNotification;
 }
