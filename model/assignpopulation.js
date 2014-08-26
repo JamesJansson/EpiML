@@ -10,13 +10,14 @@ function AssignPopulation(Data, Param){
 	
 	
 	
-	StateNotificationCount=Data.StateNotifications.slice();//copy state notifications, because we plan count down the number of 
+	//var StateNotificationCount=Data.StateNotifications.slice();//copy state notifications, because we plan count down the number of 
 	
-	
+	var StateVector;
+	var CountingState;
 
 	// Choose the age and sex from the notifications table
 	// For each of the sexes
-	Sex=[];
+	var Sex=[];
 	Sex[0].Notifications={};
 	Sex[0].Notifications=Data.MaleNotifications;
 	Sex[1].Notifications={};
@@ -27,10 +28,19 @@ function AssignPopulation(Data, Param){
 	for (var YearIndex=0; YearIndex<Data.StateNotifications.Year.length; YearIndex){
 		Year=Data.StateNotifications.Year[YearIndex];
 		
-		
-		// Scale down state notifications (by both the SampleFactor and the DuplicateFactor
+		StateVector=[];//reset
+		CountingState=0;
+		for (var StateIndex=0; StateIndex<Data.StateNotifications.State.length; StateIndex){
+			// Scale down state notifications (by both the SampleFactor and the DuplicateFactor
+			// OR maybe don't bother, just create the vector, shuffle then let the scale down of age/sex notifications take care of it
 	
-		// Create a vector of notifications by state, e.g. [0, 1, 7, 3, ...] that can be sampled sequentially 
+			// Create a vector of notifications by state, e.g. [0, 1, 7, 3, ...] that can be sampled sequentially 
+			for (var CountInThisState=0; CountInThisState<Data.StateNotifications.Table[StateIndex][YearIndex]; CountInThisState++){
+				StateVector[CountingState]=Data.StateNotifications.State[StateIndex];
+				CountingState=CountingState+1;
+			}
+		}
+		StateVector=Shuffle(StateVector);
 		
 		// Later: for each state create a vector of aboriginality [0, 0, 1, 1, 0, 0...]
 		// HIV coinfection
