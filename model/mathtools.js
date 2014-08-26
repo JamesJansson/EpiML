@@ -372,7 +372,12 @@ function TestRandSpeed(){
 }
 
 
-
+function Win(p){//Given a probability p of winning, return true or false 
+	if (Rand.Value()<p){
+		return true;
+	}
+	return false;// didn't win.
+}
 
 
 // Fisher–Yates shuffle
