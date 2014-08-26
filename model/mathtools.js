@@ -382,7 +382,8 @@ function Logit(x){//inverse of logistic. Must take value on(0,1)
 
 // Fisher–Yates shuffle
 // This code is copied from : http://bost.ocks.org/mike/shuffle/
-function Shuffle(array) {
+function Shuffle(inputarray) {
+	array=inputarray.slice();
 	var m = array.length, t, i;
 	// While there remain elements to shuffle…
 	while (m) {
