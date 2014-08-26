@@ -2,7 +2,7 @@ function AssignPopulation(Data, Param){
 	var PNotification=[];// an array that stores the notifications
 	var PCount=0; // Number of people currently added to the notification file
 	var NumAgeGroups=Data.MaleNotifications.Age.length;
-	
+	var AgeVector=Data.MaleNotifications.Age;//This +5 is the range
 	
 	
 	//Param.SampleFactor
@@ -13,7 +13,7 @@ function AssignPopulation(Data, Param){
 	//var StateNotificationCount=Data.StateNotifications.slice();//copy state notifications, because we plan count down the number of 
 	
 	var StateVector;
-	var CountingTotal;
+	var TotalInStateThisYear;
 	var EstimateInThisGroup, EstimateInThisGroup1, EstimateInThisGroup2, InThisGroup;
 
 	// Choose the age and sex from the notifications table
@@ -29,34 +29,31 @@ function AssignPopulation(Data, Param){
 	console.log("Starting to assign");
 	
 	// For each year
-	for (var YearIndex=0; YearIndex<Data.StateNotifications.Year.length; YearIndex){
-		Year=Data.StateNotifications.Year[YearIndex];
+	for (var YearIndex=0; YearIndex<Data.StateNotifications.Year.length; YearIndex++){
+		YearThisStep=Data.StateNotifications.Year[YearIndex];
 		
-		console.log("Starting year "+Year);
+		console.log("Starting year "+YearThisStep);
 		
 		StateVector=[];//reset
-		CountingTotal=0;
+		TotalInStateThisYear=0;
 		for (var StateIndex=0; StateIndex<Data.StateNotifications.State.length; StateIndex++){
-			console.log("Starting State "+StateIndex);
+			
 			// Scale down state notifications (by both the SampleFactor and the DuplicateFactor
 			// OR maybe don't bother, just create the vector, shuffle then let the scale down of age/sex notifications take care of it
 	
 			// Create a vector of notifications by state, e.g. [0, 1, 7, 3, ...] that can be sampled sequentially 
 			for (var CountInThisState=0; CountInThisState<Data.StateNotifications.Table[StateIndex][YearIndex]; CountInThisState++){
-				StateVector[CountingTotal]=Data.StateNotifications.State[StateIndex];
-				CountingTotal=CountingTotal+1;
+				StateVector[TotalInStateThisYear]=Data.StateNotifications.State[StateIndex];
+				TotalInStateThisYear=TotalInStateThisYear+1;
 			}
 		}
 		StateVector=Shuffle(StateVector);
+			
+		console.log("State vector length "+StateVector.length);
+
 		
-		//post back a sample of the StateVector
-		//console.log("The year "+Year+" had" + CountingTotal + " people. Sample:");
-		//self.postMessage({Console: StateVector});
-		//for (var i=0; i<100; i++){
-		//	console.log(StateVector[i]);
-		//}
-		
-		// Later: for each state create a vector of aboriginality [0, 0, 1, 1, 0, 0...]
+		// Later: for each state create a vector of 
+		// aboriginality [0, 0, 1, 1, 0, 0...]
 		// HIV coinfection
 		
 		// Alcoholism
@@ -68,7 +65,7 @@ function AssignPopulation(Data, Param){
 		
 		// For each age group
 		for (var AgeIndex=0; AgeIndex<NumAgeGroups; AgeIndex++){
-			//self.postMessage({Console: Sex[0]});
+			
 			for (var SexIndex=0; SexIndex<2; SexIndex++){
 				
 				EstimateInThisGroup=Sex[SexIndex].Notifications[AgeIndex][YearIndex];
@@ -81,17 +78,29 @@ function AssignPopulation(Data, Param){
 				EstimateInThisGroup2=EstimateInThisGroup-EstimateInThisGroup1;// Some value between 0 and 1
 				InThisGroup=EstimateInThisGroup1+Win(EstimateInThisGroup2);
 				
-				
+				for (var CountInThisGroup=0; CountInThisGroup<InThisGroup; CountInThisGroup++){
+					YearOfDiagnosis=YearThisStep+Rand.Value();
+					AgeAtDiagnosis=AgeVector[AgeIndex]+5*Rand.Value();
+					YearOfBirth=YearOfDiagnosis-AgeAtDiagnosis;
+					
+					PNotification[PCount]=new PersonObject(YearOfBirth, SexIndex);
+					
+					// Set the diagnosis date for the individual
+					PNotification[i].HCV.Diagnosed.Set(Year+Rand.Value());
+					
+					//Set the state value
+					PNotification[PCount].Location.Set(StateVector[PCount], YearOfBirth);
+					
+					PCount=PCount+1;
+				}
 			}
 		}
 		// Choose the state from the remaining population
-		StateNotificationCount[SomeReference]=StateNotificationCount[SomeReference]-1;
-		PNotification[i]=new PersonObject(YearOfBirth, Sex);
-		//Set the state value
+
 		
 		
-		// Set the diagnosis date for the individual
-		PNotification[i].HCV.Diagnosed.Set(Year+Rand.Value());
+		
+		
 	}
 
 

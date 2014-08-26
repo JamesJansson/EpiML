@@ -12,7 +12,7 @@ importScripts("assignpopulation.js");
 var Param={};//This is the parameter holder for the simulation
 var PP=[];//This is the global array that holds the population
 var SimID;//This value is a global, used to reference the correct simulation in the Param structure
-
+var PPNotification=[];
 
 self.onmessage = function (e) {
 
@@ -104,8 +104,8 @@ self.onmessage = function (e) {
 		self.postMessage({ProgressBarValue: (YearCount/(YearsToSimulate+1))});
 	}
 	
-	var seconds2 = new Date().getTime() / 1000;
-    var TotalTime=seconds2 -seconds1;
+	TimerFinish = new Date().getTime() / 1000;
+    TotalTime=TimerFinish -TimerStart;
 
 	console.log("Finished simulation in "+TotalTime+" seconds");
 	var SimResult={};

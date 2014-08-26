@@ -1,20 +1,20 @@
 function  PersonObject(YearOfBirth, Sex)//, YearOfObservation Param)
 {
 	//Active
-	this.Active=0;
+	this.Active=0;// status variable
 	//Sex
 	this.Sex=-1;
 	//Alive
-	this.Alive=1;
+	this.Alive=1;// status variable
 	this.Birth=0;
 	this.Death=1E9;
 	this.GeneralDeath=1E9;
 	this.IDUDeath=1E9;
 	this.HCVDeath=1E9;
 	this.HIVDeath=1E9;
-	//Location
+	//Location (in this case, there is only one location variable, it might represent state or a local area)
 	this.Location=new EventVector;
-	this.Location.Set(1, YearOfBirth);
+
 	//Alcohol
 	this.Alcohol=3E9;//Date of alcoholism (increases linearly with time, probability 
 	
