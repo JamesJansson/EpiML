@@ -34,7 +34,7 @@ self.onmessage = function (e) {
 	
 	
 	//Load the notification data
-	
+	var Data=e.data.Common.Data;
 	
 	
 	
@@ -64,7 +64,7 @@ self.onmessage = function (e) {
 	console.log("Starting to load Person object");
 	
 	
-	PPNotification=AssignPopulation(Data);
+	PPNotification=AssignPopulation(Data, Param);
 	// For each person in the simulation 
 	// Determine a random time that they have been infected for (lognormally distributed about 5 years previously, SD 2.5 years)
 	

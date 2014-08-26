@@ -23,8 +23,8 @@ function RunSim(){
 	Data.FemaleNotifications.Year=DataFile.AgeSexNotifications.GetRow(3, 1, 19);//GetRow	
 	
 	Data.StateNotifications={};
-	Data.StateNotifications.Table=DataFile.StateNotifications.GetValues(29, 37, 1, 19);//get table indicates the range [rows][columns]
-	Data.StateNotifications.State=DataFile.StateNotifications.GetColumn(0, 29, 37);//GetColumn
+	Data.StateNotifications.Table=DataFile.StateNotifications.GetValues(29, 36, 1, 19);//get table indicates the range [rows][columns]
+	Data.StateNotifications.State=DataFile.StateNotifications.GetColumn(0, 29, 36);//GetColumn
 	Data.StateNotifications.Year=DataFile.StateNotifications.GetRow(3, 1, 19);//GetRow
 	
 	
