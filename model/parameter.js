@@ -170,7 +170,6 @@ function BuildParameterPage(ParamGroup, ParamGroupDivId, GroupName){
 	for (var key in ParamGroup) {
 		if (ParamGroup.hasOwnProperty(key)) {
 			//Update display of parameter
-			console.log(key);
 			ParamGroup[key].UpdateTypeDisplay();
 		}
 	}
