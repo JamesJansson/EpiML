@@ -78,11 +78,17 @@ self.onmessage = function (e) {
 	console.log("Starting to HCV progression");
 	
 	var YearOfInfection;
-	for (var i=0; i<SimData.NoPeople; i++){
-		 
-		YearOfInfection=PPNotification[i].HCV.Infection
+	var YearOfDiagnosis;
+	for (var i=0; i<PPNotification.length; i++){
 		
-		PP[i].HCV.Infection(Year, GenotypeValue, Age, Sex, Alcohol, HCVParam );//In future iterations, HCVParam will become Param.HCV
+		TimeUntilDiagnosis=NormalRand(5, 2.5);//this may end up being lognormal
+		
+		if (TimeUntilDiagnosis<0){TimeUntilDiagnosis=0}//correct 
+		
+		YearOfDiagnosis=PPNotification[i].HCV.Diagnosed.Set(YearOfDiagnosis);
+		YearOfInfection=YearOfDiagnosis-TimeUntilDiagnosis;
+		
+		PP[i].HCV.Infection(YearOfInfection, GenotypeValue, Age, Sex, Alcohol, HCVParam );//In future iterations, HCVParam will become Param.HCV
 		if (i%IncrementSize==0){
 			self.postMessage({ProgressBarValue: i/SimData.NoPeople});
 		}

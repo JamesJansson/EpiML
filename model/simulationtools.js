@@ -79,3 +79,22 @@ EventVector.prototype.Get= function (Time){
 		}
 	}
 }
+
+EventVector.prototype.TimeOf= function (EventValue){
+	//Returns a vector of the time of all the events that match that description.
+	// for each element of the vector
+	// if the event matches
+	// add time to the return vector
+	var DatesThisEventOccurred=[];
+	for (var i=0; i<this.Value.length; i++){
+		if (EventValue==this.Value[i]){
+			DatesThisEventOccurred.push(this.Time[i]);
+		}
+	}
+	if (DatesThisEventOccurred.length>0){
+		return DatesThisEventOccurred;
+	}
+	// or if no events occurred, return a NaN in a 1 element array
+	DatesThisEventOccurred=[NaN];
+	return DatesThisEventOccurred;
+}

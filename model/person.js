@@ -1,3 +1,7 @@
+// This file describes the person object. It requires:
+// * mortality
+
+
 function  PersonObject(YearOfBirth, Sex)//, YearOfObservation Param)
 {
 	//Active
@@ -78,4 +82,6 @@ function Mortality(DateOfBirth, Year, Sex){
 	// 
 }
 
-
+PersonObject.prototype.HCVInfection= function (YearOfInfection, Genotype, HCVParam) {
+	this.HCV.Infection(YearOfInfection, Genotype, this.Age(YearOfInfection), this.Sex, Alcohol, HCVParam );
+}
