@@ -72,9 +72,9 @@ function AssignPopulation(Data, Param){
 					PNotification[PCount]=new PersonObject(YearOfBirth, SexIndex);
 					
 					// Set the diagnosis date for the individual
-					PNotification[PCount].HCV.Diagnosed.Set(YearOfDiagnosis);
+					PNotification[PCount].HCV.Diagnosed.Set(1, YearOfDiagnosis);
 					
-					//Set the state value
+					//Set the state value (choose the next in the list which has been randomised above)
 					PNotification[PCount].Location.Set(StateVector[PCount], YearOfBirth);
 					PCount++;
 				}

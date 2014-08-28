@@ -85,8 +85,8 @@ self.onmessage = function (e) {
 		
 		if (TimeUntilDiagnosis<0){TimeUntilDiagnosis=0}//correct 
 		
-		YearOfDiagnosis=PPNotification[i].HCV.Diagnosed.Set(YearOfDiagnosis);
-		YearOfInfection=YearOfDiagnosis-TimeUntilDiagnosis;
+		YearOfDiagnosis=PPNotification[i].HCV.Diagnosed.TimeOf(1);//Returns when "Diagnosed==1"
+		YearOfInfection=YearOfDiagnosis[0]-TimeUntilDiagnosis;// Zero is the first year of diagnosis
 		
 		PP[i].HCV.Infection(YearOfInfection, GenotypeValue, Age, Sex, Alcohol, HCVParam );//In future iterations, HCVParam will become Param.HCV
 		if (i%IncrementSize==0){
