@@ -88,7 +88,7 @@ self.onmessage = function (e) {
 		YearOfDiagnosis=PPNotification[i].HCV.Diagnosed.TimeOf(1);//Returns when "Diagnosed==1"
 		YearOfInfection=YearOfDiagnosis[0]-TimeUntilDiagnosis;// Zero is the first year of diagnosis
 		
-		PP[i].HCV.Infection(YearOfInfection, GenotypeValue, Age, Sex, Alcohol, HCVParam );//In future iterations, HCVParam will become Param.HCV
+		PPNotification[i].HCVInfection(YearOfInfection, GenotypeValue, HCVParam );//In future iterations, HCVParam will become Param.HCV
 		if (i%IncrementSize==0){
 			self.postMessage({ProgressBarValue: i/SimData.NoPeople});
 		}
@@ -102,8 +102,8 @@ self.onmessage = function (e) {
 	console.log("Extracting results");
 	var YearCount=0;
 	for (var GraphYear=Year; GraphYear<Year+YearsToSimulate+1; GraphYear++){
-		for (var i=0; i<SimData.NoPeople; i++){
-			FibrosisLevel=PP[i].HCV.Fibrosis.Get(GraphYear).Value;
+		for (var i=0; i<PPNotification.length; i++){
+			FibrosisLevel=PPNotification[i].HCV.Fibrosis.Get(GraphYear).Value;
 			//self.postMessage({ConsoleMessage: "FibrosisLevel "+ FibrosisLevel+ " YearCount" + YearCount});
 			FibrosisMatrix[FibrosisLevel][YearCount]=FibrosisMatrix[FibrosisLevel][YearCount]+1;;
 		}

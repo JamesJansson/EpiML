@@ -83,5 +83,6 @@ function Mortality(DateOfBirth, Year, Sex){
 }
 
 PersonObject.prototype.HCVInfection= function (YearOfInfection, Genotype, HCVParam) {
-	this.HCV.Infection(YearOfInfection, Genotype, this.Age(YearOfInfection), this.Sex, Alcohol, HCVParam );
+	var Alcohol=0;
+	this.HCV.Infection(YearOfInfection, Genotype, this.Age(YearOfInfection), this.Sex, this.Alcohol, HCVParam );
 }
