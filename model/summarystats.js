@@ -47,7 +47,7 @@ function SummaryStatistic(Type){
 	var SelectionFunction;
 	var SelectionFunctionArray=[];
 	var StartTime;
-	var StopTime;
+	var EndTime;
 	var StepSize=1;//set by default to 1
 	
 	var TimeVector=[];
@@ -72,7 +72,7 @@ SummaryStatistic.prototype.Run=function(Population){
 }
 
 SummaryStatistic.prototype.CountEvents= function (Population){//Used to count how many times something happens over a number of finite periods
-	NumberInVector=Math.round((this.StopTime-this.StartTime)/this.StepSize)+1; //This is used to avoid rounding errors
+	NumberInVector=Math.round((this.EndTime-this.StartTime)/this.StepSize)+1; //This is used to avoid rounding errors
 
 	// initialise vector with a zero vector
 	this.Value=ZeroVector(NumberInVector);
@@ -116,7 +116,7 @@ SummaryStatistic.prototype.Count= function (){// this is an instantaneous counti
 	// Status
 
 
-// Adjust: multiply by a factor to accommodate for using a representative sample, for example
+// Factor: multiply by a factor to accommodate for using a representative sample, for example
 
 
 
@@ -132,22 +132,45 @@ SummaryStatistic.prototype.Count= function (){// this is an instantaneous counti
 
 
 function MultipleSummaryStatistics(){
+	var SummaryStatisticType;
+	var StatFunction;//
+	var StateName;//e.g. HIV incidence
+	
+	var StartTime;
+	var EndTime;
+	var TimeStep;
+	
+	// This is created after all of the element are filled up
 	var SummaryStat=[];
 	
-	var Table;
+	var Table;//[StatIndex][yearindex]
 }
 
 MultipleSummaryStatistics.prototype.Run= function (Population){
-	// for each specified summary stat, run()
+	// for each specified summary stat
+	// Set the time to the same time values
+	SummaryStat=
+	// run()
 	
 	// then create a single table
 }
 
 MultipleSummaryStatistics.prototype.CreateSingleTable= function (){// this is a separate function, because the suer may want to copy in the pre-run summary stat and simply create a single table for speed
 	this.Table=[];
+	
+	
 	//for each summary stat
-		this.Table[i]=
+	
+		this.Table[i]=this.SummaryStat[i].Value;
+		
+	
 }
 
-// Finally, a function that groups the results across multiple instances of the simulations
-
+// Finally, a function that groups the results across multiple instances of the simulations to create 
+// Mean
+// Median
+// 95% bounds
+// Max and min
+// IQR
+// SD/variance?
+// Transform(for all elements of the table, transform using the function, e.g. log)
