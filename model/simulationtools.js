@@ -16,12 +16,12 @@ function TimeUntilEvent(Probability){
 
 // Event vector
 function EventVector(){
-	this.Value=[];
+	this.ValueVec=[];
 	this.Time=[];
 	this.NumberOfEvents=0;
 }
 
-EventVector.prototype.Set= function (Value, Time){
+EventVector.prototype.Set= function (InputValue, Time){
 	if (this.NumberOfEvents>0){
 		//Determine if the current time is prior the last time
 		if (Time<=this.Time[this.NumberOfEvents-1]){//falls directly on that time, delete because we don't want zero time events
@@ -34,13 +34,13 @@ EventVector.prototype.Set= function (Value, Time){
 			}
 			NumToDelete=this.NumberOfEvents-PosToDelete;
 			//if there dates after this one, delete all future events 
-			this.Value.splice(PosToDelete, NumToDelete);
+			this.ValueVec.splice(PosToDelete, NumToDelete);
 			this.Time.splice(PosToDelete, NumToDelete);
 			this.NumberOfEvents=PosToDelete;
 		} 
 	}
 	//Add new items to the end of the array
-	this.Value.push(Value);
+	this.ValueVec.push(InputValue);
 	this.Time.push(Time);
 	this.NumberOfEvents++;
 };
@@ -63,7 +63,7 @@ EventVector.prototype.Get= function (Time){
 		return Current;
 	}
 	else if (this.Time[this.NumberOfEvents-1]<=Time){ // if after the last time
-		Current.Value=this.Value[this.NumberOfEvents-1];
+		Current.Value=this.ValueVec[this.NumberOfEvents-1];
 		Current.Time=this.Time[this.NumberOfEvents-1];
 		Current.Pos=this.NumberOfEvents-1;
 		return Current;
@@ -71,7 +71,7 @@ EventVector.prototype.Get= function (Time){
 	else {//loop through all the middle places (the above should have ensured that there are at least 2 items in the array)
 		for (var i=0; i<this.NumberOfEvents-1; i++){
 			if (this.Time[i]<=Time&&Time<this.Time[i+1]){
-				Current.Value=this.Value[i];
+				Current.Value=this.ValueVec[i];
 				Current.Time=this.Time[i];
 				Current.Pos=i;
 				return Current;
@@ -80,14 +80,57 @@ EventVector.prototype.Get= function (Time){
 	}
 }
 
+EventVector.prototype.Value= function (Time){
+
+	if (this.NumberOfEvents==0){// if no times are set
+		return Number.NaN;
+	}
+	else if (Time<this.Time[0]){ // if before the first one is set 
+		return Number.NaN;
+	}
+	else if (this.Time[this.NumberOfEvents-1]<=Time){ // if after the last time. Checking this first will be much more efficient
+		return this.ValueVec[this.NumberOfEvents-1];
+	}
+	else {//loop through all the middle places (the above should have ensured that there are at least 2 items in the array)
+		for (var i=0; i<this.NumberOfEvents-1; i++){
+			if (this.Time[i]<=Time&&Time<this.Time[i+1]){
+				return this.ValueVec[i];
+			}
+		}
+	}
+}
+
+
+
+EventVector.prototype.GetRange= function (Time1, Time2, StepSize){
+	// This function returns the value of the variable from Time1 to Time2 with time between determined by StepSize
+	//Note that this algorithm is pretty inefficient. We'll need to vectorise this 
+	
+	var ReturnVec=[];
+	tCount=0;
+	for (var t=Time1; t<Time2; StepSize){
+		ValueVec[tcount]=this.Value(t);
+		tCount++;
+	}
+	ValueVec[tcount]=this.Value(Time2);// Note that this value is here to avoid rounding error
+
+}
+
+// (Value, Time1, Time2, StepSize) 
+// Return a 0 or 1, depending on whether this value is true or not
+// ValueByTimeVec=this.GetRange(Time1, Time2, StepSize);
+// for each element of ValueByTimeVec
+// if the value is the same in that point
+// Set that element to true, else false
+
 EventVector.prototype.TimeOf= function (EventValue){
 	//Returns a vector of the time of all the events that match that description.
 	// for each element of the vector
 	// if the event matches
 	// add time to the return vector
 	var DatesThisEventOccurred=[];
-	for (var i=0; i<this.Value.length; i++){
-		if (EventValue==this.Value[i]){
+	for (var i=0; i<this.ValueVec.length; i++){
+		if (EventValue==this.ValueVec[i]){
 			DatesThisEventOccurred.push(this.Time[i]);
 		}
 	}
@@ -98,3 +141,10 @@ EventVector.prototype.TimeOf= function (EventValue){
 	DatesThisEventOccurred=[NaN];
 	return DatesThisEventOccurred;
 }
+
+
+
+//DurationOf(EventValue, WhenToStop(i.e. death))
+// Determines the total amount of time spent in this status
+
+

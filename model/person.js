@@ -43,6 +43,14 @@ PersonObject.prototype.Age= function (Year){//using prototyping for speed
 	return Year-this.YearOfBirth;
 };
 
+PersonObject.prototype.AliveIn = function (Year){//using prototyping for speed
+	if (this.Birth<=Year && Year <= this.Death){
+		return true;
+	}
+	//else
+	return false;
+};
+
 PersonObject.prototype.YearsOfLifeLost= function (){//using prototyping for speed
 	// This is a general function that describes the difference between general death date and 
 	// the earliest described death date.

@@ -6,7 +6,7 @@ importScripts("person.js");
 importScripts("hcv.js");
 importScripts("hiv.js");
 importScripts("assignpopulation.js");
-//importScripts("standardsummarystats.js");
+importScripts("collectresults.js");
 
 
 var Param={};//This is the parameter holder for the simulation
@@ -100,16 +100,7 @@ self.onmessage = function (e) {
 	var FibrosisMatrix=new ZeroMatrix(6, YearsToSimulate+1);
 	
 	console.log("Extracting results");
-	var YearCount=0;
-	for (var GraphYear=Year; GraphYear<Year+YearsToSimulate+1; GraphYear++){
-		for (var i=0; i<PPNotification.length; i++){
-			FibrosisLevel=PPNotification[i].HCV.Fibrosis.Get(GraphYear).Value;
-			//self.postMessage({ConsoleMessage: "FibrosisLevel "+ FibrosisLevel+ " YearCount" + YearCount});
-			FibrosisMatrix[FibrosisLevel][YearCount]=FibrosisMatrix[FibrosisLevel][YearCount]+1;;
-		}
-		YearCount++;
-		self.postMessage({ProgressBarValue: (YearCount/(YearsToSimulate+1))});
-	}
+	
 	
 	TimerFinish = new Date().getTime() / 1000;
     TotalTime=TimerFinish -TimerStart;
@@ -119,7 +110,7 @@ self.onmessage = function (e) {
 	SimResult.HCVTestResult=FibrosisMatrix;
 	
 	//Saving simulation results into local storage
-
+	
 	
 	self.postMessage({SimNumber: e.data.SimNumber, Result: SimResult});//All simulation will end with this line
 };
