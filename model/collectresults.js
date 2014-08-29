@@ -33,10 +33,15 @@ function DetermineTotalHCCInfected(PPLocal){
 	var FibrosisMatrix=new ZeroMatrix(6, StopYear-StartYear+1);
 
 	CategoricalValueFunction=function (Person, Year){
-		return Person.HCV.Fibrosis.Value(Year);
+		return Person.HCV.Fibrosis.Value(Year);// in this case, the returned value is the numerical value found in the 
 	};
 	// can we make this an array of categorical value functions like []
-	
+	// MultiplePopulations
+	// Single population
+	// Events
+	// First events
+	// All events
+	// Status
 	
 
 	var YearCount=0;
@@ -51,3 +56,17 @@ function DetermineTotalHCCInfected(PPLocal){
 	
 	return FibrosisMatrix;
 }
+
+function SummaryStatistic(Type){
+	var CategoricalValueFunction;
+	var SelectionFunction;
+	var SelectionFunctionArray=[];
+	var StartYear;
+	var StopYear;
+	
+	
+}
+
+
+
+// Adjust: multiply by a factor to accommodate for using a reprentative sample, for example
