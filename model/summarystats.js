@@ -26,3 +26,51 @@ RecentTeenageHCVInfections.Values[0] = [];
 RecentTeenageHCVInfections.Values[0][0] = 3;//If the fibrosis stages are either 3 or 4 (but nothing else 
 RecentTeenageHCVInfections.Values[0][1] = 4;//
 
+
+
+
+function SummaryStatistic(Type){
+	var SummaryStaisticName;
+	var YearVector;
+	
+	var CategoricalValueFunction;
+	var SelectionFunction;
+	var SelectionFunctionArray=[];
+	var StartYear;
+	var StopYear;
+	var StepSize;
+	
+	
+}
+
+
+
+
+	// can we make this an array of categorical value functions like []
+	// MultiplePopulations
+	// Single population
+	// Events
+	// First events
+	// All events
+	// Status
+
+
+// Adjust: multiply by a factor to accommodate for using a representative sample, for example
+
+
+
+
+
+//One summary statistic as a proportion of another?
+// Check that the start and end years align, as well as the 
+// Numerator
+// Denominator
+// e.g testing rate = test events/total users, active users?
+// incidence rate = infection events/ total users
+
+
+
+
+
+
+

@@ -15,6 +15,7 @@ function TimeUntilEvent(Probability){
 
 
 // Event vector
+// The event vector allows "Discrete event simulation" as a means to limit the processing power and memory needed, while still being able to extract data in an efficient manner.
 function EventVector(){
 	this.ValueVec=[];
 	this.Time=[];
@@ -140,6 +141,13 @@ EventVector.prototype.TimeOf= function (EventValue){
 	// or if no events occurred, return a NaN in a 1 element array
 	DatesThisEventOccurred=[NaN];
 	return DatesThisEventOccurred;
+}
+
+
+EventVector.prototype.CountEvents= function (EventValue, Time1, Time2){
+	// Counts the number of times the event happens in the period [Year1, Year2)
+	
+
 }
 
 

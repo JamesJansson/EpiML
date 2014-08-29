@@ -25,6 +25,9 @@ self.onmessage = function (e) {
 	// Intervention (with changed settings)
 	// Get data
 	// Save
+	
+	// if intervention function is defined
+	//    go to intervention function. evaluate the function that executes at time=t
 
 	self.postMessage({Console: e.data});//This passes the data back to the console so we can look at it
 	
