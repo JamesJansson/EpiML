@@ -32,6 +32,11 @@ RecentTeenageHCVInfections.Values[0][1] = 4;//
 function SummaryStatistic(Type){
 	var SummaryStaisticName;
 	
+	var SummaryStatisticType;
+	// text
+	// Count Instantaneous
+	// CountEvents
+	// Continuous
 	
 
 	var CountEventFunction;
@@ -43,15 +48,28 @@ function SummaryStatistic(Type){
 	var SelectionFunctionArray=[];
 	var StartTime;
 	var StopTime;
-	var StepSize=1;
+	var StepSize=1;//set by default to 1
 	
 	var TimeVector=[];
 	var Value=[];
 	var LabelVector=[];
 	
 	
+	
+	
 }
 
+SummaryStatistic.prototype.Run=function(Population){
+	if (this.SummaryStatisticType.toLowerCase()=='count'){
+		this.Count(Population)
+	}
+	if (this.SummaryStatisticType.toLowerCase()=='countevents'){
+		this.CountEvents(Population)
+	}
+	if (this.SummaryStatisticType.toLowerCase()=='continous'){
+		this.CountEvents(Population)
+	}
+}
 
 SummaryStatistic.prototype.CountEvents= function (Population){//Used to count how many times something happens over a number of finite periods
 	NumberInVector=Math.round((this.StopTime-this.StartTime)/this.StepSize)+1; //This is used to avoid rounding errors
@@ -70,6 +88,9 @@ SummaryStatistic.prototype.CountEvents= function (Population){//Used to count ho
 		}
 		TimeStep=TimeStep+StepSize;// note that this may be a little off at the end (+/- 10^-6), but this should be OK for most statistical reporting
 	}
+	
+	// In this function we may also want to count mean, median, IQR, 95% range, so temporarily holding on the value in an array may help
+	
 };
 
 SummaryStatistic.prototype.Count= function (){// this is an instantaneous counting function, used to count things like prevalence
@@ -110,7 +131,23 @@ SummaryStatistic.prototype.Count= function (){// this is an instantaneous counti
 
 
 
+function MultipleSummaryStatistics(){
+	var SummaryStat=[];
+	
+	var Table;
+}
 
+MultipleSummaryStatistics.prototype.Run= function (Population){
+	// for each specified summary stat, run()
+	
+	// then create a single table
+}
 
+MultipleSummaryStatistics.prototype.CreateSingleTable= function (){// this is a separate function, because the suer may want to copy in the pre-run summary stat and simply create a single table for speed
+	this.Table=[];
+	//for each summary stat
+		this.Table[i]=
+}
 
+// Finally, a function that groups the results across multiple instances of the simulations
 
