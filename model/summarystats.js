@@ -31,19 +31,59 @@ RecentTeenageHCVInfections.Values[0][1] = 4;//
 
 function SummaryStatistic(Type){
 	var SummaryStaisticName;
-	var YearVector;
+	
+	
+
+	var CountEventFunction;
+	var CountFunction;
 	
 	var CategoricalValueFunction;
+	
 	var SelectionFunction;
 	var SelectionFunctionArray=[];
-	var StartYear;
-	var StopYear;
-	var StepSize;
+	var StartTime;
+	var StopTime;
+	var StepSize=1;
+	
+	var TimeVector=[];
+	var Value=[];
+	var LabelVector=[];
 	
 	
 }
 
 
+SummaryStatistic.prototype.CountEvents= function (Population){//Used to count how many times something happens over a number of finite periods
+	NumberInVector=Math.round((this.StopTime-this.StartTime)/this.StepSize)+1; //This is used to avoid rounding errors
+
+	// initialise vector with a zero vector
+	this.Value=ZeroVector(NumberInVector);
+
+	// for each time step
+	var TimeStep=StartTime;
+	for (var TimeStepIndex=0; TimeStepIndex<NumberInVector; TimeStepIndex++){
+		// for each person
+		for (var PIndex=0; PIndex<Population.length; PIndex++){
+			//run the SelectionFunction (takes the person, start and endpoints). If you only one once, the count function should express itself as (count between 
+			this.Value[TimeStepIndex]=this.Value[TimeStepIndex]+this.CountEventFunction(Population[PIndex], TimeStep, TimeStep+this.StepSize);
+			
+		}
+		TimeStep=TimeStep+StepSize;// note that this may be a little off at the end (+/- 10^-6), but this should be OK for most statistical reporting
+	}
+};
+
+SummaryStatistic.prototype.Count= function (){// this is an instantaneous counting function, used to count things like prevalence
+	// initialise Table with a zero matrix
+	this.Table=
+
+	// for each year
+
+	
+	return Year-this.YearOfBirth;
+};
+
+
+// ReportContinuous: ValueFunction returns a variable, which is continuous
 
 
 	// can we make this an array of categorical value functions like []
