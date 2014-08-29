@@ -97,7 +97,7 @@ self.onmessage = function (e) {
 	//Determine fibrosis levels with year
 
 	
-	var FibrosisMatrix=new ZeroMatrix(6, YearsToSimulate+1);
+	DetermineTotalHCCInfected(PPNotification);
 	
 	console.log("Extracting results");
 	

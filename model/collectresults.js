@@ -28,16 +28,26 @@ function GenerateSummaryStats(Population){
 function DetermineTotalHCCInfected(PPLocal){
 	var StartYear=1980;
 	var StopYear=2050;
+	
+	
+	var FibrosisMatrix=new ZeroMatrix(6, StopYear-StartYear+1);
+
+	CategoricalValueFunction=function (Person, Year){
+		return Person.HCV.Fibrosis.Value(Year);
+	};
+	// can we make this an array of categorical value functions like []
+	
+	
 
 	var YearCount=0;
 	for (var GraphYear=StartYear; GraphYear<StopYear; GraphYear++){
 		for (var i=0; i<PPLocal.length; i++){
 			FibrosisLevel=PPLocal[i].HCV.Fibrosis.Value(GraphYear);
-			//self.postMessage({ConsoleMessage: "FibrosisLevel "+ FibrosisLevel+ " YearCount" + YearCount});
 			FibrosisMatrix[FibrosisLevel][YearCount]=FibrosisMatrix[FibrosisLevel][YearCount]+1;;
 		}
 		YearCount++;
 		self.postMessage({ProgressBarValue: (YearCount/(YearsToSimulate+1))});
 	}
-
+	
+	return FibrosisMatrix;
 }
