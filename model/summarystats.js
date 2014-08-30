@@ -67,11 +67,15 @@ Settings.Function= function (Individual, Time){
 		return NaN;// no category
 	}
 }
-*/
 
 
 
-function SummaryStatistic(Settings){
+
+
+
+
+
+function SummaryStatistic(Settings, InputFunction){
 	var Name;
 	// A descriptive text entry about the statistic (optional)
 	
@@ -161,47 +165,46 @@ function SummaryStatistic(Settings){
 				}
 			}
 			else {
-				console.error("If CategoricalFunction is true, NumberOfCategories must be set to a whole number >1;")
+				console.error("SummaryStatistic: If CategoricalFunction is true, NumberOfCategories must be set to a whole number >1;")
 			}
 		}
 	}
 	else if (typeof Settings.CategoricalFunction != 'undefined'){
-		console.error("CategoricalFunction should have only a value of true or false");
+		console.error("SummaryStatistic: CategoricalFunction should have only a value of true or false");
 	}
 	
+	// Set the function for the summary statistic
+	if (typeof InputFunction === 'function'){
+		Function=InputFunction;
+	}
 	
-	
-	
-	
-	
-	
-	
+	// Set the times for the summary statistic
+	if (typeof Settings.StartTime === 'number'){
+		StartTime=Settings.StartTime;
+	}
+	else{
+		console.error("SummaryStatistic: StartTime and EndTime must be set");
+	}
+	if (typeof Settings.EndTime === 'number'){
+		EndTime=Settings.EndTime;
+	}
+	else{
+		console.error("SummaryStatistic: StartTime and EndTime must be set");
+	}
+	if (typeof Settings.StepSize === 'number'){
+		StepSize=Settings.StepSize;
+	}
 	
 
-	var CategoricalStatisticalFunction;
-	var VectorCategoricalStatistiticalFunction;
-
-	var CountEventFunction;
-	var CountFunction;
-	
-	var CategoricalValueFunction;
-	
-	var SelectionFunction;
-	var SelectionFunctionArray=[];
-
-	
-	var TimeVector=[];
-	var Value=[];
-	var LabelVector=[];
-	
-	
-	
-	
 }
 
 SummaryStatistic.prototype.Run=function(Population){
 	// Check that the settings line up
 	
+	
+	for (var TimeIndex; TimeIndex<NumberOfTime; TimeIndex++){
+		TimeVector[TimeIndex]=ThisTimeStep;
+	}
 
 
 	if (this.SummaryStatisticType.toLowerCase()=='instantaneouscount'){
