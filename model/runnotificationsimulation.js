@@ -1,4 +1,6 @@
 ﻿//Specify files to be included in the simulation
+DebugLoadingScripts=true;
+
 importScripts("simulation.js");
 importScripts("simulationtools.js");
 importScripts("mathtools.js");
@@ -6,7 +8,7 @@ importScripts("person.js");
 importScripts("hcv.js");
 importScripts("hiv.js");
 importScripts("assignpopulation.js");
-importScripts("collectresults.js");
+importScripts("extractresults.js");
 importScripts("summarystats.js");
 
 
@@ -49,13 +51,8 @@ self.onmessage = function (e) {
 	
 	var IncrementSize=Math.round(SimData.NoPeople/100);//used to deliver progress rates back to the progress bar
 	
-	var Year=2014.5;
 	var GenotypeValue=0;
-	var YearOfBirth=1985.1;
-	var Age=29;
-	var Sex=1;
-	var Alcohol=0;
-	var YearsToSimulate=40;
+
 	
 	var HCVParam={};
 	HCVParam.F0F1=0.117;
@@ -101,6 +98,8 @@ self.onmessage = function (e) {
 	//Determine fibrosis levels with year
 
 	console.log("Extracting results");
+	
+	console.log(typeof DetermineFibrosis);
 	FibrosisMatrix=DetermineFibrosis(PPNotification);
 	
 	

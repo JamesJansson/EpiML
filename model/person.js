@@ -94,3 +94,7 @@ PersonObject.prototype.HCVInfection= function (YearOfInfection, Genotype, HCVPar
 	var Alcohol=0;
 	this.HCV.Infection(YearOfInfection, Genotype, this.Age(YearOfInfection), this.Sex, this.Alcohol, HCVParam );
 }
+
+
+
+	console.log("Loaded person.js");

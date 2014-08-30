@@ -86,3 +86,5 @@ function AssignPopulation(Data, Param){
 
 	return PNotification;
 }
+
+console.log("Loaded assignpoplation.js");

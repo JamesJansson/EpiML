@@ -1,6 +1,8 @@
 //This function is designed to be run at the end of a simulation to provide all of the desired summary stats of the population
 // e.g. this will collect into a table the number of 
 // The whole thing will be returned as a single structure to the interface that can then be plotted
+
+	console.log("Loading collectresults.js");
 function GenerateSummaryStats(Population){
 	var SummaryResults={};
 
@@ -27,7 +29,7 @@ function GenerateSummaryStats(Population){
 
 function DetermineFibrosis(PPLocal){
 	//Create settings
-	var Settings={}
+	var Settings={};
 	Settings.Name="Fibrosis Level";
 	Settings.XLabel="Year";
 	Settings.YLabel="Count";
@@ -35,12 +37,12 @@ function DetermineFibrosis(PPLocal){
 	Settings.EndTime=2050;
 	Settings.TimeStep=1;
 	Settings.FunctionReturnsCategory=true;
-	Settings.NumberOfCategories=6
+	Settings.NumberOfCategories=6;
 	
 	//Define the selection function
 	FibrosisFunction= function (Person, Year){
-		Person.HCV.Fibrosis.Value(Year); // in this case, the returned value is the numerical value found in the 
-	}
+		return Person.HCV.Fibrosis.Value(Year); // in this case, the returned value is the numerical value found in the 
+	};
 	
 	// Run the statistic
 	FibrosisResult=new SummaryStatistic(Settings, FibrosisFunction);
@@ -54,6 +56,5 @@ function DetermineFibrosis(PPLocal){
 }
 
 
-
-
+	console.log("Loaded collectresults.js");
 

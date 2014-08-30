@@ -59,7 +59,7 @@ Settings.Function= function (Individual, Time){
 
 
 
-
+console.log("Loading summarystats.js");
 
 function SummaryStatistic(Settings, InputFunction){
 	this.Name="";
@@ -83,13 +83,13 @@ function SummaryStatistic(Settings, InputFunction){
 	// Setting this flag to true will allow the vector in summary statistic to to be filled by the function under inspection (e.g. EventVector) that could be a lot faster
 	
 	this.FunctionReturnsCategory=false;
-	// CategoricalFunction is a flag to indicate whether StatisticalFunction returns (optional, defaults to simple count)
+	// FunctionReturnsCategory is a flag to indicate whether StatisticalFunction returns (optional, defaults to simple count)
 	// true or false, or it returns an index
 	// This flag can only be used with InstantaneousCount. 
 	// It cannot be used with CountEvents or IndividualDistribution
 	
 	this.NumberOfCategories=1; 
-	//(mandatory if CategoricalFunction==true)
+	//(mandatory if FunctionReturnsCategory==true)
 	
 	this.CategoryLabel=[];
 	// Used to store the text associated with the categorical numbers (optional)
@@ -142,9 +142,9 @@ function SummaryStatistic(Settings, InputFunction){
 	
 	
 	// Set the Category settings
-	if (typeof Settings.CategoricalFunction === 'boolean'){
-		if (Settings.CategoricalFunction==true){
-			this.CategoricalFunction=true;
+	if (typeof Settings.FunctionReturnsCategory === 'boolean'){
+		if (Settings.FunctionReturnsCategory==true){
+			this.FunctionReturnsCategory=true;
 			if (typeof Settings.NumberOfCategories === 'number'){
 				this.NumberOfCategories=Settings.NumberOfCategories;
 				if (typeof Settings.CategoryLabel === 'object'){
@@ -152,12 +152,12 @@ function SummaryStatistic(Settings, InputFunction){
 				}
 			}
 			else {
-				console.error("SummaryStatistic: If CategoricalFunction is true, NumberOfCategories must be set to a whole number >1;")
+				console.error("SummaryStatistic: If FunctionReturnsCategory is true, NumberOfCategories must be set to a whole number >1;")
 			}
 		}
 	}
-	else if (typeof Settings.CategoricalFunction != 'undefined'){
-		console.error("SummaryStatistic: CategoricalFunction should have only a value of true or false");
+	else if (typeof Settings.FunctionReturnsCategory != 'undefined'){
+		console.error("SummaryStatistic: FunctionReturnsCategory should have only a value of true or false");
 	}
 	
 	// Set the function for the summary statistic
@@ -192,41 +192,41 @@ SummaryStatistic.prototype.Run=function(Population){
 	
 	// Set up the time vector
 	var CurrentTimeStep=this.StartTime;
-	this.NumberOfTimeSteps=Math.round((this.EndTime-this.StartTime)/this.TimeStep)+1; //This is used to avoid rounding errors
-	for (var TimeIndex; TimeIndex<this.NumberOfTimeSteps; TimeIndex++){
+	this.NumberOfTimeSteps=Math.round((this.EndTime-this.StartTime)/this.StepSize)+1; //This is used to avoid rounding errors
+	for (var TimeIndex=0; TimeIndex<this.NumberOfTimeSteps; TimeIndex++){
 		this.TimeVector[TimeIndex]=CurrentTimeStep;
-		CurrentTimeStep=CurrentTimeStep+this.TimeStep;// Increment the time step
+		CurrentTimeStep=CurrentTimeStep+this.StepSize;// Increment the time step
 	}
 	
 	// if (typeof Function === 'object') {break into singular functions then run individually}
 	// if (typeof Function === 'function') {just run it}
 	
 	// Inspect the individual statistics. Note that this type will have to inspect the value independently at each time step, to then take the average, etc. 
-	if (this.SummaryStatisticType.toLowerCase()=='individualdistribution'){
+	if (this.Type.toLowerCase()=='individualdistribution'){
 		this.IndividualDistribution(Population);
 	}
 	// Doing a simple count of the characteristic 
 	else{
 		// Set up the Count array
-		if (this.CategoricalFunction==false){// inspecting only a single category
+		if (this.FunctionReturnsCategory==false){// inspecting only a single category
 			this.Count=ZeroArray(this.NumberOfTimeSteps);
 			
-			if (this.SummaryStatisticType.toLowerCase()=='instantaneouscount'){
+			if (this.Type.toLowerCase()=='instantaneouscount'){
 				this.InstantaneousCount(Population);
 			}
-			else if (this.SummaryStatisticType.toLowerCase()=='countevents'){
+			else if (this.Type.toLowerCase()=='countevents'){
 				this.CountEvents(Population);
 			}
 		}
 		else{ // If there are a number of categories
 			this.Count=ZeroMatrix(this.NumberOfCategories, this.NumberOfTimeSteps);
 			
-			if (this.SummaryStatisticType.toLowerCase()=='instantaneouscount'){
+			if (this.Type.toLowerCase()=='instantaneouscount'){
 				this.InstantaneousCountCategorical(Population);
 			}
-			else if (this.SummaryStatisticType.toLowerCase()=='countevents'){
+			else if (this.Type.toLowerCase()=='countevents'){
 				this.CountEventsCategorical(Population);
-				console.error("The way this works has not been determined yet. Please do not use countevents and CategoricalFunction together");
+				console.error("The way this works has not been determined yet. Please do not use countevents and FunctionReturnsCategory together");
 			}
 		}
 	}
@@ -235,7 +235,7 @@ SummaryStatistic.prototype.Run=function(Population){
 SummaryStatistic.prototype.InstantaneousCount= function (Population){//Used to determine the number of people that satisfy a condition at a particular point in time
 	for (var PersonIndex=0; PersonIndex<Population.length; PersonIndex++){
 		for (var TimeIndex=0; TimeIndex<this.TimeVector.length; TimeIndex++){
-			if (this.Function(Population[Personindex], this.TimeVector[TimeIndex])==true){
+			if (this.Function(Population[PersonIndex], this.TimeVector[TimeIndex])==true){
 				this.Count[TimeIndex]++;
 			}
 		}
@@ -246,7 +246,7 @@ SummaryStatistic.prototype.InstantaneousCountCategorical= function (Population){
 	var CategoryIndex;
 	for (var PersonIndex=0; PersonIndex<Population.length; PersonIndex++){
 		for (var TimeIndex=0; TimeIndex<this.TimeVector.length; TimeIndex++){
-			CategoryIndex=this.Function(Population[Personindex], this.TimeVector[TimeIndex]);
+			CategoryIndex=this.Function(Population[PersonIndex], this.TimeVector[TimeIndex]);
 			if (CategoryIndex>=0){//if it is not equal to NaN
 				this.Count[CategoryIndex][TimeIndex]++;
 			}
@@ -352,3 +352,5 @@ function MultiSimSummaryStat(SummaryStatArray){
 // SD/variance?
 // Transform(for all elements of the table, transform using the function, e.g. log)
 }
+
+console.log("Loaded summarystats.js");

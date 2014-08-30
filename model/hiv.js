@@ -10,3 +10,4 @@ function  HIVObject(YearOfBirth)
 	this.AIDSDate=0;
 	
 }
+console.log("Loaded hiv.js");

@@ -122,3 +122,10 @@ HCVObject.prototype.Status= function (Year){//returns all the relevant informati
 
 
 };
+
+
+
+
+console.log("Loaded hcv.js");
+
+

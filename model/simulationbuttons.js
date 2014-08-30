@@ -1,14 +1,14 @@
 // This file contains the scripts that are called when the buttons on the interface are pressed.
 
-var SimulationObject;
-var SimData=[];
+var SimulationHolder;
+var SimInputData=[];
 var Data={};
 var Param={};
 
 function RunSim(){
 	ScriptToRun='model/runnotificationsimulation.js';
 	
-	var NumberOfSimsToRun=10;//this will later be set by the preferences in the interface
+	var NumberOfSimsToRun=1;//this will later be set by the preferences in the interface
 
 	// Load the values from the files
 	LoadDataFromFiles();
@@ -30,17 +30,17 @@ function RunSim(){
 	
 
 	//Creating the data to be used in the simulations
-	SimData=[];
+	SimInputData=[];
 	for (i=0; i<NumberOfSimsToRun; i++){
-		SimData[i]={};
+		SimInputData[i]={};
 	}
 
 	//Creating the parameter
 	
-	SimulationObject=new MulticoreSim(ScriptToRun, Common, SimData, NoCores); //Common is the same between all sims
-	SimulationObject.UseSimProgressBar=true;
-	SimulationObject.SimProgressBarID="MainProgress";
-	SimulationObject.Start();
+	SimulationHolder=new MulticoreSim(ScriptToRun, Common, SimInputData, NoCores); //Common is the same between all sims
+	SimulationHolder.UseSimProgressBar=true;
+	SimulationHolder.SimProgressBarID="MainProgress";
+	SimulationHolder.Start();
 
 
 
