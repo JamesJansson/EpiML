@@ -11,25 +11,11 @@
 // 3.2) A range of values (inclusive)
 // 4) The year that you want to observe it
 
-// e.g. Summary stats request structure
-RecentTeenageHCVInfections=new StatRequest();
-RecentTeenageHCVInfections.VariableName="";
-
-
-// Continuous variable range, instantaneous value
-RecentTeenageHCVInfections.FunctionChooserString[0] = "function (PersonUnderInspecion, Time){return PersonUnderInspecion.Age(Time);}";// this will be evaled on the other side of the webworker
-RecentTeenageHCVInfections.Lower[0] = 25;
-RecentTeenageHCVInfections.Upper[0] = 35;
-// Categorical variable value, instantaneous value
-RecentTeenageHCVInfections.FunctionChooserString[1] = "function (PersonUnderInspecion, Time){return PersonUnderInspecion.HCV.FibrosisStage(Time);};"
-RecentTeenageHCVInfections.Values[0] = [];
-RecentTeenageHCVInfections.Values[0][0] = 3;//If the fibrosis stages are either 3 or 4 (but nothing else 
-RecentTeenageHCVInfections.Values[0][1] = 4;//
 
  
 // Example usage
 
-
+/*
 // Count of prevalent cases of HIV
 Settings.Name="Currently Living With HIV";
 Settings.XLabel="Year";
@@ -45,7 +31,7 @@ Settings.Function= function (Individual, Time){
 	}
 }
 
-CurrentlyLivingWithHIV=new SummaryStatistic(Settings);
+CurrentlyLivingWithHIV=new SummaryStatistic(Settings); //Create the summary statistic
 CurrentlyLivingWithHIV.run(Population); //Population is an array individuals
 
 
@@ -67,7 +53,7 @@ Settings.Function= function (Individual, Time){
 		return NaN;// no category
 	}
 }
-
+*/
 
 
 
@@ -96,7 +82,7 @@ function SummaryStatistic(Settings, InputFunction){
 	// true: StatisticalFunction(Person, StartTime, EndTime, StepSize)and returns a vector of values over the times specified
 	// Setting this flag to true will allow the vector in summary statistic to to be filled by the function under inspection (e.g. EventVector) that could be a lot faster
 	
-	this.CategoricalFunction=false;
+	this.FunctionReturnsCategory=false;
 	// CategoricalFunction is a flag to indicate whether StatisticalFunction returns (optional, defaults to simple count)
 	// true or false, or it returns an index
 	// This flag can only be used with InstantaneousCount. 
@@ -202,6 +188,8 @@ function SummaryStatistic(Settings, InputFunction){
 SummaryStatistic.prototype.Run=function(Population){
 	// Check that the settings line up
 	
+
+	
 	// Set up the time vector
 	var CurrentTimeStep=this.StartTime;
 	this.NumberOfTimeSteps=Math.round((this.EndTime-this.StartTime)/this.TimeStep)+1; //This is used to avoid rounding errors
@@ -210,6 +198,9 @@ SummaryStatistic.prototype.Run=function(Population){
 		CurrentTimeStep=CurrentTimeStep+this.TimeStep;// Increment the time step
 	}
 	
+	// if (typeof Function === 'object') {break into singular functions then run individually}
+	// if (typeof Function === 'function') {just run it}
+	
 	// Inspect the individual statistics. Note that this type will have to inspect the value independently at each time step, to then take the average, etc. 
 	if (this.SummaryStatisticType.toLowerCase()=='individualdistribution'){
 		this.IndividualDistribution(Population);
@@ -217,7 +208,6 @@ SummaryStatistic.prototype.Run=function(Population){
 	// Doing a simple count of the characteristic 
 	else{
 		// Set up the Count array
-		var this.Count;
 		if (this.CategoricalFunction==false){// inspecting only a single category
 			this.Count=ZeroArray(this.NumberOfTimeSteps);
 			
@@ -236,6 +226,7 @@ SummaryStatistic.prototype.Run=function(Population){
 			}
 			else if (this.SummaryStatisticType.toLowerCase()=='countevents'){
 				this.CountEventsCategorical(Population);
+				console.error("The way this works has not been determined yet. Please do not use countevents and CategoricalFunction together");
 			}
 		}
 	}
@@ -252,7 +243,7 @@ SummaryStatistic.prototype.InstantaneousCount= function (Population){//Used to d
 }
 
 SummaryStatistic.prototype.InstantaneousCountCategorical= function (Population){//Used to determine the number of people that satisfy a condition at a particular point in time
-	var CategoryIndex
+	var CategoryIndex;
 	for (var PersonIndex=0; PersonIndex<Population.length; PersonIndex++){
 		for (var TimeIndex=0; TimeIndex<this.TimeVector.length; TimeIndex++){
 			CategoryIndex=this.Function(Population[Personindex], this.TimeVector[TimeIndex]);
@@ -289,15 +280,7 @@ SummaryStatistic.prototype.CountEvents= function (Population){//Used to count ho
 	
 };
 
-SummaryStatistic.prototype.Count= function (){// this is an instantaneous counting function, used to count things like prevalence
-	// initialise Table with a zero matrix
-	this.Table=
 
-	// for each year
-
-	
-	return Year-this.YearOfBirth;
-};
 
 
 // ReportContinuous: ValueFunction returns a variable, which is continuous
@@ -338,7 +321,7 @@ function MultiSimSummaryStat(SummaryStatArray){
 	// Extract the general information from the first in the SummaryStatArray
 	
 	// load the results for storage
-	if (MultipleCategories==false)
+	/*if (MultipleCategories==false)
 		for Simulationindex
 			for TimeIndex{
 				//Copy the data
@@ -352,14 +335,14 @@ function MultiSimSummaryStat(SummaryStatArray){
 			Result.LowerQuartile[TimeIndex]=xxx(Result.StorageTable[TimeIndex]);
 			Result.Variance[TimeIndex]=xxx(Result.StorageTable[TimeIndex]);
 		}
-	}
-	else
-			else
-				for CategoryIndex
-					Result.StorageTable[CategoryIndex][TimeIndex][Simulationindex];
-	
-	for CategoryIndex
-		for TimeIndex
+	}*/
+//	else
+//			else
+//				for CategoryIndex
+//					Result.StorageTable[CategoryIndex][TimeIndex][Simulationindex];
+//	
+//	for CategoryIndex
+//		for TimeIndex
 	// 
 // Mean
 // Median

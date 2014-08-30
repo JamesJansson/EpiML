@@ -7,6 +7,7 @@ importScripts("hcv.js");
 importScripts("hiv.js");
 importScripts("assignpopulation.js");
 importScripts("collectresults.js");
+importScripts("summarystats.js");
 
 
 var Param={};//This is the parameter holder for the simulation
@@ -99,10 +100,10 @@ self.onmessage = function (e) {
 	
 	//Determine fibrosis levels with year
 
-	
-	DetermineTotalHCCInfected(PPNotification);
-	
 	console.log("Extracting results");
+	FibrosisMatrix=DetermineFibrosis(PPNotification);
+	
+	
 	
 	
 	TimerFinish = new Date().getTime() / 1000;

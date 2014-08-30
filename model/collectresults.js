@@ -25,31 +25,32 @@ function GenerateSummaryStats(Population){
 }
 
 
-function DetermineTotalHCCInfected(PPLocal){
-	var StartYear=1980;
-	var StopYear=2050;
+function DetermineFibrosis(PPLocal){
+	//Create settings
+	var Settings={}
+	Settings.Name="Fibrosis Level";
+	Settings.XLabel="Year";
+	Settings.YLabel="Count";
+	Settings.StartTime=1980;
+	Settings.EndTime=2050;
+	Settings.TimeStep=1;
+	Settings.FunctionReturnsCategory=true;
+	Settings.NumberOfCategories=6
 	
-	
-	var FibrosisMatrix=new ZeroMatrix(6, StopYear-StartYear+1);
-
-	FibrosisStatistic=new SummaryStatistic();
-	CategoricalValueFunction=function (Person, Year){
-		return Person.HCV.Fibrosis.Value(Year);// in this case, the returned value is the numerical value found in the 
-	};
-
-	
-
-	var YearCount=0;
-	for (var GraphYear=StartYear; GraphYear<StopYear; GraphYear++){
-		for (var i=0; i<PPLocal.length; i++){
-			FibrosisLevel=PPLocal[i].HCV.Fibrosis.Value(GraphYear);
-			FibrosisMatrix[FibrosisLevel][YearCount]=FibrosisMatrix[FibrosisLevel][YearCount]+1;;
-		}
-		YearCount++;
-		self.postMessage({ProgressBarValue: (YearCount/(YearsToSimulate+1))});
+	//Define the selection function
+	FibrosisFunction= function (Person, Year){
+		Person.HCV.Fibrosis.Value(Year); // in this case, the returned value is the numerical value found in the 
 	}
 	
-	return FibrosisMatrix;
+	// Run the statistic
+	FibrosisResult=new SummaryStatistic(Settings, FibrosisFunction);
+	FibrosisResult.Run(PPLocal);
+
+	
+
+
+	
+	return FibrosisResult;
 }
 
 
