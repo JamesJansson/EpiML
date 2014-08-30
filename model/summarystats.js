@@ -214,33 +214,56 @@ SummaryStatistic.prototype.Run=function(Population){
 	if (this.SummaryStatisticType.toLowerCase()=='individualdistribution'){
 		this.IndividualDistribution(Population);
 	}
-	//Doing a simple count of the characteristic 
+	// Doing a simple count of the characteristic 
 	else{
 		// Set up the Count array
 		var this.Count;
 		if (this.CategoricalFunction==false){// inspecting only a single category
 			this.Count=ZeroArray(this.NumberOfTimeSteps);
+			
+			if (this.SummaryStatisticType.toLowerCase()=='instantaneouscount'){
+				this.InstantaneousCount(Population);
+			}
+			else if (this.SummaryStatisticType.toLowerCase()=='countevents'){
+				this.CountEvents(Population);
+			}
 		}
 		else{ // If there are a number of categories
 			this.Count=ZeroMatrix(this.NumberOfCategories, this.NumberOfTimeSteps);
-		}
-		
-		if (this.SummaryStatisticType.toLowerCase()=='instantaneouscount'){
-			this.InstantaneousCount(Population);
-		}
-		if (this.SummaryStatisticType.toLowerCase()=='countevents'){
-			this.CountEvents(Population);
+			
+			if (this.SummaryStatisticType.toLowerCase()=='instantaneouscount'){
+				this.InstantaneousCountCategorical(Population);
+			}
+			else if (this.SummaryStatisticType.toLowerCase()=='countevents'){
+				this.CountEventsCategorical(Population);
+			}
 		}
 	}
 }
 
 SummaryStatistic.prototype.InstantaneousCount= function (Population){//Used to determine the number of people that satisfy a condition at a particular point in time
-	if (this.CategoricalFunction==false)
-	
-	
-	
-	
+	for (var PersonIndex=0; PersonIndex<Population.length; PersonIndex++){
+		for (var TimeIndex=0; TimeIndex<this.TimeVector.length; TimeIndex++){
+			if (this.Function(Population[Personindex], this.TimeVector[TimeIndex])==true){
+				this.Count[TimeIndex]++;
+			}
+		}
+	}
 }
+
+SummaryStatistic.prototype.InstantaneousCountCategorical= function (Population){//Used to determine the number of people that satisfy a condition at a particular point in time
+	var CategoryIndex
+	for (var PersonIndex=0; PersonIndex<Population.length; PersonIndex++){
+		for (var TimeIndex=0; TimeIndex<this.TimeVector.length; TimeIndex++){
+			CategoryIndex=this.Function(Population[Personindex], this.TimeVector[TimeIndex]);
+			if (CategoryIndex>=0){//if it is not equal to NaN
+				this.Count[CategoryIndex][TimeIndex]++;
+			}
+		}
+	}
+}
+
+
 
 
 
