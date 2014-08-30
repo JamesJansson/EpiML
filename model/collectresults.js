@@ -32,6 +32,7 @@ function DetermineTotalHCCInfected(PPLocal){
 	
 	var FibrosisMatrix=new ZeroMatrix(6, StopYear-StartYear+1);
 
+	FibrosisStatistic=new SummaryStatistic();
 	CategoricalValueFunction=function (Person, Year){
 		return Person.HCV.Fibrosis.Value(Year);// in this case, the returned value is the numerical value found in the 
 	};

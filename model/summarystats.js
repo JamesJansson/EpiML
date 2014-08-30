@@ -32,12 +32,24 @@ RecentTeenageHCVInfections.Values[0][1] = 4;//
 function SummaryStatistic(Type){
 	var SummaryStaisticName;
 	
-	var SummaryStatisticType;
+	var SummaryStatisticType=Type;
 	// text
-	// Count Instantaneous
-	// CountEvents
-	// Continuous
+	// Count: how many people at time t have quality a (good for prevalence etc)
+	// CountEvents: how many people at time
+	// Individual: 
+	// Categorical: 
 	
+	var VectorFunction=false;
+	// VectorFunction is a flag to indicate whether StatisticalFunction has arguments of
+	// StatisticalFunction(Person, Time) and returns a single value at Time or
+	// StatisticalFunction(Person, StartTime, EndTime, StepSize)and returns a vector of values
+	// Setting this flag to true will allow the vector in summary statistic to to be filled by the function under inspection (e.g. EventVector) that could be a lot faster
+	
+	
+	var StatisticalFunction; // this function returns either a 0 or a 1 given a specific time
+	var VectorStatistiticalFunction;  // this function returns a vector of 0 and 1s given the StartTime, EndTime, and StepSize
+	var CategoricalStatisticalFunction;
+	var VectorCategoricalStatistiticalFunction;
 
 	var CountEventFunction;
 	var CountFunction;
@@ -61,13 +73,13 @@ function SummaryStatistic(Type){
 
 SummaryStatistic.prototype.Run=function(Population){
 	if (this.SummaryStatisticType.toLowerCase()=='count'){
-		this.Count(Population)
+		this.Count(Population);
 	}
 	if (this.SummaryStatisticType.toLowerCase()=='countevents'){
-		this.CountEvents(Population)
+		this.CountEvents(Population);
 	}
-	if (this.SummaryStatisticType.toLowerCase()=='continous'){
-		this.CountEvents(Population)
+	if (this.SummaryStatisticType.toLowerCase()=='individualdistribution'){
+		this.IndividualDistribution(Population);
 	}
 }
 
