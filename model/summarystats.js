@@ -76,51 +76,51 @@ Settings.Function= function (Individual, Time){
 
 
 function SummaryStatistic(Settings, InputFunction){
-	var Name;
+	this.Name="";
 	// A descriptive text entry about the statistic (optional)
 	
-	var XLabel="Time";
+	this.XLabel="Time";
 	// A string that would be placed on the x axis of the graph (e.g. Year, Month, etc) (optional)
 	
-	var YLabel="Value";
+	this.YLabel="Value";
 	// A string that would be placed on the y axis of the graph (e.g. Diagnoses, Infections, etc) (optional)
 	
-	var Type;
+	this.Type="";
 	// 'InstantaneousCount': how many people at time t have quality a (good for prevalence etc) (mandatory)
 	// 'CountEvents': how many events between two times occur to each person. This value is added to an aggregate 
 	// 'IndividualDistribution': used to report median, mean, and the distribution of individual characteristics. e.g. Age
 	
-	var VectorFunction=false;
+	this.VectorFunction=false;
 	// VectorFunction is a flag to indicate whether StatisticalFunction has arguments of (optional, defaults to non-vector function)
 	// false: StatisticalFunction(Person, Time) and returns a single value at time or
 	// true: StatisticalFunction(Person, StartTime, EndTime, StepSize)and returns a vector of values over the times specified
 	// Setting this flag to true will allow the vector in summary statistic to to be filled by the function under inspection (e.g. EventVector) that could be a lot faster
 	
-	var CategoricalFunction=false;
+	this.CategoricalFunction=false;
 	// CategoricalFunction is a flag to indicate whether StatisticalFunction returns (optional, defaults to simple count)
 	// true or false, or it returns an index
 	// This flag can only be used with InstantaneousCount. 
 	// It cannot be used with CountEvents or IndividualDistribution
 	
-	var NumberOfCategories; 
+	this.NumberOfCategories=1; 
 	//(mandatory if CategoricalFunction==true)
 	
-	var CategoryLabel=[];
+	this.CategoryLabel=[];
 	// Used to store the text associated with the categorical numbers (optional)
 	
-	var Function; 
+	//this.Function; 
 	// StatisticalFunction is user defined
 	// If Type=='InstantaneousCount' it returns either a 0 or a 1 given a specific time
 	// If Type=='CountEvents' it returns a number >= 0, and is given StartTime, EndTime
 	// If Type=='IndividualDistribution' it returns any number 
 	// If VectorFunction==true if returns a vector over the period stated
 	
-	var StartTime;
-	var EndTime;
-	var StepSize=1;//set by default to 1
-	var NumberOfTimeSteps;
+	this.StartTime=0;
+	this.EndTime=1;
+	this.StepSize=1;//set by default to 1
 	
-	var TimeVector=[];
+	
+	this.TimeVector=[];
 	
 	
 	
@@ -128,18 +128,18 @@ function SummaryStatistic(Settings, InputFunction){
 	
 	// Set the settings
 	if (typeof Settings.Name === 'string'){
-		Name=Settings.Name;
+		this.Name=Settings.Name;
 	}
 	if (typeof Settings.XLabel === 'string'){
-		XLabel=Settings.XLabel;
+		this.XLabel=Settings.XLabel;
 	}
 	if (typeof Settings.YLabel === 'string'){
-		YLabel=Settings.YLabel;
+		this.YLabel=Settings.YLabel;
 	}
 	
 	//  Set the Type of statistic to be collected
 	if (typeof Settings.Type === 'string'){
-		Type=Settings.Type;
+		this.Type=Settings.Type;
 	}
 	else{
 		console.error("A Type must be specified. Types include: InstantaneousCount: how many people at time t have quality a (good for prevalence etc), CountEvents: how many events between two times occur to each person. This value is added to an aggregate, IndividualDistribution: used to report median, mean, and the distribution of individual characteristics. e.g. Age") ;
@@ -147,7 +147,7 @@ function SummaryStatistic(Settings, InputFunction){
 	
 	//Set whether the function will be a boolean operator or not.
 	if (typeof Settings.VectorFunction === 'boolean'){
-		VectorFunction=Settings.VectorFunction;
+		this.VectorFunction=Settings.VectorFunction;
 	}
 	else if (typeof Settings.VectorFunction != 'undefined'){
 		console.error("SummaryStatistic: VectorFunction must be a boolean operator");
@@ -158,11 +158,11 @@ function SummaryStatistic(Settings, InputFunction){
 	// Set the Category settings
 	if (typeof Settings.CategoricalFunction === 'boolean'){
 		if (Settings.CategoricalFunction==true){
-			CategoricalFunction=true;
+			this.CategoricalFunction=true;
 			if (typeof Settings.NumberOfCategories === 'number'){
-				NumberOfCategories=Settings.NumberOfCategories;
+				this.NumberOfCategories=Settings.NumberOfCategories;
 				if (typeof Settings.CategoryLabel === 'object'){
-					CategoryLabel=Settings.CategoryLabel;
+					this.CategoryLabel=Settings.CategoryLabel;
 				}
 			}
 			else {
@@ -176,24 +176,24 @@ function SummaryStatistic(Settings, InputFunction){
 	
 	// Set the function for the summary statistic
 	if (typeof InputFunction === 'function'){
-		Function=InputFunction;
+		this.Function=InputFunction;
 	}
 	
 	// Set the times for the summary statistic
 	if (typeof Settings.StartTime === 'number'){
-		StartTime=Settings.StartTime;
+		this.StartTime=Settings.StartTime;
 	}
 	else{
 		console.error("SummaryStatistic: StartTime and EndTime must be set");
 	}
 	if (typeof Settings.EndTime === 'number'){
-		EndTime=Settings.EndTime;
+		this.EndTime=Settings.EndTime;
 	}
 	else{
 		console.error("SummaryStatistic: StartTime and EndTime must be set");
 	}
 	if (typeof Settings.StepSize === 'number'){
-		StepSize=Settings.StepSize;
+		this.StepSize=Settings.StepSize;
 	}
 	
 
@@ -206,7 +206,7 @@ SummaryStatistic.prototype.Run=function(Population){
 	var CurrentTimeStep=this.StartTime;
 	this.NumberOfTimeSteps=Math.round((this.EndTime-this.StartTime)/this.TimeStep)+1; //This is used to avoid rounding errors
 	for (var TimeIndex; TimeIndex<this.NumberOfTimeSteps; TimeIndex++){
-		TimeVector[TimeIndex]=CurrentTimeStep;
+		this.TimeVector[TimeIndex]=CurrentTimeStep;
 		CurrentTimeStep=CurrentTimeStep+this.TimeStep;// Increment the time step
 	}
 	
@@ -319,50 +319,34 @@ SummaryStatistic.prototype.Count= function (){// this is an instantaneous counti
 
 
 //One summary statistic as a proportion of another?
+function CalculateRate(Numerator, Denominator){
+	RateSummaryStatistic=Numerator.slice();
+
 // Check that the start and end years align, as well as the 
 // Numerator
 // Denominator
 // e.g testing rate = test events/total users, active users?
 // incidence rate = infection events/ total users
-
-
-
-function MultipleSummaryStatistics(){
-	var SummaryStatisticType;
-	var StatFunction;//
-	var StateName;//e.g. HIV incidence
-	
-	var StartTime;
-	var EndTime;
-	var TimeStep;
-	
-	// This is created after all of the element are filled up
-	var SummaryStat=[];
-	
-	var Table;//[StatIndex][yearindex]
 }
 
-MultipleSummaryStatistics.prototype.Run= function (Population){
-	// for each specified summary stat
-	// Set the time to the same time values
-	SummaryStat=
-	// run()
-	
-	// then create a single table
-}
 
-MultipleSummaryStatistics.prototype.CreateSingleTable= function (){// this is a separate function, because the suer may want to copy in the pre-run summary stat and simply create a single table for speed
-	this.Table=[];
-	
-	
-	//for each summary stat
-	
-		this.Table[i]=this.SummaryStat[i].Value;
-		
-	
-}
 
 // Finally, a function that groups the results across multiple instances of the simulations to create 
+function MultiSimSummaryStat(SummaryStatArray){
+	var Result={};
+
+	// Extract the general information from the first in the SummaryStatArray
+	
+	// load the results for storage
+	for Simulationindex
+		for TimeIndex
+			if Categorical==false
+			Result.StorageTable[TimeIndex][Simulationindex];
+			else
+				for CategoryIndex
+					Result.StorageTable[CategoryIndex][TimeIndex][Simulationindex];
+	
+	// 
 // Mean
 // Median
 // 95% bounds
@@ -370,3 +354,4 @@ MultipleSummaryStatistics.prototype.CreateSingleTable= function (){// this is a 
 // IQR
 // SD/variance?
 // Transform(for all elements of the table, transform using the function, e.g. log)
+}
