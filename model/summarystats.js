@@ -338,14 +338,28 @@ function MultiSimSummaryStat(SummaryStatArray){
 	// Extract the general information from the first in the SummaryStatArray
 	
 	// load the results for storage
-	for Simulationindex
-		for TimeIndex
-			if Categorical==false
-			Result.StorageTable[TimeIndex][Simulationindex];
+	if (MultipleCategories==false)
+		for Simulationindex
+			for TimeIndex{
+				//Copy the data
+				Result.StorageTable[TimeIndex][Simulationindex];
+			}
+			Result.Mean[TimeIndex]=Mean(Result.StorageTable[TimeIndex]);
+			Result.Median[TimeIndex]=Median(Result.StorageTable[TimeIndex]);
+			Result.Upper95[TimeIndex]=xxx(Result.StorageTable[TimeIndex]);
+			Result.Lower95[TimeIndex]=xxx(Result.StorageTable[TimeIndex]);
+			Result.UpperQuartile[TimeIndex]=xxx(Result.StorageTable[TimeIndex]);
+			Result.LowerQuartile[TimeIndex]=xxx(Result.StorageTable[TimeIndex]);
+			Result.Variance[TimeIndex]=xxx(Result.StorageTable[TimeIndex]);
+		}
+	}
+	else
 			else
 				for CategoryIndex
 					Result.StorageTable[CategoryIndex][TimeIndex][Simulationindex];
 	
+	for CategoryIndex
+		for TimeIndex
 	// 
 // Mean
 // Median
