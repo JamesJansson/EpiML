@@ -92,8 +92,8 @@ function SummaryStatistic(Settings, InputFunction){
 	
 	var VectorFunction=false;
 	// VectorFunction is a flag to indicate whether StatisticalFunction has arguments of (optional, defaults to non-vector function)
-	// false: StatisticalFunction(Person, Time) and returns a single value at Time or
-	// true: StatisticalFunction(Person, StartTime, EndTime, StepSize)and returns a vector of values
+	// false: StatisticalFunction(Person, Time) and returns a single value at time or
+	// true: StatisticalFunction(Person, StartTime, EndTime, StepSize)and returns a vector of values over the times specified
 	// Setting this flag to true will allow the vector in summary statistic to to be filled by the function under inspection (e.g. EventVector) that could be a lot faster
 	
 	var CategoricalFunction=false;
@@ -117,7 +117,7 @@ function SummaryStatistic(Settings, InputFunction){
 	var StartTime;
 	var EndTime;
 	var StepSize=1;//set by default to 1
-	
+	var NumberOfTimeSteps;
 	
 	var TimeVector=[];
 	var Value=[];
@@ -201,28 +201,52 @@ function SummaryStatistic(Settings, InputFunction){
 SummaryStatistic.prototype.Run=function(Population){
 	// Check that the settings line up
 	
+	// Set up the time vector
+	var CurrentTimeStep=this.StartTime;
+	NumberOfTimeSteps=Math.round((this.EndTime-this.StartTime)/this.TimeStep)+1; //This is used to avoid rounding errors
+	for (var TimeIndex; TimeIndex<NumberOfTimeSteps; TimeIndex++){
+		TimeVector[TimeIndex]=CurrentTimeStep;
+		CurrentTimeStep=CurrentTimeStep+this.TimeStep;
+	}
 	
-	for (var TimeIndex; TimeIndex<NumberOfTime; TimeIndex++){
-		TimeVector[TimeIndex]=ThisTimeStep;
-	}
-
-
-	if (this.SummaryStatisticType.toLowerCase()=='instantaneouscount'){
-		this.InstantaneousCount(Population);
-	}
-	if (this.SummaryStatisticType.toLowerCase()=='countevents'){
-		this.CountEvents(Population);
-	}
+	
 	if (this.SummaryStatisticType.toLowerCase()=='individualdistribution'){
 		this.IndividualDistribution(Population);
 	}
+	//Doing a simple count of the characteristic 
+	else{
+		// Set up the Value array
+		if (this.CategoricalFunction==false){// inspecting only a single category
+			this.Value=ZeroArray(this.TimeVector.length);
+		}
+		else{ // If there are a number of categories
+			this.Value=ZeroMatrix(this.numberOfCategories, this.
+		}
+		
+		if (this.SummaryStatisticType.toLowerCase()=='instantaneouscount'){
+			this.InstantaneousCount(Population);
+		}
+		if (this.SummaryStatisticType.toLowerCase()=='countevents'){
+			this.CountEvents(Population);
+		}
+	}
 }
 
-SummaryStatistic.prototype.CountEvents= function (Population){//Used to count how many times something happens over a number of finite periods
-	NumberInVector=Math.round((this.EndTime-this.StartTime)/this.StepSize)+1; //This is used to avoid rounding errors
+SummaryStatistic.prototype.InstantaneousCount= function (Population){//Used to determine the number of people that satisfy a condition at a particular point in time
+	if (this.CategoricalFunction==false)
+	
+	
+	
+	
+}
 
+
+
+
+SummaryStatistic.prototype.CountEvents= function (Population){//Used to count how many times something happens over a number of finite periods
+	
 	// initialise vector with a zero vector
-	this.Value=ZeroVector(NumberInVector);
+	this.Value=ZeroArray(NumberInVector);
 
 	// for each time step
 	var TimeStep=StartTime;
