@@ -102,7 +102,8 @@ function SummaryStatistic(Settings, InputFunction){
 	// This flag can only be used with InstantaneousCount. 
 	// It cannot be used with CountEvents or IndividualDistribution
 	
-	var NumberOfCategories; //(mandatory if CategoricalFunction==true)
+	var NumberOfCategories; 
+	//(mandatory if CategoricalFunction==true)
 	
 	var CategoryLabel=[];
 	// Used to store the text associated with the categorical numbers (optional)
@@ -120,7 +121,7 @@ function SummaryStatistic(Settings, InputFunction){
 	var NumberOfTimeSteps;
 	
 	var TimeVector=[];
-	var Value=[];
+	
 	
 	
 	
@@ -203,24 +204,25 @@ SummaryStatistic.prototype.Run=function(Population){
 	
 	// Set up the time vector
 	var CurrentTimeStep=this.StartTime;
-	NumberOfTimeSteps=Math.round((this.EndTime-this.StartTime)/this.TimeStep)+1; //This is used to avoid rounding errors
-	for (var TimeIndex; TimeIndex<NumberOfTimeSteps; TimeIndex++){
+	this.NumberOfTimeSteps=Math.round((this.EndTime-this.StartTime)/this.TimeStep)+1; //This is used to avoid rounding errors
+	for (var TimeIndex; TimeIndex<this.NumberOfTimeSteps; TimeIndex++){
 		TimeVector[TimeIndex]=CurrentTimeStep;
-		CurrentTimeStep=CurrentTimeStep+this.TimeStep;
+		CurrentTimeStep=CurrentTimeStep+this.TimeStep;// Increment the time step
 	}
 	
-	
+	// Inspect the individual statistics. Note that this type will have to inspect the value independently at each time step, to then take the average, etc. 
 	if (this.SummaryStatisticType.toLowerCase()=='individualdistribution'){
 		this.IndividualDistribution(Population);
 	}
 	//Doing a simple count of the characteristic 
 	else{
-		// Set up the Value array
+		// Set up the Count array
+		var this.Count;
 		if (this.CategoricalFunction==false){// inspecting only a single category
-			this.Value=ZeroArray(this.TimeVector.length);
+			this.Count=ZeroArray(this.NumberOfTimeSteps);
 		}
 		else{ // If there are a number of categories
-			this.Value=ZeroMatrix(this.numberOfCategories, this.
+			this.Count=ZeroMatrix(this.NumberOfCategories, this.NumberOfTimeSteps);
 		}
 		
 		if (this.SummaryStatisticType.toLowerCase()=='instantaneouscount'){
