@@ -43,7 +43,7 @@ function SummaryStatistic(Settings){
 	var Type;
 	// 'InstantaneousCount': how many people at time t have quality a (good for prevalence etc) (mandatory)
 	// 'CountEvents': how many events between two times occur to each person. This value is added to an aggregate 
-	// 'IndividualDistribution': used to report 
+	// 'IndividualDistribution': used to report median, mean, and the distribution of individual characteristics. e.g. Age
 	
 	var VectorFunction=false;
 	// VectorFunction is a flag to indicate whether StatisticalFunction has arguments of (optional, defaults to non-vector function)
@@ -59,7 +59,7 @@ function SummaryStatistic(Settings){
 	
 	var NumberOfCategories; //(mandatory if CategoricalFunction==true)
 	
-	var CategoricalLabel=[];
+	var CategoryLabel=[];
 	// Used to store the text associated with the categorical numbers (optional)
 	
 	var Function; 
@@ -73,23 +73,56 @@ function SummaryStatistic(Settings){
 	var EndTime;
 	var StepSize=1;//set by default to 1
 	
+	
+	var TimeVector=[];
+	var Value=[];
+	
+	
+	
+	
 	// Set the settings
+	if (typeof Settings.Name === 'string'){
+		Name=Settings.Name;
+	}
+	if (typeof Settings.XLabel === 'string'){
+		XLabel=Settings.XLabel;
+	}
+	if (typeof Settings.YLabel === 'string'){
+		YLabel=Settings.YLabel;
+	}
+	
+	//  Set the Type of statistic to be collected
+	if (typeof Settings.Type === 'string'){
+		Type=Settings.Type;
+	}
+	else{
+		console.error("A Type must be specified. Types include: InstantaneousCount: how many people at time t have quality a (good for prevalence etc), CountEvents: how many events between two times occur to each person. This value is added to an aggregate, IndividualDistribution: used to report median, mean, and the distribution of individual characteristics. e.g. Age") ;
+	}
+	
+	//Set whether the function will be a boolean operator or not.
+	if (typeof Settings.VectorFunction === 'boolean'){
+		VectorFunction=Settings.VectorFunction;
+	}
+	else if (typeof Settings.VectorFunction != 'undefined'){
+		console.error("SummaryStatistic: VectorFunction must be a boolean operator");
+	}
 	
 	
+	
+	// Set the Category settings
 	if (typeof Settings.CategoricalFunction === 'boolean'){
-		if (typeof Settings.NumberOfCategories === 'number'){
-			NumberOfCategories=Settings.NumberOfCategories;
-			if (typeof Settings.CategoricalLabel === 'array'){
-				CategoricalLabel=Settings.CategoricalLabel;
+		if (Settings.CategoricalFunction==true){
+			CategoricalFunction=true;
+			if (typeof Settings.NumberOfCategories === 'number'){
+				NumberOfCategories=Settings.NumberOfCategories;
+				if (typeof Settings.CategoryLabel === 'object'){
+					CategoryLabel=Settings.CategoryLabel;
+				}
+			}
+			else {
+				console.error("If CategoricalFunction is true, NumberOfCategories must be set to a whole number >1;")
 			}
 		}
-		else {
-			console.error("If CategoricalFunction is true, NumberOfCategories must be set to a whole number >1;")
-		}
-		
-		
-		
-		
 	}
 	else if (typeof Settings.CategoricalFunction != 'undefined'){
 		console.error("CategoricalFunction should have only a value of true or false");
