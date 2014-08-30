@@ -27,27 +27,83 @@ RecentTeenageHCVInfections.Values[0][0] = 3;//If the fibrosis stages are either 
 RecentTeenageHCVInfections.Values[0][1] = 4;//
 
 
+// Example usage
 
 
-function SummaryStatistic(Type){
-	var SummaryStaisticName;
+function SummaryStatistic(Settings){
+	var Name;
+	// A descriptive text entry about the statistic (optional)
 	
-	var SummaryStatisticType=Type;
-	// text
-	// Count: how many people at time t have quality a (good for prevalence etc)
-	// CountEvents: how many people at time
-	// Individual: 
-	// Categorical: 
+	var XLabel="Time";
+	// A string that would be placed on the x axis of the graph (e.g. Year, Month, etc) (optional)
+	
+	var YLabel="Value";
+	// A string that would be placed on the y axis of the graph (e.g. Diagnoses, Infections, etc) (optional)
+	
+	var Type;
+	// 'InstantaneousCount': how many people at time t have quality a (good for prevalence etc) (mandatory)
+	// 'CountEvents': how many events between two times occur to each person. This value is added to an aggregate 
+	// 'IndividualDistribution': used to report 
 	
 	var VectorFunction=false;
-	// VectorFunction is a flag to indicate whether StatisticalFunction has arguments of
-	// StatisticalFunction(Person, Time) and returns a single value at Time or
-	// StatisticalFunction(Person, StartTime, EndTime, StepSize)and returns a vector of values
+	// VectorFunction is a flag to indicate whether StatisticalFunction has arguments of (optional, defaults to non-vector function)
+	// false: StatisticalFunction(Person, Time) and returns a single value at Time or
+	// true: StatisticalFunction(Person, StartTime, EndTime, StepSize)and returns a vector of values
 	// Setting this flag to true will allow the vector in summary statistic to to be filled by the function under inspection (e.g. EventVector) that could be a lot faster
 	
+	var CategoricalFunction=false;
+	// CategoricalFunction is a flag to indicate whether StatisticalFunction returns (optional, defaults to simple count)
+	// true or false, or it returns an index
+	// This flag can only be used with InstantaneousCount. 
+	// It cannot be used with CountEvents or IndividualDistribution
 	
-	var StatisticalFunction; // this function returns either a 0 or a 1 given a specific time
-	var VectorStatistiticalFunction;  // this function returns a vector of 0 and 1s given the StartTime, EndTime, and StepSize
+	var NumberOfCategories; //(mandatory if CategoricalFunction==true)
+	
+	var CategoricalLabel=[];
+	// Used to store the text associated with the categorical numbers (optional)
+	
+	var Function; 
+	// StatisticalFunction is user defined
+	// If Type=='InstantaneousCount' it returns either a 0 or a 1 given a specific time
+	// If Type=='CountEvents' it returns a number >= 0, and is given StartTime, EndTime
+	// If Type=='IndividualDistribution' it returns any number 
+	// If VectorFunction==true if returns a vector over the period stated
+	
+	var StartTime;
+	var EndTime;
+	var StepSize=1;//set by default to 1
+	
+	// Set the settings
+	
+	
+	if (typeof Settings.CategoricalFunction === 'boolean'){
+		if (typeof Settings.NumberOfCategories === 'number'){
+			NumberOfCategories=Settings.NumberOfCategories;
+			if (typeof Settings.CategoricalLabel === 'array'){
+				CategoricalLabel=Settings.CategoricalLabel;
+			}
+		}
+		else {
+			console.error("If CategoricalFunction is true, NumberOfCategories must be set to a whole number >1;")
+		}
+		
+		
+		
+		
+	}
+	else if (typeof Settings.CategoricalFunction != 'undefined'){
+		console.error("CategoricalFunction should have only a value of true or false");
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
 	var CategoricalStatisticalFunction;
 	var VectorCategoricalStatistiticalFunction;
 
@@ -58,9 +114,7 @@ function SummaryStatistic(Type){
 	
 	var SelectionFunction;
 	var SelectionFunctionArray=[];
-	var StartTime;
-	var EndTime;
-	var StepSize=1;//set by default to 1
+
 	
 	var TimeVector=[];
 	var Value=[];
@@ -72,8 +126,12 @@ function SummaryStatistic(Type){
 }
 
 SummaryStatistic.prototype.Run=function(Population){
-	if (this.SummaryStatisticType.toLowerCase()=='count'){
-		this.Count(Population);
+	// Check that the settings line up
+	
+
+
+	if (this.SummaryStatisticType.toLowerCase()=='instantaneouscount'){
+		this.InstantaneousCount(Population);
 	}
 	if (this.SummaryStatisticType.toLowerCase()=='countevents'){
 		this.CountEvents(Population);
