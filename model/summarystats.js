@@ -26,8 +26,49 @@ RecentTeenageHCVInfections.Values[0] = [];
 RecentTeenageHCVInfections.Values[0][0] = 3;//If the fibrosis stages are either 3 or 4 (but nothing else 
 RecentTeenageHCVInfections.Values[0][1] = 4;//
 
-
+ 
 // Example usage
+
+
+// Count of prevalent cases of HIV
+Settings.Name="Currently Living With HIV";
+Settings.XLabel="Year";
+Settings.YLabel="Currently Living With HIV";
+Settings.Type="InstantaneousCount";
+
+Settings.Function= function (Individual, Time){
+	if (Individual.HIVInfection<Time && Individual.Alive(Time)){
+		return true; //count this individual
+	}
+	else{
+		return false; //don't count this individual
+	}
+}
+
+CurrentlyLivingWithHIV=new SummaryStatistic(Settings);
+CurrentlyLivingWithHIV.run(Population); //Population is an array individuals
+
+
+
+// Count of prevalent cases into multiple categories
+// A categorical function example might be to look at people with HIV above or below 50 years of age. 
+// Define the function as below:
+
+Settings.Function= function (Individual, Time){
+	if (Individual.HIVInfection<Time && Individual.Alive(Time)){
+		if (Individual.Age(Time)<50){
+			return 0;// first category
+		}
+		else{//over 50
+			return 1;// second category
+		}
+	}
+	else{
+		return NaN;// no category
+	}
+}
+*/
+
 
 
 function SummaryStatistic(Settings){
