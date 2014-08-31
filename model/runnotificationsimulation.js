@@ -96,12 +96,11 @@ self.onmessage = function (e) {
 	}
 	
 	//Determine fibrosis levels with year
-
 	console.log("Extracting results");
-	
-	console.log(typeof DetermineFibrosis);
+	var SimResult={};
+
 	FibrosisMatrix=DetermineFibrosis(PPNotification);
-	
+	SimResult.FibrosisCount=FibrosisMatrix;
 	
 	
 	
@@ -109,8 +108,7 @@ self.onmessage = function (e) {
     TotalTime=TimerFinish -TimerStart;
 
 	console.log("Finished simulation in "+TotalTime+" seconds");
-	var SimResult={};
-	SimResult.HCVTestResult=FibrosisMatrix;
+	
 	
 	//Saving simulation results into local storage
 	

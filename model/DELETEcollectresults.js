@@ -27,10 +27,10 @@ function GenerateSummaryStats(Population){
 }
 
 
-function DetermineFibrosis(PPLocal){
+function DetermineFibrosis(Population){
 	//Create settings
 	var Settings={};
-	Settings.Name="Fibrosis Level";
+	Settings.Name="Number of People by Fibrosis Level";
 	Settings.XLabel="Year";
 	Settings.YLabel="Count";
 	Settings.StartTime=1980;
@@ -46,12 +46,8 @@ function DetermineFibrosis(PPLocal){
 	
 	// Run the statistic
 	FibrosisResult=new SummaryStatistic(Settings, FibrosisFunction);
-	FibrosisResult.Run(PPLocal);
+	FibrosisResult.Run(Population);
 
-	
-
-
-	
 	return FibrosisResult;
 }
 

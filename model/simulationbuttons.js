@@ -13,22 +13,11 @@ function RunSim(){
 	// Load the values from the files
 	LoadDataFromFiles();
 	
-	
-	
-	
-	
-	
-	
-	
 	// Save into the Common holder
 	var Common={};//
 	Common.Data=Data;
-	
 	Common.Param=Param;
 	
-	
-	
-
 	//Creating the data to be used in the simulations
 	SimInputData=[];
 	for (i=0; i<NumberOfSimsToRun; i++){
@@ -36,14 +25,10 @@ function RunSim(){
 	}
 
 	//Creating the parameter
-	
 	SimulationHolder=new MulticoreSim(ScriptToRun, Common, SimInputData, NoCores); //Common is the same between all sims
 	SimulationHolder.UseSimProgressBar=true;
 	SimulationHolder.SimProgressBarID="MainProgress";
 	SimulationHolder.Start();
-
-
-
 
 	return 0;
 }
@@ -64,3 +49,46 @@ function LoadDataFromFiles(){
 	Data.StateNotifications.State=DataFile.StateNotifications.GetColumn(0, 29, 36);//GetColumn
 	Data.StateNotifications.Year=DataFile.StateNotifications.GetRow(3, 1, 19);//GetRow
 }
+
+
+function NotificationSimPlot(){
+	// Get the relevant data
+	SimulationHolder.Result[0];
+	
+	FibrosisArray=SimulationHolder.Result[0].FibrosisCount.Count;
+	TimeAxis=SimulationHolder.Result[0].FibrosisCount.TimeVector;
+	
+	// convert to a form that plot will accept
+	PlotData=HCVTestConvertDataToLinePlot(TimeAxis, FibrosisArray);
+	//Set up plot appearance // http://www.pikemere.co.uk/blog/flot-tutorial-how-to-create-area-charts/ 
+	PlotSettings={xaxis: {
+					axisLabel: 'Time (years)',
+					axisLabelUseCanvas: true,
+					axisLabelFontSizePixels: 12,
+					axisLabelFontFamily: 'Verdana, Arial, Helvetica, Tahoma, sans-serif',
+					axisLabelPadding: 5,
+					tickLength: 0
+				},
+				yaxis: {
+					min: 0,
+					axisLabel: 'Number of people',
+					axisLabelUseCanvas: true,
+					axisLabelFontSizePixels: 12,
+					axisLabelFontFamily: 'Verdana, Arial, Helvetica, Tahoma, sans-serif',
+					axisLabelPadding: 5
+				},
+				series: {
+					lines: {
+						show: true,
+						fill: true
+					},
+					stack: true
+				}
+			};
+	
+	//plot of HCVTestPlotHolder
+	$.plot("#HCVTestPlotHolder", PlotData, PlotSettings);
+
+}
+
+

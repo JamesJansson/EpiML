@@ -1,7 +1,7 @@
 function DetermineFibrosis(PPLocal){
 	//Create settings
 	var Settings={};
-	Settings.Name="Fibrosis Level";
+	Settings.Name="Number of People by Fibrosis Level";
 	Settings.Type="InstantaneousCount";
 	Settings.XLabel="Year";
 	Settings.YLabel="Count";
@@ -13,16 +13,17 @@ function DetermineFibrosis(PPLocal){
 	
 	//Define the selection function
 	FibrosisFunction= function (Person, Year){
-		return Person.HCV.Fibrosis.Value(Year); // in this case, the returned value is the numerical value found in the 
+		if (Person.HCV.CurrentlyInfected(Year)){
+			return Person.HCV.Fibrosis.Value(Year); // in this case, the returned value is the numerical value found in the 
+		}
+		return NaN;
 	};
 	
 	// Run the statistic
 	FibrosisResult=new SummaryStatistic(Settings, FibrosisFunction);
 	FibrosisResult.Run(PPLocal);
 
-	
-	FibrosisResult.Function=0;
+	FibrosisResult.Function=0;//The function seems to need to be destroyed before passing the results back to the main controller of the webworker
 
-	
 	return FibrosisResult;
 }
