@@ -51,7 +51,7 @@ self.onmessage = function (e) {
 	
 	var IncrementSize=Math.round(SimData.NoPeople/100);//used to deliver progress rates back to the progress bar
 	
-	var GenotypeValue=0;
+	var GenotypeValue=1;
 
 	
 	var HCVParam={};

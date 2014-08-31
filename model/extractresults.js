@@ -13,7 +13,7 @@ function DetermineFibrosis(PPLocal){
 	
 	//Define the selection function
 	FibrosisFunction= function (Person, Year){
-		if (Person.HCV.CurrentlyInfected(Year)){
+		if (Person.HCV.Infected.Value(Year)==1){//currently infected
 			return Person.HCV.Fibrosis.Value(Year); // in this case, the returned value is the numerical value found in the 
 		}
 		return NaN;
