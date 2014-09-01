@@ -61,7 +61,10 @@ self.onmessage = function (e) {
 	HCVParam.F3F4=0.116;
 	HCVParam.F4LF=0.0001;//not real
 	HCVParam.F4HCC=0.4;//not real
-
+	// Grebely http://www.ncbi.nlm.nih.gov/pubmed/23908124
+	HCVParam.SpontaneousClearance=0.296;// 4 year probability of clearance
+	HCVParam.YearlyRateOfClearanceInClearers=0.666;
+	
 
 	console.log("Starting to load Person object");
 	
@@ -108,6 +111,7 @@ self.onmessage = function (e) {
 	TimerFinish = new Date().getTime() / 1000;
     TotalTime=TimerFinish -TimerStart;
 
+	console.log("Total individuals in model: " + PPNotification.length);
 	console.log("Finished simulation in "+TotalTime+" seconds");
 	
 	
