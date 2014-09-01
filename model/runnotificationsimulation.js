@@ -82,7 +82,8 @@ self.onmessage = function (e) {
 	var YearOfDiagnosis;
 	for (var i=0; i<PPNotification.length; i++){
 		
-		TimeUntilDiagnosis=NormalRand(5, 2.5);//this may end up being lognormal
+		//TimeUntilDiagnosis=NormalRand(5, 2.5);//this may end up being lognormal
+		TimeUntilDiagnosis=TimeUntilEvent(0.10);//this may end up being lognormal
 		
 		if (TimeUntilDiagnosis<0){TimeUntilDiagnosis=0}//correct 
 		
