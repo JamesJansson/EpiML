@@ -296,8 +296,13 @@ SummaryStatistic.prototype.CountEvents= function (Population){//Used to count ho
 
 
 // Factor: multiply by a factor to accommodate for using a representative sample, for example
-
-
+SummaryStatistic.prototype.Adjust= function (Multiplier){
+	if (this.Type.toLowerCase()=='individualdistribution'){
+		console.error("Values for individual distributions should not be factored. That is, they represent a per person measurement e.g. doctors visits per year. If we are using a representative sample, this figure should stay the same regardless.");
+	}
+	// for all of the counting functions
+	
+}
 
 
 

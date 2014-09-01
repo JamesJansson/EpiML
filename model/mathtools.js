@@ -297,6 +297,8 @@ function MultiplyArrays(Array1, Array2){
 	return ArrayResult;
 }
 
+
+
 function DivideArrays(Array1, Array2){
 	if (Array1.length!=Array2.length){
 		error("Arrays are incorrect length");
@@ -308,6 +310,34 @@ function DivideArrays(Array1, Array2){
 	}
 	return ArrayResult;
 }
+
+
+// function Multiply(A, B){
+	// if (typeof A === 'object'
+		// return
+		
+
+	// else if (typeof A is number and B is object
+	//MultiplyArrayByNumber(A, B)
+	// else if (typeof B is number and A is object
+	//MultiplyArrayByNumber(B, A)
+
+// }
+
+// function MultiplyArrayByArray
+	// if the inputs are not both arrays
+		// send error
+	// if the arrays are the wrong length 
+		// send an error
+	
+	
+	
+// function MultiplyArrayByNumber
+	//for (key in B) {
+		// if (typeof B(key) === object)
+			//MultiplyArrayByNumber(A, B(key))
+	// }
+
 
 
 

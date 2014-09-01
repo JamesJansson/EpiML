@@ -4,13 +4,13 @@ function  HCVObject(YearOfBirth)
 	
 	//State variables
 	this.InfectedState=0;
-	this.AntiBodyState=0;
+	this.AntibodyState=0;
 	this.DiagnosedState=0;
 	this.GenotypeState=[0, 0, 0, 0, 0, 0]; 
 	
 	//History variables
 	this.Infected=new EventVector;
-	//this.AntiBody=new EventVector;//?
+	this.AntibodyYear=NaN;
 	this.Diagnosed=new EventVector;
 	//AntibodyDiagnosis
 	this.Fibrosis=new EventVector;//including liver failure
@@ -63,11 +63,11 @@ HCVObject.prototype.Infection= function (Year, GenotypeValue, Age, Sex, Alcohol,
 	if (this.InfectedState==0){//if not already infected (don't want to start fibrosis from f1)
 		//State variables
 		this.InfectedState=1;
-		this.AntiBodyState=1;
+		this.AntibodyState=1;
 		
 		//History variables
 		this.Infected.Set(1, Year);
-		this.AntiBodiesYear=Year;
+		this.AntibodyYear=Year;
 		
 		//Determine if spontaneous clearance occurs
 		var TimeUntilClearance;
