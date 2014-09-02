@@ -312,32 +312,45 @@ function DivideArrays(Array1, Array2){
 }
 
 
-// function Multiply(A, B){
-	// if (typeof A === 'object'
-		// return
-		
-
-	// else if (typeof A is number and B is object
+function Multiply(A, B){
+	if (typeof A === 'object' && typeof B === 'object'){
+		return MultiplyArrayByArray(A, B);
+	}
+	else if (typeof A === 'number' && typeof B === 'object'){
 	//MultiplyArrayByNumber(A, B)
 	// else if (typeof B is number and A is object
 	//MultiplyArrayByNumber(B, A)
+	}
+	// else if (typeof B is number and A is number
+		return A*B;
+	//
+	console.error("The input arguments to Multiply should be either two arrays of equal size or a number and an array");
+}
 
-// }
-
-// function MultiplyArrayByArray
+function MultiplyArrayByArray(A, B){
 	// if the inputs are not both arrays
 		// send error
 	// if the arrays are the wrong length 
 		// send an error
+}
 	
 	
+function MultiplyArrayByNumber(Arr, Num){
+	var NewObject=[];
+	for (key in Arr) {
+		if (typeof Arr[key] === 'object'){
+			NewObject[key]=MultiplyArrayByNumber(Arr[key], Num);
+		}
+		else if (typeof Arr[key] === 'number'){
+			NewObject[key]=Arr[key]*Num;
+		}
+		else{// if it is a non-number type (e.g. text), return what was in the original object
+			NewObject[key]=Arr[key];
+		}
+	}
+	return NewObject;
 	
-// function MultiplyArrayByNumber
-	//for (key in B) {
-		// if (typeof B(key) === object)
-			//MultiplyArrayByNumber(A, B(key))
-	// }
-
+}
 
 
 
