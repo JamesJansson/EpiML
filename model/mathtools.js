@@ -317,39 +317,74 @@ function Multiply(A, B){
 		return MultiplyArrayByArray(A, B);
 	}
 	else if (typeof A === 'number' && typeof B === 'object'){
-	//MultiplyArrayByNumber(A, B)
-	// else if (typeof B is number and A is object
-	//MultiplyArrayByNumber(B, A)
+		return MultiplyArrayByNumber(B, A);
 	}
-	// else if (typeof B is number and A is number
+	else if (typeof A === 'object' && typeof B === 'number'){
+		return MultiplyArrayByNumber(A, B);
+	}
+	else if (typeof A === 'number' && typeof B === 'number'){
 		return A*B;
-	//
+	}
+
 	console.error("The input arguments to Multiply should be either two arrays of equal size or a number and an array");
 }
 
-function MultiplyArrayByArray(A, B){
-	// if the inputs are not both arrays
-		// send error
-	// if the arrays are the wrong length 
-		// send an error
+function MultiplyArrayByArray(A, B){// Multiplies each element in A by the corresponding element in B
+	var NewArray=[];
+	if (typeof A === 'object' && typeof B === 'object'){
+		if (A.length!=B.length)// if the arrays are the wrong length 
+			console.error("The size and structure of the two objects being multiplied must be identical.");// send error
+		for (key in A) {
+			if (typeof A[key] != typeof B[key]){//If A and B are not the same, including if it is not defined
+				console.error("The size and structure of the two objects being multiplied must be identical.");// send error
+			}
+			else if (typeof A[key] === 'number'){// and so is B[key]
+				NewArray[key]=A[key]*B[key];
+			}
+			else if (typeof A[key] === 'object'){// and so is B[key]
+				NewArray[key]=MultiplyArrayByArray(A[key], B[key]);
+			}
+			
+		}
+		return NewArray;
+	}
+	else{// if the inputs are not both arrays
+		console.error("The inputs of MultiplyArrayByArray should both be arrays.");// send an error
+	}
+}
+
+// Testing code
+// TestVal=2.1;
+// TestArr=[];
+// for (i=0; i<4; i++){
+	// TestArr[i]=[];
+	// for (j=0; j<3; j++){
+		// TestArr[i][j]=[];
+		// for (k=0; k<2; k++){
+			// TestArr[i][j][k]=TestVal;
+			// TestVal=TestVal+3.3;
+		// }
+	// }
+// }
+
+function CopyArray(Arr){
+	return MultiplyArrayByNumber(Arr, 1);
 }
 	
-	
-function MultiplyArrayByNumber(Arr, Num){
-	var NewObject=[];
+function MultiplyArrayByNumber(Arr, Num){// Multiplies each element in Arr by the number Num
+	var NewArray=[];
 	for (key in Arr) {
-		if (typeof Arr[key] === 'object'){
-			NewObject[key]=MultiplyArrayByNumber(Arr[key], Num);
+		if (typeof Arr[key] === 'object'){// E.g. if it is an array of arrays, we want to multiply each element within the sub array
+			NewArray[key]=MultiplyArrayByNumber(Arr[key], Num);
 		}
 		else if (typeof Arr[key] === 'number'){
-			NewObject[key]=Arr[key]*Num;
+			NewArray[key]=Arr[key]*Num;
 		}
 		else{// if it is a non-number type (e.g. text), return what was in the original object
-			NewObject[key]=Arr[key];
+			NewArray[key]=Arr[key];
 		}
 	}
-	return NewObject;
-	
+	return NewArray;
 }
 
 
