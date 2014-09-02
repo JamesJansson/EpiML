@@ -301,7 +301,7 @@ SummaryStatistic.prototype.Adjust= function (Multiplier){
 		console.error("Values for individual distributions should not be factored. That is, they represent a per person measurement e.g. doctors visits per year. If we are using a representative sample, this figure should stay the same regardless.");
 	}
 	// for all of the counting functions
-	
+	this.Count=Multiply(this.Count, Multiplier);
 }
 
 

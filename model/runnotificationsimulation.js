@@ -44,8 +44,6 @@ self.onmessage = function (e) {
 	//Load the parameters data
 	var Param=e.data.Common.Param;
 	
-	console.log("Param "+ Param);
-	
 	var SimID = e.data.SimNumber; // this value is used to select the appropriate parameter value
     var SimData = e.data.SimData;//creates a pointer
 	
@@ -103,8 +101,8 @@ self.onmessage = function (e) {
 	console.log("Extracting results");
 	var SimResult={};
 
-	FibrosisMatrix=DetermineFibrosis(PPNotification);
-	SimResult.FibrosisCount=FibrosisMatrix;
+	FibrosisCount=CountFibrosisStages(PPNotification, Param.SampleFactor);
+	SimResult.FibrosisCount=FibrosisCount;
 	
 	
 	

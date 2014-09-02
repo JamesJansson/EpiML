@@ -1,4 +1,4 @@
-function DetermineFibrosis(PPLocal){
+function CountFibrosisStages(PPLocal, SampleFactorMultiplier){
 	//Create settings
 	var Settings={};
 	Settings.Name="Number of People by Fibrosis Level";
@@ -30,8 +30,8 @@ function DetermineFibrosis(PPLocal){
 	FibrosisResult.Run(PPLocal);
 
 	FibrosisResult.Function=0;//The function seems to need to be destroyed before passing the results back to the main controller of the webworker
-	//FibrosisResult.Adjust(Param.SampleFactor);// Make this representative sample actually reflect the real number of diagnoses
 	
+	FibrosisResult.Adjust(SampleFactorMultiplier);// Make this representative sample actually reflect the real number of diagnoses
 	
 	return FibrosisResult;
 }
