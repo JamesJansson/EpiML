@@ -82,7 +82,7 @@ PersonObject.prototype.YearOfDeath= function(YearOfBirth, Year){
 	
 	var YearOfDeathDetermined=false;
 	while (YearOfDeathDetermined==false){
-		if (CurrentAgeIndex<this.BaselineP.length){
+		if (CurrentAgeIndex<this.BaselineP.length-1){//If it is not at the last element in the array.
 			CurrentAgeIndex++;
 		}
 		YearsSinceBaseline++;
@@ -95,7 +95,7 @@ PersonObject.prototype.YearOfDeath= function(YearOfBirth, Year){
 			return YearsSinceStartYear;
 		}
 		// If person does not die in the year, add a year to 
-		
+		YearsSinceStartYear++;
 	}
 	
 	

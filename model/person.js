@@ -51,9 +51,17 @@ PersonObject.prototype.AliveIn = function (Year){//using prototyping for speed
 	return false;
 };
 
+PersonObject.prototype.CalculateMortality= function (YearFromWhichToCalculateMortality){//using prototyping for speed
+	// if this.Sex==0 && this.Aboriginal==false
+	// this.GeneralDeath=CalculateMaleMortality(this.YearOfBirth, YearFromWhichToCalculateMortality);
+	//
+	console.log(CalculateMaleMortality);
+	
+};
+
 PersonObject.prototype.YearsOfLifeLost= function (){//using prototyping for speed
 	// This is a general function that describes the difference between general death date and 
-	// the earliest described death date.
+	// the earliest non-general death date.
 	return this.GeneralDeath-Math.min(this.GeneralDeath, this.IDUDeath, this.HCVDeath, this.HIVDeath);
 };
 

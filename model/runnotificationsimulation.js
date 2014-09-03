@@ -17,6 +17,9 @@ var PP=[];//This is the global array that holds the population
 var SimID;//This value is a global, used to reference the correct simulation in the Param structure
 var PPNotification=[];
 
+var CalculateMaleMortality;
+
+
 self.onmessage = function (e) {
 
 	
@@ -45,7 +48,9 @@ self.onmessage = function (e) {
 	var Param=e.data.Common.Param;
 	
 	var SimID = e.data.SimNumber; // this value is used to select the appropriate parameter value
-    var SimData = e.data.SimData;//creates a pointer
+    var SimData = e.data.SimData;
+	CalculateMaleMortality=23;
+	
 	
 	var IncrementSize=Math.round(SimData.NoPeople/100);//used to deliver progress rates back to the progress bar
 	
@@ -112,6 +117,7 @@ self.onmessage = function (e) {
 	console.log("Total individuals in model: " + PPNotification.length);
 	console.log("Finished simulation in "+TotalTime+" seconds");
 	
+	//PPNotification[0].CalculateMortality();
 	
 	//Saving simulation results into local storage
 	
