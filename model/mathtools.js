@@ -524,6 +524,17 @@ var Rand = (function() {
       // return a float in [0, 1) 
       // if z = m then z / m = 0 therefore (z % m) / m < 1 always
       return z / m;
+    },
+	Array : function(NumElements) {
+	  var RandArray=[];
+	  for (var Indexcount=0; Indexcount<NumElements; Indexcount++){
+		  // define the recurrence relationship
+		  z = (a * z + c) % m;
+		  // return a float in [0, 1) 
+		  // if z = m then z / m = 0 therefore (z % m) / m < 1 always
+		  RandArray[Indexcount] = z / m;
+	  }
+	  return RandArray;
     }
   };
 }());
