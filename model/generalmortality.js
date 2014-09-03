@@ -48,18 +48,81 @@ function MortalityCalculator(MortalityProbabilityArray1, Year1, MortalityProbabi
 	}
 }
 
-PersonObject.prototype.DateOfDeath= function(YearOfBirth, Year){
+PersonObject.prototype.YearOfDeath= function(YearOfBirth, Year){
+	// This function determines the year of death of someone 
+
 
 	//Australia
 	//http://www.abs.gov.au/AUSSTATS/abs@.nsf/DetailsPage/3302.0.55.0012010%E2%80%932012?OpenDocument 
 	//Aboriginal
 	//http://www.abs.gov.au/AUSSTATS/abs@.nsf/DetailsPage/3302.0.55.0032010-2012?OpenDocument 
 
-	// Determine ago of person
+	// Determine age of person
+	var StartingAge=Year-YearOfBirth;
+	var CurrentAgeIndex=Math.floor(StartingAge);
+	var YearsSinceBaseline=(Year-this.BaselineYear);// note that this value is allowed to be both fractional and negative
+	var YearsSinceStartYear=Year;
 	
-	// Note that rounding is not perfectly precise, but over small changes in annual mortality allows for and very good trade off in terms of calculation speed.
+	var TimeRemainingInThisAge=StartingAge-CurrentAgeIndex;
 	
-	2.3
+	var AdjustedProbabilityOfDeath;
+	var TimeInThisAge;
+	
+	
+	AdjustedProbabilityOfDeath=this.BaselineP[CurrentAgeIndex] * Math.pow(this.YearlyImprovement, YearsSinceBaseline);
+	AdjustedProbabilityOfDeath=AdjustedProbabilityOfDeath*TimeRemainingInThisAge;
+	if (AdjustedProbabilityOfDeath<Rand.Value()){
+		// Determine the time at which mortality occurs
+		TimeInThisAge=TimeRemainingInThisAge*Rand.Value();
+		YearsSinceStartYear=YearsSinceStartYear+TimeInThisAge;
+		return YearsSinceStartYear;
+	}
+	// If the person does not die in the remaining time at age e.g. 42, add what remains of the year
+	YearsSinceStartYear=YearsSinceStartYear+TimeRemainingInThisAge;
+	
+	var YearOfDeathDetermined=false;
+	while (YearOfDeathDetermined==false){
+		if (CurrentAgeIndex<this.BaselineP.length){
+			CurrentAgeIndex++;
+		}
+		YearsSinceBaseline++;
+		// Adjust the mortality rate to account for improvements in mortality with time
+		AdjustedProbabilityOfDeath=this.BaselineP[CurrentAgeIndex] * Math.pow(this.YearlyImprovement, YearsSinceBaseline);
+		if (AdjustedProbabilityOfDeath<Rand.Value()){
+			YearOfDeathDetermined=true;
+			TimeInThisAge=Rand.Value();
+			YearsSinceStartYear=YearsSinceStartYear+TimeInThisAge;
+			return YearsSinceStartYear;
+		}
+		// If person does not die in the year, add a year to 
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	// Note that year adjustment was planned to be rounded, but there isn't a huge trade off in terms of calculation speed.
+	// According to the code below, rounding results in very little change between rounding the year
+	// RandomNumbers=Rand.Array(1000000);
+	// function Exponentiate(Arr, Exp){
+		// var Arr1=Arr.slice();
+		// var TimerStart = new Date().getTime() / 1000;
+		// for (key in Arr1){// For each element in the array
+			// Arr1[key]=Math.pow(Arr1[key], Exp);
+		// }
+		// var TimerFinish = new Date().getTime() / 1000;
+		// var TotalTime=TimerFinish -TimerStart;
+		// console.log(TotalTime);
+		// return Arr1;
+	// }
+	// A=Exponentiate(RandomNumbers, 5);
+	// A=Exponentiate(RandomNumbers, 5.2);
+	
+	
+	
 	
 
 
