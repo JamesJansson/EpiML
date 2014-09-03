@@ -57,38 +57,8 @@ PersonObject.prototype.YearsOfLifeLost= function (){//using prototyping for spee
 	return this.GeneralDeath-Math.min(this.GeneralDeath, this.IDUDeath, this.HCVDeath, this.HIVDeath);
 };
 
-// Text output of the individual
-// 0: born
-// 
 
-function Mortality(DateOfBirth, Year, Sex){
-	//Linear or proportion change in mortality
-	//Australia
-	//http://www.abs.gov.au/AUSSTATS/abs@.nsf/DetailsPage/3302.0.55.0012010%E2%80%932012?OpenDocument 
-	//Aboriginal
-	//http://www.abs.gov.au/AUSSTATS/abs@.nsf/DetailsPage/3302.0.55.0032010-2012?OpenDocument 
-	//Read in year 1
-	//Read in year 2
-	//Determine per year percentage change
-	//Determine mortality rate for all years under consideration
 
-	//Save into matrix Probability[Year][Age]
-	//IndexYearRef=
-	//MaxYearRef=sizeofthematrix
-	
-	
-	//.Date(DateOfBirth, Year)
-	// Work out year
-	// YearRef=Year-IndexYearRef;
-	// if (YearRef<0){YearRef=0;}
-	// perform a cumulative mortality calculation
-	// RandVal=Rand()
-	// for 
-	
-	
-	// Disease stage probability of testing
-	// 
-}
 
 PersonObject.prototype.HCVInfection= function (YearOfInfection, Genotype, HCVParam) {
 	var Alcohol=0;

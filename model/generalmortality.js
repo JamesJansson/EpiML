@@ -21,7 +21,10 @@
 // 
 
 function MortalityCalculator(MortalityProbabilityArray1, Year1, MortalityProbabilityArray2, Year2){
-	// The mortality rate is take in as a per year mortality, starting
+	// The mortality rate is take in as a per year mortality, starting with the first entry [0] being the death rate in the first year of life (0 years old)
+	// The last mortality probability is the same rate for all subsequent years
+	// e.g. is the data only goes to 90 years, 91, 92 etc will use the 90 year old rate of mortality
+	
 	// error checking
 	if (MortalityProbabilityArray1.length != MortalityProbabilityArray2.length){
 		console.error("Mortality probability arrays should be the same length");
@@ -43,6 +46,36 @@ function MortalityCalculator(MortalityProbabilityArray1, Year1, MortalityProbabi
 			this.YearlyImprovement[YearIndex]=1;
 		}
 	}
-	
 }
 
+PersonObject.prototype.DateOfDeath= function(YearOfBirth, Year){
+
+	//Australia
+	//http://www.abs.gov.au/AUSSTATS/abs@.nsf/DetailsPage/3302.0.55.0012010%E2%80%932012?OpenDocument 
+	//Aboriginal
+	//http://www.abs.gov.au/AUSSTATS/abs@.nsf/DetailsPage/3302.0.55.0032010-2012?OpenDocument 
+
+	// Determine ago of person
+	
+	// Note that rounding is not perfectly precise, but over small changes in annual mortality allows for and very good trade off in terms of calculation speed.
+	
+	2.3
+	
+
+
+
+	//IndexYearRef=
+	//MaxYearRef=sizeofthematrix
+	
+	
+	//.Date(DateOfBirth, Year)
+	// Work out year
+	// YearRef=Year-IndexYearRef;
+	// if (YearRef<0){YearRef=0;}
+	// perform a cumulative mortality calculation
+	// RandVal=Rand()
+	// for 
+	
+	
+
+};
