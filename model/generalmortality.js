@@ -122,23 +122,20 @@ PersonObject.prototype.YearOfDeath= function(YearOfBirth, Year){
 	// A=Exponentiate(RandomNumbers, 5.2);
 	
 	
-	
-	
-
-
-
-	//IndexYearRef=
-	//MaxYearRef=sizeofthematrix
-	
-	
-	//.Date(DateOfBirth, Year)
-	// Work out year
-	// YearRef=Year-IndexYearRef;
-	// if (YearRef<0){YearRef=0;}
-	// perform a cumulative mortality calculation
-	// RandVal=Rand()
-	// for 
-	
-	
-
 };
+
+
+function GeneralMortalityTesting(){
+		var MaleMortality= new MortalityCalculator(Param.Mortality.MaleGeneral1,Param.Mortality.Year1, Param.Mortality.MaleGeneral2,Param.Mortality.Year2);
+		
+		var TimerStart = new Date().getTime() / 1000;
+		for (var ind=0; ind<10000; ind++){// For each element in the array
+			MaleMortality.YearOfDeath(1985.1, 2014.8);
+		}
+		var TimerFinish = new Date().getTime() / 1000;
+		var TotalTime=TimerFinish -TimerStart;
+
+
+}
+
+
