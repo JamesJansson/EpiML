@@ -58,8 +58,6 @@ MortalityCalculator.prototype.YearOfDeath= function(YearOfBirth, Year){
 	//Aboriginal
 	//http://www.abs.gov.au/AUSSTATS/abs@.nsf/DetailsPage/3302.0.55.0032010-2012?OpenDocument 
 
-	console.log("Made it in to the calcualtor: "+ YearOfBirth +" "+ Year);
-	
 	// Determine age of person
 	var StartingAge=Year-YearOfBirth;
 	var CurrentAgeIndex=Math.floor(StartingAge);
@@ -67,7 +65,6 @@ MortalityCalculator.prototype.YearOfDeath= function(YearOfBirth, Year){
 	var YearsSinceStartYear=Year;
 	
 	var TimeRemainingInThisAge=StartingAge-CurrentAgeIndex;
-	console.log("TimeRemainingInThisAge: "+ TimeRemainingInThisAge);
 	
 	var AdjustedProbabilityOfDeath;
 	var TimeInThisAge;
@@ -87,27 +84,23 @@ MortalityCalculator.prototype.YearOfDeath= function(YearOfBirth, Year){
 	// If the person does not die in the remaining time at age e.g. 42, add what remains of the year
 	YearsSinceStartYear=YearsSinceStartYear+TimeRemainingInThisAge;
 	
-	console.log("YearsSinceStartYear: "+ YearsSinceStartYear);
-	
 	var YearOfDeathDetermined=false;
 	while (YearOfDeathDetermined==false){
-		console.log("YearsSinceStartYear: "+ YearsSinceStartYear);
 		if (CurrentAgeIndex<this.BaselineP.length-1){//If it is not at the last element in the array.
 			CurrentAgeIndex++;
 		}
 		YearsSinceBaseline++;
 		// Adjust the mortality rate to account for improvements in mortality with time
 		AdjustedProbabilityOfDeath=this.BaselineP[CurrentAgeIndex] * Math.pow(this.YearlyImprovement[CurrentAgeIndex], YearsSinceBaseline);
-		// Note that the following lines are not needed because Rand.Value is always <1
-		//if (AdjustedProbabilityOfDeath>1){//In the case of looking backwards, great increases may result in probabilities >1
-		//	AdjustedProbabilityOfDeath=1;
-		//}
+		// Note that the following lines are not needed because Rand.Value() is always <1
+		// if (AdjustedProbabilityOfDeath>1){//In the case of looking backwards, great increases may result in probabilities >1
+		//	  AdjustedProbabilityOfDeath=1;
+		// }
 		if (Rand.Value()<AdjustedProbabilityOfDeath){
 			YearOfDeathDetermined=true;
 			TimeInThisAge=Rand.Value();
 			YearsSinceStartYear=YearsSinceStartYear+TimeInThisAge;
 			
-			console.log("Returned YearsSinceStartYear: "+ YearsSinceStartYear);
 			return YearsSinceStartYear;
 		}
 		// If person does not die in the year, add a year to 

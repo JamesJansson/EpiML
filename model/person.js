@@ -44,8 +44,6 @@ PersonObject.prototype.Age= function (Year){//using prototyping for speed
 };
 
 PersonObject.prototype.CurrentlyAlive = function (Year){//using prototyping for speed
-	console.log("Year: " + this.YearOfBirth +" "+ Year +" "+ this.YearOfDeath +" "+ this.GeneralDeath);
-
 	if (this.YearOfBirth<=Year && Year <= this.YearOfDeath){
 		return true;
 	}
@@ -55,15 +53,13 @@ PersonObject.prototype.CurrentlyAlive = function (Year){//using prototyping for 
 
 PersonObject.prototype.CalculateMortality= function (YearFromWhichToCalculateMortality){//, MaleMortality, FemaleMortality){//using prototyping for speed
 	// if this.Sex==0 && this.Aboriginal==false
-	// this.GeneralDeath=CalculateMaleMortality(this.YearOfBirth, YearFromWhichToCalculateMortality);
-	//
 	if (this.Sex==0){
 		this.GeneralDeath=MaleMortality.YearOfDeath(this.YearOfBirth, YearFromWhichToCalculateMortality);
 	}
 	else {
 		this.GeneralDeath=FemaleMortality.YearOfDeath(this.YearOfBirth, YearFromWhichToCalculateMortality);
 	}
-	console.log("Birth Year Death" + this.YearOfBirth +" "+ YearFromWhichToCalculateMortality +" "+ this.GeneralDeath);
+	//console.log("Birth Year Death" + this.YearOfBirth +" "+ YearFromWhichToCalculateMortality +" "+ this.GeneralDeath);
 	if (this.GeneralDeath<this.YearOfDeath){
 		this.YearOfDeath=this.GeneralDeath;
 	}
