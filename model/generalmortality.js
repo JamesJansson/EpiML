@@ -40,7 +40,7 @@ function MortalityCalculator(MortalityProbabilityArray1, Year1, MortalityProbabi
 	var TimeDiff=Year2 - Year1;
 	var ImprovementFraction;
 	for (YearIndex=0; YearIndex<MortalityProbabilityArray1.length; YearIndex++){
-		ImprovementFraction = MortalityProbabilityArray2[YearIndex]/MortalityProbabilityArray1[YearIndex]);
+		ImprovementFraction = MortalityProbabilityArray2[YearIndex]/MortalityProbabilityArray1[YearIndex];
 		this.YearlyImprovement[YearIndex]=Math.pow(ImprovementFraction, 1/TimeDiff);
 		if (this.YearlyImprovement[YearIndex]>1){// Normalise, we don't want increasing mortality with time
 			this.YearlyImprovement[YearIndex]=1;

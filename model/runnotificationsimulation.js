@@ -10,14 +10,17 @@ importScripts("hiv.js");
 importScripts("assignpopulation.js");
 importScripts("extractresults.js");
 importScripts("summarystats.js");
-
+importScripts("generalmortality.js");
 
 var Param={};//This is the parameter holder for the simulation
 var PP=[];//This is the global array that holds the population
 var SimID;//This value is a global, used to reference the correct simulation in the Param structure
 var PPNotification=[];
 
-var CalculateMaleMortality;
+var MaleMortality;
+var FemaleMortality;
+var IndigenousMaleMoratlity;
+var IndigenousFemaleMoratlity;
 
 
 self.onmessage = function (e) {
