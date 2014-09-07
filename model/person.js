@@ -7,9 +7,9 @@ function  PersonObject(YearOfBirth, Sex)//, YearOfObservation Param)
 	//Active
 	this.Active=0;// status variable
 	//Sex
-	this.Sex=-1;
+	this.Sex=Sex;
 	//Alive
-	this.Alive=1;// status variable
+	//this.Alive=1;// status variable
 	this.YearOfBirth=YearOfBirth;
 	this.YearOfDeath=1E9;
 	this.GeneralDeath=1E9;
@@ -53,7 +53,7 @@ PersonObject.prototype.CurrentlyAlive = function (Year){//using prototyping for 
 	return false;
 };
 
-PersonObject.prototype.CalculateMortality= function (YearFromWhichToCalculateMortality, MaleMortality, FemaleMortality){//using prototyping for speed
+PersonObject.prototype.CalculateMortality= function (YearFromWhichToCalculateMortality){//, MaleMortality, FemaleMortality){//using prototyping for speed
 	// if this.Sex==0 && this.Aboriginal==false
 	// this.GeneralDeath=CalculateMaleMortality(this.YearOfBirth, YearFromWhichToCalculateMortality);
 	//
@@ -63,6 +63,7 @@ PersonObject.prototype.CalculateMortality= function (YearFromWhichToCalculateMor
 	else {
 		this.GeneralDeath=FemaleMortality.YearOfDeath(this.YearOfBirth, YearFromWhichToCalculateMortality);
 	}
+	console.log("Birth Year Death" + this.YearOfBirth +" "+ YearFromWhichToCalculateMortality +" "+ this.GeneralDeath);
 	if (this.GeneralDeath<this.YearOfDeath){
 		this.YearOfDeath=this.GeneralDeath;
 	}

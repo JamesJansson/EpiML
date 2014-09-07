@@ -22,6 +22,13 @@ var FemaleMortality;
 var IndigenousMaleMoratlity;
 var IndigenousFemaleMoratlity;
 
+var ShowDebugStatements=true;
+function DebugStatement(ConsoleMessage){
+	if (ShowDebugStatements){
+		console.log(ConsoleMessage);
+	}
+}
+
 
 self.onmessage = function (e) {
 
@@ -77,9 +84,7 @@ self.onmessage = function (e) {
 	HCVParam.SpontaneousClearance=0.296;// 4 year probability of clearance
 	HCVParam.YearlyRateOfClearanceInClearers=0.666; // proportion (of the 29.6% of people who will clear) clearing each year
 	
-
-	console.log("Starting to load Person object");
-	
+	DebugStatement("Starting to load Person object");
 	
 	PPNotification=AssignPopulation(Data, Param);
 	// For each person in the simulation 
@@ -89,9 +94,9 @@ self.onmessage = function (e) {
 	
 	var TimerFinish = new Date().getTime() / 1000;
     var TotalTime=TimerFinish -TimerStart;
-	console.log("Memory allocation stopped after "+TotalTime+" seconds");
+	DebugStatement("Memory allocation stopped after "+TotalTime+" seconds");
 	
-	console.log("Starting to HCV progression");
+	DebugStatement("Starting to HCV progression");
 	
 	var YearOfInfection;
 	var YearOfDiagnosis;
@@ -110,11 +115,11 @@ self.onmessage = function (e) {
 			self.postMessage({ProgressBarValue: i/SimData.NoPeople});
 		}
 
-		PPNotification[i].CalculateMortality(YearOfDiagnosis, MaleMortality, FemaleMortality);//In future iterations, HCVParam will become Param.HCV
+		PPNotification[i].CalculateMortality(YearOfDiagnosis); // Calculate date of mortality from the date of diagnosis
 	}
 	
 	
-	console.log("Extracting results");
+	DebugStatement("Extracting results");
 	var SimResult={};
 
 	SimResult.FibrosisCount=CountFibrosisStages(PPNotification, Param.SampleFactor);//Determine fibrosis levels with year
@@ -124,8 +129,8 @@ self.onmessage = function (e) {
 	TimerFinish = new Date().getTime() / 1000;
     TotalTime=TimerFinish -TimerStart;
 
-	console.log("Total individuals in model: " + PPNotification.length);
-	console.log("Finished simulation in "+TotalTime+" seconds");
+	DebugStatement("Total individuals in model: " + PPNotification.length);
+	DebugStatement("Finished simulation in "+TotalTime+" seconds");
 	
 	//PPNotification[0].CalculateMortality();
 	
