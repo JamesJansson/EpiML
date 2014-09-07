@@ -13,6 +13,10 @@ function RunSim(){
 	// Load the values from the files
 	LoadDataFromFiles();
 	
+	// Load parameters from files
+	
+	
+	
 	// Save into the Common holder
 	var Common={};//
 	Common.Data=Data;
@@ -22,6 +26,7 @@ function RunSim(){
 	SimInputData=[];
 	for (i=0; i<NumberOfSimsToRun; i++){
 		SimInputData[i]={};
+		// At the moment there is no sim specific data
 	}
 
 	//Creating the parameter
@@ -48,6 +53,18 @@ function LoadDataFromFiles(){
 	Data.StateNotifications.Table=DataFile.StateNotifications.GetValues(29, 36, 1, 19);//get table indicates the range [rows][columns]
 	Data.StateNotifications.State=DataFile.StateNotifications.GetColumn(0, 29, 36);//GetColumn
 	Data.StateNotifications.Year=DataFile.StateNotifications.GetRow(3, 1, 19);//GetRow
+	
+	Param.MaleMortality={};
+	Param.MaleMortality.Year1=1986;//The year which is used for the baseline
+	Param.MaleMortality.Rates1=DataFile.MaleMortality.GetColumn( 13, 1, 101);//get table indicates the range [rows][columns]
+	Param.MaleMortality.Year2=2006;//The year which is used for the baseline
+	Param.MaleMortality.Rates2=DataFile.MaleMortality.GetColumn( 17, 1, 101);//get table indicates the range [rows][columns]
+	
+	Param.FemaleMortality={};
+	Param.FemaleMortality.Year1=1986;//The year which is used for the baseline
+	Param.FemaleMortality.Rates1=DataFile.FemaleMortality.GetColumn( 13, 1, 101);//get table indicates the range [rows][columns]
+	Param.FemaleMortality.Year2=2006;//The year which is used for the baseline
+	Param.FemaleMortality.Rates2=DataFile.FemaleMortality.GetColumn( 17, 1, 101);//get table indicates the range [rows][columns]
 }
 
 

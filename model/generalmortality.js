@@ -29,7 +29,7 @@ function MortalityCalculator(MortalityProbabilityArray1, Year1, MortalityProbabi
 	if (MortalityProbabilityArray1.length != MortalityProbabilityArray2.length){
 		console.error("Mortality probability arrays should be the same length");
 	}
-	if (Year1<=Year2){
+	if (Year1>=Year2){
 		console.error("Year 2 should be bigger than year 1");
 	}
 	

@@ -52,7 +52,13 @@ self.onmessage = function (e) {
 	
 	var SimID = e.data.SimNumber; // this value is used to select the appropriate parameter value
     var SimData = e.data.SimData;
-	CalculateMaleMortality=23;
+	
+	
+	// Load up mortality data
+	MaleMortality=new MortalityCalculator(Param.MaleMortality.Rates1, Param.MaleMortality.Year1, Param.MaleMortality.Rates2, Param.MaleMortality.Year2);
+	FemaleMortality=new MortalityCalculator(Param.FemaleMortality.Rates1, Param.FemaleMortality.Year1, Param.FemaleMortality.Rates2, Param.FemaleMortality.Year2);
+	
+	//CalculateMaleMortality=23;
 	
 	
 	var IncrementSize=Math.round(SimData.NoPeople/100);//used to deliver progress rates back to the progress bar

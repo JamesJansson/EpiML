@@ -69,8 +69,8 @@ function LoadDataFiles(){
 	DataFile.AgeSexNotifications=new CSVFile('data/hcv_notifications_agesex.csv');
 	DataFile.StateNotifications=new CSVFile('data/hcv_notifications_state.csv');
 	
-	DataFile.AgeSexNotifications=new CSVFile('data/mortality_males_alltables_qx.csv');
-	DataFile.StateNotifications=new CSVFile('data/mortality_females_alltables_qx.csv');
+	DataFile.MaleMortality=new CSVFile('data/mortality_males_alltables_qx.csv');
+	DataFile.FemaleMortality=new CSVFile('data/mortality_females_alltables_qx.csv');
 
 }
 
