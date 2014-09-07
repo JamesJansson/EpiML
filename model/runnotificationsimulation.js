@@ -109,8 +109,8 @@ self.onmessage = function (e) {
 		if (i%IncrementSize==0){
 			self.postMessage({ProgressBarValue: i/SimData.NoPeople});
 		}
-		
-		PPNotification[i].CalculateMortality(YearOfDiagnosis);//In future iterations, HCVParam will become Param.HCV
+
+		PPNotification[i].CalculateMortality(YearOfDiagnosis, MaleMortality, FemaleMortality);//In future iterations, HCVParam will become Param.HCV
 	}
 	
 	

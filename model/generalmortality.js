@@ -48,7 +48,7 @@ function MortalityCalculator(MortalityProbabilityArray1, Year1, MortalityProbabi
 	}
 }
 
-PersonObject.prototype.YearOfDeath= function(YearOfBirth, Year){
+MortalityCalculator.prototype.YearOfDeath= function(YearOfBirth, Year){
 	// This function determines the year of death of someone 
 
 	// Year, in this case, is the date at which to calculate mortality from
@@ -69,10 +69,9 @@ PersonObject.prototype.YearOfDeath= function(YearOfBirth, Year){
 	var AdjustedProbabilityOfDeath;
 	var TimeInThisAge;
 	
-	
-	AdjustedProbabilityOfDeath=this.BaselineP[CurrentAgeIndex] * Math.pow(this.YearlyImprovement, YearsSinceBaseline);
+	AdjustedProbabilityOfDeath=this.BaselineP[CurrentAgeIndex] * Math.pow(this.YearlyImprovement[CurrentAgeIndex], YearsSinceBaseline);
 	AdjustedProbabilityOfDeath=AdjustedProbabilityOfDeath*TimeRemainingInThisAge;
-	if (AdjustedProbabilityOfDeath<Rand.Value()){
+	if (Rand.Value()<AdjustedProbabilityOfDeath){
 		// Determine the time at which mortality occurs
 		TimeInThisAge=TimeRemainingInThisAge*Rand.Value();
 		YearsSinceStartYear=YearsSinceStartYear+TimeInThisAge;
@@ -88,8 +87,9 @@ PersonObject.prototype.YearOfDeath= function(YearOfBirth, Year){
 		}
 		YearsSinceBaseline++;
 		// Adjust the mortality rate to account for improvements in mortality with time
-		AdjustedProbabilityOfDeath=this.BaselineP[CurrentAgeIndex] * Math.pow(this.YearlyImprovement, YearsSinceBaseline);
-		if (AdjustedProbabilityOfDeath<Rand.Value()){
+		AdjustedProbabilityOfDeath=this.BaselineP[CurrentAgeIndex] * Math.pow(this.YearlyImprovement[CurrentAgeIndex], YearsSinceBaseline);
+		
+		if (Rand.Value()<AdjustedProbabilityOfDeath){
 			YearOfDeathDetermined=true;
 			TimeInThisAge=Rand.Value();
 			YearsSinceStartYear=YearsSinceStartYear+TimeInThisAge;
@@ -103,7 +103,7 @@ PersonObject.prototype.YearOfDeath= function(YearOfBirth, Year){
 	
 	
 	
-	
+	// Comments:
 	
 	// Note that year adjustment was planned to be rounded, but there isn't a huge trade off in terms of calculation speed.
 	// According to the code below, rounding results in very little change between rounding the year

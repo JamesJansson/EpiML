@@ -13,15 +13,15 @@ function CountFibrosisStages(PPLocal, SampleFactorMultiplier){
 	
 	//Define the selection function
 	FibrosisFunction= function (Person, Year){
-		var InfectionStatus=Person.HCV.Infected.Value(Year);
-		if (InfectionStatus==1){//currently infected
-			return Person.HCV.Fibrosis.Value(Year); // in this case, the returned value is the numerical value found in the 
+		if (Person.CurrentlyAlive(Year)==true){
+			var InfectionStatus=Person.HCV.Infected.Value(Year);
+			if (InfectionStatus==1){//currently infected
+				return Person.HCV.Fibrosis.Value(Year); // in this case, the returned value is the numerical value found in the 
+			}
+			else if (Person.HCV.AntibodyYear<=Year){// not currently infected, but was previously infected
+				return 6;
+			}
 		}
-		else if (Person.HCV.AntibodyYear<=Year){// not currently infected, but was previously infected
-				//console.log("This year for this person: " +Person.HCV.AntibodyYear+ " " +Year);
-			return 6;
-		}
-				//console.log("This year for this person: " +Person.HCV.AntibodyYear+ " " +Year);
 		return NaN;
 	};
 	

@@ -13,8 +13,6 @@ function RunSim(){
 	// Load the values from the files
 	LoadDataFromFiles();
 	
-	// Load parameters from files
-	
 	
 	
 	// Save into the Common holder
