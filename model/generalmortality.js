@@ -51,6 +51,7 @@ function MortalityCalculator(MortalityProbabilityArray1, Year1, MortalityProbabi
 PersonObject.prototype.YearOfDeath= function(YearOfBirth, Year){
 	// This function determines the year of death of someone 
 
+	// Year, in this case, is the date at which to calculate mortality from
 
 	//Australia
 	//http://www.abs.gov.au/AUSSTATS/abs@.nsf/DetailsPage/3302.0.55.0012010%E2%80%932012?OpenDocument 
@@ -98,7 +99,7 @@ PersonObject.prototype.YearOfDeath= function(YearOfBirth, Year){
 		YearsSinceStartYear++;
 	}
 	
-	
+	console.error("The death should have occurred at some point above this line");
 	
 	
 	

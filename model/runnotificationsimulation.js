@@ -75,7 +75,7 @@ self.onmessage = function (e) {
 	HCVParam.F4HCC=0.4;//not real
 	// Grebely http://www.ncbi.nlm.nih.gov/pubmed/23908124
 	HCVParam.SpontaneousClearance=0.296;// 4 year probability of clearance
-	HCVParam.YearlyRateOfClearanceInClearers=0.666;
+	HCVParam.YearlyRateOfClearanceInClearers=0.666; // proportion (of the 29.6% of people who will clear) clearing each year
 	
 
 	console.log("Starting to load Person object");
@@ -109,14 +109,15 @@ self.onmessage = function (e) {
 		if (i%IncrementSize==0){
 			self.postMessage({ProgressBarValue: i/SimData.NoPeople});
 		}
+		
+		PPNotification[i].CalculateMortality(YearOfDiagnosis);//In future iterations, HCVParam will become Param.HCV
 	}
 	
-	//Determine fibrosis levels with year
+	
 	console.log("Extracting results");
 	var SimResult={};
 
-	FibrosisCount=CountFibrosisStages(PPNotification, Param.SampleFactor);
-	SimResult.FibrosisCount=FibrosisCount;
+	SimResult.FibrosisCount=CountFibrosisStages(PPNotification, Param.SampleFactor);//Determine fibrosis levels with year
 	
 	
 	
