@@ -77,36 +77,36 @@ HCVObject.prototype.Infection= function (Year, GenotypeValue, Age, Sex, Alcohol,
 			this.Infected.Set(0, Year+TimeUntilClearance);
 			this.Genotype[GenotypeValue].Set(0, Year+TimeUntilClearance);
 		}
+		else {//progress to fibrosis
 		
-		
-		//Determine time until Fibrosis
-		//F0-F4-LF are mutually exclusive, HCC is not mutually exclusive to the other states
-		var TimeF0F1=TimeUntilEvent(HCVParam.F0F1);
-		var DateF1=Year+TimeF0F1;
-		this.Fibrosis.Set(1, DateF1);
-		
-		var TimeF1F2=TimeUntilEvent(HCVParam.F1F2);
-		var DateF2=DateF1+TimeF1F2;
-		this.Fibrosis.Set(2, DateF2);
-		
-		var TimeF2F3=TimeUntilEvent(HCVParam.F2F3);
-		var DateF3=DateF2+TimeF2F3;
-		this.Fibrosis.Set(3, DateF3);
-		
-		var TimeF3F4=TimeUntilEvent(HCVParam.F3F4);
-		var DateF4=DateF3+TimeF3F4;
-		this.Fibrosis.Set(4, DateF4);
-		
-		var TimeF4LF=TimeUntilEvent(HCVParam.F4LF);
-		var DateLF=DateF4+TimeF4LF;
-		this.Fibrosis.Set(5, DateLF);
-		
-		
-		// Determine time until HCC
-		var TimeF4HCC=TimeUntilEvent(HCVParam.F4HCC);
-		var DateHCC=DateF4+TimeF4HCC;
-		this.HCC.Set(1, DateHCC);
-		
+			//Determine time until Fibrosis
+			//F0-F4-LF are mutually exclusive, HCC is not mutually exclusive to the other states
+			var TimeF0F1=TimeUntilEvent(HCVParam.F0F1);
+			var DateF1=Year+TimeF0F1;
+			this.Fibrosis.Set(1, DateF1);
+			
+			var TimeF1F2=TimeUntilEvent(HCVParam.F1F2);
+			var DateF2=DateF1+TimeF1F2;
+			this.Fibrosis.Set(2, DateF2);
+			
+			var TimeF2F3=TimeUntilEvent(HCVParam.F2F3);
+			var DateF3=DateF2+TimeF2F3;
+			this.Fibrosis.Set(3, DateF3);
+			
+			var TimeF3F4=TimeUntilEvent(HCVParam.F3F4);
+			var DateF4=DateF3+TimeF3F4;
+			this.Fibrosis.Set(4, DateF4);
+			
+			var TimeF4LF=TimeUntilEvent(HCVParam.F4LF);
+			var DateLF=DateF4+TimeF4LF;
+			this.Fibrosis.Set(5, DateLF);
+			
+			
+			// Determine time until HCC
+			var TimeF4HCC=TimeUntilEvent(HCVParam.F4HCC);
+			var DateHCC=DateF4+TimeF4HCC;
+			this.HCC.Set(1, DateHCC);
+		}
 		
 		
 	}
