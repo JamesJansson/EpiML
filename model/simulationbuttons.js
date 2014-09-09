@@ -3,7 +3,7 @@
 var SimulationHolder;
 var SimInputData=[];
 var Data={};
-var Param={};
+var CommonParam={};
 
 function RunSim(){
 	ScriptToRun='model/runnotificationsimulation.js';
@@ -13,12 +13,15 @@ function RunSim(){
 	// Load the values from the files
 	LoadDataFromFiles();
 	
-	
-	
 	// Save into the Common holder
 	var Common={};//
 	Common.Data=Data;
-	Common.Param=Param;
+	Common.Param=CommonParam;
+	
+	// In this step, we split out all parameters that have a unique simulation estimate
+	// Param.Estimate[100] -> Param[100].Estimate
+	
+	
 	
 	//Creating the data to be used in the simulations
 	SimInputData=[];
@@ -52,17 +55,17 @@ function LoadDataFromFiles(){
 	Data.StateNotifications.State=DataFile.StateNotifications.GetColumn(0, 29, 36);//GetColumn
 	Data.StateNotifications.Year=DataFile.StateNotifications.GetRow(3, 1, 19);//GetRow
 	
-	Param.MaleMortality={};
-	Param.MaleMortality.Year1=1986;//The year which is used for the baseline
-	Param.MaleMortality.Rates1=DataFile.MaleMortality.GetColumn( 13, 1, 101);//get table indicates the range [rows][columns]
-	Param.MaleMortality.Year2=2006;//The year which is used for the baseline
-	Param.MaleMortality.Rates2=DataFile.MaleMortality.GetColumn( 17, 1, 101);//get table indicates the range [rows][columns]
+	CommonParam.MaleMortality={};
+	CommonParam.MaleMortality.Year1=1986;//The year which is used for the baseline
+	CommonParam.MaleMortality.Rates1=DataFile.MaleMortality.GetColumn( 13, 1, 101);//get table indicates the range [rows][columns]
+	CommonParam.MaleMortality.Year2=2006;//The year which is used for the baseline
+	CommonParam.MaleMortality.Rates2=DataFile.MaleMortality.GetColumn( 17, 1, 101);//get table indicates the range [rows][columns]
 	
-	Param.FemaleMortality={};
-	Param.FemaleMortality.Year1=1986;//The year which is used for the baseline
-	Param.FemaleMortality.Rates1=DataFile.FemaleMortality.GetColumn( 13, 1, 101);//get table indicates the range [rows][columns]
-	Param.FemaleMortality.Year2=2006;//The year which is used for the baseline
-	Param.FemaleMortality.Rates2=DataFile.FemaleMortality.GetColumn( 17, 1, 101);//get table indicates the range [rows][columns]
+	CommonParam.FemaleMortality={};
+	CommonParam.FemaleMortality.Year1=1986;//The year which is used for the baseline
+	CommonParam.FemaleMortality.Rates1=DataFile.FemaleMortality.GetColumn( 13, 1, 101);//get table indicates the range [rows][columns]
+	CommonParam.FemaleMortality.Year2=2006;//The year which is used for the baseline
+	CommonParam.FemaleMortality.Rates2=DataFile.FemaleMortality.GetColumn( 17, 1, 101);//get table indicates the range [rows][columns]
 }
 
 

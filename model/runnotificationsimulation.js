@@ -13,6 +13,7 @@ importScripts("summarystats.js");
 importScripts("generalmortality.js");
 
 var Param={};//This is the parameter holder for the simulation
+var CommonParam={};
 var PP=[];//This is the global array that holds the population
 var SimID;//This value is a global, used to reference the correct simulation in the Param structure
 var PPNotification=[];
@@ -55,15 +56,15 @@ self.onmessage = function (e) {
 	//Load the notification data
 	var Data=e.data.Common.Data;
 	//Load the parameters data
-	var Param=e.data.Common.Param;
+	var CommonParam=e.data.Common.Param;
 	
 	var SimID = e.data.SimNumber; // this value is used to select the appropriate parameter value
     var SimData = e.data.SimData;
 	
 	
 	// Load up mortality data
-	MaleMortality=new MortalityCalculator(Param.MaleMortality.Rates1, Param.MaleMortality.Year1, Param.MaleMortality.Rates2, Param.MaleMortality.Year2);
-	FemaleMortality=new MortalityCalculator(Param.FemaleMortality.Rates1, Param.FemaleMortality.Year1, Param.FemaleMortality.Rates2, Param.FemaleMortality.Year2);
+	MaleMortality=new MortalityCalculator(CommonParam.MaleMortality.Rates1, CommonParam.MaleMortality.Year1, CommonParam.MaleMortality.Rates2, CommonParam.MaleMortality.Year2);
+	FemaleMortality=new MortalityCalculator(CommonParam.FemaleMortality.Rates1, CommonParam.FemaleMortality.Year1, CommonParam.FemaleMortality.Rates2, CommonParam.FemaleMortality.Year2);
 	
 	//CalculateMaleMortality=23;
 	
