@@ -79,7 +79,7 @@ self.onmessage = function (e) {
 	HCVParam.F2F3=0.12;
 	HCVParam.F3F4=0.116;
 	HCVParam.F4LF=0.0001;//not real
-	HCVParam.F4HCC=0.4;//not real
+	HCVParam.F4HCC=0.031;//not real
 	// Grebely http://www.ncbi.nlm.nih.gov/pubmed/23908124
 	HCVParam.SpontaneousClearance=0.296;// 4 year probability of clearance
 	HCVParam.YearlyRateOfClearanceInClearers=0.666; // proportion (of the 29.6% of people who will clear) clearing each year

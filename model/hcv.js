@@ -81,19 +81,33 @@ HCVObject.prototype.Infection= function (Year, GenotypeValue, Age, Sex, Alcohol,
 		
 		//Determine time until Fibrosis
 		//F0-F4-LF are mutually exclusive, HCC is not mutually exclusive to the other states
-		TimeUntilF1=TimeUntilEvent(HCVParam.F0F1);
-		TimeUntilF2=TimeUntilF1+TimeUntilEvent(HCVParam.F1F2);
-		TimeUntilF3=TimeUntilF2+TimeUntilEvent(HCVParam.F2F3);
-		TimeUntilF4=TimeUntilF3+TimeUntilEvent(HCVParam.F3F4);
-		TimeUntilLF=TimeUntilF4+TimeUntilEvent(HCVParam.F4LF);
+		var TimeF0F1=TimeUntilEvent(HCVParam.F0F1);
+		var DateF1=Year+TimeF0F1;
+		this.Fibrosis.Set(1, DateF1);
 		
-
+		var TimeF1F2=TimeUntilEvent(HCVParam.F1F2);
+		var DateF2=DateF1+TimeF1F2;
+		this.Fibrosis.Set(2, DateF2);
 		
-		this.Fibrosis.Set(1, Year+TimeUntilF1);
-		this.Fibrosis.Set(2, Year+TimeUntilF2);
-		this.Fibrosis.Set(3, Year+TimeUntilF3);
-		this.Fibrosis.Set(4, Year+TimeUntilF4);
-		this.Fibrosis.Set(5, Year+TimeUntilLF);
+		var TimeF2F3=TimeUntilEvent(HCVParam.F2F3);
+		var DateF3=DateF2+TimeF2F3;
+		this.Fibrosis.Set(3, DateF3);
+		
+		var TimeF3F4=TimeUntilEvent(HCVParam.F3F4);
+		var DateF4=DateF3+TimeF3F4;
+		this.Fibrosis.Set(4, DateF4);
+		
+		var TimeF4LF=TimeUntilEvent(HCVParam.F4LF);
+		var DateLF=DateF4+TimeF4LF;
+		this.Fibrosis.Set(5, DateLF);
+		
+		
+		// Determine time until HCC
+		var TimeF4HCC=TimeUntilEvent(HCVParam.F4HCC);
+		var DateHCC=DateF4+TimeF4HCC;
+		this.HCC.Set(1, DateHCC);
+		
+		
 		
 	}
 	
@@ -107,7 +121,6 @@ HCVObject.prototype.Infection= function (Year, GenotypeValue, Age, Sex, Alcohol,
 // this.Infected=0
 // determine time until fibrosis recovery
 
-
 HCVObject.prototype.FirstInfected= function (Year){//returns a 
 	if (typeof this.Infected=="undefined"){
 		return NaN;
@@ -120,6 +133,24 @@ HCVObject.prototype.CurrentlyInfected= function (Year){
 
 	// rather than doing this, why not simply do Person[i].HCV.Infected.Get(1999)?
 };
+
+HCVObject.prototype.L4ToHCCTime= function (Param){
+	// Degos et al. produced probability with time curves
+	//http://www.ncbi.nlm.nih.gov/pubmed/10861275
+
+	// for the first 2 years, there is no chance of HCC. 
+	
+	// probability of HCC increases from 0 at second year, to 0.35 at the 8th year in a linear fashion
+	
+	// from 8th year onwards, assume a flat rate
+	
+	
+	
+};
+
+
+
+
 
 
 HCVObject.prototype.Status= function (Year){//returns all the relevant information from this year (infection status, genotype, diagnosis status, treatment etc)
