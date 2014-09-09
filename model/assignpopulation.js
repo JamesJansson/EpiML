@@ -1,11 +1,11 @@
-function AssignPopulation(Data, Param){
+function AssignPopulation(Data, CommonParam){
 	var PNotification=[];// an array that stores the notifications
 	var PCount=0; // Number of people currently added to the notification file
 	var NumAgeGroups=Data.MaleNotifications.Age.length;
 	var AgeVector=Data.MaleNotifications.Age;//This +5 is the range
 	
 	console.log("Warning: duplicate rate reset here.");
-	Param.DuplicateFactor=0;// maybe a per year by age probability, 
+	CommonParam.DuplicateFactor=0;// maybe a per year by age probability, 
 	
 	var StateVector;
 	var TotalInStateThisYear;
@@ -58,7 +58,7 @@ function AssignPopulation(Data, Param){
 				//note that Math.round() will not give the full picture (groups with <0.5 people will always have less, and groups with >0.5 will always have more than they should
 				//To compensate, the algorithm adds a person with a probability based on the remainder
 				// e.g. and entry with 3.4 people will give 3 people plus one extra person with 40% probability 
-				EstimateInThisGroup=EstimateInThisGroup*(1-Param.DuplicateFactor)/Param.SampleFactor;
+				EstimateInThisGroup=EstimateInThisGroup*(1-CommonParam.DuplicateFactor)/CommonParam.SampleFactor;
 				EstimateInThisGroup1=Math.floor(EstimateInThisGroup);
 				EstimateInThisGroup2=EstimateInThisGroup-EstimateInThisGroup1;// Some value between 0 and 1
 				InThisGroup=EstimateInThisGroup1+Win(EstimateInThisGroup2);

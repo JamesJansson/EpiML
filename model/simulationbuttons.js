@@ -1,9 +1,10 @@
 // This file contains the scripts that are called when the buttons on the interface are pressed.
 
-var SimulationHolder;
-var SimInputData=[];
-var Data={};
-var CommonParam={};
+// var SimulationHolder;
+// var SimInputData=[];
+// var Data={};
+// var Param={};
+// var CommonParam={};
 
 function RunSim(){
 	ScriptToRun='model/runnotificationsimulation.js';
@@ -18,10 +19,13 @@ function RunSim(){
 	Common.Data=Data;
 	Common.Param=CommonParam;
 	
+	// Load the values from the interface into the parameters
+	// for (key in Param)
+	// 		load the equivalent key in the interface
+	// 		perform the relevant simulation based on the parameter type
+	
 	// In this step, we split out all parameters that have a unique simulation estimate
 	// Param.Estimate[100] -> Param[100].Estimate
-	
-	
 	
 	//Creating the data to be used in the simulations
 	SimInputData=[];

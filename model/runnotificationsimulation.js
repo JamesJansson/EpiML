@@ -62,11 +62,12 @@ self.onmessage = function (e) {
     var SimData = e.data.SimData;
 	
 	
+	
 	// Load up mortality data
 	MaleMortality=new MortalityCalculator(CommonParam.MaleMortality.Rates1, CommonParam.MaleMortality.Year1, CommonParam.MaleMortality.Rates2, CommonParam.MaleMortality.Year2);
 	FemaleMortality=new MortalityCalculator(CommonParam.FemaleMortality.Rates1, CommonParam.FemaleMortality.Year1, CommonParam.FemaleMortality.Rates2, CommonParam.FemaleMortality.Year2);
 	
-	//CalculateMaleMortality=23;
+	self.postMessage({Console: MaleMortality});
 	
 	
 	var IncrementSize=Math.round(SimData.NoPeople/100);//used to deliver progress rates back to the progress bar
@@ -87,11 +88,11 @@ self.onmessage = function (e) {
 	
 	DebugStatement("Starting to load Person object");
 	
-	PPNotification=AssignPopulation(Data, Param);
+	PPNotification=AssignPopulation(Data, CommonParam);
 	// For each person in the simulation 
 	// Determine a random time that they have been infected for (lognormally distributed about 5 years previously, SD 2.5 years)
 	
-	
+	console.log(PPNotification.length);
 	
 	var TimerFinish = new Date().getTime() / 1000;
     var TotalTime=TimerFinish -TimerStart;
@@ -124,7 +125,7 @@ self.onmessage = function (e) {
 	DebugStatement("Extracting results");
 	var SimResult={};
 
-	SimResult.FibrosisCount=CountFibrosisStages(PPNotification, Param.SampleFactor);//Determine fibrosis levels with year
+	SimResult.FibrosisCount=CountFibrosisStages(PPNotification, CommonParam.SampleFactor);//Determine fibrosis levels with year
 	
 	
 	

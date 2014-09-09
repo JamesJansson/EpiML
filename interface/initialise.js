@@ -3,6 +3,9 @@ var Settings={};
 var Data={};
 var Param={};
 var DataFile={};
+var SimulationHolder;
+var SimInputData=[];
+var CommonParam={};
 
 
 
@@ -62,7 +65,7 @@ function LoadSettingsFiles(){
 }
 
 function LoadParametersFiles(){
-	Param.SampleFactor=Settings.SampleFactor;// This value is the number of people each person in the simulation represents. Probably a good idea to set this to 1, 10 or 100
+	CommonParam.SampleFactor=Settings.SampleFactor;// This value is the number of people each person in the simulation represents. Probably a good idea to set this to 1, 10 or 100
 }
 
 function LoadDataFiles(){
