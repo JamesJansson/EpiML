@@ -74,7 +74,7 @@ function LoadDataFiles(){
 	
 	DataFile.MaleMortality=new CSVFile('data/mortality_males_alltables_qx.csv');
 	DataFile.FemaleMortality=new CSVFile('data/mortality_females_alltables_qx.csv');
-
+	DataFile.PWID=new CSVFile('data/pwid_size.csv');
 }
 
 

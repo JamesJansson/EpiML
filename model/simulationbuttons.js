@@ -72,9 +72,10 @@ function LoadDataFromFiles(){
 	CommonParam.FemaleMortality.Rates2=DataFile.FemaleMortality.GetColumn( 17, 1, 101);//get table indicates the range [rows][columns]
 
 	Data.PWID={};
+	Data.PWID.Year=DataFile.PWID.GetColumn( 0, 1, 6);
 	Data.PWID.Recent={};
 	Data.PWID.Ever={};
-	//Data.PWID.Recent.Male=DataFile.PWID.GetColumn( 13, 1, 101);//get table indicates the range [rows][columns]
+	
 }
 
 
