@@ -70,6 +70,11 @@ function LoadDataFromFiles(){
 	CommonParam.FemaleMortality.Rates1=DataFile.FemaleMortality.GetColumn( 13, 1, 101);//get table indicates the range [rows][columns]
 	CommonParam.FemaleMortality.Year2=2006;//The year which is used for the baseline
 	CommonParam.FemaleMortality.Rates2=DataFile.FemaleMortality.GetColumn( 17, 1, 101);//get table indicates the range [rows][columns]
+
+	Data.PWID={};
+	Data.PWID.Recent={};
+	Data.PWID.Ever={};
+	//Data.PWID.Recent.Male=DataFile.PWID.GetColumn( 13, 1, 101);//get table indicates the range [rows][columns]
 }
 
 
@@ -110,6 +115,46 @@ function NotificationSimPlot(){
 	
 	//plot of HCVTestPlotHolder
 	$.plot("#HCVTestPlotHolder", PlotData, PlotSettings);
+
+}
+
+function DxUDxSimPlot(){
+	// Get the relevant data
+	SimulationHolder.Result[0];
+	
+	DxUDxArray=SimulationHolder.Result[0].DiagnosisCount.Count;
+	TimeAxis=SimulationHolder.Result[0].DiagnosisCount.TimeVector;
+	
+	// convert to a form that plot will accept
+	PlotData=HCVTestConvertDataToLinePlot(TimeAxis, DxUDxArray);
+	//Set up plot appearance // http://www.pikemere.co.uk/blog/flot-tutorial-how-to-create-area-charts/ 
+	PlotSettings={xaxis: {
+					axisLabel: 'Time (years)',
+					axisLabelUseCanvas: true,
+					axisLabelFontSizePixels: 12,
+					axisLabelFontFamily: 'Verdana, Arial, Helvetica, Tahoma, sans-serif',
+					axisLabelPadding: 5,
+					tickLength: 0
+				},
+				yaxis: {
+					min: 0,
+					axisLabel: 'Number of people',
+					axisLabelUseCanvas: true,
+					axisLabelFontSizePixels: 12,
+					axisLabelFontFamily: 'Verdana, Arial, Helvetica, Tahoma, sans-serif',
+					axisLabelPadding: 5
+				},
+				series: {
+					lines: {
+						show: true,
+						fill: true
+					},
+					stack: true
+				}
+			};
+	
+	//plot of DxUDxPlotHolder
+	$.plot("#DxUDxPlotHolder", PlotData, PlotSettings);
 
 }
 

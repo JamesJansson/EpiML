@@ -45,7 +45,7 @@ function CountFibrosisStages(PPLocal, SampleFactorMultiplier){
 function LivingDxAndUDx(PPLocal, SampleFactorMultiplier){
 	//Create settings
 	var Settings={};
-	Settings.Name="Number of people living with diagnosed ";
+	Settings.Name="Number of people living with diagnosed and undiagnosed HCV";
 	Settings.Type="InstantaneousCount";
 	Settings.XLabel="Year";
 	Settings.YLabel="Count";
@@ -53,7 +53,7 @@ function LivingDxAndUDx(PPLocal, SampleFactorMultiplier){
 	Settings.EndTime=2050;
 	Settings.TimeStep=1;
 	Settings.FunctionReturnsCategory=true;
-	Settings.NumberOfCategories=8;
+	Settings.NumberOfCategories=4;
 	
 	//Define the selection function
 	DiagnosisFunction= function (Person, Year){
@@ -65,6 +65,13 @@ function LivingDxAndUDx(PPLocal, SampleFactorMultiplier){
 					return 1;
 				}//else
 				return 0;
+			}
+			else if (Person.HCV.AntibodyYear<=Year){// not currently infected, but was previously infected
+				var DiagnosisStatus=Person.HCV.Diagnosed.Value(Year);
+				if (DiagnosisStatus==1){
+					return 2;
+				}//else
+				return 3;
 			}
 		}
 		return NaN;
