@@ -133,6 +133,7 @@ self.onmessage = function (e) {
 	var SimResult={};
 
 	SimResult.FibrosisCount=CountFibrosisStages(PPNotification, CommonParam.SampleFactor);//Determine fibrosis levels with year
+	SimResult.DiagnosisCount=LivingDxAndUDx(PPNotification, CommonParam.SampleFactor);//Determine fibrosis levels with year
 	
 	
 	

@@ -56,31 +56,27 @@ function LivingDxAndUDx(PPLocal, SampleFactorMultiplier){
 	Settings.NumberOfCategories=8;
 	
 	//Define the selection function
-	FibrosisFunction= function (Person, Year){
+	DiagnosisFunction= function (Person, Year){
 		if (Person.CurrentlyAlive(Year)==true){
 			var InfectionStatus=Person.HCV.Infected.Value(Year);
-			if (InfectionStatus==1 && Person.HCV.HCC.Value(Year)!=1){//currently infected
-				return Person.HCV.Fibrosis.Value(Year); // in this case, the returned value is the numerical value found in the 
-			}
-			else if (Person.HCV.AntibodyYear<=Year && Person.HCV.HCC.Value(Year)==1){
-				return 6;
-			}
-			else if (Person.HCV.AntibodyYear<=Year){// not currently infected, but was previously infected
-				return 7;
+			if (InfectionStatus==1){
+				var DiagnosisStatus=Person.HCV.Diagnosed.Value(Year);
+				if (DiagnosisStatus==1){
+					return 1;
+				}//else
+				return 0;
 			}
 		}
 		return NaN;
 	};
 	
 	// Run the statistic
-	FibrosisResult=new SummaryStatistic(Settings, FibrosisFunction);
-	FibrosisResult.Run(PPLocal);
+	DiagnosisResult=new SummaryStatistic(Settings, DiagnosisFunction);
+	DiagnosisResult.Run(PPLocal);
 
-	FibrosisResult.Function=0;//The function seems to need to be destroyed before passing the results back to the main controller of the webworker
+	DiagnosisResult.Adjust(SampleFactorMultiplier);// Make this representative sample actually reflect the real number of diagnoses
 	
-	FibrosisResult.Adjust(SampleFactorMultiplier);// Make this representative sample actually reflect the real number of diagnoses
-	
-	return FibrosisResult;
+	return DiagnosisResult;
 }
 
 
