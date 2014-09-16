@@ -126,8 +126,9 @@ self.onmessage = function (e) {
 	// At this point, we'll assume 90% of people are diagnosed at 20 years of 
 	
 	
-	
-	
+	TimerFinish = new Date().getTime() / 1000;
+    TotalTime=TimerFinish -TimerStart;
+	DebugStatement("Finished simulating population at "+TotalTime+" seconds");
 	
 	DebugStatement("Extracting results");
 	var SimResult={};
@@ -136,12 +137,12 @@ self.onmessage = function (e) {
 	SimResult.DiagnosisCount=LivingDxAndUDx(PPNotification, CommonParam.SampleFactor);//Determine fibrosis levels with year
 	
 	
-	
-	TimerFinish = new Date().getTime() / 1000;
-    TotalTime=TimerFinish -TimerStart;
 
 	DebugStatement("Total individuals in model: " + PPNotification.length);
-	DebugStatement("Finished simulation in "+TotalTime+" seconds");
+		
+	TimerFinish = new Date().getTime() / 1000;
+    TotalTime=TimerFinish -TimerStart;
+	DebugStatement("Finished full simulation in "+TotalTime+" seconds");
 	
 	//PPNotification[0].CalculateMortality();
 	
