@@ -230,6 +230,10 @@ SummaryStatistic.prototype.Run=function(Population){
 			}
 		}
 	}
+
+	// Destroy the function to make passing back to the main thread easy (the function can break parallelisation)
+	this.Function=0;//The function seems to need to be destroyed before passing the results back to the main controller of the webworker
+	
 }
 
 SummaryStatistic.prototype.InstantaneousCount= function (Population){//Used to determine the number of people that satisfy a condition at a particular point in time

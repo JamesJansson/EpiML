@@ -121,6 +121,13 @@ self.onmessage = function (e) {
 		PPNotification[i].CalculateMortality(YearOfDiagnosis); // Calculate date of mortality from the date of diagnosis
 	}
 	
+	DebugStatement("Beginning estimates of undiagnosed HCV");
+	// This method assumes that all people test at the same rate. 
+	// At this point, we'll assume 90% of people are diagnosed at 20 years of 
+	
+	
+	
+	
 	
 	DebugStatement("Extracting results");
 	var SimResult={};
