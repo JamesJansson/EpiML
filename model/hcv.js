@@ -56,8 +56,13 @@ HCVObject.prototype.Infection= function (Year, GenotypeValue, Age, Sex, Alcohol,
 	
 	this.GenotypeState[GenotypeValue]=1;
 	this.Genotype[GenotypeValue].Set(1, Year);
-	
-	
+	// convert this to the this.g1a, this.g1b, g2, g3, g4, 
+	// if genotype 1 does not exist
+	//     create it
+	//     set genotype to 1
+	// else if it is not currently set to 1
+	//     set HCV.genotype
+	//
 	
 	//Pre-Calculate fibrosis
 	if (this.InfectedState==0){//if not already infected (don't want to start fibrosis from f1)
