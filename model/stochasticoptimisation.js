@@ -1,15 +1,27 @@
-function  StochasticOptimisation(FunctionToRun, InputParameters)
+function  StochasticOptimisation(){
 // Returns the parameterisation that has been optimised in the format that it was handed to the original function
-	this.Function={};
-	this.Parameter={};
-	this.Parameter
+	this.Function;
+	this.Parameter=[];
+	
+	this.CurrentParameterArray=[];
+	this.CurrentParameter={};
+	
 	this.SeedValue;// The seed value is used to reset the seed each time for the random number 
+	
+	this.Update;// this is a function that is run at the end of each round to, for example.
 // start values
 // start percentage change
 // max/min values
 // error function
 // stop after x iterations/y seconds
-Param[0]
+
+	this.Help='formats for structure\n Function(OptimisedParam) \n Update(TrialNumber, Error)';
+}
+StochasticOptimisation.prototype.AddParameter=function(P){
+	var A=new OptimisationParameter;
+	A[P.Name]=
+}
+
 
 
 // This optimisation cycles through each of the parameters individually, adjusts it a little, runs and returns the results
@@ -19,8 +31,8 @@ StochasticOptimisation.prototype.Run= function (){
 	//Set up the simulation for the first time
 	for Parameter parameter
 		Parameter[Key].CurrentValue=
-	
-	this.Function(
+	// Run the first optimisation 
+	this.BestError=this.Function(Constants
 
 }
 
