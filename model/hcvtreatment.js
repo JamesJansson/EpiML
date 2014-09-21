@@ -63,10 +63,9 @@ HCVTreatment.prototype.StartTreatment= function (Person, Year){
 		// Determine if treatment is ceased as a result
 	
 	// Determine if clearance occurs or not 
-
+	
 	
 	// Person.HCVTreatmentCosts
-	
 	
 	
 	// Set the time at which treatment starts and ends
