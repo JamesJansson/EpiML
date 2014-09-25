@@ -1,9 +1,10 @@
 var stepped = 0, chunks = 0, rows = 0;
 var start, end;
+var handle;
 
 $(function()
 {
-	$('#submit').click(function()
+	$('#submit-parse').click(function()
 	{
 		stepped = 0;
 		chunks = 0;
@@ -46,6 +47,21 @@ $(function()
 		}
 	});
 
+	$('#submit-unparse').click(function()
+	{
+		var input = $('#input').val();
+		var delim = $('#delimiter').val();
+
+		var results = Papa.unparse(input, {
+			delimiter: delim
+		});
+
+		console.log("Unparse complete!");
+		console.log("--------------------------------------");
+		console.log(results);
+		console.log("--------------------------------------");
+	});
+
 	$('#insert-tab').click(function()
 	{
 		$('#delimiter').val('\t');
@@ -66,16 +82,24 @@ function buildConfig()
 		worker: $('#worker').prop('checked'),
 		comments: $('#comments').val(),
 		complete: completeFn,
+		error: errorFn,
 		download: $('#download').prop('checked'),
 		keepEmptyRows: $('#keepEmptyRows').prop('checked'),
 		chunk: $('#chunk').prop('checked') ? chunkFn : undefined
 	};
 }
 
-function stepFn(results, parser)
+function stepFn(results, parserHandle)
 {
 	stepped++;
 	rows += results.data.length;
+	
+	if ($('#step-pause').prop('checked'))
+	{
+		handle = parserHandle
+		console.log(results, results.data[0]);
+		parserHandle.pause();
+	}
 }
 
 function chunkFn(results, file)
@@ -86,12 +110,17 @@ function chunkFn(results, file)
 	rows += results.data.length;
 }
 
+function errorFn(error, file)
+{
+	console.log("ERROR:", error, file);
+}
+
 function completeFn()
 {
 	end = performance.now();
 	if (arguments[0] && arguments[0].data)
 		rows = arguments[0].data.length;
 	
-	console.log("Finished input. Time:", end-start, arguments);
+	console.log("Finished input (async). Time:", end-start, arguments);
 	console.log("Rows:", rows, "Stepped:", stepped, "Chunks:", chunks);
 }

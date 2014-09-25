@@ -1,6 +1,6 @@
 /*
 	Papa Parse
-	v3.0.1
+	v3.1.2
 	https://github.com/mholt/PapaParse
 */
 (function(global)
@@ -21,6 +21,7 @@
 		worker: false,
 		comments: false,
 		complete: undefined,
+		error: undefined,
 		download: false,
 		chunk: undefined,
 		keepEmptyRows: false
@@ -40,6 +41,7 @@
 	// Configurable chunk sizes for local and remote files, respectively
 	global.Papa.LocalChunkSize = 1024 * 1024 * 10;	// 10 MB
 	global.Papa.RemoteChunkSize = 1024 * 1024 * 5;	// 5 MB
+	global.Papa.DefaultDelimiter = ",";				// Used if not specified and detection fails
 
 	// Exposed for testing and development only
 	global.Papa.Parser = Parser;
@@ -81,11 +83,7 @@
 			function parseNextFile()
 			{
 				if (queue.length == 0)
-				{
-					if (isFunction(options.complete))
-						options.complete();
 					return;
-				}
 
 				var f = queue[0];
 
@@ -189,8 +187,6 @@
 				{
 					var ph = new ParserHandle(config);
 					var results = ph.parse(_input);
-					if (isFunction(config.complete))
-						config.complete(results);
 					return results;
 				}
 			}
@@ -218,8 +214,11 @@
 						{
 							var ph = new ParserHandle(config);
 							var results = ph.parse(event.target.result);
-							if (isFunction(config.complete))
-								config.complete(results);
+						};
+						reader.onerror = function()
+						{
+							if (isFunction(config.error))
+								config.error(reader.error, _input);
 						};
 						reader.readAsText(_input, config.encoding);
 					}
@@ -359,7 +358,7 @@
 		// Encloses a value around quotes if needed (makes a value safe for CSV insertion)
 		function safe(str, col)
 		{
-			if (typeof str === "undefined")
+			if (typeof str === "undefined" || str === null)
 				return "";
 
 			str = str.toString().replace(/"/g, '""');
@@ -385,7 +384,7 @@
 
 
 
-	// NOTE/TODO: Many of the functions of NetworkStreamer and FileStreamer are the same. Consolidate?
+	// TODO: Many of the functions of NetworkStreamer and FileStreamer are similar or the same. Consolidate?
 	function NetworkStreamer(config)
 	{
 		config = config || {};
@@ -493,15 +492,11 @@
 				}
 				else if (isFunction(config.chunk))
 				{
-					config.chunk(results);	// TODO: Implement abort? (like step)
+					config.chunk(results);
 					results = undefined;
 				}
-				
-				if (finishedWithEntireFile && isFunction(config.complete))
-					config.complete(results);
-				else if (results && results.meta.aborted && isFunction(config.complete))
-					config.complete(results);
-				else if (!finishedWithEntireFile)
+
+				if (!finishedWithEntireFile && !results.meta.paused)
 					nextChunk();
 			}
 
@@ -540,20 +535,29 @@
 		config = config || {};
 		if (!config.chunkSize)
 			config.chunkSize = Papa.LocalChunkSize;
-		
+
 		var start = 0;
 		var aggregate = "";
 		var partialLine = "";
 		var reader, nextChunk, slice;
 		var handle = new ParserHandle(copy(config));
 
+		// FileReader is better than FileReaderSync (even in worker) - see http://stackoverflow.com/q/24708649/1048862
+		// But Firefox is a pill, too - see issue #76: https://github.com/mholt/PapaParse/issues/76
+		var usingAsyncReader = typeof FileReader === 'function';
+
 		this.stream = function(file)
 		{
 			var slice = file.slice || file.webkitSlice || file.mozSlice;
-			
-			reader = new FileReader();	// Better than FileReaderSync (even in worker). See: http://stackoverflow.com/q/24708649/1048862
-			reader.onload = chunkLoaded;
-			reader.onerror = chunkError;
+
+			if (usingAsyncReader)
+			{
+				reader = new FileReader();		// Preferred method of reading files, even in workers
+				reader.onload = chunkLoaded;
+				reader.onerror = chunkError;
+			}
+			else
+				reader = new FileReaderSync();	// Hack for running in a web worker in Firefox
 
 			nextChunk();	// Starts streaming
 
@@ -567,12 +571,15 @@
 			{
 				var end = Math.min(start + config.chunkSize, file.size);
 				var txt = reader.readAsText(slice.call(file, start, end), config.encoding);
-				start += config.chunkSize;
-				return txt;
+				if (!usingAsyncReader)
+					chunkLoaded({ target: { result: txt } });	// mimic the async signature
 			}
 
 			function chunkLoaded(event)
 			{
+				// Very important to increment start each time before handling results
+				start += config.chunkSize;
+
 				// Rejoin the line we likely just split in two by chunking the file
 				aggregate += partialLine + event.target.result;
 				partialLine = "";
@@ -616,12 +623,8 @@
 					config.chunk(results, file);
 					results = undefined;
 				}
-				
-				if (finishedWithEntireFile && isFunction(config.complete))
-					config.complete(undefined, file);
-				else if (results && results.meta.aborted && isFunction(config.complete))	// TODO: Abort needs reworking like pause/resume need it (if streaming, no results object is returned, so it has no meta to say aborted: true...)
-					config.complete(results, file);
-				else if (!finishedWithEntireFile)
+
+				if (!finishedWithEntireFile && !results.meta.paused)
 					nextChunk();
 			}
 
@@ -652,6 +655,10 @@
 		// One goal is to minimize the use of regular expressions...
 		var FLOAT = /^\s*-?(\d*\.?\d+|\d+\.?\d*)(e[-+]?\d+)?\s*$/i;
 
+		var self = this;
+		var _input;				// The input being parsed
+		var _parser;			// The core parser being used
+		var _paused = false;	// Whether we are paused or not
 		var _delimiterError;	// Temporary state between delimiter detection and processing results
 		var _fields = [];		// Fields are from the header row of the input, if there is one
 		var _results = {		// The last results returned from the parser
@@ -672,7 +679,7 @@
 				else
 				{
 					_delimiterError = true;	// add error after parsing (otherwise it would be overwritten)
-					_config.delimiter = ",";
+					_config.delimiter = Papa.DefaultDelimiter;
 				}
 				_results.meta.delimiter = _config.delimiter;
 			}
@@ -680,25 +687,57 @@
 			if (isFunction(_config.step))
 			{
 				var userStep = _config.step;
-				_config.step = function(results, parser)
+				_config.step = function(results)
 				{
 					_results = results;
 					if (needsHeaderRow())
 						processResults();
 					else
-						userStep(processResults(), parser);
+						userStep(processResults(), self);
 				};
 			}
 
-			_results = new Parser(_config).parse(input);
-			return processResults();
+			if (_config.preview && _config.header)
+				_config.preview++;	// to compensate for header row
+
+			_input = input;
+			_parser = new Parser(_config);
+			_results = _parser.parse(_input);
+			processResults();
+			if (isFunction(_config.complete) && !_paused)
+				_config.complete(_results);
+			return _paused ? { meta: { paused: true } } : _results;
 		};
+
+		this.pause = function()
+		{
+			_paused = true;
+			_parser.abort();
+			_input = _input.substr(_parser.getCharIndex());
+		};
+
+		this.resume = function()
+		{
+			_paused = false;
+			_parser = new Parser(_config);
+			_parser.parse(_input);
+			if (isFunction(_config.complete) && !_paused)
+				_config.complete(_results);
+		};
+
+		this.abort = function()
+		{
+			_parser.abort();
+			if (isFunction(_config.complete))
+				_config.complete(_results);
+			_input = "";
+		}
 
 		function processResults()
 		{
 			if (_results && _delimiterError)
 			{
-				addError("Delimiter", "UndetectableDelimiter", "Unable to auto-detect delimiting character; defaulted to comma");
+				addError("Delimiter", "UndetectableDelimiter", "Unable to auto-detect delimiting character; defaulted to '"+Papa.DefaultDelimiter+"'");
 				_delimiterError = false;
 			}
 
@@ -752,7 +791,8 @@
 								row["__parsed_extra"] = [];
 							row["__parsed_extra"].push(_results.data[i][j]);
 						}
-						row[_fields[j]] = _results.data[i][j];
+						else
+							row[_fields[j]] = _results.data[i][j];
 					}
 				}
 
@@ -766,7 +806,7 @@
 				}
 			}
 
-			if (_config.header && _results.meta);
+			if (_config.header && _results.meta)
 				_results.meta.fields = _fields;
 
 			return _results;
@@ -852,7 +892,6 @@
 
 	function Parser(config)
 	{
-		var self = this;
 		var EMPTY = /^\s*$/;
 
 		var _input;		// The input text being parsed
@@ -869,8 +908,8 @@
 		var _errors;	// Parse errors
 		var _rowIdx;	// Current row index within results (0-based)
 		var _colIdx;	// Current col index within result row (0-based)
+		var _runningRowIdx;		// Cumulative row index, used by the preview feature
 		var _aborted = false;	// Abort flag
-		var _paused = false;	// Pause flag
 
 		// Unpack the config object
 		config = config || {};
@@ -902,25 +941,15 @@
 			reset(input);
 			return parserLoop();
 		};
-/*
-		// TODO: Pause and resume just doesn't work well.
-		// I suspect this may need to be implemented at a higher-level
-		// scope than just this core Parser.
-		this.pause = function()
-		{
-			_paused = true;
-		};
 
-		this.resume = function()
-		{
-			_paused = false;
-			if (_i < _input.length)
-				return parserLoop();
-		};
-*/
 		this.abort = function()
 		{
 			_aborted = true;
+		};
+
+		this.getCharIndex = function()
+		{
+			 return _i;
 		};
 
 		function parserLoop()
@@ -928,9 +957,8 @@
 			while (_i < _input.length)
 			{
 				if (_aborted) break;
-				if (_preview > 0 && _rowIdx >= _preview) break;
-				if (_paused) return finishParsing();
-				
+				if (_preview > 0 && _runningRowIdx >= _preview) break;
+
 				if (_ch == '"')
 					parseQuotes();
 				else if (_inQuotes)
@@ -977,6 +1005,8 @@
 
 		function parseInQuotes()
 		{
+			if (twoCharLineBreak(_i) || oneCharLineBreak(_i))
+				_lineNum++;
 			saveChar();
 		}
 
@@ -984,12 +1014,12 @@
 		{
 			if (_ch == _delimiter)
 				newField();
-			else if (twoCharLineBreak())
+			else if (twoCharLineBreak(_i))
 			{
 				newRow();
 				nextChar();
 			}
-			else if (oneCharLineBreak())
+			else if (oneCharLineBreak(_i))
 				newRow();
 			else if (isCommentStart())
 				skipLine();
@@ -1010,8 +1040,8 @@
 
 		function skipLine()
 		{
-			while (!twoCharLineBreak()
-				&& !oneCharLineBreak()
+			while (!twoCharLineBreak(_i)
+				&& !oneCharLineBreak(_i)
 				&& _i < _input.length)
 			{
 				nextChar();
@@ -1034,6 +1064,7 @@
 			endRow();
 
 			_lineNum++;
+			_runningRowIdx++;
 			_data.push([]);
 			_rowIdx = _data.length - 1;
 			newField();
@@ -1045,7 +1076,7 @@
 			if (isFunction(_step))
 			{
 				if (_data[_rowIdx])
-					_step(returnable(), self);
+					_step(returnable());
 				clearErrorsAndData();
 			}
 		}
@@ -1064,17 +1095,13 @@
 
 		function twoCharLineBreak(i)
 		{
-			if (typeof i !== 'number')
-				i = _i;
-			return i < _input.length - 1 && 
+			return i < _input.length - 1 &&
 				((_input[i] == "\r" && _input[i+1] == "\n")
 				|| (_input[i] == "\n" && _input[i+1] == "\r"))
 		}
 
 		function oneCharLineBreak(i)
 		{
-			if (typeof i !== 'number')
-				i = _i;
 			return _input[i] == "\r" || _input[i] == "\n";
 		}
 
@@ -1118,8 +1145,7 @@
 		{
 			_input = input;
 			_inQuotes = false;
-			_lineNum = 1;
-			_i = 0;
+			_i = 0, _runningRowIdx = 0, _lineNum = 1;
 			clearErrorsAndData();
 			_data = [ [""] ];	// starting parsing requires an empty field
 			_ch = _input[_i];
@@ -1141,7 +1167,8 @@
 				meta: {
 					lines: _lineNum,
 					delimiter: _delimiter,
-					aborted: _aborted
+					aborted: _aborted,
+					truncated: _preview > 0 && _i < _input.length
 				}
 			};
 		}
@@ -1187,11 +1214,13 @@
 						meta: msg.results.meta
 					});
 				}
+				delete msg.results;	// free memory ASAP
 			}
 			else if (isFunction(worker.userChunk))
+			{
 				worker.userChunk(msg.results, msg.file);
-
-			delete msg.results;	// free memory ASAP
+				delete msg.results;
+			}
 		}
 
 		if (msg.finished)
@@ -1216,7 +1245,7 @@
 			global.postMessage({
 				workerId: Papa.WORKER_ID,
 				results: Papa.parse(msg.input, msg.config),
-				finished: true,
+				finished: true
 			});
 		}
 		else if (msg.input instanceof File)
@@ -1258,6 +1287,9 @@
 
 		if (typeof config.complete !== 'function')
 			config.complete = DEFAULTS.complete;
+
+		if (typeof config.error !== 'function')
+			config.error = DEFAULTS.error;
 
 		if (typeof config.encoding !== 'string')
 			config.encoding = DEFAULTS.encoding;

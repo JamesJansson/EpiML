@@ -515,7 +515,7 @@ var Rand = (function() {
     SetSeed : function(seedval) {
       z = seed = seedval || Math.round(Math.random() * m);
     },
-    getSeed : function() {
+    GetSeed : function() {
       return seed;
     },
     Value : function() {

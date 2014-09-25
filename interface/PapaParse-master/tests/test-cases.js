@@ -140,6 +140,61 @@ var PARSE_TESTS = [
 		}
 	},
 	{
+		description: "Header row with one row of data",
+		input: 'A,B,C\r\na,b,c',
+		config: { header: true },
+		expected: {
+			data: [{"A": "a", "B": "b", "C": "c"}],
+			errors: []
+		}
+	},
+	{
+		description: "Header row only",
+		input: 'A,B,C',
+		config: { header: true },
+		expected: {
+			data: [],
+			errors: []
+		}
+	},
+	{
+		description: "Row with too few fields",
+		input: 'A,B,C\r\na,b',
+		config: { header: true },
+		expected: {
+			data: [{"A": "a", "B": "b"}],
+			errors: [{
+				"type": "FieldMismatch",
+				"code": "TooFewFields",
+				"message": "Too few fields: expected 3 fields but parsed 2",
+				"row": 0
+			}]
+		}
+	},
+	{
+		description: "Row with too many fields",
+		input: 'A,B,C\r\na,b,c,d,e\r\nf,g,h',
+		config: { header: true },
+		expected: {
+			data: [{"A": "a", "B": "b", "C": "c", "__parsed_extra": ["d", "e"]}, {"A": "f", "B": "g", "C": "h"}],
+			errors: [{
+				"type": "FieldMismatch",
+				"code": "TooManyFields",
+				"message": "Too many fields: expected 3 fields but parsed 5",
+				"row": 0
+			}]
+		}
+	},
+	{
+		description: "Row with enough fields but blank field at end",
+		input: 'A,B,C\r\na,b,',
+		config: { header: true },
+		expected: {
+			data: [{"A": "a", "B": "b", "C": ""}],
+			errors: []
+		}
+	},
+	{
 		description: "Tab delimiter",
 		input: 'a\tb\tc\r\nd\te\tf',
 		config: { delimiter: "\t" },
@@ -186,6 +241,33 @@ var PARSE_TESTS = [
 		}
 	},
 	{
+		description: "Dynamic typing converts numeric literals",
+		input: '1,2.2,1e3\r\n-4,-4.5,-4e-5\r\n-,5a,5-2',
+		config: { dynamicTyping: true },
+		expected: {
+			data: [[1, 2.2, 1000], [-4, -4.5, -0.00004], ["-", "5a", "5-2"]],
+			errors: []
+		}
+	},
+	{
+		description: "Dynamic typing converts boolean literals",
+		input: 'true,false,T,F,TRUE,False',
+		config: { dynamicTyping: true },
+		expected: {
+			data: [[true, false, "T", "F", "TRUE", "False"]],
+			errors: []
+		}
+	},
+	{
+		description: "Dynamic typing doesn't convert other types",
+		input: 'A,B,C\r\nundefined,null,[\r\nvar,float,if',
+		config: { dynamicTyping: true },
+		expected: {
+			data: [["A", "B", "C"], ["undefined", "null", "["], ["var", "float", "if"]],
+			errors: []
+		}
+	},
+	{
 		description: "Commented line at beginning (comments: true)",
 		input: '# Comment!\r\na,b,c',
 		config: { comments: true },
@@ -205,10 +287,10 @@ var PARSE_TESTS = [
 	},
 	{
 		description: "Commented line at end (comments: true)",
-		input: 'a,b,c\r\n# Comment',
+		input: 'a,true,false\r\n# Comment',
 		config: { comments: true },
 		expected: {
-			data: [['a', 'b', 'c']],
+			data: [['a', 'true', 'false']],
 			errors: []
 		}
 	},
@@ -333,7 +415,7 @@ var PARSE_TESTS = [
 			errors: [{
 				"type": "Delimiter",
 				"code": "UndetectableDelimiter",
-				"message": "Unable to auto-detect delimiting character; defaulted to comma"
+				"message": "Unable to auto-detect delimiting character; defaulted to ','"
 			}]
 		}
 	},
@@ -354,7 +436,7 @@ var PARSE_TESTS = [
 				{
 					"type": "Delimiter",
 					"code": "UndetectableDelimiter",
-					"message": "Unable to auto-detect delimiting character; defaulted to comma"
+					"message": "Unable to auto-detect delimiting character; defaulted to ','"
 				}
 			]
 		}
@@ -414,6 +496,16 @@ var PARSE_TESTS = [
 		}
 	},
 	{
+		description: "Preview with header row",
+		notes: "Preview is defined to be number of rows of input not including header row",
+		input: 'a,b,c\r\nd,e,f\r\ng,h,i\r\nj,k,l',
+		config: { header: true, preview: 2 },
+		expected: {
+			data: [{"a": "d", "b": "e", "c": "f"}, {"a": "g", "b": "h", "c": "i"}],
+			errors: []
+		}
+	},
+	{
 		description: "Keep empty rows",
 		input: 'a,b,c\r\n\r\nd,e,f',
 		config: { keepEmptyRows: true },
@@ -441,7 +533,7 @@ var PARSE_TESTS = [
 				{
 					"type": "Delimiter",
 					"code": "UndetectableDelimiter",
-					"message": "Unable to auto-detect delimiting character; defaulted to comma"
+					"message": "Unable to auto-detect delimiting character; defaulted to ','"
 				}
 			]
 		}
@@ -453,6 +545,50 @@ var PARSE_TESTS = [
 		config: { keepEmptyRows: true },
 		expected: {
 			data: [[], ['a', 'b', 'c']],
+			errors: []
+		}
+	}
+];
+
+
+
+
+
+
+
+// Tests for Papa.parse() that involve asynchronous operation
+var PARSE_ASYNC_TESTS = [
+	{
+		description: "Simple worker",
+		input: "A,B,C\nX,Y,Z",
+		config: {
+			worker: true,
+		},
+		expected: {
+			data: [['A','B','C'],['X','Y','Z']],
+			errors: []
+		}
+	},
+	{
+		description: "Simple download",
+		input: "/tests/sample.csv",
+		config: {
+			download: true
+		},
+		expected: {
+			data: [['A','B','C'],['X','Y','Z']],
+			errors: []
+		}
+	},
+	{
+		description: "Simple download + worker",
+		input: "/tests/sample.csv",
+		config: {
+			worker: true,
+			download: true
+		},
+		expected: {
+			data: [['A','B','C'],['X','Y','Z']],
 			errors: []
 		}
 	}
@@ -603,5 +739,10 @@ var UNPARSE_TESTS = [
 		description: "Mismatched field counts in rows",
 		input: [['a', 'b', 'c'], ['d', 'e'], ['f']],
 		expected: 'a,b,c\r\nd,e\r\nf'
+	},
+	{
+		description: "JSON null is treated as empty value",
+		input: [{ "Col1": "a", "Col2": null, "Col3": "c" }],
+		expected: 'Col1,Col2,Col3\r\na,,c'
 	}
 ];
