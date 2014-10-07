@@ -109,6 +109,13 @@ function SummaryStatistic(Settings, InputFunction){
 	this.TimeVector=[];
 	
 	
+	this.Mean=[];
+	this.Median=[];
+	this.Upper95Percentile=[];
+	this.Lower95Percentile=[];
+	this.STD=[];
+	
+	
 	
 	
 	
@@ -325,15 +332,18 @@ function CalculateRate(Numerator, Denominator){
 
 // Finally, a function that groups the results across multiple instances of the simulations to create 
 function MultiSimSummaryStat(SummaryStatArray){
-	var Result={};
+	var CombinedResult={};
 
 	// Extract the general information from the first in the SummaryStatArray
+	CombinedResult=SummaryStatArray[0];
+	
 	
 	// load the results for storage
 	/*if (MultipleCategories==false)
 		for Simulationindex
+			//Copy the data
 			for TimeIndex{
-				//Copy the data
+				// for each category
 				Result.StorageTable[TimeIndex][Simulationindex];
 			}
 			Result.Mean[TimeIndex]=Mean(Result.StorageTable[TimeIndex]);

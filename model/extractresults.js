@@ -50,10 +50,17 @@ function LivingDxAndUDx(PPLocal, SampleFactorMultiplier){
 	Settings.XLabel="Year";
 	Settings.YLabel="Count";
 	Settings.StartTime=1980;
-	Settings.EndTime=2050;
+	Settings.EndTime=2030;
 	Settings.TimeStep=1;
 	Settings.FunctionReturnsCategory=true;
 	Settings.NumberOfCategories=4;
+	
+	// Define the  category description
+	Settings.CategoryLabel=[];
+	Settings.CategoryLabel[0]="Undiagnosed & infected";
+	Settings.CategoryLabel[1]="Diagnosed & infected";
+	Settings.CategoryLabel[2]="Undiagnosed, uninfected & antibody+";
+	Settings.CategoryLabel[3]="Diagnosed, uninfected & antibody+";
 	
 	//Define the selection function
 	DiagnosisFunction= function (Person, Year){
@@ -69,9 +76,9 @@ function LivingDxAndUDx(PPLocal, SampleFactorMultiplier){
 			else if (Person.HCV.AntibodyYear<=Year){// not currently infected, but was previously infected
 				var DiagnosisStatus=Person.HCV.Diagnosed.Value(Year);
 				if (DiagnosisStatus==1){
-					return 2;
+					return 3;
 				}//else
-				return 3;
+				return 2;
 			}
 		}
 		return NaN;
