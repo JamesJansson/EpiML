@@ -82,6 +82,7 @@ Papa.parse("data/summarynotifications.csv", {download: true, complete: function(
 <li><level1 id="HCVMenuItem" 		onclick="ShowMenu(HCVContent);"			>HCV</level1></li>
 <li><level1 id="DataMenuItem" 		onclick="ShowMenu(DataContent);"		>Data</level1></li>
 <li><level1 id="PlotsMenuItem" 		onclick="ShowMenu(PlotsContent);"		>Plots</level1></li>
+<li><level1 id="MapsMenuItem" 		onclick="ShowMenu(MapsContent);"		>Maps</level1></li>
 <li><level1 id="SensitivityMenuItem"onclick="ShowMenu(SensitivityContent);"	>Sensitivity Analysis</level1></li>
 <li><level1 id="SettingsMenuItem" 	onclick="ShowMenu(SettingsContent);"	>Settings</level1></li>
 <li><level1 id="OtherMenuItem" 		onclick="ShowMenu(OtherContent);"		>Other</level1></li>
@@ -189,6 +190,10 @@ Papa.parse("data/summarynotifications.csv", {download: true, complete: function(
 		
 	</div>
 	
+	<div id="MapsContent" class="Content">
+		<h1>Maps</h1>
+		<p>Maps will be placed on this page.</p>
+	</div>	
 	<div id="SensitivityContent" class="Content">
 		<h1>Sensitivity Analysis</h1>
 		<p>The purpose of this section is to demonstrate the correlation between input parameters and output aggregate statistics.</p>
