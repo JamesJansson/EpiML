@@ -51,13 +51,43 @@ PersonObject.prototype.CurrentlyAlive = function (Year){//using prototyping for 
 	return false;
 };
 
-PersonObject.prototype.CalculateMortality= function (YearFromWhichToCalculateMortality){//, MaleMortality, FemaleMortality){//using prototyping for speed
+PersonObject.prototype.CalculateGeneralMortality= function (YearFromWhichToCalculateMortality){//, MaleMortality, FemaleMortality){
 	// if this.Sex==0 && this.Aboriginal==false
 	if (this.Sex==0){
 		this.GeneralDeath=MaleMortality.YearOfDeath(this.YearOfBirth, YearFromWhichToCalculateMortality);
 	}
 	else {
 		this.GeneralDeath=FemaleMortality.YearOfDeath(this.YearOfBirth, YearFromWhichToCalculateMortality);
+	}
+	//console.log("Birth Year Death" + this.YearOfBirth +" "+ YearFromWhichToCalculateMortality +" "+ this.GeneralDeath);
+	
+	// If the general death happens to be earlier than the death from other causes, set the year of death to occur first 
+	if (this.GeneralDeath<this.YearOfDeath){
+		this.YearOfDeath=this.GeneralDeath;
+	}
+	
+};
+
+PersonObject.prototype.CalculateHCVMortality= function (YearFromWhichToCalculateMortality){
+	// http://jid.oxfordjournals.org/content/206/4/469.long
+	
+	// Determine the HCV stage
+	var CurrentHCVStage=1;
+	var CurrentHCVStartTime=2;
+	var NextHCVStage=2;
+	var NextHCVTime=3;
+	var NextHCVIndex=4;
+	// Determine the time until the next HCV stage
+	// Use the HCV mortality rates by 
+	
+	
+	while (var)
+		if (this.Sex==0){
+			this.HCVDeath=HCVMaleMortality.YearOfDeath(this.YearOfBirth, CurrentHCVStage, CurrentHCVStartTime);
+		}
+		else {
+			this.HCVDeath=HCVFemaleMortality.YearOfDeath(this.YearOfBirth, CurrentHCVStartTime);
+		}
 	}
 	//console.log("Birth Year Death" + this.YearOfBirth +" "+ YearFromWhichToCalculateMortality +" "+ this.GeneralDeath);
 	if (this.GeneralDeath<this.YearOfDeath){

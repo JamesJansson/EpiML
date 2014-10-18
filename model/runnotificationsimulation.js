@@ -86,6 +86,15 @@ self.onmessage = function (e) {
 	HCVParam.SpontaneousClearance=0.296;// 4 year probability of clearance
 	HCVParam.YearlyRateOfClearanceInClearers=0.666; // proportion (of the 29.6% of people who will clear) clearing each year
 	
+	HCVParam.F0Mortality=0;
+	HCVParam.F1Mortality=0;
+	HCVParam.F2Mortality=0;
+	HCVParam.F3Mortality=0;
+	HCVParam.F4Mortality=0;
+	HCVParam.LFMortality=0;
+	HCVParam.HCCMortality=0;
+	
+	
 	DebugStatement("Starting to load Person object");
 	
 	PPNotification=AssignPopulation(Data, CommonParam);
@@ -118,8 +127,12 @@ self.onmessage = function (e) {
 			self.postMessage({ProgressBarValue: i/SimData.NoPeople});
 		}
 
-		PPNotification[i].CalculateMortality(YearOfDiagnosis); // Calculate date of mortality from the date of diagnosis
+		PPNotification[i].CalculateGeneralMortality(YearOfDiagnosis); // Calculate date of mortality from the date of diagnosis
+		PPNotification[i].CalculateHCVMortality(YearOfDiagnosis);
 	}
+	
+	
+	
 	
 	DebugStatement("Beginning estimates of undiagnosed HCV");
 	// This method assumes that all people test at the same rate. 
