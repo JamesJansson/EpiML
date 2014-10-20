@@ -72,16 +72,17 @@ PersonObject.prototype.CalculateHCVMortality= function (YearFromWhichToCalculate
 	// http://jid.oxfordjournals.org/content/206/4/469.long
 	
 	// Determine the HCV stage
-	var CurrentHCVStage=1;
+	var HCVStatus=this.HCV.Fibrosis.Get(YearFromWhichToCalculateMortality);
+	HCVStageNumber=HCVStatus.Pos;
 	var CurrentHCVStartTime=2;
 	var NextHCVStage=2;
 	var NextHCVTime=3;
 	var NextHCVIndex=4;
 	// Determine the time until the next HCV stage
-	// Use the HCV mortality rates by 
+	// Use the HCV mortality rates by stage to determine 
 	
-	
-	while (var)
+	var i=0;
+	while (i){
 		if (this.Sex==0){
 			this.HCVDeath=HCVMaleMortality.YearOfDeath(this.YearOfBirth, CurrentHCVStage, CurrentHCVStartTime);
 		}
