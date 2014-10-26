@@ -73,11 +73,12 @@ StochasticOptimisation.prototype.BuildParameter= function (){
 
 
 function StochasticOptimisationParameter(){
-	this.StartValue;
-	this.FractionalChange;
 	this.Min;
 	this.Max;
-	this.CurrentValue=[];//vector that stores all the current values
+	this.CurrentRange;
+	this.AverageDistance;
+	this.CurrentVec=[];//vector that stores all the current values
+	this.BestVec=[];
 	this.BestValue;// the best value in the overall simulation 
 }
 
