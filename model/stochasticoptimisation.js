@@ -21,6 +21,10 @@ function  StochasticOptimisation(){
 // stop after x iterations/y seconds
 
 	this.OptimisedParam;
+	
+	this.NumberOfSamplesPerRound=10;
+	
+	this.StopTime=1e9;//standard stop time of 1e9 seconds
 
 	this.Help='formats for structure\n Function(ParamForOptimisation) \n Update(TrialNumber, Error)';
 }
@@ -44,10 +48,16 @@ StochasticOptimisation.prototype.AddParameter=function(P){
 
 StochasticOptimisation.prototype.Run= function (){
 	//Set up the simulation for the first time
-	for Parameter parameter
+	for key in A {
 		Parameter[Key].CurrentValue=
-	// Run the first optimisation 
+	}
+	// Run the first sims to get the baseline error  
 	this.BestError=this.Function(Constants
+	
+	
+	// Keep running until time, number of sims runs out, or absolute error is reached, or precision is reached in all variables
+	
+	
 
 }
 
@@ -67,8 +77,12 @@ function StochasticOptimisationParameter(){
 	this.FractionalChange;
 	this.Min;
 	this.Max;
-	this.CurrentValue;
-	this.BestValue;
+	this.CurrentValue=[];//vector that stores all the current values
+	this.BestValue;// the best value in the overall simulation 
+}
+
+StochasticOptimisationParameter.prototype.StartValue= function (){
+	this.StartValue=this.Min+(this.Max-this.Min)Rand.Value();
 }
 
 StochasticOptimisationParameter.prototype.Vary= function (){
