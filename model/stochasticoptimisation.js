@@ -101,11 +101,14 @@ StochasticOptimisationParameter.prototype.SelectBest=function(BestIndexVec){
 
 StochasticOptimisationParameter.prototype.Vary= function (){
 	// Load CurrentVec with BestVec, then choose at random other values
-	for (var key in BestVec){
+	for (var key in this.BestVec){
 		this.CurrentVec[key]=this.BestVec[key];
 	}
-	
-	
+	var RandomIndex;
+	for (var i=this.BestVec.length; i<this.NumberOfSamplesPerRound; i++){
+		RandomIndex=floor(this.BestVec.length*Rand.Value());
+		this.CurrentVec[i]=this.BestVec[RandomIndex];
+	}
 	
 	for (var i=0; i<this.NumberOfSamplesPerRound; i++){
 		//try to vary
