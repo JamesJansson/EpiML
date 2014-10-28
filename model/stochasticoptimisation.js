@@ -36,7 +36,6 @@ StochasticOptimisation.prototype.AddParameter=function(P){
 	A.FractionalChange=P.FractionalChange;
 	A.Min=P.Min;
 	A.Max=P.Max;
-	
 	// Add this parameter to the list of parameters to optimise
 	this.PArray.push(A);
 }
@@ -80,20 +79,44 @@ function StochasticOptimisationParameter(){
 	this.CurrentVec=[];//vector that stores all the current values
 	this.BestVec=[];
 	this.BestValue;// the best value in the overall simulation 
+	this.NumberOtherDimensions;
+	this.NumberOfSamplesPerRound;
 }
 
-StochasticOptimisationParameter.prototype.StartValue= function (){
-	this.StartValue=this.Min+(this.Max-this.Min)Rand.Value();
+StochasticOptimisationParameter.prototype.InitiateVariable= function (NumberOfSamplesPerRound){
+	this.NumberOfSamplesPerRound=NumberOfSamplesPerRound;
+	for (var i=0; i<this.NumberOfSamplesPerRound; i++){
+		this.CurrentVec[i]=this.Min+(this.Max-this.Min)*Rand.Value();
+	}
+}
+
+StochasticOptimisationParameter.prototype.SelectBest=function(BestIndexVec){
+	var Count=0;
+	for (var key in BestIndexVec){
+		this.BestVec[Count]=this.CurrentVec[BestIndexVec[key]];
+		Count++;
+	}
+
 }
 
 StochasticOptimisationParameter.prototype.Vary= function (){
-	if (typeof this.CurrentValue===undefined){
-		this.CurrentValue=this.StartValue;
+	// Load CurrentVec with BestVec, then choose at random other values
+	for (var key in BestVec){
+		this.CurrentVec[key]=this.BestVec[key];
 	}
-	else{
+	
+	
+	
+	for (var i=0; i<this.NumberOfSamplesPerRound; i++){
 		//try to vary
+		ValueInRange=false;
+		while (ValueInRange==false){// keep sampling if it is outside the allowable range
+			if (this.Min<VariedValue && VariedValue<this.Max){
+				ValueInRange=true;
+			}
+		}
 		
-		
+		VariedValue
 		
 	}
 }
