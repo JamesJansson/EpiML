@@ -96,19 +96,29 @@ StochasticOptimisationParameter.prototype.SelectBest=function(BestIndexVec){
 		this.BestVec[Count]=this.CurrentVec[BestIndexVec[key]];
 		Count++;
 	}
-
 }
+
+StochasticOptimisationParameter.prototype.SelectNextPoint=function(BestIndexVec){
+	var Count=0;
+	for (var key in BestIndexVec){
+		this.BestVec[Count]=this.CurrentVec[BestIndexVec[key]];
+		Count++;
+	}
+}
+
 
 StochasticOptimisationParameter.prototype.Vary= function (){
 	// Perform a calculation to determine how much we want to vary the variable
-	this.CurrentRange=Math.max(this.BestVec)-Math.min(this.BestVec);
-	Variability=Math.pow(this.CurrentRange, 1/this.NumberOfDimensions);
-	var sum = 0;
-    for(var i = 0; i < this.Best.length; i++) {
-        sum += this.Best[i];
-    }
-    var average = sum / this.Best.length;
+	//this.CurrentRange=Math.max(this.BestVec)-Math.min(this.BestVec);
+	//Variability=Math.pow(this.CurrentRange, 1/this.NumberOfDimensions);
+	//var sum = 0;
+    //for(var i = 0; i < this.Best.length; i++) {
+    //    sum += this.Best[i];
+    //}
+    //var average = sum / this.Best.length;
 
+	
+	
 	// Load CurrentVec with BestVec, then choose at random other values
 	for (var key in this.BestVec){
 		this.CurrentVec[key]=this.BestVec[key];
@@ -117,13 +127,14 @@ StochasticOptimisationParameter.prototype.Vary= function (){
 	for (var i=this.BestVec.length; i<this.NumberOfSamplesPerRound; i++){
 		RandomIndex=floor(this.BestVec.length*Rand.Value());
 		this.CurrentVec[i]=this.BestVec[RandomIndex];
+		console.error('this section should go in the main area');
 	}
 	
 	for (var i=0; i<this.NumberOfSamplesPerRound; i++){
 		//try to vary
 		ValueInRange=false;
 		while (ValueInRange==false){// keep sampling if it is outside the allowable range
-			VariedValue=Current
+			VariedValue=this.CurrentVec[i];
 			if (this.Min<VariedValue && VariedValue<this.Max){
 				ValueInRange=true;
 			}
