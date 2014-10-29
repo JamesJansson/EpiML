@@ -79,7 +79,7 @@ function StochasticOptimisationParameter(){
 	this.CurrentVec=[];//vector that stores all the current values
 	this.BestVec=[];
 	this.BestValue;// the best value in the overall simulation 
-	this.NumberOtherDimensions;
+	this.NumberOfDimensions;
 	this.NumberOfSamplesPerRound;
 }
 
@@ -100,6 +100,15 @@ StochasticOptimisationParameter.prototype.SelectBest=function(BestIndexVec){
 }
 
 StochasticOptimisationParameter.prototype.Vary= function (){
+	// Perform a calculation to determine how much we want to vary the variable
+	this.CurrentRange=Math.max(this.BestVec)-Math.min(this.BestVec);
+	Variability=Math.pow(this.CurrentRange, 1/this.NumberOfDimensions);
+	var sum = 0;
+    for(var i = 0; i < this.Best.length; i++) {
+        sum += this.Best[i];
+    }
+    var average = sum / this.Best.length;
+
 	// Load CurrentVec with BestVec, then choose at random other values
 	for (var key in this.BestVec){
 		this.CurrentVec[key]=this.BestVec[key];
@@ -114,6 +123,7 @@ StochasticOptimisationParameter.prototype.Vary= function (){
 		//try to vary
 		ValueInRange=false;
 		while (ValueInRange==false){// keep sampling if it is outside the allowable range
+			VariedValue=Current
 			if (this.Min<VariedValue && VariedValue<this.Max){
 				ValueInRange=true;
 			}

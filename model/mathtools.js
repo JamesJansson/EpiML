@@ -66,35 +66,38 @@ function Max(arr) {
   return high;
 }
 
-/*
+
 // sum of squared errors of prediction (SSE)
-jStat.sumsqerr = function sumsqerr(arr) {
-  var mean = jStat.mean(arr);
+function SumSqErr(arr) {
+  var meanval = Mean(arr);
   var sum = 0;
   var i = arr.length;
   var tmp;
   while (--i >= 0) {
-    tmp = arr[i] - mean;
+    tmp = arr[i] - meanval;
     sum += tmp * tmp;
   }
   return sum;
 };
-*/
 
+function SampleVariance(arr){
+	return SumSqErr(arr) / (arr.length - 1);
+};
 
-/*
-// variance of an array
-// flag indicates population vs sample
-jStat.variance = function variance(arr, flag) {
-  return jStat.sumsqerr(arr) / (arr.length - (flag ? 1 : 0));
+function SampleStandardDeviation(arr){//Sample Standard Deviation
+	return Math.sqrt(SampleVariance(arr));
+};
+
+function PopulationVariance(arr){
+	return jStat.SumSqErr(arr) / (arr.length);
+};
+
+function PopulationStandardDeviation(arr){//Sample Standard Deviation
+	return Math.sqrt(PopulationVariance(arr));
 };
 
 
-// standard deviation of an array
-// flag indicates population vs sample
-jStat.stdev = function stdev(arr, flag) {
-  return Math.sqrt(jStat.variance(arr, flag));
-};*/
+
 
 /*
 // covariance of two arrays
