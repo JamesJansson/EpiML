@@ -1,17 +1,19 @@
 function  StochasticOptimisation(){
 // Returns the parameterisation that has been optimised in the format that it was handed to the original function
 	this.Function;
-	this.PArray=[];
+	this.Parameter=[];//an array of individual 
 	
-	this.ParamNow;// indicates the parameter that is currently being modified
+	this.BestIndex=[];
+	
+	//this.ParamNow;// indicates the parameter that is currently being modified
 	
 	
-	this.CurrentParameterArray=[];
-	this.CurrentParameter={};
+	//this.CurrentParameterArray=[];
+	//this.CurrentParameter={};
 	
 	this.SeedValue;// The seed value is used to reset the seed each time for the random number 
 	
-	this.Update;// this is a function that is run at the end of each round to, for example.
+	//this.Update;// this is a function that is run at the end of each round to, for example.
 	
 	
 // start values
@@ -26,7 +28,12 @@ function  StochasticOptimisation(){
 	
 	this.StopTime=1e9;//standard stop time of 1e9 seconds
 
-	this.Help='formats for structure\n Function(ParamForOptimisation) \n Update(TrialNumber, Error)';
+	this.Help='formats for structure\n Function(ParamForOptimisation) \n ';
+	
+	// Try SimulationTools
+	// if it fails
+	// console.log('The file simulationtools.js has not been included. This package is necessary to use this optimisation methodology.');
+	
 }
 StochasticOptimisation.prototype.AddParameter=function(P){
 	var A=new StochasticOptimisationParameter;
@@ -37,7 +44,7 @@ StochasticOptimisation.prototype.AddParameter=function(P){
 	A.Min=P.Min;
 	A.Max=P.Max;
 	// Add this parameter to the list of parameters to optimise
-	this.PArray.push(A);
+	this.Parameter.push(A);
 }
 
 
@@ -45,13 +52,16 @@ StochasticOptimisation.prototype.AddParameter=function(P){
 // This optimisation cycles through each of the parameters individually, adjusts it a little, runs and returns the results
 // Note that if there is a dependence of one on the other, this must be programmed into the function that does the optimisation
 
-StochasticOptimisation.prototype.Run= function (){
+StochasticOptimisation.prototype.Run= function (FunctionInput){
 	//Set up the simulation for the first time
-	for key in A {
-		Parameter[Key].CurrentValue=
+	for (key in this.Parameter) {
+		this.Parameter[Key].InitiateParameter(this.NumberOfSamplesPerRound);
 	}
 	// Run the first sims to get the baseline error  
-	this.BestError=this.Function(Constants
+	for (var PCount=0; PCount<NumberOfSamplesPerRound; PCount++){
+		
+		this.BestError=this.Function(FunctionInput, ParameterSet);
+	}
 	
 	
 	// Keep running until time, number of sims runs out, or absolute error is reached, or precision is reached in all variables
@@ -60,18 +70,18 @@ StochasticOptimisation.prototype.Run= function (){
 
 }
 
-StochasticOptimisation.prototype.BuildParameter= function (){
-	var ParamStruct={};
-	for ( in this.PArray){
-		
-	}
-	
-	return ParamStruct;
+// Get a single value 
+StochasticOptimisation.prototype.GetParameterSet= function (ParameterNumber){
+	ParameterSet={};
+	for (key in this.Parameter) {
+		ParameterSet[Parameter[key].Name]=this.Parameter[key].CurrentVec[ParameterNumber];
+	}	
+	return ParameterSet;
 }
 
-
-
+//************************************************************
 function StochasticOptimisationParameter(){
+	this.Name;
 	this.Min;
 	this.Max;
 	this.CurrentRange;
@@ -83,7 +93,7 @@ function StochasticOptimisationParameter(){
 	this.NumberOfSamplesPerRound;
 }
 
-StochasticOptimisationParameter.prototype.InitiateVariable= function (NumberOfSamplesPerRound){
+StochasticOptimisationParameter.prototype.InitiateParameter= function (NumberOfSamplesPerRound){
 	this.NumberOfSamplesPerRound=NumberOfSamplesPerRound;
 	for (var i=0; i<this.NumberOfSamplesPerRound; i++){
 		this.CurrentVec[i]=this.Min+(this.Max-this.Min)*Rand.Value();
