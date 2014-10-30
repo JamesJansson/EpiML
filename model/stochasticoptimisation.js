@@ -98,10 +98,10 @@ StochasticOptimisationParameter.prototype.SelectBest=function(BestIndexVec){
 	}
 }
 
-StochasticOptimisationParameter.prototype.SelectNextPoint=function(BestIndexVec){
+StochasticOptimisationParameter.prototype.SelectNextPoint=function(SelectIndexVec){//takes a vector the length of the 
 	var Count=0;
-	for (var key in BestIndexVec){
-		this.BestVec[Count]=this.CurrentVec[BestIndexVec[key]];
+	for (var key in SelectIndexVec){
+		this.CurrentVec[Count]=this.BestVec[SelectIndexVec[key]];
 		Count++;
 	}
 }
