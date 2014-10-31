@@ -78,4 +78,28 @@ function StackedBarPlot(PlotHolderName, X, ArrayToPlot,  xAxisLabel, yAxisLabel)
 	$.plot(PlotHolderName, PlotData, PlotSettings);
 }
 
-
+function ScatterPlot(PlotHolderName, Points,  xAxisLabel, yAxisLabel){
+		
+		PlotSettings={xaxis: {
+					axisLabel: xAxisLabel,
+					axisLabelUseCanvas: true,
+					axisLabelFontSizePixels: 12,
+					axisLabelFontFamily: 'Verdana, Arial, Helvetica, Tahoma, sans-serif',
+					axisLabelPadding: 5,
+					tickLength: 0
+				},
+				yaxis: {
+					axisLabel: yAxisLabel,
+					axisLabelUseCanvas: true,
+					axisLabelFontSizePixels: 12,
+					axisLabelFontFamily: 'Verdana, Arial, Helvetica, Tahoma, sans-serif',
+					axisLabelPadding: 5
+				}
+			};
+	PlotData=[];
+	PlotData[0]={};
+	PlotData[0].data=Points;
+	PlotData[0].points={show:true, filled:true};
+	PlotData[0].color="rgb(255, 0, 0)";
+	$.plot(PlotHolderName, PlotData, PlotSettings);
+}

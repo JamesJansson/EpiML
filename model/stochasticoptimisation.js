@@ -2,18 +2,13 @@ function  StochasticOptimisation(){
 // Returns the parameterisation that has been optimised in the format that it was handed to the original function
 	this.Function;
 	this.Parameter=[];//an array of individual 
+	this.ErrorFunction;//a function that describes how the error is calculated
+	// this function takes the results of the Function to be optimised, then outputs a score
 	
 	this.BestIndex=[];
 	
-	//this.ParamNow;// indicates the parameter that is currently being modified
-	
-	
-	//this.CurrentParameterArray=[];
-	//this.CurrentParameter={};
-	
 	this.SeedValue;// The seed value is used to reset the seed each time for the random number 
 	
-	//this.Update;// this is a function that is run at the end of each round to, for example.
 	
 	
 // start values
@@ -28,7 +23,7 @@ function  StochasticOptimisation(){
 	
 	this.StopTime=1e9;//standard stop time of 1e9 seconds
 
-	this.Help='formats for structure\n Function(ParamForOptimisation) \n ';
+	this.Help='Formats for structure\n Function(ParamForOptimisation) \n ';
 	
 	// Try SimulationTools
 	// if it fails
