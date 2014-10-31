@@ -135,6 +135,22 @@ MulticoreSimMessageHandler=function(e) {
 			document.getElementById(this.WithinSimProgressBarID).value=e.data.ProgressBarValue;
 		}
 	}
+	
+	// Allow the function to run an arbitrary function
+	if (typeof e.data.Execute != 'undefined'){
+		var FunctionToRun;
+		eval("FunctionToRun=function(Data){"+e.data.Execute.Code+"};");
+		FunctionToRun(e.data.Execute.Data);
+		
+		//Example usage:
+		//SaySomething={};
+		//SaySomething.Data="This is data";//NOte that Data can be an object, So there may be Data.Colour Data.Temperature
+		//SaySomething.Code="console.log(Data);";
+		//self.postMessage({Execute: SaySomething});
+	}
+	
+	
+	// Collect up results from this simulation, try to run next simulation
 	if (typeof e.data.Result != 'undefined'){
 		this.NoSimsCurrentlyRunning--;
 		SimNumber=e.data.SimNumber;

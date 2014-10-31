@@ -131,8 +131,10 @@ self.onmessage = function (e) {
 		PPNotification[i].CalculateHCVMortality(YearOfDiagnosis);
 	}
 	
-	
-	
+	SaySomething={};
+	SaySomething.Data="This is data";
+	SaySomething.Code="console.log(Data);";
+	self.postMessage({Execute: SaySomething});
 	
 	DebugStatement("Beginning estimates of undiagnosed HCV");
 	// This method assumes that all people test at the same rate. 
