@@ -52,14 +52,17 @@ StochasticOptimisation.prototype.Run= function (FunctionInput){
 	for (key in this.Parameter) {
 		this.Parameter[Key].InitiateParameter(this.NumberOfSamplesPerRound);
 	}
-	// Run the first sims to get the baseline error  
+	
+	
+	var ParameterSet;
+	// Keep running until time, number of sims runs out, or absolute error is reached, or precision is reached in all variables
 	for (var PCount=0; PCount<NumberOfSamplesPerRound; PCount++){
-		
-		this.BestError=this.Function(FunctionInput, ParameterSet);
+		ParameterSet=this.GetParameterSet(PCount);
+		this.ErrorValues=this.Function(FunctionInput, ParameterSet);
 	}
 	
 	
-	// Keep running until time, number of sims runs out, or absolute error is reached, or precision is reached in all variables
+	
 	
 	
 
@@ -75,6 +78,8 @@ StochasticOptimisation.prototype.GetParameterSet= function (ParameterNumber){
 		RandomIndex=floor(this.BestVec.length*Rand.Value());
 		this.CurrentVec[i]=this.BestVec[RandomIndex];
 	}
+	
+	return 
 }
 
 
@@ -99,6 +104,8 @@ function StochasticOptimisationParameter(){
 	this.BestValue;// the best value in the overall simulation 
 	this.NumberOfDimensions;
 	this.NumberOfSamplesPerRound;
+	this.SD;
+	this.SDHistory=[];
 }
 
 StochasticOptimisationParameter.prototype.InitiateParameter= function (NumberOfSamplesPerRound){
@@ -135,14 +142,15 @@ StochasticOptimisationParameter.prototype.Vary= function (){
     //}
     //var average = sum / this.Best.length;
 
-	SD=SampleStandardDeviation(this.BestVec);
-
+	this.SD=SampleStandardDeviation(this.BestVec);
+	this.SDHistory.push(this.SD);
+	
 	var RandomVariation;
 	for (var i=0; i<this.NumberOfSamplesPerRound; i++){
 		//try to vary
 		ValueInRange=false;
 		while (ValueInRange==false){// keep sampling if it is outside the allowable range
-			RandomVariation=NormalRand(this.CurrentVec[i], SD);//some function to change the variable.
+			RandomVariation=NormalRand(this.CurrentVec[i], this.SD);//some function to change the variable.
 			VariedValue=this.CurrentVec[i]+RandomVariation;
 			if (this.Min<VariedValue && VariedValue<this.Max){
 				ValueInRange=true;
