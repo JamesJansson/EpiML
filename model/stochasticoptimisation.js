@@ -65,6 +65,20 @@ StochasticOptimisation.prototype.Run= function (FunctionInput){
 
 }
 
+StochasticOptimisation.prototype.GetParameterSet= function (ParameterNumber){
+	// Load CurrentVec with BestVec, then choose at random other values
+	for (var key in this.BestVec){
+		this.CurrentVec[key]=this.BestVec[key];
+	}
+	var RandomIndex;
+	for (var i=this.BestVec.length; i<this.NumberOfSamplesPerRound; i++){
+		RandomIndex=floor(this.BestVec.length*Rand.Value());
+		this.CurrentVec[i]=this.BestVec[RandomIndex];
+		console.error('this section should go in the main area');
+	}
+}
+
+
 // Get a single value 
 StochasticOptimisation.prototype.GetParameterSet= function (ParameterNumber){
 	ParameterSet={};
@@ -124,21 +138,13 @@ StochasticOptimisationParameter.prototype.Vary= function (){
 
 	
 	
-	// Load CurrentVec with BestVec, then choose at random other values
-	for (var key in this.BestVec){
-		this.CurrentVec[key]=this.BestVec[key];
-	}
-	var RandomIndex;
-	for (var i=this.BestVec.length; i<this.NumberOfSamplesPerRound; i++){
-		RandomIndex=floor(this.BestVec.length*Rand.Value());
-		this.CurrentVec[i]=this.BestVec[RandomIndex];
-		console.error('this section should go in the main area');
-	}
-	
+
+	var RandomVariation;
 	for (var i=0; i<this.NumberOfSamplesPerRound; i++){
 		//try to vary
 		ValueInRange=false;
 		while (ValueInRange==false){// keep sampling if it is outside the allowable range
+			RandomVariation=1;//some function to change the variable.
 			VariedValue=this.CurrentVec[i];
 			if (this.Min<VariedValue && VariedValue<this.Max){
 				ValueInRange=true;

@@ -89,7 +89,7 @@ function SampleStandardDeviation(arr){//Sample Standard Deviation
 };
 
 function PopulationVariance(arr){
-	return jStat.SumSqErr(arr) / (arr.length);
+	return SumSqErr(arr) / (arr.length);
 };
 
 function PopulationStandardDeviation(arr){//Sample Standard Deviation
