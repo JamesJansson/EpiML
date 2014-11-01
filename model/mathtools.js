@@ -177,7 +177,7 @@ function HistogramData(Data, BinBoundaries){
 // ARRAY FUNCTIONS
 
 // Sort numerically
-function SortNumerically(SNInputVector){
+function SortIndex(SNInputVector){
 	// this function sorts the vector as given and returns the index of sorting
 	//SNInputVector.sort(function(a, b) {return a - b;});//this sorting mechanism does a simple numerical sort
 	
@@ -195,10 +195,8 @@ function SortNumerically(SNInputVector){
 	//Separate the structure
 	var IndexVector=[];
 	for (i=0; i<SNInputVector.length; i++){
-		SNInputVector[i]=MultiVec[i][1];
 		IndexVector[i]=MultiVec[i][0];
 	} 
-	
 	return IndexVector;
 }
 

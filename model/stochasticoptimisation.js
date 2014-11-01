@@ -9,7 +9,7 @@ function  StochasticOptimisation(){
 	
 	this.SeedValue;// The seed value is used to reset the seed each time for the random number 
 	
-	
+	this.FractionToKeep=0.5;
 	
 // start values
 // start percentage change
@@ -55,10 +55,32 @@ StochasticOptimisation.prototype.Run= function (FunctionInput){
 	
 	
 	var ParameterSet;
+	var OrderedIndex;
 	// Keep running until time, number of sims runs out, or absolute error is reached, or precision is reached in all variables
-	for (var PCount=0; PCount<NumberOfSamplesPerRound; PCount++){
-		ParameterSet=this.GetParameterSet(PCount);
-		this.ErrorValues=this.Function(FunctionInput, ParameterSet);
+	OptimisationComplete=false;
+	while (OptimisationComplete==false){
+		for (var PCount=0; PCount<this.NumberOfSamplesPerRound; PCount++){
+			ParameterSet=this.GetParameterSet(PCount);
+			this.ErrorValues=this.Function(FunctionInput, ParameterSet);
+		}
+		
+		// Work out which of this simulations will be selected
+		// Sort by error level
+		OrderedIndex=SortIndex(this.ErrorValues);
+		// 
+		for (var PCount=0; PCount<this.NumberOfSamplesPerRound/this.FractionToKeep; PCount++){
+		
+		
+		}
+		//this.FractionToKeep=
+		
+		// 
+		
+		
+		// Test for various factors which would determine that the optimisation has completed. 
+		//if (sum(this.SD)<){
+		
+		//}
 	}
 	
 	
