@@ -1,10 +1,10 @@
 function  StochasticOptimisation(){
 // Returns the parameterisation that has been optimised in the format that it was handed to the original function
 	this.Function;
-	this.Parameter=[];//an array of individual 
+	this.Parameter=[];//an array of individual parameters
 	this.ErrorFunction;//a function that describes how the error is calculated
 	// this function takes the results of the Function to be optimised, then outputs a score
-	
+	this.ErrorValues=[];
 	this.BestIndex=[];
 	
 	this.SeedValue;// The seed value is used to reset the seed each time for the random number 
@@ -25,10 +25,10 @@ function  StochasticOptimisation(){
 
 	this.Help='Formats for structure\n Function(ParamForOptimisation) \n ';
 	
-	// Try SimulationTools
-	// if it fails
-	// console.log('The file simulationtools.js has not been included. This package is necessary to use this optimisation methodology.');
-	
+	// Try MathToolsRunning
+	if (MathToolsRunning==false){
+		console.error('The file mathtools.js has not been included. This package is necessary to use this optimisation methodology.');
+	}
 }
 StochasticOptimisation.prototype.AddParameter=function(P){
 	var A=new StochasticOptimisationParameter;
@@ -74,7 +74,6 @@ StochasticOptimisation.prototype.GetParameterSet= function (ParameterNumber){
 	for (var i=this.BestVec.length; i<this.NumberOfSamplesPerRound; i++){
 		RandomIndex=floor(this.BestVec.length*Rand.Value());
 		this.CurrentVec[i]=this.BestVec[RandomIndex];
-		console.error('this section should go in the main area');
 	}
 }
 
@@ -136,22 +135,19 @@ StochasticOptimisationParameter.prototype.Vary= function (){
     //}
     //var average = sum / this.Best.length;
 
-	
-	
+	SD=SampleStandardDeviation(this.BestVec);
 
 	var RandomVariation;
 	for (var i=0; i<this.NumberOfSamplesPerRound; i++){
 		//try to vary
 		ValueInRange=false;
 		while (ValueInRange==false){// keep sampling if it is outside the allowable range
-			RandomVariation=1;//some function to change the variable.
-			VariedValue=this.CurrentVec[i];
+			RandomVariation=NormalRand(this.CurrentVec[i], SD);//some function to change the variable.
+			VariedValue=this.CurrentVec[i]+RandomVariation;
 			if (this.Min<VariedValue && VariedValue<this.Max){
 				ValueInRange=true;
+				this.CurrentVec[i]=VariedValue;
 			}
 		}
-		
-		VariedValue
-		
 	}
 }
