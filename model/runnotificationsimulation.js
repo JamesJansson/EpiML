@@ -136,6 +136,12 @@ self.onmessage = function (e) {
 	SaySomething.Code="console.log(Data);";
 	self.postMessage({Execute: SaySomething});
 	
+	PlotSomething={};
+	PlotSomething.Data=[[0, 3], [4, 8], [8, 5], [9, 13]];
+	PlotSomething.Code="ScatterPlot('#PlotHolder', Data,  'AAA', 'BBB');";
+	self.postMessage({Execute: PlotSomething});
+	
+	
 	DebugStatement("Beginning estimates of undiagnosed HCV");
 	// This method assumes that all people test at the same rate. 
 	// At this point, we'll assume 90% of people are diagnosed at 20 years of 
