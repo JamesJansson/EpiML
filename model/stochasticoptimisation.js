@@ -99,13 +99,33 @@ StochasticOptimisation.prototype.Run= function (FunctionInput){
 		}
 		
 		
+		
 		// 
 		
 		
 		// Test for various factors which would determine that the optimisation has completed. 
 		//if (sum(this.SD)<){
-		
+		OptimisationComplete=true;
 		//}
+		
+		if (OptimisationComplete==false){// we need to find more points for the next round of optimisation
+			//Randomly select the next points
+			var NextPointIndex=[];
+			for (var key in this.BestVec){
+				NextPointIndex[key]=key;//the first x entries will be 1 through x
+			}
+			var RandomIndex;
+			for (var i=this.BestVec.length; i<this.NumberOfSamplesPerRound; i++){
+				NextPointIndex[i]=floor(this.BestVec.length*Rand.Value());
+			}
+			// set and vary the next indices
+			for (var key in this.Parameter){
+				this.Parameter[key].SelectCurrentPoints(NextPointIndex);
+				this.Parameter[key].Vary();
+			}
+		}
+		
+		
 	}
 	
 	
@@ -124,7 +144,7 @@ StochasticOptimisation.prototype.GetParameterSet= function (ParameterNumber){
 	return ParameterSet;
 }
 
-StochasticOptimisation.prototype.GetParameterSet= function (ParameterNumber){
+StochasticOptimisation.prototype.]]]]]]]]]]]]]]]]= function (ParameterNumber){
 	// Load CurrentVec with BestVec, then choose at random other values
 	for (var key in this.BestVec){
 		this.CurrentVec[key]=this.BestVec[key];
