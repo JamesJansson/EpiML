@@ -1,13 +1,26 @@
-function  StochasticOptimisation(){
+function  StochasticOptimisation(Settings){
 // Returns the parameterisation that has been optimised in the format that it was handed to the original function
-	this.Function;
+	if (typeof Settings.Function==="function"){
+		this.Function=Settings.Function;
+	}else{
+		console.error("In calling StochasticOptimisation(Settings), Settings.Function should be set to the function you wish to optimise with inputs (FunctionInput, OptimisedParameterSet)");
+	}
+	if (typeof Settings.Function==="function"){
+		this.ErrorFunction=Settings.ErrorFunction;//a function that describes how the error is calculated
+	}else{
+		console.error("In calling StochasticOptimisation(Settings), Settings.ErrorFunction should be set to the function that will determine the error based on the result of Function");
+	}
+
+	
+	
 	this.Parameter=[];//an array of individual parameters
-	this.ErrorFunction;//a function that describes how the error is calculated
 	// this function takes the results of the Function to be optimised, then outputs a score
 	this.ErrorValues=[];
 	this.BestIndex=[];
-	
-	this.SeedValue;// The seed value is used to reset the seed each time for the random number 
+	if (typeof Settings.Function==="undefined"){
+	}else{
+		Settings.SeedValue;// The seed value is used to reset the seed each time for the random number 
+	}
 	
 	this.FractionToKeep=0.5;
 	
@@ -49,30 +62,31 @@ StochasticOptimisation.prototype.AddParameter=function(P){
 
 StochasticOptimisation.prototype.Run= function (FunctionInput){
 	//Set up the simulation for the first time
-	for (key in this.Parameter) {
+	for (var key in this.Parameter) {
 		this.Parameter[Key].InitiateParameter(this.NumberOfSamplesPerRound);
 	}
 	
 	
 	var ParameterSet;
 	var OrderedIndex;
+	var SimResults;
 	// Keep running until time, number of sims runs out, or absolute error is reached, or precision is reached in all variables
 	OptimisationComplete=false;
 	while (OptimisationComplete==false){
-		for (var PCount=0; PCount<this.NumberOfSamplesPerRound; PCount++){
-			ParameterSet=this.GetParameterSet(PCount);
-			this.ErrorValues=this.Function(FunctionInput, ParameterSet);
+		for (var PSetCount=0; PSetCount<this.NumberOfSamplesPerRound; PSetCount++){
+			ParameterSet=this.GetParameterSet(PSetCount);
+			SimResults=this.Function(FunctionInput, ParameterSet);
+			this.ErrorValues[PSetCount]=this.ErrorFunction(SimResults);
 		}
 		
 		// Work out which of this simulations will be selected
 		// Sort by error level
 		OrderedIndex=SortIndex(this.ErrorValues);
-		// 
-		for (var PCount=0; PCount<this.NumberOfSamplesPerRound/this.FractionToKeep; PCount++){
-		
-		
+		this.BestIndex=OrderedIndex.slice(0, this.NumberOfSamplesPerRound*this.FractionToKeep);
+		for (var key in this.Parameter){
+			this.Parameter[key].SelectBestPoints(this.BestIndex);// set the BestPoints array to the best values of the simulation
 		}
-		//this.FractionToKeep=
+		
 		
 		// 
 		
@@ -137,7 +151,7 @@ StochasticOptimisationParameter.prototype.InitiateParameter= function (NumberOfS
 	}
 }
 
-StochasticOptimisationParameter.prototype.SelectBest=function(BestIndexVec){
+StochasticOptimisationParameter.prototype.SelectBestPoints=function(BestIndexVec){
 	var Count=0;
 	for (var key in BestIndexVec){
 		this.BestVec[Count]=this.CurrentVec[BestIndexVec[key]];
@@ -145,7 +159,7 @@ StochasticOptimisationParameter.prototype.SelectBest=function(BestIndexVec){
 	}
 }
 
-StochasticOptimisationParameter.prototype.SelectNextPoint=function(SelectIndexVec){//takes a vector the length of the 
+StochasticOptimisationParameter.prototype.SelectCurrentPoints=function(SelectIndexVec){//takes a vector the length of the 
 	var Count=0;
 	for (var key in SelectIndexVec){
 		this.CurrentVec[Count]=this.BestVec[SelectIndexVec[key]];
