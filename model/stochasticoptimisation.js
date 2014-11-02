@@ -6,42 +6,53 @@ function  StochasticOptimisation(Settings){
 		console.error("In calling StochasticOptimisation(Settings), Settings.Function should be set to the function you wish to optimise with inputs (FunctionInput, OptimisedParameterSet)");
 	}
 	if (typeof Settings.Function==="function"){
-		this.ErrorFunction=Settings.ErrorFunction;//a function that describes how the error is calculated
+		this.ErrorFunction=Settings.ErrorFunction;// this function takes the results of the Function to be optimised, then outputs a score
 	}else{
 		console.error("In calling StochasticOptimisation(Settings), Settings.ErrorFunction should be set to the function that will determine the error based on the result of Function");
 	}
 
-	
-	
-	this.Parameter=[];//an array of individual parameters
-	// this function takes the results of the Function to be optimised, then outputs a score
-	this.ErrorValues=[];
-	this.BestIndex=[];
-	if (typeof Settings.Function==="undefined"){
+	if (typeof Settings.SeedValue==="undefined"){
 	}else{
-		Settings.SeedValue;// The seed value is used to reset the seed each time for the random number 
+		Rand.SetSeed(Settings.SeedValue);// The seed value is used to reset the seed each time for the random number 
 	}
 	
-	this.FractionToKeep=0.5;
 	
-// start values
-// start percentage change
-// max/min values
-// error function
+	if (typeof Settings.SeedValue==="undefined"){
+		this.FractionToKeep=0.5;// standard fraction to keep
+	}else{
+		this.FractionToKeep=Settings.FractionToKeep;
+	}
+	
+	if (typeof Settings.SeedValue==="undefined"){
+		this.NumberOfSamplesPerRound=10;// standard samples per round
+	}else{
+		this.NumberOfSamplesPerRound=Settings.NumberOfSamplesPerRound;
+	}
+
 // stop after x iterations/y seconds
 
 	this.OptimisedParam;
 	
-	this.NumberOfSamplesPerRound=10;
 	
 	this.StopTime=1e9;//standard stop time of 1e9 seconds
 
 	this.Help='Formats for structure\n Function(ParamForOptimisation) \n ';
 	
 	// Try MathToolsRunning
-	if (MathToolsRunning==false){
+	if (typeof MathToolsRunning==="undefined"){
 		console.error('The file mathtools.js has not been included. This package is necessary to use this optimisation methodology.');
+	}else{
+		if (MathToolsRunning==false){
+			console.error('The file mathtools.js has not been included. This package is necessary to use this optimisation methodology.');
+		}
 	}
+	
+	
+	this.Parameter=[];//an array of individual parameters, e.g. infection rate, cure rate
+	
+	//this.ErrorValues=[];
+	this.BestIndex=[];
+	
 }
 StochasticOptimisation.prototype.AddParameter=function(P){
 	var A=new StochasticOptimisationParameter;
@@ -104,6 +115,15 @@ StochasticOptimisation.prototype.Run= function (FunctionInput){
 
 }
 
+// Get a single value 
+StochasticOptimisation.prototype.GetParameterSet= function (ParameterNumber){
+	ParameterSet={};
+	for (key in this.Parameter) {
+		ParameterSet[Parameter[key].Name]=this.Parameter[key].CurrentVec[ParameterNumber];
+	}	
+	return ParameterSet;
+}
+
 StochasticOptimisation.prototype.GetParameterSet= function (ParameterNumber){
 	// Load CurrentVec with BestVec, then choose at random other values
 	for (var key in this.BestVec){
@@ -119,14 +139,7 @@ StochasticOptimisation.prototype.GetParameterSet= function (ParameterNumber){
 }
 
 
-// Get a single value 
-StochasticOptimisation.prototype.GetParameterSet= function (ParameterNumber){
-	ParameterSet={};
-	for (key in this.Parameter) {
-		ParameterSet[Parameter[key].Name]=this.Parameter[key].CurrentVec[ParameterNumber];
-	}	
-	return ParameterSet;
-}
+
 
 //************************************************************
 function StochasticOptimisationParameter(){
