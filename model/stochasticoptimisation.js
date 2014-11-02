@@ -12,6 +12,14 @@ function  StochasticOptimisation(Settings){
 		console.error("In calling StochasticOptimisation(Settings), Settings.ErrorFunction should be set to the function that will determine the error based on the result of Function");
 		return -1;
 	}
+	if (typeof Settings.Target==="undefined"){
+		console.error("In calling StochasticOptimisation(Settings), Settings.ErrorFunction should be set to the function that will determine the error based on the result of Function");
+		return -1;
+	}else{
+		this.Target=Settings.Target;// The value that the error function uses to determine fitness
+	}
+	
+	
 
 	if (typeof Settings.SeedValue==="undefined"){
 	}else{
@@ -19,13 +27,13 @@ function  StochasticOptimisation(Settings){
 	}
 	
 	
-	if (typeof Settings.SeedValue==="undefined"){
+	if (typeof Settings.FractionToKeep==="undefined"){
 		this.FractionToKeep=0.5;// standard fraction to keep
 	}else{
 		this.FractionToKeep=Settings.FractionToKeep;
 	}
 	
-	if (typeof Settings.SeedValue==="undefined"){
+	if (typeof Settings.NumberOfSamplesPerRound==="undefined"){
 		this.NumberOfSamplesPerRound=10;// standard samples per round
 	}else{
 		this.NumberOfSamplesPerRound=Settings.NumberOfSamplesPerRound;
@@ -51,17 +59,15 @@ function  StochasticOptimisation(Settings){
 	
 	
 	this.Parameter=[];//an array of individual parameters, e.g. infection rate, cure rate
-	
-	//this.ErrorValues=[];
+
 	this.BestIndex=[];
-	
 }
 StochasticOptimisation.prototype.AddParameter=function(P){
 	var A=new StochasticOptimisationParameter;
 	A.Name=P.Name;
-	A.StartValue=P.StartValue;
-	A.CurrentValue=P.StartValue;
-	A.FractionalChange=P.FractionalChange;
+	//A.StartValue=P.StartValue;
+	//A.CurrentValue=P.StartValue;
+	//A.FractionalChange=P.FractionalChange;
 	A.Min=P.Min;
 	A.Max=P.Max;
 	// Add this parameter to the list of parameters to optimise
@@ -151,11 +157,11 @@ function StochasticOptimisationParameter(){
 	this.Name;
 	this.Min;
 	this.Max;
-	this.CurrentRange;
-	this.AverageDistance;
+	//this.CurrentRange;
+	//this.AverageDistance;
 	this.CurrentVec=[];//vector that stores all the current values
 	this.BestVec=[];
-	this.BestValue;// the best value in the overall simulation 
+	//this.BestValue;// the best value in the overall simulation 
 	this.NumberOfDimensions;
 	this.NumberOfSamplesPerRound;
 	this.SD;
