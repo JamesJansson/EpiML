@@ -4,11 +4,13 @@ function  StochasticOptimisation(Settings){
 		this.Function=Settings.Function;
 	}else{
 		console.error("In calling StochasticOptimisation(Settings), Settings.Function should be set to the function you wish to optimise with inputs (FunctionInput, OptimisedParameterSet)");
+		return -1;
 	}
 	if (typeof Settings.Function==="function"){
 		this.ErrorFunction=Settings.ErrorFunction;// this function takes the results of the Function to be optimised, then outputs a score
 	}else{
 		console.error("In calling StochasticOptimisation(Settings), Settings.ErrorFunction should be set to the function that will determine the error based on the result of Function");
+		return -1;
 	}
 
 	if (typeof Settings.SeedValue==="undefined"){
@@ -97,12 +99,7 @@ StochasticOptimisation.prototype.Run= function (FunctionInput){
 		for (var key in this.Parameter){
 			this.Parameter[key].SelectBestPoints(this.BestIndex);// set the BestPoints array to the best values of the simulation
 		}
-		
-		
-		
-		// 
-		
-		
+
 		// Test for various factors which would determine that the optimisation has completed. 
 		//if (sum(this.SD)<){
 		OptimisationComplete=true;
