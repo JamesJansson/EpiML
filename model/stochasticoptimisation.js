@@ -127,12 +127,6 @@ StochasticOptimisation.prototype.Run= function (FunctionInput){
 		
 		
 	}
-	
-	
-	
-	
-	
-
 }
 
 // Get a single value 
@@ -144,18 +138,12 @@ StochasticOptimisation.prototype.GetParameterSet= function (ParameterNumber){
 	return ParameterSet;
 }
 
-StochasticOptimisation.prototype.]]]]]]]]]]]]]]]]= function (ParameterNumber){
-	// Load CurrentVec with BestVec, then choose at random other values
-	for (var key in this.BestVec){
-		this.CurrentVec[key]=this.BestVec[key];
-	}
-	var RandomIndex;
-	for (var i=this.BestVec.length; i<this.NumberOfSamplesPerRound; i++){
-		RandomIndex=floor(this.BestVec.length*Rand.Value());
-		this.CurrentVec[i]=this.BestVec[RandomIndex];
-	}
-	
-	return 
+StochasticOptimisation.prototype.GetBestParameterSet= function (ParameterNumber){
+	ParameterSet={};
+	for (key in this.Parameter) {
+		ParameterSet[Parameter[key].Name]=this.Parameter[key].BestVec[ParameterNumber];
+	}	
+	return ParameterSet;
 }
 
 
