@@ -578,7 +578,35 @@ function Apply(FunctionToApply, Input){
 
 
 
-function Abs(Input){ 	return Apply(Math.abs, 		Input);}
+function Abs(Input){ return  Apply(Math.abs, Input);}
+function Acos(Input){ return  Apply(Math.acos, Input);}
+function Acosh(Input){ return  Apply(Math.acosh, Input);}
+function Asin(Input){ return  Apply(Math.asin, Input);}
+function Asinh(Input){ return  Apply(Math.asinh, Input);}
+function Atan(Input){ return  Apply(Math.atan, Input);}
+function Atan2(Input){ return  Apply(Math.atan2, Input);}
+function Atanh(Input){ return  Apply(Math.atanh, Input);}
+function Cbrt(Input){ return  Apply(Math.cbrt, Input);}
+function Ceil(Input){ return  Apply(Math.ceil, Input);}
+function Clz32(Input){ return  Apply(Math.clz32, Input);}
+function Cos(Input){ return  Apply(Math.cos, Input);}
+function Cosh(Input){ return  Apply(Math.cosh, Input);}
+function Exp(Input){ return  Apply(Math.exp, Input);}
+function Expm1(Input){ return  Apply(Math.expm1, Input);}
+function Floor(Input){ return  Apply(Math.floor, Input);}
+function Fround(Input){ return  Apply(Math.fround, Input);}
+function Log(Input){ return  Apply(Math.log, Input);}
+function Log1p(Input){ return  Apply(Math.log1p, Input);}
+function Log2(Input){ return  Apply(Math.log2, Input);}
+function Log10(Input){ return  Apply(Math.log10, Input);}
+function Round(Input){ return  Apply(Math.round, Input);}
+function Sign(Input){ return  Apply(Math.sign, Input);}
+function Sin(Input){ return  Apply(Math.sin, Input);}
+function Sinh(Input){ return  Apply(Math.sinh, Input);}
+function Sqrt(Input){ return  Apply(Math.sqrt, Input);}
+function Tan(Input){ return  Apply(Math.tan, Input);}
+function Tanh(Input){ return  Apply(Math.tanh, Input);}
+function Trunc(Input){ return  Apply(Math.trunc, Input);}
 
 
 /*
@@ -599,16 +627,10 @@ exp: function exp() { [native code] }
 expm1: function expm1() { [native code] }
 floor: function floor() { [native code] }
 fround: function fround() { [native code] }
-hypot: function hypot() { [native code] }
-imul: function imul() { [native code] }
 log: function log() { [native code] }
 log1p: function log1p() { [native code] }
 log2: function log2() { [native code] }
 log10: function log10() { [native code] }
-max: function max() { [native code] }
-min: function min() { [native code] }
-pow: function pow() { [native code] }
-random: function random() { [native code] }
 round: function round() { [native code] }
 sign: function sign() { [native code] }
 sin: function sin() { [native code] }
@@ -617,6 +639,13 @@ sqrt: function sqrt() { [native code] }
 tan: function tan() { [native code] }
 tanh: function tanh() { [native code] }
 trunc: function trunc() { [native code] }
+
+hypot: function hypot() { [native code] }// don't need
+imul: function imul() { [native code] }// don't need
+max: function max() { [native code] }// don't need
+min: function min() { [native code] }// don't need
+pow: function pow() { [native code] }// might want to write a custom script 
+random: function random() { [native code] }// don't need
 
 */
 
