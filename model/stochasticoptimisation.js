@@ -1,50 +1,61 @@
 function  StochasticOptimisation(Settings){
-// Returns the parameterisation that has been optimised in the format that it was handed to the original function
+	// Function: function to be optimised
 	if (typeof Settings.Function==="function"){
 		this.Function=Settings.Function;
 	}else{
 		console.error("In calling StochasticOptimisation(Settings), Settings.Function should be set to the function you wish to optimise with inputs (FunctionInput, OptimisedParameterSet)");
 		return -1;
 	}
+	// ErrorFuntion
 	if (typeof Settings.ErrorFunction==="function"){
 		this.ErrorFunction=Settings.ErrorFunction;// this function takes the results of the Function to be optimised, then outputs a score
 	}else{
 		console.error("In calling StochasticOptimisation(Settings), Settings.ErrorFunction should be set to the function that will determine the error based on the result of Function");
 		return -1;
 	}
+	// Target: Data to be optimised to
 	if (typeof Settings.Target==="undefined"){
 		console.error("In calling StochasticOptimisation(Settings), Settings.ErrorFunction should be set to the function that will determine the error based on the result of Function");
 		return -1;
 	}else{
 		this.Target=Settings.Target;// The value that the error function uses to determine fitness
 	}
+	// ProgressFunction: Runs every round, can be used to output progress
+	if (typeof Settings.ProgressFunction==="function"){
+		this.RunProgressFunction=true;
+		this.ProgressFunction=Settings.ProgressFunction;
+	}else{
+		this.RunProgressFunction=false;
+	}
 	
-	
-
-	if (typeof Settings.SeedValue==="undefined"){
+	// SeedValue: used to set a seed for Rand (if determinism is important and not set elsewhere)
+	if (typeof Settings.SeedValue==="undefined"){// do nothing
 	}else{
 		Rand.SetSeed(Settings.SeedValue);// The seed value is used to reset the seed each time for the random number 
 	}
 	
-	
+	// FractionToKeep: a fraction of the total simulations per round that are chosen as the best simulations for that round
 	if (typeof Settings.FractionToKeep==="undefined"){
 		this.FractionToKeep=0.5;// standard fraction to keep
 	}else{
 		this.FractionToKeep=Settings.FractionToKeep;
 	}
 	
+	// NumberOfSamplesPerRound: Number of points tested per round
 	if (typeof Settings.NumberOfSamplesPerRound==="undefined"){
 		this.NumberOfSamplesPerRound=10;// standard samples per round
 	}else{
 		this.NumberOfSamplesPerRound=Settings.NumberOfSamplesPerRound;
 	}
 	
+	// MaxIterations: the number of iterations that can occur before the optimisation stops
 	if (typeof Settings.MaxIterations==="undefined"){
 		this.MaxIterations=1000;// stop after x iterations
 	}else{
 		this.MaxIterations=Settings.MaxIterations;
 	}
 
+	// MaxTime: the total time (in seconds) before the optimisation stops
 	if (typeof Settings.MaxTime==="undefined"){
 		this.MaxTime=1e9;//standard stop time of 1e9 seconds
 	}else{
@@ -53,12 +64,12 @@ function  StochasticOptimisation(Settings){
 	
 	this.Parameter=[];//an array of individual parameters, e.g. infection rate, cure rate
 	
-	this.BestIndex=[];
+	this.BestIndex=[];//Index of the best values from the CurrentVec array in each parameter
 	
 	this.SimResults=[];//An array of the output of the current round of simulations
 	this.ErrorValues=[];//An array of the output of the current round of simulations
 	
-	// Try MathToolsRunning
+	// Determine if MathTools is running
 	if (typeof MathToolsRunning==="undefined"){
 		console.error('The file mathtools.js has not been included. This package is necessary to use this optimisation methodology.');
 	}else{
@@ -69,6 +80,7 @@ function  StochasticOptimisation(Settings){
 	
 	this.Help='Formats for structure\n Function(ParamForOptimisation) \n ';
 }
+
 StochasticOptimisation.prototype.AddParameter=function(Name, Min, Max){
 	var A=new StochasticOptimisationParameter;
 	A.Name=Name; // type is string
@@ -77,11 +89,6 @@ StochasticOptimisation.prototype.AddParameter=function(Name, Min, Max){
 	// Add this parameter to the list of parameters to optimise
 	this.Parameter[Name]=A;
 }
-
-
-
-// This optimisation cycles through each of the parameters individually, adjusts it a little, runs and returns the results
-// Note that if there is a dependence of one on the other, this must be programmed into the function that does the optimisation
 
 StochasticOptimisation.prototype.Run= function (FunctionInput){
 	//Set up the simulation for the first time
@@ -96,10 +103,12 @@ StochasticOptimisation.prototype.Run= function (FunctionInput){
 	// Keep running until time, number of sims runs out, or absolute error is reached, or precision is reached in all variables
 	OptimisationComplete=false;
 	while (OptimisationComplete==false){
-		for (var key in this.Parameter){
-			ParameterSet=this.GetParameterSet(key);
-			this.SimResults[key]=this.Function(FunctionInput, ParameterSet);
-			this.ErrorValues[key]=this.ErrorFunction(this.SimResults[key], this.Target);
+		for (var SampleCount=0; SampleCount<this.NumberOfSamplesPerRound; SampleCount++){
+			ParameterSet=this.GetParameterSet(SampleCount);
+			this.SimResults[SampleCount]=this.Function(FunctionInput, ParameterSet);
+			console.log(ParameterSet);
+			console.log(this.SimResults[SampleCount]);
+			this.ErrorValues[SampleCount]=this.ErrorFunction(this.SimResults[SampleCount], this.Target);
 		}
 		
 		// Work out which of this simulations will be selected
@@ -110,6 +119,12 @@ StochasticOptimisation.prototype.Run= function (FunctionInput){
 			this.Parameter[key].SelectBestPoints(this.BestIndex);// set the BestPoints array to the best values of the simulation
 		}
 
+		// If the OptimisationProgress function is set
+		if (this.RunProgressFunction==true){
+			this.ProgressFunction(Parameters, Results, Error);
+		}
+		
+		
 		// Test for various factors which would determine that the optimisation has completed. 
 		//if (sum(this.SD)<){
 		OptimisationComplete=true;
@@ -138,7 +153,7 @@ StochasticOptimisation.prototype.Run= function (FunctionInput){
 StochasticOptimisation.prototype.GetParameterSet= function (ParameterNumber){
 	ParameterSet={};
 	for (key in this.Parameter) {
-		ParameterSet[this.Parameter[key].Name]=this.Parameter[key].CurrentVec[ParameterNumber];
+		ParameterSet[key]=this.Parameter[key].CurrentVec[ParameterNumber];
 	}	
 	return ParameterSet;
 }
@@ -239,6 +254,8 @@ function TestStochasticOptimisation(){
 	OptimisationSettings.Target=HistogramsResults.Count;
 	
 	OptimisationSettings.Function=function(FunctionInput, ParameterSet){
+		console.log(ParameterSet);
+		console.log(ParameterSet.Y);
 		var Results=NormalRandArray(ParameterSet.X, ParameterSet.Y, FunctionInput.NumberOfSamples);
 		return Results;
 	};
@@ -249,8 +266,9 @@ function TestStochasticOptimisation(){
 		return TotalError;
 	};
 	
-	OptimisationSettings.DisplayFunction=function(Parameters, Results, Error){
-		//Parameters[i].CurrentVec
+	OptimisationSettings.ProgressFunction=function(Parameter, Results, Error){
+		console.log("Params: X "+Mean(Parameter.X.CurrentVec)+" X "+Mean(Parameter.Y.CurrentVec));
+		//
 	};
 	
 	OptimisationObject=new StochasticOptimisation(OptimisationSettings);
