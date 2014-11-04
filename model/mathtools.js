@@ -687,45 +687,44 @@ function Trunc(Input){ return  Apply(Math.trunc, Input);}
 
 
 
-/*
-abs: function abs() { [native code] }
-acos: function acos() { [native code] }
-acosh: function acosh() { [native code] }
-asin: function asin() { [native code] }
-asinh: function asinh() { [native code] }
-atan: function atan() { [native code] }
-atan2: function atan2() { [native code] }
-atanh: function atanh() { [native code] }
-cbrt: function cbrt() { [native code] }
-ceil: function ceil() { [native code] }
-clz32: function clz32() { [native code] }
-cos: function cos() { [native code] }
-cosh: function cosh() { [native code] }
-exp: function exp() { [native code] }
-expm1: function expm1() { [native code] }
-floor: function floor() { [native code] }
-fround: function fround() { [native code] }
-log: function log() { [native code] }
-log1p: function log1p() { [native code] }
-log2: function log2() { [native code] }
-log10: function log10() { [native code] }
-round: function round() { [native code] }
-sign: function sign() { [native code] }
-sin: function sin() { [native code] }
-sinh: function sinh() { [native code] }
-sqrt: function sqrt() { [native code] }
-tan: function tan() { [native code] }
-tanh: function tanh() { [native code] }
-trunc: function trunc() { [native code] }
 
-hypot: function hypot() { [native code] }// don't need
-imul: function imul() { [native code] }// don't need
-max: function max() { [native code] }// don't need
-min: function min() { [native code] }// don't need
-pow: function pow() { [native code] }// might want to write a custom script 
-random: function random() { [native code] }// don't need
+// abs: function abs() { [native code] }
+// acos: function acos() { [native code] }
+// acosh: function acosh() { [native code] }
+// asin: function asin() { [native code] }
+// asinh: function asinh() { [native code] }
+// atan: function atan() { [native code] }
+// atan2: function atan2() { [native code] }
+// atanh: function atanh() { [native code] }
+// cbrt: function cbrt() { [native code] }
+// ceil: function ceil() { [native code] }
+// clz32: function clz32() { [native code] }
+// cos: function cos() { [native code] }
+// cosh: function cosh() { [native code] }
+// exp: function exp() { [native code] }
+// expm1: function expm1() { [native code] }
+// floor: function floor() { [native code] }
+// fround: function fround() { [native code] }
+// log: function log() { [native code] }
+// log1p: function log1p() { [native code] }
+// log2: function log2() { [native code] }
+// log10: function log10() { [native code] }
+// round: function round() { [native code] }
+// sign: function sign() { [native code] }
+// sin: function sin() { [native code] }
+// sinh: function sinh() { [native code] }
+// sqrt: function sqrt() { [native code] }
+// tan: function tan() { [native code] }
+// tanh: function tanh() { [native code] }
+// trunc: function trunc() { [native code] }
 
-*/
+// hypot: function hypot() { [native code] }// don't need
+// imul: function imul() { [native code] }// don't need
+// max: function max() { [native code] }// don't need
+// min: function min() { [native code] }// don't need
+// pow: function pow() { [native code] }// might want to write a custom script 
+// random: function random() { [native code] }// don't need
+
 
 
 
