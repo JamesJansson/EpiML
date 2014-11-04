@@ -6,7 +6,7 @@ function  StochasticOptimisation(Settings){
 		console.error("In calling StochasticOptimisation(Settings), Settings.Function should be set to the function you wish to optimise with inputs (FunctionInput, OptimisedParameterSet)");
 		return -1;
 	}
-	if (typeof Settings.Function==="function"){
+	if (typeof Settings.ErrorFunction==="function"){
 		this.ErrorFunction=Settings.ErrorFunction;// this function takes the results of the Function to be optimised, then outputs a score
 	}else{
 		console.error("In calling StochasticOptimisation(Settings), Settings.ErrorFunction should be set to the function that will determine the error based on the result of Function");
@@ -38,15 +38,21 @@ function  StochasticOptimisation(Settings){
 	}else{
 		this.NumberOfSamplesPerRound=Settings.NumberOfSamplesPerRound;
 	}
+	
+	if (typeof Settings.MaxIterations==="undefined"){
+		this.MaxIterations=1000;// stop after x iterations
+	}else{
+		this.MaxIterations=Settings.MaxIterations;
+	}
 
-// stop after x iterations/y seconds
-
-	this.OptimisedParam;
+	if (typeof Settings.MaxTime==="undefined"){
+		this.MaxTime=1e9;//standard stop time of 1e9 seconds
+	}else{
+		this.MaxTime=Settings.MaxTime;
+	}
 	
 	
-	this.StopTime=1e9;//standard stop time of 1e9 seconds
 
-	this.Help='Formats for structure\n Function(ParamForOptimisation) \n ';
 	
 	// Try MathToolsRunning
 	if (typeof MathToolsRunning==="undefined"){
@@ -61,15 +67,16 @@ function  StochasticOptimisation(Settings){
 	this.Parameter=[];//an array of individual parameters, e.g. infection rate, cure rate
 
 	this.BestIndex=[];
+	this.SimResults=[];
+	
+	
+	this.Help='Formats for structure\n Function(ParamForOptimisation) \n ';
 }
-StochasticOptimisation.prototype.AddParameter=function(P){
+StochasticOptimisation.prototype.AddParameter=function(Name, Min, Max){
 	var A=new StochasticOptimisationParameter;
-	A.Name=P.Name;
-	//A.StartValue=P.StartValue;
-	//A.CurrentValue=P.StartValue;
-	//A.FractionalChange=P.FractionalChange;
-	A.Min=P.Min;
-	A.Max=P.Max;
+	A.Name=Name; // type is string
+	A.Min=Min; // minimum value allowed in the optimisation
+	A.Max=Max; // maximum value allowed in the optimisation
 	// Add this parameter to the list of parameters to optimise
 	this.Parameter.push(A);
 }
@@ -88,14 +95,14 @@ StochasticOptimisation.prototype.Run= function (FunctionInput){
 	
 	var ParameterSet;
 	var OrderedIndex;
-	var SimResults;
+
 	// Keep running until time, number of sims runs out, or absolute error is reached, or precision is reached in all variables
 	OptimisationComplete=false;
 	while (OptimisationComplete==false){
 		for (var PSetCount=0; PSetCount<this.NumberOfSamplesPerRound; PSetCount++){
 			ParameterSet=this.GetParameterSet(PSetCount);
-			SimResults=this.Function(FunctionInput, ParameterSet);
-			this.ErrorValues[PSetCount]=this.ErrorFunction(SimResults);
+			this.SimResults[PSetCount]=this.Function(FunctionInput, ParameterSet);
+			this.ErrorValues[PSetCount]=this.ErrorFunction(this.SimResults[PSetCount], this.Target);
 		}
 		
 		// Work out which of this simulations will be selected
@@ -127,8 +134,6 @@ StochasticOptimisation.prototype.Run= function (FunctionInput){
 				this.Parameter[key].Vary();
 			}
 		}
-		
-		
 	}
 }
 
@@ -219,3 +224,32 @@ StochasticOptimisationParameter.prototype.Vary= function (){
 		}
 	}
 }
+
+//******************************************************************
+function TestStochasticOptimisation(){
+	var OptimisationSettings={};
+	var FunctionInput.NumberOfSamples=100;
+
+	
+	
+	OptimisationSettings.Function=function(FunctionInput, ParameterSet){
+		var Results=NormalRandArray(ParameterSet.X, ParameterSet.Y, FunctionInput.NumberOfSamples);
+		return Results;
+	}
+
+	OptimisationSettings.ErrorFunction=function(Results, Target){
+		
+	};
+
+	
+
+}
+
+
+
+
+
+
+
+
+
