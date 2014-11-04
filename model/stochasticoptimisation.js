@@ -63,7 +63,7 @@ function  StochasticOptimisation(Settings){
 	}
 	
 	this.Parameter=[];//an array of individual parameters, e.g. infection rate, cure rate
-	
+	this.NumberOfParameters=0;
 	this.BestIndex=[];//Index of the best values from the CurrentVec array in each parameter
 	
 	this.SimResults=[];//An array of the output of the current round of simulations
@@ -82,6 +82,7 @@ function  StochasticOptimisation(Settings){
 }
 
 StochasticOptimisation.prototype.AddParameter=function(Name, Min, Max){
+	this.NumberOfParameters++;
 	var A=new StochasticOptimisationParameter;
 	A.Name=Name; // type is string
 	A.Min=Min; // minimum value allowed in the optimisation
@@ -281,7 +282,6 @@ function TestStochasticOptimisation(){
 	OptimisationObject=new StochasticOptimisation(OptimisationSettings);
 	OptimisationObject.AddParameter("X", 0, 10);
 	OptimisationObject.AddParameter("Y", 0, 10);
-	
 	OptimisationObject.Run(FunctionInput);
 	
 	
