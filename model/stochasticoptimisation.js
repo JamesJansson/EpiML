@@ -51,8 +51,12 @@ function  StochasticOptimisation(Settings){
 		this.MaxTime=Settings.MaxTime;
 	}
 	
+	this.Parameter=[];//an array of individual parameters, e.g. infection rate, cure rate
 	
-
+	this.BestIndex=[];
+	
+	this.SimResults=[];//An array of the output of the current round of simulations
+	this.ErrorValues=[];//An array of the output of the current round of simulations
 	
 	// Try MathToolsRunning
 	if (typeof MathToolsRunning==="undefined"){
@@ -63,13 +67,6 @@ function  StochasticOptimisation(Settings){
 		}
 	}
 	
-	
-	this.Parameter=[];//an array of individual parameters, e.g. infection rate, cure rate
-
-	this.BestIndex=[];
-	this.SimResults=[];
-	
-	
 	this.Help='Formats for structure\n Function(ParamForOptimisation) \n ';
 }
 StochasticOptimisation.prototype.AddParameter=function(Name, Min, Max){
@@ -78,7 +75,7 @@ StochasticOptimisation.prototype.AddParameter=function(Name, Min, Max){
 	A.Min=Min; // minimum value allowed in the optimisation
 	A.Max=Max; // maximum value allowed in the optimisation
 	// Add this parameter to the list of parameters to optimise
-	this.Parameter.push(A);
+	this.Parameter[Name]=A;
 }
 
 
@@ -89,7 +86,7 @@ StochasticOptimisation.prototype.AddParameter=function(Name, Min, Max){
 StochasticOptimisation.prototype.Run= function (FunctionInput){
 	//Set up the simulation for the first time
 	for (var key in this.Parameter) {
-		this.Parameter[Key].InitiateParameter(this.NumberOfSamplesPerRound);
+		this.Parameter[key].InitiateParameter(this.NumberOfSamplesPerRound);
 	}
 	
 	
@@ -99,16 +96,19 @@ StochasticOptimisation.prototype.Run= function (FunctionInput){
 	// Keep running until time, number of sims runs out, or absolute error is reached, or precision is reached in all variables
 	OptimisationComplete=false;
 	while (OptimisationComplete==false){
-		for (var PSetCount=0; PSetCount<this.NumberOfSamplesPerRound; PSetCount++){
-			ParameterSet=this.GetParameterSet(PSetCount);
-			this.SimResults[PSetCount]=this.Function(FunctionInput, ParameterSet);
-			this.ErrorValues[PSetCount]=this.ErrorFunction(this.SimResults[PSetCount], this.Target);
+		for (var key in this.Parameter){
+			ParameterSet=this.GetParameterSet(key);
+			this.SimResults[key]=this.Function(FunctionInput, ParameterSet);
+			
+			
+			
+			this.ErrorValues[key]=this.ErrorFunction(this.SimResults[key], this.Target);
 		}
 		
 		// Work out which of this simulations will be selected
 		// Sort by error level
 		OrderedIndex=SortIndex(this.ErrorValues);
-		this.BestIndex=OrderedIndex.slice(0, this.NumberOfSamplesPerRound*this.FractionToKeep);
+		this.BestIndex=OrderedIndex.slice(0, Round(this.NumberOfSamplesPerRound*this.FractionToKeep));
 		for (var key in this.Parameter){
 			this.Parameter[key].SelectBestPoints(this.BestIndex);// set the BestPoints array to the best values of the simulation
 		}
@@ -141,7 +141,7 @@ StochasticOptimisation.prototype.Run= function (FunctionInput){
 StochasticOptimisation.prototype.GetParameterSet= function (ParameterNumber){
 	ParameterSet={};
 	for (key in this.Parameter) {
-		ParameterSet[Parameter[key].Name]=this.Parameter[key].CurrentVec[ParameterNumber];
+		ParameterSet[this.Parameter[key].Name]=this.Parameter[key].CurrentVec[ParameterNumber];
 	}	
 	return ParameterSet;
 }
@@ -149,7 +149,7 @@ StochasticOptimisation.prototype.GetParameterSet= function (ParameterNumber){
 StochasticOptimisation.prototype.GetBestParameterSet= function (ParameterNumber){
 	ParameterSet={};
 	for (key in this.Parameter) {
-		ParameterSet[Parameter[key].Name]=this.Parameter[key].BestVec[ParameterNumber];
+		ParameterSet[this.Parameter[key].Name]=this.Parameter[key].BestVec[ParameterNumber];
 	}	
 	return ParameterSet;
 }
@@ -227,20 +227,43 @@ StochasticOptimisationParameter.prototype.Vary= function (){
 
 //******************************************************************
 function TestStochasticOptimisation(){
-	var OptimisationSettings={};
-	var FunctionInput.NumberOfSamples=100;
-
+	// Create some example data
+	// The aim of this is to determine what the mean (=7) and sd (=3) is from the distribution of the results
+	// If the optimisation gets close to X=7 and Y=3, the optimisation is successful
 	var HistogramsResults=HistogramData(NormalRandArray(7, 3, 100), [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
-	OptimisationSettings.Target=HistogramsResults.Count
+
+	
+	
+	var FunctionInput={};
+	var OptimisationSettings={};
+	
+	FunctionInput.NumberOfSamples=100;
+	
+	OptimisationSettings.Target=HistogramsResults.Count;
 	
 	OptimisationSettings.Function=function(FunctionInput, ParameterSet){
 		var Results=NormalRandArray(ParameterSet.X, ParameterSet.Y, FunctionInput.NumberOfSamples);
 		return Results;
-	}
+	};
 
 	OptimisationSettings.ErrorFunction=function(Results, Target){
-		Histogram
+		var CurrentHistogramsResults=HistogramData(Results, [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+		var TotalError=Sum(Abs(Minus(CurrentHistogramsResults.Count, Target)));
+		return TotalError;
 	};
+	
+	OptimisationSettings.DisplayFunction=function(Parameters, Results, Error){
+		//Parameters[i].CurrentVec
+	};
+	
+	OptimisationObject=new StochasticOptimisation(OptimisationSettings);
+	OptimisationObject.AddParameter("X", 0, 10);
+	OptimisationObject.AddParameter("Y", 0, 10);
+	
+	OptimisationObject.Run(FunctionInput);
+	
+	
+	return OptimisationSettings;
 }
 
 

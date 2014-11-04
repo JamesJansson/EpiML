@@ -133,7 +133,6 @@ function HistogramData(Data, BinBoundaries){
 	HistData.Data=Data.slice();//Copy the data into the object
 	
 	NumBins=BinBoundaries.length-1;
-	console.log(NumBins);
 	HistData.BinLower=[];//
 	HistData.BinUpper=[];
 	HistData.Count=[];
@@ -142,8 +141,6 @@ function HistogramData(Data, BinBoundaries){
 		HistData.BinUpper[i]=BinBoundaries[i+1];
 		HistData.Count[i]=0;
 	}
-	
-	console.log(HistData);
 	
 	HistData.DataOutsideBoundaries=[];
 	PointsOutideBoundaries=0;
