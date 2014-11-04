@@ -556,6 +556,87 @@ function DivideNumberByArray(Num, Arr){// Divides num by each element in Arr
 
 
 
+///////Pow
+function Pow(A, B){
+	if (typeof A === 'object' && typeof B === 'object'){
+		return PowArrayByArray(A, B);
+	}
+	else if (typeof A === 'number' && typeof B === 'object'){
+		return PowNumberByArray(A, B);
+	}
+	else if (typeof A === 'object' && typeof B === 'number'){
+		return PowArrayByNumber(A, B);
+	}
+	else if (typeof A === 'number' && typeof B === 'number'){
+		return Math.pow(A, B);
+	}
+
+	console.error("The input arguments to Pow should be either two arrays of equal size or a number and an array");
+}
+
+function PowArrayByArray(A, B){// Pows each element in A by the corresponding element in B
+	var NewArray=[];
+	if (typeof A === 'object' && typeof B === 'object'){
+		if (A.length!=B.length)// if the arrays are the wrong length 
+			console.error("The size and structure of the two objects being multiplied must be identical.");// send error
+		for (var key in A) {
+			if (typeof A[key] != typeof B[key]){//If A and B are not the same, including if it is not defined
+				console.error("The size and structure of the two objects being multiplied must be identical.");// send error
+			}
+			else if (typeof A[key] === 'number'){// and so is B[key]
+				NewArray[key]=Math.pow(A[key], B[key]);
+			}
+			else if (typeof A[key] === 'object'){// and so is B[key]
+				NewArray[key]=PowArrayByArray(A[key], B[key]);
+			}
+			
+		}
+		return NewArray;
+	}
+	else{// if the inputs are not both arrays
+		console.error("The inputs of PowArrayByArray should both be arrays.");// send an error
+	}
+}
+
+function PowArrayByNumber(Arr, Num){// Pows each element in Arr by the number Num
+	var NewArray=[];
+	for (var key in Arr) {
+		if (typeof Arr[key] === 'object'){// E.g. if it is an array of arrays, we want to Pow each element within the sub array
+			NewArray[key]=PowArrayByNumber(Arr[key], Num);
+		}
+		else if (typeof Arr[key] === 'number'){
+			NewArray[key]=Math.pow(Arr[key], Num);
+		}
+		else{// if it is a non-number type (e.g. text), return what was in the original object
+			NewArray[key]=Arr[key];
+		}
+	}
+	return NewArray;
+}
+
+function PowNumberByArray(Num, Arr){// Pows num by each element in Arr 
+	var NewArray=[];
+	for (var key in Arr) {
+		if (typeof Arr[key] === 'object'){// E.g. if it is an array of arrays, we want to Pow each element within the sub array
+			NewArray[key]=PowNumberByArray(Num, Arr[key]);
+		}
+		else if (typeof Arr[key] === 'number'){
+			NewArray[key]=Math.pow(Num, Arr[key]);
+		}
+		else{// if it is a non-number type (e.g. text), return what was in the original object
+			NewArray[key]=Arr[key];
+		}
+	}
+	return NewArray;
+}
+
+// End Pow
+
+
+
+
+
+
 
 
 function Apply(FunctionToApply, Input){
@@ -573,10 +654,6 @@ function Apply(FunctionToApply, Input){
 		return Input; // return whatever type was put in (e.g. string)
 	}
 }
-
-
-
-
 
 function Abs(Input){ return  Apply(Math.abs, Input);}
 function Acos(Input){ return  Apply(Math.acos, Input);}
@@ -607,6 +684,7 @@ function Sqrt(Input){ return  Apply(Math.sqrt, Input);}
 function Tan(Input){ return  Apply(Math.tan, Input);}
 function Tanh(Input){ return  Apply(Math.tanh, Input);}
 function Trunc(Input){ return  Apply(Math.trunc, Input);}
+
 
 
 /*
