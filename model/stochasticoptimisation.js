@@ -43,7 +43,7 @@ function  StochasticOptimisation(Settings){
 	
 	// NumberOfSamplesPerRound: Number of points tested per round
 	if (typeof Settings.NumberOfSamplesPerRound==="undefined"){
-		this.NumberOfSamplesPerRound=10;// standard samples per round
+		this.NumberOfSamplesPerRound=100;// standard samples per round
 	}else{
 		this.NumberOfSamplesPerRound=Settings.NumberOfSamplesPerRound;
 	}
@@ -101,13 +101,14 @@ StochasticOptimisation.prototype.Run= function (FunctionInput){
 	var OrderedIndex;
 
 	// Keep running until time, number of sims runs out, or absolute error is reached, or precision is reached in all variables
-	OptimisationComplete=false;
+	var RoundCount=0;
+	var OptimisationComplete=false;
 	while (OptimisationComplete==false){
+		RoundCount++;
+		// Run the simulation
 		for (var SampleCount=0; SampleCount<this.NumberOfSamplesPerRound; SampleCount++){
 			ParameterSet=this.GetParameterSet(SampleCount);
 			this.SimResults[SampleCount]=this.Function(FunctionInput, ParameterSet);
-			console.log(ParameterSet);
-			console.log(this.SimResults[SampleCount]);
 			this.ErrorValues[SampleCount]=this.ErrorFunction(this.SimResults[SampleCount], this.Target);
 		}
 		
@@ -121,7 +122,7 @@ StochasticOptimisation.prototype.Run= function (FunctionInput){
 
 		// If the OptimisationProgress function is set
 		if (this.RunProgressFunction==true){
-			this.ProgressFunction(Parameters, Results, Error);
+			this.ProgressFunction(RoundCount, this.Parameter, this.SimResults, this.ErrorValues);
 		}
 		
 		
@@ -254,8 +255,8 @@ function TestStochasticOptimisation(){
 	OptimisationSettings.Target=HistogramsResults.Count;
 	
 	OptimisationSettings.Function=function(FunctionInput, ParameterSet){
-		console.log(ParameterSet);
-		console.log(ParameterSet.Y);
+		//console.log(ParameterSet);
+		//console.log(ParameterSet.Y);
 		var Results=NormalRandArray(ParameterSet.X, ParameterSet.Y, FunctionInput.NumberOfSamples);
 		return Results;
 	};
@@ -266,9 +267,15 @@ function TestStochasticOptimisation(){
 		return TotalError;
 	};
 	
-	OptimisationSettings.ProgressFunction=function(Parameter, Results, Error){
+	OptimisationSettings.ProgressFunction=function(SimulationNumber, Parameter, SimResults, ErrorValues){
 		console.log("Params: X "+Mean(Parameter.X.CurrentVec)+" X "+Mean(Parameter.Y.CurrentVec));
-		//
+		PSetCount=0;
+		Data=[];
+		for (var key in Parameter.X.CurrentVec){
+			Data[PSetCount]=[Parameter.X.CurrentVec[key], Parameter.Y.CurrentVec[key]];
+			PSetCount++;
+		}
+		ScatterPlot('#PlotHolder', Data,  'AAA', 'BBB');
 	};
 	
 	OptimisationObject=new StochasticOptimisation(OptimisationSettings);
