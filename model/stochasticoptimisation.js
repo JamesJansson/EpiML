@@ -99,9 +99,6 @@ StochasticOptimisation.prototype.Run= function (FunctionInput){
 		for (var key in this.Parameter){
 			ParameterSet=this.GetParameterSet(key);
 			this.SimResults[key]=this.Function(FunctionInput, ParameterSet);
-			
-			
-			
 			this.ErrorValues[key]=this.ErrorFunction(this.SimResults[key], this.Target);
 		}
 		
@@ -263,7 +260,7 @@ function TestStochasticOptimisation(){
 	OptimisationObject.Run(FunctionInput);
 	
 	
-	return OptimisationSettings;
+	return OptimisationObject;
 }
 
 
