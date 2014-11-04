@@ -356,24 +356,6 @@ function MultiplyArrayByArray(A, B){// Multiplies each element in A by the corre
 	}
 }
 
-// Testing code
-// TestVal=2.1;
-// TestArr=[];
-// for (i=0; i<4; i++){
-	// TestArr[i]=[];
-	// for (j=0; j<3; j++){
-		// TestArr[i][j]=[];
-		// for (k=0; k<2; k++){
-			// TestArr[i][j][k]=TestVal;
-			// TestVal=TestVal+3.3;
-		// }
-	// }
-// }
-
-function CopyArray(Arr){
-	return MultiplyArrayByNumber(Arr, 1);
-}
-	
 function MultiplyArrayByNumber(Arr, Num){// Multiplies each element in Arr by the number Num
 	var NewArray=[];
 	for (key in Arr) {
@@ -390,7 +372,95 @@ function MultiplyArrayByNumber(Arr, Num){// Multiplies each element in Arr by th
 	return NewArray;
 }
 
+///////Add !!!!
+function Add(A, B){
+	if (typeof A === 'object' && typeof B === 'object'){
+		return AddArrayToArray(A, B);
+	}
+	else if (typeof A === 'number' && typeof B === 'object'){
+		return AddArrayToNumber(B, A);
+	}
+	else if (typeof A === 'object' && typeof B === 'number'){
+		return AddArrayToNumber(A, B);
+	}
+	else if (typeof A === 'number' && typeof B === 'number'){
+		return A+B;
+	}
 
+	console.error("The input arguments to Add should be either two arrays of equal size or a number and an array");
+}
+
+function AddArrayToArray(A, B){// Adds each element in A by the corresponding element in B
+	var NewArray=[];
+	if (typeof A === 'object' && typeof B === 'object'){
+		if (A.length!=B.length)// if the arrays are the wrong length 
+			console.error("The size and structure of the two objects being addded must be identical.");// send error
+		for (key in A) {
+			if (typeof A[key] != typeof B[key]){//If A and B are not the same, including if it is not defined
+				console.error("The size and structure of the two objects being addded must be identical.");// send error
+			}
+			else if (typeof A[key] === 'number'){// and so is B[key]
+				NewArray[key]=A[key]+B[key];
+			}
+			else if (typeof A[key] === 'object'){// and so is B[key]
+				NewArray[key]=AddArrayToArray(A[key], B[key]);
+			}
+			
+		}
+		return NewArray;
+	}
+	else{// if the inputs are not both arrays
+		console.error("The inputs of AddArrayToArray should both be arrays.");// send an error
+	}
+}
+
+function AddArrayToNumber(Arr, Num){// Adds each element in Arr with the number Num
+	var NewArray=[];
+	for (key in Arr) {
+		if (typeof Arr[key] === 'object'){// E.g. if it is an array of arrays, we want to add each element within the sub array
+			NewArray[key]=AddArrayToNumber(Arr[key], Num);
+		}
+		else if (typeof Arr[key] === 'number'){
+			NewArray[key]=Arr[key]+Num;
+		}
+		else{// if it is a non-number type (e.g. text), return what was in the original object
+			NewArray[key]=Arr[key];
+		}
+	}
+	return NewArray;
+}
+
+// End Add
+
+
+
+
+
+
+
+
+
+
+
+// Testing code
+// TestVal=2.1;
+// TestArr=[];
+// for (i=0; i<4; i++){
+	// TestArr[i]=[];
+	// for (j=0; j<3; j++){
+		// TestArr[i][j]=[];
+		// for (k=0; k<2; k++){
+			// TestArr[i][j][k]=TestVal;
+			// TestVal=TestVal+3.3;
+		// }
+	// }
+// }
+
+
+function CopyArray(Arr){
+	console.log("Warning: CopyArray is not tested");
+	return MultiplyArrayByNumber(Arr, 1);
+}
 
 // RANDOM FUNCTIONS
 

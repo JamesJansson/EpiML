@@ -230,7 +230,8 @@ function TestStochasticOptimisation(){
 	var OptimisationSettings={};
 	var FunctionInput.NumberOfSamples=100;
 
-	
+	var HistogramsResults=HistogramData(NormalRandArray(7, 3, 100), [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+	OptimisationSettings.Target=HistogramsResults.Count
 	
 	OptimisationSettings.Function=function(FunctionInput, ParameterSet){
 		var Results=NormalRandArray(ParameterSet.X, ParameterSet.Y, FunctionInput.NumberOfSamples);
@@ -238,7 +239,7 @@ function TestStochasticOptimisation(){
 	}
 
 	OptimisationSettings.ErrorFunction=function(Results, Target){
-		
+		Histogram
 	};
 
 	
