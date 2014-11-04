@@ -448,9 +448,7 @@ function Negate(Input){
 		return ReturnArray;
 	}
 	else {
-		console.error("Input contains type that cannot be negated");
-		console.log(Input);
-		return NaN;
+		return Input; // return whatever type was put in (e.g. string)
 	}
 }
 
@@ -461,7 +459,7 @@ function Minus(A, B){
 
 // end minus
 
-//Start Divide
+
 function Reciprocal(Input){
 	if (typeof Input === 'number'){
 		return 1/Input;
@@ -557,6 +555,70 @@ function DivideNumberByArray(Num, Arr){// Divides num by each element in Arr
 // End Divide
 
 
+
+
+
+function Apply(FunctionToApply, Input){
+	if (typeof Input === 'number'){
+		return FunctionToApply(Input);
+	}
+	else if (typeof Input === 'object'){
+		var ReturnArray=[];
+		for (var key in Input){
+			ReturnArray[key]=Apply(FunctionToApply, Input[key]);
+		}
+		return ReturnArray;
+	}
+	else {
+		return Input; // return whatever type was put in (e.g. string)
+	}
+}
+
+
+
+
+
+function Abs(Input){ 	return Apply(Math.abs, 		Input);}
+
+
+/*
+abs: function abs() { [native code] }
+acos: function acos() { [native code] }
+acosh: function acosh() { [native code] }
+asin: function asin() { [native code] }
+asinh: function asinh() { [native code] }
+atan: function atan() { [native code] }
+atan2: function atan2() { [native code] }
+atanh: function atanh() { [native code] }
+cbrt: function cbrt() { [native code] }
+ceil: function ceil() { [native code] }
+clz32: function clz32() { [native code] }
+cos: function cos() { [native code] }
+cosh: function cosh() { [native code] }
+exp: function exp() { [native code] }
+expm1: function expm1() { [native code] }
+floor: function floor() { [native code] }
+fround: function fround() { [native code] }
+hypot: function hypot() { [native code] }
+imul: function imul() { [native code] }
+log: function log() { [native code] }
+log1p: function log1p() { [native code] }
+log2: function log2() { [native code] }
+log10: function log10() { [native code] }
+max: function max() { [native code] }
+min: function min() { [native code] }
+pow: function pow() { [native code] }
+random: function random() { [native code] }
+round: function round() { [native code] }
+sign: function sign() { [native code] }
+sin: function sin() { [native code] }
+sinh: function sinh() { [native code] }
+sqrt: function sqrt() { [native code] }
+tan: function tan() { [native code] }
+tanh: function tanh() { [native code] }
+trunc: function trunc() { [native code] }
+
+*/
 
 
 

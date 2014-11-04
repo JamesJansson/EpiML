@@ -241,9 +241,6 @@ function TestStochasticOptimisation(){
 	OptimisationSettings.ErrorFunction=function(Results, Target){
 		Histogram
 	};
-
-	
-
 }
 
 
