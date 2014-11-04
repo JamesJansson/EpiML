@@ -337,7 +337,7 @@ function MultiplyArrayByArray(A, B){// Multiplies each element in A by the corre
 	if (typeof A === 'object' && typeof B === 'object'){
 		if (A.length!=B.length)// if the arrays are the wrong length 
 			console.error("The size and structure of the two objects being multiplied must be identical.");// send error
-		for (key in A) {
+		for (var key in A) {
 			if (typeof A[key] != typeof B[key]){//If A and B are not the same, including if it is not defined
 				console.error("The size and structure of the two objects being multiplied must be identical.");// send error
 			}
@@ -358,7 +358,7 @@ function MultiplyArrayByArray(A, B){// Multiplies each element in A by the corre
 
 function MultiplyArrayByNumber(Arr, Num){// Multiplies each element in Arr by the number Num
 	var NewArray=[];
-	for (key in Arr) {
+	for (var key in Arr) {
 		if (typeof Arr[key] === 'object'){// E.g. if it is an array of arrays, we want to multiply each element within the sub array
 			NewArray[key]=MultiplyArrayByNumber(Arr[key], Num);
 		}
@@ -395,7 +395,7 @@ function AddArrayToArray(A, B){// Adds each element in A by the corresponding el
 	if (typeof A === 'object' && typeof B === 'object'){
 		if (A.length!=B.length)// if the arrays are the wrong length 
 			console.error("The size and structure of the two objects being addded must be identical.");// send error
-		for (key in A) {
+		for (var key in A) {
 			if (typeof A[key] != typeof B[key]){//If A and B are not the same, including if it is not defined
 				console.error("The size and structure of the two objects being addded must be identical.");// send error
 			}
@@ -416,7 +416,7 @@ function AddArrayToArray(A, B){// Adds each element in A by the corresponding el
 
 function AddArrayToNumber(Arr, Num){// Adds each element in Arr with the number Num
 	var NewArray=[];
-	for (key in Arr) {
+	for (var key in Arr) {
 		if (typeof Arr[key] === 'object'){// E.g. if it is an array of arrays, we want to add each element within the sub array
 			NewArray[key]=AddArrayToNumber(Arr[key], Num);
 		}
@@ -432,8 +432,31 @@ function AddArrayToNumber(Arr, Num){// Adds each element in Arr with the number 
 
 // End Add
 
+// Start Minus
 
+function Negate(Input){
+	if (typeof Input === 'number'){
+		return -Input;
+	}
+	else if (typeof Input === 'object'){
+		var ReturnArray=[];
+		for (var key in Input){
+			ReturnArray[key]=Negate(Input[key]);
+		}
+		return ReturnArray;
+	}
+	else {
+		console.error("Input contains type that cannot be negated");
+		console.log(Input);
+		return NaN;
+	}
+	
+}
 
+function Minus(A, B){
+	var BNeg=Negate(B);
+	return Add(A, BNeg);
+}
 
 
 
