@@ -49,10 +49,12 @@ function  StochasticOptimisation(Settings){
 	}
 	
 	// MaxIterations: the number of iterations that can occur before the optimisation stops
+	this.UserSpecifiedTermination=false;
 	if (typeof Settings.MaxIterations==="undefined"){
-		this.MaxIterations=1000;// stop after x iterations
+		this.MaxIterations=1e9;// stop after x iterations
 	}else{
 		this.MaxIterations=Settings.MaxIterations;
+		this.UserSpecifiedTermination=true;
 	}
 
 	// MaxTime: the total time (in seconds) before the optimisation stops
@@ -60,7 +62,16 @@ function  StochasticOptimisation(Settings){
 		this.MaxTime=1e9;//standard stop time of 1e9 seconds
 	}else{
 		this.MaxTime=Settings.MaxTime;
+		this.UserSpecifiedTermination=true;
 	}
+	
+	if (this.UserSpecifiedTermination==false){
+		console.log("Warning: a termination parameter was not set. This means that the algorithm will continue indefinitely");
+	
+	}
+	
+	
+	
 	
 	this.Parameter=[];//an array of individual parameters, e.g. infection rate, cure rate
 	this.NumberOfParameters=0;
@@ -77,6 +88,9 @@ function  StochasticOptimisation(Settings){
 			console.error('The file mathtools.js has not been included. This package is necessary to use this optimisation methodology.');
 		}
 	}
+	
+	this.ReasonForTermination;// a string used to describe why the simulation has ended
+	
 	
 	this.Help='Formats for structure\n Function(ParamForOptimisation) \n ';
 }
@@ -104,6 +118,8 @@ StochasticOptimisation.prototype.Run= function (FunctionInput){
 	// Keep running until time, number of sims runs out, or absolute error is reached, or precision is reached in all variables
 	var RoundCount=0;
 	var OptimisationComplete=false;
+	var TimerStart = new Date().getTime() / 1000;
+	var CurrentTime;
 	while (OptimisationComplete==false){
 		RoundCount++;
 		// Run the simulation
@@ -129,18 +145,30 @@ StochasticOptimisation.prototype.Run= function (FunctionInput){
 		
 		// Test for various factors which would determine that the optimisation has completed. 
 		//if (sum(this.SD)<){
-		OptimisationComplete=true;
+		
 		//}
 		
+		if (RoundCount>=this.MaxIterations){
+			OptimisationComplete=true;
+			this.ReasonForTermination="ReachedMaxIterations";
+		}
+		CurrentTime=new Date().getTime()/1000;
+		if (CurrentTime-TimerStart>this.MaxTime){
+			OptimisationComplete=true;
+			this.ReasonForTermination="ReachedMaxTime";
+		}
+		
+		// Preparing variables for next round of simulations
 		if (OptimisationComplete==false){// we need to find more points for the next round of optimisation
 			//Randomly select the next points
 			var NextPointIndex=[];
-			for (var key in this.BestVec){
+			for (var key in this.BestIndex){
 				NextPointIndex[key]=key;//the first x entries will be 1 through x
 			}
 			var RandomIndex;
-			for (var i=this.BestVec.length; i<this.NumberOfSamplesPerRound; i++){
-				NextPointIndex[i]=floor(this.BestVec.length*Rand.Value());
+			for (var i=this.BestIndex.length; i<this.NumberOfSamplesPerRound; i++){
+				RandomIndex=Math.floor(this.BestIndex.length*Rand.Value());
+				NextPointIndex[i]=RandomIndex;
 			}
 			// set and vary the next indices
 			for (var key in this.Parameter){
@@ -269,7 +297,7 @@ function TestStochasticOptimisation(){
 	};
 	
 	OptimisationSettings.ProgressFunction=function(SimulationNumber, Parameter, SimResults, ErrorValues){
-		console.log("Params: X "+Mean(Parameter.X.CurrentVec)+" X "+Mean(Parameter.Y.CurrentVec));
+		console.log("Params: X "+Mean(Parameter.X.CurrentVec)+" Y "+Mean(Parameter.Y.CurrentVec));
 		PSetCount=0;
 		Data=[];
 		for (var key in Parameter.X.CurrentVec){
@@ -278,6 +306,9 @@ function TestStochasticOptimisation(){
 		}
 		ScatterPlot('#PlotHolder', Data,  'AAA', 'BBB');
 	};
+	
+	OptimisationSettings.MaxTime=10;//stop after 10 seconds
+	
 	
 	OptimisationObject=new StochasticOptimisation(OptimisationSettings);
 	OptimisationObject.AddParameter("X", 0, 10);
