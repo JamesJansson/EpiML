@@ -43,7 +43,7 @@ function  StochasticOptimisation(Settings){
 	
 	// NumberOfSamplesPerRound: Number of points tested per round
 	if (typeof Settings.NumberOfSamplesPerRound==="undefined"){
-		this.NumberOfSamplesPerRound=1000;// standard samples per round
+		this.NumberOfSamplesPerRound=100;// standard samples per round
 	}else{
 		this.NumberOfSamplesPerRound=Settings.NumberOfSamplesPerRound;
 	}
@@ -238,6 +238,7 @@ StochasticOptimisationParameter.prototype.SelectCurrentPoints=function(SelectInd
 	
 }
 
+StochasticOptimisationParameter.NumberOfSamplesPerRound;
 
 StochasticOptimisationParameter.prototype.Vary= function (){
 	// Perform a calculation to determine how much we want to vary the variable
@@ -271,14 +272,14 @@ function TestStochasticOptimisation(){
 	// Create some example data
 	// The aim of this is to determine what the mean (=7) and sd (=3) is from the distribution of the results
 	// If the optimisation gets close to X=7 and Y=3, the optimisation is successful
-	var HistogramsResults=HistogramData(NormalRandArray(7, 3, 1000), [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+	var HistogramsResults=HistogramData(NormalRandArray(7, 3, 10000), [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
 
 	
 	
 	var FunctionInput={};
 	var OptimisationSettings={};
 	
-	FunctionInput.NumberOfSamples=1000;
+	FunctionInput.NumberOfSamples=10000;
 	
 	OptimisationSettings.Target=HistogramsResults.Count;
 	
