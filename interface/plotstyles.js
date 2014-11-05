@@ -105,3 +105,36 @@ function ScatterPlot(PlotHolderName, Points,  xAxisLabel, yAxisLabel){
 	PlotData[0].color="rgb(255, 0, 0)";
 	$.plot(PlotHolderName, PlotData, PlotSettings);
 }
+
+function FixedAxisScatterPlot(PlotHolderName, Points,  xAxisLabel, yAxisLabel, xmin, xmax, ymin, ymax){
+	//Example usage
+		//var data = [[0, 3], [4, 8], [8, 5], [9, 13]];
+		//ScatterPlot("#PlotHolder", data,  "AAA", "BBB");
+		PlotSettings={xaxis: {
+					min: xmin,
+					max: xmax,
+					axisLabel: xAxisLabel,
+					axisLabelUseCanvas: true,
+					axisLabelFontSizePixels: 12,
+					axisLabelFontFamily: 'Verdana, Arial, Helvetica, Tahoma, sans-serif',
+					axisLabelPadding: 5,
+					tickLength: 0
+				},
+				yaxis: {
+					min: ymin,
+					max: ymax,
+					axisLabel: yAxisLabel,
+					axisLabelUseCanvas: true,
+					axisLabelFontSizePixels: 12,
+					axisLabelFontFamily: 'Verdana, Arial, Helvetica, Tahoma, sans-serif',
+					axisLabelPadding: 5
+				}
+			};
+	PlotData=[];
+	PlotData[0]={};
+	PlotData[0].data=Points;
+	PlotData[0].points={show:true, radius: 1, filled:true};
+	PlotData[0].color="rgb(255, 0, 0)";
+	$.plot(PlotHolderName, PlotData, PlotSettings);
+}
+

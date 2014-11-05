@@ -43,7 +43,7 @@ function  StochasticOptimisation(Settings){
 	
 	// NumberOfSamplesPerRound: Number of points tested per round
 	if (typeof Settings.NumberOfSamplesPerRound==="undefined"){
-		this.NumberOfSamplesPerRound=10;// standard samples per round
+		this.NumberOfSamplesPerRound=1000;// standard samples per round
 	}else{
 		this.NumberOfSamplesPerRound=Settings.NumberOfSamplesPerRound;
 	}
@@ -282,14 +282,14 @@ function TestStochasticOptimisation(){
 	// Create some example data
 	// The aim of this is to determine what the mean (=7) and sd (=3) is from the distribution of the results
 	// If the optimisation gets close to X=7 and Y=3, the optimisation is successful
-	var HistogramsResults=HistogramData(NormalRandArray(7, 3, 100), [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+	var HistogramsResults=HistogramData(NormalRandArray(7, 3, 1000), [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
 
 	
 	
 	var FunctionInput={};
 	var OptimisationSettings={};
 	
-	FunctionInput.NumberOfSamples=100;
+	FunctionInput.NumberOfSamples=1000;
 	
 	OptimisationSettings.Target=HistogramsResults.Count;
 	
@@ -314,7 +314,14 @@ function TestStochasticOptimisation(){
 			Data[PSetCount]=[Parameter.X.CurrentVec[key], Parameter.Y.CurrentVec[key]];
 			PSetCount++;
 		}
-		ScatterPlot('#PlotHolder', Data,  'AAA', 'BBB');
+		
+		PlotSomething={};
+		PlotSomething.Data=Data;
+		PlotSomething.Code="FixedAxisScatterPlot('#PlotHolder', Data,  'AAA', 'BBB', 0, 10, 0, 10);";
+		self.postMessage({Execute: PlotSomething});
+		
+		
+		//ScatterPlot('#PlotHolder', Data,  'AAA', 'BBB');
 	};
 	
 	OptimisationSettings.MaxTime=10;//stop after 10 seconds

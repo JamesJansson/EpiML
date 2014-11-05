@@ -4,6 +4,7 @@ DebugLoadingScripts=true;
 importScripts("simulation.js");
 importScripts("simulationtools.js");
 importScripts("mathtools.js");
+importScripts("stochasticoptimisation.js");
 importScripts("person.js");
 importScripts("hcv.js");
 importScripts("hiv.js");
@@ -140,6 +141,11 @@ self.onmessage = function (e) {
 	PlotSomething.Data=[[0, 3], [4, 8], [8, 5], [9, 13]];
 	PlotSomething.Code="ScatterPlot('#PlotHolder', Data,  'AAA', 'BBB');";
 	self.postMessage({Execute: PlotSomething});
+	
+	
+	A=TestStochasticOptimisation();
+	
+	
 	
 	
 	DebugStatement("Beginning estimates of undiagnosed HCV");
