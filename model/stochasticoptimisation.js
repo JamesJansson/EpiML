@@ -141,7 +141,6 @@ StochasticOptimisation.prototype.Run= function (FunctionInput){
 		if (this.RunProgressFunction==true){
 			this.ProgressFunction(RoundCount, this.Parameter, this.SimResults, this.ErrorValues);
 		}
-		console.log("Ran progress function");
 		
 		// Test for various factors which would determine that the optimisation has completed. 
 		//if (sum(this.SD)<){
@@ -158,8 +157,6 @@ StochasticOptimisation.prototype.Run= function (FunctionInput){
 			this.ReasonForTermination="ReachedMaxTime";
 		}
 		
-		console.log("Ran termination determination");
-		
 		// Preparing variables for next round of simulations
 		if (OptimisationComplete==false){// we need to find more points for the next round of optimisation
 			//Randomly select the next points
@@ -172,17 +169,12 @@ StochasticOptimisation.prototype.Run= function (FunctionInput){
 				RandomIndex=Math.floor(this.BestIndex.length*Rand.Value());
 				NextPointIndex[i]=RandomIndex;
 			}
-			console.log("Filled selection index");
-			console.log(NextPointIndex);
 			// set and vary the next indices
 			for (var key in this.Parameter){
 				this.Parameter[key].SelectCurrentPoints(NextPointIndex);
-				console.log("not yet varying");
 				this.Parameter[key].Vary();
 			}
 		}
-		
-		console.log("Selected new variables");
 	}
 }
 
@@ -240,7 +232,6 @@ StochasticOptimisationParameter.prototype.SelectBestPoints=function(BestIndexVec
 StochasticOptimisationParameter.prototype.SelectCurrentPoints=function(SelectIndexVec){//takes a vector the length of the 
 	var Count=0;
 	for (var key in SelectIndexVec){
-		console.log(SelectIndexVec[key]);
 		this.CurrentVec[Count]=this.BestVec[SelectIndexVec[key]];
 		Count++;
 	}
@@ -259,8 +250,6 @@ StochasticOptimisationParameter.prototype.Vary= function (){
     //var average = sum / this.Best.length;
 
 	this.SD=SampleStandardDeviation(this.BestVec);
-	
-	console.log("SampleStandardDeviation: "+this.SD);
 	this.SDHistory.push(this.SD);
 	
 	var RandomVariation;
