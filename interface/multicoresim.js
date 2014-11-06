@@ -1,12 +1,12 @@
-// This object allows the user to perform multiple calculations over multiple cores
+// This object allows the user to perform multiple calculations over multiple Threads
 //
 
 // Example usage:
 // ScriptName="SimulationToRun.js"; 
 // Common=[InfoBlock];//All sims will have access to this information
 // SimSpecificDataArray=[67, 33, 99, 55, 88];//can be an array of any type (including other classes). Uses array length to determine the number of simulations to run.
-// NoCores=6;//The number of cores you want the simulation to run over
-// SimulationObject=new MulticoreSim(ScriptName, Common, SimSpecificDataArray, NoCores); // getting it ready
+// NoThreads=6;//The number of Threads you want the simulation to run over
+// SimulationObject=new MultiThreadSim(ScriptName, Common, SimSpecificDataArray, NoThreads); // getting it ready
 // SimulationObject.Start(); // Start the simulations running
 
 // Sample set up of SimulationToRun.js
@@ -30,16 +30,16 @@
 // http://stackoverflow.com/questions/16071211/using-transferable-objects-from-a-web-worker/16766758#16766758 
 // http://updates.html5rocks.com/2011/12/Transferable-Objects-Lightning-Fast 
 
-function MulticoreSim(ScriptName, Common, SimDataArray, NoCores){
+function MultiThreadSim(ScriptName, Common, SimDataArray, NoThreads){
 	
 	this.ScriptName=ScriptName;
 	this.Common=Common;
 	this.SimDataArray=SimDataArray;//an array of values or objects to be passed to the specified script
-	this.NoCores=NoCores;
+	this.NoThreads=NoThreads;
 	this.Worker=[];//An array of workers
 	this.NoSims=SimDataArray.length;
 	
-	this.TerminateOnFinish=false;//This flag is used to indicate that following the  return of a 'result', the simulation should terminate.
+	this.TerminateOnFinish=true;//This flag is used to indicate that following the  return of a 'result', the simulation should terminate.
 	this.WorkerComplete=[];
 	this.WorkerTerminated=[];
 	
@@ -47,6 +47,7 @@ function MulticoreSim(ScriptName, Common, SimDataArray, NoCores){
 	this.CurrentlyRunning=false;
 	this.Complete=false;
 	this.NoSimsCurrentlyRunning=0;
+	this.ThreadInUse=ZeroArray(NoThreads);
 	
 	this.SimsStarted=0;
 	this.SimsComplete=0;
@@ -58,7 +59,7 @@ function MulticoreSim(ScriptName, Common, SimDataArray, NoCores){
 	this.WithinSimProgressBarID="WithinSimProgressBar";
 }
 
-MulticoreSim.prototype.Start=function() {
+MultiThreadSim.prototype.Start=function() {
 
 	//Check that nothing else is running
 	if (this.CurrentlyRunning==true){
@@ -84,17 +85,17 @@ MulticoreSim.prototype.Start=function() {
 	this.StartNextSim();
 };
 
-MulticoreSim.prototype.StartNextSim=function() {
+MultiThreadSim.prototype.StartNextSim=function() {
 
 	MoreSimsToRun=true;//flag to prevent continually trying to run more sims
-	while (this.NoSimsCurrentlyRunning<this.NoCores &&  MoreSimsToRun==true){//there are spare cores available
+	while (this.NoSimsCurrentlyRunning<this.NoThreads &&  MoreSimsToRun==true){//there are spare Threads available
 		if (this.SimsStarted<this.NoSims){//if there are sims that have yet to be started
 			SimID=this.SimsStarted++;//run this sim, increment by 1
-			this.NoSimsCurrentlyRunning++;//indicate that another core has become used
+			this.NoSimsCurrentlyRunning++;//indicate that another Thread has become used
 			
 			this.Worker[SimID]= new Worker(this.ScriptName);
 			
-			var BoundMessage=MulticoreSimMessageHandler.bind(this);
+			var BoundMessage=MultiThreadSimMessageHandler.bind(this);
 			this.Worker[SimID].onmessage = BoundMessage;
 			
 			
@@ -115,7 +116,7 @@ MulticoreSim.prototype.StartNextSim=function() {
 }
 
 
-MulticoreSimMessageHandler=function(e) {
+MultiThreadSimMessageHandler=function(e) {
 	// There are 4 main message types that are handled
 	// Messages to the StatusText (to be put somewhere on screen to indicate what is currently occurring)
 	// Messages to the ProgressBar
@@ -172,7 +173,7 @@ MulticoreSimMessageHandler=function(e) {
 	}
 };
 
-MulticoreSim.prototype.Terminate=function() {//close down all workers
+MultiThreadSim.prototype.Terminate=function() {//close down all workers
 	for (SimID=0; SimID<this.NoSims; SimID++){
 		this.Worker[SimID].terminate();
 		this.WorkerTerminated[SimID]=true;
