@@ -326,7 +326,7 @@ function CalculateRate(Numerator, Denominator){
 }
 
 
-
+// ****************************************************************
 // Finally, a function that groups the results across multiple instances of the simulations to create 
 function MultiSimSummaryStat(SummaryStatArray){
 	var CombinedResult={};

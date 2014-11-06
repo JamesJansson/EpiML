@@ -1,13 +1,13 @@
-function CountFibrosisStages(PPLocal, SampleFactorMultiplier){
+function CountFibrosisStages(PPLocal, SampleFactorMultiplier, Time){
 	//Create settings
 	var Settings={};
 	Settings.Name="Number of People by Fibrosis Level";
 	Settings.Type="InstantaneousCount";
 	Settings.XLabel="Year";
 	Settings.YLabel="Count";
-	Settings.StartTime=1980;
-	Settings.EndTime=2050;
-	Settings.TimeStep=1;
+	Settings.StartTime=Time.Start;
+	Settings.EndTime=Time.Stop;
+	Settings.TimeStep=Time.Step;
 	Settings.FunctionReturnsCategory=true;
 	Settings.NumberOfCategories=8;
 	
@@ -54,16 +54,16 @@ function CountFibrosisStages(PPLocal, SampleFactorMultiplier){
 
 
 
-function LivingDxAndUDx(PPLocal, SampleFactorMultiplier){
+function LivingDxAndUDx(PPLocal, SampleFactorMultiplier, Time){
 	//Create settings
 	var Settings={};
 	Settings.Name="Number of people living with diagnosed and undiagnosed HCV";
 	Settings.Type="InstantaneousCount";
 	Settings.XLabel="Year";
 	Settings.YLabel="Count";
-	Settings.StartTime=1980;
-	Settings.EndTime=2030;
-	Settings.TimeStep=1;
+	Settings.StartTime=Time.Start;
+	Settings.EndTime=Time.Stop;
+	Settings.TimeStep=Time.Step;
 	Settings.FunctionReturnsCategory=true;
 	Settings.NumberOfCategories=4;
 	

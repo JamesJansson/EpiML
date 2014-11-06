@@ -160,9 +160,15 @@ self.onmessage = function (e) {
 
 	// Extract results of simulation
 	DebugStatement("Extracting results");
+	
+	StatsTime={};
+	StatsTime.Start=1980;
+	StatsTime.Stop=2030;
+	StatsTime.Step=1;
+	
 	var SimResult={};
-	SimResult.FibrosisCount=CountFibrosisStages(PPNotification, CommonParam.SampleFactor);//Determine fibrosis levels with year
-	SimResult.DiagnosisCount=LivingDxAndUDx(PPNotification, CommonParam.SampleFactor);//Determine fibrosis levels with year
+	SimResult.FibrosisCount=CountFibrosisStages(PPNotification, CommonParam.SampleFactor, StatsTime);//Determine fibrosis levels with year
+	SimResult.DiagnosisCount=LivingDxAndUDx(PPNotification, CommonParam.SampleFactor, StatsTime);//Determine fibrosis levels with year
 	
 	
 
