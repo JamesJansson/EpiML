@@ -47,7 +47,8 @@ function MultiThreadSim(ScriptName, Common, SimDataArray, NoThreads){
 	this.CurrentlyRunning=false;
 	this.Complete=false;
 	this.NoSimsCurrentlyRunning=0;
-	this.ThreadInUse=ZeroArray(NoThreads);
+	this.ThreadInUse= new Array(NoThreads);
+	for (var i = 0; i < this.ThreadInUse.length; ++i) { this.ThreadInUse[i] = false; }
 	
 	this.SimsStarted=0;
 	this.SimsComplete=0;
@@ -90,6 +91,14 @@ MultiThreadSim.prototype.StartNextSim=function() {
 	MoreSimsToRun=true;//flag to prevent continually trying to run more sims
 	while (this.NoSimsCurrentlyRunning<this.NoThreads &&  MoreSimsToRun==true){//there are spare Threads available
 		if (this.SimsStarted<this.NoSims){//if there are sims that have yet to be started
+			// Find a free thread
+			var ThreadCount=0;
+			while (this.ThreadInUse[ThreadCount]==true){
+				ThreadCount++;
+			}
+			
+			var ThreadID=ThreadCount;
+			
 			SimID=this.SimsStarted++;//run this sim, increment by 1
 			this.NoSimsCurrentlyRunning++;//indicate that another Thread has become used
 			
@@ -98,9 +107,8 @@ MultiThreadSim.prototype.StartNextSim=function() {
 			var BoundMessage=MultiThreadSimMessageHandler.bind(this);
 			this.Worker[SimID].onmessage = BoundMessage;
 			
-			
 			//Post message will soon become a handler for many commands, including starting the simulation, optimising the simulation, and requesting data
-			this.Worker[SimID].postMessage({ SimNumber: SimID, Common: this.Common, SimData: this.SimDataArray[SimID]});
+			this.Worker[SimID].postMessage({ SimID: SimID, ThreadID: ThreadID, Common: this.Common, SimData: this.SimDataArray[SimID]});
 		}
 		else{ //there are no more sims to run
 			MoreSimsToRun=false;
@@ -154,14 +162,14 @@ MultiThreadSimMessageHandler=function(e) {
 	// Collect up results from this simulation, try to run next simulation
 	if (typeof e.data.Result != 'undefined'){
 		this.NoSimsCurrentlyRunning--;
-		SimNumber=e.data.SimNumber;
-		this.Result[SimNumber]=e.data.Result;//Store the results of the simulation
+		var SimID=e.data.SimID;
+		this.Result[SimID]=e.data.Result;//Store the results of the simulation
 		this.SimsComplete++;
-		this.WorkerComplete[SimNumber]=true;
+		this.WorkerComplete[SimID]=true;
 		
 		if (this.TerminateOnFinish){
-			this.Worker[SimNumber].terminate();
-			this.WorkerTerminated[SimNumber]=true;
+			this.Worker[SimID].terminate();
+			this.WorkerTerminated[SimID]=true;
 		}
 		
 		this.StartNextSim();//Try to run more sims

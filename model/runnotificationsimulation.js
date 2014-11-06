@@ -59,9 +59,9 @@ self.onmessage = function (e) {
 	var Settings=e.data.Common.Settings;
 	
 	
-	var SimID = e.data.SimNumber; // this value is used to select the appropriate parameter value
+	var SimID = e.data.SimID; // this value is used to select the appropriate parameter value
     var SimData = e.data.SimData;
-	
+	var ThreadID = e.data.ThreadID;// this value can be used by the code to send specific messages to particular elements, e.g. progress bar 4 set to 60%
 	
 	
 	// Load up mortality data
@@ -183,5 +183,5 @@ self.onmessage = function (e) {
 	//Saving simulation results into local storage
 	
 	
-	self.postMessage({SimNumber: e.data.SimNumber, Result: SimResult});//All simulation will end with this line
+	self.postMessage({SimID: e.data.SimID, Result: SimResult});//All simulation will end with this line
 };

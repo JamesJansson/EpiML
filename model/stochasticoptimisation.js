@@ -272,14 +272,14 @@ function TestStochasticOptimisation(){
 	// Create some example data
 	// The aim of this is to determine what the mean (=7) and sd (=3) is from the distribution of the results
 	// If the optimisation gets close to X=7 and Y=3, the optimisation is successful
-	var HistogramsResults=HistogramData(NormalRandArray(7, 3, 10000), [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+	var HistogramsResults=HistogramData(NormalRandArray(7, 3, 1000), [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
 
 	
 	
 	var FunctionInput={};
 	var OptimisationSettings={};
 	
-	FunctionInput.NumberOfSamples=10000;
+	FunctionInput.NumberOfSamples=1000;
 	
 	OptimisationSettings.Target=HistogramsResults.Count;
 	
@@ -314,7 +314,7 @@ function TestStochasticOptimisation(){
 		//ScatterPlot('#PlotHolder', Data,  'AAA', 'BBB');
 	};
 	
-	OptimisationSettings.MaxTime=10;//stop after 10 seconds
+	OptimisationSettings.MaxTime=1;//stop after 10 seconds
 	
 	
 	OptimisationObject=new StochasticOptimisation(OptimisationSettings);

@@ -9,7 +9,7 @@
 function RunSim(){
 	ScriptToRun='model/runnotificationsimulation.js';
 	
-	var NumberOfSimsToRun=4;//this will later be set by the preferences in the interface
+	var NumberOfSimsToRun=20;//this will later be set by the preferences in the interface
 
 	// Load the values from the files
 	ExtractDataFromFiles();
