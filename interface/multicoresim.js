@@ -96,7 +96,7 @@ MultiThreadSim.prototype.StartNextSim=function() {
 			while (this.ThreadInUse[ThreadCount]==true){
 				ThreadCount++;
 			}
-			
+			this.ThreadInUse[ThreadCount]=true;
 			var ThreadID=ThreadCount;
 			
 			SimID=this.SimsStarted++;//run this sim, increment by 1
@@ -162,10 +162,12 @@ MultiThreadSimMessageHandler=function(e) {
 	// Collect up results from this simulation, try to run next simulation
 	if (typeof e.data.Result != 'undefined'){
 		this.NoSimsCurrentlyRunning--;
-		var SimID=e.data.SimID;
+		var SimID=e.data.WorkerMessage.SimID;
 		this.Result[SimID]=e.data.Result;//Store the results of the simulation
 		this.SimsComplete++;
 		this.WorkerComplete[SimID]=true;
+		var ThreadID=e.data.WorkerMessage.ThreadID;
+		this.ThreadInUse[ThreadID]=true;
 		
 		if (this.TerminateOnFinish){
 			this.Worker[SimID].terminate();

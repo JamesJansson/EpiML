@@ -32,7 +32,7 @@ function DebugStatement(ConsoleMessage){
 }
 
 
-self.onmessage = function (e) {
+self.onmessage = function (WorkerMessage) {
 
 	
 	//In this section will be a message handler that allows calls
@@ -47,22 +47,23 @@ self.onmessage = function (e) {
 	// if intervention function is defined
 	//    go to intervention function. evaluate the function that executes at time=t
 
-	self.postMessage({Console: e.data});//This passes the data back to the console so we can look at it
+	self.postMessage({Console: WorkerMessage.data});//This passes the data back to the console so we can look at it
 	Rand.SetSeed();//note that this is an extremely important step to allow random numbers to be generated
 	var TimerStart = new Date().getTime() / 1000;
 	
 	//Load the notification data
-	var Data=e.data.Common.Data;
+	var Data=WorkerMessage.data.Common.Data;
 	//Load the parameters data
-	var CommonParam=e.data.Common.Param;
+	var CommonParam=WorkerMessage.data.Common.Param;
 	// Load simulation settings
-	var Settings=e.data.Common.Settings;
+	var Settings=WorkerMessage.data.Common.Settings;
 	
 	
-	var SimID = e.data.SimID; // this value is used to select the appropriate parameter value
-    var SimData = e.data.SimData;
-	var ThreadID = e.data.ThreadID;// this value can be used by the code to send specific messages to particular elements, e.g. progress bar 4 set to 60%
+	var SimID = WorkerMessage.data.SimID; // this value is used to select the appropriate parameter value
+    var SimData = WorkerMessage.data.SimData;
+	var ThreadID = WorkerMessage.data.ThreadID;// this value can be used by the code to send specific messages to particular elements, e.g. progress bar 4 set to 60%
 	
+	console.log("thread: "+ThreadID);
 	
 	// Load up mortality data
 	MaleMortality=new MortalityCalculator(CommonParam.MaleMortality.Rates1, CommonParam.MaleMortality.Year1, CommonParam.MaleMortality.Rates2, CommonParam.MaleMortality.Year2);
@@ -183,5 +184,5 @@ self.onmessage = function (e) {
 	//Saving simulation results into local storage
 	
 	
-	self.postMessage({SimID: e.data.SimID, Result: SimResult});//All simulation will end with this line
+	self.postMessage({WorkerMessage: WorkerMessage.data, Result: SimResult});//All simulation will end with this line
 };
