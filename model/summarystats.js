@@ -116,9 +116,6 @@ function SummaryStatistic(Settings, InputFunction){
 	this.STD=[];
 	
 	
-	
-	
-	
 	// Set the settings
 	if (typeof Settings.Name === 'string'){
 		this.Name=Settings.Name;

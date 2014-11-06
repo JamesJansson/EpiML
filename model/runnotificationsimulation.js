@@ -48,16 +48,16 @@ self.onmessage = function (e) {
 	//    go to intervention function. evaluate the function that executes at time=t
 
 	self.postMessage({Console: e.data});//This passes the data back to the console so we can look at it
-	
 	Rand.SetSeed();//note that this is an extremely important step to allow random numbers to be generated
-	
 	var TimerStart = new Date().getTime() / 1000;
-	
 	
 	//Load the notification data
 	var Data=e.data.Common.Data;
 	//Load the parameters data
 	var CommonParam=e.data.Common.Param;
+	// Load simulation settings
+	var Settings=e.data.Common.Settings;
+	
 	
 	var SimID = e.data.SimNumber; // this value is used to select the appropriate parameter value
     var SimData = e.data.SimData;
@@ -156,10 +156,11 @@ self.onmessage = function (e) {
 	TimerFinish = new Date().getTime() / 1000;
     TotalTime=TimerFinish -TimerStart;
 	DebugStatement("Finished simulating population at "+TotalTime+" seconds");
-	
+
+
+	// Extract results of simulation
 	DebugStatement("Extracting results");
 	var SimResult={};
-
 	SimResult.FibrosisCount=CountFibrosisStages(PPNotification, CommonParam.SampleFactor);//Determine fibrosis levels with year
 	SimResult.DiagnosisCount=LivingDxAndUDx(PPNotification, CommonParam.SampleFactor);//Determine fibrosis levels with year
 	

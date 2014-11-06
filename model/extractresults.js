@@ -28,6 +28,18 @@ function CountFibrosisStages(PPLocal, SampleFactorMultiplier){
 		return NaN;
 	};
 	
+	
+	// Define the  category description
+	Settings.CategoryLabel=[];
+	Settings.CategoryLabel[0]="F0";
+	Settings.CategoryLabel[1]="F1";
+	Settings.CategoryLabel[2]="F2";
+	Settings.CategoryLabel[3]="F3";
+	Settings.CategoryLabel[4]="F4";
+	Settings.CategoryLabel[5]="Liver Failure";
+	Settings.CategoryLabel[6]="HCC";
+	Settings.CategoryLabel[7]="Antibody positive, cleared";
+	
 	// Run the statistic
 	FibrosisResult=new SummaryStatistic(Settings, FibrosisFunction);
 	FibrosisResult.Run(PPLocal);

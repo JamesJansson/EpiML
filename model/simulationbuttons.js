@@ -9,15 +9,20 @@
 function RunSim(){
 	ScriptToRun='model/runnotificationsimulation.js';
 	
-	var NumberOfSimsToRun=1;//this will later be set by the preferences in the interface
+	var NumberOfSimsToRun=4;//this will later be set by the preferences in the interface
 
 	// Load the values from the files
-	LoadDataFromFiles();
+	ExtractDataFromFiles();
+	
+	SimSettings={};
+	SimSettings.RunOptimisation=true;
+	
 	
 	// Save into the Common holder
 	var Common={};//
 	Common.Data=Data;
 	Common.Param=CommonParam;
+	Common.Settings=SimSettings;
 	
 	// Load the values from the interface into the parameters
 	// for (key in Param)
@@ -43,7 +48,7 @@ function RunSim(){
 	return 0;
 }
 
-function LoadDataFromFiles(){
+function ExtractDataFromFiles(){
 	Data.MaleNotifications={};
 	Data.MaleNotifications.Table=DataFile.AgeSexNotifications.GetValues(4, 21, 1, 19);//get table indicates the range [rows][columns]
 	Data.MaleNotifications.Age=DataFile.AgeSexNotifications.GetColumn(0, 4, 21);//GetColumn
@@ -86,8 +91,6 @@ function LoadDataFromFiles(){
 
 function NotificationSimPlot(){
 	// Get the relevant data
-	SimulationHolder.Result[0];
-	
 	FibrosisArray=SimulationHolder.Result[0].FibrosisCount.Count;
 	TimeAxis=SimulationHolder.Result[0].FibrosisCount.TimeVector;
 	
