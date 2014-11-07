@@ -215,8 +215,7 @@ CountStatistic.prototype.Run=function(Population){
 				this.InstantaneousCountCategorical(Population);
 			}
 			else if (this.CountType.toLowerCase()=='events'){
-				this.CountEventsCategorical(Population);
-				console.error("The way this works has not been determined yet. Please do not use countevents and FunctionReturnsCategory together");
+				console.error("Please do not use countevents and FunctionReturnsCategory together");
 			}
 		}
 
@@ -260,7 +259,7 @@ CountStatistic.prototype.CountEvents= function (Population){//Used to count how 
 		// for each person
 		for (var PIndex=0; PIndex<Population.length; PIndex++){
 			//run the SelectionFunction (takes the person, start and endpoints). If you only one once, the count function should express itself as (count between 
-			this.Count[TimeStepIndex]=this.Count[TimeStepIndex]+this.CountEventFunction(Population[PIndex], TimeStep, TimeStep+this.StepSize);
+			this.Count[TimeStepIndex]=this.Count[TimeStepIndex]+this.Function(Population[PIndex], TimeStep, TimeStep+this.StepSize);
 			
 		}
 		TimeStep=TimeStep+StepSize;// note that this may be a little off at the end (+/- 10^-6), but this should be OK for most statistical reporting
@@ -313,7 +312,8 @@ function SummaryStatistic(Settings, InputFunction){
 	// A vector/table that stores the results for each eligible person until the simulation is ready to do calculations such as mean etc
 	// this value should be deleted at the end of extraction, as it could get extremely large.
 	
-	this.N;
+	this.N=[];
+	this.Sum=[];
 	this.Mean=[];
 	this.Median=[];
 	this.Upper95Percentile=[];
@@ -321,8 +321,9 @@ function SummaryStatistic(Settings, InputFunction){
 	this.StandardDeviation=[];
 	this.UpperQuartile=[];
 	this.LowerQuartile=[];
-	this.Max;
-	this.Min;
+	this.Max=[];
+	this.Min=[];
+	
 	
 	// Set the settings
 	if (typeof Settings.Name === 'string'){
@@ -406,7 +407,7 @@ SummaryStatistic.prototype.Run=function(Population){
 		for (var PersonIndex=0; PersonIndex<Population.length; PersonIndex++){
 			for (var TimeIndex=0; TimeIndex<this.TimeVector.length; TimeIndex++){
 				ReturnedResult=this.Function(Population[PersonIndex], this.TimeVector[TimeIndex]);
-				if (ReturnedResult==null){
+				if (isNaN(ReturnedResult)){// using NaN to represent missing data
 					// Do nothing
 				}
 				else{//Push the value to the end of the ValueStorage
@@ -419,12 +420,19 @@ SummaryStatistic.prototype.Run=function(Population){
 		var ReturnedArray;
 		var ReturnedResult;
 		for (var PersonIndex=0; PersonIndex<Population.length; PersonIndex++){
+			ReturnedArray=this.Function(Population[PersonIndex], this.TimeVector[TimeIndex]);
 			if (ReturnedArray.length!=TimeIndex.length){
 				console.error("The returned array was not of the same length as the time vector");
 			}
-			
-			
-			
+			for (var TimeIndex=0; TimeIndex<this.TimeVector.length; TimeIndex++){
+				ReturnedResult=ReturnedArray[TimeIndex];
+				if (isNaN(ReturnedResult)){// using NaN to represent missing data
+					// Do nothing
+				}
+				else{//Push the value to the end of the ValueStorage
+					ValueStorage[TimeIndex].push(ReturnedResult);
+				}
+			}
 		}
 	}
 			
