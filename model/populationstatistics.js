@@ -103,15 +103,8 @@ function CountStatistic(Settings, InputFunction){
 	this.StepSize=1;//set by default to 1
 	
 	
-	this.TimeVector=[];
-	
-	
-	this.Mean=[];
-	this.Median=[];
-	this.Upper95Percentile=[];
-	this.Lower95Percentile=[];
-	this.STD=[];
-	
+	this.TimeVector=[];//the reference time for when the statistic was taken
+	this.Count=[];//where the counts are stored
 	
 	// Set the settings
 	if (typeof Settings.Name === 'string'){
@@ -228,7 +221,7 @@ CountStatistic.prototype.Run=function(Population){
 		}
 
 	// Destroy the function to make passing back to the main thread easy (the function can break parallelisation)
-	this.Function=0;//The function seems to need to be destroyed before passing the results back to the main controller of the webworker
+	this.Function=mull;//The function seems to need to be destroyed before passing the results back to the main controller of the webworker
 	
 }
 
@@ -316,8 +309,11 @@ function SummaryStatistic(Settings, InputFunction){
 	this.StepSize=1;//set by default to 1
 	
 	
-	this.TimeVector=[];
+	this.TimeVector=[]; //the reference time for when the statistic was taken
+	// A vector/table that stores the results for each eligible person until the simulation is ready to do calculations such as mean etc
+	// this value should be deleted at the end of extraction, as it could get extremely large.
 	
+	this.N;
 	this.Mean=[];
 	this.Median=[];
 	this.Upper95Percentile=[];
@@ -389,7 +385,7 @@ function SummaryStatistic(Settings, InputFunction){
 }
 
 SummaryStatistic.prototype.Run=function(Population){
-	// Check that the settings line up
+	
 	
 	// Set up the time vector
 	var CurrentTimeStep=this.StartTime;
@@ -400,42 +396,34 @@ SummaryStatistic.prototype.Run=function(Population){
 	}
 	
 
-		// Set up the Count array
-		if (this.FunctionReturnsCategory==false){// inspecting only a single category
-			this.Count=ZeroArray(this.NumberOfTimeSteps);
-			
-			if (this.CountType.toLowerCase()=='instantaneous'){
-				this.InstantaneousCount(Population);
-			}
-			else if (this.CountType.toLowerCase()=='events'){
-				this.CountEvents(Population);
-			}
-		}
-		else{ // If there are a number of categories
-			this.Count=ZeroMatrix(this.NumberOfCategories, this.NumberOfTimeSteps);
-			
-			if (this.CountType.toLowerCase()=='instantaneous'){
-				this.InstantaneousCountCategorical(Population);
-			}
-			else if (this.CountType.toLowerCase()=='events'){
-				this.CountEventsCategorical(Population);
-				console.error("The way this works has not been determined yet. Please do not use countevents and FunctionReturnsCategory together");
-			}
-		}
-
-	// Destroy the function to make passing back to the main thread easy (the function can break parallelisation)
-	this.Function=0;//The function seems to need to be destroyed before passing the results back to the main controller of the webworker
+	var ValueStorage=ZeroArray(this.NumberOfTimeSteps);
+	// A vector/table that stores the results for each eligible person until the simulation is ready to do calculations such as mean etc
+	// this value should be deleted at the end of extraction, as it could get extremely large.
 	
-}
-
-SummaryStatistic.prototype.InstantaneousCount= function (Population){//Used to determine the number of people that satisfy a condition at a particular point in time
+	var ReturnedResult;
 	for (var PersonIndex=0; PersonIndex<Population.length; PersonIndex++){
+		// Determine if it is a vector returning function
+		if 
 		for (var TimeIndex=0; TimeIndex<this.TimeVector.length; TimeIndex++){
-			if (this.Function(Population[PersonIndex], this.TimeVector[TimeIndex])==true){
-				this.Count[TimeIndex]++;
+			ReturnedResult=this.Function(Population[PersonIndex], this.TimeVector[TimeIndex]);
+			if (ReturnedResult==null){
+				// Do nothing
+			}
+			else{//Push the value to the end of the ValueStorage
+				ValueStorage[TimeIndex].push(ReturnedResult);
 			}
 		}
+		
+		
+		
 	}
+	
+	// Perform statistical analyses
+	
+	
+		
+	// Destroy the function to make passing back to the main thread easy (the function can break parallelisation)
+	this.Function=null;//The function seems to need to be destroyed before passing the results back to the main controller of the webworker
 }
 
 
@@ -453,6 +441,8 @@ SummaryStatistic.prototype.InstantaneousCount= function (Population){//Used to d
 
 
 
+
+// ***********************************************************************************
 
 
 
