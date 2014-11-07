@@ -445,11 +445,11 @@ SummaryStatistic.prototype.Run=function(Population){
 		this.Sum=Sum(ValueStorage[TimeIndex]);
 		this.Mean[TimeIndex]=Mean(ValueStorage[TimeIndex]);
 		this.Median=Mean(ValueStorage[TimeIndex]);
-		this.Upper95Percentile=Mean(ValueStorage[TimeIndex]);
-		this.Lower95Percentile=Mean(ValueStorage[TimeIndex]);
-		this.StandardDeviation=Mean(ValueStorage[TimeIndex]);
-		this.UpperQuartile=Mean(ValueStorage[TimeIndex]);
-		this.LowerQuartile=Mean(ValueStorage[TimeIndex]);
+		this.Upper95Percentile=Percentile(ValueStorage[TimeIndex], 97.5);
+		this.Lower95Percentile=Percentile(ValueStorage[TimeIndex], 2.5);
+		this.StandardDeviation=SampleStandardDeviation(ValueStorage[TimeIndex]);
+		this.UpperQuartile=Percentile(ValueStorage[TimeIndex], 75);
+		this.LowerQuartile=Percentile(ValueStorage[TimeIndex], 25);
 		this.Max=Max(ValueStorage[TimeIndex]);
 		this.Min=Min(ValueStorage[TimeIndex]);
 	}
