@@ -67,7 +67,7 @@ function CountStatistic(Settings, InputFunction){
 	this.YLabel="Value";
 	// A string that would be placed on the y axis of the graph (e.g. Diagnoses, Infections, etc) (optional)
 	
-	this.StatisticType="count"; // this is an indicator for the main program to use in case the object information gets stripped passing between workers
+	this.StatisticType="countstatistic"; // this is an indicator for the main program to use in case the object information gets stripped passing between workers
 	
 	this.CountType="";
 	// 'Instantaneous': how many people at time t have quality a (good for prevalence etc) (mandatory)
@@ -280,7 +280,185 @@ CountStatistic.prototype.Adjust= function (Multiplier){
 
 //****************************************************************************************************
 
+function SummaryStatistic(Settings, InputFunction){
+	this.Name="";
+	// A descriptive text entry about the statistic (optional)
+	
+	this.XLabel="Time";
+	// A string that would be placed on the x axis of the graph (e.g. Year, Month, etc) (optional)
+	
+	this.YLabel="Value";
+	// A string that would be placed on the y axis of the graph (e.g. Diagnoses, Infections, etc) (optional)
+	
+	this.StatisticType="summarystatistic"; // this is an indicator for the main program to use in case the object information gets stripped passing between workers
+	
+	this.CountType="";
+	// 'Instantaneous': how many people at time t have quality a (good for prevalence etc) (mandatory)
+	// 'Count': how many events between two times occur to each person. This value is added to an aggregate 
+	
+	
+	this.VectorFunction=false;
+	// VectorFunction is a flag to indicate whether Function has arguments of (optional, defaults to non-vector function)
+	// false: Function(Person, Time) and returns a single value at time or
+	// true: Function(Person, StartTime, EndTime, StepSize)and returns a vector of values over the times specified
+	// Setting this flag to true will allow the vector in summary statistic to to be filled by the function under inspection (e.g. EventVector) that could be a lot faster
+	
+	this.FunctionReturnsCategory=false;
+	// FunctionReturnsCategory is a flag to indicate whether Function returns (optional, defaults to simple count)
+	// true or false, or it returns an index
+	// This flag can only be used with InstantaneousCount. 
+	// It cannot be used with CountEvents
+	
+	this.NumberOfCategories=1; 
+	//(mandatory if FunctionReturnsCategory==true)
+	
+	this.CategoryLabel=[];
+	// Used to store the text associated with the categorical numbers (optional)
+	
+	//this.Function; 
+	// Function is user defined
+	// If CountType=='Instantaneous' it returns either a 0 or a 1 given a specific time
+	// If CountType=='Count' it returns a number >= 0, and is given StartTime, EndTime
+	
+	// If VectorFunction==true if returns a vector over the period stated
+	
+	this.StartTime=0;
+	this.EndTime=1;
+	this.StepSize=1;//set by default to 1
+	
+	
+	this.TimeVector=[];
+	
+	
+	this.Mean=[];
+	this.Median=[];
+	this.Upper95Percentile=[];
+	this.Lower95Percentile=[];
+	this.STD=[];
+	
+	
+	// Set the settings
+	if (typeof Settings.Name === 'string'){
+		this.Name=Settings.Name;
+	}
+	if (typeof Settings.XLabel === 'string'){
+		this.XLabel=Settings.XLabel;
+	}
+	if (typeof Settings.YLabel === 'string'){
+		this.YLabel=Settings.YLabel;
+	}
+	
+	//  Set the CountType of statistic to be collected
+	if (typeof Settings.CountType === 'string'){
+		this.CountType=Settings.CountType;
+	}
+	else{
+		console.error("A CountType must be specified. CountTypes include: Instantaneous: how many people at time t have quality a (good for prevalence etc), Events: how many events between two times occur to each person. This value is added to an aggregate.") ;
+	}
+	
+	//Set whether the function will be a boolean operator or not.
+	if (typeof Settings.VectorFunction === 'boolean'){
+		this.VectorFunction=Settings.VectorFunction;
+	}
+	else if (typeof Settings.VectorFunction != 'undefined'){
+		console.error("SummaryStatistic: VectorFunction must be a boolean operator");
+	}
+	
+	
+	
+	// Set the Category settings
+	if (typeof Settings.FunctionReturnsCategory === 'boolean'){
+		if (Settings.FunctionReturnsCategory==true){
+			this.FunctionReturnsCategory=true;
+			if (typeof Settings.NumberOfCategories === 'number'){
+				this.NumberOfCategories=Settings.NumberOfCategories;
+				if (typeof Settings.CategoryLabel === 'object'){
+					this.CategoryLabel=Settings.CategoryLabel;
+				}
+			}
+			else {
+				console.error("SummaryStatistic: If FunctionReturnsCategory is true, NumberOfCategories must be set to a whole number >1;")
+			}
+		}
+	}
+	else if (typeof Settings.FunctionReturnsCategory != 'undefined'){
+		console.error("SummaryStatistic: FunctionReturnsCategory should have only a value of true or false");
+	}
+	
+	// Set the function for the summary statistic
+	if (typeof InputFunction === 'function'){
+		this.Function=InputFunction;
+	}
+	
+	// Set the times for the summary statistic
+	if (typeof Settings.StartTime === 'number'){
+		this.StartTime=Settings.StartTime;
+	}
+	else{
+		console.error("SummaryStatistic: StartTime and EndTime must be set");
+	}
+	if (typeof Settings.EndTime === 'number'){
+		this.EndTime=Settings.EndTime;
+	}
+	else{
+		console.error("SummaryStatistic: StartTime and EndTime must be set");
+	}
+	if (typeof Settings.StepSize === 'number'){
+		this.StepSize=Settings.StepSize;
+	}
+	
 
+}
+
+SummaryStatistic.prototype.Run=function(Population){
+	// Check that the settings line up
+	
+	// Set up the time vector
+	var CurrentTimeStep=this.StartTime;
+	this.NumberOfTimeSteps=Math.round((this.EndTime-this.StartTime)/this.StepSize)+1; //This is used to avoid rounding errors
+	for (var TimeIndex=0; TimeIndex<this.NumberOfTimeSteps; TimeIndex++){
+		this.TimeVector[TimeIndex]=CurrentTimeStep;
+		CurrentTimeStep=CurrentTimeStep+this.StepSize;// Increment the time step
+	}
+	
+
+		// Set up the Count array
+		if (this.FunctionReturnsCategory==false){// inspecting only a single category
+			this.Count=ZeroArray(this.NumberOfTimeSteps);
+			
+			if (this.CountType.toLowerCase()=='instantaneous'){
+				this.InstantaneousCount(Population);
+			}
+			else if (this.CountType.toLowerCase()=='events'){
+				this.CountEvents(Population);
+			}
+		}
+		else{ // If there are a number of categories
+			this.Count=ZeroMatrix(this.NumberOfCategories, this.NumberOfTimeSteps);
+			
+			if (this.CountType.toLowerCase()=='instantaneous'){
+				this.InstantaneousCountCategorical(Population);
+			}
+			else if (this.CountType.toLowerCase()=='events'){
+				this.CountEventsCategorical(Population);
+				console.error("The way this works has not been determined yet. Please do not use countevents and FunctionReturnsCategory together");
+			}
+		}
+
+	// Destroy the function to make passing back to the main thread easy (the function can break parallelisation)
+	this.Function=0;//The function seems to need to be destroyed before passing the results back to the main controller of the webworker
+	
+}
+
+SummaryStatistic.prototype.InstantaneousCount= function (Population){//Used to determine the number of people that satisfy a condition at a particular point in time
+	for (var PersonIndex=0; PersonIndex<Population.length; PersonIndex++){
+		for (var TimeIndex=0; TimeIndex<this.TimeVector.length; TimeIndex++){
+			if (this.Function(Population[PersonIndex], this.TimeVector[TimeIndex])==true){
+				this.Count[TimeIndex]++;
+			}
+		}
+	}
+}
 
 
 
