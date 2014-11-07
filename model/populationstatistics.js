@@ -221,7 +221,7 @@ CountStatistic.prototype.Run=function(Population){
 		}
 
 	// Destroy the function to make passing back to the main thread easy (the function can break parallelisation)
-	this.Function=mull;//The function seems to need to be destroyed before passing the results back to the main controller of the webworker
+	this.Function=null;//The function seems to need to be destroyed before passing the results back to the main controller of the webworker
 	
 }
 
@@ -400,27 +400,39 @@ SummaryStatistic.prototype.Run=function(Population){
 	// A vector/table that stores the results for each eligible person until the simulation is ready to do calculations such as mean etc
 	// this value should be deleted at the end of extraction, as it could get extremely large.
 	
-	var ReturnedResult;
-	for (var PersonIndex=0; PersonIndex<Population.length; PersonIndex++){
-		// Determine if it is a vector returning function
-		if 
-		for (var TimeIndex=0; TimeIndex<this.TimeVector.length; TimeIndex++){
-			ReturnedResult=this.Function(Population[PersonIndex], this.TimeVector[TimeIndex]);
-			if (ReturnedResult==null){
-				// Do nothing
-			}
-			else{//Push the value to the end of the ValueStorage
-				ValueStorage[TimeIndex].push(ReturnedResult);
+	// Determine if it is a vector returning function
+	if (this.VectorFunction==false){
+		var ReturnedResult;
+		for (var PersonIndex=0; PersonIndex<Population.length; PersonIndex++){
+			for (var TimeIndex=0; TimeIndex<this.TimeVector.length; TimeIndex++){
+				ReturnedResult=this.Function(Population[PersonIndex], this.TimeVector[TimeIndex]);
+				if (ReturnedResult==null){
+					// Do nothing
+				}
+				else{//Push the value to the end of the ValueStorage
+					ValueStorage[TimeIndex].push(ReturnedResult);
+				}
 			}
 		}
-		
-		
-		
 	}
+	else{// using a vector function to return the result
+		var ReturnedArray;
+		var ReturnedResult;
+		for (var PersonIndex=0; PersonIndex<Population.length; PersonIndex++){
+			if (ReturnedArray.length!=TimeIndex.length){
+				console.error("The returned array was not of the same length as the time vector");
+			}
+			
+			
+			
+		}
+	}
+			
+
 	
 	// Perform statistical analyses
-	
-	
+	this.N[TimeIndex]=ValueStorage[TimeIndex].length;
+	this.Mean[TimeIndex]=Mean(ValueStorage[TimeIndex]);
 		
 	// Destroy the function to make passing back to the main thread easy (the function can break parallelisation)
 	this.Function=null;//The function seems to need to be destroyed before passing the results back to the main controller of the webworker
