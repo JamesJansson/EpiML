@@ -10,7 +10,7 @@ importScripts("hcv.js");
 importScripts("hiv.js");
 importScripts("assignpopulation.js");
 importScripts("extractresults.js");
-importScripts("summarystats.js");
+importScripts("populationstatistics.js");
 importScripts("generalmortality.js");
 
 var Param={};//This is the parameter holder for the simulation

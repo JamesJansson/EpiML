@@ -1,5 +1,5 @@
 // This file contains functions that are designed to summarise information about individuals in the simulation. 
-// There are two main types of summary stats:
+// There are two main types of statistics:
 // 1) Instantaneous count at that point in time e.g. total number of people currently infected with HCV on 1/6/2013
 // 2) Total number of events that occur over a period e.g. the number of infections that occur over a period 2013=2016
 
