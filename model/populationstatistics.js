@@ -420,7 +420,7 @@ SummaryStatistic.prototype.Run=function(Population){
 		var ReturnedArray;
 		var ReturnedResult;
 		for (var PersonIndex=0; PersonIndex<Population.length; PersonIndex++){
-			ReturnedArray=this.Function(Population[PersonIndex], this.TimeVector[TimeIndex]);
+			ReturnedArray=this.Function(Population[PersonIndex], this.TimeVector[0], this.TimeStep);
 			if (ReturnedArray.length!=TimeIndex.length){
 				console.error("The returned array was not of the same length as the time vector");
 			}
@@ -439,8 +439,20 @@ SummaryStatistic.prototype.Run=function(Population){
 
 	
 	// Perform statistical analyses
-	this.N[TimeIndex]=ValueStorage[TimeIndex].length;
-	this.Mean[TimeIndex]=Mean(ValueStorage[TimeIndex]);
+	for (var TimeIndex=0; TimeIndex<this.TimeVector.length; TimeIndex++){
+		this.N[TimeIndex]=ValueStorage[TimeIndex].length;
+		
+		this.Sum=Sum(ValueStorage[TimeIndex]);
+		this.Mean[TimeIndex]=Mean(ValueStorage[TimeIndex]);
+		this.Median=Mean(ValueStorage[TimeIndex]);
+		this.Upper95Percentile=Mean(ValueStorage[TimeIndex]);
+		this.Lower95Percentile=Mean(ValueStorage[TimeIndex]);
+		this.StandardDeviation=Mean(ValueStorage[TimeIndex]);
+		this.UpperQuartile=Mean(ValueStorage[TimeIndex]);
+		this.LowerQuartile=Mean(ValueStorage[TimeIndex]);
+		this.Max=Max(ValueStorage[TimeIndex]);
+		this.Min=Min(ValueStorage[TimeIndex]);
+	}
 		
 	// Destroy the function to make passing back to the main thread easy (the function can break parallelisation)
 	this.Function=null;//The function seems to need to be destroyed before passing the results back to the main controller of the webworker

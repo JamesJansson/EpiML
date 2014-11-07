@@ -26,8 +26,8 @@ function Mean(arr) {
 
 // Median of an array
 function Median(MInputVector){
-	VectorCopy=MInputVector.slice();
-	SortNumerically(VectorCopy);
+	var VectorCopy=MInputVector.slice();
+	VectorCopy.sort();
 	VecLength=VectorCopy.length;
 	if ((VecLength%2)==1){//odd number of elements
 		return VectorCopy[(VecLength-1)/2];//chose the middle value
@@ -36,6 +36,32 @@ function Median(MInputVector){
 		return (VectorCopy[(VecLength)/2]+VectorCopy[(VecLength)/2-1])/2;
 	}
 }
+
+// percentile of an array
+function Percentile(MInputVector, PercentileValue){
+	var VectorCopy=MInputVector.slice();
+	VectorCopy.sort();
+	
+	var Frac=PercentileValue/100;
+	console.log("Frac"+ Frac);
+	var LeftIndex=Math.floor((VectorCopy.length-1)*Frac);
+	console.log("LeftIndex"+ LeftIndex);
+	if (LeftIndex==VectorCopy.length-1){// if the percentile as close to 100% as error will allow
+		return VectorCopy[LeftIndex];
+	}
+	// find the distance between the left and right position
+	var DistanceBetween=1/(VectorCopy.length-1);
+	console.log("DistanceBetween"+ DistanceBetween);
+	var LeftDistance=DistanceBetween*LeftIndex;
+	console.log("LeftDistance"+ LeftDistance);
+	var Prop=(Frac-LeftDistance)/DistanceBetween;
+	console.log("Prop"+ Prop);
+	return VectorCopy[LeftIndex]*(1-Prop)+VectorCopy[LeftIndex+1]*Prop;
+	
+	
+}
+
+
 
 function CumSum(arr) {
   var len = arr.length;
