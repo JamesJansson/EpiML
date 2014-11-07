@@ -2,7 +2,7 @@ function CountFibrosisStages(PPLocal, SampleFactorMultiplier, Time){
 	//Create settings
 	var Settings={};
 	Settings.Name="Number of People by Fibrosis Level";
-	Settings.Type="InstantaneousCount";
+	Settings.CountType="Instantaneous";
 	Settings.XLabel="Year";
 	Settings.YLabel="Count";
 	Settings.StartTime=Time.Start;
@@ -58,7 +58,7 @@ function LivingDxAndUDx(PPLocal, SampleFactorMultiplier, Time){
 	//Create settings
 	var Settings={};
 	Settings.Name="Number of people living with diagnosed and undiagnosed HCV";
-	Settings.Type="InstantaneousCount";
+	Settings.CountType="Instantaneous";
 	Settings.XLabel="Year";
 	Settings.YLabel="Count";
 	Settings.StartTime=Time.Start;

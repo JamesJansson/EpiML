@@ -133,19 +133,21 @@ self.onmessage = function (WorkerMessage) {
 		PPNotification[i].CalculateHCVMortality(YearOfDiagnosis);
 	}
 	
-	SaySomething={};
-	SaySomething.Data="This is data";
-	SaySomething.Code="console.log(Data);";
-	self.postMessage({Execute: SaySomething});
 	
-	PlotSomething={};
-	PlotSomething.Data=[[0, 3], [4, 8], [8, 5], [9, 13]];
-	PlotSomething.Code="ScatterPlot('#PlotHolder', Data,  'AAA', 'BBB');";
-	self.postMessage({Execute: PlotSomething});
-	
-	
-	A=TestStochasticOptimisation();
-	
+	if (false){
+		SaySomething={};
+		SaySomething.Data="This is data";
+		SaySomething.Code="console.log(Data);";
+		self.postMessage({Execute: SaySomething});
+		
+		PlotSomething={};
+		PlotSomething.Data=[[0, 3], [4, 8], [8, 5], [9, 13]];
+		PlotSomething.Code="ScatterPlot('#PlotHolder', Data,  'AAA', 'BBB');";
+		self.postMessage({Execute: PlotSomething});
+		
+		
+		A=TestStochasticOptimisation();
+	}
 	
 	
 	

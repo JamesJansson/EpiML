@@ -56,11 +56,6 @@ Settings.Function= function (Individual, Time){
 */
 
 
-
-
-
-console.log("Loading summarystats.js");
-
 //function SummaryStatistic(Settings, InputFunction){
 function CountStatistic(Settings, InputFunction){
 	this.Name="";
@@ -72,22 +67,24 @@ function CountStatistic(Settings, InputFunction){
 	this.YLabel="Value";
 	// A string that would be placed on the y axis of the graph (e.g. Diagnoses, Infections, etc) (optional)
 	
-	this.Type="";
-	// 'InstantaneousCount': how many people at time t have quality a (good for prevalence etc) (mandatory)
-	// 'CountEvents': how many events between two times occur to each person. This value is added to an aggregate 
-	// 'IndividualDistribution': used to report median, mean, and the distribution of individual characteristics. e.g. Age
+	this.StatisticType="count"; // this is an indicator for the main program to use in case the object information gets stripped passing between workers
+	
+	this.CountType="";
+	// 'Instantaneous': how many people at time t have quality a (good for prevalence etc) (mandatory)
+	// 'Count': how many events between two times occur to each person. This value is added to an aggregate 
+	
 	
 	this.VectorFunction=false;
-	// VectorFunction is a flag to indicate whether StatisticalFunction has arguments of (optional, defaults to non-vector function)
-	// false: StatisticalFunction(Person, Time) and returns a single value at time or
-	// true: StatisticalFunction(Person, StartTime, EndTime, StepSize)and returns a vector of values over the times specified
+	// VectorFunction is a flag to indicate whether Function has arguments of (optional, defaults to non-vector function)
+	// false: Function(Person, Time) and returns a single value at time or
+	// true: Function(Person, StartTime, EndTime, StepSize)and returns a vector of values over the times specified
 	// Setting this flag to true will allow the vector in summary statistic to to be filled by the function under inspection (e.g. EventVector) that could be a lot faster
 	
 	this.FunctionReturnsCategory=false;
-	// FunctionReturnsCategory is a flag to indicate whether StatisticalFunction returns (optional, defaults to simple count)
+	// FunctionReturnsCategory is a flag to indicate whether Function returns (optional, defaults to simple count)
 	// true or false, or it returns an index
 	// This flag can only be used with InstantaneousCount. 
-	// It cannot be used with CountEvents or IndividualDistribution
+	// It cannot be used with CountEvents
 	
 	this.NumberOfCategories=1; 
 	//(mandatory if FunctionReturnsCategory==true)
@@ -96,10 +93,10 @@ function CountStatistic(Settings, InputFunction){
 	// Used to store the text associated with the categorical numbers (optional)
 	
 	//this.Function; 
-	// StatisticalFunction is user defined
-	// If Type=='InstantaneousCount' it returns either a 0 or a 1 given a specific time
-	// If Type=='CountEvents' it returns a number >= 0, and is given StartTime, EndTime
-	// If Type=='IndividualDistribution' it returns any number 
+	// Function is user defined
+	// If CountType=='Instantaneous' it returns either a 0 or a 1 given a specific time
+	// If CountType=='Count' it returns a number >= 0, and is given StartTime, EndTime
+	
 	// If VectorFunction==true if returns a vector over the period stated
 	
 	this.StartTime=0;
@@ -128,12 +125,12 @@ function CountStatistic(Settings, InputFunction){
 		this.YLabel=Settings.YLabel;
 	}
 	
-	//  Set the Type of statistic to be collected
-	if (typeof Settings.Type === 'string'){
-		this.Type=Settings.Type;
+	//  Set the CountType of statistic to be collected
+	if (typeof Settings.CountType === 'string'){
+		this.CountType=Settings.CountType;
 	}
 	else{
-		console.error("A Type must be specified. Types include: InstantaneousCount: how many people at time t have quality a (good for prevalence etc), CountEvents: how many events between two times occur to each person. This value is added to an aggregate, IndividualDistribution: used to report median, mean, and the distribution of individual characteristics. e.g. Age") ;
+		console.error("A CountType must be specified. CountTypes include: Instantaneous: how many people at time t have quality a (good for prevalence etc), Events: how many events between two times occur to each person. This value is added to an aggregate.") ;
 	}
 	
 	//Set whether the function will be a boolean operator or not.
@@ -193,8 +190,6 @@ function CountStatistic(Settings, InputFunction){
 CountStatistic.prototype.Run=function(Population){
 	// Check that the settings line up
 	
-
-	
 	// Set up the time vector
 	var CurrentTimeStep=this.StartTime;
 	this.NumberOfTimeSteps=Math.round((this.EndTime-this.StartTime)/this.StepSize)+1; //This is used to avoid rounding errors
@@ -203,38 +198,29 @@ CountStatistic.prototype.Run=function(Population){
 		CurrentTimeStep=CurrentTimeStep+this.StepSize;// Increment the time step
 	}
 	
-	// if (typeof Function === 'object') {break into singular functions then run individually}
-	// if (typeof Function === 'function') {just run it}
-	
-	// Inspect the individual statistics. Note that this type will have to inspect the value independently at each time step, to then take the average, etc. 
-	if (this.Type.toLowerCase()=='individualdistribution'){
-		this.IndividualDistribution(Population);
-	}
-	// Doing a simple count of the characteristic 
-	else{
+
 		// Set up the Count array
 		if (this.FunctionReturnsCategory==false){// inspecting only a single category
 			this.Count=ZeroArray(this.NumberOfTimeSteps);
 			
-			if (this.Type.toLowerCase()=='instantaneouscount'){
+			if (this.CountType.toLowerCase()=='instantaneous'){
 				this.InstantaneousCount(Population);
 			}
-			else if (this.Type.toLowerCase()=='countevents'){
+			else if (this.CountType.toLowerCase()=='events'){
 				this.CountEvents(Population);
 			}
 		}
 		else{ // If there are a number of categories
 			this.Count=ZeroMatrix(this.NumberOfCategories, this.NumberOfTimeSteps);
 			
-			if (this.Type.toLowerCase()=='instantaneouscount'){
+			if (this.CountType.toLowerCase()=='instantaneous'){
 				this.InstantaneousCountCategorical(Population);
 			}
-			else if (this.Type.toLowerCase()=='countevents'){
+			else if (this.CountType.toLowerCase()=='events'){
 				this.CountEventsCategorical(Population);
 				console.error("The way this works has not been determined yet. Please do not use countevents and FunctionReturnsCategory together");
 			}
 		}
-	}
 
 	// Destroy the function to make passing back to the main thread easy (the function can break parallelisation)
 	this.Function=0;//The function seems to need to be destroyed before passing the results back to the main controller of the webworker
@@ -265,13 +251,10 @@ CountStatistic.prototype.InstantaneousCountCategorical= function (Population){//
 
 
 
-
-
-
 CountStatistic.prototype.CountEvents= function (Population){//Used to count how many times something happens over a number of finite periods
 	
 	// initialise vector with a zero vector
-	this.Value=ZeroArray(NumberInVector);
+	this.Count=ZeroArray(NumberInVector);
 
 	// for each time step
 	var TimeStep=StartTime;
@@ -279,29 +262,14 @@ CountStatistic.prototype.CountEvents= function (Population){//Used to count how 
 		// for each person
 		for (var PIndex=0; PIndex<Population.length; PIndex++){
 			//run the SelectionFunction (takes the person, start and endpoints). If you only one once, the count function should express itself as (count between 
-			this.Value[TimeStepIndex]=this.Value[TimeStepIndex]+this.CountEventFunction(Population[PIndex], TimeStep, TimeStep+this.StepSize);
+			this.Count[TimeStepIndex]=this.Count[TimeStepIndex]+this.CountEventFunction(Population[PIndex], TimeStep, TimeStep+this.StepSize);
 			
 		}
 		TimeStep=TimeStep+StepSize;// note that this may be a little off at the end (+/- 10^-6), but this should be OK for most statistical reporting
 	}
-	
-	// In this function we may also want to count mean, median, IQR, 95% range, so temporarily holding on the value in an array may help
-	
 };
 
 
-
-
-// ReportContinuous: ValueFunction returns a variable, which is continuous
-
-
-	// can we make this an array of categorical value functions like []
-	// MultiplePopulations
-	// Single population
-	// Events
-	// First events
-	// All events
-	// Status
 
 
 // Factor: multiply by a factor to accommodate for using a representative sample, for example
@@ -309,6 +277,28 @@ CountStatistic.prototype.Adjust= function (Multiplier){
 	// for all of the counting functions
 	this.Count=Multiply(this.Count, Multiplier);
 }
+
+//****************************************************************************************************
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -369,4 +359,13 @@ function MultiSimSummaryStat(SummaryStatArray){
 // Transform(for all elements of the table, transform using the function, e.g. log)
 }
 
-console.log("Loaded summarystats.js");
+
+
+
+
+// 'IndividualDistribution': used to report median, mean, and the distribution of individual characteristics. e.g. Age
+// If Type=='IndividualDistribution' it returns any number 
+// , IndividualDistribution: used to report median, mean, and the distribution of individual characteristics. e.g. Age
+
+
+
