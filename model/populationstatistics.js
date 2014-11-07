@@ -56,7 +56,6 @@ Settings.Function= function (Individual, Time){
 */
 
 
-//function SummaryStatistic(Settings, InputFunction){
 function CountStatistic(Settings, InputFunction){
 	this.Name="";
 	// A descriptive text entry about the statistic (optional)
@@ -166,6 +165,9 @@ function CountStatistic(Settings, InputFunction){
 	if (typeof InputFunction === 'function'){
 		this.Function=InputFunction;
 	}
+	else{
+		console.error("A function must be set that returns the value to be included in the statistic");
+	}
 	
 	// Set the times for the summary statistic
 	if (typeof Settings.StartTime === 'number'){
@@ -176,6 +178,9 @@ function CountStatistic(Settings, InputFunction){
 	}
 	if (typeof Settings.EndTime === 'number'){
 		this.EndTime=Settings.EndTime;
+		if (this.EndTime<this.StartTime){
+			console.error("End time cannot be before start time");
+		}
 	}
 	else{
 		console.error("CountStatistic: StartTime and EndTime must be set");
@@ -292,28 +297,12 @@ function SummaryStatistic(Settings, InputFunction){
 	
 	this.StatisticType="summarystatistic"; // this is an indicator for the main program to use in case the object information gets stripped passing between workers
 	
-	this.CountType="";
-	// 'Instantaneous': how many people at time t have quality a (good for prevalence etc) (mandatory)
-	// 'Count': how many events between two times occur to each person. This value is added to an aggregate 
-	
 	
 	this.VectorFunction=false;
 	// VectorFunction is a flag to indicate whether Function has arguments of (optional, defaults to non-vector function)
 	// false: Function(Person, Time) and returns a single value at time or
 	// true: Function(Person, StartTime, EndTime, StepSize)and returns a vector of values over the times specified
 	// Setting this flag to true will allow the vector in summary statistic to to be filled by the function under inspection (e.g. EventVector) that could be a lot faster
-	
-	this.FunctionReturnsCategory=false;
-	// FunctionReturnsCategory is a flag to indicate whether Function returns (optional, defaults to simple count)
-	// true or false, or it returns an index
-	// This flag can only be used with InstantaneousCount. 
-	// It cannot be used with CountEvents
-	
-	this.NumberOfCategories=1; 
-	//(mandatory if FunctionReturnsCategory==true)
-	
-	this.CategoryLabel=[];
-	// Used to store the text associated with the categorical numbers (optional)
 	
 	//this.Function; 
 	// Function is user defined
@@ -329,13 +318,15 @@ function SummaryStatistic(Settings, InputFunction){
 	
 	this.TimeVector=[];
 	
-	
 	this.Mean=[];
 	this.Median=[];
 	this.Upper95Percentile=[];
 	this.Lower95Percentile=[];
-	this.STD=[];
-	
+	this.StandardDeviation=[];
+	this.UpperQuartile=[];
+	this.LowerQuartile=[];
+	this.Max;
+	this.Min;
 	
 	// Set the settings
 	if (typeof Settings.Name === 'string'){
@@ -366,28 +357,12 @@ function SummaryStatistic(Settings, InputFunction){
 	
 	
 	
-	// Set the Category settings
-	if (typeof Settings.FunctionReturnsCategory === 'boolean'){
-		if (Settings.FunctionReturnsCategory==true){
-			this.FunctionReturnsCategory=true;
-			if (typeof Settings.NumberOfCategories === 'number'){
-				this.NumberOfCategories=Settings.NumberOfCategories;
-				if (typeof Settings.CategoryLabel === 'object'){
-					this.CategoryLabel=Settings.CategoryLabel;
-				}
-			}
-			else {
-				console.error("SummaryStatistic: If FunctionReturnsCategory is true, NumberOfCategories must be set to a whole number >1;")
-			}
-		}
-	}
-	else if (typeof Settings.FunctionReturnsCategory != 'undefined'){
-		console.error("SummaryStatistic: FunctionReturnsCategory should have only a value of true or false");
-	}
-	
 	// Set the function for the summary statistic
 	if (typeof InputFunction === 'function'){
 		this.Function=InputFunction;
+	}
+	else{
+		console.error("A function must be set that returns the value to be included in the statistic");
 	}
 	
 	// Set the times for the summary statistic
@@ -399,6 +374,9 @@ function SummaryStatistic(Settings, InputFunction){
 	}
 	if (typeof Settings.EndTime === 'number'){
 		this.EndTime=Settings.EndTime;
+		if (this.EndTime<this.StartTime){
+			console.error("End time cannot be before start time");
+		}
 	}
 	else{
 		console.error("SummaryStatistic: StartTime and EndTime must be set");
