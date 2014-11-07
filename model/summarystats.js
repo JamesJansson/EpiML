@@ -61,7 +61,8 @@ Settings.Function= function (Individual, Time){
 
 console.log("Loading summarystats.js");
 
-function SummaryStatistic(Settings, InputFunction){
+//function SummaryStatistic(Settings, InputFunction){
+function CountStatistic(Settings, InputFunction){
 	this.Name="";
 	// A descriptive text entry about the statistic (optional)
 	
@@ -140,7 +141,7 @@ function SummaryStatistic(Settings, InputFunction){
 		this.VectorFunction=Settings.VectorFunction;
 	}
 	else if (typeof Settings.VectorFunction != 'undefined'){
-		console.error("SummaryStatistic: VectorFunction must be a boolean operator");
+		console.error("CountStatistic: VectorFunction must be a boolean operator");
 	}
 	
 	
@@ -156,12 +157,12 @@ function SummaryStatistic(Settings, InputFunction){
 				}
 			}
 			else {
-				console.error("SummaryStatistic: If FunctionReturnsCategory is true, NumberOfCategories must be set to a whole number >1;")
+				console.error("CountStatistic: If FunctionReturnsCategory is true, NumberOfCategories must be set to a whole number >1;")
 			}
 		}
 	}
 	else if (typeof Settings.FunctionReturnsCategory != 'undefined'){
-		console.error("SummaryStatistic: FunctionReturnsCategory should have only a value of true or false");
+		console.error("CountStatistic: FunctionReturnsCategory should have only a value of true or false");
 	}
 	
 	// Set the function for the summary statistic
@@ -174,13 +175,13 @@ function SummaryStatistic(Settings, InputFunction){
 		this.StartTime=Settings.StartTime;
 	}
 	else{
-		console.error("SummaryStatistic: StartTime and EndTime must be set");
+		console.error("CountStatistic: StartTime and EndTime must be set");
 	}
 	if (typeof Settings.EndTime === 'number'){
 		this.EndTime=Settings.EndTime;
 	}
 	else{
-		console.error("SummaryStatistic: StartTime and EndTime must be set");
+		console.error("CountStatistic: StartTime and EndTime must be set");
 	}
 	if (typeof Settings.StepSize === 'number'){
 		this.StepSize=Settings.StepSize;
@@ -189,7 +190,7 @@ function SummaryStatistic(Settings, InputFunction){
 
 }
 
-SummaryStatistic.prototype.Run=function(Population){
+CountStatistic.prototype.Run=function(Population){
 	// Check that the settings line up
 	
 
@@ -240,7 +241,7 @@ SummaryStatistic.prototype.Run=function(Population){
 	
 }
 
-SummaryStatistic.prototype.InstantaneousCount= function (Population){//Used to determine the number of people that satisfy a condition at a particular point in time
+CountStatistic.prototype.InstantaneousCount= function (Population){//Used to determine the number of people that satisfy a condition at a particular point in time
 	for (var PersonIndex=0; PersonIndex<Population.length; PersonIndex++){
 		for (var TimeIndex=0; TimeIndex<this.TimeVector.length; TimeIndex++){
 			if (this.Function(Population[PersonIndex], this.TimeVector[TimeIndex])==true){
@@ -250,7 +251,7 @@ SummaryStatistic.prototype.InstantaneousCount= function (Population){//Used to d
 	}
 }
 
-SummaryStatistic.prototype.InstantaneousCountCategorical= function (Population){//Used to determine the number of people that satisfy a condition at a particular point in time
+CountStatistic.prototype.InstantaneousCountCategorical= function (Population){//Used to determine the number of people that satisfy a condition at a particular point in time
 	var CategoryIndex;
 	for (var PersonIndex=0; PersonIndex<Population.length; PersonIndex++){
 		for (var TimeIndex=0; TimeIndex<this.TimeVector.length; TimeIndex++){
@@ -267,7 +268,7 @@ SummaryStatistic.prototype.InstantaneousCountCategorical= function (Population){
 
 
 
-SummaryStatistic.prototype.CountEvents= function (Population){//Used to count how many times something happens over a number of finite periods
+CountStatistic.prototype.CountEvents= function (Population){//Used to count how many times something happens over a number of finite periods
 	
 	// initialise vector with a zero vector
 	this.Value=ZeroArray(NumberInVector);
@@ -304,10 +305,7 @@ SummaryStatistic.prototype.CountEvents= function (Population){//Used to count ho
 
 
 // Factor: multiply by a factor to accommodate for using a representative sample, for example
-SummaryStatistic.prototype.Adjust= function (Multiplier){
-	if (this.Type.toLowerCase()=='individualdistribution'){
-		console.error("Values for individual distributions should not be factored. That is, they represent a per person measurement e.g. doctors visits per year. If we are using a representative sample, this figure should stay the same regardless.");
-	}
+CountStatistic.prototype.Adjust= function (Multiplier){
 	// for all of the counting functions
 	this.Count=Multiply(this.Count, Multiplier);
 }
@@ -316,13 +314,15 @@ SummaryStatistic.prototype.Adjust= function (Multiplier){
 
 //One summary statistic as a proportion of another?
 function CalculateRate(Numerator, Denominator){
-	RateSummaryStatistic=Numerator.slice();
-
+	//var Rate=Numerator.slice();
+	
+	
 // Check that the start and end years align, as well as the 
 // Numerator
 // Denominator
 // e.g testing rate = test events/total users, active users?
 // incidence rate = infection events/ total users
+	var Rate=Divide(Numerator, Denominator);
 }
 
 

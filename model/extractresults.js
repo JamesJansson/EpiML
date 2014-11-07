@@ -41,7 +41,7 @@ function CountFibrosisStages(PPLocal, SampleFactorMultiplier, Time){
 	Settings.CategoryLabel[7]="Antibody positive, cleared";
 	
 	// Run the statistic
-	FibrosisResult=new SummaryStatistic(Settings, FibrosisFunction);
+	FibrosisResult=new CountStatistic(Settings, FibrosisFunction);
 	FibrosisResult.Run(PPLocal);
 
 	
@@ -97,7 +97,7 @@ function LivingDxAndUDx(PPLocal, SampleFactorMultiplier, Time){
 	};
 	
 	// Run the statistic
-	DiagnosisResult=new SummaryStatistic(Settings, DiagnosisFunction);
+	DiagnosisResult=new CountStatistic(Settings, DiagnosisFunction);
 	DiagnosisResult.Run(PPLocal);
 
 	DiagnosisResult.Adjust(SampleFactorMultiplier);// Make this representative sample actually reflect the real number of diagnoses
