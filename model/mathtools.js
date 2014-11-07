@@ -43,22 +43,18 @@ function Percentile(MInputVector, PercentileValue){
 	VectorCopy.sort();
 	
 	var Frac=PercentileValue/100;
-	console.log("Frac"+ Frac);
 	var LeftIndex=Math.floor((VectorCopy.length-1)*Frac);
-	console.log("LeftIndex"+ LeftIndex);
 	if (LeftIndex==VectorCopy.length-1){// if the percentile as close to 100% as error will allow
 		return VectorCopy[LeftIndex];
 	}
 	// find the distance between the left and right position
 	var DistanceBetween=1/(VectorCopy.length-1);
-	console.log("DistanceBetween"+ DistanceBetween);
 	var LeftDistance=DistanceBetween*LeftIndex;
-	console.log("LeftDistance"+ LeftDistance);
 	var Prop=(Frac-LeftDistance)/DistanceBetween;
-	console.log("Prop"+ Prop);
+	if (Prop<1e-12){// this is to avoid round off errors. For this to become a real problem, the array will have to occupy 4TB of RAM. Unlikely to be a problem before 2024
+		Prop=0;
+	}
 	return VectorCopy[LeftIndex]*(1-Prop)+VectorCopy[LeftIndex+1]*Prop;
-	
-	
 }
 
 
