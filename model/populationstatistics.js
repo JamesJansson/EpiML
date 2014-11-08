@@ -298,9 +298,6 @@ function SummaryStatistic(Settings, InputFunction){
 	
 	//this.Function; 
 	// Function is user defined
-	// If CountType=='Instantaneous' it returns either a 0 or a 1 given a specific time
-	// If CountType=='Count' it returns a number >= 0, and is given StartTime, EndTime
-	
 	// If VectorFunction==true if returns a vector over the period stated
 	
 	this.StartTime=0;
@@ -336,13 +333,6 @@ function SummaryStatistic(Settings, InputFunction){
 		this.YLabel=Settings.YLabel;
 	}
 	
-	//  Set the CountType of statistic to be collected
-	if (typeof Settings.CountType === 'string'){
-		this.CountType=Settings.CountType;
-	}
-	else{
-		console.error("A CountType must be specified. CountTypes include: Instantaneous: how many people at time t have quality a (good for prevalence etc), Events: how many events between two times occur to each person. This value is added to an aggregate.") ;
-	}
 	
 	//Set whether the function will be a boolean operator or not.
 	if (typeof Settings.VectorFunction === 'boolean'){
@@ -386,7 +376,10 @@ function SummaryStatistic(Settings, InputFunction){
 }
 
 SummaryStatistic.prototype.Run=function(Population){
-	
+	var ValueStorage=[];
+	// A vector/table that stores the results for each eligible person until the simulation is ready to do calculations such as mean etc
+	// this value should be deleted at the end of extraction, as it could get extremely large.
+
 	
 	// Set up the time vector
 	var CurrentTimeStep=this.StartTime;
@@ -394,12 +387,10 @@ SummaryStatistic.prototype.Run=function(Population){
 	for (var TimeIndex=0; TimeIndex<this.NumberOfTimeSteps; TimeIndex++){
 		this.TimeVector[TimeIndex]=CurrentTimeStep;
 		CurrentTimeStep=CurrentTimeStep+this.StepSize;// Increment the time step
+		ValueStorage[TimeIndex]=[];
 	}
 	
 
-	var ValueStorage=ZeroArray(this.NumberOfTimeSteps);
-	// A vector/table that stores the results for each eligible person until the simulation is ready to do calculations such as mean etc
-	// this value should be deleted at the end of extraction, as it could get extremely large.
 	
 	// Determine if it is a vector returning function
 	if (this.VectorFunction==false){
@@ -442,16 +433,16 @@ SummaryStatistic.prototype.Run=function(Population){
 	for (var TimeIndex=0; TimeIndex<this.TimeVector.length; TimeIndex++){
 		this.N[TimeIndex]=ValueStorage[TimeIndex].length;
 		
-		this.Sum=Sum(ValueStorage[TimeIndex]);
+		this.Sum[TimeIndex]=Sum(ValueStorage[TimeIndex]);
 		this.Mean[TimeIndex]=Mean(ValueStorage[TimeIndex]);
-		this.Median=Mean(ValueStorage[TimeIndex]);
-		this.Upper95Percentile=Percentile(ValueStorage[TimeIndex], 97.5);
-		this.Lower95Percentile=Percentile(ValueStorage[TimeIndex], 2.5);
-		this.StandardDeviation=SampleStandardDeviation(ValueStorage[TimeIndex]);
-		this.UpperQuartile=Percentile(ValueStorage[TimeIndex], 75);
-		this.LowerQuartile=Percentile(ValueStorage[TimeIndex], 25);
-		this.Max=Max(ValueStorage[TimeIndex]);
-		this.Min=Min(ValueStorage[TimeIndex]);
+		this.Median[TimeIndex]=Mean(ValueStorage[TimeIndex]);
+		this.Upper95Percentile[TimeIndex]=Percentile(ValueStorage[TimeIndex], 97.5);
+		this.Lower95Percentile[TimeIndex]=Percentile(ValueStorage[TimeIndex], 2.5);
+		this.StandardDeviation[TimeIndex]=SampleStandardDeviation(ValueStorage[TimeIndex]);
+		this.UpperQuartile[TimeIndex]=Percentile(ValueStorage[TimeIndex], 75);
+		this.LowerQuartile[TimeIndex]=Percentile(ValueStorage[TimeIndex], 25);
+		this.Max[TimeIndex]=Max(ValueStorage[TimeIndex]);
+		this.Min[TimeIndex]=Min(ValueStorage[TimeIndex]);
 	}
 		
 	// Destroy the function to make passing back to the main thread easy (the function can break parallelisation)

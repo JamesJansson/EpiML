@@ -12,7 +12,7 @@ function CountFibrosisStages(PPLocal, SampleFactorMultiplier, Time){
 	Settings.NumberOfCategories=8;
 	
 	//Define the selection function
-	FibrosisFunction= function (Person, Year){
+	var FibrosisFunction= function (Person, Year){
 		if (Person.CurrentlyAlive(Year)==true){
 			var InfectionStatus=Person.HCV.Infected.Value(Year);
 			if (InfectionStatus==1 && Person.HCV.HCC.Value(Year)!=1){//currently infected
@@ -41,7 +41,7 @@ function CountFibrosisStages(PPLocal, SampleFactorMultiplier, Time){
 	Settings.CategoryLabel[7]="Antibody positive, cleared";
 	
 	// Run the statistic
-	FibrosisResult=new CountStatistic(Settings, FibrosisFunction);
+	var FibrosisResult=new CountStatistic(Settings, FibrosisFunction);
 	FibrosisResult.Run(PPLocal);
 
 	
@@ -75,7 +75,7 @@ function LivingDxAndUDx(PPLocal, SampleFactorMultiplier, Time){
 	Settings.CategoryLabel[3]="Diagnosed, uninfected & antibody+";
 	
 	//Define the selection function
-	DiagnosisFunction= function (Person, Year){
+	var DiagnosisFunction= function (Person, Year){
 		if (Person.CurrentlyAlive(Year)==true){
 			var InfectionStatus=Person.HCV.Infected.Value(Year);
 			if (InfectionStatus==1){
@@ -97,7 +97,7 @@ function LivingDxAndUDx(PPLocal, SampleFactorMultiplier, Time){
 	};
 	
 	// Run the statistic
-	DiagnosisResult=new CountStatistic(Settings, DiagnosisFunction);
+	var DiagnosisResult=new CountStatistic(Settings, DiagnosisFunction);
 	DiagnosisResult.Run(PPLocal);
 
 	DiagnosisResult.Adjust(SampleFactorMultiplier);// Make this representative sample actually reflect the real number of diagnoses
@@ -106,5 +106,31 @@ function LivingDxAndUDx(PPLocal, SampleFactorMultiplier, Time){
 }
 
 
+function AnalyseAgeInfected(PPLocal, Time){
+//Create settings
+	var Settings={};
+	Settings.Name="Age of people currently infected";
+	Settings.XLabel="Year";
+	Settings.YLabel="Age";
+	Settings.StartTime=Time.Start;
+	Settings.EndTime=Time.Stop;
+	Settings.TimeStep=Time.Step;
 
+	//Define the selection/statistic function
+	var AgeFunction= function (Person, Year){
+		if (Person.CurrentlyAlive(Year)==true){
+			if (Person.HCV.Infected.Value(Year)==1){
+				return Person.Age(Year);
+			}
+		}
+		return NaN;// not included in this statistic
+	};
+	
+	// Run the statistic
+	var AgeInfectedResult=new SummaryStatistic(Settings, AgeFunction);
+	AgeInfectedResult.Run(PPLocal);
+
+	return AgeInfectedResult;
+
+}
 

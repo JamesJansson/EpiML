@@ -172,7 +172,7 @@ self.onmessage = function (WorkerMessage) {
 	var SimResult={};
 	SimResult.FibrosisCount=CountFibrosisStages(PPNotification, CommonParam.SampleFactor, StatsTime);//Determine fibrosis levels with year
 	SimResult.DiagnosisCount=LivingDxAndUDx(PPNotification, CommonParam.SampleFactor, StatsTime);//Determine fibrosis levels with year
-	
+	SimResult.AgeInfectedResult=AnalyseAgeInfected(PPNotification, StatsTime);
 	
 
 	DebugStatement("Total individuals in model: " + PPNotification.length);
