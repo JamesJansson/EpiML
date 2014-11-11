@@ -140,19 +140,67 @@ function FixedAxisScatterPlot(PlotHolderName, Points,  xAxisLabel, yAxisLabel, x
 }
 
 
-function MorrisInterfaceScatter(Settings){
+
+
+function MorrisScatterPlot(Settings){
 	// take the current element, replace the contents with x axis label, y axis label, download button and plotting region
+	var SettingsCopy=SetUpPlotArea(Settings);
 	
-	Settings.element=Settings.element+"sub";
 	// make the settings work for scatter
-	Settings.lineWidth=0;
+	SettingsCopy.lineWidth=0;
 	
 	
 	// parse the Settings into the morris.js
-
+	return Morris.Line(SettingsCopy);// return the object representing the plot to be editted later, e.g.
+	// Using graph=ScatterPlot(settings); graph.setData(SomeObjectContainingData);
 }
 
-function SetUpPlotRegion(Element, XAxis, YAxis, Data){
-	
+function SetUpPlotArea(Settings){
+	// take the current element, replace the contents with x axis label, y axis label, download button and plotting region
+	var PlottingAreaID=Settings.element;
 
+	var ContentString="";
+	
+	// use papaparse to convert from JSON to csv
+	if (typeof Morris==="undefined"){
+		onsole.error("This library requires morris.js to run");
+	}
+	
+	if(typeof Papa==="undefined"){
+		console.log("If PapaParse.js is not included, a download button for the data cannot be included");
+	}	
+	else{
+		//var csvdata = Papa.unparse([
+		//{
+		//	"Column 1": "foo",
+		//	"Column 2": "bar"
+		//},
+		//{
+		//	"Column 1": "abc",
+		//	"Column 2": "def"
+		//}
+		//]);
+		var csvdata = Papa.unparse(Settings.data);
+		var DownloadDataString="var blob = new Blob([this.csvdata], {type: 'text/plain;charset=utf-8'});saveAs(blob, 'plotdata.csv');";
+		
+		//create and position the download object
+		ContentString=ContentString+"<downloadbutton href='"+DownloadDataString+"'>\21E9</downloadbutton>";
+		
+		//var blob = new Blob([this.csvdata], {type: "text/plain;charset=utf-8"});
+		//saveAs(blob, "plotdata.csv");
+	}
+	
+	// x axis
+	ContentString=ContentString+"<xAxisLabel>"+Settings.xAxisLabel+"</xAxisLabel>";
+	// y axis
+	ContentString=ContentString+"<yAxisLabel>"+Settings.yAxisLabel+"</yAxisLabel>";
+	// plotting area
+	
+	
+	// Put it into the HTML
+	document.getElementById(PlottingAreaID).innerHTML=ContentString;
+	
+	var SettingsCopy=JSON.parse(JSON.stringify(Settings));
+	SettingsCopy.element=SettingsCopy.element+"sub";// add this to the name of the element such that the correct area is addressed
+	return SettingsCopy;
 }
