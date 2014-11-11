@@ -42,3 +42,70 @@
 .legend table {
 	border-spacing: 5px;
 }
+
+
+
+
+div.plot {
+    margin: 5px;
+    padding: 5px;
+    border: 1px solid #0000ff;
+    height: auto;
+    width: 100%;
+	height: 100%;
+    float: left;
+    text-align: center;
+}
+
+div.plot plotarea {
+    display: inline;
+	    width: 100%;
+	height: 100%;
+    margin: 5px;
+    border: 1px solid #ffffff;
+}
+
+div.plot downloadbutton {
+	color: #bbbbbb;
+	position: abosolute;
+	left:0px; 
+	bottom:0px; 
+	font-size:200%;
+}
+
+div.plot downloadbutton::before{
+
+	content: "<a href='DownloadAsCSV(this.Data);'>\21E9</a>";
+}
+
+
+
+div.plot downloadbutton:hover {
+	color: #000000;
+}
+
+
+
+div.plot ylabel {
+
+             filter:  progid:DXImageTransform.Microsoft.BasicImage(rotation=0.083);  /* IE6,IE7 */
+         -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=0.083)"; /* IE8 */
+     -moz-transform: rotate(-90.0deg);  /* FF3.5+ */
+      -ms-transform: rotate(-90.0deg);  /* IE9+ */
+       -o-transform: rotate(-90.0deg);  /* Opera 10.5 */
+  -webkit-transform: rotate(-90.0deg);  /* Safari 3.1+, Chrome */
+          transform: rotate(-90.0deg);  /* Standard */
+}
+
+
+
+
+
+div.plot xlabel {
+    text-align: center;
+	position:absolute; 
+	height: auto;
+	bottom:0; 
+    font-weight: normal;
+    margin: 5px;
+}

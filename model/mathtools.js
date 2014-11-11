@@ -927,4 +927,7 @@ var Rand = (function() {
 Rand.SetSeed();//Here we set a standard seed, just in case we forget to in the code
 
 
-
+//***********************************************************
+function CloneObject(obj){
+    return JSON.parse(JSON.stringify(obj));
+}

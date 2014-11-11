@@ -1,5 +1,6 @@
 // Developed by James Jansson
 // Requires the flot plotting library to work
+// also requires the morris.js library to work
 
 
 function ConvertDataToLinePlot(x, InputMatrix){//Accepts [param][time] or [y][x]. Future systems will accept [param][time][sim]
@@ -138,3 +139,20 @@ function FixedAxisScatterPlot(PlotHolderName, Points,  xAxisLabel, yAxisLabel, x
 	$.plot(PlotHolderName, PlotData, PlotSettings);
 }
 
+
+function MorrisInterfaceScatter(Settings){
+	// take the current element, replace the contents with x axis label, y axis label, download button and plotting region
+	
+	Settings.element=Settings.element+"sub";
+	// make the settings work for scatter
+	Settings.lineWidth=0;
+	
+	
+	// parse the Settings into the morris.js
+
+}
+
+function SetUpPlotRegion(Element, XAxis, YAxis, Data){
+	
+
+}
