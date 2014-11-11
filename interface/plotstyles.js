@@ -161,10 +161,19 @@ function SetUpPlotArea(Settings){
 
 	var ContentString="";
 	
+	// change default behaviour
+	if (typeof Settings.parseTime==="undefined"){
+		Settings.parseTime=false;// this allows the x axis to be an arbitrary number, not just a date
+	}
+	
+	
 	// use papaparse to convert from JSON to csv
 	if (typeof Morris==="undefined"){
 		onsole.error("This library requires morris.js to run");
 	}
+	
+
+	
 	
 	if(typeof Papa==="undefined"){
 		console.log("If PapaParse.js is not included, a download button for the data cannot be included");
@@ -204,3 +213,5 @@ function SetUpPlotArea(Settings){
 	SettingsCopy.element=SettingsCopy.element+"sub";// add this to the name of the element such that the correct area is addressed
 	return SettingsCopy;
 }
+
+//convert data
