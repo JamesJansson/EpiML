@@ -169,7 +169,7 @@ function SetUpPlotArea(Settings){
 	
 	// use papaparse to convert from JSON to csv
 	if (typeof Morris==="undefined"){
-		onsole.error("This library requires morris.js to run");
+		console.error("This library requires morris.js to run");
 	}
 	
 

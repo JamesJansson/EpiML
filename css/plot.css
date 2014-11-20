@@ -73,13 +73,6 @@ div.plot downloadbutton {
 	font-size:200%;
 }
 
-div.plot downloadbutton::before{
-
-	content: "<a href='DownloadAsCSV(this.Data);'>\21E9</a>";
-}
-
-
-
 div.plot downloadbutton:hover {
 	color: #000000;
 }
