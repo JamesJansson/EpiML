@@ -72,8 +72,21 @@ Papa.parse("data/summarynotifications.csv", {download: true, complete: function(
 <body >
 
 <div class="plot" id="plot1" style="left: 200px">
-<div class="ylabel"><div class="rotate">Hello</div></div>
-<div class="downloadbutton" title="Download data" href="yes.html">&#x21E9;</div>
+<div class="ylabel" onclick="document.getElementById('plot1').webkitRequestFullScreen()"><div class="rotate">Hello</div></div>
+<div class="downloadbutton" title="Download data" onclick="console.log(this);">&#x21E9;</div>
+
+var i = document.getElementById("myimage");
+ 
+// go full-screen
+if (i.requestFullscreen) {
+    i.requestFullscreen();
+} else if (i.webkitRequestFullscreen) {
+    i.webkitRequestFullscreen();
+} else if (i.mozRequestFullScreen) {
+    i.mozRequestFullScreen();
+} else if (i.msRequestFullscreen) {
+    i.msRequestFullscreen();
+}
 
 </div>
 
