@@ -65,15 +65,16 @@ div.plot plotarea {
     border: 1px solid #ffffff;
 }
 
-div.plot downloadbutton {
+div.plot div.downloadbutton {
 	color: #bbbbbb;
 	position: abosolute;
 	left:0px; 
 	bottom:0px; 
 	font-size:200%;
+	font-weight: 900;
 }
 
-div.plot downloadbutton:hover {
+div.plot div.downloadbutton:hover {
 	color: #000000;
 }
 
