@@ -143,6 +143,13 @@ function FixedAxisScatterPlot(PlotHolderName, Points,  xAxisLabel, yAxisLabel, x
 
 
 function MorrisScatterPlot(Settings){
+	// Put the data into a format that the download function can understand
+	
+	// change default behaviour
+	if (typeof Settings.parseTime==="undefined"){
+		Settings.parseTime=false;// this allows the x axis to be an arbitrary number, not just a date
+	}
+	
 	// take the current element, replace the contents with x axis label, y axis label, download button and plotting region
 	var SettingsCopy=SetUpPlotArea(Settings);
 	
@@ -156,15 +163,16 @@ function MorrisScatterPlot(Settings){
 }
 
 function SetUpPlotArea(Settings){
+	// The purpose of this section is to make 
+
+
+
 	// take the current element, replace the contents with x axis label, y axis label, download button and plotting region
 	var PlottingAreaID=Settings.element;
 
 	var ContentString="";
 	
-	// change default behaviour
-	if (typeof Settings.parseTime==="undefined"){
-		Settings.parseTime=false;// this allows the x axis to be an arbitrary number, not just a date
-	}
+	
 	
 	
 	// use papaparse to convert from JSON to csv
