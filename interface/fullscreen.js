@@ -3,17 +3,22 @@
 
 // All sub divs should use 100% of the space, such that when full screen occurs, the sub divs expand appropriately.
 
-function GoFullScreen (RelevantElement){
-var i = document.getElementById(RelevantElement);
+function GoFullScreen (ElementID){
+var i = document.getElementById(ElementID);
  
 // go full-screen
-if (i.requestFullscreen) {
+if (typeof(i.requestFullscreen) != "undefined") {
     i.requestFullscreen();
-} else if (i.webkitRequestFullscreen) {
-    i.webkitRequestFullscreen();
-} else if (i.mozRequestFullScreen) {
-    i.mozRequestFullScreen();
-} else if (i.msRequestFullscreen) {
-    i.msRequestFullscreen();
+} else if (typeof(i.webkitRequestFullscreen) != "undefined") {
+	i.webkitRequestFullscreen();
+} else if (typeof(i.mozRequestFullScreen) != "undefined") {
+	i.mozRequestFullScreen();
+} else if (typeof(i.msRequestFullscreen) != "undefined") {
+	i.msRequestFullscreen();
 }
 }
+
+
+
+
+
