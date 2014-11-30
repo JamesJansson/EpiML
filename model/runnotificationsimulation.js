@@ -134,7 +134,7 @@ self.onmessage = function (WorkerMessage) {
 	}
 	
 	
-	if (false){
+	//if (true){
 		SaySomething={};
 		SaySomething.Data="This is data";
 		SaySomething.Code="console.log(Data);";
@@ -147,7 +147,7 @@ self.onmessage = function (WorkerMessage) {
 		
 		
 		A=TestStochasticOptimisation();
-	}
+	//}
 	
 	
 	

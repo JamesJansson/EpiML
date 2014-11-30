@@ -27,7 +27,10 @@
 <script type="text/javascript" src="interface/blob/blob.js"></script>
 <script type="text/javascript" src="interface/filesaver/filesaver.js"></script>
 <script type="text/javascript" src="interface/fullscreen.js"></script>
-
+<!-- The following scripts are necessary to create morrs plots -->
+<script type="text/javascript" src="interface/raphael/raphael.js"></script>
+<script type="text/javascript" src="interface/morris/morris.js"></script>
+<link rel="stylesheet" href="interface/morris/morris.css">
 
 <!-- Loading methods that are used in the model -->
 <script type="text/javascript" src="model/simulationtools.js"></script>
@@ -75,8 +78,11 @@ Papa.parse("data/summarynotifications.csv", {download: true, complete: function(
 
 <div class="plot" id="plot1" >
 	<div class="fullscreenbox" id="plot1_fullscreenbox" ><div class="fullscreenbutton" title="Fullscreen" id="plot1_fullscreenbutton" onclick="document.getElementById('plot1_fullscreenbox').webkitRequestFullScreen();">&#10063</div>
+		<div id="plot1_plotarea" ></div>
+		<div class="ylabel" ><div class="rotate">Hello</div></div>
 		<div class="ylabel" ><div class="rotate">Hello</div></div>
 		<div class="downloadbutton" title="Download data" onclick="GoFullScreen('plot1_fullscreenbox');">&#x21E9;</div>
+		
 	</div>
 
 
