@@ -20,7 +20,10 @@
 	-webkit-box-shadow: 0 3px 10px rgba(0,0,0,0.1);
 }
 
-.plot-placeholder {
+
+
+
+.plot_placeholder {
 	width: 100%;
 	height: 100%;
 	font-size: 14px;
@@ -50,11 +53,11 @@ div.plot {
 
     margin: 5px;
     padding: 5px;
-    border: 1px solid #0000ff;
+    border: 1px solid #999999;
     height: auto;
     width: 500px;
 	height: 400px;
-    float: left;
+    
     position: relative;
 }
 
@@ -65,7 +68,7 @@ div.plot plotarea {
     margin: 5px;
 }
 
-.plot .downloadbutton {
+.downloadbutton {
 	color: #dddddd;
 	position: absolute;
 	left: 10px; 

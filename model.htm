@@ -18,6 +18,7 @@
 <script type="text/javascript" src="interface/jquery/jquery.flot.js"></script>
 <script type="text/javascript" src="interface/jquery/jquery.flot.axislabels.js"></script> <!-- http://www.pikemere.co.uk/blog/flot-tutorial-how-to-create-area-charts/ -->
 <script type="text/javascript" src="interface/jquery/jquery.flot.stack.js"></script>
+<script type="text/javascript" src="interface/jquery/jquery.flot.resize.js"></script>
 <script type="text/javascript" src="interface/plotstyles.js"></script>
 <script type="text/javascript" src="interface/multicoresim.js"></script>
 <script type="text/javascript" src="interface/papaparse.js"></script>
@@ -26,6 +27,7 @@
 <script type="text/javascript" src="interface/interfacebuttons.js"></script>
 <script type="text/javascript" src="interface/blob/blob.js"></script>
 <script type="text/javascript" src="interface/filesaver/filesaver.js"></script>
+<script type="text/javascript" src="interface/fullscreen.js"></script>
 
 <!-- Loading methods that are used in the model -->
 <script type="text/javascript" src="model/simulationtools.js"></script>
@@ -102,13 +104,22 @@ Papa.parse("data/summarynotifications.csv", {download: true, complete: function(
 		<p>Below are the early stages of the full simulation</p>
 		<div id="PlotFibrosisButton" class="SolidButton" onClick="NotificationSimPlot();DxUDxSimPlot();"> Plot Fibrosis </div>
 		
+		<div class="plot" id="plot1" >
+			<div class="fullscreenbox" id="plot1_fullscreenbox" ><div class="fullscreenbutton" title="Fullscreen" id="plot1_fullscreenbutton" onclick="GoFullScreen('plot1_fullscreenbox');">&#10063</div>
+				<div id="HCVTestPlotHolder" class="plot_placeholder"></div>
+				<div class="ylabel"><div class="rotate">Hello</div></div>
+
+				<div class="downloadbutton" title="Download data" onclick="">&#x21E9;</div>
+			</div>
+		</div>
+		
 		<div class="plot-container">
-			<div id="HCVTestPlotHolder" class="plot-placeholder"></div>
+			<div id="HCVTestPlotHolder2" class="plot_placeholder"></div>
 		</div>
 		<div id="HCVResultsTable"></div>		
 
 		<div class="plot-container">
-			<div id="DxUDxPlotHolder" class="plot-placeholder"></div>
+			<div id="DxUDxPlotHolder" class="plot_placeholder"></div>
 		</div>
 		<div id="DxUDxResultsTable"></div>
 		
@@ -137,7 +148,7 @@ Papa.parse("data/summarynotifications.csv", {download: true, complete: function(
 		
 		<div style="float:left; position:absolute; left:200px; top: 0px;">
 			<div class="plot-container">
-				<div id="NotificationPlotHolder" class="plot-placeholder"></div>
+				<div id="NotificationPlotHolder" class="plot_placeholder"></div>
 			</div>
 		</div>
 	</div>
@@ -182,7 +193,7 @@ Papa.parse("data/summarynotifications.csv", {download: true, complete: function(
 			<div id="HCVResultsSection"  style="float:left; position:absolute; left:200px; top: 0px;">
 			
 				<div class="plot-container">
-					<div id="HCVTestPlotHolder" class="plot-placeholder"></div>
+					<div id="HCVTestPlotHolder" class="plot_placeholder"></div>
 				</div>
 			<div id="HCVResultsTable"></div>
 			</div>
@@ -242,7 +253,7 @@ Papa.parse("data/summarynotifications.csv", {download: true, complete: function(
 		<div id="HCVRunNotificationsButton" class="SolidButton" onClick="TestMulticoreSim()"> Run simulation </div>
 		
 		<div class="plot-container">
-			<div id="PlotHolder" class="plot-placeholder"></div>
+			<div id="PlotHolder" class="plot_placeholder"></div>
 		</div>
 
 		
