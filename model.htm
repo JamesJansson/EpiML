@@ -110,7 +110,7 @@ Papa.parse("data/summarynotifications.csv", {download: true, complete: function(
 				<div class="downloadbutton" title="Download data" onclick="plot1_data.Download();">&#x21E9;</div>
 				
 				<div class="plot_positioner">
-					<div id="HCVTestPlotHolder" class="plot_placeholder"></div>
+					<div id="plot1_placeholder" class="plot_placeholder"></div>
 				</div>
 				<div class="xlabel">Year</div>
 				<div class="ylabel"><div class="rotate">Y Axis Label</div></div>
@@ -161,32 +161,6 @@ Papa.parse("data/summarynotifications.csv", {download: true, complete: function(
 		<h1>Plots</h1>
 		
 		<p>Fibrosis Progression</p>
-		<form class="ParamContainer" id="F0F1"> 
-			<input type="text" name="paramname" value="F0F1"> 
-			<select name="DistributionType" onchange=";">
-				<option value="Normal">Normal</option>
-				<option value="LogNormal">Log Normal</option>
-				<option value="NormalProbability">Normal Probability</option>
-			</select>
-			Median <input type="text" name="Median"> 
-			SD <input type="text" name="SD"> 
-			<a onClick="ToggleDisplay(this, 'ParamInfoBox');">+ More info</a>
-			<div class="ParamInfoBox" style="display: none;"> Some info to display </div>
-		</form>
-		
-		<form class="ParamContainer" id="F1F2"> 
-			<input type="text" name="paramname" value="F1F2"> 
-			<select name="DistributionType" onchange=";">
-				<option value="Normal">Normal</option>
-				<option value="LogNormal">Log Normal</option>
-				<option value="NormalProbability">Normal Probability</option>
-			</select>
-			Median <input type="text" name="Median"> 
-			SD <input type="text" name="SD"> 
-			<a onClick="ToggleDisplay(this, 'ParamInfoBox');">+ More info</a>
-			<div class="ParamInfoBox" style="display: none;"> Some info to display </div>
-		</form>
-		
 		
 		
 		<div class="SolidButton" onClick="ToggleDisplay(this, 'HCVPlotArea');">Show plot</div>

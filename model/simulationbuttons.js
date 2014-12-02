@@ -95,7 +95,7 @@ function NotificationSimPlot(){
 	TimeAxis=SimulationHolder.Result[0].FibrosisCount.TimeVector;
 	
 	// convert to a form that plot will accept
-	PlotData=HCVTestConvertDataToLinePlot(TimeAxis, FibrosisArray);
+	PlotData=ConvertDataToLinePlot(TimeAxis, FibrosisArray);
 	//Set up plot appearance // http://www.pikemere.co.uk/blog/flot-tutorial-how-to-create-area-charts/ 
 	PlotSettings={xaxis: {
 					axisLabel: 'Time (years)',
@@ -122,8 +122,8 @@ function NotificationSimPlot(){
 				}
 			};
 	
-	//plot of HCVTestPlotHolder
-	$.plot("#HCVTestPlotHolder", PlotData, PlotSettings);
+
+	$.plot("#plot1_placeholder", PlotData, PlotSettings);
 
 }
 
@@ -135,7 +135,7 @@ function DxUDxSimPlot(){
 	TimeAxis=SimulationHolder.Result[0].DiagnosisCount.TimeVector;
 	
 	// convert to a form that plot will accept
-	PlotData=HCVTestConvertDataToLinePlot(TimeAxis, DxUDxArray);
+	PlotData=ConvertDataToLinePlot(TimeAxis, DxUDxArray);
 	//Set up plot appearance // http://www.pikemere.co.uk/blog/flot-tutorial-how-to-create-area-charts/ 
 	PlotSettings={xaxis: {
 					axisLabel: 'Time (years)',
@@ -167,4 +167,15 @@ function DxUDxSimPlot(){
 
 }
 
-
+function ConvertDataToLinePlot(x, InputMatrix){//Accepts [param][time] or [y][x]. Future systems will accept [param][time][sim]
+	LinePlotData=[];
+	NumberOfLines=InputMatrix.length;
+	for (i=0; i<NumberOfLines; i++){
+		ThisLine=[];
+		for (var j = 0; j < InputMatrix[i].length; j++) {
+			ThisLine.push([x[j], InputMatrix[i][j]]);
+		}
+		LinePlotData.push(ThisLine);
+	}
+	return LinePlotData;
+}
