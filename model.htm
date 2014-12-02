@@ -105,14 +105,15 @@ Papa.parse("data/summarynotifications.csv", {download: true, complete: function(
 		<div id="PlotFibrosisButton" class="SolidButton" onClick="NotificationSimPlot();DxUDxSimPlot();"> Plot Fibrosis </div>
 		
 		<div class="plot" id="plot1" >
-			<div class="fullscreenbox" id="plot1_fullscreenbox" ><div class="fullscreenbutton" title="Fullscreen" id="plot1_fullscreenbutton" onclick="ToggleFullScreen('plot1_fullscreenbox');">&#10063</div>
+			<div class="fullscreenbox" id="plot1_fullscreenbox" >
+				<div class="fullscreenbutton" title="Fullscreen" id="plot1_fullscreenbutton" onclick="ToggleFullScreen('plot1_fullscreenbox');">&#10063</div>
+				<div class="downloadbutton" title="Download data" onclick="plot1_data.Download();">&#x21E9;</div>
+				
 				<div class="plot_positioner">
 					<div id="HCVTestPlotHolder" class="plot_placeholder"></div>
 				</div>
 				<div class="xlabel">Year</div>
 				<div class="ylabel"><div class="rotate">Y Axis Label</div></div>
-
-				<div class="downloadbutton" title="Download data" onclick="plot1_data.Download();">&#x21E9;</div>
 			</div>
 		</div>
 		
