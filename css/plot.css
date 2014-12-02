@@ -81,8 +81,8 @@ div.plot plotarea {
 .downloadbutton {
 	color: #dddddd;
 	position: absolute;
-	left: 10px; 
-	bottom: 0px; 
+	left: 0.5em; 
+	top: calc(100% - 1.5em); 
 	font-size:200%;
 	font-weight: 900;
 	
@@ -132,7 +132,7 @@ white-space: nowrap;
 .fullscreenbutton{
 	color: #dddddd;
 	position: absolute;
-	right: 10px; 
+	right: 0.5em; 
 	top: calc(100% - 1.5em); 
 	font-size:200%;
 	font-weight: 900;
