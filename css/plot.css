@@ -102,12 +102,16 @@ div.plot plotarea {
 
 
 .ylabel {
+white-space: nowrap; 
+	word-wrap:none;
 	text-align: center;
+	
+	width: 100%;
 	color: #00000;
 	position: absolute;
-	height: 1%;
-	left: 0%; 
-	bottom: 50%; 
+	left: 5%;
+	left: calc(-50% + 1em);
+	top: 50%; 
 }
 
 .xlabel {
@@ -116,7 +120,7 @@ div.plot plotarea {
 	position: absolute;
 	left: 0%; 
 	width:100%;
-	bottom: 0%; 
+	top: calc(100% - 1.5em);
 }
 
 
