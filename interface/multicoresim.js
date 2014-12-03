@@ -43,6 +43,7 @@ function MultiThreadSim(ScriptName, Common, SimDataArray, NoThreads){
 	this.WorkerComplete=[];
 	this.WorkerTerminated=[];
 	
+	this.FunctionToRunOnCompletion; // 
 	
 	this.CurrentlyRunning=false;
 	this.Complete=false;
@@ -88,7 +89,7 @@ MultiThreadSim.prototype.Start=function() {
 
 MultiThreadSim.prototype.StartNextSim=function() {
 
-	MoreSimsToRun=true;//flag to prevent continually trying to run more sims
+	var MoreSimsToRun=true;//flag to prevent continually trying to run more sims
 	while (this.NoSimsCurrentlyRunning<this.NoThreads &&  MoreSimsToRun==true){//there are spare Threads available
 		if (this.SimsStarted<this.NoSims){//if there are sims that have yet to be started
 			// Find a free thread
@@ -99,7 +100,7 @@ MultiThreadSim.prototype.StartNextSim=function() {
 			this.ThreadInUse[ThreadCount]=true;
 			var ThreadID=ThreadCount;
 			
-			SimID=this.SimsStarted++;//run this sim, increment by 1
+			var SimID=this.SimsStarted++;//run this sim, increment by 1
 			this.NoSimsCurrentlyRunning++;//indicate that another Thread has become used
 			
 			this.Worker[SimID]= new Worker(this.ScriptName);
@@ -119,7 +120,11 @@ MultiThreadSim.prototype.StartNextSim=function() {
 	//Determine if this is the last sim to complete
 	if (this.SimsComplete>=this.NoSims){
 		this.Complete=true;
+		
 		//this.Terminate();//close all the workers
+		if (typeof(this.FunctionToRunOnCompletion) != 'undefined'){
+			this.FunctionToRunOnCompletion(this);
+		}
 	}
 }
 

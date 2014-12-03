@@ -5,6 +5,7 @@ importScripts("simulation.js");
 importScripts("simulationtools.js");
 importScripts("mathtools.js");
 importScripts("stochasticoptimisation.js");
+// Model specific functions
 importScripts("person.js");
 importScripts("hcv.js");
 importScripts("hiv.js");
