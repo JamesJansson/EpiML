@@ -90,6 +90,18 @@ function DownloadableCSV(InputData, FileName){
 	if (typeof(FileName) != 'undefined'){
 		this.FileName=FileName;
 	}
+	// // Specifying fields and data manually
+// var csv = Papa.unparse({
+	// fields: ["Column 1", "Column 2"],
+	// data: [
+		// ["foo", "bar"],
+		// ["abc", "def"]
+	// ]
+// });
+// http://papaparse.com/docs#json-to-csv
+	
+	
+	
 };
 
 DownloadableCSV.prototype.Download=function(){
