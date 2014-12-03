@@ -10,7 +10,7 @@ function CSVFile(FileName){//file name in this instance is the URL
 	//download informs Papa that it is an external CSV (http request), and the function is a handler to run when the file is ready
 	
 
-}
+};
 
 CSVFile.prototype.GetValues= function (y1, y2, x1, x2){//Changing to (row1, row2, column1, column2), as is expected in a CSV file
 	//checking input is good
@@ -73,9 +73,6 @@ CSVFile.prototype.Entries= function (y1, y2, x1, x2){
 };
 
 
-
-
-
 CSVFile.prototype.IsNaturalNumber = function (value){
 	if (Math.floor(value) == value){
 		return true;
@@ -86,5 +83,22 @@ CSVFile.prototype.IsNaturalNumber = function (value){
 	
 	//var NaturalNumberRegex = /^(0|([1-9]\d*))$/;
 	//return NaturalNumberRegex.test(StringToTest);
-}
+};
 
+function DownloadableCSV(InputData, FileName){
+	this.Data=InputData;
+	if (typeof(FileName) != 'undefined'){
+		this.FileName=FileName;
+	}
+};
+
+DownloadableCSV.prototype.Download=function(){
+	var csv = Papa.unparse(this.Data);
+	var blob = new Blob([csv], {type: "text/plain;charset=utf-8"});
+	if (typeof(this.FileName) == 'undefined'){
+		saveAs(blob, "data.csv");
+	}
+	else{
+		saveAs(blob, this.FileName);
+	}
+};
