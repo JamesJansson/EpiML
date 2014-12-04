@@ -64,8 +64,6 @@ self.onmessage = function (WorkerMessage) {
     var SimData = WorkerMessage.data.SimData;
 	var ThreadID = WorkerMessage.data.ThreadID;// this value can be used by the code to send specific messages to particular elements, e.g. progress bar 4 set to 60%
 	
-	console.log("thread: "+ThreadID+" simID: "+SimID);
-	
 	var StringForStatus="thread: "+ThreadID+" simID: "+SimID;
 	self.postMessage({StatusText: StringForStatus, StatusTextID: ThreadID});
 	

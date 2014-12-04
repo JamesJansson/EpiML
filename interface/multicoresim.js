@@ -139,6 +139,7 @@ MultiThreadSimMessageHandler=function(e) {
 	
 	// Messages to the StatusText
 	if (typeof e.data.StatusText != 'undefined'){
+		// Example usage: self.postMessage({StatusText: "hello", StatusTextID: 2});// two identifies that is using thread 2's display text
 		console.error(e.data.StatusText);
 		document.getElementById(this.StatusTextElementName+e.data.StatusTextID).value=e.data.StatusText;
 	}
