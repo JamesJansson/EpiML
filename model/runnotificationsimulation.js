@@ -66,6 +66,10 @@ self.onmessage = function (WorkerMessage) {
 	
 	console.log("thread: "+ThreadID+" simID: "+SimID);
 	
+	var StringForStatus="thread: "+ThreadID+" simID: "+SimID;
+	self.postMessage({StatusText: StringForStatus, StatusTextID: ThreadID});
+	
+	
 	// Load up mortality data
 	MaleMortality=new MortalityCalculator(CommonParam.MaleMortality.Rates1, CommonParam.MaleMortality.Year1, CommonParam.MaleMortality.Rates2, CommonParam.MaleMortality.Year2);
 	FemaleMortality=new MortalityCalculator(CommonParam.FemaleMortality.Rates1, CommonParam.FemaleMortality.Year1, CommonParam.FemaleMortality.Rates2, CommonParam.FemaleMortality.Year2);

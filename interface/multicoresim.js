@@ -57,7 +57,9 @@ function MultiThreadSim(ScriptName, Common, SimDataArray, NoThreads){
 	this.UseSimProgressBar=false;
 	this.SimProgressBarID="SimProgressBar";//To allow a progress bar to be installed into the page
 	this.UseWithinSimProgressBar=false;
-	this.WithinSimProgressBarID="WithinSimProgressBar";
+	this.WithinSimProgressBarID="WithinSimProgressBar";// to give a progress bar to each of the simulations as they are running
+
+	this.StatusTextElementName="StatusTextElement";
 }
 
 MultiThreadSim.prototype.Start=function() {
@@ -105,6 +107,7 @@ MultiThreadSim.prototype.StartNextSim=function() {
 			
 			var BoundMessage=MultiThreadSimMessageHandler.bind(this);
 			this.Worker[SimID].onmessage = BoundMessage;
+			this.Worker[SimID].ThreadID=ThreadID;
 			
 			//Post message will soon become a handler for many commands, including starting the simulation, optimising the simulation, and requesting data
 			this.Worker[SimID].postMessage({ SimID: SimID, ThreadID: ThreadID, Common: this.Common, SimData: this.SimDataArray[SimID]});
@@ -136,7 +139,8 @@ MultiThreadSimMessageHandler=function(e) {
 	
 	// Messages to the StatusText
 	if (typeof e.data.StatusText != 'undefined'){
-		console.log(e.data.StatusText);
+		console.error(e.data.StatusText);
+		document.getElementById(this.StatusTextElementName+e.data.StatusTextID).value=e.data.StatusText;
 	}
 	if (typeof e.data.Console != 'undefined'){//used to pass structured data to the console
 		console.log(e.data.Console);
@@ -144,7 +148,7 @@ MultiThreadSimMessageHandler=function(e) {
 	// Messages to the ProgressBar
 	if (typeof e.data.ProgressBarValue != 'undefined'){
 		if (this.UseWithinSimProgressBar==true){
-			document.getElementById(this.WithinSimProgressBarID).value=e.data.ProgressBarValue;
+			document.getElementById(this.WithinSimProgressBarID+this.ThreadID).value=e.data.ProgressBarValue;
 		}
 	}
 	
