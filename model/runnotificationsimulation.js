@@ -59,13 +59,12 @@ self.onmessage = function (WorkerMessage) {
 	CommonParam=WorkerMessage.data.Common.Param;
 	// Load simulation settings
 	var Settings=WorkerMessage.data.Common.Settings;
-	console.error(Settings.SampleFactor);
 	
 	SimID = WorkerMessage.data.SimID; // this value is used to select the appropriate parameter value
     var SimData = WorkerMessage.data.SimData;
 	var ThreadID = WorkerMessage.data.ThreadID;// this value can be used by the code to send specific messages to particular elements, e.g. progress bar 4 set to 60%
 	
-	console.log("thread: "+ThreadID);
+	console.log("thread: "+ThreadID+" simID: "+SimID);
 	
 	// Load up mortality data
 	MaleMortality=new MortalityCalculator(CommonParam.MaleMortality.Rates1, CommonParam.MaleMortality.Year1, CommonParam.MaleMortality.Rates2, CommonParam.MaleMortality.Year2);

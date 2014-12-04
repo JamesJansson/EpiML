@@ -41,7 +41,7 @@ function RunSim(){
 	}
 
 	//Creating the parameter
-	SimulationHolder=new MultiThreadSim(ScriptToRun, Common, SimInputData, NoCores); //Common is the same between all sims
+	SimulationHolder=new MultiThreadSim(ScriptToRun, Common, SimInputData, Settings.NoThreads); //Common is the same between all sims
 	SimulationHolder.UseSimProgressBar=true;
 	SimulationHolder.SimProgressBarID="MainProgress";
 	SimulationHolder.FunctionToRunOnCompletion=NotificationSimPlot;

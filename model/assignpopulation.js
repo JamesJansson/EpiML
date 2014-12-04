@@ -21,12 +21,10 @@ function AssignPopulation(Data, SampleFactor){
 	Sex[1].Notifications={};
 	Sex[1].Notifications=Data.FemaleNotifications.Table;
 	
-	console.log("Starting to assign people");
-	console.log("Data.StateNotifications");
+	console.log("Assigning diagnoses");
+
 	// For each year
 	for (var YearIndex=0; YearIndex<Data.StateNotifications.Year.length; YearIndex++){
-		console.log("Got into the loop");
-		console.log(YearIndex);
 		YearThisStep=Data.StateNotifications.Year[YearIndex];
 		
 		StateVector=[];//reset
@@ -52,7 +50,6 @@ function AssignPopulation(Data, SampleFactor){
 		
 		// For each age group
 		for (var AgeIndex=0; AgeIndex<NumAgeGroups; AgeIndex++){
-			console.log(SampleFactor);
 			for (var SexIndex=0; SexIndex<2; SexIndex++){
 				
 				EstimateInThisGroup=Sex[SexIndex].Notifications[AgeIndex][YearIndex];
@@ -61,8 +58,6 @@ function AssignPopulation(Data, SampleFactor){
 				//To compensate, the algorithm adds a person with a probability based on the remainder
 				// e.g. and entry with 3.4 people will give 3 people plus one extra person with 40% probability 
 				EstimateInThisGroup=EstimateInThisGroup*(1-DuplicateFactor)/SampleFactor;
-				console.log("Inside the function");
-				console.log(EstimateInThisGroup);
 				EstimateInThisGroup1=Math.floor(EstimateInThisGroup);
 				EstimateInThisGroup2=EstimateInThisGroup-EstimateInThisGroup1;// Some value between 0 and 1
 				InThisGroup=EstimateInThisGroup1+Win(EstimateInThisGroup2);

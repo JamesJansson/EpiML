@@ -12,8 +12,7 @@ var CommonParam={};
 // Setting up flags
 	var SimulationRunning=0;//set to 1 if running
 
-// Settings
-	var NoCores=1;
+
 
 	
 function InitialisePage(){
@@ -58,10 +57,11 @@ function LoadSettingsFiles(){
 	
 	// Note this does not require the script to wait
 	// For all of the settings that have not been set 
-	// if Settings.NoCores=
-	Settings.NoCores=1;// number of cores to use at a time
+	// if Settings.NoThreads=
+	Settings.NoThreads=1;// number of cores to use at a time
 	Settings.ConcurrentSims=10;// number of sims to keep active at once (for interface playing)
 	Settings.SampleFactor=10;// This value is the number of people each person in the simulation represents. Probably a good idea to set this to 1, 10 or 100
+	
 }
 
 function LoadParametersFiles(){

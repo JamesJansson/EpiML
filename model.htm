@@ -193,8 +193,8 @@ Papa.parse("data/summarynotifications.csv", {download: true, complete: function(
 	<div id="SettingsContent" class="Content">
 		<h1>Settings</h1>
 		<form>
-			<p>Number of cores to use for simulations</p>
-			<select name="NoCoresDropdown" onchange="NoCores=this.value;">
+			<p>Number of threads to use for simulations</p>
+			<select name="NoThreadsDropdown" onchange="Settings.NoThreads=this.value;">
 				<option value="1">1</option>
 				<option value="2">2</option>
 				<option value="3">3</option>
