@@ -40,7 +40,6 @@ function MultiThreadSim(ScriptName, Common, SimDataArray, NoThreads){
 	this.NoSims=SimDataArray.length;
 	
 	this.TerminateOnFinish=true;//This flag is used to indicate that following the  return of a 'result', the simulation should terminate.
-	this.WorkerComplete=[];
 	this.WorkerTerminated=[];
 	
 	this.FunctionToRunOnCompletion; // 
@@ -77,9 +76,8 @@ MultiThreadSim.prototype.Start=function() {
 		document.getElementById(this.SimProgressBarID).value=0;
 	}
 	
-	// Set up the 'WorkerComplete' and 'WorkerTerminated' arrays
+	// Set up the 'WorkerTerminated' array
 	for (var i=0; i<this.NoSims; i++){
-		this.WorkerComplete[i]=false;
 		this.WorkerTerminated[i]=false;
 	}
 	
@@ -170,9 +168,8 @@ MultiThreadSimMessageHandler=function(e) {
 		var SimID=e.data.WorkerMessage.SimID;
 		this.Result[SimID]=e.data.Result;//Store the results of the simulation
 		this.SimsComplete++;
-		this.WorkerComplete[SimID]=true;
 		var ThreadID=e.data.WorkerMessage.ThreadID;
-		this.ThreadInUse[ThreadID]=true;
+		this.ThreadInUse[ThreadID]=false;
 		
 		if (this.TerminateOnFinish){
 			this.Worker[SimID].terminate();
