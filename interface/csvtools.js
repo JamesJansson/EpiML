@@ -86,10 +86,19 @@ CSVFile.prototype.IsNaturalNumber = function (value){
 };
 
 function DownloadableCSV(InputData, FileName){
-	this.Data=InputData;
 	if (typeof(FileName) != 'undefined'){
 		this.FileName=FileName;
 	}
+	
+	this.UnparseInput={};
+	this.UnparseInput.fields=[];
+	this.UnparseInput.data=[];
+	for (A in InputData){
+		this.UnparseInput.fields.push(A);	
+		this.UnparseInput.data.push(InputData(A));	
+	}
+	
+	
 	// // Specifying fields and data manually
 // var csv = Papa.unparse({
 	// fields: ["Column 1", "Column 2"],
@@ -105,7 +114,7 @@ function DownloadableCSV(InputData, FileName){
 };
 
 DownloadableCSV.prototype.Download=function(){
-	var csv = Papa.unparse(this.Data);
+	var csv = Papa.unparse(this.UnparseInput);
 	var blob = new Blob([csv], {type: "text/plain;charset=utf-8"});
 	if (typeof(this.FileName) == 'undefined'){
 		saveAs(blob, "data.csv");
