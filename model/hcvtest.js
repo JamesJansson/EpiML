@@ -67,7 +67,7 @@ function HCVTestPlot(){
 	TimeAxis=[];
 	for (i=0; i<HCVTestResult[0].length; i++){TimeAxis[i]=i;}
 	// convert to a form that plot will accept
-	PlotData=HCVTestConvertDataToLinePlot(TimeAxis, HCVTestResult);
+	PlotData=ConvertDataToLinePlot(TimeAxis, HCVTestResult);
 	//Set up plot appearance // http://www.pikemere.co.uk/blog/flot-tutorial-how-to-create-area-charts/ 
 	PlotSettings={xaxis: {
 					axisLabel: 'Time (years)',
