@@ -217,6 +217,9 @@ Papa.parse("data/summarynotifications.csv", {download: true, complete: function(
 				<option value="8">8</option>
 			</select>
 			
+			<p>Sample factor. Note: use of a value not equal to one makes the model incapable of modelling extinction </p>
+			<input type='text' name='SampleFactorTextbox' value='10' onchange="Settings.SampleFactor=Number(this.value);">
+			
 		</form>
 
 	</div>

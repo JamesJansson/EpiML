@@ -65,7 +65,6 @@ function LoadSettingsFiles(){
 }
 
 function LoadParametersFiles(){
-	CommonParam.SampleFactor=Settings.SampleFactor;// This value is the number of people each person in the simulation represents. Probably a good idea to set this to 1, 10 or 100
 }
 
 function LoadDataFiles(){

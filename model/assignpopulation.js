@@ -50,7 +50,7 @@ function AssignPopulation(Data, CommonParam){
 		
 		// For each age group
 		for (var AgeIndex=0; AgeIndex<NumAgeGroups; AgeIndex++){
-			
+			console.log(CommonParam.Settings.SampleFactor);
 			for (var SexIndex=0; SexIndex<2; SexIndex++){
 				
 				EstimateInThisGroup=Sex[SexIndex].Notifications[AgeIndex][YearIndex];
@@ -58,7 +58,7 @@ function AssignPopulation(Data, CommonParam){
 				//note that Math.round() will not give the full picture (groups with <0.5 people will always have less, and groups with >0.5 will always have more than they should
 				//To compensate, the algorithm adds a person with a probability based on the remainder
 				// e.g. and entry with 3.4 people will give 3 people plus one extra person with 40% probability 
-				EstimateInThisGroup=EstimateInThisGroup*(1-CommonParam.DuplicateFactor)/CommonParam.SampleFactor;
+				EstimateInThisGroup=EstimateInThisGroup*(1-CommonParam.DuplicateFactor)/CommonParam.Settings.SampleFactor;
 				EstimateInThisGroup1=Math.floor(EstimateInThisGroup);
 				EstimateInThisGroup2=EstimateInThisGroup-EstimateInThisGroup1;// Some value between 0 and 1
 				InThisGroup=EstimateInThisGroup1+Win(EstimateInThisGroup2);

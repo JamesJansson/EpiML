@@ -58,7 +58,7 @@ self.onmessage = function (WorkerMessage) {
 	var CommonParam=WorkerMessage.data.Common.Param;
 	// Load simulation settings
 	var Settings=WorkerMessage.data.Common.Settings;
-	
+	console.error(Settings.SampleFactor);
 	
 	var SimID = WorkerMessage.data.SimID; // this value is used to select the appropriate parameter value
     var SimData = WorkerMessage.data.SimData;
@@ -136,12 +136,12 @@ self.onmessage = function (WorkerMessage) {
 	
 	
 	//if (true){
-		SaySomething={};
+		var SaySomething={};
 		SaySomething.Data="This is data";
 		SaySomething.Code="console.log(Data);";
 		self.postMessage({Execute: SaySomething});
 		
-		PlotSomething={};
+		var PlotSomething={};
 		PlotSomething.Data=[[0, 3], [4, 8], [8, 5], [9, 13]];
 		PlotSomething.Code="ScatterPlot('#PlotHolder', Data,  'AAA', 'BBB');";
 		self.postMessage({Execute: PlotSomething});
@@ -165,14 +165,14 @@ self.onmessage = function (WorkerMessage) {
 	// Extract results of simulation
 	DebugStatement("Extracting results");
 	
-	StatsTime={};
+	var StatsTime={};
 	StatsTime.Start=1980;
 	StatsTime.Stop=2030;
 	StatsTime.Step=1;
 	
 	var SimResult={};
-	SimResult.FibrosisCount=CountFibrosisStages(PPNotification, CommonParam.SampleFactor, StatsTime);//Determine fibrosis levels with year
-	SimResult.DiagnosisCount=LivingDxAndUDx(PPNotification, CommonParam.SampleFactor, StatsTime);//Determine fibrosis levels with year
+	SimResult.FibrosisCount=CountFibrosisStages(PPNotification, Settings.SampleFactor, StatsTime);//Determine fibrosis levels with year
+	SimResult.DiagnosisCount=LivingDxAndUDx(PPNotification, Settings.SampleFactor, StatsTime);//Determine fibrosis levels with year
 	SimResult.AgeInfectedResult=AnalyseAgeInfected(PPNotification, StatsTime);
 	
 

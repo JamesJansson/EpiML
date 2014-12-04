@@ -16,7 +16,8 @@ function RunSim(){
 	
 	SimSettings={};
 	SimSettings.RunOptimisation=true;
-	
+	// The following is required for all programs
+	SimSettings.SampleFactor=Settings.SampleFactor;
 	
 	// Save into the Common holder
 	var Common={};//
