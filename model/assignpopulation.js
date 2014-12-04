@@ -1,11 +1,11 @@
-function AssignPopulation(Data, CommonParam){
+function AssignPopulation(Data, SampleFactor){
 	var PNotification=[];// an array that stores the notifications
 	var PCount=0; // Number of people currently added to the notification file
 	var NumAgeGroups=Data.MaleNotifications.Age.length;
 	var AgeVector=Data.MaleNotifications.Age;//This +5 is the range
 	
 	console.log("Warning: duplicate rate reset here.");
-	CommonParam.DuplicateFactor=0;// maybe a per year by age probability, 
+	var DuplicateFactor=0;// maybe a per year by age probability, 
 	
 	var StateVector;
 	var TotalInStateThisYear;
@@ -22,9 +22,11 @@ function AssignPopulation(Data, CommonParam){
 	Sex[1].Notifications=Data.FemaleNotifications.Table;
 	
 	console.log("Starting to assign people");
-	
+	console.log("Data.StateNotifications");
 	// For each year
 	for (var YearIndex=0; YearIndex<Data.StateNotifications.Year.length; YearIndex++){
+		console.log("Got into the loop");
+		console.log(YearIndex);
 		YearThisStep=Data.StateNotifications.Year[YearIndex];
 		
 		StateVector=[];//reset
@@ -50,7 +52,7 @@ function AssignPopulation(Data, CommonParam){
 		
 		// For each age group
 		for (var AgeIndex=0; AgeIndex<NumAgeGroups; AgeIndex++){
-			console.log(CommonParam.Settings.SampleFactor);
+			console.log(SampleFactor);
 			for (var SexIndex=0; SexIndex<2; SexIndex++){
 				
 				EstimateInThisGroup=Sex[SexIndex].Notifications[AgeIndex][YearIndex];
@@ -58,7 +60,9 @@ function AssignPopulation(Data, CommonParam){
 				//note that Math.round() will not give the full picture (groups with <0.5 people will always have less, and groups with >0.5 will always have more than they should
 				//To compensate, the algorithm adds a person with a probability based on the remainder
 				// e.g. and entry with 3.4 people will give 3 people plus one extra person with 40% probability 
-				EstimateInThisGroup=EstimateInThisGroup*(1-CommonParam.DuplicateFactor)/CommonParam.Settings.SampleFactor;
+				EstimateInThisGroup=EstimateInThisGroup*(1-DuplicateFactor)/SampleFactor;
+				console.log("Inside the function");
+				console.log(EstimateInThisGroup);
 				EstimateInThisGroup1=Math.floor(EstimateInThisGroup);
 				EstimateInThisGroup2=EstimateInThisGroup-EstimateInThisGroup1;// Some value between 0 and 1
 				InThisGroup=EstimateInThisGroup1+Win(EstimateInThisGroup2);

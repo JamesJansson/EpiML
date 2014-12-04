@@ -14,6 +14,7 @@ importScripts("extractresults.js");
 importScripts("populationstatistics.js");
 importScripts("generalmortality.js");
 
+var Data={};
 var Param={};//This is the parameter holder for the simulation
 var CommonParam={};
 var PP=[];//This is the global array that holds the population
@@ -53,14 +54,14 @@ self.onmessage = function (WorkerMessage) {
 	var TimerStart = new Date().getTime() / 1000;
 	
 	//Load the notification data
-	var Data=WorkerMessage.data.Common.Data;
+	Data=WorkerMessage.data.Common.Data;
 	//Load the parameters data
-	var CommonParam=WorkerMessage.data.Common.Param;
+	CommonParam=WorkerMessage.data.Common.Param;
 	// Load simulation settings
 	var Settings=WorkerMessage.data.Common.Settings;
 	console.error(Settings.SampleFactor);
 	
-	var SimID = WorkerMessage.data.SimID; // this value is used to select the appropriate parameter value
+	SimID = WorkerMessage.data.SimID; // this value is used to select the appropriate parameter value
     var SimData = WorkerMessage.data.SimData;
 	var ThreadID = WorkerMessage.data.ThreadID;// this value can be used by the code to send specific messages to particular elements, e.g. progress bar 4 set to 60%
 	
@@ -100,7 +101,7 @@ self.onmessage = function (WorkerMessage) {
 	
 	DebugStatement("Starting to load Person object");
 	
-	PPNotification=AssignPopulation(Data, CommonParam);
+	PPNotification=AssignPopulation(Data, Settings.SampleFactor);
 	// For each person in the simulation 
 	// Determine a random time that they have been infected for (lognormally distributed about 5 years previously, SD 2.5 years)
 	
