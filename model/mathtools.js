@@ -221,6 +221,8 @@ function SortIndex(SNInputVector){
 	return IndexVector;
 }
 
+
+
 function ApplyIndex(AIInputVector, AIIndex){
 	// Applies the index AIIndex to AIInputVector. Note that this function does not return the array, it simply operates on AIInputVector
 	if (AIInputVector.length!=AIIndex.length){

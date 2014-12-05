@@ -93,11 +93,25 @@ function DownloadableCSV(InputData, FileName){
 	this.UnparseInput={};
 	this.UnparseInput.fields=[];
 	this.UnparseInput.data=[];
+	var DataLengths=[];
 	for (A in InputData){
 		this.UnparseInput.fields.push(A);	
 		this.UnparseInput.data.push(InputData[A]);	
+		console.log(InputData[A]);
+		if (typeof(InputData[A].length)!="undefined"){
+			DataLengths.push(InputData[A].length);
+		}
+		else{
+			DataLengths.push(1);
+		}
+		
 	}
 	
+	var Index=SortIndex(DataLengths);
+	
+	Index=Index.reverse();
+	this.UnparseInput.fields=Select(this.UnparseInput.fields, Index);
+	this.UnparseInput.data=Select(this.UnparseInput.data, Index);
 	
 	// // Specifying fields and data manually
 // var csv = Papa.unparse({
