@@ -440,7 +440,7 @@ SummaryStatistic.prototype.Run=function(Population){
 		
 		this.Sum[TimeIndex]=Sum(ValueStorage[TimeIndex]);
 		this.Mean[TimeIndex]=Mean(ValueStorage[TimeIndex]);
-		this.Median[TimeIndex]=Mean(ValueStorage[TimeIndex]);
+		this.Median[TimeIndex]=Median(ValueStorage[TimeIndex]);
 		this.Upper95Percentile[TimeIndex]=Percentile(ValueStorage[TimeIndex], 97.5);
 		this.Lower95Percentile[TimeIndex]=Percentile(ValueStorage[TimeIndex], 2.5);
 		this.StandardDeviation[TimeIndex]=SampleStandardDeviation(ValueStorage[TimeIndex]);
