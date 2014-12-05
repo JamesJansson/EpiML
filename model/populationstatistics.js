@@ -103,7 +103,7 @@ function CountStatistic(Settings, InputFunction){
 	this.StepSize=1;//set by default to 1
 	
 	
-	this.TimeVector=[];//the reference time for when the statistic was taken
+	this.Time=[];//the reference time for when the statistic was taken
 	this.Count=[];//where the counts are stored
 	
 	// Set the settings
@@ -192,7 +192,7 @@ CountStatistic.prototype.Run=function(Population){
 	var CurrentTimeStep=this.StartTime;
 	this.NumberOfTimeSteps=Math.round((this.EndTime-this.StartTime)/this.StepSize)+1; //This is used to avoid rounding errors
 	for (var TimeIndex=0; TimeIndex<this.NumberOfTimeSteps; TimeIndex++){
-		this.TimeVector[TimeIndex]=CurrentTimeStep;
+		this.Time[TimeIndex]=CurrentTimeStep;
 		CurrentTimeStep=CurrentTimeStep+this.StepSize;// Increment the time step
 	}
 	
@@ -226,8 +226,8 @@ CountStatistic.prototype.Run=function(Population){
 
 CountStatistic.prototype.InstantaneousCount= function (Population){//Used to determine the number of people that satisfy a condition at a particular point in time
 	for (var PersonIndex=0; PersonIndex<Population.length; PersonIndex++){
-		for (var TimeIndex=0; TimeIndex<this.TimeVector.length; TimeIndex++){
-			if (this.Function(Population[PersonIndex], this.TimeVector[TimeIndex])==true){
+		for (var TimeIndex=0; TimeIndex<this.Time.length; TimeIndex++){
+			if (this.Function(Population[PersonIndex], this.Time[TimeIndex])==true){
 				this.Count[TimeIndex]++;
 			}
 		}
@@ -237,8 +237,8 @@ CountStatistic.prototype.InstantaneousCount= function (Population){//Used to det
 CountStatistic.prototype.InstantaneousCountCategorical= function (Population){//Used to determine the number of people that satisfy a condition at a particular point in time
 	var CategoryIndex;
 	for (var PersonIndex=0; PersonIndex<Population.length; PersonIndex++){
-		for (var TimeIndex=0; TimeIndex<this.TimeVector.length; TimeIndex++){
-			CategoryIndex=this.Function(Population[PersonIndex], this.TimeVector[TimeIndex]);
+		for (var TimeIndex=0; TimeIndex<this.Time.length; TimeIndex++){
+			CategoryIndex=this.Function(Population[PersonIndex], this.Time[TimeIndex]);
 			if (CategoryIndex>=0){//if it is not equal to NaN
 				this.Count[CategoryIndex][TimeIndex]++;
 			}
@@ -305,7 +305,7 @@ function SummaryStatistic(Settings, InputFunction){
 	this.StepSize=1;//set by default to 1
 	
 	
-	this.TimeVector=[]; //the reference time for when the statistic was taken
+	this.Time=[]; //the reference time for when the statistic was taken
 	// A vector/table that stores the results for each eligible person until the simulation is ready to do calculations such as mean etc
 	// this value should be deleted at the end of extraction, as it could get extremely large.
 	
@@ -385,7 +385,7 @@ SummaryStatistic.prototype.Run=function(Population){
 	var CurrentTimeStep=this.StartTime;
 	this.NumberOfTimeSteps=Math.round((this.EndTime-this.StartTime)/this.StepSize)+1; //This is used to avoid rounding errors
 	for (var TimeIndex=0; TimeIndex<this.NumberOfTimeSteps; TimeIndex++){
-		this.TimeVector[TimeIndex]=CurrentTimeStep;
+		this.Time[TimeIndex]=CurrentTimeStep;
 		CurrentTimeStep=CurrentTimeStep+this.StepSize;// Increment the time step
 		ValueStorage[TimeIndex]=[];
 	}
@@ -396,8 +396,8 @@ SummaryStatistic.prototype.Run=function(Population){
 	if (this.VectorFunction==false){
 		var ReturnedResult;
 		for (var PersonIndex=0; PersonIndex<Population.length; PersonIndex++){
-			for (var TimeIndex=0; TimeIndex<this.TimeVector.length; TimeIndex++){
-				ReturnedResult=this.Function(Population[PersonIndex], this.TimeVector[TimeIndex]);
+			for (var TimeIndex=0; TimeIndex<this.Time.length; TimeIndex++){
+				ReturnedResult=this.Function(Population[PersonIndex], this.Time[TimeIndex]);
 				if (isNaN(ReturnedResult)){// using NaN to represent missing data
 					// Do nothing
 				}
@@ -411,11 +411,11 @@ SummaryStatistic.prototype.Run=function(Population){
 		var ReturnedArray;
 		var ReturnedResult;
 		for (var PersonIndex=0; PersonIndex<Population.length; PersonIndex++){
-			ReturnedArray=this.Function(Population[PersonIndex], this.TimeVector[0], this.TimeStep);
+			ReturnedArray=this.Function(Population[PersonIndex], this.Time[0], this.TimeStep);
 			if (ReturnedArray.length!=TimeIndex.length){
 				console.error("The returned array was not of the same length as the time vector");
 			}
-			for (var TimeIndex=0; TimeIndex<this.TimeVector.length; TimeIndex++){
+			for (var TimeIndex=0; TimeIndex<this.Time.length; TimeIndex++){
 				ReturnedResult=ReturnedArray[TimeIndex];
 				if (isNaN(ReturnedResult)){// using NaN to represent missing data
 					// Do nothing
@@ -430,7 +430,7 @@ SummaryStatistic.prototype.Run=function(Population){
 
 	
 	// Perform statistical analyses
-	for (var TimeIndex=0; TimeIndex<this.TimeVector.length; TimeIndex++){
+	for (var TimeIndex=0; TimeIndex<this.Time.length; TimeIndex++){
 		this.N[TimeIndex]=ValueStorage[TimeIndex].length;
 		
 		this.Sum[TimeIndex]=Sum(ValueStorage[TimeIndex]);

@@ -96,7 +96,7 @@ function ExtractDataFromFiles(){
 function NotificationSimPlot(){
 	// Get the relevant data
 	FibrosisArray=SimulationHolder.Result[0].FibrosisCount.Count;
-	TimeAxis=SimulationHolder.Result[0].FibrosisCount.TimeVector;
+	TimeAxis=SimulationHolder.Result[0].FibrosisCount.Time;
 	
 	// convert to a form that plot will accept
 	PlotData=ConvertDataToLinePlot(TimeAxis, FibrosisArray);
@@ -136,7 +136,7 @@ function DxUDxSimPlot(){
 	SimulationHolder.Result[0];
 	
 	DxUDxArray=SimulationHolder.Result[0].DiagnosisCount.Count;
-	TimeAxis=SimulationHolder.Result[0].DiagnosisCount.TimeVector;
+	TimeAxis=SimulationHolder.Result[0].DiagnosisCount.Time;
 	
 	// convert to a form that plot will accept
 	PlotData=ConvertDataToLinePlot(TimeAxis, DxUDxArray);
