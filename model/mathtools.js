@@ -47,6 +47,11 @@ function Percentile(MInputVector, PercentileValue){
 	if (LeftIndex==VectorCopy.length-1){// if the percentile as close to 100% as error will allow
 		return VectorCopy[LeftIndex];
 	}
+	
+	if (VectorCopy[LeftIndex]==VectorCopy[LeftIndex+1]){// if there is no interpolation to be done
+		return VectorCopy[LeftIndex];
+	}
+	
 	// find the distance between the left and right position
 	var DistanceBetween=1/(VectorCopy.length-1);
 	var LeftDistance=DistanceBetween*LeftIndex;
