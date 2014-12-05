@@ -95,7 +95,7 @@ function DownloadableCSV(InputData, FileName){
 	this.UnparseInput.data=[];
 	for (A in InputData){
 		this.UnparseInput.fields.push(A);	
-		this.UnparseInput.data.push(InputData(A));	
+		this.UnparseInput.data.push(InputData[A]);	
 	}
 	
 	
