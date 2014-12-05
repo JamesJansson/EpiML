@@ -26,8 +26,8 @@ function Mean(arr) {
 
 // Median of an array
 function Median(MInputVector){
-	var VectorCopy=MInputVector.slice();
-	VectorCopy.sort();
+	var VectorCopy=SortByValue(MInputVector);
+
 	VecLength=VectorCopy.length;
 	if ((VecLength%2)==1){//odd number of elements
 		return VectorCopy[(VecLength-1)/2];//chose the middle value
@@ -39,8 +39,7 @@ function Median(MInputVector){
 
 // percentile of an array
 function Percentile(MInputVector, PercentileValue){
-	var VectorCopy=MInputVector.slice();
-	VectorCopy.sort();
+	var VectorCopy=SortByValue(MInputVector);
 	
 	var Frac=PercentileValue/100;
 	var LeftIndex=Math.floor((VectorCopy.length-1)*Frac);
@@ -203,6 +202,14 @@ function HistogramData(Data, BinBoundaries){
 // ARRAY FUNCTIONS
 
 // Sort numerically
+function SortByValue(MInputVector){//Sorts by numerical value, returns results
+	var VectorCopy=MInputVector.slice();
+	VectorCopy.sort(function(a, b) {return a - b;});
+	
+	return VectorCopy;
+}
+
+// Find the index of sorting an array numerically
 function SortIndex(SNInputVector){
 	// this function sorts the vector as given and returns the index of sorting
 	//SNInputVector.sort(function(a, b) {return a - b;});//this sorting mechanism does a simple numerical sort
@@ -225,6 +232,7 @@ function SortIndex(SNInputVector){
 	} 
 	return IndexVector;
 }
+
 
 
 
