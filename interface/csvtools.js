@@ -94,12 +94,21 @@ function DownloadableCSV(InputData, FileName){
 	this.UnparseInput.fields=[];
 	this.UnparseInput.data=[];
 	var DataLengths=[];
-	for (A in InputData){
+	for (var A in InputData){
 		this.UnparseInput.fields.push(A);	
 		this.UnparseInput.data.push(InputData[A]);	
 		console.log(InputData[A]);
-		if (typeof(InputData[A].length)!="undefined"){
-			DataLengths.push(InputData[A].length);
+		if (typeof(InputData[A])=="object"){
+			console.log(A);
+			if (InputData[A]==null){
+				DataLengths.push(1);
+			}
+			else if (typeof(InputData[A].length)!="undefined"){
+				DataLengths.push(InputData[A].length);
+			}
+			else{
+				DataLengths.push(1);
+			}
 		}
 		else{
 			DataLengths.push(1);

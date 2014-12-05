@@ -275,6 +275,11 @@ CountStatistic.prototype.Adjust= function (Multiplier){
 	this.Count=Multiply(this.Count, Multiplier);
 }
 
+
+
+
+
+
 //****************************************************************************************************
 
 function SummaryStatistic(Settings, InputFunction){
@@ -446,20 +451,70 @@ SummaryStatistic.prototype.Run=function(Population){
 	}
 		
 	// Destroy the function to make passing back to the main thread easy (the function can break parallelisation)
-	this.Function=null;//The function seems to need to be destroyed before passing the results back to the main controller of the webworker
+	this.Function={};//The function seems to need to be destroyed before passing the results back to the main controller of the webworker
 }
 
 
 
 
+SummaryStatistic.prototype.Adjust= function (Multiplier){
+	// for all of the counting functions
+	this.N=Multiply(this.N, Multiplier);
+}
 
 
+function DownloadSummaryStatisticCSV(SumStat, FileName){
+	// This function creates a formatted CSV that allows the data to be manipulated in a program like excel
+	// List all the descriptors at the top
+	// Identifier, Value
+	var CSVMatrix=[];
+	CSVMatrix[0]=["Name", SumStat.Name];
+	CSVMatrix[1]=["XLabel", SumStat.XLabel];
+	CSVMatrix[2]=["YLabel", SumStat.YLabel];
+	CSVMatrix[3]=[""];// Blank line for looks
+	
+	CSVMatrix[4]=["Time", "N", "Mean", "Median", "StandardDeviation", "Lower95Percentile", "Upper95Percentile", "LowerQuartile", "UpperQuartile", "Min", "Max", "Sum"];
+	var DataMatrix=[SumStat.Time, SumStat.N, SumStat.Mean, SumStat.Median, SumStat.StandardDeviation, SumStat.Lower95Percentile, SumStat.Upper95Percentile, SumStat.LowerQuartile, SumStat.UpperQuartile, SumStat.Min, SumStat.Max, SumStat.Sum];
+	
+	TDataMatrix=TransposeForCSV(DataMatrix);
+	
+	// add this matrix to the CSV file
+	CSVMatrix=CSVMatrix.concat(TDataMatrix);
+	
+	var csv = Papa.unparse(CSVMatrix);
+	var blob = new Blob([csv], {type: "text/plain;charset=utf-8"});
+	if (typeof(FileName) == 'undefined'){
+		saveAs(blob, "data.csv");
+	}
+	else{
+		saveAs(blob, FileName);
+	}
+}
 
-
-
-
-
-
+function TransposeForCSV(DataMatrix){
+	// Below we check for the longest length, they should be the same length but just in case
+	var VecLength=0;
+	for (var A in DataMatrix){
+		if (DataMatrix[A].length>VecLength){
+			VecLength=DataMatrix[A].length;
+		}
+	}
+	
+	// transpose the matrix
+	TDataMatrix=[];
+	for (var row=0; row<VecLength; row++){// each row of the CSVMatrix
+		TDataMatrix[row]=[];
+		for (var column=0; column<DataMatrix.length; column++){// each column
+			if (typeof(DataMatrix[column][row])!="undefined"){
+				TDataMatrix[row][column]=DataMatrix[column][row];
+			}
+			else{
+				TDataMatrix[row][column]="";
+			}
+		}
+	}
+	return TDataMatrix;
+}
 
 
 
