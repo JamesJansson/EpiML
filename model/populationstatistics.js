@@ -572,28 +572,67 @@ function CalculateRate(Numerator, Denominator){
 // Finally, a function that groups the results across multiple instances of the simulations to create 
 
 function MultiSimCountStat(InputStatArray){
-	var Result={};
-	Result.Name=InputStatArray[0].Name;
-	Result.XLabel=InputStatArray[0].XLabel;
-	Result.YLabel=InputStatArray[0].YLabel;
-	Result.StatisticType=InputStatArray[0].StatisticType; 
-	Result.CountType=InputStatArray[0].CountType; 
-	Result.MultipleCategories=InputStatArray[0].MultipleCategories;
+	this.Name=InputStatArray[0].Name;
+	this.XLabel=InputStatArray[0].XLabel;
+	this.YLabel=InputStatArray[0].YLabel;
+	this.StatisticType=InputStatArray[0].StatisticType; 
+	this.CountType=InputStatArray[0].CountType; 
+	this.MultipleCategories=InputStatArray[0].MultipleCategories;
+	this.CategoryLabel=InputStatArray[0].CategoryLabel;
+	this.NumberOfSimulations=InputStatArray.length;
 	
-	Result.Time=InputStatArray[0].Time; 
+	this.Time=InputStatArray[0].Time; 
 	
-	// Data re-arranged to allow vector access to each Statistic.Data[Subcategory][Year][SimNum]
+	this.N=[];
+	this.Sum=[];
+	this.Mean=[];
+	this.Median=[];
+	this.Upper95Percentile=[];
+	this.Lower95Percentile=[];
+	this.StandardDeviation=[];
+	this.UpperQuartile=[];
+	this.LowerQuartile=[];
+	this.Max=[];
+	this.Min=[];
 	
-// Mean 
-// SD
-// Median
-// IQR 
-// 95% 
-
-
-
-	return Result;
+	if (this.MultipleCategories==false){
+		// Data re-arranged to allow vector access to each Statistic.Data[Year][SimNum]
+		this.Data=[];
+		for (TimeIndex in this.Time){
+			this.Data[TimeIndex]=[];
+			for (SimIndex in InputStatArray){
+				this.Data[TimeIndex][SimIndex]=InputStatArray[SimIndex].Count[TimeIndex];
+			}
+		}
+		
+		for (TimeIndex in this.Time){
+			this.Sum[TimeIndex]=Sum(this.Data[TimeIndex]);
+			this.Mean[TimeIndex]=Mean(this.Data[TimeIndex]);
+			this.Median[TimeIndex]=Median(this.Data[TimeIndex]);
+			this.Upper95Percentile[TimeIndex]=Percentile(this.Data[TimeIndex], 97.5);
+			this.Lower95Percentile[TimeIndex]=Percentile(this.Data[TimeIndex], 2.5);
+			this.StandardDeviation[TimeIndex]=SampleStandardDeviation(this.Data[TimeIndex]);
+			this.UpperQuartile[TimeIndex]=Percentile(this.Data[TimeIndex], 75);
+			this.LowerQuartile[TimeIndex]=Percentile(this.Data[TimeIndex], 25);
+			this.Max[TimeIndex]=Max(this.Data[TimeIndex]);
+			this.Min[TimeIndex]=Min(this.Data[TimeIndex]);
+		}
+	}
+	else {
+		// Data re-arranged to allow vector access to each Statistic.Data[Subcategory][Year][SimNum]
+	}
 }
+// LivingWithHCVSims=[];
+// for (SimCount in SimulationHolder.Result){
+// console.log(SimCount);
+	// LivingWithHCVSims[SimCount]= SimulationHolder.Result[SimCount].LivingWithHCV;
+// }
+// SumStat=new MultiSimCountStat(LivingWithHCVSims);
+// .Download
+// Description
+// time param1[mean SD etc] param2 
+// DataMatrix
+
 
 function MultiSimSummaryStat(SummaryStatArray){
 	var CombinedResult={};

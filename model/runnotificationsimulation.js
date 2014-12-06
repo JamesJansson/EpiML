@@ -176,7 +176,7 @@ self.onmessage = function (WorkerMessage) {
 	SimResult.FibrosisCount=CountFibrosisStages(PPNotification, Settings.SampleFactor, StatsTime);//Determine fibrosis levels with year
 	SimResult.DiagnosisCount=LivingDxAndUDx(PPNotification, Settings.SampleFactor, StatsTime);//Determine fibrosis levels with year
 	SimResult.AgeInfectedResult=AnalyseAgeInfected(PPNotification, StatsTime);
-	
+	SimResult.LivingWithHCV=CountLivingWithHCV(PPNotification, Settings.SampleFactor, StatsTime);// Determines a simple count of people living with HCV by year
 
 	DebugStatement("Total individuals in model: " + PPNotification.length);
 		
