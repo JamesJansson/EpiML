@@ -275,20 +275,20 @@ CountStatistic.prototype.Adjust= function (Multiplier){
 	this.Count=Multiply(this.Count, Multiplier);
 }
 
-function DownloadCountStatisticCSV(SumStat, FileName){
+function DownloadCountStatisticCSV(InputStat, FileName){
 	// This function creates a formatted CSV that allows the data to be manipulated in a program like excel
 	// List all the descriptors at the top
 	// Identifier, Value
 	var CSVMatrix=[];
-	CSVMatrix[0]=["Name", SumStat.Name];
-	CSVMatrix[1]=["XLabel", SumStat.XLabel];
-	CSVMatrix[2]=["YLabel", SumStat.YLabel];
+	CSVMatrix[0]=["Name", InputStat.Name];
+	CSVMatrix[1]=["XLabel", InputStat.XLabel];
+	CSVMatrix[2]=["YLabel", InputStat.YLabel];
 	CSVMatrix[3]=[""];// Blank line for looks
 	
-	CSVMatrix[4]=SumStat.CategoryLabel;
-	CSVMatrix[4].unshift(SumStat.XLabel);
-	var DataMatrix=SumStat.Count];
-	DataMatrix.unshift(SumStat.Time); 
+	CSVMatrix[4]=InputStat.CategoryLabel;
+	CSVMatrix[4].unshift(InputStat.XLabel);
+	var DataMatrix=InputStat.Count;
+	DataMatrix.unshift(InputStat.Time); 
 	
 	TDataMatrix=TransposeForCSV(DataMatrix);
 	
@@ -491,18 +491,18 @@ SummaryStatistic.prototype.Adjust= function (Multiplier){
 }
 
 
-function DownloadSummaryStatisticCSV(SumStat, FileName){
+function DownloadSummaryStatisticCSV(InputStat, FileName){
 	// This function creates a formatted CSV that allows the data to be manipulated in a program like excel
 	// List all the descriptors at the top
 	// Identifier, Value
 	var CSVMatrix=[];
-	CSVMatrix[0]=["Name", SumStat.Name];
-	CSVMatrix[1]=["XLabel", SumStat.XLabel];
-	CSVMatrix[2]=["YLabel", SumStat.YLabel];
+	CSVMatrix[0]=["Name", InputStat.Name];
+	CSVMatrix[1]=["XLabel", InputStat.XLabel];
+	CSVMatrix[2]=["YLabel", InputStat.YLabel];
 	CSVMatrix[3]=[""];// Blank line for looks
 	
 	CSVMatrix[4]=["Time", "N", "Mean", "Median", "StandardDeviation", "Lower95Percentile", "Upper95Percentile", "LowerQuartile", "UpperQuartile", "Min", "Max", "Sum"];
-	var DataMatrix=[SumStat.Time, SumStat.N, SumStat.Mean, SumStat.Median, SumStat.StandardDeviation, SumStat.Lower95Percentile, SumStat.Upper95Percentile, SumStat.LowerQuartile, SumStat.UpperQuartile, SumStat.Min, SumStat.Max, SumStat.Sum];
+	var DataMatrix=[InputStat.Time, InputStat.N, InputStat.Mean, InputStat.Median, InputStat.StandardDeviation, InputStat.Lower95Percentile, InputStat.Upper95Percentile, InputStat.LowerQuartile, InputStat.UpperQuartile, InputStat.Min, InputStat.Max, InputStat.Sum];
 	
 	TDataMatrix=TransposeForCSV(DataMatrix);
 	
