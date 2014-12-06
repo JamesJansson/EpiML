@@ -443,15 +443,6 @@ SummaryStatistic.prototype.Run=function(Population){
 		this.Median[TimeIndex]=Median(ValueStorage[TimeIndex]);
 		this.Upper95Percentile[TimeIndex]=Percentile(ValueStorage[TimeIndex], 97.5);
 		this.Lower95Percentile[TimeIndex]=Percentile(ValueStorage[TimeIndex], 2.5);
-		if (this.Upper95Percentile[TimeIndex]<this.Median[TimeIndex]){
-			console.log("Median");
-			console.log(this.Median[TimeIndex]);
-			console.log("Per 97.5");
-			console.log(this.Upper95Percentile[TimeIndex]);
-			for (var A in ValueStorage[TimeIndex]){
-				console.log(ValueStorage[TimeIndex][A]);
-			}	
-		}
 		this.StandardDeviation[TimeIndex]=SampleStandardDeviation(ValueStorage[TimeIndex]);
 		this.UpperQuartile[TimeIndex]=Percentile(ValueStorage[TimeIndex], 75);
 		this.LowerQuartile[TimeIndex]=Percentile(ValueStorage[TimeIndex], 25);
