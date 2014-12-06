@@ -8,7 +8,7 @@ function CountFibrosisStages(PPLocal, SampleFactorMultiplier, Time){
 	Settings.StartTime=Time.Start;
 	Settings.EndTime=Time.Stop;
 	Settings.TimeStep=Time.Step;
-	Settings.FunctionReturnsCategory=true;
+	Settings.MultipleCategories=true;
 	Settings.NumberOfCategories=8;
 	
 	//Define the selection function
@@ -64,7 +64,7 @@ function LivingDxAndUDx(PPLocal, SampleFactorMultiplier, Time){
 	Settings.StartTime=Time.Start;
 	Settings.EndTime=Time.Stop;
 	Settings.TimeStep=Time.Step;
-	Settings.FunctionReturnsCategory=true;
+	Settings.MultipleCategories=true;
 	Settings.NumberOfCategories=4;
 	
 	// Define the  category description

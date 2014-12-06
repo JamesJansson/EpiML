@@ -79,14 +79,14 @@ function CountStatistic(Settings, InputFunction){
 	// true: Function(Person, StartTime, EndTime, StepSize)and returns a vector of values over the times specified
 	// Setting this flag to true will allow the vector in summary statistic to to be filled by the function under inspection (e.g. EventVector) that could be a lot faster
 	
-	this.FunctionReturnsCategory=false;
-	// FunctionReturnsCategory is a flag to indicate whether Function returns (optional, defaults to simple count)
+	this.MultipleCategories=false;
+	// MultipleCategories is a flag to indicate whether Function returns (optional, defaults to simple count)
 	// true or false, or it returns an index
 	// This flag can only be used with InstantaneousCount. 
 	// It cannot be used with CountEvents
 	
 	this.NumberOfCategories=1; 
-	//(mandatory if FunctionReturnsCategory==true)
+	//(mandatory if MultipleCategories==true)
 	
 	this.CategoryLabel=[];
 	// Used to store the text associated with the categorical numbers (optional)
@@ -136,9 +136,9 @@ function CountStatistic(Settings, InputFunction){
 	
 	
 	// Set the Category settings
-	if (typeof Settings.FunctionReturnsCategory === 'boolean'){
-		if (Settings.FunctionReturnsCategory==true){
-			this.FunctionReturnsCategory=true;
+	if (typeof Settings.MultipleCategories === 'boolean'){
+		if (Settings.MultipleCategories==true){
+			this.MultipleCategories=true;
 			if (typeof Settings.NumberOfCategories === 'number'){
 				this.NumberOfCategories=Settings.NumberOfCategories;
 				if (typeof Settings.CategoryLabel === 'object'){
@@ -146,12 +146,12 @@ function CountStatistic(Settings, InputFunction){
 				}
 			}
 			else {
-				console.error("CountStatistic: If FunctionReturnsCategory is true, NumberOfCategories must be set to a whole number >1;")
+				console.error("CountStatistic: If MultipleCategories is true, NumberOfCategories must be set to a whole number >1;")
 			}
 		}
 	}
-	else if (typeof Settings.FunctionReturnsCategory != 'undefined'){
-		console.error("CountStatistic: FunctionReturnsCategory should have only a value of true or false");
+	else if (typeof Settings.MultipleCategories != 'undefined'){
+		console.error("CountStatistic: MultipleCategories should have only a value of true or false");
 	}
 	
 	// Set the function for the summary statistic
@@ -198,7 +198,7 @@ CountStatistic.prototype.Run=function(Population){
 	
 
 		// Set up the Count array
-		if (this.FunctionReturnsCategory==false){// inspecting only a single category
+		if (this.MultipleCategories==false){// inspecting only a single category
 			this.Count=ZeroArray(this.NumberOfTimeSteps);
 			
 			if (this.CountType.toLowerCase()=='instantaneous'){
@@ -215,7 +215,7 @@ CountStatistic.prototype.Run=function(Population){
 				this.InstantaneousCountCategorical(Population);
 			}
 			else if (this.CountType.toLowerCase()=='events'){
-				console.error("Please do not use countevents and FunctionReturnsCategory together");
+				console.error("Please do not use countevents and MultipleCategories together");
 			}
 		}
 
@@ -570,6 +570,31 @@ function CalculateRate(Numerator, Denominator){
 
 // ****************************************************************
 // Finally, a function that groups the results across multiple instances of the simulations to create 
+
+function MultiSimCountStat(InputStatArray){
+	var Result={};
+	Result.Name=InputStatArray[0].Name;
+	Result.XLabel=InputStatArray[0].XLabel;
+	Result.YLabel=InputStatArray[0].YLabel;
+	Result.StatisticType=InputStatArray[0].StatisticType; 
+	Result.CountType=InputStatArray[0].CountType; 
+	Result.MultipleCategories=InputStatArray[0].MultipleCategories;
+	
+	Result.Time=InputStatArray[0].Time; 
+	
+	// Data re-arranged to allow vector access to each Statistic.Data[Subcategory][Year][SimNum]
+	
+// Mean 
+// SD
+// Median
+// IQR 
+// 95% 
+
+
+
+	return Result;
+}
+
 function MultiSimSummaryStat(SummaryStatArray){
 	var CombinedResult={};
 
