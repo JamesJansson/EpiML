@@ -6,9 +6,9 @@ function CSVFile(FileName){//file name in this instance is the URL
 	var TempOpenCSVHolder=this;//A pointer to this file that can be called when the file is finished and ready to store
 	this.CurrentlyLoading=true;
 
+	console.log(FileName);
 	Papa.parse(FileName, {download: true, complete: function(PapaResults){TempOpenCSVHolder.Data=PapaResults.data;TempOpenCSVHolder.CurrentlyLoading=false;} });
 	//download informs Papa that it is an external CSV (http request), and the function is a handler to run when the file is ready
-	
 
 };
 
@@ -17,7 +17,7 @@ CSVFile.prototype.GetValues= function (y1, y2, x1, x2){//Changing to (row1, row2
 	if (x1>x2 || y1>y2 || x1<0 || y1<0 || this.IsNaturalNumber(x1)==false || this.IsNaturalNumber(x2)==false || this.IsNaturalNumber(y1)==false || this.IsNaturalNumber(y2)==false ){
 		console.error("The range of values requested is invalid");
 	}
-	
+
 	ReturnArray=[];
 	newyindex=0;
 	for (yindex=y1; yindex<=y2; yindex++){
