@@ -6,5 +6,5 @@
 		"toolbar": true,
 		"frame": true
 	},
-	"js-flags": "-max-old-space-size=1900"
+	"js-flags": "-max-old-space-size=2047"
 }

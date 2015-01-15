@@ -138,6 +138,9 @@ Papa.parse("data/summarynotifications.csv", {download: true, complete: function(
 		</div>
 		<div id="DxUDxResultsTable"></div>
 		
+		<div id="nodetestbutton" class="SolidButton" onClick="var cp = require('child_process');var child=[];sim=0;child[sim] = cp.fork('./testworker.js');child[sim].on('message', function(m) {console.log('received: ' + m);});child[sim].send(sim);"> Run simulation </div>
+		
+		
 	</div>
 
 	<div id="ParameterContent" class="Content">
