@@ -1,14 +1,18 @@
 var t=require('./testsubworker.js');
 var a= new Array(1000000);
 // Idea from http://stackoverflow.com/questions/5171213/load-vanilla-javascript-libraries-into-node-js
-var vm = require("vm");
-var fs = require("fs");
-var LoadJS=function(path) {
-	var data = fs.readFileSync(path);
-	vm.runInThisContext(data, path);
+
+// Adjusting the importScripts function to work under node.js
+if (typeof(importScripts)==='undefined'){
+	var vm = require("vm");
+	var fs = require("fs");
+	var importScripts=function(path) {
+		var data = fs.readFileSync(path);// This function is blocking and no other code will execute until it is complete
+		vm.runInThisContext(data, path);
+	}
 }
 
-LoadJS('./testsubworker2.js');
+importScripts('./testsubworker2.js');
 
 
 
