@@ -7,7 +7,19 @@ function CSVFile(FileName){//file name in this instance is the URL
 	this.CurrentlyLoading=true;
 
 	console.log(FileName);
-	Papa.parse(FileName, {download: true, complete: function(PapaResults){TempOpenCSVHolder.Data=PapaResults.data;TempOpenCSVHolder.CurrentlyLoading=false;} });
+	if (typeof(RunningNodeJS)=='undefined'){
+		Papa.parse(FileName, {download: true, complete: function(PapaResults){TempOpenCSVHolder.Data=PapaResults.data;TempOpenCSVHolder.CurrentlyLoading=false;} });
+	}
+	else if (RunningNodeJS==false){
+		Papa.parse(FileName, {download: true, complete: function(PapaResults){TempOpenCSVHolder.Data=PapaResults.data;TempOpenCSVHolder.CurrentlyLoading=false;} });
+	}
+	else{
+		// Load the actual local file
+		var fs=require('fs')
+		var FileContents=fs.readFileSync(FileName, {encoding: 'utf8'});
+		// Parse the file
+		Papa.parse(FileContents, { complete: function(PapaResults, FileContents){TempOpenCSVHolder.Data=PapaResults.data;TempOpenCSVHolder.CurrentlyLoading=false;} });
+	}
 	//download informs Papa that it is an external CSV (http request), and the function is a handler to run when the file is ready
 
 };
