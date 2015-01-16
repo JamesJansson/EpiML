@@ -8,6 +8,8 @@ var SimInputData=[];
 var CommonParam={};
 
 
+// Setting up whether it is working under NodeJS or not
+RunningNodeJS=true;
 
 // Setting up flags
 	var SimulationRunning=0;//set to 1 if running
@@ -68,12 +70,25 @@ function LoadParametersFiles(){
 }
 
 function LoadDataFiles(){
-	DataFile.AgeSexNotifications=new CSVFile('data/hcv_notifications_agesex.csv');
-	DataFile.StateNotifications=new CSVFile('data/hcv_notifications_state.csv');
-	
-	DataFile.MaleMortality=new CSVFile('data/mortality_males_alltables_qx.csv');
-	DataFile.FemaleMortality=new CSVFile('data/mortality_females_alltables_qx.csv');
-	DataFile.PWID=new CSVFile('data/pwid_size.csv');
+	var RunOther=true;if (typeof (RunningNodeJS)!=='undefined'){console.log("got in1");if (RunningNodeJS==true){RunOther=false;
+		console.log("got in2");
+		DataFile.AgeSexNotifications=new CSVFile('./data/hcv_notifications_agesex.csv');
+		DataFile.StateNotifications=new CSVFile('./data/hcv_notifications_state.csv');
+		
+		DataFile.MaleMortality=new CSVFile('./data/mortality_males_alltables_qx.csv');
+		DataFile.FemaleMortality=new CSVFile('./data/mortality_females_alltables_qx.csv');
+		DataFile.PWID=new CSVFile('./data/pwid_size.csv');
+	}}
+	if (RunOther){
+	console.log("got in3");
+		DataFile.AgeSexNotifications=new CSVFile('data/hcv_notifications_agesex.csv');
+		DataFile.StateNotifications=new CSVFile('data/hcv_notifications_state.csv');
+		
+		DataFile.MaleMortality=new CSVFile('data/mortality_males_alltables_qx.csv');
+		DataFile.FemaleMortality=new CSVFile('data/mortality_females_alltables_qx.csv');
+		DataFile.PWID=new CSVFile('data/pwid_size.csv');
+	}
+
 }
 
 
