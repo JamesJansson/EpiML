@@ -9,7 +9,7 @@ var CommonParam={};
 
 
 // Setting up whether it is working under NodeJS or not
-//RunningNodeJS=true;
+RunningNodeJS=true;
 
 // Setting up flags
 	var SimulationRunning=0;//set to 1 if running
