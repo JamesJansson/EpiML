@@ -209,7 +209,7 @@ Papa.parse("data/summarynotifications.csv", {download: true, complete: function(
 		<h1>Settings</h1>
 		<form>
 			<p>Number of threads to use for simulations</p>
-			<select id="NoThreadsDropdown" onchange="Settings.NoThreads=this.value;">
+			<select id="NoThreadsDropdown" onchange="Settings.NoThreads=this.value;SaveSettings();">
 				<option value="1">1</option>
 				<option value="2">2</option>
 				<option value="3">3</option>
@@ -221,7 +221,7 @@ Papa.parse("data/summarynotifications.csv", {download: true, complete: function(
 			</select>
 			
 			<p>Number of simulations to maintain concurrently.</p>
-			<select id="ConcurrentSimsDropdown" onchange="ConcurrentSims=this.value;">
+			<select id="ConcurrentSimsDropdown" onchange="Settings.ConcurrentSims=this.value;SaveSettings();">
 				<option value="1">1</option>
 				<option value="2">2</option>
 				<option value="3">3</option>
@@ -233,7 +233,7 @@ Papa.parse("data/summarynotifications.csv", {download: true, complete: function(
 			</select>
 			
 			<p>Sample factor. Note: use of a value not equal to one makes the model incapable of modelling extinction </p>
-			<input type='text' id='SampleFactorTextbox' value='10' onchange="Settings.SampleFactor=Number(this.value);">
+			<input type='text' id='SampleFactorTextbox' value='10' onchange="Settings.SampleFactor=Number(this.value);SaveSettings();">
 			
 		</form>
 

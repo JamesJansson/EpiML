@@ -7,9 +7,14 @@ var SimulationHolder;
 var SimInputData=[];
 var CommonParam={};
 
-
 // Setting up whether it is working under NodeJS or not
 RunningNodeJS=true;
+
+// Load some of the required packages
+var fs = require('fs');
+
+
+
 
 // Setting up flags
 	var SimulationRunning=0;//set to 1 if running
@@ -56,15 +61,42 @@ function TestingPageRequirements(){
 
 function LoadSettingsFiles(){
 	//Load settings/settings.json
+	//if // the settings file exists
+	// load the settings file
 	
-	// Note this does not require the script to wait
-	// For all of the settings that have not been set 
-	// if Settings.NoThreads=
-	Settings.NoThreads=1;// number of cores to use at a time
-	Settings.ConcurrentSims=10;// number of sims to keep active at once (for interface playing)
-	Settings.SampleFactor=10;// This value is the number of people each person in the simulation represents. Probably a good idea to set this to 1, 10 or 100
+	
+	fs.readFile("./interface/settings.json", 'utf8', function (err, data) {
+		if (err){
+			console.error("The ./interface/settings.json file could not be loaded. Using default values. Error: ");
+			console.log(err)
+			// Use default values
+			Settings.NoThreads=1;// number of cores to use at a time
+			Settings.ConcurrentSims=8;// number of sims to keep active at once (for interface playing)
+			Settings.SampleFactor=10;// This value is the number of people each person in the simulation represents. Probably a good idea to set this to 1, 10 or 100
+		}
+		else{
+			Settings = JSON.parse(data);
+		}
+		document.getElementById("NoThreadsDropdown").value=Settings.NoThreads;
+		document.getElementById("ConcurrentSimsDropdown").value=Settings.ConcurrentSims;
+		document.getElementById("SampleFactorTextbox").value=Settings.SampleFactor;
+	});
+	
 	
 }
+
+function SaveSettings(){
+	var SettingsJSONString=JSON.stringify(Settings, null, 4);//gives 4 spaces between elements
+	var blob = new Blob([SettingsJSONString], {type: "text/plain;charset=utf-8"});
+	
+	fs.writeFile("./interface/settings.json", SettingsJSONString , function(err) {
+		if(err) {
+			alert("There was an error writing to the settings.json file.");
+			console.log(err);
+		}
+	});
+}
+
 
 function LoadParametersFiles(){
 }
