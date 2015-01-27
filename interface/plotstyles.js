@@ -12,7 +12,9 @@ function BuildPlot(Settings){
 	// .yAxisLabel
 	// .Data
 	// 
+	// DownloadSummaryStatisticCSV(SimulationHolder.Result[0].AgeInfectedResult);
 	
+	// "Value "
 	
 	// Check that there are any ID names that are taken
 	//console.error("Using '"+Settings.ID+"' as an ID for the plot creates a parameter '" + PrexistingID + "' that already exists.";
@@ -21,7 +23,7 @@ function BuildPlot(Settings){
 	InnerHTMLForPlot="";
 	InnerHTMLForPlot+="    <div class='fullscreenbox' id='"+Settings.ID+"_fullscreenbox' >";
 	InnerHTMLForPlot+="        <div class='fullscreenbutton' title='Fullscreen' id='"+Settings.ID+"_fullscreenbutton' onclick='ToggleFullScreen('"+Settings.ID+"_fullscreenbox');'>&#10063</div>";
-	InnerHTMLForPlot+="        <div class='downloadbutton' title='Download data' onclick='DownloadSummaryStatisticCSV(SimulationHolder.Result[0].AgeInfectedResult);"+Settings.ID+"_data.Download();'>&#x21E9;</div>";
+	InnerHTMLForPlot+="        <div class='downloadbutton' title='Download data' onclick='"+Settings.ID+"_data.Download();'>&#x21E9;</div>";
 	InnerHTMLForPlot+="        <div class='plot_positioner'>";
 	InnerHTMLForPlot+="             <div id='"+Settings.ID+"_placeholder' class='plot_placeholder'></div>";
 	InnerHTMLForPlot+="        </div>";
@@ -171,6 +173,25 @@ function FixedAxisScatterPlot(PlotHolderName, Points,  xAxisLabel, yAxisLabel, x
 	PlotData[0].color="rgb(255, 0, 0)";
 	$.plot(PlotHolderName, PlotData, PlotSettings);
 }
+
+
+function OptimisationPlot(PlotHolderName, Data, OptimisedData,  xAxisLabel, yAxisLabel){
+	// Data.X
+	// Data.Value an array of y values associated with mean/median estimate
+	// Data.Upper
+	
+	
+
+}
+
+
+
+
+
+
+
+
+// All of the content below this line will be deleted
 
 MorrisSettings={
   // ID of the element in which to draw the chart.

@@ -504,7 +504,7 @@ function DownloadSummaryStatisticCSV(InputStat, FileName){
 	CSVMatrix[4]=["Time", "N", "Mean", "Median", "StandardDeviation", "Lower95Percentile", "Upper95Percentile", "LowerQuartile", "UpperQuartile", "Min", "Max", "Sum"];
 	var DataMatrix=[InputStat.Time, InputStat.N, InputStat.Mean, InputStat.Median, InputStat.StandardDeviation, InputStat.Lower95Percentile, InputStat.Upper95Percentile, InputStat.LowerQuartile, InputStat.UpperQuartile, InputStat.Min, InputStat.Max, InputStat.Sum];
 	
-	TDataMatrix=TransposeForCSV(DataMatrix);
+	var TDataMatrix=TransposeForCSV(DataMatrix);
 	
 	// add this matrix to the CSV file
 	CSVMatrix=CSVMatrix.concat(TDataMatrix);
@@ -529,7 +529,7 @@ function TransposeForCSV(DataMatrix){
 	}
 	
 	// transpose the matrix
-	TDataMatrix=[];
+	var TDataMatrix=[];
 	for (var row=0; row<VecLength; row++){// each row of the CSVMatrix
 		TDataMatrix[row]=[];
 		for (var column=0; column<DataMatrix.length; column++){// each column
