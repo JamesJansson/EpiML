@@ -178,10 +178,44 @@ function FixedAxisScatterPlot(PlotHolderName, Points,  xAxisLabel, yAxisLabel, x
 function OptimisationPlot(PlotHolderName, Data, OptimisedData,  xAxisLabel, yAxisLabel){
 	// Data.X
 	// Data.Value an array of y values associated with mean/median estimate
-	// Data.Upper
+	// Data.Upper a vector of values that 
+	// Data.Lower 
+	
+	var data2 = [
+			[.7,3,.2,.4],    // x, y, lower y by, higher y by
+			[1.5,2.2,.3,.4],
+			[2.3,1,.5,.2]
+		];
+	
+	var data2_points = {
+		show: true,
+		radius: 2.5,
+		errorbars: "y", 
+		yerr: {show:true, asymmetric:true, upperCap: "-", lowerCap: "-"}
+	};
 	
 	
-
+	
+	
+	$.plot($(PlotHolderName), data , {
+		legend: {
+			position: "sw",
+			show: true
+		},
+		series: {
+			lines: {
+				show: false
+			}
+		},
+		zoom: {
+			interactive: true
+		},
+		pan: {
+			interactive: true
+		}
+	});
+	
+	
 }
 
 
