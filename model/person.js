@@ -20,7 +20,7 @@ function  PersonObject(YearOfBirth, Sex)//, YearOfObservation Param)
 	this.Location=new EventVector;
 
 	//Alcohol
-	this.Alcohol=3E9;//Date of alcoholism (increases linearly with time, probability 
+	this.Alcohol=1E9;//Date of alcoholism (increases linearly with time, probability 
 	
 	
 	
