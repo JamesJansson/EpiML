@@ -181,6 +181,9 @@ function OptimisationPlot(PlotHolderName, Data, OptimisedData,  xAxisLabel, yAxi
 	// Data.Upper a vector of values that 
 	// Data.Lower 
 	
+	// OptimisedData.X
+	// OptimisedData.
+	
 	var data2 = [
 			[.7,3,.2,.4],    // x, y, lower y by, higher y by
 			[1.5,2.2,.3,.4],
@@ -194,7 +197,14 @@ function OptimisationPlot(PlotHolderName, Data, OptimisedData,  xAxisLabel, yAxi
 		yerr: {show:true, asymmetric:true, upperCap: "-", lowerCap: "-"}
 	};
 	
-	
+	var data = [
+			{color: rgba(255, 0, 255, 0.3), points: data1_points, data: data1, label: "data1"}, 
+			{color: "black",  points: data2_points, data: data2, label: "data2"},
+			{color: "green", lines: {show: true}, points: data3_points, data: data3, label: "data3"},
+			// bars with errors
+			{color: "orange", bars: {show: true, align: "center", barWidth: 0.25}, data: data4, label: "data4"},
+			{color: "orange", points: data3_points, data: data4_errors}
+		];
 	
 	
 	$.plot($(PlotHolderName), data , {
