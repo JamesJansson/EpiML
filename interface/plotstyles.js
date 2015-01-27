@@ -1,7 +1,40 @@
 // Developed by James Jansson
-// Requires the flot plotting library to work
+// Requires:
+// flot plotting library to work
+// Papaparse for the download button to work
 // also requires the morris.js library to work
 
+
+function BuildPlot(Settings){
+	// The settings has the following format:
+	// .ID = the ID of the container to put the graph into. Should be a unique ID on the page. Required
+	// .xAxisLabel
+	// .yAxisLabel
+	// .Data
+	// 
+	
+	
+	// Check that there are any ID names that are taken
+	//console.error("Using '"+Settings.ID+"' as an ID for the plot creates a parameter '" + PrexistingID + "' that already exists.";
+	
+	// Build HTML
+	InnerHTMLForPlot="";
+	InnerHTMLForPlot+="    <div class='fullscreenbox' id='"+Settings.ID+"_fullscreenbox' >";
+	InnerHTMLForPlot+="        <div class='fullscreenbutton' title='Fullscreen' id='"+Settings.ID+"_fullscreenbutton' onclick='ToggleFullScreen('"+Settings.ID+"_fullscreenbox');'>&#10063</div>";
+	InnerHTMLForPlot+="        <div class='downloadbutton' title='Download data' onclick='DownloadSummaryStatisticCSV(SimulationHolder.Result[0].AgeInfectedResult);"+Settings.ID+"_data.Download();'>&#x21E9;</div>";
+	InnerHTMLForPlot+="        <div class='plot_positioner'>";
+	InnerHTMLForPlot+="             <div id='"+Settings.ID+"_placeholder' class='plot_placeholder'></div>";
+	InnerHTMLForPlot+="        </div>";
+	InnerHTMLForPlot+="        <div class='xlabel'>Year</div>";
+	InnerHTMLForPlot+="        <div class='ylabel'><div class='rotate'>Y Axis Label</div></div>";
+	InnerHTMLForPlot+="    </div>";
+	
+	document.getElementById(Settings.ID).innerHTML=InnerHTMLForPlot;
+	
+	// Create plot
+
+
+}
 
 function ConvertDataToLinePlot(x, InputMatrix){//Accepts [param][time] or [y][x]. Future systems will accept [param][time][sim]
 	LinePlotData=[];
