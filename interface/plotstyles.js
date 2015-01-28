@@ -184,26 +184,44 @@ function OptimisationPlot(PlotHolderName, Data, OptimisedData,  xAxisLabel, yAxi
 	// OptimisedData.X
 	// OptimisedData.
 	
+	// Determine if error bars are present in either of the data
+	
+	// Reformat the data into the appropriate form
+	
+	
+	var data1 = [
+			[.7,3.2,.2,.4],    // x, y, lower y by, higher y by
+			[1.7,2.2,.3,.4],
+			[2.5,1,.5,.2]
+		];
+	
 	var data2 = [
 			[.7,3,.2,.4],    // x, y, lower y by, higher y by
 			[1.5,2.2,.3,.4],
 			[2.3,1,.5,.2]
 		];
+		
+		
 	
-	var data2_points = {
+	
+	var points_with_error_formatting = {
 		show: true,
 		radius: 2.5,
 		errorbars: "y", 
 		yerr: {show:true, asymmetric:true, upperCap: "-", lowerCap: "-"}
 	};
 	
+	var simple_points_formatting = {
+		show: true,
+		radius: 2.5}
+	};
+	
+	
+	
+	// Combine all the data to be included in the graph
 	var data = [
-			{color: rgba(255, 0, 255, 0.3), points: data1_points, data: data1, label: "data1"}, 
-			{color: "black",  points: data2_points, data: data2, label: "data2"},
-			{color: "green", lines: {show: true}, points: data3_points, data: data3, label: "data3"},
-			// bars with errors
-			{color: "orange", bars: {show: true, align: "center", barWidth: 0.25}, data: data4, label: "data4"},
-			{color: "orange", points: data3_points, data: data4_errors}
+			{color: "rgba(255, 0, 0, 0.5)", lines: {show: true}, points: points_with_error_formatting, data: data1, label: "Original Data"}, 
+			{color: "rgba(0, 0, 0, 0.5)",  points: points_with_error_formatting, data: data2, label: "Optimised Result"},
 		];
 	
 	
