@@ -175,17 +175,20 @@ function FixedAxisScatterPlot(PlotHolderName, Points,  xAxisLabel, yAxisLabel, x
 }
 
 
-function OptimisationPlot(PlotHolderName, Data, OptimisedData,  xAxisLabel, yAxisLabel){
-	// Data.X
-	// Data.Value an array of y values associated with mean/median estimate
-	// Data.Upper a vector of values that 
-	// Data.Lower 
+function OptimisationPlot(PlotHolderName, FittingData, OptimisedResults,  xAxisLabel, yAxisLabel){
+	// FittingData.X
+	// FittingData.Value an array of y values associated with mean/median estimate
+	// FittingData.Upper a vector of values that 
+	// FittingData.Lower 
 	
-	// OptimisedData.X
-	// OptimisedData.
+	// OptimisedResults.X
+	// OptimisedResults.
 	
 	// Determine if error bars are present in either of the data
+	//if (){
+		
 	
+	//}
 	// Reformat the data into the appropriate form
 	
 	
@@ -213,15 +216,15 @@ function OptimisationPlot(PlotHolderName, Data, OptimisedData,  xAxisLabel, yAxi
 	
 	var simple_points_formatting = {
 		show: true,
-		radius: 2.5}
+		radius: 2.5
 	};
 	
 	
 	
 	// Combine all the data to be included in the graph
 	var data = [
-			{color: "rgba(255, 0, 0, 0.5)", lines: {show: true}, points: points_with_error_formatting, data: data1, label: "Original Data"}, 
-			{color: "rgba(0, 0, 0, 0.5)",  points: points_with_error_formatting, data: data2, label: "Optimised Result"},
+			{color: "rgba(0, 0, 0, 0.7)",  points: points_with_error_formatting, data: data1, label: "Original Data"}, 
+			{color: "rgba(255, 0, 0, 0.7)",  lines: {show: true}, points: points_with_error_formatting, data: data2, label: "Optimised Result"},
 		];
 	
 	
