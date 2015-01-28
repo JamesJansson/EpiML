@@ -171,15 +171,4 @@ function DxUDxSimPlot(){
 
 }
 
-function ConvertDataToLinePlot(x, InputMatrix){//Accepts [param][time] or [y][x]. Future systems will accept [param][time][sim]
-	LinePlotData=[];
-	NumberOfLines=InputMatrix.length;
-	for (i=0; i<NumberOfLines; i++){
-		ThisLine=[];
-		for (var j = 0; j < InputMatrix[i].length; j++) {
-			ThisLine.push([x[j], InputMatrix[i][j]]);
-		}
-		LinePlotData.push(ThisLine);
-	}
-	return LinePlotData;
-}
+

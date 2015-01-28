@@ -2,6 +2,7 @@
 // Requires:
 // flot plotting library to work
 // Papaparse for the download button to work
+// Requires 
 // also requires the morris.js library to work
 
 
@@ -39,10 +40,13 @@ function BuildPlot(Settings){
 }
 
 function ConvertDataToLinePlot(x, InputMatrix){//Accepts [param][time] or [y][x]. Future systems will accept [param][time][sim]
-	LinePlotData=[];
-	NumberOfLines=InputMatrix.length;
-	for (i=0; i<NumberOfLines; i++){
-		ThisLine=[];
+	var LinePlotData=[];
+	var NumberOfLines=InputMatrix.length;
+	for (var i=0; i<NumberOfLines; i++){
+		if (x.length!=InputMatrix[i].length){
+			console.error("Input data is incorrect lengths.");
+		}
+		var ThisLine=[];
 		for (var j = 0; j < InputMatrix[i].length; j++) {
 			ThisLine.push([x[j], InputMatrix[i][j]]);
 		}
@@ -185,8 +189,8 @@ function OptimisationPlot(PlotHolderName, FittingData, OptimisedResults,  xAxisL
 	// OptimisedResults.
 	
 	// Determine if error bars are present in either of the data
-	//if (){
-		
+	//if (typeof(FittingData.Upper)!='undefined' && typeof(FittingData.Lower)!='undefined'){
+		// ConvertDataToLinePlot(FittingData.X, [FittingData.Value, FittingData.Lower, FittingData.Upper]);// This is still not in the correct format
 	
 	//}
 	// Reformat the data into the appropriate form
