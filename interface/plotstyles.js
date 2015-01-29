@@ -209,58 +209,58 @@ function OptimisationPlot(PlotHolderName, FittingData, OptimisedResults,  xAxisL
 	// OptimisedResults.Upper a vector of values that indicate the upper value of the optimised results (optional)
 	// OptimisedResults.Lower a vector of values that indicate the lower value of the optimised results (optional)
 	
+	// Example test code
+	// PlotHolderName="#plot1_placeholder";
+	// var FittingData=[];
+	// FittingData.X=[2, 4, 6];
+	// FittingData.Value=[1.3, 2.3, 2.9];
+	// var OptimisedResults=[];
+	// OptimisedResults.X=[2, 4, 6];
+	// OptimisedResults.Value=[1.5, 2.5, 3.5];
+	// OptimisedResults.Lower=[1.1, 2.1, 2.7];
+	// OptimisedResults.Upper=[1.9, 2.9, 3.9];
 	
-	// Determine if error bars are present in either of the data
-	//if (typeof(FittingData.Upper)!='undefined' && typeof(FittingData.Lower)!='undefined'){
-	//	var temp=PlotStyles_ConvertDataToLinePlot(FittingData.X, [FittingData.Value, FittingData.Lower, FittingData.Upper]);
-		// This is still not in the correct format (value need to be the difference between "value" and "lower"
-		
-		
-	//	var 
-	//}
-	//else{
+	function StylingFunction(InputData){
+		var ThingToReturn=[];
+		// Determine if error bars are present in either of the data
+		if (typeof(InputData.Upper)!='undefined' && typeof(InputData.Lower)!='undefined'){
+			// Reformat the data into the appropriate form
+			var TempMat=PlotStyles_Transpose([InputData.X, InputData.Value, InputData.Lower, InputData.Upper]);
+			// This is still not in the correct format (needs to be the difference between "value" and "lower", and "value" and "upper"
+			for (var i=0; i<TempMat.length; i++){
+				TempMat[i][2]=TempMat[i][1]-TempMat[i][2];
+				TempMat[i][3]=TempMat[i][3]-TempMat[i][1];
+			}
+			ThingToReturn.Data=TempMat;
+			
+			ThingToReturn.PointStyle = {
+				show: true,
+				radius: 5,
+				errorbars: "y", 
+				yerr: {show:true, asymmetric:true, upperCap: "-", lowerCap: "-"}
+			};
+		}
+		else{
+			// Reformat the data into the appropriate form
+			var TempMat=PlotStyles_Transpose([InputData.X, InputData.Value]);
+			ThingToReturn.Data=TempMat;
+			
+			ThingToReturn.PointStyle = {
+				show: true,
+				radius: 5
+			};
+		}
+		return ThingToReturn;
+	}
 	
-	
-	//}
-	
-	// Reformat the data into the appropriate form
-	
-	
-	var data1 = [
-			[.7,3.2,.2,.4],    // x, y, lower y by, higher y by
-			[1.7,2.2,.3,.4],
-			[2.5,1,.5,.2]
-		];
-	
-	var data2 = [
-			[.7,3,.2,.4],    // x, y, lower y by, higher y by
-			[1.5,2.2,.3,.4],
-			[2.3,1,.5,.2]
-		];
-		
-		
-	
-	
-	var points_with_error_formatting = {
-		show: true,
-		radius: 5,
-		errorbars: "y", 
-		yerr: {show:true, asymmetric:true, upperCap: "-", lowerCap: "-"}
-	};
-	
-	var simple_points_formatting = {
-		show: true,
-		radius: 5
-	};
-	
-	
+	var FittingPlot=StylingFunction(FittingData);
+	var OptimisedPlot=StylingFunction(OptimisedResults);
 	
 	// Combine all the data to be included in the graph
 	var data = [
-			{color: "rgba(0, 0, 0, 0.7)",  points: points_with_error_formatting, data: data1, label: "Original Data"}, 
-			{color: "rgba(255, 0, 0, 0.7)",  lines: {show: true}, points: points_with_error_formatting, data: data2, label: "Optimised Result"},
+			{color: "rgba(0, 0, 0, 0.7)",  points: FittingPlot.PointStyle, data: FittingPlot.Data, label: "Original Data"}, 
+			{color: "rgba(255, 0, 0, 0.7)",  lines: {show: true}, points: OptimisedPlot.PointStyle, data: OptimisedPlot.Data, label: "Optimised Result"},
 		];
-	
 	
 	$.plot($(PlotHolderName), data , {
 		legend: {
@@ -279,8 +279,6 @@ function OptimisationPlot(PlotHolderName, FittingData, OptimisedResults,  xAxisL
 			interactive: true
 		}
 	});
-	
-	
 }
 
 
