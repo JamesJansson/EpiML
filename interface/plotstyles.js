@@ -39,7 +39,7 @@ function BuildPlot(Settings){
 
 }
 
-function ConvertDataToLinePlot(x, InputMatrix){//Accepts [param][time] or [y][x]. Future systems will accept [param][time][sim]
+function PlotStyles_ConvertDataToLinePlot(x, InputMatrix){//Accepts [param][time] or [y][x]. Future systems will accept [param][time][sim]
 	var LinePlotData=[];
 	var NumberOfLines=InputMatrix.length;
 	for (var i=0; i<NumberOfLines; i++){
@@ -55,10 +55,29 @@ function ConvertDataToLinePlot(x, InputMatrix){//Accepts [param][time] or [y][x]
 	return LinePlotData;
 }
 
+function PlotStyles_Transpose(InputMatrix){
+	var ReturnMatrix=[];
+	var Nxdim=InputMatrix[1].length;
+	var Nydim=InputMatrix.length;
+	for (var j=0; j<Nydim; j++){
+		if (InputMatrix[1].length!=InputMatrix[j].length){
+			throw "Input data is incorrect lengths.";
+		}
+	}
+	for (var i = 0; i < Nxdim; i++) {
+		ReturnMatrix[i]=[];
+		var ThisLine=[];
+		for (var j=0; j<Nydim; j++){
+			ReturnMatrix[i][j]=InputMatrix[j][i];
+		}
+	}
+	return ReturnMatrix;
+}
+
 
 function StackedLinePlot(PlotHolderName, X, ArrayToPlot,  xAxisLabel, yAxisLabel){
 	// convert to a form that plot will accept
-	PlotData=ConvertDataToLinePlot(X, ArrayToPlot);
+	PlotData=PlotStyles_ConvertDataToLinePlot(X, ArrayToPlot);
 	//Set up plot appearance // http://www.pikemere.co.uk/blog/flot-tutorial-how-to-create-area-charts/ 
 	PlotSettings={xaxis: {
 					axisLabel: xAxisLabel,
@@ -88,7 +107,7 @@ function StackedLinePlot(PlotHolderName, X, ArrayToPlot,  xAxisLabel, yAxisLabel
 
 function StackedBarPlot(PlotHolderName, X, ArrayToPlot,  xAxisLabel, yAxisLabel){
 	// convert to a form that plot will accept
-	PlotData=ConvertDataToLinePlot(X, ArrayToPlot);
+	PlotData=PlotStyles_ConvertDataToLinePlot(X, ArrayToPlot);
 	//Set up plot appearance // http://www.pikemere.co.uk/blog/flot-tutorial-how-to-create-area-charts/ 
 	PlotSettings={xaxis: {
 					axisLabel: xAxisLabel,
@@ -182,17 +201,28 @@ function FixedAxisScatterPlot(PlotHolderName, Points,  xAxisLabel, yAxisLabel, x
 function OptimisationPlot(PlotHolderName, FittingData, OptimisedResults,  xAxisLabel, yAxisLabel){
 	// FittingData.X
 	// FittingData.Value an array of y values associated with mean/median estimate
-	// FittingData.Upper a vector of values that 
-	// FittingData.Lower 
+	// FittingData.Upper a vector of values that indicate the upper value of the fitting data (optional)
+	// FittingData.Lower a vector of values that indicate the lower value of the fitting data (optional)
 	
 	// OptimisedResults.X
-	// OptimisedResults.
+	// OptimisedResults.Value an array of y values associated with mean/median estimate
+	// OptimisedResults.Upper a vector of values that indicate the upper value of the optimised results (optional)
+	// OptimisedResults.Lower a vector of values that indicate the lower value of the optimised results (optional)
+	
 	
 	// Determine if error bars are present in either of the data
 	//if (typeof(FittingData.Upper)!='undefined' && typeof(FittingData.Lower)!='undefined'){
-		// ConvertDataToLinePlot(FittingData.X, [FittingData.Value, FittingData.Lower, FittingData.Upper]);// This is still not in the correct format
+	//	var temp=PlotStyles_ConvertDataToLinePlot(FittingData.X, [FittingData.Value, FittingData.Lower, FittingData.Upper]);
+		// This is still not in the correct format (value need to be the difference between "value" and "lower"
+		
+		
+	//	var 
+	//}
+	//else{
+	
 	
 	//}
+	
 	// Reformat the data into the appropriate form
 	
 	
@@ -213,14 +243,14 @@ function OptimisationPlot(PlotHolderName, FittingData, OptimisedResults,  xAxisL
 	
 	var points_with_error_formatting = {
 		show: true,
-		radius: 2.5,
+		radius: 5,
 		errorbars: "y", 
 		yerr: {show:true, asymmetric:true, upperCap: "-", lowerCap: "-"}
 	};
 	
 	var simple_points_formatting = {
 		show: true,
-		radius: 2.5
+		radius: 5
 	};
 	
 	
