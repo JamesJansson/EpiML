@@ -20,6 +20,20 @@ function BuildPlot(Settings){
 	// Check that there are any ID names that are taken
 	//console.error("Using '"+Settings.ID+"' as an ID for the plot creates a parameter '" + PrexistingID + "' that already exists.";
 	
+	// Store information associated with this plot
+	this.ID=Settings.ID;
+	this.PlotFunction=Settings.PlotFunction;
+	this.PlotData=Settings.PlotData;
+	this.DownloadFunction=Settings.DownloadFunction;
+	this.DownloadData=Settings.DownloadData;
+
+	
+	
+	this.XMin=Settings.XMin;
+	this.XMax=Settings.XMax;
+	this.YMin=Settings.YMin;
+	this.YMax=Settings.YMax;
+		
 	// Build HTML
 	InnerHTMLForPlot="";
 	InnerHTMLForPlot+="    <div class='fullscreenbox' id='"+Settings.ID+"_fullscreenbox' >";
@@ -34,10 +48,21 @@ function BuildPlot(Settings){
 	
 	document.getElementById(Settings.ID).innerHTML=InnerHTMLForPlot;
 	
+	
+	
 	// Create plot
-
-
+	
+	// .Update() //Only updates plot
+	
+	// .DownloadData(){
+		//this.DownloadFunction(this.DownloadData);
+	//}
 }
+
+
+
+
+
 
 function PlotStyles_ConvertDataToLinePlot(x, InputMatrix){//Accepts [param][time] or [y][x]. Future systems will accept [param][time][sim]
 	var LinePlotData=[];
