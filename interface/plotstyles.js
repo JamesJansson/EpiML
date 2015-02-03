@@ -44,25 +44,38 @@ function GeneralPlot(Settings){
 	this.DownloadFunction=Settings.DownloadFunction;
 	this.DownloadData=Settings.DownloadData;
 
+	
 	// Options window
+	// The Options window initially only displays min/max 
+	var OptionsPanelHTML="";
+	this.DisplayOptionsPanel=false; // the default is to not display it unless the option is selected
+	if (typeof(Settings.DisplayOptionsPanel)!='undefined'){
+		this.DisplayOptionsPanel=Settings.DisplayOptionsPanel;
+	}
+	
+	// If there are further 
 	if (typeof(Settings.OptionsPanel)!='undefined'){
 		this.DisplayOptionsPanel=true;
 		this.OptionsPanel;
 		
 		
-		var OptionsPanelHTML="";
+		
 		// Drop down: PlotStyle
 		//      PlotFunction (on selection 
-		// Drop down: X value
+		// Drop down: X value, .Name .Values
 		// Drop down: Plot 1
 		//     Drop down: Y value
-		//     Upper uncertainty
+		//     Drop down: Display uncertainty (none), 
 		//     Lower un
+		//     Can only plot this if the X value name exists in the parameter 
+		
+		// Need to work out if we are going to force coupling of values or not, I say yes
 		
 		// The close button causes the graph to update with the new settings.
-	}
-	else{
-		this.DisplayOptionsPanel=false;
+		// Visibility initial set to false
+		
+		var PlotVariableSelectionHTML="";
+		
 	}
 	
 	
