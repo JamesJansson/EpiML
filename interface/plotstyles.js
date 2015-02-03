@@ -6,7 +6,7 @@
 // also requires the morris.js library to work
 
 
-function BuildPlot(Settings){
+function GeneralPlot(Settings){
 	// The settings has the following format:
 	// .ID = the ID of the container to put the graph into. Should be a unique ID on the page. Required
 	// .xAxisLabel
@@ -22,20 +22,60 @@ function BuildPlot(Settings){
 	
 	// Store information associated with this plot
 	this.ID=Settings.ID;
-	this.PlotFunction=Settings.PlotFunction;
-	this.PlotData=Settings.PlotData;
+	this.PlotPlaceholder=Settings.ID+"_placeholder";
+	
+	if (typeof(Settings.OptionsPanel)!='undefined'){
+		this.Name=Settings.Name;
+	}
+	else {
+		console.error("In order to use the general plot function, you must set the Settings.Name value to the string of the name of the variable that represents this object, such that HTML can be constructed around this object.");
+	}
+		
+	this.PlotFunction=Settings.PlotFunction;// should have the format function(PlotPlaceholder, PlotData){}
+	// e.g. 
+	// Settings.PlotFunction=function(PlotPlaceholder, PlotData){
+	// 	   var OriginalData=PlotData.Plot[1]; // note in this case, since the OriginalData and OptimisedResults have the same format as PlotData.Plot (.X .Y .Upper .Lower) we can simply use this format
+	// 	   var OptimisedResults=PlotData.Plot[2];
+	//     return OptimisationPlot(PlotHolderName, PlotData.OriginalData, PlotData.OptimisedResults);
+	// }
+	this.PlotData=Settings.PlotData;// A structure that can contain anything that is needed to graph
+	
+	
 	this.DownloadFunction=Settings.DownloadFunction;
 	this.DownloadData=Settings.DownloadData;
 
+	// Options window
+	if (typeof(Settings.OptionsPanel)!='undefined'){
+		this.DisplayOptionsPanel=true;
+		this.OptionsPanel;
+		
+		
+		var OptionsPanelHTML="";
+		// Drop down: PlotStyle
+		//      PlotFunction (on selection 
+		// Drop down: X value
+		// Drop down: Plot 1
+		//     Drop down: Y value
+		//     Upper uncertainty
+		//     Lower un
+		
+		// The close button causes the graph to update with the new settings.
+	}
+	else{
+		this.DisplayOptionsPanel=false;
+	}
 	
 	
 	this.XMin=Settings.XMin;
 	this.XMax=Settings.XMax;
 	this.YMin=Settings.YMin;
 	this.YMax=Settings.YMax;
+	
+	
+	
 		
 	// Build HTML
-	InnerHTMLForPlot="";
+	var InnerHTMLForPlot="";
 	InnerHTMLForPlot+="    <div class='fullscreenbox' id='"+Settings.ID+"_fullscreenbox' >";
 	InnerHTMLForPlot+="        <div class='fullscreenbutton' title='Fullscreen' id='"+Settings.ID+"_fullscreenbutton' onclick='ToggleFullScreen('"+Settings.ID+"_fullscreenbox');'>&#10063</div>";
 	InnerHTMLForPlot+="        <div class='downloadbutton' title='Download data' onclick='"+Settings.ID+"_data.Download();'>&#x21E9;</div>";
@@ -46,7 +86,7 @@ function BuildPlot(Settings){
 	InnerHTMLForPlot+="        <div class='ylabel'><div class='rotate'>Y Axis Label</div></div>";
 	InnerHTMLForPlot+="    </div>";
 	
-	document.getElementById(Settings.ID).innerHTML=InnerHTMLForPlot;
+	
 	
 	
 	
@@ -54,10 +94,23 @@ function BuildPlot(Settings){
 	
 	// .Update() //Only updates plot
 	
-	// .DownloadData(){
+	// .Download(){
 		//this.DownloadFunction(this.DownloadData);
 	//}
 }
+
+
+GeneralPlot.prototype.Draw= function (){//using prototyping for speed
+	document.getElementById(this.ID).innerHTML=InnerHTMLForPlot;
+};
+
+GeneralPlot.prototype.Update= function (){//using prototyping for speed
+	return this.PlotFunction(this.PlotPlaceholder, PlotData);
+};
+
+
+
+
 
 
 
@@ -223,25 +276,25 @@ function FixedAxisScatterPlot(PlotHolderName, Points,  xAxisLabel, yAxisLabel, x
 }
 
 
-function OptimisationPlot(PlotHolderName, FittingData, OptimisedResults,  xAxisLabel, yAxisLabel){
-	// FittingData.X
-	// FittingData.Value an array of y values associated with mean/median estimate
-	// FittingData.Upper a vector of values that indicate the upper value of the fitting data (optional)
-	// FittingData.Lower a vector of values that indicate the lower value of the fitting data (optional)
+function OptimisationPlot(PlotHolderName, OriginalData, OptimisedResults){
+	// OriginalData.X
+	// OriginalData.Y an array of y values associated with mean/median estimate
+	// OriginalData.Upper a vector of values that indicate the upper value of the fitting data (optional)
+	// OriginalData.Lower a vector of values that indicate the lower value of the fitting data (optional)
 	
 	// OptimisedResults.X
-	// OptimisedResults.Value an array of y values associated with mean/median estimate
+	// OptimisedResults.Y an array of y values associated with mean/median estimate
 	// OptimisedResults.Upper a vector of values that indicate the upper value of the optimised results (optional)
 	// OptimisedResults.Lower a vector of values that indicate the lower value of the optimised results (optional)
 	
 	// Example test code
 	// PlotHolderName="#plot1_placeholder";
-	// var FittingData=[];
-	// FittingData.X=[2, 4, 6];
-	// FittingData.Value=[1.3, 2.3, 2.9];
+	// var OriginalData=[];
+	// OriginalData.X=[2, 4, 6];
+	// OriginalData.Y=[1.3, 2.3, 2.9];
 	// var OptimisedResults=[];
 	// OptimisedResults.X=[2, 4, 6];
-	// OptimisedResults.Value=[1.5, 2.5, 3.5];
+	// OptimisedResults.Y=[1.5, 2.5, 3.5];
 	// OptimisedResults.Lower=[1.1, 2.1, 2.7];
 	// OptimisedResults.Upper=[1.9, 2.9, 3.9];
 	
@@ -250,7 +303,7 @@ function OptimisationPlot(PlotHolderName, FittingData, OptimisedResults,  xAxisL
 		// Determine if error bars are present in either of the data
 		if (typeof(InputData.Upper)!='undefined' && typeof(InputData.Lower)!='undefined'){
 			// Reformat the data into the appropriate form
-			var TempMat=PlotStyles_Transpose([InputData.X, InputData.Value, InputData.Lower, InputData.Upper]);
+			var TempMat=PlotStyles_Transpose([InputData.X, InputData.Y, InputData.Lower, InputData.Upper]);
 			// This is still not in the correct format (needs to be the difference between "value" and "lower", and "value" and "upper"
 			for (var i=0; i<TempMat.length; i++){
 				TempMat[i][2]=TempMat[i][1]-TempMat[i][2];
@@ -267,7 +320,7 @@ function OptimisationPlot(PlotHolderName, FittingData, OptimisedResults,  xAxisL
 		}
 		else{
 			// Reformat the data into the appropriate form
-			var TempMat=PlotStyles_Transpose([InputData.X, InputData.Value]);
+			var TempMat=PlotStyles_Transpose([InputData.X, InputData.Y]);
 			ThingToReturn.Data=TempMat;
 			
 			ThingToReturn.PointStyle = {
@@ -278,12 +331,12 @@ function OptimisationPlot(PlotHolderName, FittingData, OptimisedResults,  xAxisL
 		return ThingToReturn;
 	}
 	
-	var FittingPlot=StylingFunction(FittingData);
+	var OriginalPlot=StylingFunction(OriginalData);
 	var OptimisedPlot=StylingFunction(OptimisedResults);
 	
 	// Combine all the data to be included in the graph
 	var data = [
-			{color: "rgba(0, 0, 0, 0.7)",  points: FittingPlot.PointStyle, data: FittingPlot.Data, label: "Original Data"}, 
+			{color: "rgba(0, 0, 0, 0.7)",  points: OriginalPlot.PointStyle, data: OriginalPlot.Data, label: "Original Data"}, 
 			{color: "rgba(255, 0, 0, 0.7)",  lines: {show: true}, points: OptimisedPlot.PointStyle, data: OptimisedPlot.Data, label: "Optimised Result"},
 		];
 	
