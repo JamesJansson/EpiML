@@ -314,7 +314,7 @@ function TestStochasticOptimisation(){
 		//ScatterPlot('#PlotHolder', Data,  'AAA', 'BBB');
 	};
 	
-	OptimisationSettings.MaxTime=1;//stop after 10 seconds
+	OptimisationSettings.MaxTime=10;//stop after 10 seconds
 	
 	
 	OptimisationObject=new StochasticOptimisation(OptimisationSettings);
