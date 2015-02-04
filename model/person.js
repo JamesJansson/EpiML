@@ -2,7 +2,7 @@
 // * mortality
 
 
-function  PersonObject(YearOfBirth, Sex)//, YearOfObservation Param)
+function PersonObject(YearOfBirth, Sex)//, YearOfObservation Param)
 {
 	//Active
 	this.Active=0;// status variable
@@ -27,8 +27,8 @@ function  PersonObject(YearOfBirth, Sex)//, YearOfObservation Param)
 	this.HCV = new HCVObject(YearOfBirth);//may need to declare this in function to reduce the size of the memory footprint
 	
 	this.HIV = new HIVObject();
-	//this.IDU
-	this.IDU={};
+
+	this.IDU={};//Injection drug use
 	
 	//QALY 
 	//this.QualityCalculation=function(time){(this.HCV, this.IDU, this.HIV, this.Age, time);}//
@@ -97,14 +97,25 @@ PersonObject.prototype.CalculateHCVMortality= function (YearFromWhichToCalculate
 	
 };
 
-PersonObject.prototype.YearsOfLifeLost= function (){//using prototyping for speed
+PersonObject.prototype.YearsOfLifeLost= function (){
 	// This is a general function that describes the difference between general death date and 
 	// the earliest non-general death date.
 	return this.GeneralDeath-Math.min(this.GeneralDeath, this.IDUDeath, this.HCVDeath, this.HIVDeath);
 };
 
-
-
+PersonObject.prototype.StartInjecting= function (Time){
+	this.IDU=new EventVector;
+	
+	// Add the first date of injecting
+	
+	// Add the transition to regular user
+	
+	// Add the transition to former user
+	
+	// Determine excess death due to drug use
+	
+	this.IDUDeath;
+};
 
 PersonObject.prototype.HCVInfection= function (YearOfInfection, Genotype, HCVParam) {
 	var Alcohol=0;
@@ -113,4 +124,12 @@ PersonObject.prototype.HCVInfection= function (YearOfInfection, Genotype, HCVPar
 
 
 
-	console.log("Loaded person.js");
+
+
+
+function 
+
+
+
+
+console.log("Loaded person.js");

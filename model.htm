@@ -246,7 +246,9 @@ Papa.parse("data/summarynotifications.csv", {download: true, complete: function(
 				<option value="8">8</option>
 			</select>
 			
-			<p>Sample factor. Note: use of a value not equal to one makes the model incapable of modelling extinction </p>
+			<p>Sample factor</p>
+			<p>Set to larger values to decrease run time. </p>
+			<p>Note: use of a value not equal to one makes the model incapable of modelling stochastic epidemic extinction accurately. </p>
 			<input type='text' id='SampleFactorTextbox' value='10' onchange="Settings.SampleFactor=Number(this.value);SaveSettings();">
 			
 		</form>
