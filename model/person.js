@@ -104,9 +104,12 @@ PersonObject.prototype.YearsOfLifeLost= function (){
 };
 
 PersonObject.prototype.StartInjecting= function (Time){
-	this.IDU=new EventVector;
+	this.IDU=new IDUObject(this.YearOfBirth);
 	
 	// Add the first date of injecting
+	this.IDU.Use.Set(1, Time);
+	
+	// Add the transition to occasional user
 	
 	// Add the transition to regular user
 	
@@ -123,11 +126,27 @@ PersonObject.prototype.HCVInfection= function (YearOfInfection, Genotype, HCVPar
 }
 
 
-
-
-
-
-function 
+//-----------------------------------------------------------------
+//
+//
+function IDUObject(YearOfBirth){
+	this.State=0;
+	this.Use = new EventVector;
+	this.Use.Set(0, YearOfBirth);
+	// IDU codes
+	// 0: Never used
+	// 1: First try
+	// 2: Occasional user
+	// 3: Regular user
+	// 4: Former user
+	
+	this.OST = new EventVector;
+	this.OST.Set(0, YearOfBirth);
+	
+	this.NSP = new EventVector;
+	this.NSP.Set(0, YearOfBirth);
+	
+}
 
 
 

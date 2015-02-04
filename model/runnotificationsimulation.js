@@ -17,6 +17,10 @@ importScripts("generalmortality.js");
 var Data={};
 var Param={};//This is the parameter holder for the simulation
 var CommonParam={};
+var Settings={};
+
+var OptimisedParam={};// The results are stored both here and in Param
+
 var PP=[];//This is the global array that holds the population
 var SimID;//This value is a global, used to reference the correct simulation in the Param structure
 var PPNotification=[];
@@ -58,7 +62,7 @@ self.onmessage = function (WorkerMessage) {
 	//Load the parameters data
 	CommonParam=WorkerMessage.data.Common.Param;
 	// Load simulation settings
-	var Settings=WorkerMessage.data.Common.Settings;
+	Settings=WorkerMessage.data.Common.Settings;
 	
 	SimID = WorkerMessage.data.SimID; // this value is used to select the appropriate parameter value
     var SimData = WorkerMessage.data.SimData;
@@ -74,7 +78,14 @@ self.onmessage = function (WorkerMessage) {
 	
 	self.postMessage({Console: MaleMortality});
 	
+	// Perform an optimisation of the number of injectors
+	if (true){
+	// Get the data for the numbers by sex and age
+		EntryRateOptimisation();
+	}
 	
+	
+	// Run an example simulation
 	var IncrementSize=Math.round(SimData.NoPeople/100);//used to deliver progress rates back to the progress bar
 	
 	var GenotypeValue=1;
@@ -188,6 +199,22 @@ self.onmessage = function (WorkerMessage) {
 	
 	//Saving simulation results into local storage
 	
+	// Run the same simulation, but this time with the proposed intervention starting at the time of the intervention
+	
 	
 	self.postMessage({WorkerMessage: WorkerMessage.data, Result: SimResult});//All simulation will end with this line
 };
+
+
+
+
+
+
+
+function EntryRateOptimisation(){
+	// First step is to assume increasing rates leading up to the end of the 1999 
+	// due to the increased availability of heroin, followed by a slump due to 
+	// reduced supply/increased prices 
+
+
+}
