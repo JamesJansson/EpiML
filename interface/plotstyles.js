@@ -21,25 +21,38 @@ function GeneralPlot(Settings){
 	//console.error("Using '"+Settings.ID+"' as an ID for the plot creates a parameter '" + PrexistingID + "' that already exists.";
 	
 	// Store information associated with this plot
-	this.ID=Settings.ID;
+	
+	
+	// ID
+	if (typeof(Settings.ID)!='undefined'){
+		this.ID=Settings.ID;
+	}
+	else {
+		throw "In order to use the GeneralPlot function, you must set the Settings.ID value to the name of the div element you wish to place the plot into.";
+	}
 	this.PlotPlaceholder=Settings.ID+"_placeholder";
 	
-	if (typeof(Settings.OptionsPanel)!='undefined'){
+	
+	if (typeof(Settings.Name)!='undefined'){
 		this.Name=Settings.Name;
 	}
 	else {
-		console.error("In order to use the general plot function, you must set the Settings.Name value to the string of the name of the variable that represents this object, such that HTML can be constructed around this object.");
+		throw "In order to use the GeneralPlot function, you must set the Settings.Name value to the string of the name of the variable that represents this object, such that HTML can be constructed around this object.";
 	}
-		
+			
 	this.PlotFunction=Settings.PlotFunction;// should have the format function(PlotPlaceholder, PlotData){}
 	// e.g. 
 	// Settings.PlotFunction=function(PlotPlaceholder, PlotData){
 	// 	   var OriginalData=PlotData.Plot[1]; // note in this case, since the OriginalData and OptimisedResults have the same format as PlotData.Plot (.X .Y .Upper .Lower) we can simply use this format
 	// 	   var OptimisedResults=PlotData.Plot[2];
-	//     return OptimisationPlot(PlotHolderName, PlotData.OriginalData, PlotData.OptimisedResults);
+	//     return OptimisationPlot(PlotHolderName, OriginalData, OptimisedResults);
 	// }
 	this.PlotData=Settings.PlotData;// A structure that can contain anything that is needed to graph
-	
+	// note: PlotData contains an array of Plot[] that each contain:
+	// .X (or .Category) .Y .Upper .Lower .Name
+	// PlotData contains
+	// .XMin .XMax .YMin .YMax
+	// These can be edited by the options interface
 	
 	this.DownloadFunction=Settings.DownloadFunction;
 	this.DownloadData=Settings.DownloadData;
@@ -50,14 +63,19 @@ function GeneralPlot(Settings){
 	var OptionsPanelHTML="";
 	this.DisplayOptionsPanel=false; // the default is to not display it unless the option is selected
 	if (typeof(Settings.DisplayOptionsPanel)!='undefined'){
-		this.DisplayOptionsPanel=Settings.DisplayOptionsPanel;
+		this.DisplayOptionsPanel=Settings.DisplayOptionsPanel;// This is the first point at which displaying the options panel becomes possible
 	}
 	
-	// If there are further 
-	if (typeof(Settings.OptionsPanel)!='undefined'){
+	// This is where the set up of the Options parameter selection occurs
+	if (typeof(Settings.Options)!='undefined'){
 		this.DisplayOptionsPanel=true;
-		this.OptionsPanel;
+		this.Options=Settings.Options;
 		
+		// this.Options will contain the following elements
+		// PossibleXValues
+		// for each x value, the possible y values 
+		// PossibleYValues
+		// PossibleYValuesUncertainties
 		
 		
 		// Drop down: PlotStyle
@@ -69,6 +87,9 @@ function GeneralPlot(Settings){
 		//     Lower un
 		//     Can only plot this if the X value name exists in the parameter 
 		
+		
+		
+		
 		// Need to work out if we are going to force coupling of values or not, I say yes
 		
 		// The close button causes the graph to update with the new settings.
@@ -79,28 +100,31 @@ function GeneralPlot(Settings){
 	}
 	
 	
-	this.XMin=Settings.XMin;
-	this.XMax=Settings.XMax;
-	this.YMin=Settings.YMin;
-	this.YMax=Settings.YMax;
 	
+	
+	// Set up axis labels
+	this.XLabel="";
+	if (typeof(Settings.XLabel)!='undefined'){
+		this.XLabel=Settings.XLabel;
+	}
+	this.YLabel="";
+	if (typeof(Settings.YLabel)!='undefined'){
+		this.YLabel=Settings.YLabel;
+	}
 	
 	
 		
 	// Build HTML
-	var InnerHTMLForPlot="";
-	InnerHTMLForPlot+="    <div class='fullscreenbox' id='"+Settings.ID+"_fullscreenbox' >";
-	InnerHTMLForPlot+="        <div class='fullscreenbutton' title='Fullscreen' id='"+Settings.ID+"_fullscreenbutton' onclick='ToggleFullScreen('"+Settings.ID+"_fullscreenbox');'>&#10063</div>";
-	InnerHTMLForPlot+="        <div class='downloadbutton' title='Download data' onclick='"+Settings.ID+"_data.Download();'>&#x21E9;</div>";
-	InnerHTMLForPlot+="        <div class='plot_positioner'>";
-	InnerHTMLForPlot+="             <div id='"+Settings.ID+"_placeholder' class='plot_placeholder'></div>";
-	InnerHTMLForPlot+="        </div>";
-	InnerHTMLForPlot+="        <div class='xlabel'>Year</div>";
-	InnerHTMLForPlot+="        <div class='ylabel'><div class='rotate'>Y Axis Label</div></div>";
-	InnerHTMLForPlot+="    </div>";
-	
-	
-	
+	this.InnerHTMLForPlot="";
+	this.InnerHTMLForPlot+="    <div class='fullscreenbox' id='"+Settings.ID+"_fullscreenbox' >\n";
+	this.InnerHTMLForPlot+="        <div class='fullscreenbutton' title='Fullscreen' id='"+Settings.ID+"_fullscreenbutton' onclick='ToggleFullScreen('"+Settings.ID+"_fullscreenbox');'>&#10063</div>\n";
+	this.InnerHTMLForPlot+="        <div class='downloadbutton' title='Download data' onclick='"+Settings.ID+"_data.Download();'>&#x21E9;</div>\n";
+	this.InnerHTMLForPlot+="        <div class='plot_positioner'>\n";
+	this.InnerHTMLForPlot+="             <div id='"+this.PlotPlaceholder+"' class='plot_placeholder'></div>\n";
+	this.InnerHTMLForPlot+="        </div>\n";
+	this.InnerHTMLForPlot+="        <div class='xlabel'>Year</div>\n";
+	this.InnerHTMLForPlot+="        <div class='ylabel'><div class='rotate'>Y Axis Label</div></div>\n";
+	this.InnerHTMLForPlot+="    </div>\n";
 	
 	
 	// Create plot
@@ -115,6 +139,7 @@ function GeneralPlot(Settings){
 
 GeneralPlot.prototype.Draw= function (){//using prototyping for speed
 	document.getElementById(this.ID).innerHTML=InnerHTMLForPlot;
+	this.Update();
 };
 
 GeneralPlot.prototype.Update= function (){//using prototyping for speed
