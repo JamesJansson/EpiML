@@ -99,7 +99,7 @@ function NotificationSimPlot(){
 	TimeAxis=SimulationHolder.Result[0].FibrosisCount.Time;
 	
 	// convert to a form that plot will accept
-	PlotData=ConvertDataToLinePlot(TimeAxis, FibrosisArray);
+	PlotData=PlotStyles_ConvertDataToLinePlot(TimeAxis, FibrosisArray);
 	//Set up plot appearance // http://www.pikemere.co.uk/blog/flot-tutorial-how-to-create-area-charts/ 
 	PlotSettings={xaxis: {
 					axisLabel: 'Time (years)',
@@ -139,7 +139,7 @@ function DxUDxSimPlot(){
 	TimeAxis=SimulationHolder.Result[0].DiagnosisCount.Time;
 	
 	// convert to a form that plot will accept
-	PlotData=ConvertDataToLinePlot(TimeAxis, DxUDxArray);
+	PlotData=PlotStyles_ConvertDataToLinePlot(TimeAxis, DxUDxArray);
 	//Set up plot appearance // http://www.pikemere.co.uk/blog/flot-tutorial-how-to-create-area-charts/ 
 	PlotSettings={xaxis: {
 					axisLabel: 'Time (years)',

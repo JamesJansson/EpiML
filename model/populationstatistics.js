@@ -98,9 +98,7 @@ function CountStatistic(Settings, InputFunction){
 	
 	// If VectorFunction==true if returns a vector over the period stated
 	
-	this.StartTime=0;
-	this.EndTime=1;
-	this.StepSize=1;//set by default to 1
+
 	
 	
 	this.Time=[];//the reference time for when the statistic was taken
@@ -163,61 +161,76 @@ function CountStatistic(Settings, InputFunction){
 	}
 	
 	// Set the times for the summary statistic
-	if (typeof Settings.StartTime === 'number'){
-		this.StartTime=Settings.StartTime;
-	}
-	else{
-		console.error("CountStatistic: StartTime and EndTime must be set");
-	}
-	if (typeof Settings.EndTime === 'number'){
-		this.EndTime=Settings.EndTime;
-		if (this.EndTime<this.StartTime){
-			console.error("End time cannot be before start time");
+	// The user can set either
+	// Settings.Time to a vector of times or
+	// Settings.StartTime, Settings.EndTime and Settings.StepSize (optional)
+	if (typeof Settings.Time != 'undefined'){ // if the user set the times individually
+		if (typeof Settings.Time.length == 'undefined'){
+			throw "Settings.Time should be an array of times";
+		}
+		else{
+			this.StartTime=Settings.Time[0];
+			this.EndTime=Settings.Time[Settings.Time.length-1];
+			this.Time=Settings.Time;
+			this.NumberOfTimeSteps=Settings.Time.length;
 		}
 	}
 	else{
-		console.error("CountStatistic: StartTime and EndTime must be set");
+		// Check required input variables exist
+		if (typeof Settings.StartTime === 'number'){
+			this.StartTime=Settings.StartTime;
+		}
+		else{
+			console.error("CountStatistic: StartTime and EndTime or Time[] must be set");
+		}
+		
+		if (typeof Settings.EndTime === 'number'){
+			this.EndTime=Settings.EndTime;
+			if (this.EndTime<this.StartTime){
+				console.error("End time cannot be before start time");
+			}
+		}
+		else{
+			console.error("CountStatistic: StartTime and EndTime or Time[] must be set");
+		}
+		
+		this.StepSize=1;//set by default to 1
+		if (typeof Settings.StepSize === 'number'){
+			this.StepSize=Settings.StepSize;
+		}
+		// Set up the time vector
+		var CurrentTimeStep=this.StartTime;
+		this.NumberOfTimeSteps=Math.round((this.EndTime-this.StartTime)/this.StepSize)+1; //This is used to avoid rounding errors
+		for (var TimeIndex=0; TimeIndex<this.NumberOfTimeSteps; TimeIndex++){
+			this.Time[TimeIndex]=CurrentTimeStep;
+			CurrentTimeStep=CurrentTimeStep+this.StepSize;// Increment the time step
+		}
 	}
-	if (typeof Settings.StepSize === 'number'){
-		this.StepSize=Settings.StepSize;
-	}
-	
 
 }
 
 CountStatistic.prototype.Run=function(Population){
-	// Check that the settings line up
-	
-	// Set up the time vector
-	var CurrentTimeStep=this.StartTime;
-	this.NumberOfTimeSteps=Math.round((this.EndTime-this.StartTime)/this.StepSize)+1; //This is used to avoid rounding errors
-	for (var TimeIndex=0; TimeIndex<this.NumberOfTimeSteps; TimeIndex++){
-		this.Time[TimeIndex]=CurrentTimeStep;
-		CurrentTimeStep=CurrentTimeStep+this.StepSize;// Increment the time step
+	// Set up the Count array
+	if (this.MultipleCategories==false){// inspecting only a single category
+		this.Count=ZeroArray(this.NumberOfTimeSteps);
+		
+		if (this.CountType.toLowerCase()=='instantaneous'){
+			this.InstantaneousCount(Population);
+		}
+		else if (this.CountType.toLowerCase()=='events'){
+			this.CountEvents(Population);
+		}
 	}
-	
-
-		// Set up the Count array
-		if (this.MultipleCategories==false){// inspecting only a single category
-			this.Count=ZeroArray(this.NumberOfTimeSteps);
-			
-			if (this.CountType.toLowerCase()=='instantaneous'){
-				this.InstantaneousCount(Population);
-			}
-			else if (this.CountType.toLowerCase()=='events'){
-				this.CountEvents(Population);
-			}
+	else{ // If there are a number of categories
+		this.Count=ZeroMatrix(this.NumberOfCategories, this.NumberOfTimeSteps);
+		
+		if (this.CountType.toLowerCase()=='instantaneous'){
+			this.InstantaneousCountCategorical(Population);
 		}
-		else{ // If there are a number of categories
-			this.Count=ZeroMatrix(this.NumberOfCategories, this.NumberOfTimeSteps);
-			
-			if (this.CountType.toLowerCase()=='instantaneous'){
-				this.InstantaneousCountCategorical(Population);
-			}
-			else if (this.CountType.toLowerCase()=='events'){
-				console.error("Please do not use countevents and MultipleCategories together");
-			}
+		else if (this.CountType.toLowerCase()=='events'){
+			console.error("Please do not use countevents and MultipleCategories together");
 		}
+	}
 
 	// Destroy the function to make passing back to the main thread easy (the function can break parallelisation)
 	this.Function=null;//The function seems to need to be destroyed before passing the results back to the main controller of the webworker
@@ -249,6 +262,8 @@ CountStatistic.prototype.InstantaneousCountCategorical= function (Population){//
 
 
 CountStatistic.prototype.CountEvents= function (Population){//Used to count how many times something happens over a number of finite periods
+	
+	throw "This function currently doesn't allow for variable time steps (still uses StepSize) and hasn't defined NumberInVector";
 	
 	// initialise vector with a zero vector
 	this.Count=ZeroArray(NumberInVector);

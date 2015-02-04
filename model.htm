@@ -145,9 +145,9 @@ Papa.parse("data/summarynotifications.csv", {download: true, complete: function(
 		<div id="nodetestbutton" class="SolidButton" onClick="var cp = require('child_process');var child=[];sim=0;child[sim] = cp.fork('./testworker.js');child[sim].on('message', function(m) {console.log('received: ' + m);});child[sim].send(sim);"> Run simulation </div>
 		
 		
-		<div class="plot" id="plot2" >
+		
 
-		</div>
+		
 		
 		
 	</div>
@@ -182,6 +182,11 @@ Papa.parse("data/summarynotifications.csv", {download: true, complete: function(
 	
 	<div id="PlotsContent" class="Content">
 		<h1>Plots</h1>
+		
+		<p>"Plot 2" (for testing)</p>
+		
+		<div class="plot" id="plot2" ></div>
+		
 		
 		<p>Fibrosis Progression</p>
 		
