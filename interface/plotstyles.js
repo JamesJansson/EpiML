@@ -50,6 +50,7 @@ function GeneralPlot(Settings){
 	this.PlotData=Settings.PlotData;// A structure that can contain anything that is needed to graph
 	// note: PlotData contains an array of Plot[] that each contain:
 	// .X (or .Category) .Y .Upper .Lower .Name
+	
 	// PlotData contains
 	// .XMin .XMax .YMin .YMax
 	// These can be edited by the options interface
@@ -117,13 +118,13 @@ function GeneralPlot(Settings){
 	// Build HTML
 	this.InnerHTMLForPlot="";
 	this.InnerHTMLForPlot+="    <div class='fullscreenbox' id='"+Settings.ID+"_fullscreenbox' >\n";
-	this.InnerHTMLForPlot+="        <div class='fullscreenbutton' title='Fullscreen' id='"+Settings.ID+"_fullscreenbutton' onclick='ToggleFullScreen('"+Settings.ID+"_fullscreenbox');'>&#10063</div>\n";
+	this.InnerHTMLForPlot+="        <div class='fullscreenbutton' title='Fullscreen' id='"+Settings.ID+"_fullscreenbutton' onclick=\"ToggleFullScreen('"+Settings.ID+"_fullscreenbox');\">&#10063</div>\n";
 	this.InnerHTMLForPlot+="        <div class='downloadbutton' title='Download data' onclick='"+Settings.ID+"_data.Download();'>&#x21E9;</div>\n";
 	this.InnerHTMLForPlot+="        <div class='plot_positioner'>\n";
 	this.InnerHTMLForPlot+="             <div id='"+this.PlotPlaceholder+"' class='plot_placeholder'></div>\n";
 	this.InnerHTMLForPlot+="        </div>\n";
-	this.InnerHTMLForPlot+="        <div class='xlabel'>Year</div>\n";
-	this.InnerHTMLForPlot+="        <div class='ylabel'><div class='rotate'>Y Axis Label</div></div>\n";
+	this.InnerHTMLForPlot+="        <div class='xlabel'>"+this.XLabel+"</div>\n";
+	this.InnerHTMLForPlot+="        <div class='ylabel'><div class='rotate'>"+this.XLabel+"</div></div>\n";
 	this.InnerHTMLForPlot+="    </div>\n";
 	
 	
@@ -138,7 +139,7 @@ function GeneralPlot(Settings){
 
 
 GeneralPlot.prototype.Draw= function (){//using prototyping for speed
-	document.getElementById(this.ID).innerHTML=InnerHTMLForPlot;
+	document.getElementById(this.ID).innerHTML=this.InnerHTMLForPlot;
 	this.Update();
 };
 
@@ -147,8 +148,12 @@ GeneralPlot.prototype.Update= function (){//using prototyping for speed
 };
 
 
+// Example code
+// PlotSettings=[];
+// PlotSettings.Name="PlotObjectName";// what the object will be called later
+// PlotSettings.ID="plot2";
 
-
+// var PlotObjectName=new GeneralPlot(PlotSettings);
 
 
 
