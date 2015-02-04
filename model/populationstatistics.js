@@ -572,6 +572,7 @@ function CalculateRate(Numerator, Denominator){
 // Finally, a function that groups the results across multiple instances of the simulations to create 
 
 function MultiSimCountStat(InputStatArray){
+	// Use the details of the first simulation to form the general properties of this aggregate statistic
 	this.Name=InputStatArray[0].Name;
 	this.XLabel=InputStatArray[0].XLabel;
 	this.YLabel=InputStatArray[0].YLabel;

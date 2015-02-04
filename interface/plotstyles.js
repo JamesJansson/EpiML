@@ -55,8 +55,16 @@ function GeneralPlot(Settings){
 	// .XMin .XMax .YMin .YMax
 	// These can be edited by the options interface
 	
-	this.DownloadFunction=Settings.DownloadFunction;
-	this.DownloadData=Settings.DownloadData;
+	// The .Data element can be used for selecting new graphing options in the graphing panel, and to allow data to be downloaded
+	var DownloadButtonHTML="";//by default blank if the download data function does not exist
+	if (typeof(Settings.Data)!='undefined'){
+		this.Data=Settings.Data;
+		
+		// If the .Data hads a function called "Download", create a button that allows the download of Data
+		if (typeof(this.Data.Download)=='function'){
+			DownloadButtonHTML="        <div class='downloadbutton' title='Download data' onclick='"+this.Name+".Download();'>&#x21E9;</div>\n";
+		}
+	}
 
 	
 	// Options window
@@ -113,9 +121,9 @@ function GeneralPlot(Settings){
 			
 	// Build HTML
 	this.InnerHTMLForPlot="";
-	this.InnerHTMLForPlot+="    <div class='fullscreenbox' id='"+Settings.ID+"_fullscreenbox' >\n";
-	this.InnerHTMLForPlot+="        <div class='fullscreenbutton' title='Fullscreen' id='"+Settings.ID+"_fullscreenbutton' onclick=\"ToggleFullScreen('"+Settings.ID+"_fullscreenbox');\">&#10063</div>\n";
-	this.InnerHTMLForPlot+="        <div class='downloadbutton' title='Download data' onclick='"+Settings.ID+"_data.Download();'>&#x21E9;</div>\n";
+	this.InnerHTMLForPlot+="    <div class='fullscreenbox' id='"+this.ID+"_fullscreenbox' >\n";
+	this.InnerHTMLForPlot+="        <div class='fullscreenbutton' title='Fullscreen' id='"+this.ID+"_fullscreenbutton' onclick=\"ToggleFullScreen('"+this.ID+"_fullscreenbox');\">&#10063</div>\n";
+	this.InnerHTMLForPlot+=DownloadButtonHTML;
 	this.InnerHTMLForPlot+="        <div class='plot_positioner'>\n";
 	this.InnerHTMLForPlot+="             <div id='"+this.ID+"_placeholder' class='plot_placeholder'></div>\n";
 	this.InnerHTMLForPlot+="        </div>\n";
@@ -141,6 +149,11 @@ GeneralPlot.prototype.Draw= function (){//using prototyping for speed
 GeneralPlot.prototype.Update= function (){//using prototyping for speed
 	return this.PlotFunction(this.PlotPlaceholder, this.PlotData);
 };
+
+GeneralPlot.prototype.Download= function (){//using prototyping for speed
+	return this.Data.Download();
+};
+
 
 
 // Example code
@@ -170,11 +183,15 @@ GeneralPlot.prototype.Update= function (){//using prototyping for speed
 // PlotSettings.XLabel="Year";
 // PlotSettings.YLabel="Number";
 
+// PlotSettings.Data=[];
+// PlotSettings.Data.Download=function (){console.log('This runs when the button is pushed')};
+
 // var PlotObjectName=new GeneralPlot(PlotSettings);
 // PlotObjectName.Draw();
 
-
-
+//Yet to be implemented steps
+// PlotSettings.Download=function (){OriginalDataDraw.Download()};
+// PlotSettings.Title
 
 
 function PlotStyles_ConvertDataToLinePlot(x, InputMatrix){//Accepts [param][time] or [y][x]. Future systems will accept [param][time][sim]
