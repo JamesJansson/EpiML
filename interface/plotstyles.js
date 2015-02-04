@@ -30,7 +30,7 @@ function GeneralPlot(Settings){
 	else {
 		throw "In order to use the GeneralPlot function, you must set the Settings.ID value to the name of the div element you wish to place the plot into.";
 	}
-	this.PlotPlaceholder=Settings.ID+"_placeholder";
+	this.PlotPlaceholder="#"+Settings.ID+"_placeholder";
 	
 	
 	if (typeof(Settings.Name)!='undefined'){
@@ -45,7 +45,7 @@ function GeneralPlot(Settings){
 	// Settings.PlotFunction=function(PlotPlaceholder, PlotData){
 	// 	   var OriginalData=PlotData.Plot[1]; // note in this case, since the OriginalData and OptimisedResults have the same format as PlotData.Plot (.X .Y .Upper .Lower) we can simply use this format
 	// 	   var OptimisedResults=PlotData.Plot[2];
-	//     return OptimisationPlot(PlotHolderName, OriginalData, OptimisedResults);
+	//     return OptimisationPlot(PlotPlaceholder, OriginalData, OptimisedResults);
 	// }
 	this.PlotData=Settings.PlotData;// A structure that can contain anything that is needed to graph
 	// note: PlotData contains an array of Plot[] that each contain:
@@ -101,8 +101,6 @@ function GeneralPlot(Settings){
 	}
 	
 	
-	
-	
 	// Set up axis labels
 	this.XLabel="";
 	if (typeof(Settings.XLabel)!='undefined'){
@@ -112,21 +110,18 @@ function GeneralPlot(Settings){
 	if (typeof(Settings.YLabel)!='undefined'){
 		this.YLabel=Settings.YLabel;
 	}
-	
-	
-		
+			
 	// Build HTML
 	this.InnerHTMLForPlot="";
 	this.InnerHTMLForPlot+="    <div class='fullscreenbox' id='"+Settings.ID+"_fullscreenbox' >\n";
 	this.InnerHTMLForPlot+="        <div class='fullscreenbutton' title='Fullscreen' id='"+Settings.ID+"_fullscreenbutton' onclick=\"ToggleFullScreen('"+Settings.ID+"_fullscreenbox');\">&#10063</div>\n";
 	this.InnerHTMLForPlot+="        <div class='downloadbutton' title='Download data' onclick='"+Settings.ID+"_data.Download();'>&#x21E9;</div>\n";
 	this.InnerHTMLForPlot+="        <div class='plot_positioner'>\n";
-	this.InnerHTMLForPlot+="             <div id='"+this.PlotPlaceholder+"' class='plot_placeholder'></div>\n";
+	this.InnerHTMLForPlot+="             <div id='"+this.ID+"_placeholder' class='plot_placeholder'></div>\n";
 	this.InnerHTMLForPlot+="        </div>\n";
 	this.InnerHTMLForPlot+="        <div class='xlabel'>"+this.XLabel+"</div>\n";
-	this.InnerHTMLForPlot+="        <div class='ylabel'><div class='rotate'>"+this.XLabel+"</div></div>\n";
+	this.InnerHTMLForPlot+="        <div class='ylabel'><div class='rotate'>"+this.YLabel+"</div></div>\n";
 	this.InnerHTMLForPlot+="    </div>\n";
-	
 	
 	// Create plot
 	
@@ -144,7 +139,7 @@ GeneralPlot.prototype.Draw= function (){//using prototyping for speed
 };
 
 GeneralPlot.prototype.Update= function (){//using prototyping for speed
-	return this.PlotFunction(this.PlotPlaceholder, PlotData);
+	return this.PlotFunction(this.PlotPlaceholder, this.PlotData);
 };
 
 
@@ -152,9 +147,31 @@ GeneralPlot.prototype.Update= function (){//using prototyping for speed
 // PlotSettings=[];
 // PlotSettings.Name="PlotObjectName";// what the object will be called later
 // PlotSettings.ID="plot2";
+// PlotSettings.PlotFunction=function(PlotPlaceholder, PlotData){
+	   // var OriginalData=PlotData.Plot[0]; // note in this case, since the OriginalData and OptimisedResults have the same format as PlotData.Plot (.X .Y .Upper .Lower) we can simply use this format
+	   // var OptimisedResults=PlotData.Plot[1];
+    // return OptimisationPlot(PlotPlaceholder, OriginalData, OptimisedResults);
+// }
+// PlotSettings.PlotData=[];
+// PlotSettings.PlotData.Plot=[];
+
+// var OriginalData=[];
+// OriginalData.X=[2, 4, 6];
+// OriginalData.Y=[1.3, 2.3, 2.9];
+// var OptimisedResults=[];
+// OptimisedResults.X=[2, 4, 6];
+// OptimisedResults.Y=[1.5, 2.5, 3.5];
+// OptimisedResults.Lower=[1.1, 2.1, 2.7];
+// OptimisedResults.Upper=[1.9, 2.9, 3.9];
+
+// PlotSettings.PlotData.Plot[0]=OriginalData;
+// PlotSettings.PlotData.Plot[1]=OptimisedResults;
+
+// PlotSettings.XLabel="Year";
+// PlotSettings.YLabel="Number";
 
 // var PlotObjectName=new GeneralPlot(PlotSettings);
-
+// PlotObjectName.Draw();
 
 
 
