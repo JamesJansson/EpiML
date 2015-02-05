@@ -81,7 +81,7 @@ self.onmessage = function (WorkerMessage) {
 	// Perform an optimisation of the number of injectors
 	if (true){
 	// Get the data for the numbers by sex and age
-		EntryRateOptimisation();
+		//EntryRateOptimisation();
 	}
 	
 	
@@ -218,28 +218,47 @@ function EntryRateOptimisation(){
 
 	// this is a multistage optimisation that requires the optimisation of the first data points followed by subsequent ones.
 	// First step is to model the increase in the number of people starting drug use in the lead up to 1998
+	// From that point on, we adjust the entry rate every 3 years (with interpolation)
 	
+	// Start off with all parameters set to zero
 	var FunctionInput={};
-	var OptimisationSettings={};
+	var EntryRateOptimisationSettings={};
 	
 	FunctionInput.NumberOfSamples=1000;
 	
-	OptimisationSettings.Target=HistogramsResults.Count;
 	
-	OptimisationSettings.Function=function(FunctionInput, ParameterSet){
-		//console.log(ParameterSet);
-		//console.log(ParameterSet.Y);
-		var Results=NormalRandArray(ParameterSet.X, ParameterSet.Y, FunctionInput.NumberOfSamples);
+	
+	// Do the first range that increases up to 1998
+	EntryRateOptimisationSettings.Target=HistogramsResults.Count;
+	
+	EntryRateOptimisationSettings.Function=function(FunctionInput, ParametersToOptimise){
+		// Determine what is the entry rate per year from the ParametersToOptimise
+		FunctionInput.EntryParams.expk=ParametersToOptimise.expk;
+		FunctionInput.EntryParams.expA=ParametersToOptimise.expA;
+		// FunctionInput.EntryParams.EndExponential=1998;// Beginning of 1998
+		// FunctionInput.EntryParams.FirstYear=1958;// Beginning of 1958 (40 years earlier) is the earliest we consider injection drug use
+		// FunctionInput.EntryParams.MedianEntryAge = 21; (from 
+		// PWIDPopulation=DistributePWIDPopulation(FunctionInput.EntryParams, FunctionInput.MaxYear);//Returns PWIDPopulation as defined to the MaxYear
+	
+		var Results={};
+		Results.PWIDPopulation=PWIDPopulation;
+	
+		//console.log(ParametersToOptimise);
+		//console.log(ParametersToOptimise.Y);
+		//var Results=NormalRandArray(ParametersToOptimise.X, ParametersToOptimise.Y, FunctionInput.NumberOfSamples);
 		return Results;
 	};
 
-	OptimisationSettings.ErrorFunction=function(Results, Target){
+	EntryRateOptimisationSettings.ErrorFunction=function(Results, Target){
+		// Look at Results.People
+		// Count the distribution at given dates
+			// Use the CountStatistic to determine the numbers in specific groups
 		var CurrentHistogramsResults=HistogramData(Results, [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
 		var TotalError=Sum(Abs(Minus(CurrentHistogramsResults.Count, Target)));
 		return TotalError;
 	};
 	
-	// OptimisationSettings.ProgressFunction=function(SimulationNumber, Parameter, SimResults, ErrorValues){
+	// EntryRateOptimisationSettings.ProgressFunction=function(SimulationNumber, Parameter, SimResults, ErrorValues){
 		// console.log("Params: X "+Mean(Parameter.X.CurrentVec)+" Y "+Mean(Parameter.Y.CurrentVec));
 		// PSetCount=0;
 		// Data=[];
@@ -257,12 +276,12 @@ function EntryRateOptimisation(){
 		// ScatterPlot('#PlotHolder', Data,  'AAA', 'BBB');
 	// };
 	
-	OptimisationSettings.MaxTime=10;//stop after 10 seconds
+	EntryRateOptimisationSettings.MaxTime=10;//stop after 10 seconds
 	
 	
-	OptimisationObject=new StochasticOptimisation(OptimisationSettings);
-	OptimisationObject.AddParameter("X", 0, 10);
-	OptimisationObject.AddParameter("Y", 0, 10);
+	OptimisationObject=new StochasticOptimisation(EntryRateOptimisationSettings);
+	OptimisationObject.AddParameter("expk", 0, 10);
+	OptimisationObject.AddParameter("expA", 0, 100000);
 	OptimisationObject.Run(FunctionInput);
 	
 	

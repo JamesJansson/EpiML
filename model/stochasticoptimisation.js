@@ -126,7 +126,7 @@ StochasticOptimisation.prototype.Run= function (FunctionInput){
 		for (var SampleCount=0; SampleCount<this.NumberOfSamplesPerRound; SampleCount++){
 			ParameterSet=this.GetParameterSet(SampleCount);
 			this.SimResults[SampleCount]=this.Function(FunctionInput, ParameterSet);
-			this.ErrorValues[SampleCount]=this.ErrorFunction(this.SimResults[SampleCount], this.Target);
+			this.ErrorValues[SampleCount]=this.ErrorFunction(this.SimResults[SampleCount], this.Target, FunctionInput);
 		}
 		
 		// Work out which of this simulations will be selected

@@ -85,9 +85,9 @@ function ExtractDataFromFiles(){
 	Data.PWID.Recent={};
 	Data.PWID.Ever={};
 	Data.PWID.Recent.Male=DataFile.PWID.GetValues(2, 5, 1, 6);
-	Data.PWID.Recent.Female=DataFile.PWID.GetValues(14, 17, 1, 6);
-	Data.PWID.Ever.Male=DataFile.PWID.GetValues(9, 12, 1, 6);
-	Data.PWID.Ever.Female=DataFile.PWID.GetValues(19, 22, 1, 6);
+	Data.PWID.Recent.Female=DataFile.PWID.GetValues(12, 15, 1, 6);
+	Data.PWID.Ever.Male=DataFile.PWID.GetValues(7, 10, 1, 6);
+	Data.PWID.Ever.Female=DataFile.PWID.GetValues(17, 20, 1, 6);
 	
 	
 }

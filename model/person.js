@@ -28,7 +28,7 @@ function PersonObject(YearOfBirth, Sex)//, YearOfObservation Param)
 	
 	this.HIV = new HIVObject();
 
-	this.IDU={};//Injection drug use
+	this.IDU = new IDUObject(this.YearOfBirth);//Injection drug use
 	
 	//QALY 
 	//this.QualityCalculation=function(time){(this.HCV, this.IDU, this.HIV, this.Age, time);}//
@@ -104,7 +104,7 @@ PersonObject.prototype.YearsOfLifeLost= function (){
 };
 
 PersonObject.prototype.StartInjecting= function (Time){
-	this.IDU=new IDUObject(this.YearOfBirth);
+	
 	
 	// Add the first date of injecting
 	this.IDU.Use.Set(1, Time);
@@ -135,7 +135,7 @@ function IDUObject(YearOfBirth){
 	this.Use.Set(0, YearOfBirth);
 	// IDU codes
 	// 0: Never used
-	// 1: First try
+	// 1: Tried once
 	// 2: Occasional user
 	// 3: Regular user
 	// 4: Former user
