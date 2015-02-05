@@ -5,7 +5,7 @@
 // From there they become a frequent user
 // Finally they may leave or OD
 
-function DeterineDrugUse(Person, Year){
+function DetermineDrugUse(Person, Year){
 	// In this framework, drug use is independent of the network in which they use 
 
 
