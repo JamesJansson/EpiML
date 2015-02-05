@@ -147,11 +147,11 @@ self.onmessage = function (WorkerMessage) {
 		PPNotification[i].CalculateHCVMortality(YearOfDiagnosis);
 	}
 	
-	
-	//if (true){
+	// This section contains testing code which is not used at the moment
+	if (false){
 		var SaySomething={};
 		SaySomething.Data="This is data";
-		SaySomething.Code="console.log(Data);";
+		
 		self.postMessage({Execute: SaySomething});
 		
 		var PlotSomething={};
@@ -161,7 +161,7 @@ self.onmessage = function (WorkerMessage) {
 		
 		
 		A=TestStochasticOptimisation();
-	//}
+	}
 	
 	
 	
@@ -229,17 +229,36 @@ function EntryRateOptimisation(){
 	
 	
 	// Do the first range that increases up to 1998
-	EntryRateOptimisationSettings.Target=HistogramsResults.Count;
+	EntryRateOptimisationSettings.Target=Data.PWID;
 	
 	EntryRateOptimisationSettings.Function=function(FunctionInput, ParametersToOptimise){
 		// Determine what is the entry rate per year from the ParametersToOptimise
-		FunctionInput.EntryParams.expk=ParametersToOptimise.expk;
+		FunctionInput.EntryParams.logk=ParametersToOptimise.logk;
 		FunctionInput.EntryParams.expA=ParametersToOptimise.expA;
 		// FunctionInput.EntryParams.EndExponential=1998;// Beginning of 1998
 		// FunctionInput.EntryParams.FirstYear=1958;// Beginning of 1958 (40 years earlier) is the earliest we consider injection drug use
 		// FunctionInput.EntryParams.MedianEntryAge = 21; (from 
+		
+		
+		
 		// PWIDPopulation=DistributePWIDPopulation(FunctionInput.EntryParams, FunctionInput.MaxYear);//Returns PWIDPopulation as defined to the MaxYear
 	
+		// Determine drug related mortality - use Australian cause of death statistics
+		// page 71 of the 2001 social trends will be good enough for this
+		// http://www.ausstats.abs.gov.au/ausstats/subscriber.nsf/0/6AB30EFAC93E3F5CCA256A630006EA93/$File/41020_2001.pdf
+		// http://www.abs.gov.au/AUSSTATS/abs@.nsf/2f762f95845417aeca25706c00834efa/a96b3196035d56c0ca2570ec000c46e5!OpenDocument 
+		// 1737 in 1999, 72% were male in 1999
+		// 734 in 1979, 49% were male in 1979
+		// Interpolate for periods in between
+		// 
+		// This gives drug-induced death rates by age groups in years 2000 to 2012
+		// "4125.0 Gender Indicators, Australia, August 2014"
+		// http://www.abs.gov.au/AUSSTATS/abs@.nsf/DetailsPage/4125.0August%202014?OpenDocument 
+		// Multiplying this out by the age groups should give the right number of deaths
+		
+		
+		// Optimise leaving rate for this period
+		
 		var Results={};
 		Results.PWIDPopulation=PWIDPopulation;
 	
@@ -249,10 +268,13 @@ function EntryRateOptimisation(){
 		return Results;
 	};
 
-	EntryRateOptimisationSettings.ErrorFunction=function(Results, Target){
+	EntryRateOptimisationSettings.ErrorFunction=function(Results, Target, FunctionInput){
 		// Look at Results.People
 		// Count the distribution at given dates
 			// Use the CountStatistic to determine the numbers in specific groups
+		var Value=new CountStatistic();
+			
+			
 		var CurrentHistogramsResults=HistogramData(Results, [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
 		var TotalError=Sum(Abs(Minus(CurrentHistogramsResults.Count, Target)));
 		return TotalError;
@@ -280,7 +302,7 @@ function EntryRateOptimisation(){
 	
 	
 	OptimisationObject=new StochasticOptimisation(EntryRateOptimisationSettings);
-	OptimisationObject.AddParameter("expk", 0, 10);
+	OptimisationObject.AddParameter("logk", 0, 1);
 	OptimisationObject.AddParameter("expA", 0, 100000);
 	OptimisationObject.Run(FunctionInput);
 	
@@ -288,3 +310,8 @@ function EntryRateOptimisation(){
 	return OptimisationObject;
 
 }
+
+function EntryRateOptimisationExponentialGrowth(){
+
+}
+
