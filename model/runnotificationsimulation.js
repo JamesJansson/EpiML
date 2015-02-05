@@ -207,15 +207,28 @@ self.onmessage = function (WorkerMessage) {
 	
 	// Run the same simulation, but this time with the proposed intervention starting at the time of the intervention
 	
+	// for (i=1; i<
+	// 	RunSimulation(
+	// 			in RunSimulation at the beginning of each year run the Intervention.Instructions to adjust parameters etc
+	
 	
 	// SimResult should be structured as follows
 	// SimResult.OptimisedValues // if they were previously optimised, they should stay that way
 	// SimResult.Intervention[0] // the baseline result. 
 	// SimResult.Intervention[1] // the first intervention result. Should contain 
 	// SimResult.Intervention[1].Instructions 
-	// SimResult.Intervention[1].Instructions[0].Time // the year that the intervention takes place
-	//
+	// SimResult.Intervention[1].Instructions[0].Type // Instantaneous or Gradual parameter change
+	// SimResult.Intervention[1].Instructions[0].Start // the year that the intervention takes place
+	// SimResult.Intervention[1].Instructions[0].BuildUp // the duration of gradual build up
+	// SimResult.Intervention[1].Instructions[0].Stop // the year intervention ends
+	// SimResult.Intervention[1].Instructions[0].ParameterName // the parameter to be adjusted
+	// SimResult.Intervention[1].Instructions[0].CodeText // to be run each year to adjust parameters e.g. 
+	// 				TempFunction=function(Year){
+	//					if (Year>2016){
+	//						Parameter.HCV.Treatment.SofosbuvirLateStage=0.2;
+	// 					}
 	// 
+	// eval("FunctionToRun=function(Data){"+e.data.Execute.Code+"};");
 	// SimResult.Intervention[1].Results 
 	
 	
@@ -231,10 +244,6 @@ function AdjustData(){
 	
 	self.postMessage({Console: Data});
 }
-
-
-
-
 
 function AdjustPWID(Data, AdjustmentFactor){
 	Data.AdjustedPWID={};
@@ -356,4 +365,11 @@ function EntryRateOptimisation(){
 function EntryRateOptimisationExponentialGrowth(){
 
 }
+
+
+
+
+
+
+
 
