@@ -140,14 +140,10 @@ function DistributePWIDPopulation(EntryParams, MaxYear){//MaxYear is not inclusi
 			}
 			// if it is before the final year where there is an estimate
 			if (MidCurrentYear<EntryParams.Year[EntryParams.Year.length-1]){
-				console.log("Got passed YearVecCount");
-				console.log(MidCurrentYear);
 				var KeepChecking=true;
 				// try to place and interpolate the values later on
 				for (var YearVecCount=0; YearVecCount<EntryParams.Year.length && KeepChecking; YearVecCount++){
-					// check that you can check
-					
-					console.log(YearVecCount);
+
 					// check for the period immediately after the exponential
 					if (YearVecCount==0 && EntryParams.EndExponential<= MidCurrentYear && MidCurrentYear<EntryParams.Year[YearVecCount]){
 						IntStartYear=EntryParams.EndExponential;
@@ -169,27 +165,18 @@ function DistributePWIDPopulation(EntryParams, MaxYear){//MaxYear is not inclusi
 				TimeBetweenRange=IntEndYear-IntStartYear;
 				DifferenceBetweenYears=IntEndValue-IntStartValue;
 				NumberInYear=IntStartValue+(MidCurrentYear-IntStartYear)*DifferenceBetweenYears/TimeBetweenRange;
-				
-				console.log(IntStartYear);
-				console.log(IntStartValue);
-				console.log(IntEndYear);
-				console.log(IntEndValue);
-				
-				console.log(TimeBetweenRange);
-				console.log(DifferenceBetweenYears);
-				console.log(NumberInYear);
-
 			}
 			else{
 				UseAverage=true;
 			}
+			
 			if (UseAverage){// if it is after the final year, use an average
 				if (typeof(AverageNumber)=="undefined"){//calculate the average
 					//EntryParams.NumberOfAveragingYears=3
 					// The last entry should be the last with a value in the range currently
 					var SumOfLastYears=0;
 					for(var CountBackwards=0; CountBackwards<EntryParams.NumberOfAveragingYears; CountBackwards++){
-						SumOfLastYears+=InitiatingIVDrugUse.Number[InitiatingIVDrugUse.Number-1-CountBackwards];
+						SumOfLastYears+=InitiatingIVDrugUse.Number[InitiatingIVDrugUse.Number.length-1-CountBackwards];
 					}
 					AverageNumber=SumOfLastYears/EntryParams.NumberOfAveragingYears;
 				}//else the average is already calculated

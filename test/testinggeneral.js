@@ -1,4 +1,4 @@
-function DistributePWIDPopulation(EntryParams, MaxYear){//MaxYear is not inclusive of this year
+/*function DistributePWIDPopulation(EntryParams, MaxYear){//MaxYear is not inclusive of this year
 	var InitiatingIVDrugUse={};
 	InitiatingIVDrugUse.Year=[];
 	InitiatingIVDrugUse.Number=[];
@@ -102,4 +102,4 @@ DistributePWIDPopulationResults=DistributePWIDPopulation(EntryParams, MaxYear);
 DistributePWIDPopulationText="";//Used to copy the output
 for (i=0; i<=60; i++){
 DistributePWIDPopulationText+=DistributePWIDPopulationResults.Number[i]+"\n";
-}
+}*/
