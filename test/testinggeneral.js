@@ -19,12 +19,22 @@ function DistributePWIDPopulation(EntryParams, MaxYear){//MaxYear is not inclusi
 			NumberInYear=EntryParams.expA*Math.exp(Math.log(EntryParams.explogk)*(EntryParams.EndExponential-MidCurrentYear));
 		}
 		else{
-			// try to place and interpolate the values later on
-			for (var YearVecCount=0; YearVecCount<EntryParams.Year.length; YearVecCount++){
-				// check that you can check
-				if (YearVecCount<EntryParams.Year.length-1){//before you reach the final year
+			var UseAverage=false;
+			if (EntryParams.Year.length<0){
+				UseAverage=true;
+			}
+			// if it is before the final year where there is an estimate
+			if (MidCurrentYear<EntryParams.Year[EntryParams.Year.length-1]){
+				console.log("Got passed YearVecCount");
+				console.log(MidCurrentYear);
+				var KeepChecking=true;
+				// try to place and interpolate the values later on
+				for (var YearVecCount=0; YearVecCount<EntryParams.Year.length && KeepChecking; YearVecCount++){
+					// check that you can check
+					
+					console.log(YearVecCount);
 					// check for the period immediately after the exponential
-					if (EntryParams.EndExponential<= MidCurrentYear && MidCurrentYear<EntryParams.Year[YearVecCount]){
+					if (YearVecCount==0 && EntryParams.EndExponential<= MidCurrentYear && MidCurrentYear<EntryParams.Year[YearVecCount]){
 						IntStartYear=EntryParams.EndExponential;
 						IntStartValue=EntryParams.expA;
 					}
@@ -35,24 +45,43 @@ function DistributePWIDPopulation(EntryParams, MaxYear){//MaxYear is not inclusi
 					IntEndYear=EntryParams.Year[YearVecCount];
 					IntEndValue=EntryParams.Estimate[YearVecCount];
 					
-					// interpolate between the other points
-					TimeBetweenRange=IntEndYear-IntStartYear;
-					DifferenceBetweenYears=IntEndValue-IntStartValue;
-					NumberInYear=(MidCurrentYear-IntStartYear)*DifferenceBetweenYears/TimeBetweenRange;
-				}
-				else{// if it is after the final year, use an average
-					if (typeof(AverageNumber)=="undefined"){//calculate the average
-						//EntryParams.NumberOfAveragingYears=3
-						// The last entry should be the last with a value in the range currently
-						var SumOfLastYears=0;
-						for(var CountBackwards=0; CountBackwards<EntryParams.NumberOfAveragingYears; CountBackwards++){
-							SumOfLastYears+=InitiatingIVDrugUse.Number[InitiatingIVDrugUse.Number-1-CountBackwards];
-						}
-						AverageNumber=SumOfLastYears/EntryParams.NumberOfAveragingYears;
-					}//else the average is already calculated
-					NumberInYear=AverageNumber;
-				}
+					// Check that it is actually between those years, if so stop
+					if (IntStartYear<=MidCurrentYear && MidCurrentYear< IntEndYear){
+						KeepChecking=false
+					}
+				}	
+				// interpolate between the other points
+				TimeBetweenRange=IntEndYear-IntStartYear;
+				DifferenceBetweenYears=IntEndValue-IntStartValue;
+				NumberInYear=IntStartValue+(MidCurrentYear-IntStartYear)*DifferenceBetweenYears/TimeBetweenRange;
+				
+				console.log(IntStartYear);
+				console.log(IntStartValue);
+				console.log(IntEndYear);
+				console.log(IntEndValue);
+				
+				console.log(TimeBetweenRange);
+				console.log(DifferenceBetweenYears);
+				console.log(NumberInYear);
+
 			}
+			else{
+				UseAverage=true;
+			}
+			if (UseAverage){// if it is after the final year, use an average
+				if (typeof(AverageNumber)=="undefined"){//calculate the average
+					//EntryParams.NumberOfAveragingYears=3
+					// The last entry should be the last with a value in the range currently
+					var SumOfLastYears=0;
+					for(var CountBackwards=0; CountBackwards<EntryParams.NumberOfAveragingYears; CountBackwards++){
+						SumOfLastYears+=InitiatingIVDrugUse.Number[InitiatingIVDrugUse.Number-1-CountBackwards];
+					}
+					AverageNumber=SumOfLastYears/EntryParams.NumberOfAveragingYears;
+				}//else the average is already calculated
+				NumberInYear=AverageNumber;
+			}
+			
+			
 		}
 		InitiatingIVDrugUse.Number[YearCount]=NumberInYear;
 	}
@@ -68,4 +97,9 @@ EntryParams.Year=[2002, 2005, 2012];
 EntryParams.Estimate=[15000, 14000, 23000];// note the estimate here is instantaneous
 EntryParams.NumberOfAveragingYears=4;
 MaxYear=2020;
-DistributePWIDPopulation(EntryParams, MaxYear);
+DistributePWIDPopulationResults=DistributePWIDPopulation(EntryParams, MaxYear);
+
+DistributePWIDPopulationText="";//Used to copy the output
+for (i=0; i<=60; i++){
+DistributePWIDPopulationText+=DistributePWIDPopulationResults.Number[i]+"\n";
+}
