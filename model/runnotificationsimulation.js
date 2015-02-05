@@ -78,6 +78,12 @@ self.onmessage = function (WorkerMessage) {
 	
 	self.postMessage({Console: MaleMortality});
 	
+	// Adjust data according to beliefs about inaccuracies 
+	AdjustData();
+	
+	
+	
+	
 	// Perform an optimisation of the number of injectors
 	if (true){
 	// Get the data for the numbers by sex and age
@@ -202,12 +208,43 @@ self.onmessage = function (WorkerMessage) {
 	// Run the same simulation, but this time with the proposed intervention starting at the time of the intervention
 	
 	
+	// SimResult should be structured as follows
+	// SimResult.OptimisedValues // if they were previously optimised, they should stay that way
+	// SimResult.Intervention[0] // the baseline result. 
+	// SimResult.Intervention[1] // the first intervention result. Should contain 
+	// SimResult.Intervention[1].Instructions 
+	// SimResult.Intervention[1].Instructions[0].Time // the year that the intervention takes place
+	//
+	// 
+	// SimResult.Intervention[1].Results 
+	
+	
+	
 	self.postMessage({WorkerMessage: WorkerMessage.data, Result: SimResult});//All simulation will end with this line
 };
 
+function AdjustData(){
+	var AdjustmentFactor=1.2;
+	AdjustPWID(Data, AdjustmentFactor);
+	
+	
+	
+	self.postMessage({Console: Data});
+}
 
 
 
+
+
+function AdjustPWID(Data, AdjustmentFactor){
+	Data.AdjustedPWID={};
+	Data.AdjustedPWID.Ever={};
+	Data.AdjustedPWID.Ever.Male=Multiply(Data.PWID.Ever.Male, AdjustmentFactor);
+	Data.AdjustedPWID.Ever.Female=Multiply(Data.PWID.Ever.Female, AdjustmentFactor);
+	Data.AdjustedPWID.Recent={};
+	Data.AdjustedPWID.Recent.Male=Multiply(Data.PWID.Recent.Male, AdjustmentFactor);
+	Data.AdjustedPWID.Recent.Female=Multiply(Data.PWID.Recent.Female, AdjustmentFactor);
+}
 
 
 
@@ -224,9 +261,9 @@ function EntryRateOptimisation(){
 	var FunctionInput={};
 	var EntryRateOptimisationSettings={};
 	
-	FunctionInput.NumberOfSamples=1000;
+	//FunctionInput.NumberOfSamples=1000;
 	
-	
+	// FunctionInput.EntryParams=FunctionInput.PWID;
 	
 	// Do the first range that increases up to 1998
 	EntryRateOptimisationSettings.Target=Data.PWID;
@@ -238,7 +275,12 @@ function EntryRateOptimisation(){
 		// FunctionInput.EntryParams.EndExponential=1998;// Beginning of 1998
 		// FunctionInput.EntryParams.FirstYear=1958;// Beginning of 1958 (40 years earlier) is the earliest we consider injection drug use
 		// FunctionInput.EntryParams.MedianEntryAge = 21; (from 
+		// FunctionInput.EntryParams.MedianEntryAgeLogSD = 0.XXXXX; (from 
+		// 
 		
+		// FunctionInput.EntryParams.AIHWHouseholdSurveryUnderstimate=1.2;
+		// FunctionInput.EntryParams.AIHWHouseholdSurveryUnderstimateLowerRange=1.0;
+		// FunctionInput.EntryParams.AIHWHouseholdSurveryUnderstimateUpperRange=1.4;
 		
 		
 		// PWIDPopulation=DistributePWIDPopulation(FunctionInput.EntryParams, FunctionInput.MaxYear);//Returns PWIDPopulation as defined to the MaxYear
@@ -257,7 +299,7 @@ function EntryRateOptimisation(){
 		// Multiplying this out by the age groups should give the right number of deaths
 		
 		
-		// Optimise leaving rate for this period
+		// Optimise staying and leaving rate for this period
 		
 		var Results={};
 		Results.PWIDPopulation=PWIDPopulation;
