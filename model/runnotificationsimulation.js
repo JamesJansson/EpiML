@@ -44,9 +44,10 @@ self.onmessage = function (WorkerMessage) {
 	//In this section will be a message handler that allows calls
 	// Initialise (set data and parameters)
 	// Optimise (find unknown parameters)
+	// Send Optimised data back to Simulation Manager to be saved
 	// Initialise with optimised data
-	// Extrapolate (with current settings)
-	// Intervention (with changed settings)
+	// Extrapolate (with current parameter estimates and no interventions)
+	// Intervention (with changed parameter estimates and interventions)
 	// Get data
 	// Save
 	
@@ -279,13 +280,19 @@ function EntryRateOptimisation(){
 	
 	EntryRateOptimisationSettings.Function=function(FunctionInput, ParametersToOptimise){
 		// Determine what is the entry rate per year from the ParametersToOptimise
-		FunctionInput.EntryParams.logk=ParametersToOptimise.logk;
+		FunctionInput.EntryParams.explogk=ParametersToOptimise.explogk;
 		FunctionInput.EntryParams.expA=ParametersToOptimise.expA;
-		// FunctionInput.EntryParams.EndExponential=1998;// Beginning of 1998
+		
+		// FunctionInput.EntryParams.Year
+		// FunctionInput.EntryParams.Number (.push to append the latest estimate)
+		
+		// FunctionInput.EntryParams.EndExponential=1999;// Beginning of 1998
 		// FunctionInput.EntryParams.FirstYear=1958;// Beginning of 1958 (40 years earlier) is the earliest we consider injection drug use
 		// FunctionInput.EntryParams.MedianEntryAge = 21; (from 
 		// FunctionInput.EntryParams.MedianEntryAgeLogSD = 0.XXXXX; (from 
 		// 
+		
+		// FunctionInput.EntryParams.AIHWHouseholdSurveryUncertaintySD=0.1;// a value that gives variation in the result due to the small numbers
 		
 		// FunctionInput.EntryParams.AIHWHouseholdSurveryUnderstimate=1.2;
 		// FunctionInput.EntryParams.AIHWHouseholdSurveryUnderstimateLowerRange=1.0;
@@ -353,7 +360,7 @@ function EntryRateOptimisation(){
 	
 	
 	OptimisationObject=new StochasticOptimisation(EntryRateOptimisationSettings);
-	OptimisationObject.AddParameter("logk", 0, 1);
+	OptimisationObject.AddParameter("explogk", 0, 1);
 	OptimisationObject.AddParameter("expA", 0, 100000);
 	OptimisationObject.Run(FunctionInput);
 	
@@ -361,6 +368,63 @@ function EntryRateOptimisation(){
 	return OptimisationObject;
 
 }
+
+function DistributePWIDPopulation(EntryParams, MaxYear){//MaxYear is not inclusive of this year
+	var InitiatingIVDrugUse={};
+	InitiatingIVDrugUse.Year=[];
+	
+	var MaxYearValue=Round(MaxYear);
+	var MidCurrentYear, NumberInYear;
+	var IntStartYear, IntStartValue, IntEndYear, IntEndValue, TimeBetweenRange, DifferenceBetweenYears;
+	var YearCount=-1;
+	for (var CurrentYear=EntryParams.FirstYear; CurrentYear<MaxYearValue; CurrentYear++){
+		YearCount++;
+		MidCurrentYear=CurrentYear+0.5;// Add half a year (to get the rough average over the year)
+		
+		InitiatingIVDrugUse.Year[YearCount]=CurrentYear;
+		// Determine if in the exponential period
+		if (MidCurrentYear<EntryParams.EndExponential){
+			// Determine the exponential value
+			NumberInYear=EntryParams.expA*Math.exp(Math.log(EntryParams.explogk)*(EntryParams.EndExponential-MidCurrentYear));
+			InitiatingIVDrugUse.Number[YearCount]=NumberInYear;
+		}
+		else{
+			// try to place and interpolate the values later on
+			for (var InnerYearCount=0; InnerYearCount<EntryParams.Year.length; InnerYearCount++){
+				// check that you can check
+				if (InnerYearCount<EntryParams.Year.length-1){//before you reach the final year
+					// check for the period immediately after the exponential
+					if (EntryParams.EndExponential<= MidCurrentYear && MidCurrentYear<EntryParams.Year[InnerYearCount]){
+						
+					}
+					else{
+						
+					}
+					// interpolate between the other points
+					TimeBetweenRange=IntEndYear-IntStartYear;
+					DifferenceBetweenYears=IntEndValue-IntStartValue;
+					NumberInYear=(MidCurrentYear-IntStartYear)*DifferenceBetweenYears/TimeBetweenRange;
+				}
+				else{// if it is after the final year, use an average
+					//EntryParams.NumberOfAveragingYears=3
+					
+				}
+			}
+		}
+		
+	}
+
+	return InitiatingIVDrugUse;
+}
+
+
+
+
+// Use the average of the previous 3 years entry and leaving rate
+
+// OPTIMISE THE NUMBER OF USERS TO THE DEATH RATE??????
+
+
 
 function EntryRateOptimisationExponentialGrowth(){
 
