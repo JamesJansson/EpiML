@@ -14,3 +14,23 @@ InterventionObject.prototype.Run= function (Year) {
 	}
 	return this.Code(Year);
 }
+
+// Example usage 
+// var TestTreatmentRate=0;// a global variable used in the simulation
+
+// b=function(Year){
+	// if (Year>2019){
+		// TestTreatmentRate=0.2;
+	// }
+	// else{
+		// TestTreatmentRate=0;
+	// }
+// }
+// var StandardIntervention=new InterventionObject(b);
+
+// StandardIntervention.Code="";//When you pass it into a worker, it may strip the function element as such
+
+
+// StandardIntervention.Run(1993);//TestTreatmentRate=0
+// StandardIntervention.Run(2020);//TestTreatmentRate=0.2
+
