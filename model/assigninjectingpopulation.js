@@ -9,6 +9,9 @@ function EntryRateOptimisation(){
 	
 	// Start off with all parameters set to zero
 	var FunctionInput={};
+	FunctionInput.EntryParams={};
+	FunctionInput.EntryParams.Year=[1999, 2012];// Preset to avoid annoying situations?
+	
 	var EntryRateOptimisationSettings={};
 	
 	//FunctionInput.NumberOfSamples=1000;
@@ -20,9 +23,14 @@ function EntryRateOptimisation(){
 	
 	EntryRateOptimisationSettings.Function=function(FunctionInput, ParametersToOptimise){
 		// Determine what is the entry rate per year from the ParametersToOptimise
-		FunctionInput.EntryParams.explogk=ParametersToOptimise.explogk;
-		FunctionInput.EntryParams.expA=ParametersToOptimise.expA;
-		
+		if (typeof(ParametersToOptimise.explogk)!="undefined"){
+			FunctionInput.EntryParams.explogk=ParametersToOptimise.explogk;
+			FunctionInput.EntryParams.expA=ParametersToOptimise.expA;
+		}
+		else{
+			FunctionInput.EntryParams.Year[XXXX]=ParametersToOptimise.Year;
+			FunctionInput.EntryParams.Estimate[XXXX]=ParametersToOptimise.Estimate;
+		}
 		// FunctionInput.EntryParams.Year
 		// FunctionInput.EntryParams.Estimate (.push to append the latest estimate)
 		
@@ -190,21 +198,26 @@ function DistributePWIDPopulation(EntryParams, MaxYear){//MaxYear is not inclusi
 	return InitiatingIVDrugUse;
 }
 // Example usage
-EntryParams={};
-EntryParams.EndExponential=1999;
-EntryParams.FirstYear=1959;
-EntryParams.expA=20000;
-EntryParams.explogk=0.8;
-EntryParams.Year=[2002, 2005, 2012];
-EntryParams.Estimate=[15000, 14000, 23000];// note the estimate here is instantaneous
-EntryParams.NumberOfAveragingYears=4;
-MaxYear=2020;
-DistributePWIDPopulationResults=DistributePWIDPopulation(EntryParams, MaxYear);
+// EntryParams={};
+// EntryParams.EndExponential=1999;
+// EntryParams.FirstYear=1959;
+// EntryParams.expA=20000;
+// EntryParams.explogk=0.8;
+// EntryParams.Year=[2002, 2005, 2012];
+// EntryParams.Estimate=[15000, 14000, 23000];// note the estimate here is instantaneous
+// EntryParams.NumberOfAveragingYears=4;
+// MaxYear=2020;
+// DistributePWIDPopulationResults=DistributePWIDPopulation(EntryParams, MaxYear);
 
-DistributePWIDPopulationText="";//Used to copy the output
-for (i=0; i<=60; i++){
-DistributePWIDPopulationText+=DistributePWIDPopulationResults.Number[i]+"\n";
-}
+// DistributePWIDPopulationText="";//Used to copy the output
+// for (i=0; i<=60; i++){
+// DistributePWIDPopulationText+=DistributePWIDPopulationResults.Number[i]+"\n";
+// }
+
+
+
+
+
 
 // Following the assignment of the population, the main idea is to establish the following parameters
 // Rate of entry into injection
