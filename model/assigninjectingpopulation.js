@@ -78,11 +78,15 @@ function EntryRateOptimisation(){
 	EntryRateOptimisationSettings.ErrorFunction=function(Results, Target, FunctionInput){
 		// Look at Results.People
 		// Count the distribution at given dates to determine the numbers in specific groups
-		for (each person in the PWID population){
+		for (var PCount=0; PCount<Results.PWIDPopulation.length; PCount++){
 			FunctionInput.YearBeingOptimised;
-			for (eachelement in the age grouping vector){
-				
-			}
+			// Determine if the individual has previous injected at that point
+			// if (Results.PWIDPopulation[PCount].IDU.Get(FunctionInput.YearBeingOptimised)>=1)// if the person is a former injector 
+				// Determine the age at the year being optimised
+			
+				//for (eachelement in the age grouping vector){
+					
+				//}
 		}
 		
 		//
@@ -99,12 +103,12 @@ function EntryRateOptimisation(){
 		return TotalError;
 	};
 	
-	EntryRateOptimisationSettings.ProgressFunction=function(RoundCount, Parameter, SimResults, ErrorValues, FunctionInput);{
+	EntryRateOptimisationSettings.ProgressFunction=function(RoundCount, Parameter, SimResults, ErrorValues, FunctionInput){
 		// Display the results to the console for every 100 simulations
 		var ProgressString=RoundCount+": ";
 		
 		var KeyCount=0, Key, MeanResult;
-		for Key in Parameter{
+		for (Key in Parameter){
 			KeyCount++;
 			ProgressString+=Key+": ";
 			MeanResult=Mean(Parameter[Key]);
@@ -132,20 +136,25 @@ function DistributePWIDPopulation(EntryParams, MaxYear){
 	var PWIDPopulation=[];
 	
 	var TotalPWID=0;
-	for (each year in the year array){
-		for (the total number in the group){
+	var LogMedianEntryAge=Log(21);
+	var LogSDEntryAge=0.16;
+	console.error("Note the median entry age is hard set");
+	
+	for (var YearIndex=0; YearIndex<PWIDEntryByYear.Year.length; YearIndex++){
+		var CurrentYear=PWIDEntryByYear.Year[YearIndex];
+		for (var CountThisYear=0; CountThisYear<PWIDEntryByYear.Number[YearIndex]; CountThisYear++){//the total number in the group
 			TotalPWID++;
 			// Determine a random age
-			var AgeAtFirstInjection=RandNormal();
+			var AgeAtFirstInjection=Exp(NormalRand(LogMedianEntryAge, LogSDEntryAge));// this needs to include the median and SD of the age at first injection
 			// Determine a random time of starting (between Year + [0, 1) )
 			var TimeOfStartingInjection=CurrentYear+Rand.Value();
-			var DateOfBirth=
-			PWIDPopulation[TotalPWID-1]=new PersonClass();// Pass date of birth, sex
-			PWIDPopulation[TotalPWID-1].StartInjecting();// Pass year of first injection
+			var YearOfBirth=TimeOfStartingInjection-AgeAtFirstInjection;
+			PWIDPopulation[TotalPWID-1]=new PersonObject(YearOfBirth, EntryParams.SexIndex);
+			PWIDPopulation[TotalPWID-1].StartInjecting(TimeOfStartingInjection);
 			
 		}
 	}
-	
+	return PWIDPopulation;
 }
 
 
@@ -229,10 +238,10 @@ function DeterminePWIDEntryRate(EntryParams, MaxYear){//MaxYear is not inclusive
 // EntryParams={};
 // EntryParams.EndExponential=1999;
 // EntryParams.FirstYear=1959;
-// EntryParams.expA=20000;
+// EntryParams.expA=2000;
 // EntryParams.explogk=0.8;
 // EntryParams.Year=[2002, 2005, 2012];
-// EntryParams.Estimate=[15000, 14000, 23000];// note the estimate here is instantaneous
+// EntryParams.Estimate=[1500, 1400, 2300];// note the estimate here is instantaneous
 // EntryParams.NumberOfAveragingYears=4;
 // MaxYear=2020;
 // DistributePWIDPopulationResults=DeterminePWIDEntryRate(EntryParams, MaxYear);
@@ -243,6 +252,11 @@ function DeterminePWIDEntryRate(EntryParams, MaxYear){//MaxYear is not inclusive
 // }
 
 
+// PersonArrayStorage=DistributePWIDPopulation(EntryParams, MaxYear);// To create PersonObects
+// DistributePWIDPopulationText="";//Used to copy the output
+// for (i=0; i<=1000; i++){
+// DistributePWIDPopulationText+=(PersonArrayStorage[i].IDU.Use.Time[1]-PersonArrayStorage[i].IDU.Use.Time[0])+"\n";
+// }
 
 
 
