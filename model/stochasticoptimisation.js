@@ -67,7 +67,6 @@ function  StochasticOptimisation(Settings){
 	
 	if (this.UserSpecifiedTermination==false){
 		console.log("Warning: a termination parameter was not set. This means that the algorithm will continue indefinitely");
-	
 	}
 	
 	
@@ -139,7 +138,7 @@ StochasticOptimisation.prototype.Run= function (FunctionInput){
 
 		// If the OptimisationProgress function is set
 		if (this.RunProgressFunction==true){
-			this.ProgressFunction(RoundCount, this.Parameter, this.SimResults, this.ErrorValues);
+			this.ProgressFunction(RoundCount, this.Parameter, this.SimResults, this.ErrorValues, FunctionInput);
 		}
 		
 		// Test for various factors which would determine that the optimisation has completed. 
@@ -162,7 +161,7 @@ StochasticOptimisation.prototype.Run= function (FunctionInput){
 			//Randomly select the next points
 			var NextPointIndex=[];
 			for (var key in this.BestIndex){
-				NextPointIndex[key]=key;//the first x entries will be 1 through x
+				NextPointIndex[key]=key;//the first x entries will be 1 through x best results from last time
 			}
 			var RandomIndex;
 			for (var i=this.BestIndex.length; i<this.NumberOfSamplesPerRound; i++){
@@ -238,7 +237,7 @@ StochasticOptimisationParameter.prototype.SelectCurrentPoints=function(SelectInd
 	
 }
 
-StochasticOptimisationParameter.NumberOfSamplesPerRound;
+
 
 StochasticOptimisationParameter.prototype.Vary= function (){
 	// Perform a calculation to determine how much we want to vary the variable

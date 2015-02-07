@@ -14,8 +14,8 @@ function EntryRateOptimisation(){
 	
 	var EntryRateOptimisationSettings={};
 	
-	//FunctionInput.NumberOfSamples=1000;
-	
+	FunctionInput.NumberOfSamplesPerRound=100;// note we'll randomly select one of these results
+	FunctionInput.MaxIterations=100;// In this case, it will allow 10 000 dfferent parameter selections, which gives a granularity of 1% of the range. Should be sufficient
 	// FunctionInput.EntryParams=FunctionInput.PWID;
 	
 	// Do the first range that increases up to 1998
@@ -23,16 +23,17 @@ function EntryRateOptimisation(){
 	
 	EntryRateOptimisationSettings.Function=function(FunctionInput, ParametersToOptimise){
 		// Determine what is the entry rate per year from the ParametersToOptimise
-		if (typeof(ParametersToOptimise.explogk)!="undefined"){
+		if (FunctionInput.OptimiseExponential==true){
 			FunctionInput.EntryParams.explogk=ParametersToOptimise.explogk;
 			FunctionInput.EntryParams.expA=ParametersToOptimise.expA;
 		}
 		else{
-			FunctionInput.EntryParams.Year[XXXX]=ParametersToOptimise.Year;
-			FunctionInput.EntryParams.Estimate[XXXX]=ParametersToOptimise.Estimate;
+			FunctionInput.EntryParams.Estimate[FunctionInput.PositionForYearBeingOptimised]=ParametersToOptimise.Estimate;
 		}
+		
+		
 		// FunctionInput.EntryParams.Year
-		// FunctionInput.EntryParams.Estimate (.push to append the latest estimate)
+		// FunctionInput.EntryParams.Estimate 
 		
 		// FunctionInput.EntryParams.EndExponential=1999;// Beginning of 1998
 		// FunctionInput.EntryParams.FirstYear=1958;// Beginning of 1958 (40 years earlier) is the earliest we consider injection drug use
@@ -47,7 +48,7 @@ function EntryRateOptimisation(){
 		// FunctionInput.EntryParams.AIHWHouseholdSurveryUnderstimateUpperRange=1.4;
 		
 		
-		// PWIDPopulation=DistributePWIDPopulation(FunctionInput.EntryParams, FunctionInput.MaxYear);//Returns PWIDPopulation as defined to the MaxYear
+		PWIDPopulation=DistributePWIDPopulation(FunctionInput.EntryParams, FunctionInput.YearBeingOptimised);//Returns PWIDPopulation as defined to the MaxYear
 	
 		// Determine drug related mortality - use Australian cause of death statistics
 		// page 71 of the 2001 social trends will be good enough for this
@@ -76,8 +77,20 @@ function EntryRateOptimisation(){
 
 	EntryRateOptimisationSettings.ErrorFunction=function(Results, Target, FunctionInput){
 		// Look at Results.People
-		// Count the distribution at given dates
-			// Use the CountStatistic to determine the numbers in specific groups
+		// Count the distribution at given dates to determine the numbers in specific groups
+		for (each person in the PWID population){
+			FunctionInput.YearBeingOptimised;
+			for (eachelement in the age grouping vector){
+				
+			}
+		}
+		
+		//
+		
+		
+		
+		
+		
 		var Value=new CountStatistic();
 			
 			
@@ -86,23 +99,19 @@ function EntryRateOptimisation(){
 		return TotalError;
 	};
 	
-	// EntryRateOptimisationSettings.ProgressFunction=function(SimulationNumber, Parameter, SimResults, ErrorValues){
-		// console.log("Params: X "+Mean(Parameter.X.CurrentVec)+" Y "+Mean(Parameter.Y.CurrentVec));
-		// PSetCount=0;
-		// Data=[];
-		// for (var key in Parameter.X.CurrentVec){
-			// Data[PSetCount]=[Parameter.X.CurrentVec[key], Parameter.Y.CurrentVec[key]];
-			// PSetCount++;
-		// }
+	EntryRateOptimisationSettings.ProgressFunction=function(RoundCount, Parameter, SimResults, ErrorValues, FunctionInput);{
+		// Display the results to the console for every 100 simulations
+		var ProgressString=RoundCount+": ";
 		
-		// PlotSomething={};
-		// PlotSomething.Data=Data;
-		// PlotSomething.Code="FixedAxisScatterPlot('#PlotHolder', Data,  'AAA', 'BBB', 0, 10, 0, 10);";
-		// self.postMessage({Execute: PlotSomething});
-		
-		
-		// ScatterPlot('#PlotHolder', Data,  'AAA', 'BBB');
-	// };
+		var KeyCount=0, Key, MeanResult;
+		for Key in Parameter{
+			KeyCount++;
+			ProgressString+=Key+": ";
+			MeanResult=Mean(Parameter[Key]);
+			ProgressString+=MeanResult+", ";
+		}
+		console.log(ProgressString);
+	};
 	
 	EntryRateOptimisationSettings.MaxTime=10;//stop after 10 seconds
 	
@@ -118,10 +127,29 @@ function EntryRateOptimisation(){
 }
 
 
+function DistributePWIDPopulation(EntryParams, MaxYear){
+	var PWIDEntryByYear=DeterminePWIDEntryRate(EntryParams, MaxYear);
+	var PWIDPopulation=[];
+	
+	var TotalPWID=0;
+	for (each year in the year array){
+		for (the total number in the group){
+			TotalPWID++;
+			// Determine a random age
+			var AgeAtFirstInjection=RandNormal();
+			// Determine a random time of starting (between Year + [0, 1) )
+			var TimeOfStartingInjection=CurrentYear+Rand.Value();
+			var DateOfBirth=
+			PWIDPopulation[TotalPWID-1]=new PersonClass();// Pass date of birth, sex
+			PWIDPopulation[TotalPWID-1].StartInjecting();// Pass year of first injection
+			
+		}
+	}
+	
+}
 
 
-
-function DistributePWIDPopulation(EntryParams, MaxYear){//MaxYear is not inclusive of this year
+function DeterminePWIDEntryRate(EntryParams, MaxYear){//MaxYear is not inclusive of this year
 	var InitiatingIVDrugUse={};
 	InitiatingIVDrugUse.Year=[];
 	InitiatingIVDrugUse.Number=[];
@@ -207,7 +235,7 @@ function DistributePWIDPopulation(EntryParams, MaxYear){//MaxYear is not inclusi
 // EntryParams.Estimate=[15000, 14000, 23000];// note the estimate here is instantaneous
 // EntryParams.NumberOfAveragingYears=4;
 // MaxYear=2020;
-// DistributePWIDPopulationResults=DistributePWIDPopulation(EntryParams, MaxYear);
+// DistributePWIDPopulationResults=DeterminePWIDEntryRate(EntryParams, MaxYear);
 
 // DistributePWIDPopulationText="";//Used to copy the output
 // for (i=0; i<=60; i++){

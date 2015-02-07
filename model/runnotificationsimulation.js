@@ -247,7 +247,12 @@ function AdjustData(){
 	self.postMessage({Console: Data});
 }
 
-function AdjustPWID(Data, AdjustmentFactor){
+function AdjustPWID(Data, AdjustmentFactor){// This should occur prior to passing the data to the function
+	// FunctionInput.EntryParams.AIHWHouseholdSurveryUncertaintySD=0.1;// a value that gives variation in the result due to the small numbers
+		
+	// FunctionInput.EntryParams.AIHWHouseholdSurveryUnderstimate=1.2;
+	// FunctionInput.EntryParams.AIHWHouseholdSurveryUnderstimateLowerRange=1.0;
+	// FunctionInput.EntryParams.AIHWHouseholdSurveryUnderstimateUpperRange=1.4;
 	Data.AdjustedPWID={};
 	Data.AdjustedPWID.Ever={};
 	Data.AdjustedPWID.Ever.Male=Multiply(Data.PWID.Ever.Male, AdjustmentFactor);
