@@ -48,7 +48,12 @@ function EntryRateOptimisation(TargetForThisOptimisation){
 		// Determine what is the entry rate per year from the ParametersToOptimise
 		if (FunctionInput.OptimiseExponential==true){
 			FunctionInput.EntryParams.explogk=ParametersToOptimise.explogk;
+			
+			// Note that normalised A attempts to put a constant number of people into the years prior to the end of exponential growth period
+			// This is to improve the optimisation rate of the algorithm
 			FunctionInput.EntryParams.expA=ParametersToOptimise.expA;
+			
+			
 		}
 		else{
 			FunctionInput.EntryParams.Estimate[FunctionInput.PositionForYearBeingOptimised]=ParametersToOptimise.Estimate;
@@ -89,19 +94,8 @@ function EntryRateOptimisation(TargetForThisOptimisation){
 		
 		// Optimise staying and leaving rate for this period
 		
-		var Results={};
-		Results.PWIDPopulation=PWIDPopulation;
-	
-		//console.log(ParametersToOptimise);
-		//console.log(ParametersToOptimise.Y);
-		//var Results=NormalRandArray(ParametersToOptimise.X, ParametersToOptimise.Y, FunctionInput.NumberOfSamples);
-		return Results;
-	};
-
-	EntryRateOptimisationSettings.ErrorFunction=function(Results, Target, FunctionInput){
-		// Look at Results.People
-		// Count the distribution at given dates to determine the numbers in specific groups
-		for (var PCount=0; PCount<Results.PWIDPopulation.length; PCount++){
+		// Count the distribution at the given date to determine the numbers in specific groups
+		for (var PCount=0; PCount<PWIDPopulation.length; PCount++){
 			FunctionInput.YearBeingOptimised;
 			// Determine if the individual has previous injected at that point
 			// if (Results.PWIDPopulation[PCount].IDU.Get(FunctionInput.YearBeingOptimised)>=1)// if the person is a former injector 
@@ -112,14 +106,18 @@ function EntryRateOptimisation(TargetForThisOptimisation){
 				//}
 		}
 		
-		//
 		
-		
-		
-		
-		
-		
-			
+		var Results={};
+		Results.PWIDPopulation=PWIDPopulation;
+	
+		//console.log(ParametersToOptimise);
+		//console.log(ParametersToOptimise.Y);
+		//var Results=NormalRandArray(ParametersToOptimise.X, ParametersToOptimise.Y, FunctionInput.NumberOfSamples);
+		return Results;
+	};
+
+	EntryRateOptimisationSettings.ErrorFunction=function(Results, Target, FunctionInput){
+	
 			
 		//var CurrentHistogramsResults=HistogramData(Results, [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
 		var TotalError=Sum(Abs(Minus(CurrentHistogramsResults.Count, Target)));
