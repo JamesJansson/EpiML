@@ -9,7 +9,7 @@ function PersonObject(YearOfBirth, Sex)//, YearOfObservation Param)
 	//Sex
 	this.Sex=Sex;
 	//Alive
-	//this.Alive=1;// status variable
+	//this.AliveStatus=1;// status variable
 	this.YearOfBirth=YearOfBirth;
 	this.YearOfDeath=1E9;
 	this.GeneralDeath=1E9;
@@ -43,7 +43,7 @@ PersonObject.prototype.Age= function (Year){//using prototyping for speed
 	return Year-this.YearOfBirth;
 };
 
-PersonObject.prototype.CurrentlyAlive = function (Year){//using prototyping for speed
+PersonObject.prototype.Alive = function (Year){//using prototyping for speed
 	if (this.YearOfBirth<=Year && Year <= this.YearOfDeath){
 		return true;
 	}

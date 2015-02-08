@@ -48,12 +48,10 @@ function EntryRateOptimisation(TargetForThisOptimisation){
 		// Determine what is the entry rate per year from the ParametersToOptimise
 		if (FunctionInput.OptimiseExponential==true){
 			FunctionInput.EntryParams.explogk=ParametersToOptimise.explogk;
-			
 			// Note that normalised A attempts to put a constant number of people into the years prior to the end of exponential growth period
 			// This is to improve the optimisation rate of the algorithm
+			// FunctionInput.EntryParams.expA=ParametersToOptimise.NormalisedA;
 			FunctionInput.EntryParams.expA=ParametersToOptimise.expA;
-			
-			
 		}
 		else{
 			FunctionInput.EntryParams.Estimate[FunctionInput.PositionForYearBeingOptimised]=ParametersToOptimise.Estimate;
@@ -98,14 +96,14 @@ function EntryRateOptimisation(TargetForThisOptimisation){
 		for (var PCount=0; PCount<PWIDPopulation.length; PCount++){
 			FunctionInput.YearBeingOptimised;
 			// Determine if the individual has previous injected at that point
-			// if (Results.PWIDPopulation[PCount].IDU.Get(FunctionInput.YearBeingOptimised)>=1)// if the person is a former injector 
+			// if (aPWIDPopulation[PCount].IDU.Get(FunctionInput.YearBeingOptimised)>=1)// if the person is a former injector 
 				// Determine the age at the year being optimised
 			
 				//for (eachelement in the age grouping vector){
 					
 				//}
 		}
-		
+		Results=HistogramData([1.5, 1.0, 1.6, 0.5, 2.0, 2.5, 2.6, 2.6, 2.7, 3.1, 3.2, 6], [1, 2, 3, 4]); 
 		
 		var Results={};
 		Results.PWIDPopulation=PWIDPopulation;

@@ -13,7 +13,7 @@ function CountFibrosisStages(PPLocal, SampleFactorMultiplier, Time){
 	
 	//Define the selection function
 	var FibrosisFunction= function (Person, Year){
-		if (Person.CurrentlyAlive(Year)==true){
+		if (Person.Alive(Year)==true){
 			var InfectionStatus=Person.HCV.Infected.Value(Year);
 			if (InfectionStatus==1 && Person.HCV.HCC.Value(Year)!=1){//currently infected
 				return Person.HCV.Fibrosis.Value(Year); // in this case, the returned value is the numerical value found in the 
@@ -76,7 +76,7 @@ function LivingDxAndUDx(PPLocal, SampleFactorMultiplier, Time){
 	
 	//Define the selection function
 	var DiagnosisFunction= function (Person, Year){
-		if (Person.CurrentlyAlive(Year)==true){
+		if (Person.Alive(Year)==true){
 			var InfectionStatus=Person.HCV.Infected.Value(Year);
 			if (InfectionStatus==1){
 				var DiagnosisStatus=Person.HCV.Diagnosed.Value(Year);
@@ -118,7 +118,7 @@ function AnalyseAgeInfected(PPLocal, Time){
 
 	//Define the selection/statistic function
 	var AgeFunction= function (Person, Year){
-		if (Person.CurrentlyAlive(Year)==true){
+		if (Person.Alive(Year)==true){
 			if (Person.HCV.Infected.Value(Year)==1){
 				return Person.Age(Year);
 			}
@@ -149,7 +149,7 @@ function CountLivingWithHCV(PPLocal, SampleFactorMultiplier, Time){
 	
 	//Define the selection function
 	var DiagnosisFunction= function (Person, Year){
-		if (Person.CurrentlyAlive(Year)==true){
+		if (Person.Alive(Year)==true){
 			var InfectionStatus=Person.HCV.Infected.Value(Year);
 			if (InfectionStatus==1){
 				return 1;
