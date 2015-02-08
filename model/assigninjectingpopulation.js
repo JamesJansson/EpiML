@@ -7,7 +7,7 @@ function SplitByGender(PWIDData){
 	
 	// Do male EntryParams
 	MalePWIDEverData.Data=TransposeForCSV(PWIDData.Ever.Male); // copies in the matrix, which at time of writing is a 4 age band by 6-year matrix 
-	console.log(Sum(MalePWIDEverData.Data=));
+	console.log(Sum(MalePWIDEverData.Data));
 	PerYearEntryRate.Male=EntryRateOptimisation(MalePWIDEverData);
 	
 	
@@ -76,6 +76,8 @@ function EntryRateOptimisation(TargetForThisOptimisation){
 		console.log("Here's the input to the distribution funciton");
 		console.log(FunctionInput.EntryParams);
 		console.log(FunctionInput.YearBeingOptimised);
+		console.log("Entry params");
+		console.log(FunctionInput.EntryParams);
 		
 		var PWIDPopulation=DistributePWIDPopulation(FunctionInput.EntryParams, FunctionInput.YearBeingOptimised);//Returns PWIDPopulation as defined to the MaxYear
 	
@@ -95,7 +97,7 @@ function EntryRateOptimisation(TargetForThisOptimisation){
 		
 		// Optimise staying and leaving rate for this period
 		
-		throw PWIDPopulation.length;
+		
 		
 		console.log(PWIDPopulation);
 		
@@ -114,6 +116,7 @@ function EntryRateOptimisation(TargetForThisOptimisation){
 		}
 		console.log("age array");
 		console.log(AgeArray);
+		console.log(FunctionInput.YearBeingOptimised);
 		
 		Results=HistogramData([AgeArray], [14, 20, 30, 40, 200]); 
 		
@@ -155,7 +158,8 @@ function EntryRateOptimisation(TargetForThisOptimisation){
 	EntryRateOptimisationSettings.MaxTime=1;//stop after 1000 seconds
 	
 	// Initialise all of the values to zero
-	FunctionInput.EntryParams.Year=TargetForThisOptimisation.Year;
+	FunctionInput.EntryParams.Year=TargetForThisOptimisation.Year.slice();
+	FunctionInput.EntryParams.Year.splice(0, 1); // remove the first element
 	FunctionInput.EntryParams.explogk=1;//log1=0;
 	FunctionInput.EntryParams.expA=0;
 	FunctionInput.EntryParams.Estimate=ZeroArray(FunctionInput.EntryParams.Year.length);
@@ -175,19 +179,19 @@ function EntryRateOptimisation(TargetForThisOptimisation){
 	
 	OptimisationObject=new StochasticOptimisation(EntryRateOptimisationSettings);
 	OptimisationObject.AddParameter("explogk", 0, 1);
-	OptimisationObject.AddParameter("expA", 0, 100000);
+	OptimisationObject.AddParameter("expA", 0, 10000);
 	OptimisationObject.Run(FunctionInput);
 	
 	// For each of the subsequent years
 	FunctionInput.OptimiseExponential=false;
 	EntryRateOptimisationSettings.NumberOfSamplesPerRound=10;// note we'll randomly select one of these results
 	EntryRateOptimisationSettings.MaxIterations=100;// In this case, it will allow 10 000 dfferent parameter selections, which gives a granularity of 1% of the range. Should be sufficient
-	for (var OptimisationCount=1; OptimisationCount<FunctionInput.Estimate; OptimisationCount++){
+	for (var OptimisationCount=0; OptimisationCount<FunctionInput.EntryParams.Year.length; OptimisationCount++){
 		FunctionInput.PositionForYearBeingOptimised=OptimisationCount;
 		EntryRateOptimisationSettings.Target=TargetForThisOptimisation.Data[FunctionInput.PositionForYearBeingOptimised];
 		FunctionInput.YearBeingOptimised=FunctionInput.EntryParams.Year[OptimisationCount];
 		OptimisationObject=new StochasticOptimisation(EntryRateOptimisationSettings);
-		OptimisationObject.AddParameter("Estimate", 0, 100000);
+		OptimisationObject.AddParameter("Estimate", 0, 10000);
 		OptimisationObject.Run(FunctionInput);
 	}
 	
@@ -199,6 +203,11 @@ function EntryRateOptimisation(TargetForThisOptimisation){
 
 function DistributePWIDPopulation(EntryParams, MaxYear){
 	var PWIDEntryByYear=DeterminePWIDEntryRate(EntryParams, MaxYear);
+	if (Sum(PWIDEntryByYear.Number)>100000){
+		console.log("Warning: over 100000 people will be created. This may occupy a lot of memory");
+	}
+	
+	
 	var PWIDPopulation=[];
 	
 	var TotalPWID=0;
@@ -208,7 +217,7 @@ function DistributePWIDPopulation(EntryParams, MaxYear){
 	
 	for (var YearIndex=0; YearIndex<PWIDEntryByYear.Year.length; YearIndex++){
 		var CurrentYear=PWIDEntryByYear.Year[YearIndex];
-		for (var CountThisYear=0; CountThisYear<PWIDEntryByYear.Number[YearIndex]; CountThisYear++){//the total number in the group
+		for (var CountThisYear=0; CountThisYear<Round(PWIDEntryByYear.Number[YearIndex]); CountThisYear++){//the total number in the group
 			TotalPWID++;
 			// Determine a random age
 			var AgeAtFirstInjection=Exp(NormalRand(LogMedianEntryAge, LogSDEntryAge));// this needs to include the median and SD of the age at first injection
