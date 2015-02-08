@@ -1,13 +1,13 @@
 function SplitByGender(PWIDData){
 	//ExtractDataFromFiles();
-	
-	var Target={};
+	// SplitByGender(Data.PWID);
+	var MalePWIDEverData={};
 	var PerYearEntryRate={}
-	Target.Year=PWIDData.Year;
+	MalePWIDEverData.Year=PWIDData.Year;
 	
 	// Do male EntryParams
-	Target.Value=TransposeForCSV(PWIDData.Ever.Male); // copies in the matrix, which at time of writing is a 4 age band by 6-year matrix 
-	PerYearEntryRate.Male=EntryRateOptimisation(Target);
+	MalePWIDEverData.Data=TransposeForCSV(PWIDData.Ever.Male); // copies in the matrix, which at time of writing is a 4 age band by 6-year matrix 
+	PerYearEntryRate.Male=EntryRateOptimisation(MalePWIDEverData);
 	
 	
 	
@@ -26,16 +26,14 @@ function EntryRateOptimisation(TargetForThisOptimisation){
 	// due to the increased availability of heroin, followed by a slump due to 
 	// reduced supply/increased prices 
 
-	// this is a multistage optimisation that requires the optimisation of the first data points followed by subsequent ones.
+	// this is a multi-stage optimisation that requires the optimisation of the first data points followed by subsequent ones.
 	// First step is to model the increase in the number of people starting drug use in the lead up to 1998
 	// From that point on, we adjust the entry rate every 3 years (with interpolation)
 	
 	// Start off with all parameters set to zero
 	var FunctionInput={};
 	FunctionInput.EntryParams={};
-	// We can set the years to optimise to whatever we want, but the first attempt will be to optimise it to each of the years in the survey 
-	//FunctionInput.EntryParams.Year=[1999, 2012];
-	FunctionInput.EntryParams.Year=TargetForThisOptimisation.Year;
+	
 	
 	var EntryRateOptimisationSettings={};
 	
@@ -51,6 +49,8 @@ function EntryRateOptimisation(TargetForThisOptimisation){
 			// This is to improve the optimisation rate of the algorithm
 			// FunctionInput.EntryParams.expA=ParametersToOptimise.NormalisedA;
 			FunctionInput.EntryParams.expA=ParametersToOptimise.expA;
+			
+			console.log(FunctionInput.EntryParams);
 		}
 		else{
 			FunctionInput.EntryParams.Estimate[FunctionInput.PositionForYearBeingOptimised]=ParametersToOptimise.Estimate;
@@ -73,7 +73,7 @@ function EntryRateOptimisation(TargetForThisOptimisation){
 		// FunctionInput.EntryParams.AIHWHouseholdSurveryUnderstimateUpperRange=1.4;
 		
 		
-		PWIDPopulation=DistributePWIDPopulation(FunctionInput.EntryParams, FunctionInput.YearBeingOptimised);//Returns PWIDPopulation as defined to the MaxYear
+		var PWIDPopulation=DistributePWIDPopulation(FunctionInput.EntryParams, FunctionInput.YearBeingOptimised);//Returns PWIDPopulation as defined to the MaxYear
 	
 		// Determine drug related mortality - use Australian cause of death statistics
 		// page 71 of the 2001 social trends will be good enough for this
@@ -91,6 +91,9 @@ function EntryRateOptimisation(TargetForThisOptimisation){
 		
 		// Optimise staying and leaving rate for this period
 		
+		
+		console.log(PWIDPopulation);
+		
 		// Count the distribution at the given date to determine the numbers in specific groups
 		var AgeArray=[];
 		for (var PCount=0; PCount<PWIDPopulation.length; PCount++){
@@ -101,20 +104,28 @@ function EntryRateOptimisation(TargetForThisOptimisation){
 				AgeArray.push(P.Age(FunctionInput.YearBeingOptimised));
 			}
 		}
+		console.log("age array");
+		console.log(AgeArray);
+		
 		Results=HistogramData([AgeArray], [14, 20, 30, 40, 200]); 
-			
+		
 	
 		//console.log(ParametersToOptimise);
 		//console.log(ParametersToOptimise.Y);
 		//var Results=NormalRandArray(ParametersToOptimise.X, ParametersToOptimise.Y, FunctionInput.NumberOfSamples);
-		return Results;
+		return Results.Count;
 	};
 
 	EntryRateOptimisationSettings.ErrorFunction=function(Results, Target, FunctionInput){
 	
 			
 		//var CurrentHistogramsResults=HistogramData(Results, [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
-		var TotalError=Sum(Abs(Minus(CurrentHistogramsResults.Count, Target)));
+		console.log("The results and target are:");
+		console.log(Results);
+		console.log(Target);
+		
+		var TotalError=Sum(Abs(Minus(Results, Target)));
+		
 		return TotalError;
 	};
 	
@@ -123,6 +134,7 @@ function EntryRateOptimisation(TargetForThisOptimisation){
 		var ProgressString=RoundCount+": ";
 		
 		var KeyCount=0, Key, MeanResult;
+		console.log(Parameter);
 		for (Key in Parameter){
 			KeyCount++;
 			ProgressString+=Key+": ";
@@ -132,22 +144,26 @@ function EntryRateOptimisation(TargetForThisOptimisation){
 		console.log(ProgressString);
 	};
 	
-	EntryRateOptimisationSettings.MaxTime=10000;//stop after 1000 seconds
+	EntryRateOptimisationSettings.MaxTime=1;//stop after 1000 seconds
 	
 	// Initialise all of the values to zero
+	FunctionInput.EntryParams.Year=TargetForThisOptimisation.Year;
 	FunctionInput.EntryParams.explogk=1;//log1=0;
 	FunctionInput.EntryParams.expA=0;
-	FunctionInput.Estimate=ZeroArray(FunctionInput.EntryParams.Year.length-1);
-	// for (EachYearOfData){
-		// FunctionInput.EntryParams.Estimate[FunctionInput.PositionForYearBeingOptimised]=0;
-	// }
+	FunctionInput.EntryParams.Estimate=ZeroArray(FunctionInput.EntryParams.Year.length);
+	// We can set the years to optimise to whatever we want, but the first attempt will be to optimise it to each of the years in the survey 
+	//FunctionInput.EntryParams.Year=[1999, 2012];
+	FunctionInput.EntryParams.EndExponential=FunctionInput.EntryParams.Year[0];
+	FunctionInput.EntryParams.FirstYear=FunctionInput.EntryParams.Year[0]-40;// 40 years prior to the first available data
 	
 	// For the exponential 
 	FunctionInput.OptimiseExponential=true;
 	// Do the first range that increases up to 1998
 	FunctionInput.PositionForYearBeingOptimised=0;
-	EntryRateOptimisationSettings.NumberOfSamplesPerRound=100;// note we'll randomly select one of these results
+	EntryRateOptimisationSettings.NumberOfSamplesPerRound=10;// note we'll randomly select one of these results
 	EntryRateOptimisationSettings.MaxIterations=100;// In this case, it will allow 10 000 dfferent parameter selections, which gives a granularity of 1% of the range. Should be sufficient
+	EntryRateOptimisationSettings.Target=TargetForThisOptimisation.Data[FunctionInput.PositionForYearBeingOptimised];
+	
 	OptimisationObject=new StochasticOptimisation(EntryRateOptimisationSettings);
 	OptimisationObject.AddParameter("explogk", 0, 1);
 	OptimisationObject.AddParameter("expA", 0, 100000);
@@ -159,7 +175,7 @@ function EntryRateOptimisation(TargetForThisOptimisation){
 	EntryRateOptimisationSettings.MaxIterations=100;// In this case, it will allow 10 000 dfferent parameter selections, which gives a granularity of 1% of the range. Should be sufficient
 	for (var OptimisationCount=1; OptimisationCount<FunctionInput.Estimate; OptimisationCount++){
 		FunctionInput.PositionForYearBeingOptimised=OptimisationCount;
-		EntryRateOptimisationSettings.Target=TargetForThisOptimisation[FunctionInput.PositionForYearBeingOptimised];
+		EntryRateOptimisationSettings.Target=TargetForThisOptimisation.Data[FunctionInput.PositionForYearBeingOptimised];
 		OptimisationObject=new StochasticOptimisation(EntryRateOptimisationSettings);
 		OptimisationObject.AddParameter("Estimate", 0, 100000);
 		OptimisationObject.Run(FunctionInput);

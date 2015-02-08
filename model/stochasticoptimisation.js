@@ -15,7 +15,7 @@ function  StochasticOptimisation(Settings){
 	}
 	// Target: Data to be optimised to
 	if (typeof Settings.Target==="undefined"){
-		console.error("In calling StochasticOptimisation(Settings), Settings.ErrorFunction should be set to the function that will determine the error based on the result of Function");
+		console.error("In calling StochasticOptimisation(Settings), Settings.Target should be set to the Target data that the optimisation algorithm is trying to match.");
 		return -1;
 	}else{
 		this.Target=Settings.Target;// The value that the error function uses to determine fitness
