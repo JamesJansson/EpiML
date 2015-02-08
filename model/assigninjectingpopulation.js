@@ -6,7 +6,7 @@ function SplitByGender(PWIDData){
 	Target.Year=PWIDData.Year;
 	
 	// Do male EntryParams
-	Target.Value=PWIDData.Ever.Male; // copies in the matrix, which at time of writing is a 4 age band by 6-year matrix 
+	Target.Value=TransposeForCSV(PWIDData.Ever.Male); // copies in the matrix, which at time of writing is a 4 age band by 6-year matrix 
 	PerYearEntryRate.Male=EntryRateOptimisation(Target);
 	
 	
@@ -41,8 +41,7 @@ function EntryRateOptimisation(TargetForThisOptimisation){
 	
 	// FunctionInput.EntryParams=FunctionInput.PWID;
 	
-	// Do the first range that increases up to 1998
-	EntryRateOptimisationSettings.Target=TargetForThisOptimisation;
+	
 	
 	EntryRateOptimisationSettings.Function=function(FunctionInput, ParametersToOptimise){
 		// Determine what is the entry rate per year from the ParametersToOptimise
@@ -103,9 +102,7 @@ function EntryRateOptimisation(TargetForThisOptimisation){
 			}
 		}
 		Results=HistogramData([AgeArray], [14, 20, 30, 40, 200]); 
-		
-		var Results={};
-		Results.PWIDPopulation=PWIDPopulation;
+			
 	
 		//console.log(ParametersToOptimise);
 		//console.log(ParametersToOptimise.Y);
@@ -140,13 +137,15 @@ function EntryRateOptimisation(TargetForThisOptimisation){
 	// Initialise all of the values to zero
 	FunctionInput.EntryParams.explogk=1;//log1=0;
 	FunctionInput.EntryParams.expA=0;
-	FunctionInput.Estimate=ZeroArray(FunctionInput.EntryParams.Year.length);
+	FunctionInput.Estimate=ZeroArray(FunctionInput.EntryParams.Year.length-1);
 	// for (EachYearOfData){
 		// FunctionInput.EntryParams.Estimate[FunctionInput.PositionForYearBeingOptimised]=0;
 	// }
 	
 	// For the exponential 
 	FunctionInput.OptimiseExponential=true;
+	// Do the first range that increases up to 1998
+	FunctionInput.PositionForYearBeingOptimised=0;
 	EntryRateOptimisationSettings.NumberOfSamplesPerRound=100;// note we'll randomly select one of these results
 	EntryRateOptimisationSettings.MaxIterations=100;// In this case, it will allow 10 000 dfferent parameter selections, which gives a granularity of 1% of the range. Should be sufficient
 	OptimisationObject=new StochasticOptimisation(EntryRateOptimisationSettings);
@@ -158,8 +157,9 @@ function EntryRateOptimisation(TargetForThisOptimisation){
 	FunctionInput.OptimiseExponential=false;
 	EntryRateOptimisationSettings.NumberOfSamplesPerRound=10;// note we'll randomly select one of these results
 	EntryRateOptimisationSettings.MaxIterations=100;// In this case, it will allow 10 000 dfferent parameter selections, which gives a granularity of 1% of the range. Should be sufficient
-	for (var OptimisationCount=0; OptimisationCount<FunctionInput.Estimate; OptimisationCount++){
+	for (var OptimisationCount=1; OptimisationCount<FunctionInput.Estimate; OptimisationCount++){
 		FunctionInput.PositionForYearBeingOptimised=OptimisationCount;
+		EntryRateOptimisationSettings.Target=TargetForThisOptimisation[FunctionInput.PositionForYearBeingOptimised];
 		OptimisationObject=new StochasticOptimisation(EntryRateOptimisationSettings);
 		OptimisationObject.AddParameter("Estimate", 0, 100000);
 		OptimisationObject.Run(FunctionInput);
