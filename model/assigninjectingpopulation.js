@@ -7,6 +7,7 @@ function SplitByGender(PWIDData){
 	
 	// Do male EntryParams
 	MalePWIDEverData.Data=TransposeForCSV(PWIDData.Ever.Male); // copies in the matrix, which at time of writing is a 4 age band by 6-year matrix 
+	console.log(Sum(MalePWIDEverData.Data=));
 	PerYearEntryRate.Male=EntryRateOptimisation(MalePWIDEverData);
 	
 	
@@ -72,6 +73,9 @@ function EntryRateOptimisation(TargetForThisOptimisation){
 		// FunctionInput.EntryParams.AIHWHouseholdSurveryUnderstimateLowerRange=1.0;
 		// FunctionInput.EntryParams.AIHWHouseholdSurveryUnderstimateUpperRange=1.4;
 		
+		console.log("Here's the input to the distribution funciton");
+		console.log(FunctionInput.EntryParams);
+		console.log(FunctionInput.YearBeingOptimised);
 		
 		var PWIDPopulation=DistributePWIDPopulation(FunctionInput.EntryParams, FunctionInput.YearBeingOptimised);//Returns PWIDPopulation as defined to the MaxYear
 	
@@ -91,15 +95,19 @@ function EntryRateOptimisation(TargetForThisOptimisation){
 		
 		// Optimise staying and leaving rate for this period
 		
+		throw PWIDPopulation.length;
 		
 		console.log(PWIDPopulation);
+		
+		
 		
 		// Count the distribution at the given date to determine the numbers in specific groups
 		var AgeArray=[];
 		for (var PCount=0; PCount<PWIDPopulation.length; PCount++){
 			P=PWIDPopulation[PCount];//separate out to make clearer
 			// Determine if the individual is currently alive and has previously  injected at that point
-			if (P.Alive(FunctionInput.YearBeingOptimised) && P.IDU.Get(FunctionInput.YearBeingOptimised)>=1){
+			var a=P.IDU.Use.Get(FunctionInput.YearBeingOptimised);
+			if (P.Alive(FunctionInput.YearBeingOptimised) && P.IDU.Use.Get(FunctionInput.YearBeingOptimised)>=1){
 				// Determine the age at the year being optimised // Add this age to the vector of ages
 				AgeArray.push(P.Age(FunctionInput.YearBeingOptimised));
 			}
@@ -159,6 +167,7 @@ function EntryRateOptimisation(TargetForThisOptimisation){
 	// For the exponential 
 	FunctionInput.OptimiseExponential=true;
 	// Do the first range that increases up to 1998
+	FunctionInput.YearBeingOptimised=FunctionInput.EntryParams.EndExponential;// First year of data
 	FunctionInput.PositionForYearBeingOptimised=0;
 	EntryRateOptimisationSettings.NumberOfSamplesPerRound=10;// note we'll randomly select one of these results
 	EntryRateOptimisationSettings.MaxIterations=100;// In this case, it will allow 10 000 dfferent parameter selections, which gives a granularity of 1% of the range. Should be sufficient
@@ -176,6 +185,7 @@ function EntryRateOptimisation(TargetForThisOptimisation){
 	for (var OptimisationCount=1; OptimisationCount<FunctionInput.Estimate; OptimisationCount++){
 		FunctionInput.PositionForYearBeingOptimised=OptimisationCount;
 		EntryRateOptimisationSettings.Target=TargetForThisOptimisation.Data[FunctionInput.PositionForYearBeingOptimised];
+		FunctionInput.YearBeingOptimised=FunctionInput.EntryParams.Year[OptimisationCount];
 		OptimisationObject=new StochasticOptimisation(EntryRateOptimisationSettings);
 		OptimisationObject.AddParameter("Estimate", 0, 100000);
 		OptimisationObject.Run(FunctionInput);
