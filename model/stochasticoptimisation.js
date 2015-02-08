@@ -307,10 +307,10 @@ function TestStochasticOptimisation(){
 		PlotSomething={};
 		PlotSomething.Data=Data;
 		PlotSomething.Code="FixedAxisScatterPlot('#PlotHolder', Data,  'AAA', 'BBB', 0, 10, 0, 10);";
-		self.postMessage({Execute: PlotSomething});
+		//self.postMessage({Execute: PlotSomething});
 		
 		
-		//ScatterPlot('#PlotHolder', Data,  'AAA', 'BBB');
+		ScatterPlot('#PlotHolder', Data,  'AAA', 'BBB');
 	};
 	
 	OptimisationSettings.MaxTime=10;//stop after 10 seconds

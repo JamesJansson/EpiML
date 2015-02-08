@@ -81,7 +81,8 @@ function ExtractDataFromFiles(){
 	CommonParam.FemaleMortality.Rates2=DataFile.FemaleMortality.GetColumn( 17, 1, 101);//get table indicates the range [rows][columns]
 
 	Data.PWID={};
-	Data.PWID.Year=DataFile.PWID.GetColumn( 0, 1, 6);
+	Data.PWID.Year=DataFile.PWID.GetRow( 0, 1, 6);
+	Data.PWID.AgeRange=DataFile.PWID.GetValues(25, 28, 0, 1);
 	Data.PWID.Recent={};
 	Data.PWID.Ever={};
 	Data.PWID.Recent.Male=DataFile.PWID.GetValues(2, 5, 1, 6);

@@ -1,4 +1,27 @@
-function EntryRateOptimisation(){
+function SplitByGender(PWIDData){
+	//ExtractDataFromFiles();
+	
+	var Target={};
+	var PerYearEntryRate={}
+	Target.Year=PWIDData.Year;
+	
+	// Do male EntryParams
+	Target.Value=PWIDData.Ever.Male; // copies in the matrix, which at time of writing is a 4 age band by 6-year matrix 
+	PerYearEntryRate.Male=EntryRateOptimisation(Target);
+	
+	
+	
+	
+	// Do female EntryParams
+	// Target 
+	
+	// This function returns the entry rate by year
+}
+
+
+
+
+function EntryRateOptimisation(TargetForThisOptimisation){
 	// First step is to assume increasing rates leading up to the end of the 1999 
 	// due to the increased availability of heroin, followed by a slump due to 
 	// reduced supply/increased prices 
@@ -10,16 +33,16 @@ function EntryRateOptimisation(){
 	// Start off with all parameters set to zero
 	var FunctionInput={};
 	FunctionInput.EntryParams={};
-	FunctionInput.EntryParams.Year=[1999, 2012];// Preset to avoid annoying situations?
+	// We can set the years to optimise to whatever we want, but the first attempt will be to optimise it to each of the years in the survey 
+	//FunctionInput.EntryParams.Year=[1999, 2012];
+	FunctionInput.EntryParams.Year=TargetForThisOptimisation.Year;
 	
 	var EntryRateOptimisationSettings={};
 	
-	FunctionInput.NumberOfSamplesPerRound=100;// note we'll randomly select one of these results
-	FunctionInput.MaxIterations=100;// In this case, it will allow 10 000 dfferent parameter selections, which gives a granularity of 1% of the range. Should be sufficient
 	// FunctionInput.EntryParams=FunctionInput.PWID;
 	
 	// Do the first range that increases up to 1998
-	EntryRateOptimisationSettings.Target=Data.PWID;
+	EntryRateOptimisationSettings.Target=TargetForThisOptimisation;
 	
 	EntryRateOptimisationSettings.Function=function(FunctionInput, ParametersToOptimise){
 		// Determine what is the entry rate per year from the ParametersToOptimise
@@ -95,10 +118,10 @@ function EntryRateOptimisation(){
 		
 		
 		
-		var Value=new CountStatistic();
+		
 			
 			
-		var CurrentHistogramsResults=HistogramData(Results, [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+		//var CurrentHistogramsResults=HistogramData(Results, [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
 		var TotalError=Sum(Abs(Minus(CurrentHistogramsResults.Count, Target)));
 		return TotalError;
 	};
@@ -117,16 +140,38 @@ function EntryRateOptimisation(){
 		console.log(ProgressString);
 	};
 	
-	EntryRateOptimisationSettings.MaxTime=10;//stop after 10 seconds
+	EntryRateOptimisationSettings.MaxTime=10000;//stop after 1000 seconds
 	
+	// Initialise all of the values to zero
+	FunctionInput.EntryParams.explogk=1;//log1=0;
+	FunctionInput.EntryParams.expA=0;
+	FunctionInput.Estimate=ZeroArray(FunctionInput.EntryParams.Year.length);
+	// for (EachYearOfData){
+		// FunctionInput.EntryParams.Estimate[FunctionInput.PositionForYearBeingOptimised]=0;
+	// }
 	
+	// For the exponential 
+	FunctionInput.OptimiseExponential=true;
+	EntryRateOptimisationSettings.NumberOfSamplesPerRound=100;// note we'll randomly select one of these results
+	EntryRateOptimisationSettings.MaxIterations=100;// In this case, it will allow 10 000 dfferent parameter selections, which gives a granularity of 1% of the range. Should be sufficient
 	OptimisationObject=new StochasticOptimisation(EntryRateOptimisationSettings);
 	OptimisationObject.AddParameter("explogk", 0, 1);
 	OptimisationObject.AddParameter("expA", 0, 100000);
 	OptimisationObject.Run(FunctionInput);
 	
+	// For each of the subsequent years
+	FunctionInput.OptimiseExponential=false;
+	EntryRateOptimisationSettings.NumberOfSamplesPerRound=10;// note we'll randomly select one of these results
+	EntryRateOptimisationSettings.MaxIterations=100;// In this case, it will allow 10 000 dfferent parameter selections, which gives a granularity of 1% of the range. Should be sufficient
+	for (var OptimisationCount=0; OptimisationCount<FunctionInput.Estimate; OptimisationCount++){
+		FunctionInput.PositionForYearBeingOptimised=OptimisationCount;
+		OptimisationObject=new StochasticOptimisation(EntryRateOptimisationSettings);
+		OptimisationObject.AddParameter("Estimate", 0, 100000);
+		OptimisationObject.Run(FunctionInput);
+	}
 	
-	return OptimisationObject;
+	
+	return OptimisationObject;// what is this? Should return the full results
 
 }
 
