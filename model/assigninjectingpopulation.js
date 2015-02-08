@@ -93,17 +93,16 @@ function EntryRateOptimisation(TargetForThisOptimisation){
 		// Optimise staying and leaving rate for this period
 		
 		// Count the distribution at the given date to determine the numbers in specific groups
+		var AgeArray=[];
 		for (var PCount=0; PCount<PWIDPopulation.length; PCount++){
-			FunctionInput.YearBeingOptimised;
-			// Determine if the individual has previous injected at that point
-			// if (aPWIDPopulation[PCount].IDU.Get(FunctionInput.YearBeingOptimised)>=1)// if the person is a former injector 
-				// Determine the age at the year being optimised
-			
-				//for (eachelement in the age grouping vector){
-					
-				//}
+			P=PWIDPopulation[PCount];//separate out to make clearer
+			// Determine if the individual is currently alive and has previously  injected at that point
+			if (P.Alive(FunctionInput.YearBeingOptimised) && P.IDU.Get(FunctionInput.YearBeingOptimised)>=1){
+				// Determine the age at the year being optimised // Add this age to the vector of ages
+				AgeArray.push(P.Age(FunctionInput.YearBeingOptimised));
+			}
 		}
-		Results=HistogramData([1.5, 1.0, 1.6, 0.5, 2.0, 2.5, 2.6, 2.6, 2.7, 3.1, 3.2, 6], [1, 2, 3, 4]); 
+		Results=HistogramData([AgeArray], [14, 20, 30, 40, 200]); 
 		
 		var Results={};
 		Results.PWIDPopulation=PWIDPopulation;

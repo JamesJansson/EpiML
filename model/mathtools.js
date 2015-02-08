@@ -164,7 +164,7 @@ function HistogramData(Data, BinBoundaries){// the BinBoundaries are inclusive o
 	HistData.BinLower=[];//
 	HistData.BinUpper=[];
 	HistData.Count=[];
-	console.log(NumBins);
+
 	for (var i=0; i<NumBins; i++){
 		HistData.BinLower[i]=BinBoundaries[i];
 		HistData.BinUpper[i]=BinBoundaries[i+1];
@@ -173,7 +173,7 @@ function HistogramData(Data, BinBoundaries){// the BinBoundaries are inclusive o
 	
 	HistData.DataOutsideBoundaries=[];
 	var PointsOutideBoundaries=0;
-	console.log(Data.length);
+
 	for (var i=0; i<Data.length; i++){//each point in the data set
 		//Check if the value is in the range
 		var BinFound=false;
@@ -192,7 +192,7 @@ function HistogramData(Data, BinBoundaries){// the BinBoundaries are inclusive o
 			PointsOutideBoundaries++;
 		}
 	}
-	console.log(HistData);
+
 	return HistData;
 }
 	//TestHist=HistogramData([1.5, 1.0, 1.6, 0.5, 2.0, 2.5, 2.6, 2.6, 2.7, 3.1, 3.2, 6], [1, 2, 3, 4]); 
