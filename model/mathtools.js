@@ -256,7 +256,7 @@ function Select(InputVector, IndexToSelect){
 	// Returns an array of the selected indices
 	//Apply the array
 	var ReturnArray=[];
-	for (i=0; i<IndexToSelect.length; i++){
+	for (var i=0; i<IndexToSelect.length; i++){
 		if (IndexToSelect[i]>=InputVector.length){
 			console.error("Index exceeds size of array.");
 		}

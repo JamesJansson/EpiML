@@ -138,7 +138,7 @@ function DistributePWIDPopulation(EntryParams, MaxYear){
 	var TotalPWID=0;
 	var LogMedianEntryAge=Log(21);
 	var LogSDEntryAge=0.16;
-	console.error("Note the median entry age is hard set");
+	console.log("Note the median entry age is hard set");
 	
 	for (var YearIndex=0; YearIndex<PWIDEntryByYear.Year.length; YearIndex++){
 		var CurrentYear=PWIDEntryByYear.Year[YearIndex];
@@ -234,30 +234,35 @@ function DeterminePWIDEntryRate(EntryParams, MaxYear){//MaxYear is not inclusive
 	}
 	return InitiatingIVDrugUse;
 }
-// Example usage
-// EntryParams={};
-// EntryParams.EndExponential=1999;
-// EntryParams.FirstYear=1959;
-// EntryParams.expA=2000;
-// EntryParams.explogk=0.8;
-// EntryParams.Year=[2002, 2005, 2012];
-// EntryParams.Estimate=[1500, 1400, 2300];// note the estimate here is instantaneous
-// EntryParams.NumberOfAveragingYears=4;
-// MaxYear=2020;
-// DistributePWIDPopulationResults=DeterminePWIDEntryRate(EntryParams, MaxYear);
 
-// DistributePWIDPopulationText="";//Used to copy the output
-// for (i=0; i<=60; i++){
-// DistributePWIDPopulationText+=DistributePWIDPopulationResults.Number[i]+"\n";
-// }
+function TESTDeterminePWIDEntryRate(){
+	// Example usage
+	var EntryParams={};
+	EntryParams.EndExponential=1999;
+	EntryParams.FirstYear=1959;
+	EntryParams.expA=2000;
+	EntryParams.explogk=0.8;
+	EntryParams.Year=[2002, 2005, 2012];
+	EntryParams.Estimate=[1500, 1400, 2300];// note the estimate here is instantaneous
+	EntryParams.NumberOfAveragingYears=4;
+	var MaxYear=2020;
 
+	var DistributePWIDPopulationResults=DeterminePWIDEntryRate(EntryParams, MaxYear);
+	
+	var DistributePWIDPopulationText="";//Used to copy the output
+	for (var i=0; i<=60; i++){
+		DistributePWIDPopulationText+=DistributePWIDPopulationResults.Number[i]+"\n";
+	}
+	//console.log(DistributePWIDPopulationText);
 
-// PersonArrayStorage=DistributePWIDPopulation(EntryParams, MaxYear);// To create PersonObects
-// DistributePWIDPopulationText="";//Used to copy the output
-// for (i=0; i<=1000; i++){
-// DistributePWIDPopulationText+=(PersonArrayStorage[i].IDU.Use.Time[1]-PersonArrayStorage[i].IDU.Use.Time[0])+"\n";
-// }
-
+	// here make the relevant person class individuals,  
+	var PersonArrayStorage=DistributePWIDPopulation(EntryParams, MaxYear);// To create PersonObects
+	DistributePWIDPopulationText="";//Used to copy the output
+	for (var i=0; i<=1000; i++){
+		DistributePWIDPopulationText+=(PersonArrayStorage[i].IDU.Use.Time[1]-PersonArrayStorage[i].IDU.Use.Time[0])+"\n";
+	}
+	//console.log(DistributePWIDPopulationText);
+}
 
 
 
