@@ -10,10 +10,17 @@ function SplitByGender(PWIDData){
 	MalePWIDEverData.Year=PWIDData.Year;
 	MalePWIDEverData.SexIndex=0;
 	MalePWIDEverData.Data=TransposeForCSV(PWIDData.Ever.Male); // copies in the matrix, which at time of writing is a 4 age band by 6-year matrix 
-	// If the number is a bit large, normalise the total down to something reasonable. 
-	
-	console.log(Sum(MalePWIDEverData.Data));
-	PerYearEntryRate.Male=EntryRateOptimisation(MalePWIDEverData);
+	// If the number is a bit large, normalise the total down to something reasonable to optimise over
+	// Find the max year group
+	var MaxInYear=0;
+	for (var i=0; i<MalePWIDEverData.Data.length; i++){
+		var SumInYear=Sum(MalePWIDEverData.Data[i]);
+		if (SumInYear>MaxInYear){MaxInYear=SumInYear;} 
+	}
+	Factor=10000/MaxInYear;
+	MalePWIDEverData.Data=Multiply(MalePWIDEverData.Data, Factor);
+	console.log(MalePWIDEverData.Data);
+	//PerYearEntryRate.Male=EntryRateOptimisation(MalePWIDEverData);
 	
 	
 	
