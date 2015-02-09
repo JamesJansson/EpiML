@@ -1,10 +1,13 @@
 function SplitByGender(PWIDData){
-	//ExtractDataFromFiles();
-	// SplitByGender(Data.PWID);
+/* 	ExtractDataFromFiles();
+	MaleMortality=new MortalityCalculator(Param.MaleMortality.Rates1, Param.MaleMortality.Year1, Param.MaleMortality.Rates2, Param.MaleMortality.Year2);
+	FemaleMortality=new MortalityCalculator(Param.FemaleMortality.Rates1, Param.FemaleMortality.Year1, Param.FemaleMortality.Rates2, Param.FemaleMortality.Year2);
+	SplitByGender(Data.PWID); */
+	
 	var MalePWIDEverData={};
 	var PerYearEntryRate={}
 	MalePWIDEverData.Year=PWIDData.Year;
-	
+	MalePWIDEverData.SexIndex=0;
 	// Do male EntryParams
 	MalePWIDEverData.Data=TransposeForCSV(PWIDData.Ever.Male); // copies in the matrix, which at time of writing is a 4 age band by 6-year matrix 
 	console.log(Sum(MalePWIDEverData.Data));
@@ -34,7 +37,7 @@ function EntryRateOptimisation(TargetForThisOptimisation){
 	// Start off with all parameters set to zero
 	var FunctionInput={};
 	FunctionInput.EntryParams={};
-	
+	FunctionInput.EntryParams.SexIndex=TargetForThisOptimisation.SexIndex;
 	
 	var EntryRateOptimisationSettings={};
 	
@@ -73,18 +76,24 @@ function EntryRateOptimisation(TargetForThisOptimisation){
 		// FunctionInput.EntryParams.AIHWHouseholdSurveryUnderstimateLowerRange=1.0;
 		// FunctionInput.EntryParams.AIHWHouseholdSurveryUnderstimateUpperRange=1.4;
 		
-		console.log("Here's the input to the distribution funciton");
+		console.log("Here's the input to the distribution function");
 		console.log(FunctionInput.EntryParams);
 		console.log(FunctionInput.YearBeingOptimised);
 		console.log("Entry params");
 		console.log(FunctionInput.EntryParams);
 		
 		var PWIDPopulation=DistributePWIDPopulation(FunctionInput.EntryParams, FunctionInput.YearBeingOptimised);//Returns PWIDPopulation as defined to the MaxYear
+		console.log("got past the distribution. Doing mortality");
+	
+		console.log("Warning global creation below");
+		ASDGlobal=PWIDPopulation;
+		
 	
 		// Determine the general population death 
 		for (var PCount=0; PCount<PWIDPopulation.length; PCount++){
+			console.log(PCount);
 			P=PWIDPopulation[PCount];//separate out to make clearer
-			P.CalculateGeneralMortality();
+			P.CalculateGeneralMortality(P.IDU.Use.Time[1]);// Perform mortality calculations from the date of first using injection drugs
 		}
 		// Determine drug related mortality - use Australian cause of death statistics
 		// page 71 of the 2001 social trends will be good enough for this
@@ -102,9 +111,7 @@ function EntryRateOptimisation(TargetForThisOptimisation){
 		
 		// Optimise staying and leaving rate for this period
 		
-		console.log("Warning global creation below");
-		ASDGlobal=PWIDPopulation;
-		console.log(PWIDPopulation);
+		
 		
 		
 		
@@ -113,8 +120,7 @@ function EntryRateOptimisation(TargetForThisOptimisation){
 		for (var PCount=0; PCount<PWIDPopulation.length; PCount++){
 			P=PWIDPopulation[PCount];//separate out to make clearer
 			// Determine if the individual is currently alive and has previously  injected at that point
-			var a=P.IDU.Use.Get(FunctionInput.YearBeingOptimised);
-			if (P.Alive(FunctionInput.YearBeingOptimised) && P.IDU.Use.Get(FunctionInput.YearBeingOptimised)>=1){
+			if (P.Alive(FunctionInput.YearBeingOptimised) && P.IDU.Use.Value(FunctionInput.YearBeingOptimised)>=1){
 				// Determine the age at the year being optimised // Add this age to the vector of ages
 				AgeArray.push(P.Age(FunctionInput.YearBeingOptimised));
 			}
@@ -125,6 +131,9 @@ function EntryRateOptimisation(TargetForThisOptimisation){
 		
 		Results=HistogramData([AgeArray], [14, 20, 30, 40, 200]); 
 		
+		console.log("Warning global creation below");
+		ASDResultsGlobal=Results;
+		throw "Stopping to look at results";
 	
 		//console.log(ParametersToOptimise);
 		//console.log(ParametersToOptimise.Y);
