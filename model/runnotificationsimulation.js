@@ -17,7 +17,7 @@ importScripts("generalmortality.js");
 
 var Data={};
 var Param={};//This is the parameter holder for the simulation
-var CommonParam={};
+
 var Settings={};
 
 var OptimisedParam={};// The results are stored both here and in Param
@@ -28,8 +28,8 @@ var PPNotification=[];
 
 var MaleMortality;
 var FemaleMortality;
-var IndigenousMaleMoratlity;
-var IndigenousFemaleMoratlity;
+var IndigenousMaleMortality;
+var IndigenousFemaleMortality;
 
 var ShowDebugStatements=true;
 function DebugStatement(ConsoleMessage){
@@ -62,7 +62,8 @@ self.onmessage = function (WorkerMessage) {
 	//Load the notification data
 	Data=WorkerMessage.data.Common.Data;
 	//Load the parameters data
-	CommonParam=WorkerMessage.data.Common.Param;
+	Param=WorkerMessage.data.Common.Param;
+	console.log("Note at some point we will simply merge the common and non-common Params into a single Param for simplicity");
 	// Load simulation settings
 	Settings=WorkerMessage.data.Common.Settings;
 	
@@ -75,8 +76,8 @@ self.onmessage = function (WorkerMessage) {
 	
 	
 	// Load up mortality data
-	MaleMortality=new MortalityCalculator(CommonParam.MaleMortality.Rates1, CommonParam.MaleMortality.Year1, CommonParam.MaleMortality.Rates2, CommonParam.MaleMortality.Year2);
-	FemaleMortality=new MortalityCalculator(CommonParam.FemaleMortality.Rates1, CommonParam.FemaleMortality.Year1, CommonParam.FemaleMortality.Rates2, CommonParam.FemaleMortality.Year2);
+	MaleMortality=new MortalityCalculator(Param.MaleMortality.Rates1, Param.MaleMortality.Year1, Param.MaleMortality.Rates2, Param.MaleMortality.Year2);
+	FemaleMortality=new MortalityCalculator(Param.FemaleMortality.Rates1, Param.FemaleMortality.Year1, Param.FemaleMortality.Rates2, Param.FemaleMortality.Year2);
 	
 	self.postMessage({Console: MaleMortality});
 	

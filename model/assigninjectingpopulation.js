@@ -48,8 +48,8 @@ function EntryRateOptimisation(TargetForThisOptimisation){
 			FunctionInput.EntryParams.explogk=ParametersToOptimise.explogk;
 			// Note that normalised A attempts to put a constant number of people into the years prior to the end of exponential growth period
 			// This is to improve the optimisation rate of the algorithm
-			// FunctionInput.EntryParams.expA=ParametersToOptimise.NormalisedA;
-			FunctionInput.EntryParams.expA=ParametersToOptimise.expA;
+			FunctionInput.EntryParams.expA=-ParametersToOptimise.NormalisedA*Log(ParametersToOptimise.explogk);
+			//FunctionInput.EntryParams.expA=ParametersToOptimise.expA;
 			
 			console.log(FunctionInput.EntryParams);
 		}
@@ -81,6 +81,11 @@ function EntryRateOptimisation(TargetForThisOptimisation){
 		
 		var PWIDPopulation=DistributePWIDPopulation(FunctionInput.EntryParams, FunctionInput.YearBeingOptimised);//Returns PWIDPopulation as defined to the MaxYear
 	
+		// Determine the general population death 
+		for (var PCount=0; PCount<PWIDPopulation.length; PCount++){
+			P=PWIDPopulation[PCount];//separate out to make clearer
+			P.CalculateGeneralMortality();
+		}
 		// Determine drug related mortality - use Australian cause of death statistics
 		// page 71 of the 2001 social trends will be good enough for this
 		// http://www.ausstats.abs.gov.au/ausstats/subscriber.nsf/0/6AB30EFAC93E3F5CCA256A630006EA93/$File/41020_2001.pdf
@@ -97,8 +102,8 @@ function EntryRateOptimisation(TargetForThisOptimisation){
 		
 		// Optimise staying and leaving rate for this period
 		
-		
-		
+		console.log("Warning global creation below");
+		ASDGlobal=PWIDPopulation;
 		console.log(PWIDPopulation);
 		
 		
@@ -165,8 +170,10 @@ function EntryRateOptimisation(TargetForThisOptimisation){
 	FunctionInput.EntryParams.Estimate=ZeroArray(FunctionInput.EntryParams.Year.length);
 	// We can set the years to optimise to whatever we want, but the first attempt will be to optimise it to each of the years in the survey 
 	//FunctionInput.EntryParams.Year=[1999, 2012];
-	FunctionInput.EntryParams.EndExponential=FunctionInput.EntryParams.Year[0];
+	FunctionInput.EntryParams.EndExponential=TargetForThisOptimisation.Year[0];
 	FunctionInput.EntryParams.FirstYear=FunctionInput.EntryParams.Year[0]-40;// 40 years prior to the first available data
+	FunctionInput.EntryParams.NumberOfAveragingYears=5;
+	
 	
 	// For the exponential 
 	FunctionInput.OptimiseExponential=true;
@@ -179,8 +186,10 @@ function EntryRateOptimisation(TargetForThisOptimisation){
 	
 	OptimisationObject=new StochasticOptimisation(EntryRateOptimisationSettings);
 	OptimisationObject.AddParameter("explogk", 0, 1);
-	OptimisationObject.AddParameter("expA", 0, 10000);
+	OptimisationObject.AddParameter("NormalisedA", 0, 10000);
 	OptimisationObject.Run(FunctionInput);
+	
+	throw "Stopping here: need to save to the optimisation results";
 	
 	// For each of the subsequent years
 	FunctionInput.OptimiseExponential=false;
@@ -205,6 +214,7 @@ function DistributePWIDPopulation(EntryParams, MaxYear){
 	var PWIDEntryByYear=DeterminePWIDEntryRate(EntryParams, MaxYear);
 	if (Sum(PWIDEntryByYear.Number)>100000){
 		console.log("Warning: over 100000 people will be created. This may occupy a lot of memory");
+		throw "Stopping before it breaks";
 	}
 	
 	
