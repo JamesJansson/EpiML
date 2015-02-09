@@ -129,7 +129,7 @@ function EntryRateOptimisation(TargetForThisOptimisation){
 		console.log(AgeArray);
 		console.log(FunctionInput.YearBeingOptimised);
 		
-		Results=HistogramData([AgeArray], [14, 20, 30, 40, 200]); 
+		Results=HistogramData(AgeArray, [14, 20, 30, 40, 200]); 
 		
 		console.log("Warning global creation below");
 		ASDResultsGlobal=Results;
