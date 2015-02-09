@@ -4,12 +4,14 @@ function SplitByGender(PWIDData){
 	FemaleMortality=new MortalityCalculator(Param.FemaleMortality.Rates1, Param.FemaleMortality.Year1, Param.FemaleMortality.Rates2, Param.FemaleMortality.Year2);
 	SplitByGender(Data.PWID); */
 	
-	var MalePWIDEverData={};
 	var PerYearEntryRate={}
+	// Do male EntryParams
+	var MalePWIDEverData={};
 	MalePWIDEverData.Year=PWIDData.Year;
 	MalePWIDEverData.SexIndex=0;
-	// Do male EntryParams
 	MalePWIDEverData.Data=TransposeForCSV(PWIDData.Ever.Male); // copies in the matrix, which at time of writing is a 4 age band by 6-year matrix 
+	// If the number is a bit large, normalise the total down to something reasonable. 
+	
 	console.log(Sum(MalePWIDEverData.Data));
 	PerYearEntryRate.Male=EntryRateOptimisation(MalePWIDEverData);
 	

@@ -9,13 +9,20 @@ MathToolsRunning=true;
 
 // STATISTICAL FUNCTIONS
 
-// Sum of an array
+// Sum of an array or matrix
 function Sum(arr) {
   var sum = 0;
   var i = arr.length;
   var tmp;
-  while (--i >= 0)
-    sum += arr[i];
+  while (--i >= 0){
+	if (typeof arr[i] == 'object'){
+		sum +=Sum(arr[i]);// look at all the sub elements
+	} else if (typeof arr[i] == 'number'){
+		sum += arr[i];
+	}else{
+		throw "A non-array/non-number type was found using Sum.";
+	}
+  }
   return sum;
 }
 
