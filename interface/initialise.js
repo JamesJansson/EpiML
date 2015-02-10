@@ -5,7 +5,6 @@ var Param={};
 var DataFile={};
 var SimulationHolder;
 var SimInputData=[];
-var CommonParam={};
 
 // Setting up whether it is working under NodeJS or not
 RunningNodeJS=true;

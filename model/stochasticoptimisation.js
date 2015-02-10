@@ -200,7 +200,19 @@ StochasticOptimisation.prototype.GetBestParameterSet= function (ParameterNumber)
 	return ParameterSet;
 }
 
-
+StochasticOptimisation.prototype.GetBestResults= function (ParameterNumber){
+	if (typeof(ParameterNumber)=="undefined"){
+		ParameterNumber=0;// if the number is not set, assume the caller wants the very best parameter set.
+	}
+	if (ParameterNumber>this.BestIndex.length){
+		throw ("GetBestResults(BestPosition) requires BestPosition to be smaller than the number of 'best' results selected in each round");
+	}
+	var ParameterSet={};
+	for (key in this.Parameter) {
+		ParameterSet[this.Parameter[key].Name]=this.Parameter[key].BestVec[ParameterNumber];
+	}	
+	return ParameterSet;
+}
 
 
 //************************************************************

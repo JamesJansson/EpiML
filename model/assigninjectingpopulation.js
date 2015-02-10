@@ -6,7 +6,7 @@ function SplitByGender(PWIDData){
 	FemaleMortality=new MortalityCalculator(Param.FemaleMortality.Rates1, Param.FemaleMortality.Year1, Param.FemaleMortality.Rates2, Param.FemaleMortality.Year2);
 	SplitByGender(Data.PWID); */
 	
-	var PerYearEntryRate={}
+	var PerYearEntry={}
 	
 	// Do male EntryParams
 	var MalePWIDEverData={};
@@ -25,10 +25,17 @@ function SplitByGender(PWIDData){
 	console.log(MalePWIDEverData.Data);
 	ReturnStructure=EntryRateOptimisation(MalePWIDEverData);
 	// Store the results for male optimisation
-	PerYearEntryRate.Male={};
-	PerYearEntryRate.Male.Data=Multiply(ReturnStructure.PerYearEntryRate, Factor);
+	PerYearEntry.Male={};
+	PerYearEntry.Male.Year=ReturnStructure.PerYearEntryRate.Year;
+	// fix up the normalisation we did earlier
+	PerYearEntry.Male.Number=Divide(ReturnStructure.PerYearEntryRate.Number, Factor);
 	
-	
+	PerYearEntry.Male.OriginalData={};
+	PerYearEntry.Male.OriginalData.Year=MalePWIDEverData.Year;
+	PerYearEntry.Male.OriginalData.Data=MalePWIDEverData.Data;
+	// Storing the optimisation result for later
+	PerYearEntry.Male.OptimisedResult={};
+	PerYearEntry.Male.OptimisedResult=ReturnStructure;
 	
 	
 	
@@ -38,7 +45,7 @@ function SplitByGender(PWIDData){
 	// This function returns the entry rate by year
 	
 	
-	return PerYearEntryRate;
+	return PerYearEntry;
 }
 
 
@@ -72,8 +79,6 @@ function EntryRateOptimisation(TargetForThisOptimisation){
 			// This is to improve the optimisation rate of the algorithm
 			FunctionInput.EntryParams.expA=-ParametersToOptimise.NormalisedA*Log(ParametersToOptimise.explogk);
 			//FunctionInput.EntryParams.expA=ParametersToOptimise.expA;
-			
-			console.log(FunctionInput.EntryParams);
 		}
 		else{
 			FunctionInput.EntryParams.Estimate[FunctionInput.PositionForYearBeingOptimised]=ParametersToOptimise.Estimate;
@@ -95,19 +100,10 @@ function EntryRateOptimisation(TargetForThisOptimisation){
 		// FunctionInput.EntryParams.AIHWHouseholdSurveryUnderstimateLowerRange=1.0;
 		// FunctionInput.EntryParams.AIHWHouseholdSurveryUnderstimateUpperRange=1.4;
 		
-		console.log("Here's the input to the distribution function");
-		console.log(FunctionInput.EntryParams);
-		console.log(FunctionInput.YearBeingOptimised);
-		console.log("Entry params");
-		console.log(FunctionInput.EntryParams);
+
 		
 		var PWIDPopulation=DistributePWIDPopulation(FunctionInput.EntryParams, FunctionInput.YearBeingOptimised);//Returns PWIDPopulation as defined to the MaxYear
-		console.log("got past the distribution. Doing mortality");
-	
-		console.log("Warning global creation below");
-		ASDGlobal=PWIDPopulation;
-		
-	
+
 		// Determine the general population death 
 		for (var PCount=0; PCount<PWIDPopulation.length; PCount++){
 			P=PWIDPopulation[PCount];//separate out to make clearer
@@ -147,8 +143,7 @@ function EntryRateOptimisation(TargetForThisOptimisation){
 		
 		Results=HistogramData(AgeArray, [14, 20, 30, 40, 200]); 
 		
-		console.log("Warning global creation below");
-		ASDResultsGlobal=Results;
+
 		
 	
 		//console.log(ParametersToOptimise);
@@ -158,10 +153,6 @@ function EntryRateOptimisation(TargetForThisOptimisation){
 	};
 
 	EntryRateOptimisationSettings.ErrorFunction=function(Results, Target, FunctionInput){
-		console.log("The results and target are:");
-		console.log(Results);
-		console.log(Target);
-		
 		// In this error function the error is made up of two parts:
 		// 1) The error for individual ages
 		// 2) The error for the sum in that year
@@ -218,6 +209,11 @@ function EntryRateOptimisation(TargetForThisOptimisation){
 	var SelectedParameters=OptimisationObject.GetBestParameterSet();
 	// Adjust the expA back 
 	SelectedParameters.expA=-SelectedParameters.NormalisedA*Log(SelectedParameters.explogk);
+	// Here we put a pretty serious warning to inform the user if something is amiss with the optimisation
+	if (SelectedParameters.NormalisedA> 0.9*10000){
+		console.error("The optimised result is very close to the upper bound of the optmisation ranges. This may represent that a minimum was not properly found.");
+	}
+	
 	
 	// Place the best parameters into the unchanging parameterisation 
 	FunctionInput.EntryParams.explogk=SelectedParameters.explogk;
@@ -242,6 +238,11 @@ function EntryRateOptimisation(TargetForThisOptimisation){
 		SelectedParameters=OptimisationObject.GetBestParameterSet();
 		
 		FunctionInput.EntryParams.Estimate[OptimisationCount]=SelectedParameters.Estimate;
+		
+		// Here we put a pretty serious warning to inform the user if something is amiss with the optimisation
+		if (SelectedParameters.Estimate> 0.9*10000){
+			console.error("The optimised result is very close to the upper bound of the optmisation ranges. This may represent that a minimum was not properly found.");
+		}
 	}
 	
 	var PerYearEntryRate=DeterminePWIDEntryRate(FunctionInput.EntryParams, 2100); 
