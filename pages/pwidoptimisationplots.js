@@ -3,7 +3,14 @@ var PWIDEntryPlotSettings={};
 PWIDEntryPlotSettings.AgeRange=ZeroArray(4);
 PWIDEntryPlotSettings.Sex=ZeroArray(2);
 
-function PlotPWIDOptimisation(PWIDEntryPlotSettings){
+/* 	ExtractDataFromFiles();
+	MaleMortality=new MortalityCalculator(Param.MaleMortality.Rates1, Param.MaleMortality.Year1, Param.MaleMortality.Rates2, Param.MaleMortality.Year2);
+	FemaleMortality=new MortalityCalculator(Param.FemaleMortality.Rates1, Param.FemaleMortality.Year1, Param.FemaleMortality.Rates2, Param.FemaleMortality.Year2);
+	PWIDEntryOptimisationResults=OptimiseByGender(Data.PWID); */
+
+
+
+function PlotPWIDEntryOptimisation(PWIDEntryPlotSettings){
 	// There are multiple different graphs that can be produced from this:
 	// Total by year
 	// Individual levels for sex and age by year
@@ -12,8 +19,9 @@ function PlotPWIDOptimisation(PWIDEntryPlotSettings){
 	// get the data
 	// for each simulation
 		// for each year
-			// for each sex
-				// for each age group
+			// for each age group
+				// for each sex
+					//
 					// Add to the total for that year (both the result and the target)
 					// Value[YearIndex].Sim.push
 	

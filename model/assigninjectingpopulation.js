@@ -4,7 +4,7 @@ function OptimiseByGender(PWIDData){
 /* 	ExtractDataFromFiles();
 	MaleMortality=new MortalityCalculator(Param.MaleMortality.Rates1, Param.MaleMortality.Year1, Param.MaleMortality.Rates2, Param.MaleMortality.Year2);
 	FemaleMortality=new MortalityCalculator(Param.FemaleMortality.Rates1, Param.FemaleMortality.Year1, Param.FemaleMortality.Rates2, Param.FemaleMortality.Year2);
-	PWIDOptimisationResults=OptimiseByGender(Data.PWID); */
+	PWIDEntryOptimisationResults=OptimiseByGender(Data.PWID); */
 	
 	var PerYearEntry={}
 	

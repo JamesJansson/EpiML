@@ -113,8 +113,9 @@ Papa.parse("data/summarynotifications.csv", {download: true, complete: function(
 		<h1>Home</h1>
 		<p> This model is a work in progress. The results have not yet been confirmed. Please contact jjansson@kirby.unsw.edu.au for enquiries. </p>
 		
-		<p> <b>Use existing optimisation </b> </p>
-		
+		<p> <b>Use existing optimisation (if it exists) </b> </p>
+		<input type="checkbox" onClick="Something=this.checked;">PWID Entry<br>
+		<input type="checkbox" onClick="Something=this.checked;">PWID Progression and Exit<br>
 		<p>Below are the early stages of the full simulation</p>
 		<div id="RunSimButton" class="SolidButton" onClick="RunSim()"> Run simulation </div>
 		<p>Below are the early stages of the full simulation</p>
@@ -237,8 +238,8 @@ Papa.parse("data/summarynotifications.csv", {download: true, complete: function(
 			Sex: <br>
 			<input type="checkbox" onClick="PWIDEntryPlotSettings.Sex[0]=this.checked;">Male<br>
 			<input type="checkbox" onClick="PWIDEntryPlotSettings.Sex[1]=this.checked;">Female<br>
-			<div class="SolidButton" onClick="PlotPWIDOptimisation(0);">Plot median</div><br>
-			<div class="SolidButton" onClick="PlotPWIDOptimisation(0);">Plot mean</div><br>
+			<div class="SolidButton" onClick="PlotPWIDEntryOptimisation(0);">Plot median</div><br>
+			<div class="SolidButton" onClick="PlotPWIDEntryOptimisation(0);">Plot mean</div><br>
 		</div>
 	</div>
 	
