@@ -158,7 +158,7 @@ GeneralPlot.prototype.Download= function (){//using prototyping for speed
 
 // Example code
 // PlotSettings=[];
-// PlotSettings.Name="PlotObjectName";// what the object will be called later
+// PlotSettings.Name="PlotObjectName";// what the object will be called later in this line var PlotObjectName=new GeneralPlot(PlotSettings);
 // PlotSettings.ID="plot2";
 // PlotSettings.PlotFunction=function(PlotPlaceholder, PlotData){
 	   // var OriginalData=PlotData.Plot[0]; // note in this case, since the OriginalData and OptimisedResults have the same format as PlotData.Plot (.X .Y .Upper .Lower) we can simply use this format

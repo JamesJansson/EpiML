@@ -48,6 +48,41 @@ function SplitByGender(PWIDData){
 	return PerYearEntry;
 }
 
+function PlotPWIDOptimisation(Reference){
+	PlotSettings=[];
+	PlotSettings.Name="PWIDEntryPlotObject";// what the object will be called later
+	PlotSettings.ID="PWIDEntryPlot";
+	PlotSettings.PlotFunction=function(PlotPlaceholder, PlotData){
+		return OptimisationPlot(PlotPlaceholder, PlotData.OriginalData, PlotData.OptimisedResults);
+	}
+	PlotSettings.PlotData=[];
+	PlotSettings.PlotData.Plot=[];
+
+	var OriginalData={};
+	OriginalData.X=[2, 4, 6];
+	OriginalData.Y=[1.3, 2.3, 2.9];
+	var OptimisedResults={};
+	OptimisedResults.X=[2, 4, 6];
+	OptimisedResults.Y=[1.5, 2.5, 3.5];
+	OptimisedResults.Lower=[1.1, 2.1, 2.7];
+	OptimisedResults.Upper=[1.9, 2.9, 3.9];
+
+	PlotSettings.PlotData.OriginalData=OriginalData;
+	PlotSettings.PlotData.OptimisedResults=OptimisedResults;
+
+	PlotSettings.XLabel="Year";
+	PlotSettings.YLabel="Number";
+
+	PlotSettings.Data=[];
+	PlotSettings.Data.Download=function (){console.log('This runs when the button is pushed')};
+
+	var PWIDEntryPlotObject=new GeneralPlot(PlotSettings);
+	PWIDEntryPlotObject.Draw();
+}
+
+
+
+
 
 
 
@@ -106,7 +141,7 @@ function EntryRateOptimisation(TargetForThisOptimisation){
 
 		// Determine the general population death 
 		for (var PCount=0; PCount<PWIDPopulation.length; PCount++){
-			P=PWIDPopulation[PCount];//separate out to make clearer
+			var P=PWIDPopulation[PCount];//separate out to make clearer
 			P.CalculateGeneralMortality(P.IDU.Use.Time[1]);// Perform mortality calculations from the date of first using injection drugs
 		}
 		// Determine drug related mortality - use Australian cause of death statistics
@@ -132,7 +167,7 @@ function EntryRateOptimisation(TargetForThisOptimisation){
 		// Count the distribution at the given date to determine the numbers in specific groups
 		var AgeArray=[];
 		for (var PCount=0; PCount<PWIDPopulation.length; PCount++){
-			P=PWIDPopulation[PCount];//separate out to make clearer
+			var P=PWIDPopulation[PCount];//separate out to make clearer
 			// Determine if the individual is currently alive and has previously  injected at that point
 			if (P.Alive(FunctionInput.YearBeingOptimised) && P.IDU.Use.Value(FunctionInput.YearBeingOptimised)>=1){
 				// Determine the age at the year being optimised // Add this age to the vector of ages
@@ -141,7 +176,7 @@ function EntryRateOptimisation(TargetForThisOptimisation){
 		}
 
 		
-		Results=HistogramData(AgeArray, [14, 20, 30, 40, 200]); 
+		var Results=HistogramData(AgeArray, [14, 20, 30, 40, 200]); 
 		
 
 		
@@ -156,6 +191,7 @@ function EntryRateOptimisation(TargetForThisOptimisation){
 		// In this error function the error is made up of two parts:
 		// 1) The error for individual ages
 		// 2) The error for the sum in that year
+		
 		var TotalError=Sum(Abs(Minus(Results, Target)))+Abs(Sum(Results)-Sum(Target));
 		
 		return TotalError;
@@ -219,10 +255,16 @@ function EntryRateOptimisation(TargetForThisOptimisation){
 	FunctionInput.EntryParams.explogk=SelectedParameters.explogk;
 	FunctionInput.EntryParams.expA=SelectedParameters.expA;
 	
+	// Save the Optimisation results so that it can be graphed later
+	var Results=[];
+	Results[0]=OptimisationObject.GetBestResults();
+	
+	
 	console.error("Creating global parameter here");
 	ASDOptimisationObject=OptimisationObject;
 	ASDFunctionInput=FunctionInput;
-	//throw "Stopping here: need to save to the optimisation results";
+	
+	
 	
 	// For each of the subsequent years
 	FunctionInput.OptimiseExponential=false;
@@ -238,6 +280,8 @@ function EntryRateOptimisation(TargetForThisOptimisation){
 		SelectedParameters=OptimisationObject.GetBestParameterSet();
 		
 		FunctionInput.EntryParams.Estimate[OptimisationCount]=SelectedParameters.Estimate;
+		Results[OptimisationCount+1]=OptimisationObject.GetBestResults();
+		
 		
 		// Here we put a pretty serious warning to inform the user if something is amiss with the optimisation
 		if (SelectedParameters.Estimate> 0.9*10000){
@@ -249,6 +293,7 @@ function EntryRateOptimisation(TargetForThisOptimisation){
 	var ReturnStructure={};
 	ReturnStructure.PerYearEntryRate=PerYearEntryRate;
 	ReturnStructure.Target=TargetForThisOptimisation;
+	ReturnStructure.Results=Results;
 	return ReturnStructure;// Return the object that contains the optimisation information
 
 }

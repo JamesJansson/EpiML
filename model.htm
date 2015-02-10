@@ -91,6 +91,7 @@ Papa.parse("data/summarynotifications.csv", {download: true, complete: function(
 <li><level1 id="HCVMenuItem" 		onclick="ShowMenu(HCVContent);"			>HCV</level1></li>
 <li><level1 id="DataMenuItem" 		onclick="ShowMenu(DataContent);"		>Data</level1></li>
 <li><level1 id="PlotsMenuItem" 		onclick="ShowMenu(PlotsContent);"		>Plots</level1></li>
+<li><level1 id="PlotsMenuItem" 		onclick="ShowMenu(PWIDOptimisationPlotsContent);"		>PWID Optimisation</level1></li>
 <li><level1 id="MapsMenuItem" 		onclick="ShowMenu(MapsContent);"		>Maps</level1></li>
 <li><level1 id="SensitivityMenuItem"onclick="ShowMenu(SensitivityContent);"	>Sensitivity Analysis</level1></li>
 <li><level1 id="SettingsMenuItem" 	onclick="ShowMenu(SettingsContent);"	>Settings</level1></li>
@@ -211,6 +212,25 @@ Papa.parse("data/summarynotifications.csv", {download: true, complete: function(
 		</div>
 		
 	</div>
+	
+	
+	
+	
+	
+	<div id="PWIDOptimisationPlotsContent" class="Content">
+		<h1>PWID entry optimisation</h1>
+		<div class="plot" id="PWIDEntryPlot" style="position: absolute;left: 200px;"></div>
+		<div class="SolidButton" onClick="PlotPWIDOptimisation(0);">Plot 14-20</div>
+		<div class="SolidButton" onClick="PlotPWIDOptimisation(1);">Plot 20-30</div>
+		<div class="SolidButton" onClick="PlotPWIDOptimisation(2);">Plot 30-40</div>
+		<div class="SolidButton" onClick="PlotPWIDOptimisation(3);">Plot 40+</div>
+	</div>
+	
+	
+	
+	
+	
+	
 	
 	<div id="MapsContent" class="Content">
 		<h1>Maps</h1>
