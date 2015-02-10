@@ -13,22 +13,30 @@ function OptimiseByGender(PWIDData){
 	MalePWIDEverData.Year=PWIDData.Year;
 	MalePWIDEverData.SexIndex=0;
 	MalePWIDEverData.Data=TransposeForCSV(PWIDData.Ever.Male); // copies in the matrix, which at time of writing is a 4 age band by 6-year matrix 
+	
 	// If the number is a bit large, normalise the total down to something reasonable to optimise over
-	// Find the max year group
-	var MaxInYear=0;
-	for (var i=0; i<MalePWIDEverData.Data.length; i++){
-		var SumInYear=Sum(MalePWIDEverData.Data[i]);
-		if (SumInYear>MaxInYear){MaxInYear=SumInYear;} 
-	}
-	Factor=10000/MaxInYear;
-	MalePWIDEverData.Data=Multiply(MalePWIDEverData.Data, Factor);
-	console.log(MalePWIDEverData.Data);
-	ReturnStructure=EntryRateOptimisation(MalePWIDEverData);
+		// Find the max year group
+		var MaxInYear=0;
+		for (var i=0; i<MalePWIDEverData.Data.length; i++){
+			var SumInYear=Sum(MalePWIDEverData.Data[i]);
+			if (SumInYear>MaxInYear){MaxInYear=SumInYear;} 
+		}
+		// Find and multiply it by the factor associated with it
+		var Factor=10000/MaxInYear;
+		MalePWIDEverData.Data=Multiply(MalePWIDEverData.Data, Factor);
+
+	// Perform the optimisation
+	var ReturnStructure=EntryRateOptimisation(MalePWIDEverData);
+	
 	// Store the results for male optimisation
 	PerYearEntry.Male={};
 	PerYearEntry.Male.Year=ReturnStructure.PerYearEntryRate.Year;
 	// fix up the normalisation we did earlier
+	MalePWIDEverData.Data=Divide(MalePWIDEverData.Data, Factor);
 	PerYearEntry.Male.Number=Divide(ReturnStructure.PerYearEntryRate.Number, Factor);
+	
+	// there needs to be another factorisation here for the target
+	
 	
 	PerYearEntry.Male.OriginalData={};
 	PerYearEntry.Male.OriginalData.Year=MalePWIDEverData.Year;
@@ -36,6 +44,21 @@ function OptimiseByGender(PWIDData){
 	// Storing the optimisation result for later
 	PerYearEntry.Male.OptimisedResult={};
 	PerYearEntry.Male.OptimisedResult=ReturnStructure;
+	
+	// The results will be structured as follows
+	// Male
+		// EntryRate
+			// Year
+			// Number
+		// OptimisationParameters
+			// epxk
+			// expA
+			// Estimate
+		// OptimisationProcess
+			// TargetData
+			// ResultsOfSimulation
+			
+			
 	
 	
 	
@@ -234,15 +257,13 @@ function EntryRateOptimisation(TargetForThisOptimisation){
 	ASDOptimisationObject=OptimisationObject;
 	ASDFunctionInput=FunctionInput;
 	
-	
-	
 	// For each of the subsequent years
 	FunctionInput.OptimiseExponential=false;
 	EntryRateOptimisationSettings.NumberOfSamplesPerRound=10;// note we'll randomly select one of these results
 	EntryRateOptimisationSettings.MaxIterations=100;// In this case, it will allow 10 000 dfferent parameter selections, which gives a granularity of 1% of the range. Should be sufficient
 	for (var OptimisationCount=0; OptimisationCount<FunctionInput.EntryParams.Year.length; OptimisationCount++){
 		FunctionInput.PositionForYearBeingOptimised=OptimisationCount;
-		EntryRateOptimisationSettings.Target=TargetForThisOptimisation.Data[FunctionInput.PositionForYearBeingOptimised];
+		EntryRateOptimisationSettings.Target=TargetForThisOptimisation.Data[FunctionInput.PositionForYearBeingOptimised+1];
 		FunctionInput.YearBeingOptimised=FunctionInput.EntryParams.Year[OptimisationCount];
 		OptimisationObject=new StochasticOptimisation(EntryRateOptimisationSettings);
 		OptimisationObject.AddParameter("Estimate", 0, 10000);
