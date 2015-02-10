@@ -195,7 +195,8 @@ StochasticOptimisation.prototype.GetBestParameterSet= function (ParameterNumber)
 	}
 	var ParameterSet={};
 	for (key in this.Parameter) {
-		ParameterSet[this.Parameter[key].Name]=this.Parameter[key].BestVec[ParameterNumber];
+		//ParameterSet[this.Parameter[key].Name]=this.Parameter[key].BestVec[ParameterNumber];
+		ParameterSet[key]=this.Parameter[key].BestVec[ParameterNumber];
 	}	
 	return ParameterSet;
 }
@@ -208,7 +209,7 @@ StochasticOptimisation.prototype.GetBestResults= function (ParameterNumber){
 	if (ParameterNumber>this.BestIndex.length){
 		throw ("GetBestResults(BestPosition) requires BestPosition to be smaller than the number of 'best' results selected in each round");
 	}
-	var Results=this.SimResults[ParameterNumber];
+	var Results=this.SimResults[this.BestIndex[ParameterNumber]];
 	return Results;
 }
 

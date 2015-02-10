@@ -54,16 +54,12 @@ function OptimiseByGender(PWIDData){
 	
 	// fix up the normalisation we did earlier
 	OptimisationResults.Male.OriginalData.Data=Divide(OptimisationResults.Male.OriginalData.Data, Factor);
+	OptimisationResults.Male.Results.Data=Divide(OptimisationResults.Male.Results.Data, Factor);
 	OptimisationResults.Male.EntryRate.Number=Divide(OptimisationResults.Male.EntryRate.Number, Factor);
 	
-	// there needs to be another factorisation here for the target
+	OptimisationResults.Male.EntryParams=EntryParams;
 	
-	
-	
-	// Storing the optimisation result for later
-	OptimisationResults.Male.OptimisedResult={};
-	OptimisationResults.Male.OptimisedResult=ReturnStructure;
-	
+
 	// The results will be structured as follows
 	// Male
 		// EntryRate
@@ -266,8 +262,11 @@ function EntryRateOptimisation(TargetForThisOptimisation, EntryParams){
 	FunctionInput.EntryParams.expA=SelectedParameters.expA;
 	
 	// Save the Optimisation results so that it can be graphed later
-	var Results=[];
-	Results[0]=OptimisationObject.GetBestResults();
+	var Results={};
+	Results.Year=[];
+	Results.Data=[];
+	Results.Year[0]=TargetForThisOptimisation.Year[0];
+	Results.Data[0]=OptimisationObject.GetBestResults();
 	
 	
 
@@ -283,11 +282,12 @@ function EntryRateOptimisation(TargetForThisOptimisation, EntryParams){
 		OptimisationObject=new StochasticOptimisation(EntryRateOptimisationSettings);
 		OptimisationObject.AddParameter("Estimate", 0, 10000);
 		OptimisationObject.Run(FunctionInput);
+		// Select and save best parameter fit
 		SelectedParameters=OptimisationObject.GetBestParameterSet();
-		
 		FunctionInput.EntryParams.Estimate[OptimisationCount]=SelectedParameters.Estimate;
-		Results[OptimisationCount+1]=OptimisationObject.GetBestResults();
-		
+		// Select and save best results
+		Results.Data[OptimisationCount+1]=OptimisationObject.GetBestResults();
+		Results.Year[0]=TargetForThisOptimisation.Year[0];
 		
 		// Here we put a pretty serious warning to inform the user if something is amiss with the optimisation
 		if (SelectedParameters.Estimate> 0.9*10000){
