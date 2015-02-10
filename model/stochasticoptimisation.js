@@ -72,7 +72,7 @@ function  StochasticOptimisation(Settings){
 	
 	
 	
-	this.Parameter=[];//an array of individual parameters, e.g. infection rate, cure rate
+	this.Parameter={};//an array of individual parameters, e.g. infection rate, cure rate
 	this.NumberOfParameters=0;
 	this.BestIndex=[];//Index of the best values from the CurrentVec array in each parameter
 	

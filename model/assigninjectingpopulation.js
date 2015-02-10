@@ -20,7 +20,7 @@ function SplitByGender(PWIDData){
 	Factor=10000/MaxInYear;
 	MalePWIDEverData.Data=Multiply(MalePWIDEverData.Data, Factor);
 	console.log(MalePWIDEverData.Data);
-	//PerYearEntryRate.Male=EntryRateOptimisation(MalePWIDEverData);
+	PerYearEntryRate.Male=EntryRateOptimisation(MalePWIDEverData);
 	
 	
 	
@@ -100,7 +100,6 @@ function EntryRateOptimisation(TargetForThisOptimisation){
 	
 		// Determine the general population death 
 		for (var PCount=0; PCount<PWIDPopulation.length; PCount++){
-			console.log(PCount);
 			P=PWIDPopulation[PCount];//separate out to make clearer
 			P.CalculateGeneralMortality(P.IDU.Use.Time[1]);// Perform mortality calculations from the date of first using injection drugs
 		}
@@ -134,15 +133,13 @@ function EntryRateOptimisation(TargetForThisOptimisation){
 				AgeArray.push(P.Age(FunctionInput.YearBeingOptimised));
 			}
 		}
-		console.log("age array");
-		console.log(AgeArray);
-		console.log(FunctionInput.YearBeingOptimised);
+
 		
 		Results=HistogramData(AgeArray, [14, 20, 30, 40, 200]); 
 		
 		console.log("Warning global creation below");
 		ASDResultsGlobal=Results;
-		throw "Stopping to look at results";
+		
 	
 		//console.log(ParametersToOptimise);
 		//console.log(ParametersToOptimise.Y);
@@ -158,7 +155,7 @@ function EntryRateOptimisation(TargetForThisOptimisation){
 		console.log(Results);
 		console.log(Target);
 		
-		var TotalError=Sum(Abs(Minus(Results, Target)));
+		var TotalError=Sum(Abs(Minus(Results, Target)))+Abs(Sum(Results)-Sum(Target));
 		
 		return TotalError;
 	};
@@ -172,7 +169,7 @@ function EntryRateOptimisation(TargetForThisOptimisation){
 		for (Key in Parameter){
 			KeyCount++;
 			ProgressString+=Key+": ";
-			MeanResult=Mean(Parameter[Key]);
+			MeanResult=Mean(Parameter[Key].BestVec);
 			ProgressString+=MeanResult+", ";
 		}
 		console.log(ProgressString);
@@ -198,7 +195,7 @@ function EntryRateOptimisation(TargetForThisOptimisation){
 	// Do the first range that increases up to 1998
 	FunctionInput.YearBeingOptimised=FunctionInput.EntryParams.EndExponential;// First year of data
 	FunctionInput.PositionForYearBeingOptimised=0;
-	EntryRateOptimisationSettings.NumberOfSamplesPerRound=10;// note we'll randomly select one of these results
+	EntryRateOptimisationSettings.NumberOfSamplesPerRound=100;// note we'll randomly select one of these results
 	EntryRateOptimisationSettings.MaxIterations=100;// In this case, it will allow 10 000 dfferent parameter selections, which gives a granularity of 1% of the range. Should be sufficient
 	EntryRateOptimisationSettings.Target=TargetForThisOptimisation.Data[FunctionInput.PositionForYearBeingOptimised];
 	
@@ -207,6 +204,7 @@ function EntryRateOptimisation(TargetForThisOptimisation){
 	OptimisationObject.AddParameter("NormalisedA", 0, 10000);
 	OptimisationObject.Run(FunctionInput);
 	
+	ASDOptimisationObject=OptimisationObject;
 	throw "Stopping here: need to save to the optimisation results";
 	
 	// For each of the subsequent years
