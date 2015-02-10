@@ -148,13 +148,13 @@ function EntryRateOptimisation(TargetForThisOptimisation){
 	};
 
 	EntryRateOptimisationSettings.ErrorFunction=function(Results, Target, FunctionInput){
-	
-			
-		//var CurrentHistogramsResults=HistogramData(Results, [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
 		console.log("The results and target are:");
 		console.log(Results);
 		console.log(Target);
 		
+		// In this error function the error is made up of two parts:
+		// 1) The error for individual ages
+		// 2) The error for the sum in that year
 		var TotalError=Sum(Abs(Minus(Results, Target)))+Abs(Sum(Results)-Sum(Target));
 		
 		return TotalError;
