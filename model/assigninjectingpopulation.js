@@ -295,6 +295,14 @@ function EntryRateOptimisation(TargetForThisOptimisation, EntryParams){
 		}
 	}
 	
+	
+	// An alterntive optimisation function
+	// A, expk, (finish 1999) and a result for 2010
+	
+	
+	
+	
+	
 	FunctionInput.EntryParams.MaxYear=2100;
 	var PerYearEntryRate=DeterminePWIDEntryRate(FunctionInput.EntryParams); // Rerun the algorithm to produce data that can be uses the simulation
 	var ReturnStructure={};

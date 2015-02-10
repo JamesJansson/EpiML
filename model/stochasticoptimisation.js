@@ -141,10 +141,6 @@ StochasticOptimisation.prototype.Run= function (FunctionInput){
 			this.ProgressFunction(RoundCount, this.Parameter, this.SimResults, this.ErrorValues, FunctionInput);
 		}
 		
-		// Test for various factors which would determine that the optimisation has completed. 
-		//if (sum(this.SD)<){
-		
-		//}
 		
 		if (RoundCount>=this.MaxIterations){
 			OptimisationComplete=true;
