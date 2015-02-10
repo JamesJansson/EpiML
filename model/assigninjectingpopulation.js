@@ -1,10 +1,13 @@
 function SplitByGender(PWIDData){
+// The following code needs to have run before the above function will work. 
+
 /* 	ExtractDataFromFiles();
 	MaleMortality=new MortalityCalculator(Param.MaleMortality.Rates1, Param.MaleMortality.Year1, Param.MaleMortality.Rates2, Param.MaleMortality.Year2);
 	FemaleMortality=new MortalityCalculator(Param.FemaleMortality.Rates1, Param.FemaleMortality.Year1, Param.FemaleMortality.Rates2, Param.FemaleMortality.Year2);
 	SplitByGender(Data.PWID); */
 	
 	var PerYearEntryRate={}
+	
 	// Do male EntryParams
 	var MalePWIDEverData={};
 	MalePWIDEverData.Year=PWIDData.Year;
@@ -20,7 +23,11 @@ function SplitByGender(PWIDData){
 	Factor=10000/MaxInYear;
 	MalePWIDEverData.Data=Multiply(MalePWIDEverData.Data, Factor);
 	console.log(MalePWIDEverData.Data);
-	PerYearEntryRate.Male=EntryRateOptimisation(MalePWIDEverData);
+	ReturnStructure=EntryRateOptimisation(MalePWIDEverData);
+	// Store the results for male optimisation
+	PerYearEntryRate.Male={};
+	PerYearEntryRate.Male.Data=Multiply(ReturnStructure.PerYearEntryRate, Factor);
+	
 	
 	
 	
@@ -29,6 +36,9 @@ function SplitByGender(PWIDData){
 	// Target 
 	
 	// This function returns the entry rate by year
+	
+	
+	return PerYearEntryRate;
 }
 
 
@@ -204,8 +214,19 @@ function EntryRateOptimisation(TargetForThisOptimisation){
 	OptimisationObject.AddParameter("NormalisedA", 0, 10000);
 	OptimisationObject.Run(FunctionInput);
 	
+	// Choose the best optimisation results
+	var SelectedParameters=OptimisationObject.GetBestParameterSet();
+	// Adjust the expA back 
+	SelectedParameters.expA=-SelectedParameters.NormalisedA*Log(SelectedParameters.explogk);
+	
+	// Place the best parameters into the unchanging parameterisation 
+	FunctionInput.EntryParams.explogk=SelectedParameters.explogk;
+	FunctionInput.EntryParams.expA=SelectedParameters.expA;
+	
+	console.error("Creating global parameter here");
 	ASDOptimisationObject=OptimisationObject;
-	throw "Stopping here: need to save to the optimisation results";
+	ASDFunctionInput=FunctionInput;
+	//throw "Stopping here: need to save to the optimisation results";
 	
 	// For each of the subsequent years
 	FunctionInput.OptimiseExponential=false;
@@ -218,10 +239,16 @@ function EntryRateOptimisation(TargetForThisOptimisation){
 		OptimisationObject=new StochasticOptimisation(EntryRateOptimisationSettings);
 		OptimisationObject.AddParameter("Estimate", 0, 10000);
 		OptimisationObject.Run(FunctionInput);
+		SelectedParameters=OptimisationObject.GetBestParameterSet();
+		
+		FunctionInput.EntryParams.Estimate[OptimisationCount]=SelectedParameters.Estimate;
 	}
 	
-	
-	return OptimisationObject;// what is this? Should return the full results
+	var PerYearEntryRate=DeterminePWIDEntryRate(FunctionInput.EntryParams, 2100); 
+	var ReturnStructure={};
+	ReturnStructure.PerYearEntryRate=PerYearEntryRate;
+	ReturnStructure.Target=TargetForThisOptimisation;
+	return ReturnStructure;// Return the object that contains the optimisation information
 
 }
 
@@ -277,7 +304,7 @@ function DeterminePWIDEntryRate(EntryParams, MaxYear){//MaxYear is not inclusive
 		// Determine if in the exponential period
 		if (MidCurrentYear<EntryParams.EndExponential){
 			// Determine the exponential value
-			NumberInYear=EntryParams.expA*Math.exp(Math.log(EntryParams.explogk)*(EntryParams.EndExponential-MidCurrentYear));
+			NumberInYear=EntryParams.expA*Exp(Log(EntryParams.explogk)*(EntryParams.EndExponential-MidCurrentYear));
 		}
 		else{
 			var UseAverage=false;
