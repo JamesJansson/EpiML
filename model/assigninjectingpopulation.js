@@ -1,10 +1,10 @@
-function SplitByGender(PWIDData){
+function OptimiseByGender(PWIDData){
 // The following code needs to have run before the above function will work. 
 
 /* 	ExtractDataFromFiles();
 	MaleMortality=new MortalityCalculator(Param.MaleMortality.Rates1, Param.MaleMortality.Year1, Param.MaleMortality.Rates2, Param.MaleMortality.Year2);
 	FemaleMortality=new MortalityCalculator(Param.FemaleMortality.Rates1, Param.FemaleMortality.Year1, Param.FemaleMortality.Rates2, Param.FemaleMortality.Year2);
-	SplitByGender(Data.PWID); */
+	PWIDOptimisationResults=OptimiseByGender(Data.PWID); */
 	
 	var PerYearEntry={}
 	
@@ -48,37 +48,7 @@ function SplitByGender(PWIDData){
 	return PerYearEntry;
 }
 
-function PlotPWIDOptimisation(Reference){
-	PlotSettings=[];
-	PlotSettings.Name="PWIDEntryPlotObject";// what the object will be called later
-	PlotSettings.ID="PWIDEntryPlot";
-	PlotSettings.PlotFunction=function(PlotPlaceholder, PlotData){
-		return OptimisationPlot(PlotPlaceholder, PlotData.OriginalData, PlotData.OptimisedResults);
-	}
-	PlotSettings.PlotData=[];
-	PlotSettings.PlotData.Plot=[];
 
-	var OriginalData={};
-	OriginalData.X=[2, 4, 6];
-	OriginalData.Y=[1.3, 2.3, 2.9];
-	var OptimisedResults={};
-	OptimisedResults.X=[2, 4, 6];
-	OptimisedResults.Y=[1.5, 2.5, 3.5];
-	OptimisedResults.Lower=[1.1, 2.1, 2.7];
-	OptimisedResults.Upper=[1.9, 2.9, 3.9];
-
-	PlotSettings.PlotData.OriginalData=OriginalData;
-	PlotSettings.PlotData.OptimisedResults=OptimisedResults;
-
-	PlotSettings.XLabel="Year";
-	PlotSettings.YLabel="Number";
-
-	PlotSettings.Data=[];
-	PlotSettings.Data.Download=function (){console.log('This runs when the button is pushed')};
-
-	var PWIDEntryPlotObject=new GeneralPlot(PlotSettings);
-	PWIDEntryPlotObject.Draw();
-}
 
 
 

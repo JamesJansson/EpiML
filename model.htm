@@ -53,6 +53,13 @@
 <script type="text/javascript" src="model/assigninjectingpopulation.js"></script>
 
 
+
+
+<!-- Loading javascript specific to pages and their settings -->
+<script type="text/javascript" src="pages/pwidoptimisationplots.js"></script>
+
+
+
 <!-- Loading HCVTest stuff javascript -->
 <script type="text/javascript" src="model/hcvtest.js"></script>
 <script type="text/javascript" src="interface/tablemaker.js"></script>
@@ -105,7 +112,8 @@ Papa.parse("data/summarynotifications.csv", {download: true, complete: function(
 	<div id="HomeContent" class="Content">
 		<h1>Home</h1>
 		<p> This model is a work in progress. The results have not yet been confirmed. Please contact jjansson@kirby.unsw.edu.au for enquiries. </p>
-		<p> Opening files in this app does not upload the data to the server.  </p>
+		
+		<p> <b>Use existing optimisation </b> </p>
 		
 		<p>Below are the early stages of the full simulation</p>
 		<div id="RunSimButton" class="SolidButton" onClick="RunSim()"> Run simulation </div>
@@ -219,11 +227,19 @@ Papa.parse("data/summarynotifications.csv", {download: true, complete: function(
 	
 	<div id="PWIDOptimisationPlotsContent" class="Content">
 		<h1>PWID entry optimisation</h1>
-		<div class="plot" id="PWIDEntryPlot" style="position: absolute;left: 200px;"></div>
-		<div class="SolidButton" onClick="PlotPWIDOptimisation(0);">Plot 14-20</div>
-		<div class="SolidButton" onClick="PlotPWIDOptimisation(1);">Plot 20-30</div>
-		<div class="SolidButton" onClick="PlotPWIDOptimisation(2);">Plot 30-40</div>
-		<div class="SolidButton" onClick="PlotPWIDOptimisation(3);">Plot 40+</div>
+		<div>
+			<div class="plot" id="PWIDEntryPlot" style="position: absolute;left: 200px;"></div>
+			Age Range: <br>
+			<input type="checkbox" onClick="PWIDEntryPlotSettings.AgeRange[0]=this.checked;">14-20<br>
+			<input type="checkbox" onClick="PWIDEntryPlotSettings.AgeRange[1]=this.checked;">20-30<br>
+			<input type="checkbox" onClick="PWIDEntryPlotSettings.AgeRange[2]=this.checked;">30-40<br>
+			<input type="checkbox" onClick="PWIDEntryPlotSettings.AgeRange[3]=this.checked;">40+<br>
+			Sex: <br>
+			<input type="checkbox" onClick="PWIDEntryPlotSettings.Sex[0]=this.checked;">Male<br>
+			<input type="checkbox" onClick="PWIDEntryPlotSettings.Sex[1]=this.checked;">Female<br>
+			<div class="SolidButton" onClick="PlotPWIDOptimisation(0);">Plot median</div><br>
+			<div class="SolidButton" onClick="PlotPWIDOptimisation(0);">Plot mean</div><br>
+		</div>
 	</div>
 	
 	
