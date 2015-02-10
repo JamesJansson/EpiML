@@ -4,14 +4,25 @@ function OptimiseByGender(PWIDData){
 /* 	ExtractDataFromFiles();
 	MaleMortality=new MortalityCalculator(Param.MaleMortality.Rates1, Param.MaleMortality.Year1, Param.MaleMortality.Rates2, Param.MaleMortality.Year2);
 	FemaleMortality=new MortalityCalculator(Param.FemaleMortality.Rates1, Param.FemaleMortality.Year1, Param.FemaleMortality.Rates2, Param.FemaleMortality.Year2);
-	PWIDEntryOptimisationResults=OptimiseByGender(Data.PWID); */
+	PWIDEntryOptimisationResults=OptimiseByGender(Data.PWID); 
+	A=new DownloadableCSV(PWIDEntryOptimisationResults.Male.EntryRate);
+	A.Download();
+	*/
 	
-	var PerYearEntry={}
+	var OptimisationResults={}
 	
 	// Do male EntryParams
+	var EntryParams={};
+	EntryParams.SexIndex=0;
+	EntryParams.LogMedianEntryAge=Log(21);
+	EntryParams.LogSDEntryAge=0.16;
+	console.log("Note the median entry age is hard set");
+	
+	//EntryParams.TotalPWID=0;//Probably unnecessary
+	
+	
 	var MalePWIDEverData={};
 	MalePWIDEverData.Year=PWIDData.Year;
-	MalePWIDEverData.SexIndex=0;
 	MalePWIDEverData.Data=TransposeForCSV(PWIDData.Ever.Male); // copies in the matrix, which at time of writing is a 4 age band by 6-year matrix 
 	
 	// If the number is a bit large, normalise the total down to something reasonable to optimise over
@@ -26,24 +37,32 @@ function OptimiseByGender(PWIDData){
 		MalePWIDEverData.Data=Multiply(MalePWIDEverData.Data, Factor);
 
 	// Perform the optimisation
-	var ReturnStructure=EntryRateOptimisation(MalePWIDEverData);
+	var ReturnStructure=EntryRateOptimisation(MalePWIDEverData, EntryParams);
 	
 	// Store the results for male optimisation
-	PerYearEntry.Male={};
-	PerYearEntry.Male.Year=ReturnStructure.PerYearEntryRate.Year;
+	OptimisationResults.Male={};
+
+	OptimisationResults.Male.OriginalData={};
+	OptimisationResults.Male.OriginalData.Year=MalePWIDEverData.Year;
+	OptimisationResults.Male.OriginalData.Data=MalePWIDEverData.Data;
+	
+	OptimisationResults.Male.Results=ReturnStructure.Results;
+	
+	OptimisationResults.Male.EntryRate=ReturnStructure.EntryRate;
+	
+	OptimisationResults.Male.Parameters=ReturnStructure.Parameters;
+	
 	// fix up the normalisation we did earlier
-	MalePWIDEverData.Data=Divide(MalePWIDEverData.Data, Factor);
-	PerYearEntry.Male.Number=Divide(ReturnStructure.PerYearEntryRate.Number, Factor);
+	OptimisationResults.Male.OriginalData.Data=Divide(OptimisationResults.Male.OriginalData.Data, Factor);
+	OptimisationResults.Male.EntryRate.Number=Divide(OptimisationResults.Male.EntryRate.Number, Factor);
 	
 	// there needs to be another factorisation here for the target
 	
 	
-	PerYearEntry.Male.OriginalData={};
-	PerYearEntry.Male.OriginalData.Year=MalePWIDEverData.Year;
-	PerYearEntry.Male.OriginalData.Data=MalePWIDEverData.Data;
+	
 	// Storing the optimisation result for later
-	PerYearEntry.Male.OptimisedResult={};
-	PerYearEntry.Male.OptimisedResult=ReturnStructure;
+	OptimisationResults.Male.OptimisedResult={};
+	OptimisationResults.Male.OptimisedResult=ReturnStructure;
 	
 	// The results will be structured as follows
 	// Male
@@ -54,9 +73,8 @@ function OptimiseByGender(PWIDData){
 			// epxk
 			// expA
 			// Estimate
-		// OptimisationProcess
-			// TargetData
-			// ResultsOfSimulation
+		// OriginalData
+		// Results
 			
 			
 	
@@ -68,7 +86,7 @@ function OptimiseByGender(PWIDData){
 	// This function returns the entry rate by year
 	
 	
-	return PerYearEntry;
+	return OptimisationResults;
 }
 
 
@@ -79,7 +97,7 @@ function OptimiseByGender(PWIDData){
 
 
 
-function EntryRateOptimisation(TargetForThisOptimisation){
+function EntryRateOptimisation(TargetForThisOptimisation, EntryParams){
 	// First step is to assume increasing rates leading up to the end of the 1999 
 	// due to the increased availability of heroin, followed by a slump due to 
 	// reduced supply/increased prices 
@@ -90,8 +108,7 @@ function EntryRateOptimisation(TargetForThisOptimisation){
 	
 	// Start off with all parameters set to zero
 	var FunctionInput={};
-	FunctionInput.EntryParams={};
-	FunctionInput.EntryParams.SexIndex=TargetForThisOptimisation.SexIndex;
+	FunctionInput.EntryParams=EntryParams;
 	
 	var EntryRateOptimisationSettings={};
 	
@@ -129,8 +146,8 @@ function EntryRateOptimisation(TargetForThisOptimisation){
 		// FunctionInput.EntryParams.AIHWHouseholdSurveryUnderstimateUpperRange=1.4;
 		
 
-		
-		var PWIDPopulation=DistributePWIDPopulation(FunctionInput.EntryParams, FunctionInput.YearBeingOptimised);//Returns PWIDPopulation as defined to the MaxYear
+		FunctionInput.EntryParams.MaxYear=FunctionInput.YearBeingOptimised;
+		var PWIDPopulation=DistributePWIDPopulation(FunctionInput.EntryParams);//Returns PWIDPopulation as defined to the MaxYear
 
 		// Determine the general population death 
 		for (var PCount=0; PCount<PWIDPopulation.length; PCount++){
@@ -253,9 +270,7 @@ function EntryRateOptimisation(TargetForThisOptimisation){
 	Results[0]=OptimisationObject.GetBestResults();
 	
 	
-	console.error("Creating global parameter here");
-	ASDOptimisationObject=OptimisationObject;
-	ASDFunctionInput=FunctionInput;
+
 	
 	// For each of the subsequent years
 	FunctionInput.OptimiseExponential=false;
@@ -280,9 +295,10 @@ function EntryRateOptimisation(TargetForThisOptimisation){
 		}
 	}
 	
-	var PerYearEntryRate=DeterminePWIDEntryRate(FunctionInput.EntryParams, 2100); 
+	FunctionInput.EntryParams.MaxYear=2100;
+	var PerYearEntryRate=DeterminePWIDEntryRate(FunctionInput.EntryParams); // Rerun the algorithm to produce data that can be uses the simulation
 	var ReturnStructure={};
-	ReturnStructure.PerYearEntryRate=PerYearEntryRate;
+	ReturnStructure.EntryRate=PerYearEntryRate;
 	ReturnStructure.Target=TargetForThisOptimisation;
 	ReturnStructure.Results=Results;
 	return ReturnStructure;// Return the object that contains the optimisation information
@@ -290,20 +306,24 @@ function EntryRateOptimisation(TargetForThisOptimisation){
 }
 
 
-function DistributePWIDPopulation(EntryParams, MaxYear){
-	var PWIDEntryByYear=DeterminePWIDEntryRate(EntryParams, MaxYear);
+function DistributePWIDPopulation(EntryParams){
+	var PWIDEntryByYear=DeterminePWIDEntryRate(EntryParams);
 	if (Sum(PWIDEntryByYear.Number)>100000){
 		console.log("Warning: over 100000 people will be created. This may occupy a lot of memory");
 		throw "Stopping before it breaks";
 	}
+	return CreatePWIDPopulation(PWIDEntryByYear, EntryParams);
+}
+
 	
+function CreatePWIDPopulation(PWIDEntryByYear, EntryParams){	
 	
 	var PWIDPopulation=[];
 	
 	var TotalPWID=0;
-	var LogMedianEntryAge=Log(21);
-	var LogSDEntryAge=0.16;
-	console.log("Note the median entry age is hard set");
+	var LogMedianEntryAge=EntryParams.LogMedianEntryAge;
+	var LogSDEntryAge=EntryParams.LogSDEntryAge;
+	
 	
 	for (var YearIndex=0; YearIndex<PWIDEntryByYear.Year.length; YearIndex++){
 		var CurrentYear=PWIDEntryByYear.Year[YearIndex];
@@ -323,12 +343,12 @@ function DistributePWIDPopulation(EntryParams, MaxYear){
 }
 
 
-function DeterminePWIDEntryRate(EntryParams, MaxYear){//MaxYear is not inclusive of this year
+function DeterminePWIDEntryRate(EntryParams){//MaxYear is not inclusive of this year
 	var InitiatingIVDrugUse={};
 	InitiatingIVDrugUse.Year=[];
 	InitiatingIVDrugUse.Number=[];
 	
-	var MaxYearValue=Round(MaxYear);
+	var MaxYearValue=Round(EntryParams.MaxYear);
 	var MidCurrentYear, NumberInYear;
 	var IntStartYear, IntStartValue, IntEndYear, IntEndValue, TimeBetweenRange, DifferenceBetweenYears, AverageNumber;
 	var YearCount=-1;
@@ -410,23 +430,30 @@ function TESTDeterminePWIDEntryRate(){
 	EntryParams.Year=[2002, 2005, 2012];
 	EntryParams.Estimate=[1500, 1400, 2300];// note the estimate here is instantaneous
 	EntryParams.NumberOfAveragingYears=4;
-	var MaxYear=2020;
-
-	var DistributePWIDPopulationResults=DeterminePWIDEntryRate(EntryParams, MaxYear);
+	EntryParams.MaxYear=2020;
+	EntryParams.SexIndex=0;
+	EntryParams.LogMedianEntryAge=Log(21);
+	EntryParams.LogSDEntryAge=0.16;
+	
+	
+	var DistributePWIDPopulationResults=DeterminePWIDEntryRate(EntryParams);
 	
 	var DistributePWIDPopulationText="";//Used to copy the output
 	for (var i=0; i<=60; i++){
 		DistributePWIDPopulationText+=DistributePWIDPopulationResults.Number[i]+"\n";
 	}
-	//console.log(DistributePWIDPopulationText);
+	console.log(DistributePWIDPopulationText);
 
+	
+	
 	// here make the relevant person class individuals,  
-	var PersonArrayStorage=DistributePWIDPopulation(EntryParams, MaxYear);// To create PersonObects
+	var PersonArrayStorage=CreatePWIDPopulation(DistributePWIDPopulationResults, EntryParams);// To create PersonObects
+	console.log(PersonArrayStorage.length);
 	DistributePWIDPopulationText="";//Used to copy the output
 	for (var i=0; i<=1000; i++){
 		DistributePWIDPopulationText+=(PersonArrayStorage[i].IDU.Use.Time[1]-PersonArrayStorage[i].IDU.Use.Time[0])+"\n";
 	}
-	//console.log(DistributePWIDPopulationText);
+	console.log(DistributePWIDPopulationText);
 }
 
 

@@ -109,9 +109,7 @@ function DownloadableCSV(InputData, FileName){
 	for (var A in InputData){
 		this.UnparseInput.fields.push(A);	
 		this.UnparseInput.data.push(InputData[A]);	
-		console.log(InputData[A]);
 		if (typeof(InputData[A])=="object"){
-			console.log(A);
 			if (InputData[A]==null){
 				DataLengths.push(1);
 			}
@@ -133,6 +131,8 @@ function DownloadableCSV(InputData, FileName){
 	Index=Index.reverse();
 	this.UnparseInput.fields=Select(this.UnparseInput.fields, Index);
 	this.UnparseInput.data=Select(this.UnparseInput.data, Index);
+	this.UnparseInput.data=TransposeForCSV(this.UnparseInput.data);
+
 	
 	// // Specifying fields and data manually
 // var csv = Papa.unparse({
@@ -158,3 +158,5 @@ DownloadableCSV.prototype.Download=function(){
 		saveAs(blob, this.FileName);
 	}
 };
+
+
