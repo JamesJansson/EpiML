@@ -228,7 +228,8 @@ function EntryRateOptimisationExponential(TargetForThisOptimisation, EntryParams
 			TotalError+=Abs(Sum(Results[YearCount])-Sum(Target[YearCount]));
 		}
 
-		return TotalError+AgeError;
+		//return TotalError+AgeError;
+		return AgeError;
 	};
 	
 	EntryRateOptimisationSettings.ProgressFunction=function(RoundCount, Parameter, SimResults, ErrorValues, FunctionInput){
@@ -256,7 +257,7 @@ function EntryRateOptimisationExponential(TargetForThisOptimisation, EntryParams
 	
 	EntryRateOptimisationSettings.NumberOfSamplesPerRound=100;// note we'll randomly select one of these results
 	EntryRateOptimisationSettings.MaxIterations=100;// In this case, it will allow 10 000 different parameter selections, which gives a granularity of 1% of the range. Should be sufficient
-	EntryRateOptimisationSettings.MaxTime=100;//stop after 1000 seconds
+	EntryRateOptimisationSettings.MaxTime=20;//stop after 1000 seconds
 	console.error("Warning: the optimisation currently stops after just 10 seconds for debugging");
 	
 	
