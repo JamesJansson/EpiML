@@ -33,7 +33,8 @@ function OptimiseByGender(PWIDData){
 			if (SumInYear>MaxInYear){MaxInYear=SumInYear;} 
 		}
 		// Find and multiply it by the factor associated with it
-		var Factor=10000/MaxInYear;
+		console.log("MaxInYear: " +MaxInYear);
+		var Factor=1000/MaxInYear;
 		MalePWIDEverData.Data=Multiply(MalePWIDEverData.Data, Factor);
 
 	// Perform the optimisation
@@ -226,6 +227,7 @@ function EntryRateOptimisationExponential(TargetForThisOptimisation, EntryParams
 		for (var YearCount=0; YearCount<Target.Length; YearCount++){// for each year under inspection
 			TotalError+=Abs(Sum(Results[YearCount])-Sum(Target[YearCount]));
 		}
+
 		return TotalError+AgeError;
 	};
 	
@@ -254,7 +256,7 @@ function EntryRateOptimisationExponential(TargetForThisOptimisation, EntryParams
 	
 	EntryRateOptimisationSettings.NumberOfSamplesPerRound=100;// note we'll randomly select one of these results
 	EntryRateOptimisationSettings.MaxIterations=100;// In this case, it will allow 10 000 different parameter selections, which gives a granularity of 1% of the range. Should be sufficient
-	EntryRateOptimisationSettings.MaxTime=10;//stop after 1000 seconds
+	EntryRateOptimisationSettings.MaxTime=100;//stop after 1000 seconds
 	console.error("Warning: the optimisation currently stops after just 10 seconds for debugging");
 	
 	
@@ -283,7 +285,11 @@ function EntryRateOptimisationExponential(TargetForThisOptimisation, EntryParams
 	Results.Year=TargetForThisOptimisation.Year;
 	Results.Data=OptimisationObject.GetBestResults();
 	
-	
+			
+		console.log("Results");
+		console.log(Results.Data);
+		console.log("Target");
+		console.log(EntryRateOptimisationSettings.Target);
 	
 	
 	
