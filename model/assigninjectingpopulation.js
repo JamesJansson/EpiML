@@ -444,6 +444,7 @@ function DistributePWIDPopulationExponential(EntryParams){
 		console.log("Warning: over 100000 people will be created. This may occupy a lot of memory");
 		throw "Stopping before it breaks";
 	}
+
 	return CreatePWIDPopulation(PWIDEntryByYear, EntryParams);
 }
 
@@ -463,15 +464,17 @@ function EntryRateOptimisationExponential(TargetForThisOptimisation, EntryParams
 	
 	EntryRateOptimisationSettings.Function=function(FunctionInput, ParametersToOptimise){
 		// Determine what is the entry rate per year from the ParametersToOptimise
-		FunctionInput.EntryParams.Logk=ParametersToOptimise.Logk1;
-		FunctionInput.EntryParams.Logk=ParametersToOptimise.Logk2;
+		FunctionInput.EntryParams.Logk1=ParametersToOptimise.Logk1;
+		FunctionInput.EntryParams.Logk2=ParametersToOptimise.Logk2;
 		// Note that normalised A attempts to put a constant number of people into the years prior to the end of exponential growth period
 		// This is to improve the optimisation rate of the algorithm
 		FunctionInput.EntryParams.A=-ParametersToOptimise.NormalisedA*Log(ParametersToOptimise.Logk1);
-		FunctionInput.EntryParams.B=-ParametersToOptimise.B;
+		FunctionInput.EntryParams.B=ParametersToOptimise.B;
 
 		var PWIDPopulation=DistributePWIDPopulationExponential(FunctionInput.EntryParams);//Returns PWIDPopulation as defined to the MaxYear
 
+
+		
 		// Determine the general population death 
 		for (var PCount=0; PCount<PWIDPopulation.length; PCount++){
 			var P=PWIDPopulation[PCount];//separate out to make clearer
@@ -493,26 +496,33 @@ function EntryRateOptimisationExponential(TargetForThisOptimisation, EntryParams
 		
 		
 		// Count the distribution at the given date to determine the numbers in specific groups
-		var Results={};
-		Results.Count=[];
+		var Results=[];
+
 		
 		
-		for (var YearIndex=0;YearIndex<EntryParams.Year;YearIndex++){//for each year in which there is data
+		for (var YearIndex=0;YearIndex<EntryParams.Year.length;YearIndex++){//for each year in which there is data
 			var AgeArray=[];
 			for (var PCount=0; PCount<PWIDPopulation.length; PCount++){
 				var P=PWIDPopulation[PCount];//separate out to make clearer
 				// Determine if the individual is currently alive and has previously  injected at that point
-				if (P.Alive(FunctionInput.YearBeingOptimised) && P.IDU.Use.Value(FunctionInput.YearBeingOptimised)>=1){
+				if (P.Alive(EntryParams.Year[YearIndex]) && P.IDU.Use.Value(EntryParams.Year[YearIndex])>=1){
 					// Determine the age at the year being optimised // Add this age to the vector of ages
-					AgeArray.push(P.Age(FunctionInput.YearBeingOptimised));
+					AgeArray.push(P.Age(EntryParams.Year[YearIndex]));
 				}
 			}
+			
+			
+			
+			
 			var ThisYearsResults=HistogramData(AgeArray, [14, 20, 30, 40, 200]); 
+
+			
+			
 			// store the results in the array
-			Results.Count.push(ThisYearsResults.Count);
+			Results.push(ThisYearsResults.Count);
 		}
 		
-		return Results.Count;
+		return Results;
 	};
 
 	EntryRateOptimisationSettings.ErrorFunction=function(Results, Target, FunctionInput){
@@ -564,6 +574,8 @@ function EntryRateOptimisationExponential(TargetForThisOptimisation, EntryParams
 	OptimisationObject.AddParameter("NormalisedA", 0, MaxEntryRateIn2000);
 	OptimisationObject.AddParameter("B", 0, 1);
 	
+	console.log(OptimisationObject);
+	
 	OptimisationObject.Run(FunctionInput);
 	
 	// Choose the best optimisation results
@@ -596,7 +608,7 @@ function EntryRateOptimisationExponential(TargetForThisOptimisation, EntryParams
 	
 		
 	FunctionInput.EntryParams.MaxYear=2100;
-	var PerYearEntryRate=DeterminePWIDEntryRate(FunctionInput.EntryParams); // Rerun the algorithm to produce data that can be uses the simulation
+	var PerYearEntryRate=DeterminePWIDEntryRateExponential(FunctionInput.EntryParams); // Rerun the algorithm to produce data that can be uses the simulation
 	var ReturnStructure={};
 	ReturnStructure.EntryRate=PerYearEntryRate;
 	ReturnStructure.Target=TargetForThisOptimisation;
