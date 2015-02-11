@@ -513,8 +513,8 @@ function EntryRateOptimisationExponential(TargetForThisOptimisation, EntryParams
 		var AgeError=Sum(Abs(Minus(Results, Target)));
 		// 2) The error for the sum in each year
 		var TotalError=0;
-		for (){// for each year under inspecter
-			TotalError+=Abs(Sum(Results)-Sum(Target));
+		for (var YearCount=0; YearCount<Target.Length; YearCount++){// for each year under inspection
+			TotalError+=Abs(Sum(Results[YearCount])-Sum(Target[YearCount]));
 		}
 		return TotalError+AgeError;
 	};
@@ -548,10 +548,12 @@ function EntryRateOptimisationExponential(TargetForThisOptimisation, EntryParams
 	
 	EntryRateOptimisationSettings.Target=TargetForThisOptimisation.Data;
 	
+	var MaxEntryRateIn2000=20000;
+	
 	OptimisationObject=new StochasticOptimisation(EntryRateOptimisationSettings);
 	OptimisationObject.AddParameter("Logk1", 0, 1);
 	OptimisationObject.AddParameter("Logk2", 0, 1);
-	OptimisationObject.AddParameter("NormalisedA", 0, 20000);
+	OptimisationObject.AddParameter("NormalisedA", 0, MaxEntryRateIn2000);
 	OptimisationObject.AddParameter("B", 0, 1);
 	
 	OptimisationObject.Run(FunctionInput);
@@ -572,7 +574,7 @@ function EntryRateOptimisationExponential(TargetForThisOptimisation, EntryParams
 	
 	
 	// Here we put a pretty serious warning to inform the user if something is amiss with the optimisation
-	if (SelectedParameters.NormalisedA> 0.9*10000){
+	if (SelectedParameters.NormalisedA> 0.9*MaxEntryRateIn2000){
 		console.error("The optimised result is very close to the upper bound of the optmisation ranges. This may represent that a minimum was not properly found.");
 	}
 	
@@ -580,41 +582,14 @@ function EntryRateOptimisationExponential(TargetForThisOptimisation, EntryParams
 	// Place the best parameters into the unchanging parameterisation 
 	FunctionInput.EntryParams.Logk1=SelectedParameters.Logk1;
 	FunctionInput.EntryParams.Logk2=SelectedParameters.Logk2;
-	FunctionInput.EntryParams.explogk=SelectedParameters.explogk;
-	FunctionInput.EntryParams.expA=SelectedParameters.expA;
+	FunctionInput.EntryParams.A=SelectedParameters.A;
+	FunctionInput.EntryParams.B=SelectedParameters.B;
 	
 	
 	
 	
 
 	
-	// For each of the subsequent years
-	FunctionInput.OptimiseExponential=false;
-	EntryRateOptimisationSettings.NumberOfSamplesPerRound=10;// note we'll randomly select one of these results
-	EntryRateOptimisationSettings.MaxIterations=100;// In this case, it will allow 10 000 dfferent parameter selections, which gives a granularity of 1% of the range. Should be sufficient
-	for (var OptimisationCount=0; OptimisationCount<FunctionInput.EntryParams.Year.length; OptimisationCount++){
-		FunctionInput.PositionForYearBeingOptimised=OptimisationCount;
-		EntryRateOptimisationSettings.Target=TargetForThisOptimisation.Data[FunctionInput.PositionForYearBeingOptimised+1];
-		FunctionInput.YearBeingOptimised=FunctionInput.EntryParams.Year[OptimisationCount];
-		OptimisationObject=new StochasticOptimisation(EntryRateOptimisationSettings);
-		OptimisationObject.AddParameter("Estimate", 0, 10000);
-		OptimisationObject.Run(FunctionInput);
-		// Select and save best parameter fit
-		SelectedParameters=OptimisationObject.GetBestParameterSet();
-		FunctionInput.EntryParams.Estimate[OptimisationCount]=SelectedParameters.Estimate;
-		// Select and save best results
-		Results.Data[OptimisationCount+1]=OptimisationObject.GetBestResults();
-		Results.Year[0]=TargetForThisOptimisation.Year[0];
-		
-		// Here we put a pretty serious warning to inform the user if something is amiss with the optimisation
-		if (SelectedParameters.Estimate> 0.9*10000){
-			console.error("The optimised result is very close to the upper bound of the optmisation ranges. This may represent that a minimum was not properly found.");
-		}
-	}
-	
-	
-	// An alterntive optimisation function
-	// A, expk, (finish 1999) and a result for 2010
 	
 	
 	
@@ -656,6 +631,8 @@ function DeterminePWIDEntryRateExponential(EntryParams){//MaxYear is not inclusi
 		}
 		else{
 			NumberInYear=EntryParams.A*EntryParams.B+EntryParams.A*(1-EntryParams.B)*Exp(Log(EntryParams.Logk2)*(MidCurrentYear-EntryParams.EndExponential));
+			console.log(NumberInYear);
+			console.log(EntryParams);
 		}
 		
 		InitiatingIVDrugUse.Number[YearCount]=NumberInYear;
@@ -668,6 +645,44 @@ function DeterminePWIDEntryRateExponential(EntryParams){//MaxYear is not inclusi
 		
 		
 
+
+
+
+function TESTDeterminePWIDEntryRateExponential(){
+	// Example usage
+	var EntryParams={};
+	EntryParams.EndExponential=2000;
+	EntryParams.FirstYear=1959;
+	EntryParams.A=5000;
+	EntryParams.Logk1=0.8;
+	EntryParams.Logk2=0.9;
+	EntryParams.B=0.6;
+	
+	EntryParams.MaxYear=2100;
+	EntryParams.SexIndex=0;
+	EntryParams.LogMedianEntryAge=Log(21);
+	EntryParams.LogSDEntryAge=0.16;
+	
+	
+	var DistributePWIDPopulationResults=DeterminePWIDEntryRateExponential(EntryParams);
+	
+	var DistributePWIDPopulationText="";//Used to copy the output
+	for (var i=0; i<DistributePWIDPopulationResults.Number.length; i++){
+		DistributePWIDPopulationText+=DistributePWIDPopulationResults.Number[i]+"\n";
+	}
+	console.log(DistributePWIDPopulationText);
+
+	
+	
+/* 	// here make the relevant person class individuals,  
+	var PersonArrayStorage=CreatePWIDPopulation(DistributePWIDPopulationResults, EntryParams);// To create PersonObects
+	console.log(PersonArrayStorage.length);
+	DistributePWIDPopulationText="";//Used to copy the output
+	for (var i=0; i<=1000; i++){
+		DistributePWIDPopulationText+=(PersonArrayStorage[i].IDU.Use.Time[1]-PersonArrayStorage[i].IDU.Use.Time[0])+"\n";
+	}
+	console.log(DistributePWIDPopulationText); */
+}
 
 
 
