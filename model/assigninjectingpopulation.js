@@ -37,7 +37,10 @@ function OptimiseByGender(PWIDData){
 		MalePWIDEverData.Data=Multiply(MalePWIDEverData.Data, Factor);
 
 	// Perform the optimisation
-	var ReturnStructure=EntryRateOptimisation(MalePWIDEverData, EntryParams);
+	// var ReturnStructure=EntryRateOptimisation(MalePWIDEverData, EntryParams);
+	var ReturnStructure=EntryRateOptimisationExponential(MalePWIDEverData, EntryParams);
+	
+	
 	
 	// Store the results for male optimisation
 	OptimisationResults.Male={};
@@ -435,23 +438,27 @@ function DeterminePWIDEntryRate(EntryParams){//MaxYear is not inclusive of this 
 
 
 
+function DistributePWIDPopulationExponential(EntryParams){
+	var PWIDEntryByYear=DeterminePWIDEntryRateExponential(EntryParams);
+	if (Sum(PWIDEntryByYear.Number)>100000){
+		console.log("Warning: over 100000 people will be created. This may occupy a lot of memory");
+		throw "Stopping before it breaks";
+	}
+	return CreatePWIDPopulation(PWIDEntryByYear, EntryParams);
+}
+
+
+
+
 function EntryRateOptimisationExponential(TargetForThisOptimisation, EntryParams){
 	// First step is to assume increasing rates leading up to the end of the 1999 
 	// due to the increased availability of heroin, followed by a slump due to 
 	// reduced supply/increased prices 
 
-	// this is a multi-stage optimisation that requires the optimisation of the first data points followed by subsequent ones.
-	// First step is to model the increase in the number of people starting drug use in the lead up to 1998
-	// From that point on, we adjust the entry rate every 3 years (with interpolation)
-	
-	// Start off with all parameters set to zero
 	var FunctionInput={};
 	FunctionInput.EntryParams=EntryParams;
 	
 	var EntryRateOptimisationSettings={};
-	
-	// FunctionInput.EntryParams=FunctionInput.PWID;
-	
 	
 	
 	EntryRateOptimisationSettings.Function=function(FunctionInput, ParametersToOptimise){
@@ -489,7 +496,8 @@ function EntryRateOptimisationExponential(TargetForThisOptimisation, EntryParams
 		var Results={};
 		Results.Count=[];
 		
-		for (var YearIndex=0;YearIndex<YearArrayToBePassed;YearIndex++){//for each year in which there is data
+		
+		for (var YearIndex=0;YearIndex<EntryParams.Year;YearIndex++){//for each year in which there is data
 			var AgeArray=[];
 			for (var PCount=0; PCount<PWIDPopulation.length; PCount++){
 				var P=PWIDPopulation[PCount];//separate out to make clearer
@@ -586,15 +594,7 @@ function EntryRateOptimisationExponential(TargetForThisOptimisation, EntryParams
 	FunctionInput.EntryParams.B=SelectedParameters.B;
 	
 	
-	
-	
-
-	
-	
-	
-	
-	
-	
+		
 	FunctionInput.EntryParams.MaxYear=2100;
 	var PerYearEntryRate=DeterminePWIDEntryRate(FunctionInput.EntryParams); // Rerun the algorithm to produce data that can be uses the simulation
 	var ReturnStructure={};
@@ -626,18 +626,14 @@ function DeterminePWIDEntryRateExponential(EntryParams){//MaxYear is not inclusi
 		
 		// Determine if in the initial exponential period
 		if (MidCurrentYear<EntryParams.EndExponential){
-			// Determine the exponential value
 			NumberInYear=EntryParams.A*Exp(Log(EntryParams.Logk1)*(EntryParams.EndExponential-MidCurrentYear));
 		}
 		else{
 			NumberInYear=EntryParams.A*EntryParams.B+EntryParams.A*(1-EntryParams.B)*Exp(Log(EntryParams.Logk2)*(MidCurrentYear-EntryParams.EndExponential));
-			console.log(NumberInYear);
-			console.log(EntryParams);
 		}
 		
 		InitiatingIVDrugUse.Number[YearCount]=NumberInYear;
 	}
-	
 	
 	return InitiatingIVDrugUse;
 }	
