@@ -167,7 +167,8 @@ self.onmessage = function (WorkerMessage) {
 		PlotSomething.Data=[[0, 3], [4, 8], [8, 5], [9, 13]];
 		PlotSomething.Code="ScatterPlot('#PlotHolder', Data,  'AAA', 'BBB');";
 		self.postMessage({Execute: PlotSomething});
-		
+	}
+	if (true){
 		
 		A=TestStochasticOptimisation();
 	}

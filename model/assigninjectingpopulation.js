@@ -428,6 +428,249 @@ function DeterminePWIDEntryRate(EntryParams){//MaxYear is not inclusive of this 
 	return InitiatingIVDrugUse;
 }
 
+
+
+
+
+
+
+
+function EntryRateOptimisationExponential(TargetForThisOptimisation, EntryParams){
+	// First step is to assume increasing rates leading up to the end of the 1999 
+	// due to the increased availability of heroin, followed by a slump due to 
+	// reduced supply/increased prices 
+
+	// this is a multi-stage optimisation that requires the optimisation of the first data points followed by subsequent ones.
+	// First step is to model the increase in the number of people starting drug use in the lead up to 1998
+	// From that point on, we adjust the entry rate every 3 years (with interpolation)
+	
+	// Start off with all parameters set to zero
+	var FunctionInput={};
+	FunctionInput.EntryParams=EntryParams;
+	
+	var EntryRateOptimisationSettings={};
+	
+	// FunctionInput.EntryParams=FunctionInput.PWID;
+	
+	
+	
+	EntryRateOptimisationSettings.Function=function(FunctionInput, ParametersToOptimise){
+		// Determine what is the entry rate per year from the ParametersToOptimise
+		FunctionInput.EntryParams.Logk=ParametersToOptimise.Logk1;
+		FunctionInput.EntryParams.Logk=ParametersToOptimise.Logk2;
+		// Note that normalised A attempts to put a constant number of people into the years prior to the end of exponential growth period
+		// This is to improve the optimisation rate of the algorithm
+		FunctionInput.EntryParams.A=-ParametersToOptimise.NormalisedA*Log(ParametersToOptimise.Logk1);
+		FunctionInput.EntryParams.B=-ParametersToOptimise.B;
+
+		var PWIDPopulation=DistributePWIDPopulationExponential(FunctionInput.EntryParams);//Returns PWIDPopulation as defined to the MaxYear
+
+		// Determine the general population death 
+		for (var PCount=0; PCount<PWIDPopulation.length; PCount++){
+			var P=PWIDPopulation[PCount];//separate out to make clearer
+			P.CalculateGeneralMortality(P.IDU.Use.Time[1]);// Perform mortality calculations from the date of first using injection drugs
+		}
+
+		// Determine drug related mortality - use Australian cause of death statistics
+		// page 71 of the 2001 social trends will be good enough for this
+		// http://www.ausstats.abs.gov.au/ausstats/subscriber.nsf/0/6AB30EFAC93E3F5CCA256A630006EA93/$File/41020_2001.pdf
+		// http://www.abs.gov.au/AUSSTATS/abs@.nsf/2f762f95845417aeca25706c00834efa/a96b3196035d56c0ca2570ec000c46e5!OpenDocument 
+		// 1737 in 1999, 72% were male in 1999
+		// 734 in 1979, 49% were male in 1979
+		// Interpolate for periods in between
+		// 
+		// This gives drug-induced death rates by age groups in years 2000 to 2012
+		// "4125.0 Gender Indicators, Australia, August 2014"
+		// http://www.abs.gov.au/AUSSTATS/abs@.nsf/DetailsPage/4125.0August%202014?OpenDocument 
+		// Multiplying this out by the age groups should give the right number of deaths
+		
+		
+		// Count the distribution at the given date to determine the numbers in specific groups
+		var Results={};
+		Results.Count=[];
+		
+		for (var YearIndex=0;YearIndex<YearArrayToBePassed;YearIndex++){//for each year in which there is data
+			var AgeArray=[];
+			for (var PCount=0; PCount<PWIDPopulation.length; PCount++){
+				var P=PWIDPopulation[PCount];//separate out to make clearer
+				// Determine if the individual is currently alive and has previously  injected at that point
+				if (P.Alive(FunctionInput.YearBeingOptimised) && P.IDU.Use.Value(FunctionInput.YearBeingOptimised)>=1){
+					// Determine the age at the year being optimised // Add this age to the vector of ages
+					AgeArray.push(P.Age(FunctionInput.YearBeingOptimised));
+				}
+			}
+			var ThisYearsResults=HistogramData(AgeArray, [14, 20, 30, 40, 200]); 
+			// store the results in the array
+			Results.Count.push(ThisYearsResults.Count);
+		}
+		
+		return Results.Count;
+	};
+
+	EntryRateOptimisationSettings.ErrorFunction=function(Results, Target, FunctionInput){
+		// In this error function the error is made up of two parts:
+		// 1) The error for individual ages
+		var AgeError=Sum(Abs(Minus(Results, Target)));
+		// 2) The error for the sum in each year
+		var TotalError=0;
+		for (){// for each year under inspecter
+			TotalError+=Abs(Sum(Results)-Sum(Target));
+		}
+		return TotalError+AgeError;
+	};
+	
+	EntryRateOptimisationSettings.ProgressFunction=function(RoundCount, Parameter, SimResults, ErrorValues, FunctionInput){
+		// Display the results to the console for every 100 simulations
+		var ProgressString=RoundCount+": ";
+		
+		var KeyCount=0, Key, MeanResult;
+		console.log(Parameter);
+		for (Key in Parameter){
+			KeyCount++;
+			ProgressString+=Key+": ";
+			MeanResult=Mean(Parameter[Key].BestVec);
+			ProgressString+=MeanResult+", ";
+		}
+		console.log(ProgressString);
+	};
+	
+	
+	
+	FunctionInput.EntryParams.Year=TargetForThisOptimisation.Year.slice();
+	FunctionInput.EntryParams.EndExponential=2000;
+	FunctionInput.EntryParams.FirstYear=FunctionInput.EntryParams.Year[0]-40;// 40 years prior to the first available data
+	FunctionInput.EntryParams.MaxYear=2010;//last year of data
+	console.log("Last year of data set manually");	
+	
+	EntryRateOptimisationSettings.NumberOfSamplesPerRound=100;// note we'll randomly select one of these results
+	EntryRateOptimisationSettings.MaxIterations=100;// In this case, it will allow 10 000 dfferent parameter selections, which gives a granularity of 1% of the range. Should be sufficient
+	EntryRateOptimisationSettings.MaxTime=1000;//stop after 1000 seconds
+	
+	EntryRateOptimisationSettings.Target=TargetForThisOptimisation.Data;
+	
+	OptimisationObject=new StochasticOptimisation(EntryRateOptimisationSettings);
+	OptimisationObject.AddParameter("Logk1", 0, 1);
+	OptimisationObject.AddParameter("Logk2", 0, 1);
+	OptimisationObject.AddParameter("NormalisedA", 0, 20000);
+	OptimisationObject.AddParameter("B", 0, 1);
+	
+	OptimisationObject.Run(FunctionInput);
+	
+	// Choose the best optimisation results
+	var SelectedParameters=OptimisationObject.GetBestParameterSet();
+	// Adjust the A back 
+	SelectedParameters.A=-SelectedParameters.NormalisedA*Log(SelectedParameters.Logk1);
+	// Save the Optimisation results so that it can be graphed later
+	var Results={};
+	Results.Year=[];
+	Results.Data=[];
+	Results.Year=TargetForThisOptimisation.Year;
+	Results.Data=OptimisationObject.GetBestResults();
+	
+	
+	
+	
+	
+	// Here we put a pretty serious warning to inform the user if something is amiss with the optimisation
+	if (SelectedParameters.NormalisedA> 0.9*10000){
+		console.error("The optimised result is very close to the upper bound of the optmisation ranges. This may represent that a minimum was not properly found.");
+	}
+	
+	
+	// Place the best parameters into the unchanging parameterisation 
+	FunctionInput.EntryParams.Logk1=SelectedParameters.Logk1;
+	FunctionInput.EntryParams.Logk2=SelectedParameters.Logk2;
+	FunctionInput.EntryParams.explogk=SelectedParameters.explogk;
+	FunctionInput.EntryParams.expA=SelectedParameters.expA;
+	
+	
+	
+	
+
+	
+	// For each of the subsequent years
+	FunctionInput.OptimiseExponential=false;
+	EntryRateOptimisationSettings.NumberOfSamplesPerRound=10;// note we'll randomly select one of these results
+	EntryRateOptimisationSettings.MaxIterations=100;// In this case, it will allow 10 000 dfferent parameter selections, which gives a granularity of 1% of the range. Should be sufficient
+	for (var OptimisationCount=0; OptimisationCount<FunctionInput.EntryParams.Year.length; OptimisationCount++){
+		FunctionInput.PositionForYearBeingOptimised=OptimisationCount;
+		EntryRateOptimisationSettings.Target=TargetForThisOptimisation.Data[FunctionInput.PositionForYearBeingOptimised+1];
+		FunctionInput.YearBeingOptimised=FunctionInput.EntryParams.Year[OptimisationCount];
+		OptimisationObject=new StochasticOptimisation(EntryRateOptimisationSettings);
+		OptimisationObject.AddParameter("Estimate", 0, 10000);
+		OptimisationObject.Run(FunctionInput);
+		// Select and save best parameter fit
+		SelectedParameters=OptimisationObject.GetBestParameterSet();
+		FunctionInput.EntryParams.Estimate[OptimisationCount]=SelectedParameters.Estimate;
+		// Select and save best results
+		Results.Data[OptimisationCount+1]=OptimisationObject.GetBestResults();
+		Results.Year[0]=TargetForThisOptimisation.Year[0];
+		
+		// Here we put a pretty serious warning to inform the user if something is amiss with the optimisation
+		if (SelectedParameters.Estimate> 0.9*10000){
+			console.error("The optimised result is very close to the upper bound of the optmisation ranges. This may represent that a minimum was not properly found.");
+		}
+	}
+	
+	
+	// An alterntive optimisation function
+	// A, expk, (finish 1999) and a result for 2010
+	
+	
+	
+	
+	
+	FunctionInput.EntryParams.MaxYear=2100;
+	var PerYearEntryRate=DeterminePWIDEntryRate(FunctionInput.EntryParams); // Rerun the algorithm to produce data that can be uses the simulation
+	var ReturnStructure={};
+	ReturnStructure.EntryRate=PerYearEntryRate;
+	ReturnStructure.Target=TargetForThisOptimisation;
+	ReturnStructure.Results=Results;
+	return ReturnStructure;// Return the object that contains the optimisation information
+
+}
+
+
+
+
+
+function DeterminePWIDEntryRateExponential(EntryParams){//MaxYear is not inclusive of this year
+	var InitiatingIVDrugUse={};
+	InitiatingIVDrugUse.Year=[];
+	InitiatingIVDrugUse.Number=[];
+	
+	var MaxYearValue=Round(EntryParams.MaxYear);
+	var MidCurrentYear, NumberInYear;
+	var IntStartYear, IntStartValue, IntEndYear, IntEndValue, TimeBetweenRange, DifferenceBetweenYears, AverageNumber;
+	var YearCount=-1;
+	for (var CurrentYear=EntryParams.FirstYear; CurrentYear<MaxYearValue; CurrentYear++){
+		YearCount++;
+		MidCurrentYear=CurrentYear+0.5;// Add half a year (to get the rough average over the year)
+		
+		InitiatingIVDrugUse.Year[YearCount]=CurrentYear;//Add the year label
+		
+		// Determine if in the initial exponential period
+		if (MidCurrentYear<EntryParams.EndExponential){
+			// Determine the exponential value
+			NumberInYear=EntryParams.A*Exp(Log(EntryParams.Logk1)*(EntryParams.EndExponential-MidCurrentYear));
+		}
+		else{
+			NumberInYear=EntryParams.A*EntryParams.B+EntryParams.A*(1-EntryParams.B)*Exp(Log(EntryParams.Logk2)*(MidCurrentYear-EntryParams.EndExponential));
+		}
+		
+		InitiatingIVDrugUse.Number[YearCount]=NumberInYear;
+	}
+	
+	
+	return InitiatingIVDrugUse;
+}	
+		
+		
+		
+
+
+
+
 function TESTDeterminePWIDEntryRate(){
 	// Example usage
 	var EntryParams={};
