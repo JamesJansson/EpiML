@@ -135,14 +135,16 @@ function CreatePWIDPopulation(PWIDEntryByYear, EntryParams){
 
 function DistributePWIDPopulationExponential(EntryParams){
 	var PWIDEntryByYear=DeterminePWIDEntryRateExponential(EntryParams);
+	var ReturnPopulation=[];
 	if (Sum(PWIDEntryByYear.Number)>100000){
 		console.log(EntryParams);
 		console.log(PWIDEntryByYear);
-		console.log("Warning: over 100000 people will be created. This may occupy a lot of memory");
-		throw "Stopping before it breaks";
+		console.error("Warning: over 100000 people will be created (see above). This may occupy a lot of memory. Returning an empty matrix to compensate for the inability intercept excessive memory usage to model the population.");
 	}
-
-	return CreatePWIDPopulation(PWIDEntryByYear, EntryParams);
+	else{
+		ReturnPopulation=CreatePWIDPopulation(PWIDEntryByYear, EntryParams);
+	}
+	return ReturnPopulation;
 }
 
 
@@ -223,17 +225,32 @@ function EntryRateOptimisationExponential(TargetForThisOptimisation, EntryParams
 	};
 
 	EntryRateOptimisationSettings.ErrorFunction=function(Results, Target, FunctionInput){
-		// In this error function the error is made up of two parts:
-		// 1) The error for individual ages
-		var AgeError=Sum(Abs(Minus(Results, Target)));
-		// 2) The error for the sum in each year
-		var TotalError=0;
-		for (var YearCount=0; YearCount<Target.length; YearCount++){// for each year under inspection
-			TotalError+=Abs(Sum(Results[YearCount])-Sum(Target[YearCount]));
+		if (false){
+			// In this error function the error is made up of two parts:
+			// 1) The error for individual ages
+			var AgeError=Sum(Abs(Minus(Results, Target)));
+			// 2) The error for the sum in each year
+			var TotalError=0;
+			for (var YearCount=0; YearCount<Target.length; YearCount++){// for each year under inspection
+				TotalError+=Abs(Sum(Results[YearCount])-Sum(Target[YearCount]));
+			}
+			
+			//return AgeError+TotalError;
+			return AgeError+4*TotalError;// 1/1.98 times as much error in the sum of four normally distributed values. In this case we are assuming that the total number is twice as important to get right as any individual value
 		}
-		
-		//return AgeError+TotalError;
-		return AgeError+4*TotalError;// 1.98 times as much error for the total because there are 4 sub categories
+		if (true){
+			// In this error function the error is made up of two parts:
+			// 1) The error for individual ages
+			var AgeError=Sum(Divide(Abs(Minus(Results, Target)), Target));
+			// 2) The error for the sum in each year
+			var TotalError=0;
+			for (var YearCount=0; YearCount<Target.length; YearCount++){// for each year under inspection
+				TotalError+=(Abs(Sum(Results[YearCount])-Sum(Target[YearCount])))/Sum(Target[YearCount]);
+			}
+			
+			//return AgeError+TotalError;
+			return AgeError+4*TotalError;// 1/1.98 times as much error in the sum of four normally distributed values. In this case we are assuming that the total number is as important to get right as any individual value
+		}
 	};
 	
 	EntryRateOptimisationSettings.ProgressFunction=function(RoundCount, Parameter, SimResults, ErrorValues, FunctionInput){
@@ -254,7 +271,7 @@ function EntryRateOptimisationExponential(TargetForThisOptimisation, EntryParams
 	
 	
 	FunctionInput.EntryParams.Year=TargetForThisOptimisation.Year.slice();
-	FunctionInput.EntryParams.EndExponential=2000;
+	FunctionInput.EntryParams.EndExponential=1995;
 	FunctionInput.EntryParams.FirstYear=FunctionInput.EntryParams.Year[0]-40;// 40 years prior to the first available data
 	FunctionInput.EntryParams.MaxYear=FunctionInput.EntryParams.Year[FunctionInput.EntryParams.Year.length-1];//last year of data
 	console.log("Last year of data set manually");	
