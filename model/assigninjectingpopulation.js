@@ -5,7 +5,11 @@ function OptimiseByGender(PWIDData){
 	MaleMortality=new MortalityCalculator(Param.MaleMortality.Rates1, Param.MaleMortality.Year1, Param.MaleMortality.Rates2, Param.MaleMortality.Year2);
 	FemaleMortality=new MortalityCalculator(Param.FemaleMortality.Rates1, Param.FemaleMortality.Year1, Param.FemaleMortality.Rates2, Param.FemaleMortality.Year2);
 	PWIDEntryOptimisationResults=OptimiseByGender(Data.PWID); 
-	A=new DownloadableCSV(PWIDEntryOptimisationResults.Male.EntryRate);
+	// A=new DownloadableCSV(PWIDEntryOptimisationResults.Male.EntryRate);
+	// A=new DownloadableCSV(PWIDEntryOptimisationResults.Male.OriginalData.Data);
+	// A.Download();
+	var children = PWIDEntryOptimisationResults.Male.Results.Data.concat(PWIDEntryOptimisationResults.Male.OriginalData.Data);
+	A=new DownloadableCSV(children);
 	A.Download();
 	*/
 	
@@ -224,12 +228,12 @@ function EntryRateOptimisationExponential(TargetForThisOptimisation, EntryParams
 		var AgeError=Sum(Abs(Minus(Results, Target)));
 		// 2) The error for the sum in each year
 		var TotalError=0;
-		for (var YearCount=0; YearCount<Target.Length; YearCount++){// for each year under inspection
+		for (var YearCount=0; YearCount<Target.length; YearCount++){// for each year under inspection
 			TotalError+=Abs(Sum(Results[YearCount])-Sum(Target[YearCount]));
 		}
-
-		//return TotalError+AgeError;
-		return AgeError;
+		
+		//return AgeError+TotalError;
+		return AgeError+4*TotalError;// 1.98 times as much error for the total because there are 4 sub categories
 	};
 	
 	EntryRateOptimisationSettings.ProgressFunction=function(RoundCount, Parameter, SimResults, ErrorValues, FunctionInput){
@@ -252,23 +256,23 @@ function EntryRateOptimisationExponential(TargetForThisOptimisation, EntryParams
 	FunctionInput.EntryParams.Year=TargetForThisOptimisation.Year.slice();
 	FunctionInput.EntryParams.EndExponential=2000;
 	FunctionInput.EntryParams.FirstYear=FunctionInput.EntryParams.Year[0]-40;// 40 years prior to the first available data
-	FunctionInput.EntryParams.MaxYear=2010;//last year of data
+	FunctionInput.EntryParams.MaxYear=FunctionInput.EntryParams.Year[FunctionInput.EntryParams.Year.length-1];//last year of data
 	console.log("Last year of data set manually");	
 	
 	EntryRateOptimisationSettings.NumberOfSamplesPerRound=100;// note we'll randomly select one of these results
 	EntryRateOptimisationSettings.MaxIterations=100;// In this case, it will allow 10 000 different parameter selections, which gives a granularity of 1% of the range. Should be sufficient
-	EntryRateOptimisationSettings.MaxTime=20;//stop after 1000 seconds
+	EntryRateOptimisationSettings.MaxTime=100;//stop after 100 seconds
 	console.error("Warning: the optimisation currently stops after just 10 seconds for debugging");
 	
 	
 	EntryRateOptimisationSettings.Target=TargetForThisOptimisation.Data;
 	
-	var MaxEntryRateIn2000=2000;
+	var MaxEntryRateAtPeak=2000;
 	
 	OptimisationObject=new StochasticOptimisation(EntryRateOptimisationSettings);
 	OptimisationObject.AddParameter("Logk1", 0, 1);
 	OptimisationObject.AddParameter("Logk2", 0, 1);
-	OptimisationObject.AddParameter("NormalisedA", 0, MaxEntryRateIn2000);
+	OptimisationObject.AddParameter("NormalisedA", 0, MaxEntryRateAtPeak);
 	OptimisationObject.AddParameter("B", 0, 1);
 	
 	console.log(OptimisationObject);
@@ -295,7 +299,7 @@ function EntryRateOptimisationExponential(TargetForThisOptimisation, EntryParams
 	
 	
 	// Here we put a pretty serious warning to inform the user if something is amiss with the optimisation
-	if (SelectedParameters.NormalisedA> 0.9*MaxEntryRateIn2000){
+	if (SelectedParameters.NormalisedA> 0.9*MaxEntryRateAtPeak){
 		console.error("The optimised result is very close to the upper bound of the optmisation ranges. This may represent that a minimum was not properly found.");
 	}
 	
