@@ -67,6 +67,7 @@ function OptimiseByGender(PWIDData){
 	
 	OptimisationResults.Male.EntryParams=EntryParams;
 	
+	console.log("The factor used in this simulation was: "+Factor);
 
 	// The results will be structured as follows
 	// Male
@@ -276,7 +277,7 @@ function EntryRateOptimisationExponential(TargetForThisOptimisation, EntryParams
 	FunctionInput.EntryParams.MaxYear=FunctionInput.EntryParams.Year[FunctionInput.EntryParams.Year.length-1];//last year of data
 	console.log("Last year of data set manually");	
 	
-	EntryRateOptimisationSettings.NumberOfSamplesPerRound=100;// note we'll randomly select one of these results
+	EntryRateOptimisationSettings.NumberOfSamplesPerRound=10;// note we'll randomly select one of these results
 	EntryRateOptimisationSettings.MaxIterations=100;// In this case, it will allow 10 000 different parameter selections, which gives a granularity of 1% of the range. Should be sufficient
 	EntryRateOptimisationSettings.MaxTime=100;//stop after 100 seconds
 	console.error("Warning: the optimisation currently stops after just 10 seconds for debugging");
@@ -284,7 +285,7 @@ function EntryRateOptimisationExponential(TargetForThisOptimisation, EntryParams
 	
 	EntryRateOptimisationSettings.Target=TargetForThisOptimisation.Data;
 	
-	var MaxEntryRateAtPeak=2000;
+	var MaxEntryRateAtPeak=1000;// The maximum number who hae previously injected is capped at 1000 above. This limit reduces the parameter space and hence time needed to run this optimisation
 	
 	OptimisationObject=new StochasticOptimisation(EntryRateOptimisationSettings);
 	OptimisationObject.AddParameter("Logk1", 0, 1);
@@ -331,6 +332,10 @@ function EntryRateOptimisationExponential(TargetForThisOptimisation, EntryParams
 		
 	FunctionInput.EntryParams.MaxYear=2100;
 	var PerYearEntryRate=DeterminePWIDEntryRateExponential(FunctionInput.EntryParams); // Rerun the algorithm to produce data that can be uses the simulation
+	
+	console.log("This is the unadjusted PerYearEntryRate. The highest rate was set to 2000 per year. This likely quite a bit too high.");
+	console.log(PerYearEntryRate);
+	
 	var ReturnStructure={};
 	ReturnStructure.EntryRate=PerYearEntryRate;
 	ReturnStructure.Target=TargetForThisOptimisation;
