@@ -1,0 +1,5 @@
+Things that I want to achieve 
+Implement the injecting across the multiple simulations
+Get the count statistic to work across multiple simulations
+ 
+Optimisation of becoming regular and exiting IDU population
