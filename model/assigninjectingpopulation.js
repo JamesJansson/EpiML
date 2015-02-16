@@ -1,71 +1,86 @@
-function OptimiseByGender(PWIDData){
+function OptimiseInjectionEntry(PWIDData){
 // The following code needs to have run before the above function will work. 
 
 /* 	ExtractDataFromFiles();
 	MaleMortality=new MortalityCalculator(Param.MaleMortality.Rates1, Param.MaleMortality.Year1, Param.MaleMortality.Rates2, Param.MaleMortality.Year2);
 	FemaleMortality=new MortalityCalculator(Param.FemaleMortality.Rates1, Param.FemaleMortality.Year1, Param.FemaleMortality.Rates2, Param.FemaleMortality.Year2);
-	PWIDEntryOptimisationResults=OptimiseByGender(Data.PWID); 
-	// A=new DownloadableCSV(PWIDEntryOptimisationResults.Male.EntryRate);
-	// A=new DownloadableCSV(PWIDEntryOptimisationResults.Male.OriginalData.Data);
+	PWIDEntryOptimisationResults=OptimiseInjectionEntry(Data.PWID); 
+	
+	
+	
+	// A=new DownloadableCSV(PWIDEntryOptimisationResults.EntryRate);
+	// A=new DownloadableCSV(PWIDEntryOptimisationResults.OriginalData.Data);
 	// A.Download();
-	var children = PWIDEntryOptimisationResults.Male.Results.Data.concat(PWIDEntryOptimisationResults.Male.OriginalData.Data);
+	var children = PWIDEntryOptimisationResults.Results.Data.concat(PWIDEntryOptimisationResults.OriginalData.Data);
 	A=new DownloadableCSV(children);
 	A.Download();
 	*/
-	
 	var OptimisationResults={}
 	
-	// Do male EntryParams
+	// Male EntryParams
 	var EntryParams={};
-	EntryParams.SexIndex=0;
 	EntryParams.LogMedianEntryAge=Log(21);
 	EntryParams.LogSDEntryAge=0.16;
 	console.log("Note the median entry age is hard set");
 	
-	//EntryParams.TotalPWID=0;//Probably unnecessary
+	// Do male entry
+	EntryParams.SexIndex=0;
+	OptimisationResults[EntryParams.SexIndex]=OptimiseInjectionEntryByGender(PWIDData, EntryParams);
 	
+	// Female EntryParams
+	var EntryParams={};
+	EntryParams.LogMedianEntryAge=Log(21);
+	EntryParams.LogSDEntryAge=0.16;
+	console.log("Note the median entry age is hard set");
 	
-	var MalePWIDEverData={};
-	MalePWIDEverData.Year=PWIDData.Year;
-	MalePWIDEverData.Data=TransposeForCSV(PWIDData.Ever.Male); // copies in the matrix, which at time of writing is a 4 age band by 6-year matrix 
+	// Do female entry
+	EntryParams.SexIndex=1;
+	OptimisationResults[EntryParams.SexIndex]=OptimiseInjectionEntryByGender(PWIDData, EntryParams);
+
+}
+
+
+function OptimiseInjectionEntryByGender(PWIDData, EntryParams){
+	
+	var OptimisationResults={}
+	var PWIDEverData={};
+	PWIDEverData.Year=PWIDData.Year;
+	PWIDEverData.Data=TransposeForCSV(PWIDData.Ever.Male); // copies in the matrix, which at time of writing is a 4 age band by 6-year matrix 
 	
 	// If the number is a bit large, normalise the total down to something reasonable to optimise over
 		// Find the max year group
 		var MaxInYear=0;
-		for (var i=0; i<MalePWIDEverData.Data.length; i++){
-			var SumInYear=Sum(MalePWIDEverData.Data[i]);
+		for (var i=0; i<PWIDEverData.Data.length; i++){
+			var SumInYear=Sum(PWIDEverData.Data[i]);
 			if (SumInYear>MaxInYear){MaxInYear=SumInYear;} 
 		}
 		// Find and multiply it by the factor associated with it
 		console.log("MaxInYear: " +MaxInYear);
 		var Factor=1000/MaxInYear;
-		MalePWIDEverData.Data=Multiply(MalePWIDEverData.Data, Factor);
+		PWIDEverData.Data=Multiply(PWIDEverData.Data, Factor);
 
 	// Perform the optimisation
-	// var ReturnStructure=EntryRateOptimisation(MalePWIDEverData, EntryParams);
-	var ReturnStructure=EntryRateOptimisationExponential(MalePWIDEverData, EntryParams);
+	// var ReturnStructure=EntryRateOptimisation(PWIDEverData, EntryParams);
+	var ReturnStructure=EntryRateOptimisationExponential(PWIDEverData, EntryParams);
 	
 	
 	
 	// Store the results for male optimisation
-	OptimisationResults.Male={};
 
-	OptimisationResults.Male.OriginalData={};
-	OptimisationResults.Male.OriginalData.Year=MalePWIDEverData.Year;
-	OptimisationResults.Male.OriginalData.Data=MalePWIDEverData.Data;
+	OptimisationResults.OriginalData={};
+	OptimisationResults.OriginalData.Year=PWIDEverData.Year;
+	OptimisationResults.OriginalData.Data=PWIDEverData.Data;
 	
-	OptimisationResults.Male.Results=ReturnStructure.Results;
+	OptimisationResults.Results=ReturnStructure.Results;
 	
-	OptimisationResults.Male.EntryRate=ReturnStructure.EntryRate;
-	
-	OptimisationResults.Male.Parameters=ReturnStructure.Parameters;
+	OptimisationResults.EntryRate=ReturnStructure.EntryRate;
 	
 	// fix up the normalisation we did earlier
-	OptimisationResults.Male.OriginalData.Data=Divide(OptimisationResults.Male.OriginalData.Data, Factor);
-	OptimisationResults.Male.Results.Data=Divide(OptimisationResults.Male.Results.Data, Factor);
-	OptimisationResults.Male.EntryRate.Number=Divide(OptimisationResults.Male.EntryRate.Number, Factor);
+	OptimisationResults.OriginalData.Data=Divide(OptimisationResults.OriginalData.Data, Factor);
+	OptimisationResults.Results.Data=Divide(OptimisationResults.Results.Data, Factor);
+	OptimisationResults.EntryRate.Number=Divide(OptimisationResults.EntryRate.Number, Factor);
 	
-	OptimisationResults.Male.EntryParams=EntryParams;
+	OptimisationResults.EntryParams=EntryParams;
 	
 	console.log("The factor used in this simulation was: "+Factor);
 
@@ -279,7 +294,7 @@ function EntryRateOptimisationExponential(TargetForThisOptimisation, EntryParams
 	
 	EntryRateOptimisationSettings.NumberOfSamplesPerRound=10;// note we'll randomly select one of these results
 	EntryRateOptimisationSettings.MaxIterations=100;// In this case, it will allow 10 000 different parameter selections, which gives a granularity of 1% of the range. Should be sufficient
-	EntryRateOptimisationSettings.MaxTime=100;//stop after 100 seconds
+	EntryRateOptimisationSettings.MaxTime=10;//stop after 10 seconds
 	console.error("Warning: the optimisation currently stops after just 10 seconds for debugging");
 	
 	

@@ -1,4 +1,5 @@
 Things that I want to achieve 
+Implement for females
 Implement the injecting across the multiple simulations
 Get the count statistic to work across multiple simulations
  
