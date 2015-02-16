@@ -15,7 +15,7 @@ function OptimiseInjectionEntry(PWIDData){
 	A=new DownloadableCSV(children);
 	A.Download();
 	*/
-	var OptimisationResults={}
+	var OptimisationResults=[];
 	
 	// Male EntryParams
 	var EntryParams={};
@@ -37,6 +37,7 @@ function OptimiseInjectionEntry(PWIDData){
 	EntryParams.SexIndex=1;
 	OptimisationResults[EntryParams.SexIndex]=OptimiseInjectionEntryByGender(PWIDData, EntryParams);
 
+	return OptimisationResults;
 }
 
 
@@ -45,8 +46,12 @@ function OptimiseInjectionEntryByGender(PWIDData, EntryParams){
 	var OptimisationResults={}
 	var PWIDEverData={};
 	PWIDEverData.Year=PWIDData.Year;
-	PWIDEverData.Data=TransposeForCSV(PWIDData.Ever.Male); // copies in the matrix, which at time of writing is a 4 age band by 6-year matrix 
-	
+	if (EntryParams.SexIndex==0){
+		PWIDEverData.Data=TransposeForCSV(PWIDData.Ever.Male); // copies in the matrix, which at time of writing is a 4 age band by 6-year matrix 
+	}
+	else{//==1
+		PWIDEverData.Data=TransposeForCSV(PWIDData.Ever.Female); // copies in the matrix, which at time of writing is a 4 age band by 6-year matrix 
+	}
 	// If the number is a bit large, normalise the total down to something reasonable to optimise over
 		// Find the max year group
 		var MaxInYear=0;
@@ -294,7 +299,7 @@ function EntryRateOptimisationExponential(TargetForThisOptimisation, EntryParams
 	
 	EntryRateOptimisationSettings.NumberOfSamplesPerRound=10;// note we'll randomly select one of these results
 	EntryRateOptimisationSettings.MaxIterations=100;// In this case, it will allow 10 000 different parameter selections, which gives a granularity of 1% of the range. Should be sufficient
-	EntryRateOptimisationSettings.MaxTime=10;//stop after 10 seconds
+	EntryRateOptimisationSettings.MaxTime=20;//stop after 10 seconds
 	console.error("Warning: the optimisation currently stops after just 10 seconds for debugging");
 	
 	
