@@ -21,7 +21,7 @@ function OptimiseInjectionEntry(PWIDData){
 	var EntryParams={};
 	EntryParams.LogMedianEntryAge=Log(21);
 	EntryParams.LogSDEntryAge=0.16;
-	console.log("Note the median entry age is hard set");
+	console.error("Note the median entry age is hard set");
 	
 	// Do male entry
 	EntryParams.SexIndex=0;
@@ -31,7 +31,7 @@ function OptimiseInjectionEntry(PWIDData){
 	var EntryParams={};
 	EntryParams.LogMedianEntryAge=Log(21);
 	EntryParams.LogSDEntryAge=0.16;
-	console.log("Note the median entry age is hard set");
+	console.error("Note the median entry age is the same for female as it is for male. It is likely a couple of years earlier");
 	
 	// Do female entry
 	EntryParams.SexIndex=1;
