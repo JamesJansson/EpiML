@@ -90,6 +90,7 @@ Papa.parse("data/summarynotifications.csv", {download: true, complete: function(
 <img src="img/logo.png">
 
 <progress id="MainProgress" value="0.0" max="1"></progress>
+<input type='text' style='position:relative; float=right;' id='MainStatusTextElement' value=''><br>
 
 <div id="menu">
 <ul>
@@ -264,6 +265,10 @@ Papa.parse("data/summarynotifications.csv", {download: true, complete: function(
 	<div id="SettingsContent" class="Content">
 		<h1>Settings</h1>
 		<form>
+			<p>Number of simulations to run</p>
+			<input type='text' id='NumberOfSimulationsTextbox' value='10' onchange="Settings.NumberOfSimulations=Number(this.value);SaveSettings();">
+			
+			
 			<p>Number of threads to use for simulations</p>
 			<select id="NoThreadsDropdown" onchange="Settings.NoThreads=this.value;SaveSettings();">
 				<option value=1>1</option>

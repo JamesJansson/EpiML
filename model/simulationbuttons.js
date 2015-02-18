@@ -34,7 +34,7 @@ function RunSim(){
 	
 	//Creating the data to be used in the simulations
 	SimInputData=[];
-	for (i=0; i<NumberOfSimsToRun; i++){
+	for (i=0; i<Settings.NumberOfSimulations; i++){
 		SimInputData[i]={};
 		// At the moment there is no sim specific data
 	}

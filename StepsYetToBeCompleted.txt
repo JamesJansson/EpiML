@@ -1,6 +1,10 @@
 Things that I want to achieve 
-Implement for females
-Implement the injecting across the multiple simulations
-Get the count statistic to work across multiple simulations
- 
+Done Implement for females
+Done Implement the injecting across the multiple simulations
 Optimisation of becoming regular and exiting IDU population
+Adjust input values
+	Randomise by a certain amount
+	Increase by a factor for underreporting
+Get the count statistic to work across multiple simulations
+Get the parameter calss to start accepting input values
+Scenario blender
