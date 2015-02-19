@@ -98,6 +98,25 @@ function SaveSettings(){
 
 
 function LoadParametersFiles(){
+	console.log("Got into load patient files");
+	var ParameterFileName="./model/parameters.json";
+	
+	//Below we save Param to the global variable Param
+	Param=LoadParameters(ParameterFileName);
+	
+	console.log(Param);
+	
+	// Check for an error
+	if (typeof(Param.ParamLoadingError)!="undefined"){
+		console.error("Could not load parameters file, using defaults (empty)");
+		Param.HCV={};
+		Param.HCV.AAA=new ParameterClass('AAA');
+		Param.HCV.AAA.Description="This is what will appear in the textarea box";
+		Param.HIV={};
+		Param.HIV.AAA=new ParameterClass('AAA');
+	
+	}
+	
 }
 
 function LoadDataFiles(){

@@ -221,24 +221,31 @@ function AddNewParameter(ParamGroup, GroupName, ParamGroupDivId){
 // Load parameters from a file
 function LoadParameters(ParameterFileName){
 	// Open the file	
-	fs.readFile("./model/parameters.json", 'utf8', function (err, data) {
+	var ParamStruct=fs.readFileSync("./model/parameters.json", 'utf8');
+	console.log(ParamStruct);
+	
+	
+	var ParamStruct=fs.readFileSync("./model/parameters.json", 'utf8', function (err, data) {
+		console.log("1");
 		if (err){
-			console.error("The ./model/parameters.json file could not be loaded. Using default values. Error: ");
+			console.error("The file " + ParameterFileName+" could not be loaded. Error: ");
 			console.error(err);
-			// Use default values
-			Settings.NoThreads=1;// number of cores to use at a time
-			Settings.ConcurrentSims=8;// number of sims to keep active at once (for interface playing)
-			Settings.SampleFactor=10;// This value is the number of people each person in the simulation represents. Probably a good idea to set this to 1, 10 or 100
+			var ParsedStruct={};
+			ParsedStruct.ParamLoadingError=err;
+			return ParsedStruct;
 		}
 		else{
-			var ParamJSON = JSON.parse(data);
+			// Parse the JSON
+			var ParsedStruct= JSON.parse(data);
+			return ParsedStruct;
 		}
-		document.getElementById("NoThreadsDropdown").value=Settings.NoThreads;
-		document.getElementById("ConcurrentSimsDropdown").value=Settings.ConcurrentSims;
-		document.getElementById("SampleFactorTextbox").value=Settings.SampleFactor;
 	});
-	// Parse the JSON
-	ParamStruct=JSON.parse(ParamJSON);//JSON.stringify(Settings)
+	console.log(ParamStruct);
+	// Check for error
+	if (typeof(ParamStruct.ParamLoadingError)!='undefined'){
+		return ParamStruct;
+	}
+	
 	// Check for problems
 	
 	
