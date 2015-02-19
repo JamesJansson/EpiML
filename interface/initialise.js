@@ -38,7 +38,7 @@ function InitialisePage(){
 	
 	//Param.HCV.F0F1;
 	
-	
+	// 
 	
 	//Initialise interface
 	BuildParameterPage(Param.HCV, "HCVParamHolder", "Param.HCV");
@@ -67,7 +67,7 @@ function LoadSettingsFiles(){
 	fs.readFile("./interface/settings.json", 'utf8', function (err, data) {
 		if (err){
 			console.error("The ./interface/settings.json file could not be loaded. Using default values. Error: ");
-			console.log(err)
+			console.log(err);
 			// Use default values
 			Settings.NoThreads=1;// number of cores to use at a time
 			Settings.ConcurrentSims=8;// number of sims to keep active at once (for interface playing)

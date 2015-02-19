@@ -44,6 +44,15 @@ this.URL=[];//An array of URLs that are sources for the parameter in question [L
 
 //Load the parameter from text
 	//or maybe simply bind a JSON object
+ParameterClass.prototype.Load= function (InputStructure){
+	for (var Key in this){
+		if (typeof(InputStructure[Key])!='undefined'){
+			this[key]=InputStructure[Key];
+		}
+	}
+}	
+
+
 	
 ParameterClass.prototype.Name= function (){
 	return (this.GroupName+'.'+this.ParameterID);
@@ -207,3 +216,42 @@ function AddNewParameter(ParamGroup, GroupName, ParamGroupDivId){
 //    Object.defineProperty(o, new_key, Object.getOwnPropertyDescriptor(o, old_key));
 //    delete o[old_key];
 //}
+
+
+// Load parameters from a file
+function LoadParameters(ParameterFileName){
+	// Open the file	
+	fs.readFile("./model/parameters.json", 'utf8', function (err, data) {
+		if (err){
+			console.error("The ./model/parameters.json file could not be loaded. Using default values. Error: ");
+			console.error(err);
+			// Use default values
+			Settings.NoThreads=1;// number of cores to use at a time
+			Settings.ConcurrentSims=8;// number of sims to keep active at once (for interface playing)
+			Settings.SampleFactor=10;// This value is the number of people each person in the simulation represents. Probably a good idea to set this to 1, 10 or 100
+		}
+		else{
+			var ParamJSON = JSON.parse(data);
+		}
+		document.getElementById("NoThreadsDropdown").value=Settings.NoThreads;
+		document.getElementById("ConcurrentSimsDropdown").value=Settings.ConcurrentSims;
+		document.getElementById("SampleFactorTextbox").value=Settings.SampleFactor;
+	});
+	// Parse the JSON
+	ParamStruct=JSON.parse(ParamJSON);//JSON.stringify(Settings)
+	// Check for problems
+	
+	
+	var Param={};
+	// Parse into each subgroup
+	for (var Key in ParamStruct){
+		// Create a new parameter for each value in the group
+		Param[Key]={};
+		for (var Key2 in ParamStruct[Key]){
+			Param[Key][Key2]=new ParameterClass(Key2);
+			Param[Key][Key2].Load(ParamStruct[Key][Key2]);
+		}
+	}
+	return Param;
+}
+

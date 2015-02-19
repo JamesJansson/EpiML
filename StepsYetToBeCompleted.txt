@@ -6,5 +6,5 @@ Adjust input values
 	Randomise by a certain amount
 	Increase by a factor for underreporting
 Get the count statistic to work across multiple simulations
-Get the parameter calss to start accepting input values
+Get the parameter class to start accepting input values
 Scenario blender
