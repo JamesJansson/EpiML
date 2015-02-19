@@ -90,7 +90,7 @@ function SaveSettings(){
 	
 	fs.writeFile("./interface/settings.json", SettingsJSONString , function(err) {
 		if(err) {
-			alert("There was an error writing to the settings.json file.");
+			alert("There was an error writing to the settings.json file. See console for details.");
 			console.log(err);
 		}
 	});
@@ -108,7 +108,7 @@ function LoadParametersFiles(){
 	
 	// Check for an error
 	if (typeof(Param.ParamLoadingError)!="undefined"){
-		console.error("Could not load parameters file, using defaults (empty)");
+		alert("Could not load parameters file, using defaults (empty)");
 		Param.HCV={};
 		Param.HCV.AAA=new ParameterClass('AAA');
 		Param.HCV.AAA.Description="This is what will appear in the textarea box";
@@ -118,6 +118,24 @@ function LoadParametersFiles(){
 	}
 	
 }
+
+function SaveParameters(){
+	// Remove unnecessary values from Param?? Maybe just leave as is and update later
+	
+	var ParamJSONString=JSON.stringify(Param, null, 4);//gives 4 spaces between elements
+	var blob = new Blob([ParamJSONString], {type: "text/plain;charset=utf-8"});
+	
+	fs.writeFile("./model/parameters.json", ParamJSONString , function(err) {
+		if(err) {
+			alert("There was an error writing to the parameters.json file. See console for details.");
+			console.log(err);
+		}
+	});
+}
+
+
+
+
 
 function LoadDataFiles(){
 	var RunOther=true;if (typeof (RunningNodeJS)!=='undefined'){console.log("got in1");if (RunningNodeJS==true){RunOther=false;
@@ -130,7 +148,7 @@ function LoadDataFiles(){
 		DataFile.PWID=new CSVFile('./data/pwid_size.csv');
 	}}
 	if (RunOther){
-	console.log("got in3");
+		console.log("got in3");
 		DataFile.AgeSexNotifications=new CSVFile('data/hcv_notifications_agesex.csv');
 		DataFile.StateNotifications=new CSVFile('data/hcv_notifications_state.csv');
 		

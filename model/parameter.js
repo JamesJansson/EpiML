@@ -224,7 +224,7 @@ function LoadParameters(ParameterFileName){
 	var ParamStruct=fs.readFileSync("./model/parameters.json", 'utf8');
 	console.log(ParamStruct);
 	
-	
+	console.error("Note that file error handling has not yet been implemented. Maybe use a try/catch system. Determine how to use readFileSync properly to ensure that the lack of the file is handled properly.");
 	var ParamStruct=fs.readFileSync("./model/parameters.json", 'utf8', function (err, data) {
 		console.log("1");
 		if (err){
