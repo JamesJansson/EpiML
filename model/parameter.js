@@ -3,7 +3,7 @@
 
 //CreateNewVariable
 
-function ParameterClass(ParameterID){
+function ParameterClass(ParameterID, GroupName){
 
 
 this.ParameterID=ParameterID;// e.g. LFHCCProbability
@@ -70,10 +70,16 @@ ParameterClass.prototype.UpdateTypeDisplay= function (){
 	"</select>\n ";
 	
 	if (this.DistributionType=="uniform"){
-		ParameterHTML=ParameterHTML+"Lower Bound <input type='text' name='LowerBound' value='" + this.LowerBound + " '>\n"+
+		ParameterHTML+="Lower Bound <input type='text' name='LowerBound' value='" + this.LowerBound + " '>\n"+
 		" Upper Bound <input type='text' name='UpperBound' value='" + this.UpperBound + " '>\n";
 	}
-	
+	else if (this.DistributionType=="normal"){
+		ParameterHTML+="Median <input type='text' name='Median' value='" + this.Median + " '>\n"+
+		" Upper Bound <input type='text' name='UpperBound' value='" + this.UpperBound + " '>\n";
+	}
+	// onchange="Settings.NumberOfSimulations=Number(this.value);SaveSettings();"
+	// onchange="ID.Change(this.Name, this.value)";
+	// in the function Number(this.value); SaveParameterFile();
 	
 	
 	//
@@ -117,8 +123,10 @@ ParameterClass.prototype.CalculateUncertaintyBounds= function (){
 	} 
 	else if (this.DistributionType=="lognormal"){
 		//log
-		//calculate
-		//delog
+		var LogMean=Log(this.MedianEstimate);
+		//calculate //delog
+		this.Upper95Range=Exp(LogMean+1.96*this.StandardError);
+		this.Lower95Range=Exp(LogMean-1.96*this.StandardError);
 	}
 }
 
