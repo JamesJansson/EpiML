@@ -204,22 +204,7 @@ Papa.parse("data/summarynotifications.csv", {download: true, complete: function(
 		<div class="plot" id="plot2" ></div>
 		
 		
-		<p>Fibrosis Progression</p>
-		
-		
-		<div class="SolidButton" onClick="ToggleDisplay(this, 'HCVPlotArea');">Show plot</div>
-		<div class="HCVPlotArea" style="position:relative; display: none;">
-			<div id="HCVTestSimButton" 	class="SolidButton" onClick="HCVTest();"> Run simulation </div>
-			<div id="HCVTestPlotButton" class="SolidButton" onClick="HCVTestPlot();"> Plot result </div>
-			<div id="GeneralisedButtonForPlots" class="SolidButton" onClick="StackedLinePlot('#HCVTestPlotHolder', TimeAxis, SimResult[0].HCVTestResult, 'Time (years)','Number Of People');"> Plot result </div>
-			<div id="HCVResultsSection"  style="float:left; position:absolute; left:200px; top: 0px;">
-			
-				<div class="plot-container">
-					<div id="HCVTestPlotHolder" class="plot_placeholder"></div>
-				</div>
-			<div id="HCVResultsTable"></div>
-			</div>
-		</div>
+
 		
 	</div>
 	
@@ -313,7 +298,24 @@ Papa.parse("data/summarynotifications.csv", {download: true, complete: function(
 		<div class="plot-container">
 			<div id="PlotHolder" class="plot_placeholder"></div>
 		</div>
-
+	
+		
+		<p>Fibrosis Progression</p>
+		
+		<p>Note the code for this section needs to be cleared out</p>
+		<div class="SolidButton" onClick="ToggleDisplay(this, 'HCVPlotArea');">Show plot</div>
+		<div class="HCVPlotArea" style="position:relative; display: none;">
+			<div id="HCVTestSimButton" 	class="SolidButton" onClick="HCVTest();"> Run simulation </div>
+			<div id="HCVTestPlotButton" class="SolidButton" onClick="HCVTestPlot();"> Plot result </div>
+			<div id="GeneralisedButtonForPlots" class="SolidButton" onClick="StackedLinePlot('#HCVTestPlotHolder', TimeAxis, SimResult[0].HCVTestResult, 'Time (years)','Number Of People');"> Plot result </div>
+			<div id="HCVResultsSection"  style="float:left; position:absolute; left:200px; top: 0px;">
+			
+				<div class="plot-container">
+					<div id="HCVTestPlotHolder" class="plot_placeholder"></div>
+				</div>
+			<div id="HCVResultsTable"></div>
+			</div>
+		</div>
 		
 		
 	</div>

@@ -76,6 +76,7 @@ function LoadSettingsFiles(){
 		else{
 			Settings = JSON.parse(data);
 		}
+		document.getElementById("NumberOfSimulationsTextbox").value=Settings.NumberOfSimulations;
 		document.getElementById("NoThreadsDropdown").value=Settings.NoThreads;
 		document.getElementById("ConcurrentSimsDropdown").value=Settings.ConcurrentSims;
 		document.getElementById("SampleFactorTextbox").value=Settings.SampleFactor;
