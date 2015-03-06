@@ -199,11 +199,14 @@ Papa.parse("data/summarynotifications.csv", {download: true, complete: function(
 	<div id="PlotsContent" class="Content">
 		<h1>Plots</h1>
 		
-		<p>"Plot 2" (for testing)</p>
+		<p>Plot 1</p>
+		<div class="plot" id="plot1" ></div>
 		
+		<p>Plot 2</p>
 		<div class="plot" id="plot2" ></div>
 		
-		
+		<p>Plot 3</p>
+		<div class="plot" id="plot3" ></div>
 
 		
 	</div>
@@ -289,6 +292,11 @@ Papa.parse("data/summarynotifications.csv", {download: true, complete: function(
 	
 	
 	<div id="OtherContent" class="Content">
+		
+		<p>"Testplot" (for testing)</p>
+		<div class="plot" id="testplot" ></div>
+		
+		
 		<p>Testing the multicoresim system</p>
 		<p>Warning: this process may occupy a large amount of RAM and CPU power</p>
 		<div id="HCVTestSimButton" 	class="SolidButton" onClick="TestMulticoreSim()"> Run simulation </div>

@@ -7,9 +7,9 @@ function ParameterClass(ParameterID, GroupName){
 
 
 this.ParameterID=ParameterID;// e.g. LFHCCProbability
-this.InterfaceID=NaN;// e.g. HCV_LFHCCProbability
+this.InterfaceID="";// e.g. HCV_LFHCCProbability
 // Note that GroupName is primarily used for interface design. It is updated at load to represent the true structure of the objects in which it resides, so it cannot be relied upon to be consistent between builds.
-this.GroupName=NaN;//e.g. HCV, or in the case of it being a struct of a struct, Param.HCV
+this.GroupName="";//e.g. HCV, or in the case of it being a struct of a struct, Param.HCV
 //GroupName+'.'+ParameterID gives the full name that the function can call. 
 
 this.DistributionType="uniform";
@@ -21,6 +21,7 @@ this.DistributionType="uniform";
 //5: poisson
 //6: sqrnormal
 //7: optimisedsample //used in a case where the parameters is unknown and an algorithm decides the sample chosen based on the outcome of an optimisation routine
+
 
 this.MedianEstimate=NaN;
 this.StandardError=NaN;
@@ -35,10 +36,15 @@ this.Lower95Range=NaN;
 this.NumberOfSamples=NaN;
 this.Val=[];//This is the array of the samples
 
+this.MinValue="";// These values are used to put a bound on the values, e.g. many values must not be less than zero.
+this.MaxValue="";
+
 //These variables are used to describe what the variables are and where they are from 
 this.Description=[];//
 this.RefText=[];//Text to be displayed in lieu of the 
 this.URL=[];//An array of URLs that are sources for the parameter in question [Link] Jansson et al., 2013, Title of paper
+
+
 
 }
 
@@ -62,7 +68,7 @@ ParameterClass.prototype.UpdateTypeDisplay= function (){
 	// Set up the name and parameter type
 	var ParameterHTML=""+
 	"<input type='text' name='ParameterID' value='" + this.ParameterID + "'>\n"+ 
-	"<select id='DistributionType'  onchange='"+this.Name()+".DistributionType=this.value;"+this.Name()+".UpdateTypeDisplay();'>\n"+//change the type, then redisplay
+	"<select name='DistributionType'  onchange='"+this.Name()+".DistributionType=this.value;"+this.Name()+".UpdateTypeDisplay();'>\n"+//change the type, then redisplay
 	"	<option value='uniform'>Uniform</option>\n"+
 	"	<option value='normal'>Normal</option>\n"+
 	"	<option value='exponential'>Exponential</option>\n"+
@@ -92,12 +98,26 @@ ParameterClass.prototype.UpdateTypeDisplay= function (){
 	//		<div class="ParamInfoBox" style="display: none;"> Some info to display </div>
 	// 
 	
-	//
+	// Determine estimated value of the mean, IQR and 95% range of the parameters
+	// this.CalculateRangeEstimates();
+	// Display this information to the user
+	
+	// Save button
+		// When pressed, 
+		// Get the values from all the fields
+		// save the value to Param
+		// Save Param
+	
+	// This information exists for all parameters
 	ParameterHTML=ParameterHTML+
 		"<a onClick=\"ToggleDisplay(this, 'ParamInfoBox');\">+ More info</a>\n"+
 		"<div class='ParamInfoBox' style='display: none;'>\n"+
-		"<p>Description</p>"+
-		"<textarea name='Description' cols='100' rows='5'>"+this.Description+"</textarea>";
+		"<p>\n"+
+		"    Median <input type='text' name='' value='" + 0 + " '>\n"+
+		"    Lower 95%CI <input type='text' name='' value='" + 0 + " '>\n"+
+		"    Upper 95%CI <input type='text' name='' value='" + 0 + " '>\n"+
+		"    <p>Description</p>"+
+		"    <textarea name='Description' cols='100' rows='5'>"+this.Description+"</textarea>";
 	//For each of the references, add a link, a box for the title, and the link
 	// 
 	//Add a "add ref button"
@@ -110,6 +130,11 @@ ParameterClass.prototype.UpdateTypeDisplay= function (){
 	document.getElementById(this.InterfaceID).innerHTML=ParameterHTML;
 	document.getElementById(this.InterfaceID).DistributionType.value=this.DistributionType;
 }
+	
+	
+	
+	
+	
 	
 //Load the parameter from interface
 	//This requires that the 
