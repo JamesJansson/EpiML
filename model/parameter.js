@@ -15,12 +15,14 @@ this.GroupName="";//e.g. HCV, or in the case of it being a struct of a struct, P
 this.DistributionType="uniform";
 //0: uniform
 //1: normal
-//2: exponential
-//3: lognormal
-//4: logitnormal   // used for probability distributions (on [0,1]). Note sigma<1 to avoid strange edge effects
-//5: poisson
-//6: sqrnormal
-//7: optimisedsample //used in a case where the parameters is unknown and an algorithm decides the sample chosen based on the outcome of an optimisation routine
+//2: lognormal
+//3: optimisedsample //used in a case where the parameters is unknown and an algorithm decides the sample chosen based on the outcome of an optimisation routine
+
+// The following are used for inside the simulations
+//4: exponential
+//5: logitnormal   // used for probability distributions (on [0,1]). Note sigma<1 to avoid strange edge effects
+//6: poisson
+//7: sqrnormal
 
 
 this.MedianEstimate=NaN;
@@ -69,20 +71,34 @@ ParameterClass.prototype.UpdateTypeDisplay= function (){
 	var ParameterHTML=""+
 	"<input type='text' name='ParameterID' value='" + this.ParameterID + "'>\n"+ 
 	"<select name='DistributionType'  onchange='"+this.Name()+".DistributionType=this.value;"+this.Name()+".UpdateTypeDisplay();'>\n"+//change the type, then redisplay
-	"	<option value='uniform'>Uniform</option>\n"+
+	
 	"	<option value='normal'>Normal</option>\n"+
-	"	<option value='exponential'>Exponential</option>\n"+
 	"	<option value='lognormal'>Log Normal</option>\n"+
+	"	<option value='uniform'>Uniform</option>\n"+
+	"	<option value='optimisedsample'>Optimised Sample</option>\n"+
+	
 	"</select>\n ";
 	
-	if (this.DistributionType=="uniform"){
+	
+	if (this.DistributionType=="normal"){
+		ParameterHTML+="Median <input type='text' name='Median' value='" + this.Median + " '>\n"+
+		" Standard error <input type='text' name='StandardError' value='" + this.StandardError + " '>\n";
+	}
+	else if (this.DistributionType=="lognormal"){
+		ParameterHTML+="Median <input type='text' name='Median' value='" + this.Median + " '>\n"+
+		" Standard error of log <input type='text' name='StandardError' value='" + this.StandardError + " '>\n";
+	}
+	else if (this.DistributionType=="uniform"){
 		ParameterHTML+="Lower Bound <input type='text' name='LowerBound' value='" + this.LowerBound + " '>\n"+
 		" Upper Bound <input type='text' name='UpperBound' value='" + this.UpperBound + " '>\n";
 	}
-	else if (this.DistributionType=="normal"){
-		ParameterHTML+="Median <input type='text' name='Median' value='" + this.Median + " '>\n"+
+	else if (this.DistributionType=="optimisedsample"){
+		ParameterHTML+="Lower Bound <input type='text' name='LowerBound' value='" + this.LowerBound + " '>\n"+
 		" Upper Bound <input type='text' name='UpperBound' value='" + this.UpperBound + " '>\n";
 	}
+	
+	
+	
 	// onchange="Settings.NumberOfSimulations=Number(this.value);SaveSettings();"
 	// onchange="ID.Change(this.Name, this.value)";
 	// in the function Number(this.value); SaveParameterFile();
