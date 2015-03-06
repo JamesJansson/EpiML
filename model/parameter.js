@@ -38,13 +38,8 @@ this.Val=[];//This is the array of the samples
 this.MinValue="";// These values are used to put a bound on the values, e.g. many values must not be less than zero.
 this.MaxValue="";
 
-//These variables are used to describe what the variables are and where they are from 
+//The Description is used to describe what the variables are and where they are from including URLs and any other calculation
 this.Description=[];//
-this.RefText=[];//Text to be displayed in lieu of the 
-this.URL=[];//An array of URLs that are sources for the parameter in question [Link] Jansson et al., 2013, Title of paper
-
-
-
 }
 
 //Load the parameter from text
@@ -149,10 +144,33 @@ ParameterClass.prototype.Save=function(){
 	console.log("Button pressing works");
 
 	// Go through each of the possible elements
-	
+	var FieldNames=['ParameterID',
+					'InterfaceID',
+					'DistributionType',
+					'Median',
+					'StandardError',
+					'LowerBound',
+					'UpperBound',
+					'Upper95Range',
+					'Lower95Range',
+					'MinValue',
+					'MaxValue',
+					'Description'];
 	// See if it exists
-	
+	var ParamElement = document.getElementById(this.InterfaceID);
 	// if it exists, set to the value in the Param
+	for (var Field in FieldNames){
+		console.log(FieldNames[Field]);
+		if (typeof(ParamElement[FieldNames[Field]])!='undefined'){
+			this[FieldNames[Field]]=ParamElement[FieldNames[Field]].value;
+			
+			console.log(this[FieldNames[Field]]);
+		}
+	
+	}
+	
+	console.error('Need to convert to numbers before this will work. Spaces making your life tough');
+	
 	
 	
 	
