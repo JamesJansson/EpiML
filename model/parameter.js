@@ -1,9 +1,6 @@
+// This library requires mathtools.js to work
 
-
-
-//CreateNewVariable
-
-function ParameterClass(ParameterID, GroupName){
+function ParameterClass(ParameterID, GroupName){// InterfacePrefix
 
 
 this.ParameterID=ParameterID;// e.g. LFHCCProbability
@@ -126,7 +123,8 @@ ParameterClass.prototype.UpdateTypeDisplay= function (){
 	
 	// This information exists for all parameters
 	ParameterHTML=ParameterHTML+
-		"<a onClick=\"ToggleDisplay(this, 'ParamInfoBox');\">+ More info</a>\n"+
+		"<a  onClick='"+this.Name()+".Save();' style='background-color: #acf;'> Save</a>  \n"+
+		"<a onClick=\"ToggleDisplay(this, 'ParamInfoBox');\" style='background-color: #acf;'> + More info </a>\n"+
 		"<div class='ParamInfoBox' style='display: none;'>\n"+
 		"<p>\n"+
 		"    Median <input type='text' name='' value='" + this.Median + " '>\n"+
@@ -147,7 +145,26 @@ ParameterClass.prototype.UpdateTypeDisplay= function (){
 	document.getElementById(this.InterfaceID).DistributionType.value=this.DistributionType;
 }
 	
+ParameterClass.prototype.Save=function(){
+	console.log("Button pressing works");
+
+	// Go through each of the possible elements
 	
+	// See if it exists
+	
+	// if it exists, set to the value in the Param
+	
+	
+	
+	// if the name in the display is different to the name in the 
+	
+	// if the name changes, update the InterfaceID
+	var OldId=this.InterfaceID;
+	// DetermineInterfaceID(this.Name);
+	
+	
+	this.UpdateTypeDisplay();
+}	
 	
 	
 	
