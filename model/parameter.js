@@ -25,7 +25,7 @@ this.DistributionType="uniform";
 //7: sqrnormal
 
 
-this.MedianEstimate=NaN;
+this.Median=NaN;
 this.StandardError=NaN;
 this.LowerBound=NaN;//used for uniform distributions
 this.UpperBound=NaN;//used for uniform distributions
@@ -115,7 +115,7 @@ ParameterClass.prototype.UpdateTypeDisplay= function (){
 	// 
 	
 	// Determine estimated value of the mean, IQR and 95% range of the parameters
-	// this.CalculateRangeEstimates();
+	this.CalculateUncertaintyBounds();
 	// Display this information to the user
 	
 	// Save button
@@ -129,9 +129,9 @@ ParameterClass.prototype.UpdateTypeDisplay= function (){
 		"<a onClick=\"ToggleDisplay(this, 'ParamInfoBox');\">+ More info</a>\n"+
 		"<div class='ParamInfoBox' style='display: none;'>\n"+
 		"<p>\n"+
-		"    Median <input type='text' name='' value='" + 0 + " '>\n"+
-		"    Lower 95%CI <input type='text' name='' value='" + 0 + " '>\n"+
-		"    Upper 95%CI <input type='text' name='' value='" + 0 + " '>\n"+
+		"    Median <input type='text' name='' value='" + this.Median + " '>\n"+
+		"    Lower 95%CI <input type='text' name='' value='" + this.Lower95Range + " '>\n"+
+		"    Upper 95%CI <input type='text' name='' value='" + this.Upper95Range + " '>\n"+
 		"    <p>Description</p>"+
 		"    <textarea name='Description' cols='100' rows='5'>"+this.Description+"</textarea>";
 	//For each of the references, add a link, a box for the title, and the link
@@ -159,12 +159,12 @@ ParameterClass.prototype.UpdateTypeDisplay= function (){
 
 ParameterClass.prototype.CalculateUncertaintyBounds= function (){
 	if (this.DistributionType=="normal"){
-		this.Upper95Range=this.MedianEstimate+1.96*this.StandardError;
-		this.Lower95Range=this.MedianEstimate-1.96*this.StandardError;
+		this.Upper95Range=this.Median+1.96*this.StandardError;
+		this.Lower95Range=this.Median-1.96*this.StandardError;
 	} 
 	else if (this.DistributionType=="lognormal"){
 		//log
-		var LogMean=Log(this.MedianEstimate);
+		var LogMean=Log(this.Median);
 		//calculate //delog
 		this.Upper95Range=Exp(LogMean+1.96*this.StandardError);
 		this.Lower95Range=Exp(LogMean-1.96*this.StandardError);
@@ -175,7 +175,7 @@ ParameterClass.prototype.CreateDistribution= function (){
 	
 	if (this.distributionType=="lognormal"){
 		//log
-		logmedian=Math.log(this.MedianEstimate);
+		var logmedian=Math.log(this.Median);
 		//calculate
 		Rand.Value();
 		//some code here https://gist.github.com/Protonk/5367430
@@ -311,3 +311,5 @@ function LoadParameters(ParameterFileName){
 	return Param;
 }
 
+
+// Save parameters to file
