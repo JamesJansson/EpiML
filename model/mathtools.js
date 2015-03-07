@@ -830,6 +830,16 @@ function NormalRandArray(Mean, SD, Num){
 	return Z;
 }
 
+function RandArray(Min, Max, Num){
+	var Z=[];
+	for (var i=0; i<Num; i++){
+		Z[i]=Rand.Value();
+	}
+	return Z;
+}
+
+
+
 function NormalRandFillUp(Mean, SD, Array){
 	// Create the distribution around zero
 	// Using the Box-Muller transform

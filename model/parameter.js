@@ -33,7 +33,7 @@ this.Upper95Range=NaN;// These values are calculated on the fly by the program, 
 this.Lower95Range=NaN;
 this.CalculatedMedian=NaN;
 
-this.NumberOfSamples=NaN;
+this.NumberOfSamples=1;
 this.Val=[];//This is the array of the samples
 
 this.MinValue="";// These values are used to put a bound on the values, e.g. many values must not be less than zero.
@@ -222,10 +222,10 @@ ParameterClass.prototype.CalculateUncertaintyBounds= function (){
 	else if (this.DistributionType=="lognormal"){
 		this.CalculatedMedian=this.Median;
 		//log
-		var LogMean=Log(this.Median);
+		var LogMedian=Log(this.Median);
 		//calculate //delog
-		this.Upper95Range=Exp(LogMean+1.96*this.StandardError);
-		this.Lower95Range=Exp(LogMean-1.96*this.StandardError);
+		this.Upper95Range=Exp(LogMedian+1.96*this.StandardError);
+		this.Lower95Range=Exp(LogMedian-1.96*this.StandardError);
 	}
 	else if(this.DistributionType=="uniform"){
 		this.CalculatedMedian=(this.LowerBound+this.UpperBound)/2;
@@ -242,26 +242,15 @@ ParameterClass.prototype.CalculateUncertaintyBounds= function (){
 }
 
 ParameterClass.prototype.CreateDistribution= function (){
-	
+	if (this.distributionType=="normal"){
+		this.Val=NormalRandArray(this.Median, this.StandardError, this.NumberOfSamples);
+	}
 	if (this.distributionType=="lognormal"){
-		//log
-		var logmedian=Math.log(this.Median);
-		//calculate
-		Rand.Value();
-		//some code here https://gist.github.com/Protonk/5367430
-		//Linear congruential generator
-		
-		
-		//http://stackoverflow.com/questions/20160827/when-generating-normally-distributed-random-values-what-is-the-most-efficient-w 
-		// To get approximately normally distributed random numbers, add 12 rands, minus 6, divide 
-		//
-		
-		
-		
-		
-		
-		//delog
-	}	
+		var LogMedian=Log(this.Median);
+		this.Val=NormalRandArray(LogMedian, this.StandardError, this.NumberOfSamples);
+		this.Val=Exp(this.Val);
+	}
+	
 	
 	
 }
