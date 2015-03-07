@@ -833,7 +833,7 @@ function NormalRandArray(Mean, SD, Num){
 function RandArray(Min, Max, Num){
 	var Z=[];
 	for (var i=0; i<Num; i++){
-		Z[i]=Rand.Value();
+		Z[i]=Min+(Max-Min)*Rand.Value();
 	}
 	return Z;
 }
