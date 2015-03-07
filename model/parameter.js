@@ -256,6 +256,49 @@ ParameterClass.prototype.CreateDistribution= function (){
 	
 }
 
+
+// The following code takes an array of parameters with samples in each, and splits it into an array of parameter set objects that can be passed to individual simulations
+function ParameterSplit(ParameterArray, NumberOfSamples){
+	var ParamObject=[];
+	for (var SimCount=0; SimCount<NumberOfSamples; SimCount++){
+		ParamObject[SimCount]={};
+		for (ParamCount in ParameterArray){
+			var ParamName=ParameterArray[ParamCount].ParameterID;
+			var ValueToStore=ParameterArray[ParamCount].Val[SimCount];
+			
+			ParameterSplitByUnderscore(ParamObject, ParamName, ValueToStore);
+			// If there is an underscore in the name
+		}
+	}
+	return ParamObject;
+}
+
+
+function ParameterSplitByUnderscore(ParamObject, ParamName, Value){
+	// If there is no underscore in the name
+	if(ParamName.indexOf('-') == -1){
+		ParamObject[ParamName]=Value;
+	}
+	else{
+		//Split off the first part
+		var FirstPart="something";
+		var SecondPart="somethingelse";
+		
+		if (typeof(ParamObject[FirstPart])==="number"){
+			throw "There is a problem with defining the object, which could mean that a parameter group is called the same thing as a parameter";
+		}
+		if (typeof(ParamObject[FirstPart])==="undefined"){
+			// Create the subelement
+			ParamObject[FirstPart]={};
+		}
+		
+		ParameterSplitByUnderscore(ParamObject[FirstPart], SecondPart, Value);
+	}
+	// There is no return, because under javascript, the modifications made to ParamObject should be maintained as it is passed back through the recursions
+}
+
+
+
 //**************************************************************************************************************************
 // From this point, the code is no longer dealing with individual parameters, but with displaying groups of parameters in a page
 
