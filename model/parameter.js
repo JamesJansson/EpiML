@@ -31,6 +31,7 @@ this.UpperBound=NaN;//used for uniform distributions
 
 this.Upper95Range=NaN;// These values are calculated on the fly by the program, and are displayed in the interface
 this.Lower95Range=NaN;
+this.CalculatedMedian=NaN;
 
 this.NumberOfSamples=NaN;
 this.Val=[];//This is the array of the samples
@@ -122,7 +123,7 @@ ParameterClass.prototype.UpdateTypeDisplay= function (){
 		"<a onClick=\"ToggleDisplay(this, 'ParamInfoBox');\" style='background-color: #acf;'> + More info </a>\n"+
 		"<div class='ParamInfoBox' style='display: none;'>\n"+
 		"<p>\n"+
-		"    Median <input type='text' name='' value='" + this.Median + " '>\n"+
+		"    Median <input type='text' name='' value='" + this.CalculatedMedian + " '>\n"+
 		"    Lower 95%CI <input type='text' name='' value='" + this.Lower95Range + " '>\n"+
 		"    Upper 95%CI <input type='text' name='' value='" + this.Upper95Range + " '>\n"+
 		"    <p>Description</p>"+
@@ -144,8 +145,9 @@ ParameterClass.prototype.Save=function(){
 	console.log("Button pressing works");
 
 	// Go through each of the possible elements
+	var FieldsList=[];
+	
 	var FieldNames=['ParameterID',
-					'InterfaceID',
 					'DistributionType',
 					'Median',
 					'StandardError',
@@ -156,14 +158,33 @@ ParameterClass.prototype.Save=function(){
 					'MinValue',
 					'MaxValue',
 					'Description'];
+					
+					
+	var FieldTypes=['text',
+					'text',
+					'number',
+					'number',
+					'number',
+					'number',
+					'number',
+					'number',
+					'number',
+					'number',
+					'text'];
+					
+					
 	// See if it exists
 	var ParamElement = document.getElementById(this.InterfaceID);
 	// if it exists, set to the value in the Param
 	for (var Field in FieldNames){
 		console.log(FieldNames[Field]);
 		if (typeof(ParamElement[FieldNames[Field]])!='undefined'){
-			this[FieldNames[Field]]=ParamElement[FieldNames[Field]].value;
-			
+			if (FieldTypes[Field]=='number'){
+				this[FieldNames[Field]]=Number(ParamElement[FieldNames[Field]].value);
+			}
+			else{
+				this[FieldNames[Field]]=ParamElement[FieldNames[Field]].value;
+			}
 			console.log(this[FieldNames[Field]]);
 		}
 	
@@ -194,15 +215,29 @@ ParameterClass.prototype.Save=function(){
 
 ParameterClass.prototype.CalculateUncertaintyBounds= function (){
 	if (this.DistributionType=="normal"){
+		this.CalculatedMedian=this.Median;
 		this.Upper95Range=this.Median+1.96*this.StandardError;
 		this.Lower95Range=this.Median-1.96*this.StandardError;
 	} 
 	else if (this.DistributionType=="lognormal"){
+		this.CalculatedMedian=this.Median;
 		//log
 		var LogMean=Log(this.Median);
 		//calculate //delog
 		this.Upper95Range=Exp(LogMean+1.96*this.StandardError);
 		this.Lower95Range=Exp(LogMean-1.96*this.StandardError);
+	}
+	else if(this.DistributionType=="uniform"){
+		this.CalculatedMedian=(this.LowerBound+this.UpperBound)/2;
+		this.Lower95Range=this.LowerBound+0.05*(this.UpperBound-this.LowerBound);
+		this.Upper95Range=this.LowerBound+0.95*(this.UpperBound-this.LowerBound);
+	}
+	else if(this.DistributionType=="optimisedsample"){
+		if (this.Val.length>0){
+			this.CalculatedMedian=Median(this.Val);
+			this.Lower95Range=Percentile(this.Val, 5);
+			this.Upper95Range=Percentile(this.Val, 95);
+		}
 	}
 }
 
