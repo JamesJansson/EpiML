@@ -190,10 +190,6 @@ ParameterClass.prototype.Save=function(){
 	
 	}
 	
-	console.error('Need to convert to numbers before this will work. Spaces making your life tough');
-	
-	
-	
 	
 	// if the name in the display is different to the name in the 
 	
@@ -256,6 +252,7 @@ ParameterClass.prototype.CreateDistribution= function (){
 	
 }
 
+// *********************************************************************************
 
 // The following code takes an array of parameters with samples in each, and splits it into an array of parameter set objects that can be passed to individual simulations
 function ParameterSplit(ParameterArray, NumberOfSamples){
@@ -272,7 +269,6 @@ function ParameterSplit(ParameterArray, NumberOfSamples){
 	}
 	return ParamObject;
 }
-
 
 function ParameterSplitByUnderscore(ParamObject, ParamName, Value){
 	// If there is no underscore in the name
