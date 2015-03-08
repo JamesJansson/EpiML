@@ -16,10 +16,11 @@ this.SetInterfaceID(InterfaceHolder);// e.g. HCV_LFHCCProbability
 this.GroupName="";//e.g. HCV, or in the case of it being a struct of a struct, Param.HCV
 //GroupName+'.'+ParameterID gives the full name that the function can call. 
 
-this.DistributionType="uniform";
-//0: uniform
-//1: normal
-//2: lognormal
+this.DistributionType="normal";
+
+//0: normal
+//1: lognormal
+//2: uniform
 //3: optimisedsample //used in a case where the parameters is unknown and an algorithm decides the sample chosen based on the outcome of an optimisation routine
 
 // The following are used for inside the simulations
@@ -105,22 +106,6 @@ ParameterClass.prototype.UpdateTypeDisplay= function (){
 	}
 	
 	
-	
-	// onchange="Settings.NumberOfSimulations=Number(this.value);SaveSettings();"
-	// onchange="ID.Change(this.Name, this.value)";
-	// in the function Number(this.value); SaveParameterFile();
-	
-	
-	//
-	//		
-	//		
-	//			
-	//		Median <input type="text" name="Median"> 
-	//		SD <input type="text" name="SD"> 
-	//		<a onClick="ToggleDisplay(this, 'ParamInfoBox');">+ More info</a>
-	//		<div class="ParamInfoBox" style="display: none;"> Some info to display </div>
-	// 
-	
 	// Determine estimated value of the mean, IQR and 95% range of the parameters
 	this.CalculateUncertaintyBounds();
 	// Display this information to the user
@@ -156,8 +141,6 @@ ParameterClass.prototype.UpdateTypeDisplay= function (){
 }
 	
 ParameterClass.prototype.Save=function(){
-	console.log("Button pressing works");
-
 	// Go through each of the possible elements
 	var FieldsList=[];
 	
@@ -373,24 +356,11 @@ function ParameterPage(ParamArray, ParamArrayName, PageName, InterfaceHolder, Nu
 	// for each element in the ParamArray, set the InterfaceID
 	for (var key in this.ParamArray){
 		this.ParamArray[key].SetInterfaceID(InterfaceHolder);
-	}	
-	
-	console.log(this);
+	}
 }
 
 
 ParameterPage.prototype.Build= function (){
-	
-
-
-	// Firstly, ensure that each of the parameters in the group have the proper GroupName e.g. Param.HIV
-	// This allows the object to be able to write code that allows it to execute itself, e.g. Param.HIV.CalculateAndDisplayMedian()
-	// for (var key in ParamGroup) {// Code inspired by http://stackoverflow.com/questions/208016/how-to-list-the-properties-of-a-javascript-object
-		// if (ParamGroup.hasOwnProperty(key)) {
-			// ParamGroup[key].GroupName=GroupName;
-		// }
-	// }
-
 
 	var BuildText="";
 	for (var key in this.ParamArray) {// Code inspired by http://stackoverflow.com/questions/208016/how-to-list-the-properties-of-a-javascript-object
@@ -416,33 +386,17 @@ ParameterPage.prototype.Build= function (){
 
 
 ParameterPage.prototype.AddNewParameter= function(){
-	
-
 	var ArrayNumber=this.ParamArray.length;
-	
 	var ParamName="NewParameter"+ArrayNumber;//The new parameter will be called e.g. NewParam12
-	
-	
 	this.ParamArray[ArrayNumber]=new ParameterClass(ParamName, this.ParamArrayName, ArrayNumber, this.InterfaceHolder, this.NumberOfSamples)
 	
 	// Create the HTML that will be added to the interface
 	HTMLToAdd="\n                <form class=\"ParamContainer\" id=\""+this.ParamArray[ArrayNumber].InterfaceID+"\"></form>";
 	document.getElementById(this.InterfaceHolder).innerHTML = document.getElementById(this.InterfaceHolder).innerHTML + HTMLToAdd;
-	
-	console.log(this.ParamArray[ArrayNumber].Name());
-	console.log(this.ParamArray[ArrayNumber].GroupName);
-	
 	this.ParamArray[ArrayNumber].UpdateTypeDisplay();
 }
 
 
-//   create a new 'form' element 
-
-// Renaming a key for an object
-//if (old_key !== new_key) {
-//    Object.defineProperty(o, new_key, Object.getOwnPropertyDescriptor(o, old_key));
-//    delete o[old_key];
-//}
 
 
 // Load parameters from a file
@@ -476,32 +430,13 @@ function LoadParameters(ParameterFileName){
 	// Check for problems
 	
 	
-	var Param={};
+	var Param=[];
 	// Parse into each subgroup
 	for (var Key in ParamStruct){
 		// Create a new parameter for each value in the group
-		Param[Key]={};
-		for (var Key2 in ParamStruct[Key]){
-			Param[Key][Key2]=new ParameterClass(Key2);
-			Param[Key][Key2].Load(ParamStruct[Key][Key2]);
-		}
+		Param[Key].Load(ParamStruct[Key]);
 	}
 	return Param;
 }
 
 
-// Save parameters to file
-function SaveParameterFile(ParamToSave, FileName){
-	// Sort the Parameters by ID
-	function compare(a,b) {
-	  if (a.ParameterID < b.ParameterID)
-		 return -1;
-	  if (a.ParameterID > b.ParameterID)
-		return 1;
-	  return 0;
-	}
-
-	ParamToSave.sort(compare);
-	// note this will likely break the interface
-
-}

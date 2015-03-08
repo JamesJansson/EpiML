@@ -41,7 +41,8 @@ function InitialisePage(){
 	// 
 	
 	//Initialise interface
-	Param=[];
+	//Param=[];
+	//Param=LoadParameters();
 	PPage=new ParameterPage(Param, "Param", "PPage", "ParamHolder", 100);
 	PPage.Build();
 	
@@ -104,36 +105,19 @@ function SaveSettings(){
 }
 
 
-function LoadParametersFiles(){
-	console.log("Got into LoadParametersFiles");
-	var ParameterFileName="./model/parameters.json";
+function SaveParameters(ParamToSave, FileName){
+	// Sort the Parameters by ID
+	function compare(a,b) {
+	  if (a.ParameterID < b.ParameterID)
+		 return -1;
+	  if (a.ParameterID > b.ParameterID)
+		return 1;
+	  return 0;
+	}
+	ParamToSave.sort(compare);
 	
-	//Below we save Param to the global variable Param
-	//Param=LoadParameters(ParameterFileName);
 	
-	
-	// Check for an error
-	//if (typeof(Param.ParamLoadingError)!="undefined"){
-		alert("Could not load parameters file, creating empty parameters");
-		Param=[];// This line may be unnecessary
-		
-		
-		
-		// Param[0]=new
-		// Param.HCV={};
-		// Param.HCV.AAA=new ParameterClass('AAA');
-		// Param.HCV.AAA.Description="This is what will appear in the textarea box";
-		// Param.HIV={};
-		// Param.HIV.AAA=new ParameterClass('AAA');
-	
-	//}
-	
-}
-
-function SaveParameters(){
-	// Remove unnecessary values from Param?? Maybe just leave as is and update later
-	
-	var ParamJSONString=JSON.stringify(Param, null, 4);//gives 4 spaces between elements
+	var ParamJSONString=JSON.stringify(ParamToSave, null, 4);//gives 4 spaces between elements
 	var blob = new Blob([ParamJSONString], {type: "text/plain;charset=utf-8"});
 	
 	fs.writeFile("./model/parameters.json", ParamJSONString , function(err) {
