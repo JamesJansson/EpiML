@@ -238,15 +238,17 @@ ParameterClass.prototype.CalculateUncertaintyBounds= function (){
 }
 
 ParameterClass.prototype.CreateDistribution= function (){
-	if (this.distributionType=="normal"){
+	
+	if (this.DistributionType=="normal"){
 		this.Val=NormalRandArray(this.Median, this.StandardError, this.NumberOfSamples);
+		console.log(this.Val);
 	}
-	if (this.distributionType=="lognormal"){
+	if (this.DistributionType=="lognormal"){
 		var LogMedian=Log(this.Median);
 		this.Val=NormalRandArray(LogMedian, this.StandardError, this.NumberOfSamples);
 		this.Val=Exp(this.Val);
 	}
-	if (this.distributionType=="lognormal"){
+	if (this.DistributionType=="lognormal"){
 		this.Val=RandArray(this.LowerBound, this.UpperBound, this.NumberOfSamples);
 	}
 	
@@ -263,7 +265,7 @@ function ParameterSplit(ParameterArray, NumberOfSamples){
 			var ParamName=ParameterArray[ParamCount].ParameterID;
 			var ValueToStore=ParameterArray[ParamCount].Val[SimCount];
 			
-			ParameterSplitByUnderscore(ParamObject, ParamName, ValueToStore);
+			ParameterSplitByUnderscore(ParamObject[SimCount], ParamName, ValueToStore);
 			// If there is an underscore in the name
 		}
 	}
@@ -271,14 +273,16 @@ function ParameterSplit(ParameterArray, NumberOfSamples){
 }
 
 function ParameterSplitByUnderscore(ParamObject, ParamName, Value){
+	
+	
 	// If there is no underscore in the name
-	if(ParamName.indexOf('-') == -1){
+	if(ParamName.indexOf('_') == -1){
 		ParamObject[ParamName]=Value;
 	}
 	else{
 		//Split off the first part
-		var FirstPart="something";
-		var SecondPart="somethingelse";
+		var FirstPart=ParamName.substr(0,ParamName.indexOf('_'));
+		var SecondPart=ParamName.substr(ParamName.indexOf('_')+1);
 		
 		if (typeof(ParamObject[FirstPart])==="number"){
 			throw "There is a problem with defining the object, which could mean that a parameter group is called the same thing as a parameter";
@@ -293,6 +297,36 @@ function ParameterSplitByUnderscore(ParamObject, ParamName, Value){
 	// There is no return, because under javascript, the modifications made to ParamObject should be maintained as it is passed back through the recursions
 }
 
+// testing
+function ParameterSplitTest(){
+	console.error("This function is to be used for testing purposes only");
+	// Create the parameters
+	TestParam=[];//global 
+	TestParam[0]=new ParameterClass("JJJ", "empty");
+	TestParam[0].DistributionType="normal";
+	TestParam[0].Median=5;
+	TestParam[0].StandardError=2;
+	TestParam[0].NumberOfSamples=100;
+	TestParam[0].CreateDistribution();
+	
+	TestParam[1]=new ParameterClass("KKK_Subjjj", "empty");
+	TestParam[1].DistributionType="uniform";
+	TestParam[1].LowerBound=10;
+	TestParam[1].UpperBound=20;
+	TestParam[1].NumberOfSamples=100;
+	TestParam[1].CreateDistribution();
+	
+	TestParam[2]=new ParameterClass("KKK_Subkkk", "empty");
+	TestParam[2].DistributionType="lognormal";
+	TestParam[2].Median=21;
+	TestParam[2].StandardError=0.17;
+	TestParam[2].NumberOfSamples=100;
+	TestParam[2].CreateDistribution();
+	
+	TestSplitParam=ParameterSplit(TestParam, 100);
+	
+	console.log(TestSplitParam);
+}
 
 
 //**************************************************************************************************************************
