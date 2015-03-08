@@ -323,6 +323,20 @@ function ParameterSplitTest(){
 	TestParam[2].NumberOfSamples=100;
 	TestParam[2].CreateDistribution();
 	
+	TestParam[3]=new ParameterClass("AAA_1", "empty");
+	TestParam[3].DistributionType="lognormal";
+	TestParam[3].Median=21;
+	TestParam[3].StandardError=0.17;
+	TestParam[3].NumberOfSamples=100;
+	TestParam[3].CreateDistribution();
+	
+	TestParam[4]=new ParameterClass("AAA_2", "empty");
+	TestParam[4].DistributionType="lognormal";
+	TestParam[4].Median=100;
+	TestParam[4].StandardError=0.17;
+	TestParam[4].NumberOfSamples=100;
+	TestParam[4].CreateDistribution();
+	
 	TestSplitParam=ParameterSplit(TestParam, 100);
 	
 	console.log(TestSplitParam);
@@ -446,3 +460,17 @@ function LoadParameters(ParameterFileName){
 
 
 // Save parameters to file
+function SaveParameterFile(ParamToSave, FileName){
+	// Sort the Parameters by ID
+	function compare(a,b) {
+	  if (a.ParameterID < b.ParameterID)
+		 return -1;
+	  if (a.ParameterID > b.ParameterID)
+		return 1;
+	  return 0;
+	}
+
+	ParamToSave.sort(compare);
+	// note this will likely break the interface
+
+}
