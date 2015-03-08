@@ -41,7 +41,13 @@ function InitialisePage(){
 	// 
 	
 	//Initialise interface
-	BuildParameterPage(Param.HCV, "HCVParamHolder", "Param.HCV");
+	Param=[];
+	PPage=new ParameterPage(Param, "Param", "PPage", "ParamHolder", 100);
+	PPage.Build();
+	
+	
+	
+	//BuildParameterPage(Param.HCV, "HCVParamHolder", "Param.HCV");
 	
 	
 	console.log("It might be a good idea to compress simulation output to save on time using LZAA in lz-string http://pieroxy.net/blog/pages/lz-string/demo.html");

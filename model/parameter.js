@@ -360,16 +360,22 @@ function ParameterSplitTest(){
 //**************************************************************************************************************************
 // From this point, the code is no longer dealing with individual parameters, but with displaying groups of parameters in a page
 
-function ParameterPage(ParamArray, InterfaceHolder){
+function ParameterPage(ParamArray, ParamArrayName, PageName, InterfaceHolder, NumberOfSamples){
 	// Note that Param is passed as a pointer, and hence any changes internal to here affect the entire page
 	this.ParamArray=ParamArray;
+	this.ParamArrayName=ParamArrayName;
+	this.PageName=PageName;
 	
 	this.InterfaceHolder=InterfaceHolder;
 	
+	this.NumberOfSamples=NumberOfSamples;
+	
 	// for each element in the ParamArray, set the InterfaceID
+	for (var key in this.ParamArray){
+		this.ParamArray[key].SetInterfaceID(InterfaceHolder);
+	}	
 	
-	
-	
+	console.log(this);
 }
 
 
@@ -390,50 +396,43 @@ ParameterPage.prototype.Build= function (){
 	for (var key in this.ParamArray) {// Code inspired by http://stackoverflow.com/questions/208016/how-to-list-the-properties-of-a-javascript-object
 		//if (this.ParamArray.hasOwnProperty(key)) {
 		//	this.ParamArray[key].InterfaceID=ParamGroupDivId+key;
-			BuildText=BuildText+"                <form class=\"ParamContainer\" id=\""+ParamGroup[key].InterfaceID+"\"></form>\n";
+			BuildText=BuildText+"                <form class=\"ParamContainer\" id=\""+this.ParamArray[key].InterfaceID+"\"></form>\n";
 		//}
 	}
 	
 	//This next section is very naughty, because it breaks the div by setting the inner HTML. It will probably break.
-	BuildText=BuildText+"<div class='SolidButton' onClick='AddNewParameter("+GroupName+", \""+GroupName+"\", \""+ParamGroupDivId+"\"); '>Add parameter</div>"
+	BuildText=BuildText+"<div class='SolidButton' onClick='"+this.PageName+".AddNewParameter(); '>Add parameter</div>"
 	BuildText=BuildText+"<p>Unsaved parameters <\p>";
-	document.getElementById(ParamGroupDivId).innerHTML = BuildText;
+	document.getElementById(this.InterfaceHolder).innerHTML = BuildText;
 	
 	//Load each of the holders with the parameters that should be held
-	for (var key in ParamGroup) {
-		if (ParamGroup.hasOwnProperty(key)) {
+	for (var key in this.ParamArray) {
+		if (this.ParamArray.hasOwnProperty(key)) {
 			//Update display of parameter
-			ParamGroup[key].UpdateTypeDisplay();
+			this.ParamArray[key].UpdateTypeDisplay();
 		}
 	}
 }
 
 
-function AddNewParameter(ParamArray, GroupName, InterfaceHolder, NumberOfSamples){
+ParameterPage.prototype.AddNewParameter= function(){
 	
 
-	var ArrayNumber=ParamArray.length;
+	var ArrayNumber=this.ParamArray.length;
 	
 	var ParamName="NewParameter"+ArrayNumber;//The new parameter will be called e.g. NewParam12
 	
 	
-	ParamArray[ArrayNumber]=new ParameterClass(ParamName, ArrayName, ArrayNumber, InterfaceHolder, NumberOfSamples)
+	this.ParamArray[ArrayNumber]=new ParameterClass(ParamName, this.ParamArrayName, ArrayNumber, this.InterfaceHolder, this.NumberOfSamples)
 	
+	// Create the HTML that will be added to the interface
+	HTMLToAdd="\n                <form class=\"ParamContainer\" id=\""+this.ParamArray[ArrayNumber].InterfaceID+"\"></form>";
+	document.getElementById(this.InterfaceHolder).innerHTML = document.getElementById(this.InterfaceHolder).innerHTML + HTMLToAdd;
 	
-	ParameterClass(ParamName);
-	// Add the GroupName
-	ParamArray[ArrayNumber].GroupName=GroupName;
+	console.log(this.ParamArray[ArrayNumber].Name());
+	console.log(this.ParamArray[ArrayNumber].GroupName);
 	
-	
-	// Name the interface
-	ParamArray[ArrayNumber].InterfaceID=ParamGroupDivId+ParamName;
-	HTMLToAdd="\n                <form class=\"ParamContainer\" id=\""+ParamArray[ParamName].InterfaceID+"\"></form>";
-	document.getElementById(ParamGroupDivId).innerHTML = document.getElementById(ParamGroupDivId).innerHTML + HTMLToAdd;
-	
-	console.log(ParamArray[ArrayNumber].Name());
-	console.log(ParamArray[ArrayNumber].GroupName);
-	
-	ParamArray[ArrayNumber].UpdateTypeDisplay();
+	this.ParamArray[ArrayNumber].UpdateTypeDisplay();
 }
 
 
