@@ -1,10 +1,17 @@
 // This library requires mathtools.js to work
 
-function ParameterClass(ParameterID, GroupName){// InterfacePrefix
+function ParameterClass(ParameterID, ArrayName, ArrayNumber, InterfaceHolder, NumberOfSamples){// InterfacePrefix
 
 
-this.ParameterID=ParameterID;// e.g. LFHCCProbability
-this.InterfaceID="";// e.g. HCV_LFHCCProbability
+this.ParameterID=ParameterID;// e.g. HCV_LFHCCProbability
+this.ArrayName=ArrayName;
+this.ArrayNumber=ArrayNumber;
+this.InterfaceID=[];
+
+this.SetInterfaceID(InterfaceHolder);// e.g. HCV_LFHCCProbability
+
+
+
 // Note that GroupName is primarily used for interface design. It is updated at load to represent the true structure of the objects in which it resides, so it cannot be relied upon to be consistent between builds.
 this.GroupName="";//e.g. HCV, or in the case of it being a struct of a struct, Param.HCV
 //GroupName+'.'+ParameterID gives the full name that the function can call. 
@@ -33,7 +40,7 @@ this.Upper95Range=NaN;// These values are calculated on the fly by the program, 
 this.Lower95Range=NaN;
 this.CalculatedMedian=NaN;
 
-this.NumberOfSamples=1;
+this.NumberOfSamples=NumberOfSamples;
 this.Val=[];//This is the array of the samples
 
 this.MinValue="";// These values are used to put a bound on the values, e.g. many values must not be less than zero.
@@ -42,6 +49,12 @@ this.MaxValue="";
 //The Description is used to describe what the variables are and where they are from including URLs and any other calculation
 this.Description=[];//
 }
+
+ParameterClass.prototype.SetInterfaceID= function (InterfaceHolder){
+	this.InterfaceID=InterfaceHolder+"_"+this.ParameterID;
+}
+
+
 
 //Load the parameter from text
 	//or maybe simply bind a JSON object
@@ -56,7 +69,8 @@ ParameterClass.prototype.Load= function (InputStructure){
 
 	
 ParameterClass.prototype.Name= function (){
-	return (this.GroupName+'.'+this.ParameterID);
+	return (this.ArrayName+'['+this.ArrayNumber+']');
+	//return (this.GroupName+'.'+this.ParameterID);
 }	
 	
 ParameterClass.prototype.UpdateTypeDisplay= function (){
@@ -346,24 +360,38 @@ function ParameterSplitTest(){
 //**************************************************************************************************************************
 // From this point, the code is no longer dealing with individual parameters, but with displaying groups of parameters in a page
 
-function BuildParameterPage(ParamGroup, ParamGroupDivId, GroupName){
+function ParameterPage(ParamArray, InterfaceHolder){
+	// Note that Param is passed as a pointer, and hence any changes internal to here affect the entire page
+	this.ParamArray=ParamArray;
+	
+	this.InterfaceHolder=InterfaceHolder;
+	
+	// for each element in the ParamArray, set the InterfaceID
+	
+	
+	
+}
 
-	//Firstly, ensure that each of the parameters in the group have the proper GroupName e.g. Param.HIV
-	//This allows the object to be able to write code that allows it to execute itself, e.g. Param.HIV.CalculateAndDisplayMedian()
-	for (var key in ParamGroup) {// Code inspired by http://stackoverflow.com/questions/208016/how-to-list-the-properties-of-a-javascript-object
-		if (ParamGroup.hasOwnProperty(key)) {
-			ParamGroup[key].GroupName=GroupName;
-		}
-	}
+
+ParameterPage.prototype.Build= function (){
+	
+
+
+	// Firstly, ensure that each of the parameters in the group have the proper GroupName e.g. Param.HIV
+	// This allows the object to be able to write code that allows it to execute itself, e.g. Param.HIV.CalculateAndDisplayMedian()
+	// for (var key in ParamGroup) {// Code inspired by http://stackoverflow.com/questions/208016/how-to-list-the-properties-of-a-javascript-object
+		// if (ParamGroup.hasOwnProperty(key)) {
+			// ParamGroup[key].GroupName=GroupName;
+		// }
+	// }
 
 
 	var BuildText="";
-	for (var key in ParamGroup) {// Code inspired by http://stackoverflow.com/questions/208016/how-to-list-the-properties-of-a-javascript-object
-		if (ParamGroup.hasOwnProperty(key)) {
-			//maybe also check here that the parameter is not an array, other wise use a different function 
-			ParamGroup[key].InterfaceID=ParamGroupDivId+key;
+	for (var key in this.ParamArray) {// Code inspired by http://stackoverflow.com/questions/208016/how-to-list-the-properties-of-a-javascript-object
+		//if (this.ParamArray.hasOwnProperty(key)) {
+		//	this.ParamArray[key].InterfaceID=ParamGroupDivId+key;
 			BuildText=BuildText+"                <form class=\"ParamContainer\" id=\""+ParamGroup[key].InterfaceID+"\"></form>\n";
-		}
+		//}
 	}
 	
 	//This next section is very naughty, because it breaks the div by setting the inner HTML. It will probably break.
@@ -381,27 +409,31 @@ function BuildParameterPage(ParamGroup, ParamGroupDivId, GroupName){
 }
 
 
-function AddNewParameter(ParamGroup, GroupName, ParamGroupDivId){
-	//Count number of current 
-	var NumParams=1;
-	for (var key in ParamGroup) {
-		NumParams++;
-	}
-	var ParamName="NewParam"+NumParams;//The new parameter will be called e.g. NewParam12
-	ParamGroup[ParamName]=new ParameterClass(ParamName);
+function AddNewParameter(ParamArray, GroupName, InterfaceHolder, NumberOfSamples){
+	
+
+	var ArrayNumber=ParamArray.length;
+	
+	var ParamName="NewParameter"+ArrayNumber;//The new parameter will be called e.g. NewParam12
+	
+	
+	ParamArray[ArrayNumber]=new ParameterClass(ParamName, ArrayName, ArrayNumber, InterfaceHolder, NumberOfSamples)
+	
+	
+	ParameterClass(ParamName);
 	// Add the GroupName
-	ParamGroup[ParamName].GroupName=GroupName;
+	ParamArray[ArrayNumber].GroupName=GroupName;
 	
 	
 	// Name the interface
-	ParamGroup[ParamName].InterfaceID=ParamGroupDivId+ParamName;
-	HTMLToAdd="\n                <form class=\"ParamContainer\" id=\""+ParamGroup[ParamName].InterfaceID+"\"></form>";
+	ParamArray[ArrayNumber].InterfaceID=ParamGroupDivId+ParamName;
+	HTMLToAdd="\n                <form class=\"ParamContainer\" id=\""+ParamArray[ParamName].InterfaceID+"\"></form>";
 	document.getElementById(ParamGroupDivId).innerHTML = document.getElementById(ParamGroupDivId).innerHTML + HTMLToAdd;
 	
-	console.log(ParamGroup[ParamName].Name());
-	console.log(ParamGroup[ParamName].GroupName);
+	console.log(ParamArray[ArrayNumber].Name());
+	console.log(ParamArray[ArrayNumber].GroupName);
 	
-	ParamGroup[ParamName].UpdateTypeDisplay();
+	ParamArray[ArrayNumber].UpdateTypeDisplay();
 }
 
 

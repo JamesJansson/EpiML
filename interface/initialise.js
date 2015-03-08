@@ -1,7 +1,7 @@
 //Global variables for use in the program
 var Settings={};
 var Data={};
-var Param={};
+var Param=[];//An array of parameters
 var DataFile={};
 var SimulationHolder;
 var SimInputData=[];
@@ -31,10 +31,10 @@ function InitialisePage(){
 	
 	
 	
-	Param.HCV={};
-	Param.HCV.AAA=new ParameterClass('AAA');
-	Param.HCV.AAA.Description="This is what will appear in the textarea box";
-	Param.HCV.BBB=new ParameterClass('BBB');
+	// Param.HCV={};
+	// Param.HCV.AAA=new ParameterClass('AAA');
+	// Param.HCV.AAA.Description="This is what will appear in the textarea box";
+	// Param.HCV.BBB=new ParameterClass('BBB');
 	
 	//Param.HCV.F0F1;
 	
@@ -99,24 +99,28 @@ function SaveSettings(){
 
 
 function LoadParametersFiles(){
-	console.log("Got into load patient files");
+	console.log("Got into LoadParametersFiles");
 	var ParameterFileName="./model/parameters.json";
 	
 	//Below we save Param to the global variable Param
-	Param=LoadParameters(ParameterFileName);
+	//Param=LoadParameters(ParameterFileName);
 	
-	console.log(Param);
 	
 	// Check for an error
-	if (typeof(Param.ParamLoadingError)!="undefined"){
-		alert("Could not load parameters file, using defaults (empty)");
-		Param.HCV={};
-		Param.HCV.AAA=new ParameterClass('AAA');
-		Param.HCV.AAA.Description="This is what will appear in the textarea box";
-		Param.HIV={};
-		Param.HIV.AAA=new ParameterClass('AAA');
+	//if (typeof(Param.ParamLoadingError)!="undefined"){
+		alert("Could not load parameters file, creating empty parameters");
+		Param=[];// This line may be unnecessary
+		
+		
+		
+		// Param[0]=new
+		// Param.HCV={};
+		// Param.HCV.AAA=new ParameterClass('AAA');
+		// Param.HCV.AAA.Description="This is what will appear in the textarea box";
+		// Param.HIV={};
+		// Param.HIV.AAA=new ParameterClass('AAA');
 	
-	}
+	//}
 	
 }
 
