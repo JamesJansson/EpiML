@@ -251,7 +251,18 @@ ParameterClass.prototype.CreateDistribution= function (){
 // *********************************************************************************
 
 // The following code takes an array of parameters with samples in each, and splits it into an array of parameter set objects that can be passed to individual simulations
-function ParameterSplit(ParameterArray, NumberOfSamples){
+function ParameterSplit(ParameterArray, NumberOfSamples, RecalculateDistribution){
+	// Firstly, recalculate the distribution
+	if (typeof(RecalculateDistribution)!='undefined'){
+		if (RecalculateDistribution==true){
+			for (ParamCount in ParameterArray){
+				ParameterArray[ParamCount].NumberOfSamples=NumberOfSamples;
+				ParameterArray[ParamCount].CreateDistribution();
+			}
+		}
+	}
+
+
 	var ParamObject=[];
 	for (var SimCount=0; SimCount<NumberOfSamples; SimCount++){
 		ParamObject[SimCount]={};
