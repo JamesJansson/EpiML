@@ -61,7 +61,6 @@ ParameterClass.prototype.SetInterfaceID= function (InterfaceHolder){
 	//or maybe simply bind a JSON object
 ParameterClass.prototype.Load= function (InputStructure){
 	for (var Key in this){
-		console.log(Key);
 		if (typeof(InputStructure[Key])!='undefined'){
 			this[Key]=InputStructure[Key];
 		}
@@ -344,7 +343,7 @@ function ParameterSplitTest(){
 //**************************************************************************************************************************
 // From this point, the code is no longer dealing with individual parameters, but with displaying groups of parameters in a page
 
-function ParameterPage(ParamArray, ParamArrayName, PageName, InterfaceHolder, NumberOfSamples){
+function ParameterPage(ParamArray, ParamArrayName, PageName, InterfaceHolder, NumberOfSamples, FileSaveLocation){
 	// Note that Param is passed as a pointer, and hence any changes internal to here affect the entire page
 	this.ParamArray=ParamArray;
 	this.ParamArrayName=ParamArrayName;
@@ -353,6 +352,9 @@ function ParameterPage(ParamArray, ParamArrayName, PageName, InterfaceHolder, Nu
 	this.InterfaceHolder=InterfaceHolder;
 	
 	this.NumberOfSamples=NumberOfSamples;
+	
+	this.FileSaveLocation=FileSaveLocation;
+	
 	
 	// for each element in the ParamArray, set the InterfaceID
 	for (var key in this.ParamArray){
@@ -406,7 +408,6 @@ ParameterPage.prototype.AddNewParameter= function(){
 function LoadParameters(ParameterFileName){
 	// Open the file	
 	var ParamStruct=fs.readFileSync("./model/parameters.json", 'utf8');
-	console.log(ParamStruct);
 	
 	console.error("Note that file error handling has not yet been implemented. Maybe use a try/catch system. Determine how to use readFileSync properly to ensure that the lack of the file is handled properly.");
 	// var ParamStruct=fs.readFileSync("./model/parameters.json", 'utf8', function (err, data) {
@@ -434,13 +435,12 @@ function LoadParameters(ParameterFileName){
 	}
 	
 	// Check for problems
-	console.log(ParsedStruct);
+
 	
 	var Param=[];
 	// Parse into each subgroup
 	for (var Key in ParsedStruct){
 		// Create a new parameter for each value in the group
-		console.log(Key);
 		Param[Key]=new ParameterClass("", "", Key, "", 1);// ParameterID, ArrayName, ArrayNumber, InterfaceHolder, NumberOfSamples
 		Param[Key].Load(ParsedStruct[Key]);
 	}
