@@ -343,7 +343,7 @@ function ParameterSplitTest(){
 //**************************************************************************************************************************
 // From this point, the code is no longer dealing with individual parameters, but with displaying groups of parameters in a page
 
-function ParameterPage(ParamArray, ParamArrayName, PageName, InterfaceHolder, NumberOfSamples, FileSaveLocation){
+function ParameterPage(ParamArray, ParamArrayName, PageName, InterfaceHolder, NumberOfSamples){
 	// Note that Param is passed as a pointer, and hence any changes internal to here affect the entire page
 	this.ParamArray=ParamArray;
 	this.ParamArrayName=ParamArrayName;
@@ -353,7 +353,7 @@ function ParameterPage(ParamArray, ParamArrayName, PageName, InterfaceHolder, Nu
 	
 	this.NumberOfSamples=NumberOfSamples;
 	
-	this.FileSaveLocation=FileSaveLocation;
+	this.FileSaveLocation=[];
 	
 	
 	// for each element in the ParamArray, set the InterfaceID
@@ -399,6 +399,34 @@ ParameterPage.prototype.AddNewParameter= function(){
 	for (Key in this.ParamArray){
 		this.ParamArray[Key].UpdateTypeDisplay();//Update all parameters because changing the HTML forces it to a normal distr. option.
 	}
+}
+
+
+ParameterPage.prototype.SaveParameters= function(){
+		// Sort the Parameters by ID
+	function compare(a,b) {
+	  if (a.ParameterID < b.ParameterID)
+		 return -1;
+	  if (a.ParameterID > b.ParameterID)
+		return 1;
+	  return 0;
+	}
+	this.ParamArray.sort(compare);
+	
+	
+	var ParamJSONString=JSON.stringify(this.ParamArray, null, 4);//gives 4 spaces between elements
+	var blob = new Blob([ParamJSONString], {type: "text/plain;charset=utf-8"});
+	
+	fs.writeFile("./model/parameters.json", ParamJSONString , function(err) {
+		if(err) {
+			alert("There was an error writing to the parameters.json file. See console for details.");
+			console.log(err);
+		}
+	});
+	
+	
+	this.Build();
+
 }
 
 
