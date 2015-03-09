@@ -392,9 +392,11 @@ ParameterPage.prototype.AddNewParameter= function(){
 	this.ParamArray[ArrayNumber]=new ParameterClass(ParamName, this.ParamArrayName, ArrayNumber, this.InterfaceHolder, this.NumberOfSamples)
 	
 	// Create the HTML that will be added to the interface
-	HTMLToAdd="\n                <form class=\"ParamContainer\" id=\""+this.ParamArray[ArrayNumber].InterfaceID+"\"></form>";
+	var HTMLToAdd="\n                <form class=\"ParamContainer\" id=\""+this.ParamArray[ArrayNumber].InterfaceID+"\"></form>";
 	document.getElementById(this.InterfaceHolder).innerHTML = document.getElementById(this.InterfaceHolder).innerHTML + HTMLToAdd;
-	this.ParamArray[ArrayNumber].UpdateTypeDisplay();
+	for (Key in this.ParamArray){
+		this.ParamArray[Key].UpdateTypeDisplay();//Update all parameters because changing the HTML forces it to a normal distr. option.
+	}
 }
 
 
