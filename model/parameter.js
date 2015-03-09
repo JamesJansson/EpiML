@@ -61,8 +61,9 @@ ParameterClass.prototype.SetInterfaceID= function (InterfaceHolder){
 	//or maybe simply bind a JSON object
 ParameterClass.prototype.Load= function (InputStructure){
 	for (var Key in this){
+		console.log(Key);
 		if (typeof(InputStructure[Key])!='undefined'){
-			this[key]=InputStructure[Key];
+			this[Key]=InputStructure[Key];
 		}
 	}
 }	
@@ -406,35 +407,40 @@ function LoadParameters(ParameterFileName){
 	console.log(ParamStruct);
 	
 	console.error("Note that file error handling has not yet been implemented. Maybe use a try/catch system. Determine how to use readFileSync properly to ensure that the lack of the file is handled properly.");
-	var ParamStruct=fs.readFileSync("./model/parameters.json", 'utf8', function (err, data) {
-		console.log("1");
-		if (err){
-			console.error("The file " + ParameterFileName+" could not be loaded. Error: ");
-			console.error(err);
-			var ParsedStruct={};
-			ParsedStruct.ParamLoadingError=err;
-			return ParsedStruct;
-		}
-		else{
-			// Parse the JSON
-			var ParsedStruct= JSON.parse(data);
-			return ParsedStruct;
-		}
-	});
-	console.log(ParamStruct);
+	// var ParamStruct=fs.readFileSync("./model/parameters.json", 'utf8', function (err, data) {
+		// console.log("1");
+		// if (err){
+			// console.error("The file " + ParameterFileName+" could not be loaded. Error: ");
+			// console.error(err);
+			// var ParsedStruct={};
+			// ParsedStruct.ParamLoadingError=err;
+			// return ParsedStruct;
+		// }
+		// else{
+			// //Parse the JSON
+			// var ParsedStruct= JSON.parse(data);
+			// return ParsedStruct;
+		// }
+	// });
+	
+	//Parse the JSON
+	 var ParsedStruct= JSON.parse(ParamStruct);
+	
 	// Check for error
-	if (typeof(ParamStruct.ParamLoadingError)!='undefined'){
-		return ParamStruct;
+	if (typeof(ParsedStruct.ParamLoadingError)!='undefined'){
+		return ParsedStruct;
 	}
 	
 	// Check for problems
-	
+	console.log(ParsedStruct);
 	
 	var Param=[];
 	// Parse into each subgroup
-	for (var Key in ParamStruct){
+	for (var Key in ParsedStruct){
 		// Create a new parameter for each value in the group
-		Param[Key].Load(ParamStruct[Key]);
+		console.log(Key);
+		Param[Key]=new ParameterClass("", "", Key, "", 1);// ParameterID, ArrayName, ArrayNumber, InterfaceHolder, NumberOfSamples
+		Param[Key].Load(ParsedStruct[Key]);
 	}
 	return Param;
 }

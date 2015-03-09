@@ -25,7 +25,7 @@ function InitialisePage(){
 	TestingPageRequirements();
 	LoadDataFiles();
 	LoadSettingsFiles();
-	LoadParametersFiles();
+	Param=LoadParameters();
 	
 	//Wait?
 	
