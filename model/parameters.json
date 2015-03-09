@@ -80,6 +80,26 @@
         "Description": ""
     },
     {
+        "ParameterID": "IDU_AIHWDataFactor",
+        "ArrayName": "Param",
+        "ArrayNumber": "6",
+        "InterfaceID": "ParamHolder_6",
+        "GroupName": "",
+        "DistributionType": "uniform",
+        "Median": null,
+        "StandardError": null,
+        "LowerBound": 1,
+        "UpperBound": 1.5,
+        "Upper95Range": 1.475,
+        "Lower95Range": 1.025,
+        "CalculatedMedian": 1.25,
+        "NumberOfSamples": 100,
+        "Val": [],
+        "MinValue": "",
+        "MaxValue": "",
+        "Description": "The purpose of this factor is to accomodate for concerns that the AIHW Household Drug Surveys fail to capture people who inject drugs accurately. This factor inflates the results slightly."
+    },
+    {
         "ParameterID": "IDU_MedianInjectionStartAge",
         "ArrayName": "Param",
         "ArrayNumber": "4",
@@ -118,25 +138,5 @@
         "MinValue": "",
         "MaxValue": "",
         "Description": ""
-    },
-    {
-        "ParameterID": "NewParameter6",
-        "ArrayName": "Param",
-        "ArrayNumber": "6",
-        "InterfaceID": "ParamHolder_6",
-        "GroupName": "",
-        "DistributionType": "uniform",
-        "Median": null,
-        "StandardError": null,
-        "LowerBound": null,
-        "UpperBound": null,
-        "Upper95Range": 0,
-        "Lower95Range": 0,
-        "CalculatedMedian": 0,
-        "NumberOfSamples": 100,
-        "Val": [],
-        "MinValue": "",
-        "MaxValue": "",
-        "Description": []
     }
 ]

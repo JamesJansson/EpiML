@@ -174,7 +174,6 @@ ParameterClass.prototype.Save=function(){
 	var ParamElement = document.getElementById(this.InterfaceID);
 	// if it exists, set to the value in the Param
 	for (var Field in FieldNames){
-		console.log(FieldNames[Field]);
 		if (typeof(ParamElement[FieldNames[Field]])!='undefined'){
 			if (FieldTypes[Field]=='number'){
 				this[FieldNames[Field]]=Number(ParamElement[FieldNames[Field]].value);
@@ -182,7 +181,6 @@ ParameterClass.prototype.Save=function(){
 			else{
 				this[FieldNames[Field]]=ParamElement[FieldNames[Field]].value;
 			}
-			console.log(this[FieldNames[Field]]);
 		}
 	
 	}
