@@ -235,7 +235,6 @@ ParameterClass.prototype.CreateDistribution= function (){
 	
 	if (this.DistributionType=="normal"){
 		this.Val=NormalRandArray(this.Median, this.StandardError, this.NumberOfSamples);
-		console.log(this.Val);
 	}
 	if (this.DistributionType=="lognormal"){
 		var LogMedian=Log(this.Median);
@@ -382,7 +381,8 @@ ParameterPage.prototype.Build= function (){
 	}
 	
 	//This next section is very naughty, because it breaks the div by setting the inner HTML. It will probably break.
-	BuildText=BuildText+"<div class='SolidButton' onClick='"+this.PageName+".AddNewParameter(); '>Add parameter</div>"
+	BuildText=BuildText+"<div class='SolidButton' onClick='"+this.PageName+".AddNewParameter(); '>Add parameter</div>";
+	BuildText=BuildText+"<div class='SolidButton' onClick='"+this.PageName+".SaveParameters(); '>Save to file</div>"
 	BuildText=BuildText+"<p>Unsaved parameters <\p>";
 	document.getElementById(this.InterfaceHolder).innerHTML = BuildText;
 	
@@ -425,7 +425,7 @@ ParameterPage.prototype.SaveParameters= function(){
 	var ParamJSONString=JSON.stringify(this.ParamArray, null, 4);//gives 4 spaces between elements
 	var blob = new Blob([ParamJSONString], {type: "text/plain;charset=utf-8"});
 	
-	fs.writeFile("./model/parameters.json", ParamJSONString , function(err) {
+	fs.writeFile("./data/parameters.json", ParamJSONString , function(err) {
 		if(err) {
 			alert("There was an error writing to the parameters.json file. See console for details.");
 			console.log(err);
@@ -447,13 +447,34 @@ ParameterPage.prototype.UpdateArrayPositions= function(){
 }
 
 
-
+// function SaveParameters(ParamToSave, FileName){
+	// //Sort the Parameters by ID
+	// function compare(a,b) {
+	  // if (a.ParameterID < b.ParameterID)
+		 // return -1;
+	  // if (a.ParameterID > b.ParameterID)
+		// return 1;
+	  // return 0;
+	// }
+	// ParamToSave.sort(compare);
+	
+	
+	// var ParamJSONString=JSON.stringify(ParamToSave, null, 4);//gives 4 spaces between elements
+	// var blob = new Blob([ParamJSONString], {type: "text/plain;charset=utf-8"});
+	
+	// fs.writeFile("./data/parameters.json", ParamJSONString , function(err) {
+		// if(err) {
+			// alert("There was an error writing to the parameters.json file. See console for details.");
+			// console.log(err);
+		// }
+	// });
+// }
 
 
 // Load parameters from a file
 function LoadParameters(ParameterFileName){
 	// Open the file	
-	var ParamStruct=fs.readFileSync("./model/parameters.json", 'utf8');
+	var ParamStruct=fs.readFileSync("./data/parameters.json", 'utf8');
 	
 	console.error("Note that file error handling has not yet been implemented. Maybe use a try/catch system. Determine how to use readFileSync properly to ensure that the lack of the file is handled properly.");
 	// var ParamStruct=fs.readFileSync("./model/parameters.json", 'utf8', function (err, data) {

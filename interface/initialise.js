@@ -105,28 +105,7 @@ function SaveSettings(){
 }
 
 
-function SaveParameters(ParamToSave, FileName){
-	// Sort the Parameters by ID
-	function compare(a,b) {
-	  if (a.ParameterID < b.ParameterID)
-		 return -1;
-	  if (a.ParameterID > b.ParameterID)
-		return 1;
-	  return 0;
-	}
-	ParamToSave.sort(compare);
-	
-	
-	var ParamJSONString=JSON.stringify(ParamToSave, null, 4);//gives 4 spaces between elements
-	var blob = new Blob([ParamJSONString], {type: "text/plain;charset=utf-8"});
-	
-	fs.writeFile("./model/parameters.json", ParamJSONString , function(err) {
-		if(err) {
-			alert("There was an error writing to the parameters.json file. See console for details.");
-			console.log(err);
-		}
-	});
-}
+
 
 
 
