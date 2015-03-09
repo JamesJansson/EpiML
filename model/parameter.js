@@ -52,7 +52,7 @@ this.Description=[];//
 }
 
 ParameterClass.prototype.SetInterfaceID= function (InterfaceHolder){
-	this.InterfaceID=InterfaceHolder+"_"+this.ParameterID;
+	this.InterfaceID=InterfaceHolder+"_"+this.ArrayNumber;
 }
 
 
@@ -191,7 +191,6 @@ ParameterClass.prototype.Save=function(){
 	// if the name in the display is different to the name in the 
 	
 	// if the name changes, update the InterfaceID
-	var OldId=this.InterfaceID;
 	// DetermineInterfaceID(this.Name);
 	
 	
@@ -424,10 +423,20 @@ ParameterPage.prototype.SaveParameters= function(){
 		}
 	});
 	
+	//Update the array positions
 	
+	this.UpdateArrayPositions();
 	this.Build();
 
 }
+
+ParameterPage.prototype.UpdateArrayPositions= function(){
+	for (Key in this.ParamArray){
+		this.ParamArray[Key].ArrayNumber=Key;
+		this.ParamArray[Key].SetInterfaceID(this.InterfaceHolder);
+	}
+}
+
 
 
 
