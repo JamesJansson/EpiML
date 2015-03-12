@@ -812,6 +812,16 @@ function NormalRand(Mean, SD){
 	return Z;
 }
 
+function ExponentialDistributionRand(k){
+//pdf	ke-kx
+//CDF	1-e-kx
+
+
+
+}
+
+
+
 function NormalRandArray(Mean, SD, Num){
 	// Create the distribution around zero
 	// Using the Box-Muller transform
