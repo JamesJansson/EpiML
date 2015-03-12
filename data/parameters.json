@@ -15,8 +15,8 @@
         "CalculatedMedian": 0.032665489,
         "NumberOfSamples": 100,
         "Val": [],
-        "MinValue": "",
-        "MaxValue": "",
+        "MinValue": 0,
+        "MaxValue": 0,
         "Description": "Degos et al 2000 Hepatitis C virus related cirrhosis: time to occurrence of hepatocellular carcinoma and death.\n\nOf the 416 patients, 60 developed HCC with a five year rate of 13.4% (95% confidence interval (CI) 9.0-17.8%) and 83 died (including 34 with HCC), with a five year death rate of 15.3% (95% CI 12.6-18.0%)\n\n5-year -> Annual probability\n15.3% -> 0.032665489\n12.6%  ->0.026575469\n18% -> 0.03891285\n\n"
     },
     {
@@ -1350,8 +1350,8 @@
     {
         "ParameterID": "Prison_Females",
         "ArrayName": "Param",
-        "ArrayNumber": "28",
-        "InterfaceID": "ParamHolder_28",
+        "ArrayNumber": "27",
+        "InterfaceID": "ParamHolder_27",
         "GroupName": "",
         "DistributionType": "normal",
         "Median": 0.4,
@@ -1370,8 +1370,8 @@
     {
         "ParameterID": "Prison_Males",
         "ArrayName": "Param",
-        "ArrayNumber": "29",
-        "InterfaceID": "ParamHolder_29",
+        "ArrayNumber": "28",
+        "InterfaceID": "ParamHolder_28",
         "GroupName": "",
         "DistributionType": "normal",
         "Median": 0.63,
@@ -1390,8 +1390,8 @@
     {
         "ParameterID": "Z_HCC_SpClearance_Female_Prob",
         "ArrayName": "Param",
-        "ArrayNumber": "30",
-        "InterfaceID": "ParamHolder_30",
+        "ArrayNumber": "29",
+        "InterfaceID": "ParamHolder_29",
         "GroupName": "",
         "DistributionType": "normal",
         "Median": 0.522900763,
@@ -1410,8 +1410,8 @@
     {
         "ParameterID": "Z_HCC_SpClearance_Male_Prob",
         "ArrayName": "Param",
-        "ArrayNumber": "31",
-        "InterfaceID": "ParamHolder_31",
+        "ArrayNumber": "30",
+        "InterfaceID": "ParamHolder_30",
         "GroupName": "",
         "DistributionType": "normal",
         "Median": 0.292802,
@@ -1430,8 +1430,8 @@
     {
         "ParameterID": "Z_HCC_SpClearance_Male_k",
         "ArrayName": "Param",
-        "ArrayNumber": "32",
-        "InterfaceID": "ParamHolder_32",
+        "ArrayNumber": "31",
+        "InterfaceID": "ParamHolder_31",
         "GroupName": "",
         "DistributionType": "normal",
         "Median": 1.1,
@@ -1450,8 +1450,8 @@
     {
         "ParameterID": "Z_NewParameter28",
         "ArrayName": "Param",
-        "ArrayNumber": "27",
-        "InterfaceID": "ParamHolder_27",
+        "ArrayNumber": "32",
+        "InterfaceID": "ParamHolder_32",
         "GroupName": "",
         "DistributionType": "normal",
         "Median": null,

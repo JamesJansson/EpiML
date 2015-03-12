@@ -122,9 +122,14 @@ ParameterClass.prototype.UpdateTypeDisplay= function (){
 		"<a onClick=\"ToggleDisplay(this, 'ParamInfoBox');\" style='background-color: #acf;'> + More info </a>\n"+
 		"<div class='ParamInfoBox' style='display: none;'>\n"+
 		"<p>\n"+
+		"    Hard bounds: Min <input type='text' name='MinValue' value='" + this.MinValue + " '>\n"+
+		"    Max <input type='text' name='MaxValue' value='" + this.MaxValue + " '>\n"+
+		"</p>\n"+
+		"<p>\n"+
 		"    Median <input type='text' name='' value='" + this.CalculatedMedian + " '>\n"+
 		"    Lower 95%CI <input type='text' name='' value='" + this.Lower95Range + " '>\n"+
 		"    Upper 95%CI <input type='text' name='' value='" + this.Upper95Range + " '>\n"+
+		"</p>\n"+
 		"    <p>Description</p>"+
 		"    <textarea name='Description' cols='100' rows='5'>"+this.Description+"</textarea>";
 	//For each of the references, add a link, a box for the title, and the link
@@ -176,7 +181,17 @@ ParameterClass.prototype.Save=function(){
 	for (var Field in FieldNames){
 		if (typeof(ParamElement[FieldNames[Field]])!='undefined'){
 			if (FieldTypes[Field]=='number'){
+				if (!ParamElement[FieldNames[Field]].value.localeCompare("") || !ParamElement[FieldNames[Field]].value.localeCompare(" ")){
+					ParamElement[FieldNames[Field]].value="NaN";
+				}
 				this[FieldNames[Field]]=Number(ParamElement[FieldNames[Field]].value);
+
+				
+				// Special case for min and max values
+				if (isNaN(this[FieldNames[Field]])&& (FieldNames[Field]=='MinValue' || FieldNames[Field]=='MaxValue')){
+					console.log("Got in");
+					this[FieldNames[Field]]="";
+				}
 			}
 			else{
 				this[FieldNames[Field]]=ParamElement[FieldNames[Field]].value;
