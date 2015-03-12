@@ -1,0 +1,6 @@
+Opimisation of exit rate
+
+Optimisation of starting levels and transmission
+
+new StochasticOptimisation(Settings)
+
