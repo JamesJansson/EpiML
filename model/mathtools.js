@@ -817,18 +817,64 @@ function NormalRandArray(Mean, SD, Num){
 	// Using the Box-Muller transform
 	//StartTime = new Date().getTime();
 	var Z=[];
+	var Result=0;
 	for (var i=0; i<Num; i++){
-		Z[i]=Math.sqrt(-2*Math.log(Rand.Value()))*Math.cos(2*Math.PI*Rand.Value());
+		Result=Math.sqrt(-2*Math.log(Rand.Value()))*Math.cos(2*Math.PI*Rand.Value());
 		// Using central limit theorem
 		//Z[i]=lcg.rand()+lcg.rand()+lcg.rand()+lcg.rand()+lcg.rand()+lcg.rand()+lcg.rand()+lcg.rand()+lcg.rand()+lcg.rand()+lcg.rand()+lcg.rand()-6;
 		//Z[i]=Math.random()+Math.random()+Math.random()+Math.random()+Math.random()+Math.random()+Math.random()+Math.random()+Math.random()+Math.random()+Math.random()+Math.random()-6;
 		// Increase the deviation to the standard deviation specified amount, adjust such that the distribution is centred about the mean
-		Z[i]=Mean+Z[i]*SD;
+		Z[i]=Mean+Result*SD;
 	}
 	//StopTime = new Date().getTime();
 	//console.log(StopTime-StartTime);
 	return Z;
 }
+
+function NormalRandArrayBounded(Mean, SD, Num, Min, Max, MaxTries){
+	// Bounds the results ( to prevent Normal distributed numbers from having an incorrect result)
+	// MaxTries is optional
+	// This function stops after sampling for 100 times the initial Num value by default
+	
+	// Create the distribution around zero
+	// Using the Box-Muller transform
+	//StartTime = new Date().getTime();
+	var Z=[];
+	var Result=0;
+	var i=0;
+	var FoundVals=0;
+	if (typeof(MaxTries)=="undefined"){
+		var MaxTries=100*Num;
+	}
+	while ( i<MaxTries && FoundVals<Num){
+		i++;
+		Result=Math.sqrt(-2*Math.log(Rand.Value()))*Math.cos(2*Math.PI*Rand.Value());
+		// Using central limit theorem
+		//Z[i]=lcg.rand()+lcg.rand()+lcg.rand()+lcg.rand()+lcg.rand()+lcg.rand()+lcg.rand()+lcg.rand()+lcg.rand()+lcg.rand()+lcg.rand()+lcg.rand()-6;
+		//Z[i]=Math.random()+Math.random()+Math.random()+Math.random()+Math.random()+Math.random()+Math.random()+Math.random()+Math.random()+Math.random()+Math.random()+Math.random()-6;
+		// Increase the deviation to the standard deviation specified amount, adjust such that the distribution is centred about the mean
+		Result=Mean+Result*SD;
+		// Test if outside range specified
+		if (!(Result<Min) && !(Result>Max)){// this expression should work if Min or Max are unset
+			Z[FoundVals]=Result;
+			FoundVals++;
+		}
+	}
+	if (FoundVals<Num){
+		throw "Not enough values were found before time out. Try setting larger MaxTries";
+	}
+	//StopTime = new Date().getTime();
+	//console.log(StopTime-StartTime);
+	return Z;
+}
+// testing
+// Mean=3;
+// SD=2;
+// Num=100;
+// Min=NaN;
+// Max=NaN;
+// b=NormalRandArrayBounded(Mean, SD, Num, Min, Max);
+
 
 function RandArray(Min, Max, Num){
 	var Z=[];

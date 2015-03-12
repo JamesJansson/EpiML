@@ -247,13 +247,44 @@ ParameterClass.prototype.CalculateUncertaintyBounds= function (){
 }
 
 ParameterClass.prototype.CreateDistribution= function (){
+	var EmptyString="";
+	var RunBounded=false;
+	
+	var Min, Max;
+	if (!EmptyString.localeCompare(this.MinValue)){
+		Min=NaN;
+	}
+	else{
+		Min=this.MinValue;
+		RunBounded=true;
+	}
+	if (!EmptyString.localeCompare(this.MaxValue)){
+		Max=NaN;
+	}
+	else{
+		Max=this.MaxValue;
+		RunBounded=true;
+	}
 	
 	if (this.DistributionType=="normal"){
-		this.Val=NormalRandArray(this.Median, this.StandardError, this.NumberOfSamples);
+		if (RunBounded==false){ // if both bounds are set to empty strings
+			this.Val=NormalRandArray(this.Median, this.StandardError, this.NumberOfSamples);
+		}
+		else{
+			
+			this.Val=NormalRandArrayBounded(this.Median, this.StandardError, this.NumberOfSamples, Min, Max);
+		}
 	}
 	if (this.DistributionType=="lognormal"){
 		var LogMedian=Log(this.Median);
-		this.Val=NormalRandArray(LogMedian, this.StandardError, this.NumberOfSamples);
+		
+		if (RunBounded==false){ // if both bounds are set to empty strings
+			this.Val=NormalRandArray(LogMedian, this.StandardError, this.NumberOfSamples);
+		}
+		else{
+			this.Val=NormalRandArrayBounded(LogMedian, this.StandardError, this.NumberOfSamples, Min, Max);
+		}
+		
 		this.Val=Exp(this.Val);
 	}
 	if (this.DistributionType=="uniform"){

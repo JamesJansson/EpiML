@@ -15,8 +15,8 @@
         "CalculatedMedian": 0.032665489,
         "NumberOfSamples": 100,
         "Val": [],
-        "MinValue": 0,
-        "MaxValue": 0,
+        "MinValue": "",
+        "MaxValue": "",
         "Description": "Degos et al 2000 Hepatitis C virus related cirrhosis: time to occurrence of hepatocellular carcinoma and death.\n\nOf the 416 patients, 60 developed HCC with a five year rate of 13.4% (95% confidence interval (CI) 9.0-17.8%) and 83 died (including 34 with HCC), with a five year death rate of 15.3% (95% CI 12.6-18.0%)\n\n5-year -> Annual probability\n15.3% -> 0.032665489\n12.6%  ->0.026575469\n18% -> 0.03891285\n\n"
     },
     {
