@@ -145,9 +145,13 @@ function CreatePWIDPopulation(PWIDEntryByYear, EntryParams){
 			var YearOfBirth=TimeOfStartingInjection-AgeAtFirstInjection;
 			PWIDPopulation[TotalPWID-1]=new PersonObject(YearOfBirth, EntryParams.SexIndex);
 			PWIDPopulation[TotalPWID-1].StartInjecting(TimeOfStartingInjection);
-			
 		}
 	}
+	
+	
+	// Following entry, there is also a probability associated with becoming a regular user, and following that exiting at a certain probability
+	
+	
 	return PWIDPopulation;
 }
 

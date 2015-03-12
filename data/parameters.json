@@ -15,8 +15,8 @@
         "CalculatedMedian": 0.032665489,
         "NumberOfSamples": 100,
         "Val": [],
-        "MinValue": "",
-        "MaxValue": 0.032,
+        "MinValue": 0,
+        "MaxValue": 1,
         "Description": "Degos et al 2000 Hepatitis C virus related cirrhosis: time to occurrence of hepatocellular carcinoma and death.\n\nOf the 416 patients, 60 developed HCC with a five year rate of 13.4% (95% confidence interval (CI) 9.0-17.8%) and 83 died (including 34 with HCC), with a five year death rate of 15.3% (95% CI 12.6-18.0%)\n\n5-year -> Annual probability\n15.3% -> 0.032665489\n12.6%  ->0.026575469\n18% -> 0.03891285\n\n"
     },
     {
@@ -35,8 +35,8 @@
         "CalculatedMedian": 0.028364043,
         "NumberOfSamples": 100,
         "Val": [],
-        "MinValue": "",
-        "MaxValue": "",
+        "MinValue": 0,
+        "MaxValue": 1,
         "Description": "Degos et al 2000 Hepatitis C virus related cirrhosis: time to occurrence of hepatocellular carcinoma and death.\n\nOf the 416 patients, 60 developed HCC with a five year rate of 13.4% (95% confidence interval (CI) 9.0-17.8%) and 83 died (including 34 with HCC), with a five year death rate of 15.3% (95% CI 12.6-18.0%)\n\n5-year -> Annual probability\n13.4% -> 0.028364043\n9.0%  ->0.018685359\n17.8% -> 0.038444484\n"
     },
     {
@@ -55,8 +55,8 @@
         "CalculatedMedian": 0.07,
         "NumberOfSamples": 100,
         "Val": [],
-        "MinValue": "",
-        "MaxValue": "",
+        "MinValue": 0,
+        "MaxValue": 1,
         "Description": "It appears that the greatest risk for HCV infected individuals is the excess consumption of alcohol. \nThe probability of no Cirrohsis (F4) at 20 years following infection\n<50g/day 93% (SD 1)\n>50g/day 70% (SD 7)\nRef:\nPoynard et al. 2001 Rates and risk factors of liver fibrosis progression in patients with chronic hepatitis C "
     },
     {
@@ -75,8 +75,8 @@
         "CalculatedMedian": 70,
         "NumberOfSamples": 100,
         "Val": [],
-        "MinValue": "",
-        "MaxValue": "",
+        "MinValue": 0,
+        "MaxValue": 1,
         "Description": "It appears that the greatest risk for HCV infected individuals is the excess consumption of alcohol. \nThe probability of no Cirrohsis (F4) at 20 years following infection\n<50g/day 93% (SD 1)\n>50g/day 70% (SD 7)\nRef:\nPoynard et al. 2001 Rates and risk factors of liver fibrosis progression in patients with chronic hepatitis C \n\n\nThe estimated prevalence of cirrhosis at 20 years after the infection was16%(14%-19%) for all studies,18%(15%-21%) for cross-sectional/retrospective studies, 7% (4%-14%) for retrospective-prospective studies, 18% (16%-21%) for studies conducted in clinical settings, and 7% (4%-12%) for studies conducted in nonclinical settings.\n\nThein, Estimation of Stage-Specific Fibrosis Progression..."
     },
     {
@@ -1163,8 +1163,8 @@
         "CalculatedMedian": 0.0322,
         "NumberOfSamples": 100,
         "Val": [],
-        "MinValue": "",
-        "MaxValue": "",
+        "MinValue": 0,
+        "MaxValue": 1,
         "Description": "Injecting behaviour in MSM (HIV positive and negative) Table 27\t\t\t\t\t\t\t\nRecent\t2009\t2010\t2011\t2012\t2013\tMean\tSD\nHIV-positive\t20.40%\t16.40%\t14.20%\t18.20%\t17.60%\t17.36%\t0.02286482\nHIV-negative\t4.00%\t3.40%\t2.70%\t2.90%\t3.10%\t3.22%\t0.005069517\nhttps://csrh.arts.unsw.edu.au/media/CSRHFile/GCPS_Sydney_2013_Report.pdf"
     },
     {
@@ -1183,8 +1183,8 @@
         "CalculatedMedian": 0.1736,
         "NumberOfSamples": 100,
         "Val": [],
-        "MinValue": "",
-        "MaxValue": "",
+        "MinValue": 0,
+        "MaxValue": 1,
         "Description": "Injecting behaviour in MSM (HIV positive and negative) Table 27\t\t\t\t\t\t\t\nRecent\t2009\t2010\t2011\t2012\t2013\tMean\tSD\nHIV-positive\t20.40%\t16.40%\t14.20%\t18.20%\t17.60%\t17.36%\t0.02286482\nHIV-negative\t4.00%\t3.40%\t2.70%\t2.90%\t3.10%\t3.22%\t0.005069517\nhttps://csrh.arts.unsw.edu.au/media/CSRHFile/GCPS_Sydney_2013_Report.pdf"
     },
     {
@@ -1203,8 +1203,8 @@
         "CalculatedMedian": 0.66,
         "NumberOfSamples": 100,
         "Val": [],
-        "MinValue": "",
-        "MaxValue": "",
+        "MinValue": 0,
+        "MaxValue": 1,
         "Description": ""
     },
     {
@@ -1363,8 +1363,8 @@
         "CalculatedMedian": 0.4,
         "NumberOfSamples": 100,
         "Val": [],
-        "MinValue": "",
-        "MaxValue": "",
+        "MinValue": 0,
+        "MaxValue": 1,
         "Description": "Ref 1: Key findings from the 2012 IDRS: a survey of people who inject drugs \n"
     },
     {
@@ -1383,8 +1383,8 @@
         "CalculatedMedian": 0.63,
         "NumberOfSamples": 100,
         "Val": [],
-        "MinValue": "",
-        "MaxValue": "",
+        "MinValue": 0,
+        "MaxValue": 1,
         "Description": "Ref 1: Key findings from the 2012 IDRS: a survey of people who inject drugs \n"
     },
     {
