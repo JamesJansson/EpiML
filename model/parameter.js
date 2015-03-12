@@ -285,7 +285,7 @@ ParameterClass.prototype.CreateDistribution= function (){
 			this.Val=NormalRandArrayBounded(LogMedian, this.StandardError, this.NumberOfSamples, Min, Max);
 		}
 		
-		this.Val=Exp(this.Val);
+		this.Val=Exp(this.Val);// transform back
 	}
 	if (this.DistributionType=="uniform"){
 		this.Val=RandArray(this.LowerBound, this.UpperBound, this.NumberOfSamples);

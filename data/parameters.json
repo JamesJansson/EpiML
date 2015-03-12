@@ -16,7 +16,7 @@
         "NumberOfSamples": 100,
         "Val": [],
         "MinValue": "",
-        "MaxValue": "",
+        "MaxValue": 0.032,
         "Description": "Degos et al 2000 Hepatitis C virus related cirrhosis: time to occurrence of hepatocellular carcinoma and death.\n\nOf the 416 patients, 60 developed HCC with a five year rate of 13.4% (95% confidence interval (CI) 9.0-17.8%) and 83 died (including 34 with HCC), with a five year death rate of 15.3% (95% CI 12.6-18.0%)\n\n5-year -> Annual probability\n15.3% -> 0.032665489\n12.6%  ->0.026575469\n18% -> 0.03891285\n\n"
     },
     {
@@ -166,18 +166,18 @@
         "InterfaceID": "ParamHolder_8",
         "GroupName": "",
         "DistributionType": "normal",
-        "Median": 0.641581633,
-        "StandardError": 0.03,
+        "Median": 0.358418367,
+        "StandardError": 0.026,
         "LowerBound": null,
         "UpperBound": null,
-        "Upper95Range": 0.700381633,
-        "Lower95Range": 0.5827816330000001,
-        "CalculatedMedian": 0.641581633,
+        "Upper95Range": 0.409378367,
+        "Lower95Range": 0.307458367,
+        "CalculatedMedian": 0.358418367,
         "NumberOfSamples": 100,
         "Val": [],
-        "MinValue": "",
-        "MaxValue": "",
-        "Description": "According to Figure 1A of \nGrebely, J, The effects of female sex, viral genotype, and IL28B genotype on spontaneous clearance of acute hepatitis C virus infection. \nhttp://www.ncbi.nlm.nih.gov/pubmed/23908124\n\nThe Kaplan-Meier estimator gives the probaility of clearance as 0.641581633 (95%CI 0.588010204-0.69005102). Standard error is hence set to 0.03.\n"
+        "MinValue": 0,
+        "MaxValue": 1,
+        "Description": "According to Figure 1A of \nGrebely, J, The effects of female sex, viral genotype, and IL28B genotype on spontaneous clearance of acute hepatitis C virus infection. \nhttp://www.ncbi.nlm.nih.gov/pubmed/23908124\n\nThe Kaplan-Meier estimator gives the probaility of persistent infection as 0.641581633 (95%CI 0.588010204-0.69005102). \n\nP of clearance is therefore 0.358418367 (95%CI 0.30994898-0.411989796)\n\n\nStandard error is hence set to 0.03.\n"
     },
     {
         "ParameterID": "HCV_TimeF0F1",
