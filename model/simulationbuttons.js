@@ -19,10 +19,25 @@ function RunSim(){
 	SimSettings.SampleFactor=Settings.SampleFactor;
 	
 	// Save into the Common holder
-	var Common={};//
+	var Common={};
+	
+	//Data
 	Common.Data=Data;
+	
+	
+	
+	
+	console.error("this is where we need to be putting a splitter for the Param");
 	Common.Param=Param;
+	
+	
+	
+	
+	
+	
 	Common.Settings=SimSettings;
+	
+	
 	
 	// Load the values from the interface into the parameters
 	// for (key in Param)
@@ -67,17 +82,24 @@ function ExtractDataFromFiles(){
 	Data.StateNotifications.State=DataFile.StateNotifications.GetColumn(0, 29, 36);//GetColumn
 	Data.StateNotifications.Year=DataFile.StateNotifications.GetRow(3, 1, 19);//GetRow
 	
-	Param.MaleMortality={};
-	Param.MaleMortality.Year1=1986;//The year which is used for the baseline
-	Param.MaleMortality.Rates1=DataFile.MaleMortality.GetColumn( 13, 1, 101);//get table indicates the range [rows][columns]
-	Param.MaleMortality.Year2=2006;//The year which is used for the baseline
-	Param.MaleMortality.Rates2=DataFile.MaleMortality.GetColumn( 17, 1, 101);//get table indicates the range [rows][columns]
 	
-	Param.FemaleMortality={};
-	Param.FemaleMortality.Year1=1986;//The year which is used for the baseline
-	Param.FemaleMortality.Rates1=DataFile.FemaleMortality.GetColumn( 13, 1, 101);//get table indicates the range [rows][columns]
-	Param.FemaleMortality.Year2=2006;//The year which is used for the baseline
-	Param.FemaleMortality.Rates2=DataFile.FemaleMortality.GetColumn( 17, 1, 101);//get table indicates the range [rows][columns]
+	Data.Mortality={};
+	Data.Mortality.Male=[];
+	Data.Mortality.Male[1]={};
+	Data.Mortality.Male[1].Year=1986;//The year which is used for the baseline
+	Data.Mortality.Male[1].Rates=DataFile.MaleMortality.GetColumn( 13, 1, 101);//get table indicates the range [rows][columns]
+	Data.Mortality.Male[2]={};
+	Data.Mortality.Male[2].Year=2006;//The year which is used for the baseline
+	Data.Mortality.Male[2].Rates=DataFile.MaleMortality.GetColumn( 17, 1, 101);//get table indicates the range [rows][columns]
+	
+	Data.Mortality.Female=[];
+	Data.Mortality.Female[1]={};
+	Data.Mortality.Female[1].Year=1986;//The year which is used for the baseline
+	Data.Mortality.Female[1].Rates=DataFile.FemaleMortality.GetColumn( 13, 1, 101);//get table indicates the range [rows][columns]
+	Data.Mortality.Female[2]={};
+	Data.Mortality.Female[2].Year=2006;//The year which is used for the baseline
+	Data.Mortality.Female[2].Rates=DataFile.FemaleMortality.GetColumn( 17, 1, 101);//get table indicates the range [rows][columns]
+
 
 	Data.PWID={};
 	Data.PWID.Year=DataFile.PWID.GetRow( 0, 1, 6);

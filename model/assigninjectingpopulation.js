@@ -144,7 +144,7 @@ function CreatePWIDPopulation(PWIDEntryByYear, EntryParams){
 			var TimeOfStartingInjection=CurrentYear+Rand.Value();
 			var YearOfBirth=TimeOfStartingInjection-AgeAtFirstInjection;
 			PWIDPopulation[TotalPWID-1]=new PersonObject(YearOfBirth, EntryParams.SexIndex);
-			PWIDPopulation[TotalPWID-1].StartInjecting(TimeOfStartingInjection);
+			PWIDPopulation[TotalPWID-1].IDU.StartInjecting(TimeOfStartingInjection);
 		}
 	}
 	
@@ -454,3 +454,8 @@ function TESTDeterminePWIDEntryRateExponential(){
 // Rate of people becoming regular users
 // Rate that the regular users use
 // Rate of leaving regular injection 
+
+
+
+
+
