@@ -309,7 +309,7 @@ function EntryRateOptimisationExponential(TargetForThisOptimisation, EntryParams
 	
 	EntryRateOptimisationSettings.Target=TargetForThisOptimisation.Data;
 	
-	var MaxEntryRateAtPeak=1000;// The maximum number who hae previously injected is capped at 1000 above. This limit reduces the parameter space and hence time needed to run this optimisation
+	var MaxEntryRateAtPeak=1000;// The maximum number who have previously injected is capped at 1000 above. This limit reduces the parameter space and hence time needed to run this optimisation
 	
 	OptimisationObject=new StochasticOptimisation(EntryRateOptimisationSettings);
 	OptimisationObject.AddParameter("Logk1", 0, 1);
