@@ -100,8 +100,6 @@ HCVObject.prototype.Infection= function (Year, GenotypeValue){//, Age, Sex, Alco
 			var DateF4=DateF3+Time;
 			this.Fibrosis.Set(4, DateF4);
 			//F4LF
-			console.log(Param.HCV.F4LF);
-			console.log(Param.HCV);
 			var TimeF4LF=TimeUntilEvent(Param.HCV.F4LF);
 			var DateLF=DateF4+TimeF4LF;
 			this.Fibrosis.Set(5, DateLF);
