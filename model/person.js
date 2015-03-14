@@ -12,12 +12,10 @@ function PersonObject(YearOfBirth, Sex)//, YearOfObservation Param)
 	//this.AliveStatus=1;// status variable
 	this.YearOfBirth=YearOfBirth;
 	
-	this.YearOfDeath=1E9;
-	this.GeneralDeath=1E9;
-	this.IDUDeath=1E9;
-	this.HCVDeath=1E9;
-	this.HCCDeath=1E9;
-	this.HIVDeath=1E9;
+
+	
+	this.Death=new DeathObject(this);
+	
 	
 	//Location (in this case, there is only one location variable, it might represent state or a local area)
 	this.Location=new EventVector;
@@ -74,6 +72,9 @@ PersonObject.prototype.CalculateGeneralMortality= function (YearFromWhichToCalcu
 PersonObject.prototype.CalculateHCVMortality= function (YearFromWhichToCalculateMortality){
 	// http://jid.oxfordjournals.org/content/206/4/469.long
 	
+	throw "This function should not be used";
+	
+	
 	// Determine the HCV stage
 	var HCVStatus=this.HCV.Fibrosis.Get(YearFromWhichToCalculateMortality);
 	HCVStageNumber=HCVStatus.Pos;
@@ -100,11 +101,7 @@ PersonObject.prototype.CalculateHCVMortality= function (YearFromWhichToCalculate
 	
 };
 
-PersonObject.prototype.YearsOfLifeLost= function (){
-	// This is a general function that describes the difference between general death date and 
-	// the earliest non-general death date.
-	return this.GeneralDeath-Math.min(this.GeneralDeath, this.IDUDeath, this.HCVDeath, this.HIVDeath);
-};
+
 
 PersonObject.prototype.StartInjecting= function (Time){
 	
@@ -116,6 +113,26 @@ PersonObject.prototype.HCVInfection= function (YearOfInfection, Genotype, HCVPar
 	var Alcohol=0;
 	this.HCV.Infection(YearOfInfection, Genotype, this.Age(YearOfInfection), this.Sex, this.Alcohol, HCVParam );
 }
+
+
+function DeathObject(PersonPointer){
+	this.YearOfDeath=1E9;
+	this.GeneralDeath=1E9;
+	this.IDUDeath=1E9;
+	this.HCVDeath=1E9;
+	this.HCCDeath=1E9;
+	this.HIVDeath=1E9;
+}
+
+
+DeathObject.prototype.YearsOfLifeLost= function (){
+	// This is a general function that describes the difference between general death date and 
+	// the earliest non-general death date.
+	return this.GeneralDeath-Math.min(this.GeneralDeath, this.IDUDeath, this.HCVDeath, this.HIVDeath);
+};
+
+
+
 
 
 //-----------------------------------------------------------------

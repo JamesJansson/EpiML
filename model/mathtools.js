@@ -308,55 +308,7 @@ function ZeroMatrix(xsize, ysize){
 }
 
 // Array operations
-function AddArrays(Array1, Array2){
-	if (Array1.length!=Array2.length){
-		error("Arrays are incorrect length");
-	}
-	var ArrayResult=new Array(Array1.length);
-	
-	for (var i=0; i<Array1.length;i++){
-		ArrayResult[i]=Array1[i]+Array2[i];
-	}
-	return ArrayResult;
-}
 
-function MinusArrays(Array1, Array2){
-	if (Array1.length!=Array2.length){
-		error("Arrays are incorrect length");
-	}
-	var ArrayResult=new Array(Array1.length);
-	
-	for (var i=0; i<Array1.length;i++){
-		ArrayResult[i]=Array1[i]-Array2[i];
-	}
-	return ArrayResult;
-}
-
-function MultiplyArrays(Array1, Array2){
-	if (Array1.length!=Array2.length){
-		error("Arrays are incorrect length");
-	}
-	var ArrayResult=new Array(Array1.length);
-	
-	for (var i=0; i<Array1.length;i++){
-		ArrayResult[i]=Array1[i]*Array2[i];
-	}
-	return ArrayResult;
-}
-
-
-
-function DivideArrays(Array1, Array2){
-	if (Array1.length!=Array2.length){
-		error("Arrays are incorrect length");
-	}
-	var ArrayResult=new Array(Array1.length);
-	
-	for (var i=0; i<Array1.length;i++){
-		ArrayResult[i]=Array1[i]/Array2[i];
-	}
-	return ArrayResult;
-}
 
 
 function Multiply(A, B){
