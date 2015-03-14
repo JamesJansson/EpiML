@@ -764,27 +764,7 @@ function NormalRand(Mean, SD){
 	return Z;
 }
 
-function ExpDistributionRand(HalfLife){
-	// This distribution can be used to save time when a constant probability process occurs
-	// It differs from TimeUntilEvent where the annual probability is known.
-	// The HalfLife is the time it takes half the population to have the event occur
-	// Prop=1-Exp(-k*t)
-	// Exp(-k*t)=1-Prop
-	// t=-Log(1-Prop)/k AND k=-Log(1-Prop)/t
-	// when Prop=0.5 and t=HalfLife
-	// Log(1-Prop)=-0.6931471805599453// numerical value used for speed
-	var k=0.6931471805599453/HalfLife;
-	// to find a random time
-	return -Log(1-Rand.Value())/k;
-}
 
-function ExpDistributionRandArray(HalfLife, Num){
-	var ReturnArray=[];
-	for (var i=0; i<Num; i++){
-		ReturnArray[i]=ExpDistributionRand(HalfLife);
-	}
-	return ReturnArray;
-}
 
 function NormalRandArray(Mean, SD, Num){
 	// Create the distribution around zero
@@ -848,6 +828,30 @@ function NormalRandArrayBounded(Mean, SD, Num, Min, Max, MaxTries){
 // Min=NaN;
 // Max=NaN;
 // b=NormalRandArrayBounded(Mean, SD, Num, Min, Max);
+
+
+function ExpDistributionRand(HalfLife){
+	// This distribution can be used to save time when a constant probability process occurs
+	// It differs from TimeUntilEvent where the annual probability is known.
+	// The HalfLife is the time it takes half the population to have the event occur
+	// Prop=1-Exp(-k*t)
+	// Exp(-k*t)=1-Prop
+	// t=-Log(1-Prop)/k AND k=-Log(1-Prop)/t
+	// when Prop=0.5 and t=HalfLife
+	// Log(1-Prop)=-0.6931471805599453// numerical value used for speed
+	var k=0.6931471805599453/HalfLife;
+	// to find a random time
+	return -Log(1-Rand.Value())/k;
+}
+
+function ExpDistributionRandArray(HalfLife, Num){
+	var ReturnArray=[];
+	for (var i=0; i<Num; i++){
+		ReturnArray[i]=ExpDistributionRand(HalfLife);
+	}
+	return ReturnArray;
+}
+
 
 
 function RandArray(Min, Max, Num){

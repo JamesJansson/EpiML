@@ -1,5 +1,6 @@
-﻿//Specify files to be included in the simulation
-DebugLoadingScripts=true;
+﻿
+//Specify files to be included in the simulation
+var DebugLoadingScripts=true;
 
 importScripts("simulation.js");
 importScripts("simulationtools.js");
@@ -89,7 +90,7 @@ self.onmessage = function (WorkerMessage) {
 	
 	
 	// Perform an optimisation of the number of injectors
-	if (true){
+	if (false){
 	// Get the data for the numbers by sex and age
 		var PWIDEntryOptimisationResults=OptimiseInjectionEntry(Data.PWID); 
 	}
@@ -99,25 +100,7 @@ self.onmessage = function (WorkerMessage) {
 	
 	var GenotypeValue=1;
 
-	
-	var HCVParam={};
-	HCVParam.F0F1=0.117;
-	HCVParam.F1F2=0.085;
-	HCVParam.F2F3=0.12;
-	HCVParam.F3F4=0.116;
-	HCVParam.F4LF=0.055;//not real
-	HCVParam.F4HCC=0.031;//not real
-	// Grebely http://www.ncbi.nlm.nih.gov/pubmed/23908124
-	HCVParam.SpontaneousClearance=0.296;// 4 year probability of clearance
-	HCVParam.YearlyRateOfClearanceInClearers=0.666; // proportion (of the 29.6% of people who will clear) clearing each year
-	
-	HCVParam.F0Mortality=0;
-	HCVParam.F1Mortality=0;
-	HCVParam.F2Mortality=0;
-	HCVParam.F3Mortality=0;
-	HCVParam.F4Mortality=0;
-	HCVParam.LFMortality=0;
-	HCVParam.HCCMortality=0;
+
 	
 	
 	DebugStatement("Starting to load Person object");
@@ -149,13 +132,12 @@ self.onmessage = function (WorkerMessage) {
 		YearOfDiagnosis=YearOfDiagnosisVector[0];
 		YearOfInfection=YearOfDiagnosis-TimeUntilDiagnosis;// Zero is the first year of diagnosis
 		
-		PPNotification[i].HCVInfection(YearOfInfection, GenotypeValue, HCVParam );//In future iterations, HCVParam will become Param.HCV
+		PPNotification[i].HCV.Infection(YearOfInfection, GenotypeValue );//In future iterations, HCVParam will become Param.HCV
 		if (i%ProgressDisplay==0){
 			self.postMessage({ProgressBarValue: i/PPNotification.length});
 		}
 
 		PPNotification[i].CalculateGeneralMortality(YearOfDiagnosis); // Calculate date of mortality from the date of diagnosis
-		PPNotification[i].CalculateHCVMortality(YearOfDiagnosis);
 	}
 	
 	// This section contains testing code which is not used at the moment

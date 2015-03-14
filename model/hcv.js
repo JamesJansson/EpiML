@@ -84,26 +84,25 @@ HCVObject.prototype.Infection= function (Year, GenotypeValue){//, Age, Sex, Alco
 			//Determine time until Fibrosis
 			//F0-F4-LF are mutually exclusive, HCC is not mutually exclusive to the other states
 			//F0F1
-			Time=ExpDistributionRand(Param.HCV.TimeF0F1);
-			
-			
-			
+			Time=TimeUntilEvent(Param.HCV.F0F1);
 			var DateF1=Year+Time;
 			this.Fibrosis.Set(1, DateF1);
 			//F1F2
-			Time=ExpDistributionRand(Param.HCV.TimeF1F2);
+			Time=TimeUntilEvent(Param.HCV.F1F2);
 			var DateF2=DateF1+Time;
 			this.Fibrosis.Set(2, DateF2);
 			//F2F3
-			Time=ExpDistributionRand(Param.HCV.TimeF2F3);
+			Time=TimeUntilEvent(Param.HCV.F2F3);
 			var DateF3=DateF2+Time;
 			this.Fibrosis.Set(3, DateF3);
 			//F3F4
-			Time=ExpDistributionRand(Param.HCV.TimeF3F4);
+			Time=TimeUntilEvent(Param.HCV.F3F4);
 			var DateF4=DateF3+Time;
 			this.Fibrosis.Set(4, DateF4);
 			//F4LF
-			var TimeF4LF=TimeUntilEvent(Param.HCV.TimeF4LF);
+			console.log(Param.HCV.F4LF);
+			console.log(Param.HCV);
+			var TimeF4LF=TimeUntilEvent(Param.HCV.F4LF);
 			var DateLF=DateF4+TimeF4LF;
 			this.Fibrosis.Set(5, DateLF);
 			

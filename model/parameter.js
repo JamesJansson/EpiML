@@ -272,7 +272,9 @@ ParameterClass.prototype.CreateDistribution= function (){
 				this.Val=NormalRandArray(this.Median, this.StandardError, this.NumberOfSamples);
 			}
 			else{
-				
+				if (Max<Min){
+					throw "Min should be smaller than Max";
+				}
 				this.Val=NormalRandArrayBounded(this.Median, this.StandardError, this.NumberOfSamples, Min, Max);
 			}
 		}
@@ -283,7 +285,24 @@ ParameterClass.prototype.CreateDistribution= function (){
 				this.Val=NormalRandArray(LogMedian, this.StandardError, this.NumberOfSamples);
 			}
 			else{
-				this.Val=NormalRandArrayBounded(LogMedian, this.StandardError, this.NumberOfSamples, Min, Max);
+				if (Min<0 ||Max<0){
+					throw "Min and Max should be larger than zero";
+				}
+				if (Max<Min){
+					throw "Min should be smaller than Max";
+				}
+				//We need to treat the Min specially, in case it is zero
+				if (Min==0){
+					var LogMin=-1.7976931348623157e+308;
+				}else{
+					var LogMin=Log(Min);
+				}
+				var LogMax=Log(Max);
+				
+				console.log("Median: "+LogMedian+" "+LogMin+" "+LogMax);
+				
+				
+				this.Val=NormalRandArrayBounded(LogMedian, this.StandardError, this.NumberOfSamples, LogMin, LogMax);
 			}
 			
 			this.Val=Exp(this.Val);// transform back

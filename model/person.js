@@ -73,10 +73,10 @@ PersonObject.prototype.StartInjecting= function (Time){
 	
 };
 
-PersonObject.prototype.HCVInfection= function (YearOfInfection, Genotype, HCVParam) {
-	var Alcohol=0;
-	this.HCV.Infection(YearOfInfection, Genotype, this.Age(YearOfInfection), this.Sex, this.Alcohol, HCVParam );
-}
+// PersonObject.prototype.HCVInfection= function (YearOfInfection, Genotype, HCVParam) {
+	// var Alcohol=0;
+	// this.HCV.Infection(YearOfInfection, Genotype, this.Age(YearOfInfection), this.Sex, this.Alcohol, HCVParam );
+// }
 
 
 function DeathObject(PersonPointer){
