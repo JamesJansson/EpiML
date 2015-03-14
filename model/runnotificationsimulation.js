@@ -62,7 +62,7 @@ self.onmessage = function (WorkerMessage) {
 	//Load the notification data
 	Data=WorkerMessage.data.Common.Data;
 	//Load the parameters data
-	//Param=WorkerMessage.data.Common.Param;
+	Param = WorkerMessage.data.SimData;
 	
 	
 	console.log("Note at some point we will simply merge the common and non-common Params into a single Param for simplicity");
@@ -70,7 +70,7 @@ self.onmessage = function (WorkerMessage) {
 	Settings=WorkerMessage.data.Common.Settings;
 	
 	SimID = WorkerMessage.data.SimID; // this value is used to select the appropriate parameter value
-    Param = WorkerMessage.data.SimData;
+
 	var ThreadID = WorkerMessage.data.ThreadID;// this value can be used by the code to send specific messages to particular elements, e.g. progress bar 4 set to 60%
 	
 	var StringForStatus="thread: "+ThreadID+" simID: "+SimID;
@@ -95,8 +95,7 @@ self.onmessage = function (WorkerMessage) {
 	}
 	
 	
-	// Run an example simulation
-	var IncrementSize=Math.round(SimData.NoPeople/100);//used to deliver progress rates back to the progress bar
+	
 	
 	var GenotypeValue=1;
 
@@ -137,6 +136,8 @@ self.onmessage = function (WorkerMessage) {
 	
 	var YearOfInfection;
 	var YearOfDiagnosis;
+	
+	var ProgressDisplay=Math.round(PPNotification.length/100);//used to deliver progress rates back to the progress bar
 	for (var i=0; i<PPNotification.length; i++){
 		
 		//TimeUntilDiagnosis=NormalRand(5, 2.5);//this may end up being lognormal
@@ -149,8 +150,8 @@ self.onmessage = function (WorkerMessage) {
 		YearOfInfection=YearOfDiagnosis-TimeUntilDiagnosis;// Zero is the first year of diagnosis
 		
 		PPNotification[i].HCVInfection(YearOfInfection, GenotypeValue, HCVParam );//In future iterations, HCVParam will become Param.HCV
-		if (i%IncrementSize==0){
-			self.postMessage({ProgressBarValue: i/SimData.NoPeople});
+		if (i%ProgressDisplay==0){
+			self.postMessage({ProgressBarValue: i/PPNotification.length});
 		}
 
 		PPNotification[i].CalculateGeneralMortality(YearOfDiagnosis); // Calculate date of mortality from the date of diagnosis

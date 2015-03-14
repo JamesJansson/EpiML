@@ -13,7 +13,7 @@ var Param={};
 var PP=[];
 self.onmessage = function (e) {
 
-	console.log("WARNING WARNING WARNING WARNING WARNING WARNING WARNING This is the old version of this simulation, do not use it!");
+	throw "WARNING WARNING WARNING WARNING WARNING WARNING WARNING This is the old version of this simulation, do not use it!";
 
 	//In this section will be a message handler that allows calls
 	// Initialise (set data and parameters)
