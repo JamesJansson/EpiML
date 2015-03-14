@@ -868,10 +868,38 @@
         "Description": "Ref 1: Key findings from the 2012 IDRS: a survey of people who inject drugs \n"
     },
     {
-        "ParameterID": "Z_HCC_SpClearance_Male_k",
+        "ParameterID": "Z_A",
         "ArrayName": "Param",
         "ArrayNumber": "31",
         "InterfaceID": "ParamHolder_31",
+        "GroupName": "",
+        "DistributionType": "normal",
+        "Median": null,
+        "StandardError": null,
+        "LowerBound": null,
+        "UpperBound": null,
+        "Upper95Range": null,
+        "Lower95Range": null,
+        "CalculatedMedian": null,
+        "NumberOfSamples": 7,
+        "Val": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+        ],
+        "MinValue": "",
+        "MaxValue": "",
+        "Description": ""
+    },
+    {
+        "ParameterID": "Z_HCC_SpClearance_Male_k",
+        "ArrayName": "Param",
+        "ArrayNumber": "32",
+        "InterfaceID": "ParamHolder_32",
         "GroupName": "",
         "DistributionType": "normal",
         "Median": 1.1,
@@ -894,33 +922,5 @@
         "MinValue": "",
         "MaxValue": "",
         "Description": "P=1-e(-kt)\n-kt=ln(1-P)\nt=-ln(1-P)/t\n\nThe uncertainty in the curvature is eyeballed from adjusting the spreadsheet on figure 2 B from:\nGrebely, J, The effects of female sex, viral genotype, and IL28B genotype on spontaneous clearance of acute hepatitis C virus infection. "
-    },
-    {
-        "ParameterID": "Z_NewParameter28",
-        "ArrayName": "Param",
-        "ArrayNumber": "32",
-        "InterfaceID": "ParamHolder_32",
-        "GroupName": "",
-        "DistributionType": "normal",
-        "Median": null,
-        "StandardError": null,
-        "LowerBound": null,
-        "UpperBound": null,
-        "Upper95Range": 0,
-        "Lower95Range": 0,
-        "CalculatedMedian": null,
-        "NumberOfSamples": 7,
-        "Val": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0
-        ],
-        "MinValue": "",
-        "MaxValue": "",
-        "Description": ""
     }
 ]
