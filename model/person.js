@@ -45,7 +45,7 @@ PersonObject.prototype.Age= function (Year){//using prototyping for speed
 };
 
 PersonObject.prototype.Alive = function (Year){//using prototyping for speed
-	if (this.YearOfBirth<=Year && Year <= this.YearOfDeath){
+	if (this.YearOfBirth<=Year && Year <= this.Death.Year()){
 		return true;
 	}
 	//else
@@ -55,51 +55,15 @@ PersonObject.prototype.Alive = function (Year){//using prototyping for speed
 PersonObject.prototype.CalculateGeneralMortality= function (YearFromWhichToCalculateMortality){//, MaleMortality, FemaleMortality){
 	// if this.Sex==0 && this.Aboriginal==false
 	if (this.Sex==0){
-		this.GeneralDeath=MaleMortality.YearOfDeath(this.YearOfBirth, YearFromWhichToCalculateMortality);
+		this.Death.General=MaleMortality.YearOfDeath(this.YearOfBirth, YearFromWhichToCalculateMortality);
 	}
 	else {
-		this.GeneralDeath=FemaleMortality.YearOfDeath(this.YearOfBirth, YearFromWhichToCalculateMortality);
+		this.Death.General=FemaleMortality.YearOfDeath(this.YearOfBirth, YearFromWhichToCalculateMortality);
 	}
-	//console.log("Birth Year Death" + this.YearOfBirth +" "+ YearFromWhichToCalculateMortality +" "+ this.GeneralDeath);
-	
-	// If the general death happens to be earlier than the death from other causes, set the year of death to occur first 
-	if (this.GeneralDeath<this.YearOfDeath){
-		this.YearOfDeath=this.GeneralDeath;
-	}
-	
 };
 
-PersonObject.prototype.CalculateHCVMortality= function (YearFromWhichToCalculateMortality){
-	// http://jid.oxfordjournals.org/content/206/4/469.long
 	
-	throw "This function should not be used";
-	
-	
-	// Determine the HCV stage
-	var HCVStatus=this.HCV.Fibrosis.Get(YearFromWhichToCalculateMortality);
-	HCVStageNumber=HCVStatus.Pos;
-	var CurrentHCVStartTime=2;
-	var NextHCVStage=2;
-	var NextHCVTime=3;
-	var NextHCVIndex=4;
-	// Determine the time until the next HCV stage
-	// Use the HCV mortality rates by stage to determine 
-	
-	var i=0;
-	while (i){
-		if (this.Sex==0){
-			this.HCVDeath=HCVMaleMortality.YearOfDeath(this.YearOfBirth, CurrentHCVStage, CurrentHCVStartTime);
-		}
-		else {
-			this.HCVDeath=HCVFemaleMortality.YearOfDeath(this.YearOfBirth, CurrentHCVStartTime);
-		}
-	}
-	//console.log("Birth Year Death" + this.YearOfBirth +" "+ YearFromWhichToCalculateMortality +" "+ this.GeneralDeath);
-	if (this.GeneralDeath<this.YearOfDeath){
-		this.YearOfDeath=this.GeneralDeath;
-	}
-	
-};
+
 
 
 
@@ -116,19 +80,27 @@ PersonObject.prototype.HCVInfection= function (YearOfInfection, Genotype, HCVPar
 
 
 function DeathObject(PersonPointer){
-	this.YearOfDeath=1E9;
-	this.GeneralDeath=1E9;
-	this.IDUDeath=1E9;
-	this.HCVDeath=1E9;
-	this.HCCDeath=1E9;
-	this.HIVDeath=1E9;
+	
+	this.General=1E9;
+	this.IDU=1E9;
+	this.HCV=1E9;
+	this.HCC=1E9;
+	this.LF=1E9;
+	this.HIV=1E9;
 }
+
+DeathObject.prototype.Year= function (){
+	// This is a general function that describes the difference between general death date and 
+	// the earliest non-general death date.
+	return Math.min(this.General, this.IDU, this.HCV, this.HCC, this.LF, this.HIV);
+};
+
 
 
 DeathObject.prototype.YearsOfLifeLost= function (){
 	// This is a general function that describes the difference between general death date and 
 	// the earliest non-general death date.
-	return this.GeneralDeath-Math.min(this.GeneralDeath, this.IDUDeath, this.HCVDeath, this.HIVDeath);
+	return this.General-Math.min(this.General, this.IDU, this.HCV, this.HCC, this.LF, this.HIV);
 };
 
 
@@ -178,7 +150,7 @@ IDUObject.prototype.StartInjecting= function (Time){
 	
 	// Determine excess death due to drug use
 	
-	this.Person.IDUDeath;
+	this.Person.Death.IDU;
 }
 
 

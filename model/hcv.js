@@ -116,7 +116,11 @@ HCVObject.prototype.Infection= function (Year, GenotypeValue){//, Age, Sex, Alco
 			//Determine time until death
 			Time=TimeUntilEvent(Param.HCV.F4DeathP);
 			var DateHCVDeath=DateF4+Time;
-			this.Person.HCVDeath=DateHCVDeath;
+			this.Person.Death.HCV=DateHCVDeath;
+			
+			// Also look at
+				// http://jid.oxfordjournals.org/content/206/4/469.long
+
 		}
 		
 		
