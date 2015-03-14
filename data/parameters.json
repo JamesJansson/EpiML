@@ -196,19 +196,19 @@
         "Description": "According to Figure 3 of \nGrebely, J, The effects of female sex, viral genotype, and IL28B genotype on spontaneous clearance of acute hepatitis C virus infection. \nhttp://www.ncbi.nlm.nih.gov/pubmed/23908124"
     },
     {
-        "ParameterID": "HCV_SpontaneousClearance_k",
+        "ParameterID": "HCV_SpontaneousClearance_MedianTime",
         "ArrayName": "Param",
         "ArrayNumber": "7",
         "InterfaceID": "ParamHolder_7",
         "GroupName": "",
         "DistributionType": "normal",
-        "Median": 1.63,
+        "Median": 0.425,
         "StandardError": null,
         "LowerBound": null,
         "UpperBound": null,
         "Upper95Range": null,
         "Lower95Range": null,
-        "CalculatedMedian": 1.63,
+        "CalculatedMedian": 0.425,
         "NumberOfSamples": 7,
         "Val": [
             1.63,
@@ -219,9 +219,9 @@
             1.63,
             1.63
         ],
-        "MinValue": "",
+        "MinValue": 0,
         "MaxValue": "",
-        "Description": "According to Figure 1A of \nGrebely, J, The effects of female sex, viral genotype, and IL28B genotype on spontaneous clearance of acute hepatitis C virus infection. \nhttp://www.ncbi.nlm.nih.gov/pubmed/23908124\n\nThe time by which 50% of people who would clear have cleared is 0.425 years. Converting this such that 50% of people have cleared on the exponential decline by 0.425 years\n\n0.5=1-e(-k*0.425)\nln(0.5)=-0.425k\nk=-ln(0.5)/0.425\nk=1.63"
+        "Description": "According to Figure 1A of \nGrebely, J, The effects of female sex, viral genotype, and IL28B genotype on spontaneous clearance of acute hepatitis C virus infection. \nhttp://www.ncbi.nlm.nih.gov/pubmed/23908124\n\nThe time by which 50% of people who would clear have cleared is 0.425 years.\n\nThe uncertainty in this parameter is not well known as yet."
     },
     {
         "ParameterID": "HCV_SpontaneousClearance_p",

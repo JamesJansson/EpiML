@@ -812,12 +812,20 @@ function NormalRand(Mean, SD){
 	return Z;
 }
 
-function ExponentialDistributionRand(k){
-//pdf	ke-kx
-//CDF	1-e-kx
+function ExpDistributionRand(HalfLife){
+// This distribution can be used to save time when a constant probability process occurs
+// It differs from TimeUntilEvent where the annual probability is known.
+// The HalfLife is the time it takes half the population to have the event occur
+// Prop=1-Exp(-k*t)
+// Exp(-k*t)=1-Prop
+// t=-Log(1-Prop)/k AND k=-Log(1-Prop)/t
+// when Prop=0.5 and t=HalfLife
+// Log(1-Prop)=-0.6931471805599453// numerical value used for speed
+var k=0.6931471805599453/HalfLife;
+// to find a random time
+var t=-Log(1-Prop)/k;
 
-
-
+return t;
 }
 
 
