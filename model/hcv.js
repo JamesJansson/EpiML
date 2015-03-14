@@ -75,40 +75,48 @@ HCVObject.prototype.Infection= function (Year, GenotypeValue){//, Age, Sex, Alco
 		
 		//Determine if spontaneous clearance occurs
 		if (Rand.Value()<Param.HCV.SpontaneousClearance.p){
-			var TimeUntilClearance=TimeUntilEvent(HCVParam.YearlyRateOfClearanceInClearers);
-			
+			var TimeUntilClearance=ExpDistributionRand(Param.HCV.SpontaneousClearance.MedianTime);
 			this.Infected.Set(0, Year+TimeUntilClearance);
 			this.Genotype[GenotypeValue].Set(0, Year+TimeUntilClearance);
 		}
 		else {//progress to fibrosis
-		
+			var Time;
 			//Determine time until Fibrosis
 			//F0-F4-LF are mutually exclusive, HCC is not mutually exclusive to the other states
-			var TimeF0F1=TimeUntilEvent(HCVParam.F0F1);
-			var DateF1=Year+TimeF0F1;
+			//F0F1
+			Time=ExpDistributionRand(Param.HCV.TimeF0F1);
+			
+			
+			
+			var DateF1=Year+Time;
 			this.Fibrosis.Set(1, DateF1);
-			
-			var TimeF1F2=TimeUntilEvent(HCVParam.F1F2);
-			var DateF2=DateF1+TimeF1F2;
+			//F1F2
+			Time=ExpDistributionRand(Param.HCV.TimeF1F2);
+			var DateF2=DateF1+Time;
 			this.Fibrosis.Set(2, DateF2);
-			
-			var TimeF2F3=TimeUntilEvent(HCVParam.F2F3);
-			var DateF3=DateF2+TimeF2F3;
+			//F2F3
+			Time=ExpDistributionRand(Param.HCV.TimeF2F3);
+			var DateF3=DateF2+Time;
 			this.Fibrosis.Set(3, DateF3);
-			
-			var TimeF3F4=TimeUntilEvent(HCVParam.F3F4);
-			var DateF4=DateF3+TimeF3F4;
+			//F3F4
+			Time=ExpDistributionRand(Param.HCV.TimeF3F4);
+			var DateF4=DateF3+Time;
 			this.Fibrosis.Set(4, DateF4);
-			
+			//F4LF
 			var TimeF4LF=TimeUntilEvent(HCVParam.F4LF);
 			var DateLF=DateF4+TimeF4LF;
 			this.Fibrosis.Set(5, DateLF);
 			
 			
 			// Determine time until HCC
-			var TimeF4HCC=TimeUntilEvent(HCVParam.F4HCC);
-			var DateHCC=DateF4+TimeF4HCC;
+			Time=TimeUntilEvent(Param.HCV.F4HCCP);
+			var DateHCC=DateF4+Time;
 			this.HCC.Set(1, DateHCC);
+			
+			//Determine time until death
+			Time=TimeUntilEvent(Param.HCV.F4DeathP);
+			var DateHCVDeath=DateF4+Time;
+			this.Person.HCVDeath=DateHCVDeath;
 		}
 		
 		

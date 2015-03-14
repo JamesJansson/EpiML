@@ -11,11 +11,14 @@ function PersonObject(YearOfBirth, Sex)//, YearOfObservation Param)
 	//Alive
 	//this.AliveStatus=1;// status variable
 	this.YearOfBirth=YearOfBirth;
+	
 	this.YearOfDeath=1E9;
 	this.GeneralDeath=1E9;
 	this.IDUDeath=1E9;
 	this.HCVDeath=1E9;
+	this.HCCDeath=1E9;
 	this.HIVDeath=1E9;
+	
 	//Location (in this case, there is only one location variable, it might represent state or a local area)
 	this.Location=new EventVector;
 
