@@ -27,8 +27,9 @@ function RunSim(){
 	
 	
 	
-	console.error("this is where we need to be putting a splitter for the Param");
-	Common.Param=Param;
+	
+	
+	Common.Param=[];//this where parameters that are the same between simulations are entered
 	
 	
 	
@@ -48,11 +49,13 @@ function RunSim(){
 	// Param.Estimate[100] -> Param[100].Estimate
 	
 	//Creating the data to be used in the simulations
-	SimInputData=[];
-	for (i=0; i<Settings.NumberOfSimulations; i++){
-		SimInputData[i]={};
-		// At the moment there is no sim specific data
-	}
+	
+	console.error("this is where we need to be putting a splitter for the Param");
+	var RecalculateDistribution=true;
+	var SimInputData=ParameterSplit(Param, Settings.NumberOfSimulations, RecalculateDistribution);
+	
+	
+	
 
 	//Creating the parameter
 	SimulationHolder=new MultiThreadSim(ScriptToRun, Common, SimInputData, Settings.NoThreads); //Common is the same between all sims

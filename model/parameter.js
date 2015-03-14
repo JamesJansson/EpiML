@@ -266,31 +266,36 @@ ParameterClass.prototype.CreateDistribution= function (){
 		RunBounded=true;
 	}
 	
-	if (this.DistributionType=="normal"){
-		if (RunBounded==false){ // if both bounds are set to empty strings
-			this.Val=NormalRandArray(this.Median, this.StandardError, this.NumberOfSamples);
+	try {
+		if (this.DistributionType=="normal"){
+			if (RunBounded==false){ // if both bounds are set to empty strings
+				this.Val=NormalRandArray(this.Median, this.StandardError, this.NumberOfSamples);
+			}
+			else{
+				
+				this.Val=NormalRandArrayBounded(this.Median, this.StandardError, this.NumberOfSamples, Min, Max);
+			}
 		}
-		else{
+		if (this.DistributionType=="lognormal"){
+			var LogMedian=Log(this.Median);
 			
-			this.Val=NormalRandArrayBounded(this.Median, this.StandardError, this.NumberOfSamples, Min, Max);
+			if (RunBounded==false){ // if both bounds are set to empty strings
+				this.Val=NormalRandArray(LogMedian, this.StandardError, this.NumberOfSamples);
+			}
+			else{
+				this.Val=NormalRandArrayBounded(LogMedian, this.StandardError, this.NumberOfSamples, Min, Max);
+			}
+			
+			this.Val=Exp(this.Val);// transform back
+		}
+		if (this.DistributionType=="uniform"){
+			this.Val=RandArray(this.LowerBound, this.UpperBound, this.NumberOfSamples);
 		}
 	}
-	if (this.DistributionType=="lognormal"){
-		var LogMedian=Log(this.Median);
-		
-		if (RunBounded==false){ // if both bounds are set to empty strings
-			this.Val=NormalRandArray(LogMedian, this.StandardError, this.NumberOfSamples);
-		}
-		else{
-			this.Val=NormalRandArrayBounded(LogMedian, this.StandardError, this.NumberOfSamples, Min, Max);
-		}
-		
-		this.Val=Exp(this.Val);// transform back
-	}
-	if (this.DistributionType=="uniform"){
-		this.Val=RandArray(this.LowerBound, this.UpperBound, this.NumberOfSamples);
-	}
-	
+	catch(err) {
+		console.error(err);
+		throw "In parameter "+ this.ParameterID;
+	}	
 }
 
 // *********************************************************************************

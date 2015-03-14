@@ -62,18 +62,20 @@ self.onmessage = function (WorkerMessage) {
 	//Load the notification data
 	Data=WorkerMessage.data.Common.Data;
 	//Load the parameters data
-	Param=WorkerMessage.data.Common.Param;
+	//Param=WorkerMessage.data.Common.Param;
+	
+	
 	console.log("Note at some point we will simply merge the common and non-common Params into a single Param for simplicity");
 	// Load simulation settings
 	Settings=WorkerMessage.data.Common.Settings;
 	
 	SimID = WorkerMessage.data.SimID; // this value is used to select the appropriate parameter value
-    var SimData = WorkerMessage.data.SimData;
+    Param = WorkerMessage.data.SimData;
 	var ThreadID = WorkerMessage.data.ThreadID;// this value can be used by the code to send specific messages to particular elements, e.g. progress bar 4 set to 60%
 	
 	var StringForStatus="thread: "+ThreadID+" simID: "+SimID;
 	self.postMessage({StatusText: StringForStatus, StatusTextID: ThreadID});
-	
+	self.postMessage(Param);
 	
 	// Load up mortality data
 	MaleMortality=new MortalityCalculator(Data.Mortality.Male[1].Rates, Data.Mortality.Male[1].Year, Data.Mortality.Male[2].Rates, Data.Mortality.Male[2].Year);
@@ -240,20 +242,22 @@ self.onmessage = function (WorkerMessage) {
 };
 
 function AdjustData(){
-	var AdjustmentFactor=1.2;
-	AdjustPWID(Data, AdjustmentFactor);
+	//var AdjustmentFactor=1.2;
+	AdjustPWID();//(Data, AdjustmentFactor);
 	
 	
 	
 	self.postMessage({Console: Data});
 }
 
-function AdjustPWID(Data, AdjustmentFactor){// This should occur prior to passing the data to the function
+function AdjustPWID(){//Data, AdjustmentFactor){// This should occur prior to passing the data to the function
 	// FunctionInput.EntryParams.AIHWHouseholdSurveryUncertaintySD=0.1;// a value that gives variation in the result due to the small numbers
 		
 	// FunctionInput.EntryParams.AIHWHouseholdSurveryUnderstimate=1.2;
 	// FunctionInput.EntryParams.AIHWHouseholdSurveryUnderstimateLowerRange=1.0;
 	// FunctionInput.EntryParams.AIHWHouseholdSurveryUnderstimateUpperRange=1.4;
+	AdjustmentFactor=Param.IDU.AIHWDataFactor;
+	
 	Data.AdjustedPWID={};
 	Data.AdjustedPWID.Ever={};
 	Data.AdjustedPWID.Ever.Male=Multiply(Data.PWID.Ever.Male, AdjustmentFactor);
