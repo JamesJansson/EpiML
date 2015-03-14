@@ -1,5 +1,6 @@
-function  HCVObject(YearOfBirth)
-{
+function  HCVObject(PersonPointer){
+	this.Person=PersonPointer;
+	
 	//this.Active={};//indicates whether the HCV module is active or not 
 	
 	//State variables
@@ -24,16 +25,16 @@ function  HCVObject(YearOfBirth)
 	this.Genotype[5]=new EventVector;
 	
 	//Initialise history variables
-	this.Infected.Set(0, YearOfBirth);
-	this.Diagnosed.Set(0, YearOfBirth);
-	this.Fibrosis.Set(0, YearOfBirth);
-	this.HCC.Set(0, YearOfBirth);
-	//this.Genotype[0].Set(0, YearOfBirth);
-	//this.Genotype[1].Set(0, YearOfBirth);
-	//this.Genotype[2].Set(0, YearOfBirth);
-	//this.Genotype[3].Set(0, YearOfBirth);
-	//this.Genotype[4].Set(0, YearOfBirth);
-	//this.Genotype[5].Set(0, YearOfBirth);
+	this.Infected.Set(0, this.Person.YearOfBirth);
+	this.Diagnosed.Set(0, this.Person.YearOfBirth);
+	this.Fibrosis.Set(0, this.Person.YearOfBirth);
+	this.HCC.Set(0, this.Person.YearOfBirth);
+	//this.Genotype[0].Set(0, this.Person.YearOfBirth);
+	//this.Genotype[1].Set(0, this.Person.YearOfBirth);
+	//this.Genotype[2].Set(0, this.Person.YearOfBirth);
+	//this.Genotype[3].Set(0, this.Person.YearOfBirth);
+	//this.Genotype[4].Set(0, this.Person.YearOfBirth);
+	//this.Genotype[5].Set(0, this.Person.YearOfBirth);
 	
 	//Cascade of care
     this.Assessment=new EventVector;//
@@ -45,12 +46,10 @@ function  HCVObject(YearOfBirth)
 	this.HIVCoinfectionTreatment=0;
 }
 
-HCVObject.prototype.Age= function (Year){//using prototyping for speed
-	return Year-this.YearOfBirth;
-};
 
 
-HCVObject.prototype.Infection= function (Year, GenotypeValue, Age, Sex, Alcohol, HCVParam ){
+
+HCVObject.prototype.Infection= function (Year, GenotypeValue){//, Age, Sex, Alcohol, HCVParam ){
 	//Special note about recalculating Fibrosis: if fibrosis needs to be recalculated, care should be taken to avoid extending time until Fibrosis, as a person who is late F3 would  
 	//This will become especially important in cases where alcoholism begins. In such cases, the remaining time (e.g. 3.5 years to F4) should be shortened accordingly, not recalculated from scratch)
 	
@@ -77,7 +76,7 @@ HCVObject.prototype.Infection= function (Year, GenotypeValue, Age, Sex, Alcohol,
 		//Determine if spontaneous clearance occurs
 		var TimeUntilClearance;
 		//if (Rand.Value()<HCVParam.SpClearance.p){
-		if (Rand.Value()<HCVParam.SpontaneousClearance){
+		if (Rand.Value()<Param.HCV.SpontaneousClearance){
 			TimeUntilClearance=TimeUntilEvent(HCVParam.YearlyRateOfClearanceInClearers);
 			
 			this.Infected.Set(0, Year+TimeUntilClearance);

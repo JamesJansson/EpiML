@@ -24,7 +24,7 @@ function PersonObject(YearOfBirth, Sex)//, YearOfObservation Param)
 	
 	
 	
-	this.HCV = new HCVObject(YearOfBirth);//may need to declare this in function to reduce the size of the memory footprint
+	this.HCV = new HCVObject(this);//may need to declare this in function to reduce the size of the memory footprint
 	
 	this.HIV = new HIVObject();
 
