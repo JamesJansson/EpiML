@@ -18,6 +18,8 @@ function FullModel(Param, Data, Intervention){
 	
 	// Run migrants
 	
+	// Determine proportion of each that end up PWID
+	
 	// Join populations
 	var Population=[];
 	Population.concat(PWIDPopulation, HCVInfectedBloodRecipients);// Later add MSM and migrants
@@ -52,7 +54,10 @@ function FullModel(Param, Data, Intervention){
 }
 
 function CreateHCVInfectedBloodRecipients(){
-	Param.Haemophilia_Total2013
+	Param.Haemophilia.Total2013;
+	// Data.TotalPopulation
+	
+	
 	//Determine total population by year
 	
 	//Interpolate to get number of new cases per year
@@ -64,6 +69,15 @@ function CreateHCVInfectedBloodRecipients(){
 	Param.Haemophilia.HCV.Prevalence1980;
 	Param.Haemophilia.HCV.Prevalence1980;
 	
+	// Create a distribution which is based on 10000 samples
+	// Age them
+	// This is the starting age distribution
+	
+	// 
+	
+	Param.Haemophilia_HCV_Prevalence1973
+	Param.Haemophilia_HCV_Prevalence1980
+	Param.Haemophilia_HCV_Prevalence1990
 	
 	Param.HCV.Prevalence.Haemophiliacs1960;
 	
