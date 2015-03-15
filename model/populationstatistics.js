@@ -612,6 +612,8 @@ function MultiSimCountStat(InputStatArray){
 	this.Min=[];
 	
 	if (this.MultipleCategories==false){
+		console.log("got into MultiSimCountStat");
+		
 		// Data re-arranged to allow vector access to each Statistic.Data[Year][SimNum]
 		this.Data=[];
 		for (TimeIndex in this.Time){

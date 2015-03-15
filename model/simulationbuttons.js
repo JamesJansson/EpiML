@@ -60,7 +60,7 @@ function RunSim(){
 	SimulationHolder.SimProgressBarID="MainProgress";
 	SimulationHolder.FunctionToRunOnCompletion=function(){
 		SimOutput=RearrangeSimResults(this.Result);//here 'this' refers to the .Result  stored in simulation holder
-		AggregateSimResults(SimOutput);
+		AggregatedResults=AggregateSimResults(SimOutput);
 		    // var Testing= new MultiSimCountStat(InputStatArray);
 		NotificationSimPlot();
 	}
@@ -79,10 +79,6 @@ function RearrangeSimResults(ResultsArray){
 	var NumInterventions=ResultsArray[0].Intervention.length;
 	var NumStats=ResultsArray[0].Intervention[0].length;// the number of stats
 	
-	console.log(NumInterventions);
-	console.log(NumSims);
-	
-	
 	var SimOutput=[];
 	for (var IntCount=0; IntCount< NumInterventions; IntCount++){
 		SimOutput[IntCount]=[];
@@ -98,12 +94,26 @@ function RearrangeSimResults(ResultsArray){
 
 function AggregateSimResults(SimOutput){
 	var NumInterventions=SimOutput.length;
-	var NumSims=SimOutput[0].length;
-	var AggregatedResults={};
-	// for each intervention
+	var NumStats=SimOutput[0].length;
+	var NumSims=SimOutput[0][0].length;
+	var AggregatedResults=[];
+	var NumAggregatedResults=0;
+	for (var IntCount=0; IntCount< NumInterventions; IntCount++){
+		for (var StatCount=0; StatCount<NumStats; StatCount++){
+			console.log(SimOutput[IntCount][StatCount]);
+			console.log(SimOutput[IntCount][StatCount][0].StatisticType);
+			console.log(SimOutput[IntCount][StatCount][0].MultipleCategories);
+			if (typeof(SimOutput[IntCount][StatCount][0].StatisticType)!="undefined"){// if it has a statistic type
+				if (SimOutput[IntCount][StatCount][0].StatisticType=="countstatistic" && SimOutput[IntCount][StatCount][0].MultipleCategories==false ){// if it is a countstatistic and it is not a multi stat
+					AggregatedResults[NumAggregatedResults]=new MultiSimCountStat(SimOutput[IntCount][StatCount]);
+					NumAggregatedResults++;
+				}
+			}
+		}
+	}
 		// for each sim
 			// for each statistic
-				// if it is a countstatistic
+				
 	return AggregatedResults;
 }
 

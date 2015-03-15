@@ -5,6 +5,7 @@ var Param=[];//An array of parameters
 var DataFile={};
 var SimulationHolder;
 var SimOutput;
+var AggregatedResults;
 
 // Setting up whether it is working under NodeJS or not
 RunningNodeJS=true;
