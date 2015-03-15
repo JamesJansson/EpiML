@@ -299,7 +299,7 @@ ParameterClass.prototype.CreateDistribution= function (){
 				}
 				var LogMax=Log(Max);
 				
-				console.log("Median: "+LogMedian+" "+LogMin+" "+LogMax+this.ParameterName);
+				console.log("Median: "+LogMedian+" "+LogMin+" "+LogMax+this.ParameterID);
 				
 				
 				this.Val=NormalRandArrayBounded(LogMedian, this.StandardError, this.NumberOfSamples, LogMin, LogMax);

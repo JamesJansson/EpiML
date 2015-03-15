@@ -261,13 +261,11 @@ function AdjustPWID(){//Data, AdjustmentFactor){// This should occur prior to pa
 	console.error("The adjustment is" +AdjustmentFactor);
 	
 	
-	Data.AdjustedPWID={};
-	Data.AdjustedPWID.Ever={};
-	Data.AdjustedPWID.Ever.Male=Multiply(Data.PWID.Ever.Male, AdjustmentFactor);
-	Data.AdjustedPWID.Ever.Female=Multiply(Data.PWID.Ever.Female, AdjustmentFactor);
-	Data.AdjustedPWID.Recent={};
-	Data.AdjustedPWID.Recent.Male=Multiply(Data.PWID.Recent.Male, AdjustmentFactor);
-	Data.AdjustedPWID.Recent.Female=Multiply(Data.PWID.Recent.Female, AdjustmentFactor);
+
+	Data.PWID.Ever.Male=Multiply(Data.PWID.Ever.Male, AdjustmentFactor);
+	Data.PWID.Ever.Female=Multiply(Data.PWID.Ever.Female, AdjustmentFactor);
+	Data.PWID.Recent.Male=Multiply(Data.PWID.Recent.Male, AdjustmentFactor);
+	Data.PWID.Recent.Female=Multiply(Data.PWID.Recent.Female, AdjustmentFactor);
 }
 
 
