@@ -1,4 +1,10 @@
+// requires mathtools.js
 function  StochasticOptimisation(Settings){
+	this.MeanError=[];
+	this.BestError=[];
+	
+	
+	
 	// Function: function to be optimised
 	if (typeof Settings.Function==="function"){
 		this.Function=Settings.Function;
@@ -128,6 +134,7 @@ StochasticOptimisation.prototype.Run= function (FunctionInput){
 			this.ErrorValues[SampleCount]=this.ErrorFunction(this.SimResults[SampleCount], this.Target, FunctionInput);
 		}
 		
+		
 		// Work out which of this simulations will be selected
 		// Sort by error level
 		OrderedIndex=SortIndex(this.ErrorValues);
@@ -141,7 +148,11 @@ StochasticOptimisation.prototype.Run= function (FunctionInput){
 			this.ProgressFunction(RoundCount, this.Parameter, this.SimResults, this.ErrorValues, FunctionInput);
 		}
 		
+		// Storing optimisation results for later inspection/graphing
+		this.MeanError[RoundCount-1]=Mean(this.ErrorValues);
+		this.BestError[RoundCount-1]=this.ErrorValues[this.BestIndex[0]];
 		
+		// Determine whether the optimisation should finish or not
 		if (RoundCount>=this.MaxIterations){
 			OptimisationComplete=true;
 			this.ReasonForTermination="ReachedMaxIterations";

@@ -337,7 +337,10 @@ function EntryRateOptimisationExponential(TargetForThisOptimisation, EntryParams
 		console.log(Results.Data);
 		console.log("Target");
 		console.log(EntryRateOptimisationSettings.Target);
-	
+		console.log("Mean and best error by round");
+		console.log(OptimisationObject.MeanError);
+		console.log(OptimisationObject.BestError);
+
 	
 	
 	// Here we put a pretty serious warning to inform the user if something is amiss with the optimisation
