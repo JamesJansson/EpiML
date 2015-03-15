@@ -17,5 +17,24 @@ Intervention[1].Function=function (Time){
 	}
 };
 
+Intervention[1]=new InterventionObject();
+Intervention[1].Name="100% Treatment";
+Intervention[1].Function=function (Time){
+	if (Time<2016){
+		SofosbuvirTreatmentDecider=function (Person){
+			if (Person.HCV.Stage()>=3){
+				return true;
+			}
+		};
+	}
+	else{
+		SofosbuvirTreatmentDecider=function (Person){
+			if (Person.HCV.Stage()>=1){
+				return true;
+			}
+		};
+	}
+};
+
 
 
