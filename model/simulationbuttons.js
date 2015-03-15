@@ -74,8 +74,10 @@ function RearrangeSimResults(ResultsArray){
 	// Makes results that are in the format SimOutput[InterventionCount][SimCount]
 	// Sort by interventions
 	// Determine number of interventions
-	var NumInterventions=ResultsArray[0].Intervention.length;
+	
 	var NumSims=ResultsArray.length;
+	var NumInterventions=ResultsArray[0].Intervention.length;
+	var NumStats=ResultsArray[0].Intervention[0].length;// the number of stats
 	
 	console.log(NumInterventions);
 	console.log(NumSims);
@@ -83,9 +85,12 @@ function RearrangeSimResults(ResultsArray){
 	
 	var SimOutput=[];
 	for (var IntCount=0; IntCount< NumInterventions; IntCount++){
-		SimOutput[IntCount]=[];// second index is the result
-		for (var SimCount=0; SimCount<NumSims; SimCount++){
-			SimOutput[IntCount][SimCount]=ResultsArray[SimCount].Intervention[IntCount];
+		SimOutput[IntCount]=[];
+		for (var StatCount=0; StatCount<NumStats; StatCount++){
+			SimOutput[IntCount][StatCount]=[];
+			for (var SimCount=0; SimCount<NumSims; SimCount++){
+				SimOutput[IntCount][StatCount][SimCount]=ResultsArray[SimCount].Intervention[IntCount][StatCount];
+			}
 		}
 	}
 	return SimOutput;
@@ -110,7 +115,7 @@ function NotificationSimPlot(){
 	var IntCount=0;
 	var SimCount=0;
 	var StatCount=0;
-	var IndividualStat=SimOutput[IntCount][SimCount][SimCount];
+	var IndividualStat=SimOutput[IntCount][StatCount][SimCount];
 	FibrosisArray=IndividualStat.Count;
 	TimeAxis=IndividualStat.Time;
 	
