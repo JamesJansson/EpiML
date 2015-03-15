@@ -48,11 +48,17 @@ function MortalityCalculator(MortalityProbabilityArray1, Year1, MortalityProbabi
 	}
 }
 
-MortalityCalculator.prototype.YearOfDeath= function(YearOfBirth, Year){
+MortalityCalculator.prototype.YearOfDeath= function(YearOfBirth, Year, SMR){
 	// This function determines the year of death of someone 
-
 	// Year, in this case, is the date at which to calculate mortality from
-
+	
+	if (typeof(SMR)!="number"){
+		SMR=1;
+	}
+	if (SMR<0){
+		throw "SMR must be greater than 0";
+	}
+	
 	//Australia
 	//http://www.abs.gov.au/AUSSTATS/abs@.nsf/DetailsPage/3302.0.55.0012010%E2%80%932012?OpenDocument 
 	//Aboriginal
@@ -69,7 +75,7 @@ MortalityCalculator.prototype.YearOfDeath= function(YearOfBirth, Year){
 	var AdjustedProbabilityOfDeath;
 	var TimeInThisAge;
 	
-	AdjustedProbabilityOfDeath=this.BaselineP[CurrentAgeIndex] * Math.pow(this.YearlyImprovement[CurrentAgeIndex], YearsSinceBaseline);
+	AdjustedProbabilityOfDeath=this.BaselineP[CurrentAgeIndex] * Math.pow(this.YearlyImprovement[CurrentAgeIndex], YearsSinceBaseline) *SMR;
 	if (AdjustedProbabilityOfDeath>1){//In the case of looking backwards, great increases may result in probabilities >1
 		AdjustedProbabilityOfDeath=1;
 	}
@@ -91,7 +97,7 @@ MortalityCalculator.prototype.YearOfDeath= function(YearOfBirth, Year){
 		}
 		YearsSinceBaseline++;
 		// Adjust the mortality rate to account for improvements in mortality with time
-		AdjustedProbabilityOfDeath=this.BaselineP[CurrentAgeIndex] * Math.pow(this.YearlyImprovement[CurrentAgeIndex], YearsSinceBaseline);
+		AdjustedProbabilityOfDeath=this.BaselineP[CurrentAgeIndex] * Math.pow(this.YearlyImprovement[CurrentAgeIndex], YearsSinceBaseline) *SMR;
 		// Note that the following lines are not needed because Rand.Value() is always <1
 		// if (AdjustedProbabilityOfDeath>1){//In the case of looking backwards, great increases may result in probabilities >1
 		//	  AdjustedProbabilityOfDeath=1;
@@ -134,7 +140,7 @@ MortalityCalculator.prototype.YearOfDeath= function(YearOfBirth, Year){
 };
 
 
-function GeneralMortalityTesting(){
+function MortalityCalculatorTEST(){
 		var MaleMortality= new MortalityCalculator(Param.Mortality.MaleGeneral1,Param.Mortality.Year1, Param.Mortality.MaleGeneral2,Param.Mortality.Year2);
 		
 		var TimerStart = new Date().getTime() / 1000;

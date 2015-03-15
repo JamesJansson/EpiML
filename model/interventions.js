@@ -4,11 +4,11 @@ Intervention[0]=new InterventionObject();
 
 Intervention[0]=new InterventionObject();
 Intervention[0].Name="No intervention";
-Intervention[0].Function=function (Time){};
+Intervention[0].RunFunction=function (Time){};
 
 Intervention[1]=new InterventionObject();
-Intervention[1].Name="100% Treatment";
-Intervention[1].Function=function (Time){
+Intervention[1].Name="Sofosbuvir 10% Treatment";
+Intervention[1].RunFunction=function (Time){
 	if (Time<2016){
 		Param.HCV.Treatment.Sofosbuvir=0.0;
 	}
@@ -17,9 +17,9 @@ Intervention[1].Function=function (Time){
 	}
 };
 
-Intervention[1]=new InterventionObject();
-Intervention[1].Name="100% Treatment";
-Intervention[1].Function=function (Time){
+Intervention[2]=new InterventionObject();
+Intervention[2].Name="Sofosbuvir Earlier Treatment";
+Intervention[2].RunFunction=function (Time){
 	if (Time<2016){
 		SofosbuvirTreatmentDecider=function (Person){
 			if (Person.HCV.Stage()>=3){
@@ -28,7 +28,7 @@ Intervention[1].Function=function (Time){
 		};
 	}
 	else{
-		SofosbuvirTreatmentDecider=function (Person){
+		SofosbuvirTreatmentDecider=function (Person// here, a function is reset to make increased treatment
 			if (Person.HCV.Stage()>=1){
 				return true;
 			}
@@ -36,5 +36,7 @@ Intervention[1].Function=function (Time){
 	}
 };
 
-
+Intervention[2].ResetFunction=function(){
+	
+}
 
