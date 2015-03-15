@@ -31,6 +31,9 @@ function PersonObject(YearOfBirth, Sex)//, YearOfObservation Param)
 
 	this.IDU = new IDUObject(this);//Injection drug use
 	
+	this.Haemophilia=0;
+	
+	
 	//QALY 
 	//this.QualityCalculation=function(time){(this.HCV, this.IDU, this.HIV, this.Age, time);}//
 	//this.QALY(this.HCV, this.IDU, this.HIV, this.Age)//
