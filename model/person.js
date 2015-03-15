@@ -55,13 +55,13 @@ PersonObject.prototype.Alive = function (Year){//using prototyping for speed
 	return false;
 };
 
-PersonObject.prototype.CalculateGeneralMortality= function (YearFromWhichToCalculateMortality){//, MaleMortality, FemaleMortality){
+PersonObject.prototype.CalculateGeneralMortality= function (YearFromWhichToCalculateMortality, SMR){//, MaleMortality, FemaleMortality){
 	// if this.Sex==0 && this.Aboriginal==false
 	if (this.Sex==0){
-		this.Death.General=MaleMortality.YearOfDeath(this.YearOfBirth, YearFromWhichToCalculateMortality);
+		this.Death.General=MaleMortality.YearOfDeath(this.YearOfBirth, YearFromWhichToCalculateMortality, SMR);
 	}
 	else {
-		this.Death.General=FemaleMortality.YearOfDeath(this.YearOfBirth, YearFromWhichToCalculateMortality);
+		this.Death.General=FemaleMortality.YearOfDeath(this.YearOfBirth, YearFromWhichToCalculateMortality, SMR);
 	}
 };
 
