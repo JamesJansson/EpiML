@@ -10,7 +10,7 @@ PWIDEntryPlotSettings.Sex=ZeroArray(2);
 
 
 
-function PlotPWIDEntryOptimisation(PWIDEntryPlotSettings){
+function PlotPWIDEntryOptimisation(Sex){
 	// There are multiple different graphs that can be produced from this:
 	// Total by year
 	// Individual levels for sex and age by year
@@ -40,20 +40,70 @@ function PlotPWIDEntryOptimisation(PWIDEntryPlotSettings){
 	PlotSettings.PlotData=[];
 	PlotSettings.PlotData.Plot=[];
 
-	var OriginalData={};
+	
+	// add each
+	var SumTheResults=function(Array){// given [6]*[4] array 
+		ReturnObject=[];
+		for (var i=0; i<6; i++){
+			ReturnObject[i]=Sum(Array[i]);
+		}
+		return ReturnObject;
+	};
+	var DoStats=function(Array){
+		ReturnObject={};
+		ReturnObject.Y=[];
+		ReturnObject.Lower=[];
+		ReturnObject.Upper=[];
+		var NumYears=Array.length;
+		for(var YearNum=0; YearNum<NumYears; YearNum++){
+			ReturnObject.Y[YearNum]=Median(Array[YearNum]);
+			ReturnObject.Lower[YearNum]=Percentile(Array[YearNum], 2.5);;
+			ReturnObject.Upper[YearNum]=Percentile(Array[YearNum], 97.5);;
+		}
+		return ReturnObject;
+	};
+	
+	var NumSims=SimulationHolder.Result.length;
+	var DataBySim=[];
+	var ResultsBySim=[];
+	for (var SimNum=0; SimNum<NumSims; SimNum++){
+		DataBySim[SimNum]=SumTheResults(SimulationHolder.Result[SimNum].OriginalData[Sex].OriginalData.Data);
+		ResultsBySim[SimNum]=SumTheResults(SimulationHolder.Result[SimNum].OriginalData[Sex].Results.Data);
+	}
+	
+	// Transpose
+	DataByYear=TransposeForCSV(DataBySim);
+	ResultsByYear=TransposeForCSV(ResultsBySim);
+	// Do stats on it
+	OriginalData=DoStats(DataByYear);
+	OptimisedResults=DoStats(ResultsByYear);
+
+	// Add the year vector
+	OriginalData.X=SimulationHolder.Result[0].OriginalData[0].OriginalData.Year;
+	OptimisedResults.X=SimulationHolder.Result[0].OriginalData[0].OriginalData.Year;
+	
+	//Process results
+
+
+	
+	
+	
+	/*var OriginalData={};
 	OriginalData.X=[2, 4, 6];
 	OriginalData.Y=[1.3, 2.3, 2.9];
+	OptimisedResults.Lower=[1.2, 2.1, 2.8];
+	OptimisedResults.Upper=[1.4, 2.5, 3.0];
 	var OptimisedResults={};
 	OptimisedResults.X=[2, 4, 6];
 	OptimisedResults.Y=[1.5, 2.5, 3.5];
 	OptimisedResults.Lower=[1.1, 2.1, 2.7];
-	OptimisedResults.Upper=[1.9, 2.9, 3.9];
+	OptimisedResults.Upper=[1.9, 2.9, 3.9];*/
 
 	PlotSettings.PlotData.OriginalData=OriginalData;
 	PlotSettings.PlotData.OptimisedResults=OptimisedResults;
 
 	PlotSettings.XLabel="Year";
-	PlotSettings.YLabel="Number initiating injection drugs";
+	PlotSettings.YLabel="Number ever injected drugs";
 
 	PlotSettings.Data=[];
 	PlotSettings.Data.Download=function (){console.log('This runs when the button is pushed')};

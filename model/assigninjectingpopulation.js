@@ -58,9 +58,9 @@ function OptimiseInjectionEntryByGender(PWIDData, EntryParams){
 			if (SumInYear>MaxInYear){MaxInYear=SumInYear;} 
 		}
 		// Find and multiply it by the factor associated with it
-		console.log("MaxInYear: " +MaxInYear);
-		var Factor=1000/MaxInYear;
-		PWIDEverData.Data=Multiply(PWIDEverData.Data, Factor);
+		//console.log("MaxInYear: " +MaxInYear);
+		//var Factor=1000/MaxInYear;
+		PWIDEverData.Data=Divide(PWIDEverData.Data, Settings.SampleFactor);
 
 	// Perform the optimisation
 	// var ReturnStructure=EntryRateOptimisation(PWIDEverData, EntryParams);
@@ -79,13 +79,12 @@ function OptimiseInjectionEntryByGender(PWIDData, EntryParams){
 	OptimisationResults.EntryRate=ReturnStructure.EntryRate;
 	
 	// fix up the normalisation we did earlier
-	OptimisationResults.OriginalData.Data=Divide(OptimisationResults.OriginalData.Data, Factor);
-	OptimisationResults.Results.Data=Divide(OptimisationResults.Results.Data, Factor);
-	OptimisationResults.EntryRate.Number=Divide(OptimisationResults.EntryRate.Number, Factor);
+	OptimisationResults.OriginalData.Data=Multiply(OptimisationResults.OriginalData.Data, Settings.SampleFactor);
+	OptimisationResults.Results.Data=Multiply(OptimisationResults.Results.Data, Settings.SampleFactor);
+	OptimisationResults.EntryRate.Number=Multiply(OptimisationResults.EntryRate.Number, Settings.SampleFactor);
 	
 	OptimisationResults.EntryParams=EntryParams;
 	
-	console.log("The factor used in this simulation was: "+Factor);
 
 	// The results will be structured as follows
 	// Male

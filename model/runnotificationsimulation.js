@@ -93,11 +93,12 @@ self.onmessage = function (WorkerMessage) {
 	
 	
 	// Perform an optimisation of the number of injectors
-	if (false){
-	// Get the data for the numbers by sex and age
+	if (true){
+		// Get the data for the numbers by sex and age
 		var PWIDEntryOptimisationResults=OptimiseInjectionEntry(Data.PWID); 
+
 	}
-	
+
 	
 	
 	
@@ -201,7 +202,7 @@ self.onmessage = function (WorkerMessage) {
 	console.log("Intervention");
 	console.log(Intervention);
 	
-	
+	SimResult.OriginalData=PWIDEntryOptimisationResults;
 	
 	
 	// The new structure of the the program is:
@@ -256,6 +257,9 @@ function AdjustPWID(){//Data, AdjustmentFactor){// This should occur prior to pa
 	// FunctionInput.EntryParams.AIHWHouseholdSurveryUnderstimateLowerRange=1.0;
 	// FunctionInput.EntryParams.AIHWHouseholdSurveryUnderstimateUpperRange=1.4;
 	AdjustmentFactor=Param.IDU.AIHWDataFactor;
+	
+	console.error("The adjustment is" +AdjustmentFactor);
+	
 	
 	Data.AdjustedPWID={};
 	Data.AdjustedPWID.Ever={};
