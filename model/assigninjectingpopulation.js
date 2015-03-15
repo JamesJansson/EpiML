@@ -19,9 +19,8 @@ function OptimiseInjectionEntry(PWIDData){
 	
 	// Male EntryParams
 	var EntryParams={};
-	EntryParams.LogMedianEntryAge=Log(21);
-	EntryParams.LogSDEntryAge=0.16;
-	console.error("Note the median entry age is hard set");
+	EntryParams.LogMedianEntryAge=Log(Param.IDU.InjectionStartAge.Median);
+	EntryParams.LogSDEntryAge=Param.IDU.InjectionStartAge.SD;
 	
 	// Do male entry
 	EntryParams.SexIndex=0;
@@ -29,9 +28,8 @@ function OptimiseInjectionEntry(PWIDData){
 	
 	// Female EntryParams
 	var EntryParams={};
-	EntryParams.LogMedianEntryAge=Log(21);
-	EntryParams.LogSDEntryAge=0.16;
-	console.error("Note the median entry age is the same for female as it is for male. It is likely a couple of years earlier");
+	EntryParams.LogMedianEntryAge=Log(Param.IDU.InjectionStartAge.Median);
+	EntryParams.LogSDEntryAge=Param.IDU.InjectionStartAge.SD;
 	
 	// Do female entry
 	EntryParams.SexIndex=1;
@@ -278,20 +276,20 @@ function EntryRateOptimisationExponential(TargetForThisOptimisation, EntryParams
 		}
 	};
 	
-	EntryRateOptimisationSettings.ProgressFunction=function(RoundCount, Parameter, SimResults, ErrorValues, FunctionInput){
-		// Display the results to the console for every 100 simulations
-		var ProgressString=RoundCount+": ";
+	// EntryRateOptimisationSettings.ProgressFunction=function(RoundCount, Parameter, SimResults, ErrorValues, FunctionInput){
+		// // Display the results to the console for every 100 simulations
+		// var ProgressString=RoundCount+": ";
 		
-		var KeyCount=0, Key, MeanResult;
-		console.log(Parameter);
-		for (Key in Parameter){
-			KeyCount++;
-			ProgressString+=Key+": ";
-			MeanResult=Mean(Parameter[Key].BestVec);
-			ProgressString+=MeanResult+", ";
-		}
-		console.log(ProgressString);
-	};
+		// var KeyCount=0, Key, MeanResult;
+		// console.log(Parameter);
+		// for (Key in Parameter){
+			// KeyCount++;
+			// ProgressString+=Key+": ";
+			// MeanResult=Mean(Parameter[Key].BestVec);
+			// ProgressString+=MeanResult+", ";
+		// }
+		// console.log(ProgressString);
+	// };
 	
 	
 	

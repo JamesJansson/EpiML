@@ -47,7 +47,9 @@ function FullModel(Param, Data, Intervention){
 	
 	// Match to population (including choosing individuals that are not diagnosed by the end of the data)
 	// Assign dates to those with diagnoses
-	// 
+	// In the first year that you have results
+		// Find the number of diagnoses in the earlier model
+		// For every diagnosis, 
 	
 	
 	return Population;
@@ -55,7 +57,10 @@ function FullModel(Param, Data, Intervention){
 
 function CreateHCVInfectedBloodRecipients(){
 	Param.Haemophilia.Total2013;
-	// Data.TotalPopulation
+	// Data.Population.Total
+	// Data.Population.Migration
+	// Data.Population.Deaths
+	// Data.Population.Births
 	
 	
 	//Determine total population by year
@@ -70,8 +75,12 @@ function CreateHCVInfectedBloodRecipients(){
 	Param.Haemophilia.HCV.Prevalence1980;
 	
 	// Create a distribution which is based on 10000 samples
+	// Roughly add to the 
 	// Age them
 	// This is the starting age distribution
+	// Randomly assign people with HCV or not
+	
+	
 	
 	// 
 	
