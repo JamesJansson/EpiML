@@ -61,6 +61,12 @@ function CreateHCVInfectedBloodRecipients(){
 	// Data.Population.Migration
 	// Data.Population.Deaths
 	// Data.Population.Births
+	Data.GeneralPopulation={};
+	Data.GeneralPopulation.Year=DataFile.GeneralPopulation.GetColumn(0, 1, 43);
+	Data.GeneralPopulation.Size=DataFile.GeneralPopulation.GetColumn(1, 1, 43);
+	Data.GeneralPopulation.Births=DataFile.GeneralPopulation.GetColumn(2, 1, 43);
+	Data.GeneralPopulation.Migration=DataFile.GeneralPopulation.GetColumn(2, 1, 43);
+	Data.GeneralPopulation.Deaths=DataFile.GeneralPopulation.GetColumn(3, 1, 43);
 	
 	
 	//Determine total population by year
@@ -69,11 +75,7 @@ function CreateHCVInfectedBloodRecipients(){
 	
 	
 	
-	Param.Haemophilia.HCV.Prevalence1960;
-	Param.Haemophilia.HCV.Prevalence1970;
-	Param.Haemophilia.HCV.Prevalence1980;
-	Param.Haemophilia.HCV.Prevalence1980;
-	
+
 	// Create a distribution which is based on 10000 samples
 	// Roughly add to the 
 	// Age them
@@ -84,9 +86,9 @@ function CreateHCVInfectedBloodRecipients(){
 	
 	// 
 	
-	Param.Haemophilia_HCV_Prevalence1973
-	Param.Haemophilia_HCV_Prevalence1980
-	Param.Haemophilia_HCV_Prevalence1990
+	Param.Haemophilia.HCV.Prevalence1973;
+	Param.Haemophilia.HCV.Prevalence1980;
+	Param.Haemophilia.HCV.Prevalence1990;
 	
 	Param.HCV.Prevalence.Haemophiliacs1960;
 	

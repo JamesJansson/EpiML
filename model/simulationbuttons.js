@@ -57,12 +57,14 @@ function RunSim(){
 	
 	
 
-	//Creating the parameter
+	//Creating the simulation holder
 	SimulationHolder=new MultiThreadSim(ScriptToRun, Common, SimInputData, Settings.NoThreads); //Common is the same between all sims
 	SimulationHolder.UseSimProgressBar=true;
 	SimulationHolder.SimProgressBarID="MainProgress";
-	SimulationHolder.FunctionToRunOnCompletion=NotificationSimPlot;
-	
+	SimulationHolder.FunctionToRunOnCompletion=function(){
+		AggregateSimResults(this.Results.SummaryStats);
+		NotificationSimPlot();
+	}
 	
 	SimulationHolder.Start();
 
@@ -114,7 +116,21 @@ function ExtractDataFromFiles(){
 	Data.PWID.Ever.Male=DataFile.PWID.GetValues(7, 10, 1, 6);
 	Data.PWID.Ever.Female=DataFile.PWID.GetValues(17, 20, 1, 6);
 	
-	
+	Data.GeneralPopulation={};
+	Data.GeneralPopulation.Year=DataFile.GeneralPopulation.GetColumn(0, 1, 43);
+	Data.GeneralPopulation.Size=DataFile.GeneralPopulation.GetColumn(1, 1, 43);
+	Data.GeneralPopulation.Births=DataFile.GeneralPopulation.GetColumn(2, 1, 43);
+	Data.GeneralPopulation.Migration=DataFile.GeneralPopulation.GetColumn(2, 1, 43);
+	Data.GeneralPopulation.Deaths=DataFile.GeneralPopulation.GetColumn(3, 1, 43);
+}
+
+function AggregateSimResults(ResultsArray){
+	// The purpose of this function is to turn the structure into something that can be graphed simply
+	// e.g. ResultsArray[Simnum].StatArrayName[Optional] -> 
+
+
+	// this should be Simulation holder, but may not be
+	console.log(ResultsArray);
 }
 
 

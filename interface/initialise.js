@@ -112,24 +112,34 @@ function SaveSettings(){
 
 
 function LoadDataFiles(){
-	var RunOther=true;if (typeof (RunningNodeJS)!=='undefined'){console.log("got in1");if (RunningNodeJS==true){RunOther=false;
-		console.log("got in2");
-		DataFile.AgeSexNotifications=new CSVFile('./data/hcv_notifications_agesex.csv');
-		DataFile.StateNotifications=new CSVFile('./data/hcv_notifications_state.csv');
+	DataFile.AgeSexNotifications=new CSVFile('./data/hcv_notifications_agesex.csv');
+	DataFile.StateNotifications=new CSVFile('./data/hcv_notifications_state.csv');
+	
+	DataFile.MaleMortality=new CSVFile('./data/mortality_males_alltables_qx.csv');
+	DataFile.FemaleMortality=new CSVFile('./data/mortality_females_alltables_qx.csv');
+	DataFile.PWID=new CSVFile('./data/pwid_size.csv');
+	DataFile.GeneralPopulation=new CSVFile('./data/generalpopulation.csv');
+	
+
+	// Originally it was thought this would run both in a web browser and in nw.js. Now it will only run in nw.js 
+	// var RunOther=true;if (typeof (RunningNodeJS)!=='undefined'){console.log("got in1");if (RunningNodeJS==true){RunOther=false;
+		// console.log("got in2");
+		// DataFile.AgeSexNotifications=new CSVFile('./data/hcv_notifications_agesex.csv');
+		// DataFile.StateNotifications=new CSVFile('./data/hcv_notifications_state.csv');
 		
-		DataFile.MaleMortality=new CSVFile('./data/mortality_males_alltables_qx.csv');
-		DataFile.FemaleMortality=new CSVFile('./data/mortality_females_alltables_qx.csv');
-		DataFile.PWID=new CSVFile('./data/pwid_size.csv');
-	}}
-	if (RunOther){
-		console.log("got in3");
-		DataFile.AgeSexNotifications=new CSVFile('data/hcv_notifications_agesex.csv');
-		DataFile.StateNotifications=new CSVFile('data/hcv_notifications_state.csv');
+		// DataFile.MaleMortality=new CSVFile('./data/mortality_males_alltables_qx.csv');
+		// DataFile.FemaleMortality=new CSVFile('./data/mortality_females_alltables_qx.csv');
+		// DataFile.PWID=new CSVFile('./data/pwid_size.csv');
+	// }}
+	// if (RunOther){
+		// console.log("got in3");
+		// DataFile.AgeSexNotifications=new CSVFile('data/hcv_notifications_agesex.csv');
+		// DataFile.StateNotifications=new CSVFile('data/hcv_notifications_state.csv');
 		
-		DataFile.MaleMortality=new CSVFile('data/mortality_males_alltables_qx.csv');
-		DataFile.FemaleMortality=new CSVFile('data/mortality_females_alltables_qx.csv');
-		DataFile.PWID=new CSVFile('data/pwid_size.csv');
-	}
+		// DataFile.MaleMortality=new CSVFile('data/mortality_males_alltables_qx.csv');
+		// DataFile.FemaleMortality=new CSVFile('data/mortality_females_alltables_qx.csv');
+		// DataFile.PWID=new CSVFile('data/pwid_size.csv');
+	// }
 
 }
 

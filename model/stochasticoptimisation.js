@@ -344,16 +344,6 @@ function TestStochasticOptimisation(){
 	OptimisationObject.AddParameter("X", 0, 10);
 	OptimisationObject.AddParameter("Y", 0, 10);
 	OptimisationObject.Run(FunctionInput);
-	
-	
+
 	return OptimisationObject;
 }
-
-
-
-
-
-
-
-
-

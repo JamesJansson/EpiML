@@ -1,3 +1,24 @@
+// Functions to be added to this section
+// A function that runs through each summary stat for counting in a simulation
+	// Input is the array of selection functions 
+// A function that runs through each summary stat for aggregation (check that it isn't made already)
+	// Input is the array of results from the simulation
+// A function that links summary stats to plots
+
+// Statistic
+	// Selection function
+	// Settings
+	// A graph function
+
+
+
+
+
+
+
+
+
+
 function CountFibrosisStages(PPLocal, SampleFactorMultiplier, Time){
 	//Create settings
 	var Settings={};
@@ -46,8 +67,6 @@ function CountFibrosisStages(PPLocal, SampleFactorMultiplier, Time){
 
 	
 	FibrosisResult.Adjust(SampleFactorMultiplier);// Make this representative sample actually reflect the real number of diagnoses
-	
-	FibrosisResult.CategoryLabel[0]="F0";//
 	
 	return FibrosisResult;
 }

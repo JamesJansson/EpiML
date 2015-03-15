@@ -172,6 +172,8 @@ self.onmessage = function (WorkerMessage) {
 	// Extract results of simulation
 	DebugStatement("Extracting results");
 	
+	
+	
 	var StatsTime={};
 	StatsTime.Start=1980;
 	StatsTime.Stop=2030;
