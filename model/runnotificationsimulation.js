@@ -15,6 +15,9 @@ importScripts("assigninjectingpopulation.js");
 importScripts("extractresults.js");
 importScripts("populationstatistics.js");
 importScripts("generalmortality.js");
+importScripts("interventionobject.js");
+importScripts("interventions.js");
+
 
 var Data={};
 var Param={};//This is the parameter holder for the simulation
@@ -179,11 +182,15 @@ self.onmessage = function (WorkerMessage) {
 	StatsTime.Stop=2030;
 	StatsTime.Step=1;
 	
+	
 	var SimResult={};
-	SimResult.FibrosisCount=CountFibrosisStages(PPNotification, Settings.SampleFactor, StatsTime);//Determine fibrosis levels with year
-	SimResult.DiagnosisCount=LivingDxAndUDx(PPNotification, Settings.SampleFactor, StatsTime);//Determine fibrosis levels with year
-	SimResult.AgeInfectedResult=AnalyseAgeInfected(PPNotification, StatsTime);
-	SimResult.LivingWithHCV=CountLivingWithHCV(PPNotification, Settings.SampleFactor, StatsTime);// Determines a simple count of people living with HCV by year
+	SimResult.Intervention=[];
+	SimResult.Intervention[0]={};
+	
+	SimResult.Intervention[0].FibrosisCount=FibrosisCount(PPNotification, Settings.SampleFactor, StatsTime);//Determine fibrosis levels with year
+	SimResult.Intervention[0].LivingDxAndUDx=LivingDxAndUDx(PPNotification, Settings.SampleFactor, StatsTime);//Determine fibrosis levels with year
+	SimResult.Intervention[0].AgeInfected=AgeInfected(PPNotification, StatsTime);
+	SimResult.Intervention[0].LivingWithHCV=LivingWithHCV(PPNotification, Settings.SampleFactor, StatsTime);// Determines a simple count of people living with HCV by year
 
 	DebugStatement("Total individuals in model: " + PPNotification.length);
 		
@@ -191,15 +198,22 @@ self.onmessage = function (WorkerMessage) {
     TotalTime=TimerFinish -TimerStart;
 	DebugStatement("Finished full simulation in "+TotalTime+" seconds");
 	
-	//PPNotification[0].CalculateMortality();
+	console.log("Intervention");
+	console.log(Intervention);
 	
-	//Saving simulation results into local storage
 	
-	// Run the same simulation, but this time with the proposed intervention starting at the time of the intervention
 	
-	// for (i=1; i<
-	// 	RunSimulation(
-	// 			in RunSimulation at the beginning of each year run the Intervention.Instructions to adjust parameters etc
+	
+	// The new structure of the the program is:
+	// Optimise without intervention
+	// Optimise with intervention (with [0] being with no interventions)
+	// for each intervention {
+	//      FullSimulation(Intervention[num])
+	//		SimResult.Intervention[0].Result=ExtractResults
+	//		Intervention[num]this.ResetFunction
+	// }
+	// Do comparison of interventions if we feel it is necessary
+	
 	
 	
 	// SimResult should be structured as follows

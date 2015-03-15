@@ -638,16 +638,7 @@ function MultiSimCountStat(InputStatArray){
 		// Data re-arranged to allow vector access to each Statistic.Data[Subcategory][Year][SimNum]
 	}
 }
-// LivingWithHCVSims=[];
-// for (SimCount in SimulationHolder.Result){
-// console.log(SimCount);
-	// LivingWithHCVSims[SimCount]= SimulationHolder.Result[SimCount].LivingWithHCV;
-// }
-// SumStat=new MultiSimCountStat(LivingWithHCVSims);
-// .Download
-// Description
-// time param1[mean SD etc] param2 
-// DataMatrix
+
 
 
 function MultiSimSummaryStat(SummaryStatArray){

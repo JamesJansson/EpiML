@@ -111,7 +111,7 @@ function EntryRateOptimisation(TargetForThisOptimisation, EntryParams){
 		return TotalError;
 	};
 	
-	EntryRateOptimisationSettings.ProgressFunction=function(RoundCount, Parameter, SimResults, ErrorValues, FunctionInput){
+	EntryRateOptimisationSettings.ProgressFunction=function(RoundCount, Parameter, SimOutput, ErrorValues, FunctionInput){
 		// Display the results to the console for every 100 simulations
 		var ProgressString=RoundCount+": ";
 		

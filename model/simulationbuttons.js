@@ -1,9 +1,6 @@
 // This file contains the scripts that are called when the buttons on the interface are pressed.
 
-// var SimulationHolder;
-// var SimInputData=[];
-// var Data={};
-// var Param={};
+
 
 function RunSim(){
 	ScriptToRun='model/runnotificationsimulation.js';
@@ -62,7 +59,9 @@ function RunSim(){
 	SimulationHolder.UseSimProgressBar=true;
 	SimulationHolder.SimProgressBarID="MainProgress";
 	SimulationHolder.FunctionToRunOnCompletion=function(){
-		AggregateSimResults(this.Results.SummaryStats);
+		SimOutput=RearrangeSimResults(this.Result);//here 'this' refers to the .Result  stored in simulation holder
+		// AggregateSimResults
+		    // var Testing= new MultiSimCountStat(InputStatArray);
 		NotificationSimPlot();
 	}
 	
@@ -70,6 +69,66 @@ function RunSim(){
 
 	return 0;
 }
+
+function RearrangeSimResults(ResultsArray){
+	// Makes results that are in the format SimOutput[InterventionCount][SimCount]
+	// Sort by interventions
+	// Determine number of interventions
+	var NumInterventions=ResultsArray[0].Intervention.length;
+	var NumSims=ResultsArray.length;
+	
+	console.log(NumInterventions);
+	console.log(NumSims);
+	
+	
+	var SimOutput=[];
+	for (var IntCount=0; IntCount< NumInterventions; IntCount++){
+		SimOutput[IntCount]=[];// second index is the result
+		for (var SimCount=0; SimCount<NumSims; SimCount++){
+			SimOutput[IntCount][SimCount]=ResultsArray[SimCount].Intervention[IntCount];
+		}
+	}
+	return SimOutput;
+}
+
+function NotificationSimPlot(){
+	// Get the relevant data
+	FibrosisArray=SimOutput[0][0].FibrosisCount.Count;
+	TimeAxis=SimOutput[0][0].FibrosisCount.Time;
+	
+	// convert to a form that plot will accept
+	PlotData=PlotStyles_ConvertDataToLinePlot(TimeAxis, FibrosisArray);
+	//Set up plot appearance // http://www.pikemere.co.uk/blog/flot-tutorial-how-to-create-area-charts/ 
+	PlotSettings={xaxis: {
+					axisLabel: 'Time (years)',
+					axisLabelUseCanvas: true,
+					axisLabelFontSizePixels: 12,
+					axisLabelFontFamily: 'Verdana, Arial, Helvetica, Tahoma, sans-serif',
+					axisLabelPadding: 5,
+					tickLength: 0
+				},
+				yaxis: {
+					min: 0,
+					axisLabel: 'Number of people',
+					axisLabelUseCanvas: true,
+					axisLabelFontSizePixels: 12,
+					axisLabelFontFamily: 'Verdana, Arial, Helvetica, Tahoma, sans-serif',
+					axisLabelPadding: 5
+				},
+				series: {
+					lines: {
+						show: true,
+						fill: true
+					},
+					stack: true
+				}
+			};
+	
+
+	$.plot("#plot1_placeholder", PlotData, PlotSettings);
+
+}
+
 
 function ExtractDataFromFiles(){
 	Data.MaleNotifications={};
@@ -124,53 +183,10 @@ function ExtractDataFromFiles(){
 	Data.GeneralPopulation.Deaths=DataFile.GeneralPopulation.GetColumn(3, 1, 43);
 }
 
-function AggregateSimResults(ResultsArray){
-	// The purpose of this function is to turn the structure into something that can be graphed simply
-	// e.g. ResultsArray[Simnum].StatArrayName[Optional] -> 
 
 
-	// this should be Simulation holder, but may not be
-	console.log(ResultsArray);
-}
 
 
-function NotificationSimPlot(){
-	// Get the relevant data
-	FibrosisArray=SimulationHolder.Result[0].FibrosisCount.Count;
-	TimeAxis=SimulationHolder.Result[0].FibrosisCount.Time;
-	
-	// convert to a form that plot will accept
-	PlotData=PlotStyles_ConvertDataToLinePlot(TimeAxis, FibrosisArray);
-	//Set up plot appearance // http://www.pikemere.co.uk/blog/flot-tutorial-how-to-create-area-charts/ 
-	PlotSettings={xaxis: {
-					axisLabel: 'Time (years)',
-					axisLabelUseCanvas: true,
-					axisLabelFontSizePixels: 12,
-					axisLabelFontFamily: 'Verdana, Arial, Helvetica, Tahoma, sans-serif',
-					axisLabelPadding: 5,
-					tickLength: 0
-				},
-				yaxis: {
-					min: 0,
-					axisLabel: 'Number of people',
-					axisLabelUseCanvas: true,
-					axisLabelFontSizePixels: 12,
-					axisLabelFontFamily: 'Verdana, Arial, Helvetica, Tahoma, sans-serif',
-					axisLabelPadding: 5
-				},
-				series: {
-					lines: {
-						show: true,
-						fill: true
-					},
-					stack: true
-				}
-			};
-	
-
-	$.plot("#plot1_placeholder", PlotData, PlotSettings);
-
-}
 
 function DxUDxSimPlot(){
 	// Get the relevant data

@@ -82,7 +82,7 @@ function  StochasticOptimisation(Settings){
 	this.NumberOfParameters=0;
 	this.BestIndex=[];//Index of the best values from the CurrentVec array in each parameter
 	
-	this.SimResults=[];//An array of the output of the current round of simulations
+	this.SimOutput=[];//An array of the output of the current round of simulations
 	this.ErrorValues=[];//An array of the output of the current round of simulations
 	
 	// Determine if MathTools is running
@@ -130,8 +130,8 @@ StochasticOptimisation.prototype.Run= function (FunctionInput){
 		// Run the simulation
 		for (var SampleCount=0; SampleCount<this.NumberOfSamplesPerRound; SampleCount++){
 			ParameterSet=this.GetParameterSet(SampleCount);
-			this.SimResults[SampleCount]=this.Function(FunctionInput, ParameterSet);
-			this.ErrorValues[SampleCount]=this.ErrorFunction(this.SimResults[SampleCount], this.Target, FunctionInput);
+			this.SimOutput[SampleCount]=this.Function(FunctionInput, ParameterSet);
+			this.ErrorValues[SampleCount]=this.ErrorFunction(this.SimOutput[SampleCount], this.Target, FunctionInput);
 		}
 		
 		
@@ -145,7 +145,7 @@ StochasticOptimisation.prototype.Run= function (FunctionInput){
 
 		// If the OptimisationProgress function is set
 		if (this.RunProgressFunction==true){
-			this.ProgressFunction(RoundCount, this.Parameter, this.SimResults, this.ErrorValues, FunctionInput);
+			this.ProgressFunction(RoundCount, this.Parameter, this.SimOutput, this.ErrorValues, FunctionInput);
 		}
 		
 		// Storing optimisation results for later inspection/graphing
@@ -216,7 +216,7 @@ StochasticOptimisation.prototype.GetBestResults= function (ParameterNumber){
 	if (ParameterNumber>this.BestIndex.length){
 		throw ("GetBestResults(BestPosition) requires BestPosition to be smaller than the number of 'best' results selected in each round");
 	}
-	var Results=this.SimResults[this.BestIndex[ParameterNumber]];
+	var Results=this.SimOutput[this.BestIndex[ParameterNumber]];
 	return Results;
 }
 
@@ -319,7 +319,7 @@ function TestStochasticOptimisation(){
 		return TotalError;
 	};
 	
-	OptimisationSettings.ProgressFunction=function(SimulationNumber, Parameter, SimResults, ErrorValues){
+	OptimisationSettings.ProgressFunction=function(SimulationNumber, Parameter, SimOutput, ErrorValues){
 		console.log("Params: X "+Mean(Parameter.X.CurrentVec)+" Y "+Mean(Parameter.Y.CurrentVec));
 		PSetCount=0;
 		Data=[];

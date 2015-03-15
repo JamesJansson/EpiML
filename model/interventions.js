@@ -28,7 +28,7 @@ Intervention[2].RunFunction=function (Time){
 		};
 	}
 	else{
-		SofosbuvirTreatmentDecider=function (Person// here, a function is reset to make increased treatment
+		SofosbuvirTreatmentDecider=function (Person){// here, a function is reset to make increased treatment
 			if (Person.HCV.Stage()>=1){
 				return true;
 			}

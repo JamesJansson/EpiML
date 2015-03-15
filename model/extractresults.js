@@ -19,7 +19,7 @@
 
 
 
-function CountFibrosisStages(PPLocal, SampleFactorMultiplier, Time){
+function FibrosisCount(PPLocal, SampleFactorMultiplier, Time){
 	//Create settings
 	var Settings={};
 	Settings.Name="Number of People by Fibrosis Level";
@@ -31,6 +31,17 @@ function CountFibrosisStages(PPLocal, SampleFactorMultiplier, Time){
 	Settings.TimeStep=Time.Step;
 	Settings.MultipleCategories=true;
 	Settings.NumberOfCategories=8;
+	
+	// Define the  category description
+	Settings.CategoryLabel=[];
+	Settings.CategoryLabel[0]="F0";
+	Settings.CategoryLabel[1]="F1";
+	Settings.CategoryLabel[2]="F2";
+	Settings.CategoryLabel[3]="F3";
+	Settings.CategoryLabel[4]="F4";
+	Settings.CategoryLabel[5]="Liver Failure";
+	Settings.CategoryLabel[6]="HCC";
+	Settings.CategoryLabel[7]="Antibody positive, cleared";
 	
 	//Define the selection function
 	var FibrosisFunction= function (Person, Year){
@@ -50,16 +61,7 @@ function CountFibrosisStages(PPLocal, SampleFactorMultiplier, Time){
 	};
 	
 	
-	// Define the  category description
-	Settings.CategoryLabel=[];
-	Settings.CategoryLabel[0]="F0";
-	Settings.CategoryLabel[1]="F1";
-	Settings.CategoryLabel[2]="F2";
-	Settings.CategoryLabel[3]="F3";
-	Settings.CategoryLabel[4]="F4";
-	Settings.CategoryLabel[5]="Liver Failure";
-	Settings.CategoryLabel[6]="HCC";
-	Settings.CategoryLabel[7]="Antibody positive, cleared";
+	
 	
 	// Run the statistic
 	var FibrosisResult=new CountStatistic(Settings, FibrosisFunction);
@@ -125,7 +127,7 @@ function LivingDxAndUDx(PPLocal, SampleFactorMultiplier, Time){
 }
 
 
-function AnalyseAgeInfected(PPLocal, Time){
+function AgeInfected(PPLocal, Time){
 //Create settings
 	var Settings={};
 	Settings.Name="Age of people currently infected";
@@ -153,7 +155,7 @@ function AnalyseAgeInfected(PPLocal, Time){
 
 }
 
-function CountLivingWithHCV(PPLocal, SampleFactorMultiplier, Time){
+function LivingWithHCV(PPLocal, SampleFactorMultiplier, Time){
 	//Create settings
 	var Settings={};
 	Settings.Name="Number of people living with HCV";

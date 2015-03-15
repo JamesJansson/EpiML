@@ -4,7 +4,7 @@ var Data={};
 var Param=[];//An array of parameters
 var DataFile={};
 var SimulationHolder;
-var SimInputData=[];
+var SimOutput;
 
 // Setting up whether it is working under NodeJS or not
 RunningNodeJS=true;
@@ -16,7 +16,7 @@ var fs = require('fs');
 
 
 // Setting up flags
-	var SimulationRunning=0;//set to 1 if running
+var SimulationRunning=0;//set to 1 if running
 
 
 

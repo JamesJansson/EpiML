@@ -36,7 +36,7 @@ function OptimiseTransmission(){
 		return TotalError;
 	};
 	
-	OptimisationSettings.ProgressFunction=function(SimulationNumber, Parameter, SimResults, ErrorValues){
+	OptimisationSettings.ProgressFunction=function(SimulationNumber, Parameter, SimOutput, ErrorValues){
 		console.log("Params: X "+Mean(Parameter.X.CurrentVec)+" Y "+Mean(Parameter.Y.CurrentVec));
 		PSetCount=0;
 		Data=[];
