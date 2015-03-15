@@ -44,17 +44,27 @@ function FullModel(Param, Data, Intervention){
 	// Create HCV notification population
 	
 	// Match to population (including choosing individuals that are not diagnosed by the end of the data)
+	// Assign dates to those with diagnoses
+	// 
+	
 	
 	return Population;
 }
 
 function CreateHCVInfectedBloodRecipients(){
+	Param.Haemophilia_Total2013
+	//Determine total population by year
+	
+	//Interpolate to get number of new cases per year
+	
+	
+	
 	Param.Haemophilia.HCV.Prevalence1960;
 	Param.Haemophilia.HCV.Prevalence1970;
 	Param.Haemophilia.HCV.Prevalence1980;
 	Param.Haemophilia.HCV.Prevalence1980;
 	
-	TotalHaemophilliacs
+	
 	Param.HCV.Prevalence.Haemophiliacs1960;
 	
 }
