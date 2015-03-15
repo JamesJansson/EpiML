@@ -60,7 +60,7 @@ function RunSim(){
 	SimulationHolder.SimProgressBarID="MainProgress";
 	SimulationHolder.FunctionToRunOnCompletion=function(){
 		SimOutput=RearrangeSimResults(this.Result);//here 'this' refers to the .Result  stored in simulation holder
-		// AggregateSimResults
+		AggregateSimResults(SimOutput);
 		    // var Testing= new MultiSimCountStat(InputStatArray);
 		NotificationSimPlot();
 	}
@@ -91,10 +91,28 @@ function RearrangeSimResults(ResultsArray){
 	return SimOutput;
 }
 
+function AggregateSimResults(SimOutput){
+	var NumInterventions=SimOutput.length;
+	var NumSims=SimOutput[0].length;
+	var AggregatedResults={};
+	// for each intervention
+		// for each sim
+			// for each statistic
+				// if it is a countstatistic
+	return AggregatedResults;
+}
+
+
+
+
 function NotificationSimPlot(){
 	// Get the relevant data
-	FibrosisArray=SimOutput[0][0].FibrosisCount.Count;
-	TimeAxis=SimOutput[0][0].FibrosisCount.Time;
+	var IntCount=0;
+	var SimCount=0;
+	var StatCount=0;
+	var IndividualStat=SimOutput[IntCount][SimCount][SimCount];
+	FibrosisArray=IndividualStat.Count;
+	TimeAxis=IndividualStat.Time;
 	
 	// convert to a form that plot will accept
 	PlotData=PlotStyles_ConvertDataToLinePlot(TimeAxis, FibrosisArray);
