@@ -413,8 +413,8 @@ function OptimisationPlot(PlotHolderName, OriginalData, OptimisedResults){
 	
 	// Combine all the data to be included in the graph
 	var data = [
-			{color: "rgba(0, 0, 0, 0.7)",  points: OriginalPlot.PointStyle, data: OriginalPlot.Data, label: "Original Data"}, 
-			{color: "rgba(255, 0, 0, 0.7)",  lines: {show: true}, points: OptimisedPlot.PointStyle, data: OptimisedPlot.Data, label: "Optimised Result"},
+			{color: "rgba(0, 0, 0, 0.7)",  points: OriginalPlot.PointStyle, data: OriginalPlot.Data, label: "Data"}, 
+			{color: "rgba(255, 0, 0, 0.7)",  lines: {show: true}, points: OptimisedPlot.PointStyle, data: OptimisedPlot.Data, label: "Model"},
 		];
 	
 	$.plot($(PlotHolderName), data , {
