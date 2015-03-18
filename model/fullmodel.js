@@ -26,10 +26,16 @@ function FullModel(Param, Data, Intervention){
 	
 	
 	for (){
+	
+	
+	
 		// Run the individuals through exit
 		// PWIDExit(PWIDPopulation);
 		// PWID additional mortality
-		
+
+		// Keep HCV prevalence flat in line with data from NSP surveys
+		// 
+	
 		// HCV transmission
 		// Run HCV transmission
 		
