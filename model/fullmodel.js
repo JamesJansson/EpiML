@@ -49,6 +49,13 @@ function FullModel(Param, Data, Intervention){
 		// Testing
 			// If testing occurs prior to death, add the time to Person.HCV.DiagnosisDate
 		
+			// Pull out all people who reach symptomatic testing
+			// Reduce diagnoses in that year/sex/age group
+			
+			// Simply pull out the number of diagnoses in the age/sex group as it appears in the table
+			
+			// Keep track of diagnoses that could not be pulled out of that group. penalise that sim heavily
+		
 		// Determine treatment
 			// X number per year are treated out of those who are diagnosed
 			// If treated change future history of HCV
@@ -58,6 +65,10 @@ function FullModel(Param, Data, Intervention){
 					// Removes HCV related liver disease advancement
 					// Determines retraction of liver disease
 		
+		
+		
+		
+		
 		// lots of points are lost for insufficient diagnoses 
 		
 		
@@ -66,7 +77,7 @@ function FullModel(Param, Data, Intervention){
 			// Give the injecting
 		
 		// Join diagnoses in model to the expected 
-		// Keep track of un-joined diagnoses
+		
 		// Keep 
 	
 		// Run the individuals through exit
@@ -163,7 +174,10 @@ function ErrorOfFullModel(){
 function RunAndLink(){
 	// this is the final step before a normal run of the model occurs
 	
-	// Run the model with optimised parameters
+	// Run the model with optimised parameters, but this time with double (?) the number of individuals 
+		// starting injecting
+		// treatment numbers
+		// 
 
 	// Create a table that determines the diagnoses by year, age and sex (later state)
 		// Store this table for error analyses later
@@ -181,9 +195,18 @@ function RunAndLink(){
 	// for each notification
 		Ind=DetermineIndicies(NotificationPerson);
 		// choose a diagnosis that matches it in terms of sex and age
-		// may choose the same diagnosis multiple times but it MUST be a duplicate
+		NumInArray=PopRef[Ind.Sex][Ind.Year][Ind.Age].listpeople.length;
+		// If no available individual remaining
+		// may choose the same diagnosis multiple times but it MUST be duplicated using DeepCopy
+		
+		// If none available in category of diagnoses
+			// may choose nearest neighbour
+		
+	// determine difference 
+		
 	
 	// Delete all un-matched diagnoses
-		
+	
+	// Randomly remove undiagnosed individuals in the model at the same proportion as 
 }
 

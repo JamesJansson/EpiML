@@ -1,3 +1,7 @@
+// Inspired by
+// http://james.padolsey.com/javascript/deep-copying-of-objects-and-arrays/
+
+
 function DeepCopy(obj) {
     if (Object.prototype.toString.call(obj) === '[object Array]') {
         var out = [], i = 0, len = obj.length;
