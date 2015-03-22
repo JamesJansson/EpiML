@@ -25,13 +25,53 @@ function FullModel(Param, Data, Intervention){
 	Population.concat(PWIDPopulation, HCVInfectedBloodRecipients);// Later add MSM and migrants
 	
 	
-	for (){
-	
-	
+	for (){// each time step
+	// this is a function that will be called "AdvanceModel(YearLast, YearCurrent, Param, Population)
+		// determine number of individuals added the population of PWID
+		// Param.IDU.Add
+		
+		
+		// Start the individuals on IDU
+			// General moratlity
+			// Determine staying probability
+			// Determine exit rate
+			// PWID additional mortality
+		
+		// Determine transmissions that occur
+			// Number of infected active injectors * T0
+			
+			// Run through infection
+			// Clearance
+
+			// HCV progression
+			// Determine additional mortality due to HCV
+		
+		// Testing
+			// If testing occurs prior to death, add the time to Person.HCV.DiagnosisDate
+		
+		// Determine treatment
+			// X number per year are treated out of those who are diagnosed
+			// If treated change future history of HCV
+				// HCV.TreatmentClearance(date)
+					// Removes HCV related death
+					// Removes HCV related HCC
+					// Removes HCV related liver disease advancement
+					// Determines retraction of liver disease
+		
+		// lots of points are lost for insufficient diagnoses 
+		
+		
+		
+		// If the year is the first year of the simulation
+			// Give the injecting
+		
+		// Join diagnoses in model to the expected 
+		// Keep track of un-joined diagnoses
+		// Keep 
 	
 		// Run the individuals through exit
 		// PWIDExit(PWIDPopulation);
-		// PWID additional mortality
+		
 
 		// Keep HCV prevalence flat in line with data from NSP surveys
 		// 
@@ -48,7 +88,14 @@ function FullModel(Param, Data, Intervention){
 		// Treatment
 		
 		// HCV mortality
+		
+		
 	}
+	
+	// 
+	
+	
+	
 	// Create HCV notification population
 	
 	// Match to population (including choosing individuals that are not diagnosed by the end of the data)
@@ -67,6 +114,8 @@ function CreateHCVInfectedBloodRecipients(){
 	// Data.Population.Migration
 	// Data.Population.Deaths
 	// Data.Population.Births
+	
+	// THIS MUST BE MOVED TO THE INTERFACE
 	Data.GeneralPopulation={};
 	Data.GeneralPopulation.Year=DataFile.GeneralPopulation.GetColumn(0, 1, 43);
 	Data.GeneralPopulation.Size=DataFile.GeneralPopulation.GetColumn(1, 1, 43);
@@ -99,3 +148,42 @@ function CreateHCVInfectedBloodRecipients(){
 	Param.HCV.Prevalence.Haemophiliacs1960;
 	
 }
+
+
+function ErrorOfFullModel(){
+	// Error categories:
+	// Ever injected
+	// Recently injected
+	// Ratio of standard deviation to the mean is basically the same in recent injectors over time (last x years)
+	// Error of difference between diagnosed data and undiagnosed
+	//
+}
+
+
+function RunAndLink(){
+	// this is the final step before a normal run of the model occurs
+	
+	// Run the model with optimised parameters
+
+	// Create a table that determines the diagnoses by year, age and sex (later state)
+		// Store this table for error analyses later
+	
+	// sort the diagnoses by year, age and sex (later state)
+	// Initialise object
+		// Ind=DetermineIndicies(SimPerson);
+		// determine sexindex
+		// determine yearindex
+		// determine ageindex
+		PopRef[Ind.Sex][Ind.Year][Ind.Age].listpeople.push(i);
+	
+	// Convert ALL diagnoses in the model to real diagnoses
+	// i.e. notification cases
+	// for each notification
+		Ind=DetermineIndicies(NotificationPerson);
+		// choose a diagnosis that matches it in terms of sex and age
+		// may choose the same diagnosis multiple times but it MUST be a duplicate
+	
+	// Delete all un-matched diagnoses
+		
+}
+
