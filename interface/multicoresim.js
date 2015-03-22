@@ -30,7 +30,7 @@
 // http://stackoverflow.com/questions/16071211/using-transferable-objects-from-a-web-worker/16766758#16766758 
 // http://updates.html5rocks.com/2011/12/Transferable-Objects-Lightning-Fast 
 
-function MultiThreadSim(ScriptName, Common, SimDataArray, NoThreads){
+function MultiThreadSim(ScriptName, Common, SimDataArray, NoThreads, TerminateOnFinish){
 	
 	this.ScriptName=ScriptName;
 	this.Common=Common;
@@ -39,12 +39,21 @@ function MultiThreadSim(ScriptName, Common, SimDataArray, NoThreads){
 	this.Worker=[];//An array of workers
 	this.NoSims=SimDataArray.length;
 	
-	this.TerminateOnFinish=true;//This flag is used to indicate that following the  return of a 'result', the simulation should terminate.
+	if(typeof(TerminateOnFinish)==='undefined'){
+		this.TerminateOnFinish=false;//This flag is used to indicate that following the  return of a 'result', the simulation should terminate.
+	}
+	else{
+		this.TerminateOnFinish=TerminateOnFinish;
+	}
 	this.WorkerTerminated=[];
 	
 	this.FunctionToRunOnCompletionOfStartUp; // 
 	
+	// There are two types of variable that indicate if a simulation is currently running:
+	// One is that there are currently sims doing calculations
+	// The other is to indciate that the thread exists but is dormant
 	this.CurrentlyRunning=false;
+	
 	this.Complete=false;
 	this.NoSimsCurrentlyRunning=0;
 	this.ThreadInUse= new Array(NoThreads);
@@ -66,7 +75,7 @@ MultiThreadSim.prototype.Start=function() {
 
 	//Check that nothing else is running
 	if (this.CurrentlyRunning==true){
-		console.log("Warning: worker currently running");
+		console.log("Warning: this simulation has already been started. You may want to run .Terminate() ");
 		return 0;
 	};
 	this.CurrentlyRunning=true;

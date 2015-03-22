@@ -2,7 +2,7 @@
 //Specify files to be included in the simulation
 var DebugLoadingScripts=true;
 
-importScripts("simulation.js");
+
 importScripts("simulationtools.js");
 importScripts("mathtools.js");
 importScripts("stochasticoptimisation.js");
