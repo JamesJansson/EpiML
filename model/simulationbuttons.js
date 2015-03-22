@@ -58,7 +58,7 @@ function RunSim(){
 	SimulationHolder=new MultiThreadSim(ScriptToRun, Common, SimInputData, Settings.NoThreads); //Common is the same between all sims
 	SimulationHolder.UseSimProgressBar=true;
 	SimulationHolder.SimProgressBarID="MainProgress";
-	SimulationHolder.FunctionToRunOnCompletion=function(){
+	SimulationHolder.FunctionToRunOnCompletionOfStartUp=function(){
 		SimOutput=RearrangeSimResults(this.Result);//here 'this' refers to the .Result  stored in simulation holder
 		AggregatedResults=AggregateSimResults(SimOutput);
 		    // var Testing= new MultiSimCountStat(InputStatArray);

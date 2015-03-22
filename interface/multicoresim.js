@@ -42,7 +42,7 @@ function MultiThreadSim(ScriptName, Common, SimDataArray, NoThreads){
 	this.TerminateOnFinish=true;//This flag is used to indicate that following the  return of a 'result', the simulation should terminate.
 	this.WorkerTerminated=[];
 	
-	this.FunctionToRunOnCompletion; // 
+	this.FunctionToRunOnCompletionOfStartUp; // 
 	
 	this.CurrentlyRunning=false;
 	this.Complete=false;
@@ -123,8 +123,8 @@ MultiThreadSim.prototype.StartNextSim=function() {
 		this.Complete=true;
 		
 		//this.Terminate();//close all the workers
-		if (typeof(this.FunctionToRunOnCompletion) != 'undefined'){
-			this.FunctionToRunOnCompletion(this);
+		if (typeof(this.FunctionToRunOnCompletionOfStartUp) != 'undefined'){
+			this.FunctionToRunOnCompletionOfStartUp(this);
 		}
 	}
 }
