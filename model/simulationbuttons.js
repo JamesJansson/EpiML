@@ -95,7 +95,7 @@ function RunPersistentSim(){
 	var SimInputData=ParameterSplit(Param, Settings.NumberOfSimulations, RecalculateDistribution);
 	
 	//Creating the simulation holder
-	var TerminateOnFinish=true;
+	var TerminateOnFinish=false;
 	SimulationHolder=new MultiThreadSim(ScriptToRun, Common, SimInputData, Settings.NoThreads, TerminateOnFinish); //Common is the same between all sims
 	SimulationHolder.UseSimProgressBar=true;
 	SimulationHolder.SimProgressBarID="MainProgress";
