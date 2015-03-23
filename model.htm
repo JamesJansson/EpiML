@@ -117,8 +117,15 @@ Papa.parse("data/summarynotifications.csv", {download: true, complete: function(
 		<input type="checkbox" onClick="Something=this.checked;">PWID Entry<br>
 		<input type="checkbox" onClick="Something=this.checked;">PWID Progression and Exit<br>
 		<p>Below are the early stages of the full simulation</p>
-		<div id="RunSimButton" class="SolidButton" onClick="RunSim()"> Run simulation </div>
-		<p>Below are the early stages of the full simulation</p>
+		<div id="RunSimButton" class="SolidButton" onClick="RunSim();"> Run simulation </div>
+		
+		<p>Run the simulation but keep sims alive to extract results from </p>
+		<div id="RunPersistentSimButton" class="SolidButton" onClick="RunPersistentSim();"> Run persistent simulation </div>
+		<p>Terminate the simulation </p>
+		<div id="RunSimButton" class="SolidButton" onClick="SimulationHolder.Terminate();"> Terminate simulation </div>
+		
+		
+		<p>Plot results</p>
 		<div id="PlotFibrosisButton" class="SolidButton" onClick="NotificationSimPlot();DxUDxSimPlot();"> Plot Fibrosis </div>
 		
 		<div id="PlotFibrosisButton" class="SolidButton" onClick="DownloadSimulationResults();"> Download Results </div>

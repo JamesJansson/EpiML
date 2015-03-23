@@ -5,8 +5,6 @@
 function RunSim(){
 	ScriptToRun='model/runnotificationsimulation.js';
 	
-	var NumberOfSimsToRun=20;//this will later be set by the preferences in the interface
-
 	// Load the values from the files
 	ExtractDataFromFiles();
 	
@@ -70,6 +68,55 @@ function RunSim(){
 
 	return 0;
 }
+
+
+function RunPersistentSim(){
+	var ModelDirectory='model';
+
+	// Load the values from the files
+	ExtractDataFromFiles();
+	
+	SimSettings={};
+	SimSettings.RunOptimisation=true;
+	console.error("SimSettings.RunOptimisation hard set above");
+	
+	
+	// The following is required for all programs
+	SimSettings.SampleFactor=Settings.SampleFactor;
+	
+	// Save into the Common holder
+	var Common={};
+	Common.Data=Data;
+	Common.Param=[];//this where parameters that are the same between simulations are entered
+	Common.Settings=SimSettings;
+	
+	//Creating the data to be used in the simulations
+	var RecalculateDistribution=true;
+	var SimInputData=ParameterSplit(Param, Settings.NumberOfSimulations, RecalculateDistribution);
+	
+	//Creating the simulation holder
+	var TerminateOnFinish=true;
+	SimulationHolder=new MultiThreadSim(ScriptToRun, Common, SimInputData, Settings.NoThreads, TerminateOnFinish); //Common is the same between all sims
+	SimulationHolder.UseSimProgressBar=true;
+	SimulationHolder.SimProgressBarID="MainProgress";
+	SimulationHolder.FunctionToRunOnCompletionOfStartUp=function(){
+		SimOutput=RearrangeSimResults(this.Result);//here 'this' refers to the .Result  stored in simulation holder
+		AggregatedResults=AggregateSimResults(SimOutput);
+		    // var Testing= new MultiSimCountStat(InputStatArray);
+		NotificationSimPlot();
+	}
+	// Run the simulation
+	SimulationHolder.Start();
+
+	return 0;
+}
+
+
+
+
+
+
+
 
 function RearrangeSimResults(ResultsArray){
 	// Makes results that are in the format SimOutput[InterventionCount][SimCount]
