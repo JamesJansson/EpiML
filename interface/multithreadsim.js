@@ -30,12 +30,15 @@
 // http://stackoverflow.com/questions/16071211/using-transferable-objects-from-a-web-worker/16766758#16766758 
 // http://updates.html5rocks.com/2011/12/Transferable-Objects-Lightning-Fast 
 
-function MultiThreadSim(ScriptName,NoSims,  NoThreads, TerminateOnFinish){
+function MultiThreadSim(ScriptName, NoSims, NoThreads, TerminateOnFinish){
 	
 	this.ScriptName=ScriptName;
 	this.NoThreads=NoThreads;
 	this.Worker=[];//An array of workers
 	this.NoSims=NoSims;
+	
+	this.FunctionToRun=[];// the function to be run inside the new webworker
+	
 	
 	if(typeof(TerminateOnFinish)==='undefined'){
 		this.TerminateOnFinish=false;//This flag is used to indicate that following the  return of a 'result', the simulation should terminate.
@@ -142,6 +145,7 @@ MultiThreadSim.prototype.StartNextSim=function() {
 
 
 MultiThreadSim.prototype.Run=function(FunctionName, Common, SimDataArray, TerminateOnFinish) {
+	this.FunctionToRun=FunctionName;
 
 	//Check that nothing else is running
 	if (this.CurrentlyRunning==true){
