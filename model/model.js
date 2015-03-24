@@ -5,6 +5,8 @@ var DebugLoadingScripts=true;
 
 var Data={};
 var Param={};//This is the parameter holder for the simulation
+var OptimisedParam={};// This is the Param object which includes values for the optimised param 
+
 
 var Settings={};
 
@@ -26,7 +28,7 @@ function DebugStatement(ConsoleMessage){
 	}
 }
 
-function RunModel(Msg){
+function RunModel(WorkerMessage){
 	//
 	
 	//In this section will be a message handler that allows calls

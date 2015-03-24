@@ -57,7 +57,8 @@ function RunSim(){
 	SimulationHolder=new MultiThreadSim(ScriptToRun, Common, SimInputData, Settings.NoThreads, TerminateOnFinish); //Common is the same between all sims
 	SimulationHolder.UseSimProgressBar=true;
 	SimulationHolder.SimProgressBarID="MainProgress";
-	SimulationHolder.FunctionToRunOnCompletionOfStartUp=function(){
+	SimulationHolder.RunFunctionOnCompletion=true;
+	SimulationHolder.FunctionToRunOnCompletion=function(){
 		SimOutput=RearrangeSimResults(this.Result);//here 'this' refers to the .Result  stored in simulation holder
 		AggregatedResults=AggregateSimResults(SimOutput);
 		    // var Testing= new MultiSimCountStat(InputStatArray);
@@ -99,7 +100,7 @@ function RunPersistentSim(){
 	SimulationHolder=new MultiThreadSim(ScriptToRun, Common, SimInputData, Settings.NoThreads, TerminateOnFinish); //Common is the same between all sims
 	SimulationHolder.UseSimProgressBar=true;
 	SimulationHolder.SimProgressBarID="MainProgress";
-	SimulationHolder.FunctionToRunOnCompletionOfStartUp=function(){
+	SimulationHolder.FunctionToRunOnCompletion=function(){
 		SimOutput=RearrangeSimResults(this.Result);//here 'this' refers to the .Result  stored in simulation holder
 		AggregatedResults=AggregateSimResults(SimOutput);
 		    // var Testing= new MultiSimCountStat(InputStatArray);

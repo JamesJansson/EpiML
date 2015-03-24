@@ -47,8 +47,7 @@ function MultiThreadSim(ScriptName, Common, SimDataArray, NoThreads, TerminateOn
 	}
 	this.WorkerTerminated=[];
 	
-	this.RunFunctionOnCompletion=false;
-	this.FunctionToRunOnCompletion; // 
+	this.FunctionToRunOnCompletionOfStartUp; // 
 	
 	// There are two types of variable that indicate if a simulation is currently running:
 	// One is that there are currently sims doing calculations
@@ -133,8 +132,8 @@ MultiThreadSim.prototype.StartNextSim=function() {
 		this.Complete=true;
 		
 		//this.Terminate();//close all the workers
-		if (this.RunFunctionOnCompletion== true){
-			this.FunctionToRunOnCompletion(this);
+		if (typeof(this.FunctionToRunOnCompletionOfStartUp) != 'undefined'){
+			this.FunctionToRunOnCompletionOfStartUp(this);
 		}
 	}
 }
