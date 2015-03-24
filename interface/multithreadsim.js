@@ -33,6 +33,8 @@
 function MultiThreadSim(ScriptName, NoSims, NoThreads, TerminateOnFinish){
 	
 	this.ScriptName=ScriptName;
+	// function MultiThreadSim(FolderName, NoSims, NoThreads, TerminateOnFinish){
+	//this.FolderName=FolderName;
 	this.NoThreads=NoThreads;
 	this.Worker=[];//An array of workers
 	this.NoSims=NoSims;
@@ -170,7 +172,7 @@ MultiThreadSim.prototype.Run=function(FunctionName, Common, SimDataArray, Termin
 	// Determine if the simulation is running or not 
 	
 	
-	if (typeof(TerminateOnFinish)!='undefine'){
+	if (typeof(TerminateOnFinish)!='undefined'){
 		this.TerminateOnFinish=TerminateOnFinish;
 	}
 	
