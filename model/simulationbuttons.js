@@ -54,7 +54,7 @@ function RunSim(){
 
 	//Creating the simulation holder
 	var TerminateOnFinish=true;
-	SimulationHolder=new MultiThreadSim(ScriptToRun, Common, SimInputData, Settings.NoThreads, TerminateOnFinish); //Common is the same between all sims
+	SimulationHolder=new MultiThreadSim(ScriptToRun, SimInputData.length, Settings.NoThreads, TerminateOnFinish); //Common is the same between all sims
 	SimulationHolder.UseSimProgressBar=true;
 	SimulationHolder.SimProgressBarID="MainProgress";
 	SimulationHolder.RunFunctionOnCompletion=true;
@@ -65,7 +65,7 @@ function RunSim(){
 		NotificationSimPlot();
 	}
 	
-	SimulationHolder.Start();
+	SimulationHolder.Start(Common, SimInputData);
 
 	return 0;
 }

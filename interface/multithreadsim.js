@@ -30,14 +30,12 @@
 // http://stackoverflow.com/questions/16071211/using-transferable-objects-from-a-web-worker/16766758#16766758 
 // http://updates.html5rocks.com/2011/12/Transferable-Objects-Lightning-Fast 
 
-function MultiThreadSim(ScriptName, Common, SimDataArray, NoThreads, TerminateOnFinish){
+function MultiThreadSim(ScriptName,NoSims,  NoThreads, TerminateOnFinish){
 	
 	this.ScriptName=ScriptName;
-	this.Common=Common;
-	this.SimDataArray=SimDataArray;//an array of values or objects to be passed to the specified script
 	this.NoThreads=NoThreads;
 	this.Worker=[];//An array of workers
-	this.NoSims=SimDataArray.length;
+	this.NoSims=NoSims;
 	
 	if(typeof(TerminateOnFinish)==='undefined'){
 		this.TerminateOnFinish=false;//This flag is used to indicate that following the  return of a 'result', the simulation should terminate.
@@ -52,8 +50,9 @@ function MultiThreadSim(ScriptName, Common, SimDataArray, NoThreads, TerminateOn
 	
 	// There are two types of variable that indicate if a simulation is currently running:
 	// One is that there are currently sims doing calculations
-	// The other is to indciate that the thread exists but is dormant
+	// The other is to indicate that the thread exists but is dormant
 	this.CurrentlyRunning=false;
+	this.ThreadsOpen=false;
 	
 	this.Complete=false;
 	this.NoSimsCurrentlyRunning=0;
@@ -72,8 +71,10 @@ function MultiThreadSim(ScriptName, Common, SimDataArray, NoThreads, TerminateOn
 	this.StatusTextElementName="StatusTextElement";
 }
 
-MultiThreadSim.prototype.Start=function() {
-
+MultiThreadSim.prototype.Start=function(Common, SimDataArray) {
+	this.Common=Common;
+	this.SimDataArray=SimDataArray;//an array of values or objects to be passed to the specified script
+	
 	//Check that nothing else is running
 	if (this.CurrentlyRunning==true){
 		console.log("Warning: this simulation has already been started. You may want to run .Terminate() ");
@@ -138,6 +139,101 @@ MultiThreadSim.prototype.StartNextSim=function() {
 		}
 	}
 }
+
+
+MultiThreadSim.prototype.Run=function(FunctionName, Common, SimDataArray, TerminateOnFinish) {
+
+	//Check that nothing else is running
+	if (this.CurrentlyRunning==true){
+		console.log("Warning: a simulation has already been started. You may want to run .Terminate() ");
+		return 0;
+	};
+	this.CurrentlyRunning=true;
+	this.NoSimsCurrentlyRunning=0;
+	this.Complete=false;
+	
+	
+	
+	
+	
+	this.Common=Common;
+	this.SimDataArray=SimDataArray;//an array of values or objects to be passed to the specified script
+	
+	
+	
+	
+	
+	// Determine if the simulation is running or not 
+	
+	
+	if (typeof(TerminateOnFinish)!='undefine'){
+		this.TerminateOnFinish=TerminateOnFinish;
+	}
+	
+	
+	
+	
+	// Set progress bar to zero
+	if (this.UseSimProgressBar==true){
+		document.getElementById(this.SimProgressBarID).value=0;
+	}
+	
+	// Set up the 'WorkerTerminated' array
+	for (var i=0; i<this.NoSims; i++){
+		this.WorkerTerminated[i]=false;
+	}
+	
+	//Create workers	
+	this.StartNextSim2();
+};
+
+
+MultiThreadSim.prototype.StartNextSim2=function() {
+
+	var MoreSimsToRun=true;//flag to prevent continually trying to run more sims
+	while (this.NoSimsCurrentlyRunning<this.NoThreads &&  MoreSimsToRun==true){//there are spare Threads available
+		if (this.SimsStarted<this.NoSims){//if there are sims that have yet to be started
+			// Find a free thread
+			var ThreadCount=0;
+			while (this.ThreadInUse[ThreadCount]==true){
+				ThreadCount++;
+			}
+			this.ThreadInUse[ThreadCount]=true;
+			var ThreadID=ThreadCount;
+			
+			var SimID=this.SimsStarted++;//run this sim, increment by 1
+			this.NoSimsCurrentlyRunning++;//indicate that another Thread has become used
+			
+			this.Worker[SimID]= new Worker(this.ScriptName);
+			
+			var BoundMessage=MultiThreadSimMessageHandler.bind(this);
+			this.Worker[SimID].onmessage = BoundMessage;
+			this.Worker[SimID].ThreadID=ThreadID;
+			
+			//Post message will soon become a handler for many commands, including starting the simulation, optimising the simulation, and requesting data
+			this.Worker[SimID].postMessage({ SimID: SimID, ThreadID: ThreadID, Common: this.Common, SimData: this.SimDataArray[SimID]});
+		}
+		else{ //there are no more sims to run
+			MoreSimsToRun=false;
+		}
+		
+	}
+	
+	//Determine if this is the last sim to complete
+	if (this.SimsComplete>=this.NoSims){
+		this.Complete=true;
+		
+		//this.Terminate();//close all the workers
+		if (this.RunFunctionOnCompletion== true){
+			this.FunctionToRunOnCompletion(this);
+		}
+	}
+}
+
+
+
+
+
 
 
 MultiThreadSimMessageHandler=function(e) {
