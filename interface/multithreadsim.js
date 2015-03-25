@@ -150,40 +150,66 @@ MultiThreadSim.prototype.StartNextSim=function() {
 }
 
 
-MultiThreadSim.prototype.Run=function(FunctionName, Common, SimDataArray, TerminateOnFinish) {
-	// Terminate on finish is optional
-	if (typeof(TerminateOnFinish)!='undefined'){
-		this.TerminateOnFinish=TerminateOnFinish;
-	}
-	//else use the set up originally decided when the object was started
-
-
-	this.FunctionToRun=FunctionName;
+MultiThreadSim.prototype.Run=function(RunSettings){//FunctionName, Common, SimDataArray, TerminateOnFinish) {
+	//RunSettings has the following elements
+	// RunSettings.FunctionName: Required. Runs that simulation 
+	// RunSettings.Common: Optional. Passes this information to FunctionName(Input) as Input.Common
+	// RunSettings.SimDataArray: Optional. An array the length of the number of sims. Passes this information to FunctionName(Input) as Input.SimData
+	// RunSettings.TerminateOnFinish: Optional. Tells the worker to terminate to save memory or CPU use. 
+	// RunSettings.FunctionToRunOnCompletion: Optional. Runs once all workers have finished.
 
 	//Check that nothing else is running
 	if (this.CurrentlyRunning==true){
 		console.log("Warning: a simulation has already been started. You may want to run .Terminate() ");
 		return 0;
 	};
+
+	
+	// Import and check settings
+	if (typeof(RunSettings.FunctionName)=='undefined'){
+		throw "A RunSettings.FunctionName must be set when runnning MultiThreadSim.Run(RunSettings)";
+	}
+	this.FunctionToRun=RunSettings.FunctionName;
+
+	if (typeof(RunSettings.Common)!='undefined'){
+		this.Common=RunSettings.Common;
+	}
+	else{
+		this.Common={};// Don't pass anything in the common holder
+	}
+	
+	if (typeof(RunSettings.SimDataArray)!='undefined'){
+		// Check that the data is the right size
+		if (RunSettings.SimDataArray.length!=this.NoSims){
+			throw "The size of the sim data array should be the same as the number of sims in the set up of MultiThreadSim";
+		}
+		this.SimDataArray=RunSettings.SimDataArray;//an array of values or objects to be passed to the specified script
+	}
+	else{
+		this.SimDataArray = [];
+		for (var i = 0; i < this.NoSims; i++)
+			this.SimDataArray.push({});
+	}
+	
+	// Terminate on finish is optional
+	if (typeof(RunSettings.TerminateOnFinish)!='undefined'){
+		this.TerminateOnFinish=RunSettings.TerminateOnFinish;
+	}
+	//else use the set up originally decided when the object was started
+
+	if (typeof(RunSettings.FunctionToRunOnCompletion)!='undefined'){
+		this.FunctionToRunOnCompletion=RunSettings.FunctionToRunOnCompletion;
+		this.RunFunctionOnCompletion=true;
+	}
+	else{
+		this.RunFunctionOnCompletion=false;
+	}
+	
+	
+	// Start up the run
 	this.CurrentlyRunning=true;
 	this.NoThreadsCurrentlyRunning=0;
 	this.Complete=false;
-	
-	
-	this.Common=Common;
-	// Check that the data is the right size
-	if (SimDataArray.length!=this.NoSims){
-		throw "The size of the sim data array should be the same as the number of sims in the set up of MultiThreadSim";
-	}
-	this.SimDataArray=SimDataArray;//an array of values or objects to be passed to the specified script
-	
-	
-	
-	
-	// Determine if the simulation is running or not 
-	
-	
-	
 	
 	// Set progress bar to zero
 	if (this.UseSimProgressBar==true){
