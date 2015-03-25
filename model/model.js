@@ -256,3 +256,10 @@ function CollectStatistic(){
 }
 
 
+function TestMulticoreSim(WorkerMessage){
+	console.log(WorkerMessage);
+	return Param;
+}
+
+
+

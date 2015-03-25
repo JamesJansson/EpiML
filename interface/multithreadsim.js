@@ -71,6 +71,8 @@ function MultiThreadSim(FolderName, NoSims, NoThreads, TerminateOnFinish){
 	this.SimsStarted=0;
 	this.SimsComplete=0;
 	this.Result=[];
+	this.AllWorkersStarted=false;
+	
 	
 	this.UseSimProgressBar=false;
 	this.SimProgressBarID="SimProgressBar";//To allow a progress bar to be installed into the page
@@ -208,8 +210,11 @@ MultiThreadSim.prototype.Run=function(RunSettings){//FunctionName, Common, SimDa
 	
 	// Start up the run
 	this.CurrentlyRunning=true;
+	this.ThreadsOpen=true;// is false once all simulations are closed
 	this.NoThreadsCurrentlyRunning=0;
 	this.Complete=false;
+	this.SimsComplete=0;
+	this.SimsStarted=0;
 	
 	// Set progress bar to zero
 	if (this.UseSimProgressBar==true){
@@ -242,11 +247,13 @@ MultiThreadSim.prototype.StartNextSim2=function() {
 			var SimID=this.SimsStarted++;//run this sim, increment by 1
 			this.NoThreadsCurrentlyRunning++;//indicate that another Thread has become used
 			
-			
-			this.Worker[SimID]= new Worker(this.ScriptName);
-			
-			var BoundMessage=MultiThreadSimMessageHandler2.bind(this);
-			this.Worker[SimID].onmessage = BoundMessage;
+			// the first time the simulation is run, we need to start up the workers
+			if (this.AllWorkersStarted==false){
+				this.Worker[SimID]= new Worker(this.ScriptName);
+				this.NoThreadsOpen++;
+				var BoundMessage=MultiThreadSimMessageHandler2.bind(this);
+				this.Worker[SimID].onmessage = BoundMessage;
+			}
 			this.Worker[SimID].ThreadID=ThreadID;
 			
 			//Post message will soon become a handler for many commands, including starting the simulation, optimising the simulation, and requesting data
@@ -261,6 +268,16 @@ MultiThreadSim.prototype.StartNextSim2=function() {
 	//Determine if this is the last sim to complete
 	if (this.SimsComplete>=this.NoSims){
 		this.Complete=true;
+		
+		this.CurrentlyRunning=false;
+		
+		
+		if (this.TerminateOnFinish==true){
+			this.ThreadsOpen=false;
+		}
+		else{
+			this.AllWorkersStarted=true;
+		}
 		
 		//this.Terminate();//close all the workers
 		if (this.RunFunctionOnCompletion== true){
@@ -403,7 +420,8 @@ MultiThreadSim.prototype.Terminate=function() {//close down all workers
 	for (SimID=0; SimID<this.NoSims; SimID++){
 		this.Worker[SimID].terminate();
 		this.WorkerTerminated[SimID]=true;
-	}	
+	}
+	this.ThreadsOpen=true;
 	this.CurrentlyRunning==false;
 };
 
