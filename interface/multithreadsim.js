@@ -350,6 +350,7 @@ MultiThreadSimMessageHandler2=function(e) {
 	}
 	if (typeof e.data.Console != 'undefined'){//used to pass structured data to the console
 		console.log(e.data.Console);
+		console.error("The use of this should be depreciated");
 	}
 	// Messages to the ProgressBar
 	if (typeof e.data.ProgressBarValue != 'undefined'){

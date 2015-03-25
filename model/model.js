@@ -21,7 +21,7 @@ var FemaleMortality;
 var IndigenousMaleMortality;
 var IndigenousFemaleMortality;
 
-var ShowDebugStatements=true;
+var ShowDebugStatements=false;
 function DebugStatement(ConsoleMessage){
 	if (ShowDebugStatements){
 		console.log(ConsoleMessage);
@@ -43,8 +43,9 @@ function OptimiseModel(WorkerData){
 	
 	// if intervention function is defined
 	//    go to intervention function. evaluate the function that executes at time=t
-
-	self.postMessage({Console: WorkerData});//This passes the data back to the console so we can look at it
+	
+	DebugStatement("Data passed to the simulation");
+	DebugStatement(WorkerData);//This passes the data back to the console so we can look at it
 	Rand.SetSeed();//note that this is an extremely important step to allow random numbers to be generated
 	var TimerStart = new Date().getTime() / 1000;
 	
@@ -54,7 +55,9 @@ function OptimiseModel(WorkerData){
 	Param = WorkerData.SimData;
 	
 	
-	console.log("Note at some point we will simply merge the common and non-common Params into a single Param for simplicity");
+	// Note at some point we will simply merge the common and non-common Params into a single Param for simplicity
+	
+	
 	// Load simulation settings
 	Settings=WorkerData.Common.Settings;
 	
@@ -64,7 +67,6 @@ function OptimiseModel(WorkerData){
 	
 	var StringForStatus="thread: "+ThreadID+" simID: "+SimID;
 	self.postMessage({StatusText: StringForStatus, StatusTextID: ThreadID});
-	self.postMessage(Param);
 	
 	// Load up mortality data
 	MaleMortality=new MortalityCalculator(Data.Mortality.Male[1].Rates, Data.Mortality.Male[1].Year, Data.Mortality.Male[2].Rates, Data.Mortality.Male[2].Year);
@@ -98,7 +100,7 @@ function OptimiseModel(WorkerData){
 	// For each person in the simulation 
 	// Determine a random time that they have been infected for (lognormally distributed about 5 years previously, SD 2.5 years)
 	
-	console.log(PPNotification.length);
+
 	
 	var TimerFinish = new Date().getTime() / 1000;
     var TotalTime=TimerFinish -TimerStart;
@@ -184,8 +186,7 @@ function OptimiseModel(WorkerData){
     TotalTime=TimerFinish -TimerStart;
 	DebugStatement("Finished full simulation in "+TotalTime+" seconds");
 	
-	console.log("Intervention");
-	console.log(Intervention);
+
 	
 	SimResult.OriginalData=PWIDEntryOptimisationResults;
 	
@@ -223,18 +224,12 @@ function OptimiseModel(WorkerData){
 	
 	
 	
-	// self.postMessage({WorkerMessage: WorkerMessage.data, Result: SimResult});//All simulation will end with this line
 	return SimResult;
 
 };
 
 function AdjustData(){
-	//var AdjustmentFactor=1.2;
 	AdjustPWID();//(Data, AdjustmentFactor);
-	
-	
-	
-	self.postMessage({Console: Data});
 }
 
 function AdjustPWID(){//Data, AdjustmentFactor){// This should occur prior to passing the data to the function

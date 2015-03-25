@@ -109,9 +109,8 @@ function RunPersistentSim(){
 	RunSettings.FunctionToRunOnCompletion=function(){
 		SimOutput=RearrangeSimResults(this.Result);//here 'this' refers to the .Result  stored in simulation holder
 		AggregatedResults=AggregateSimResults(SimOutput);
-		    // var Testing= new MultiSimCountStat(InputStatArray);
+
 		NotificationSimPlot();
-		console.error("FunctionToRunOnCompletion is running");
 	}
 	
 	

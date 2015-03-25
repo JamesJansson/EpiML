@@ -21,7 +21,7 @@ function AssignPopulation(Data, SampleFactor){
 	Sex[1].Notifications={};
 	Sex[1].Notifications=Data.FemaleNotifications.Table;
 	
-	console.log("Assigning diagnoses");
+
 
 	// For each year
 	for (var YearIndex=0; YearIndex<Data.StateNotifications.Year.length; YearIndex++){
@@ -81,9 +81,7 @@ function AssignPopulation(Data, SampleFactor){
 		}
 	}
 
-	console.log("Total notifications loaded "+ PCount);
+
 
 	return PNotification;
 }
-
-console.log("Loaded assignpoplation.js");
