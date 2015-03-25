@@ -73,7 +73,7 @@ function RunSim(){
 
 function RunPersistentSim(){
 	var ModelDirectory='model';
-
+	var FunctionName="OptimiseModel";
 	// Load the values from the files
 	ExtractDataFromFiles();
 	
@@ -97,17 +97,22 @@ function RunPersistentSim(){
 	
 	//Creating the simulation holder
 	var TerminateOnFinish=false;
-	SimulationHolder=new MultiThreadSim(ScriptToRun, Common, SimInputData, Settings.NoThreads, TerminateOnFinish); //Common is the same between all sims
+	SimulationHolder=new MultiThreadSim(ModelDirectory, Settings.NumberOfSimulations , Settings.NoThreads, TerminateOnFinish); //Common is the same between all sims
 	SimulationHolder.UseSimProgressBar=true;
 	SimulationHolder.SimProgressBarID="MainProgress";
+	console.log("Setting SimulationHolder.FunctionToRunOnCompletion");
+	SimulationHolder.RunFunctionOnCompletion=true;
 	SimulationHolder.FunctionToRunOnCompletion=function(){
 		SimOutput=RearrangeSimResults(this.Result);//here 'this' refers to the .Result  stored in simulation holder
 		AggregatedResults=AggregateSimResults(SimOutput);
 		    // var Testing= new MultiSimCountStat(InputStatArray);
 		NotificationSimPlot();
+		console.error("FunctionToRunOnCompletion is running");
 	}
+	
+	
 	// Run the simulation
-	SimulationHolder.Start();
+	SimulationHolder.Run(FunctionName, Common, SimInputData)
 
 	return 0;
 }

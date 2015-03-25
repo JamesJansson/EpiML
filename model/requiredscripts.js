@@ -1,9 +1,10 @@
 // requiredscripts.js
+importScripts("model.js");
+
 importScripts("simulationtools.js");
 importScripts("mathtools.js");
 importScripts("stochasticoptimisation.js");
 // Model specific functions
-importScripts("model.js");
 importScripts("person.js");
 importScripts("hcv.js");
 importScripts("hiv.js");

@@ -2,7 +2,9 @@ importScripts("requiredscripts.js"); // should include in it any function that c
 
 self.onmessage = function (WorkerMessage) {
 	var FunctionHolder;
-	eval("FunctionHolder="+WorkerMessage.FunctionToRun+";");
-	var SimResult=FunctionHolder(WorkerMessage.Args);
+	console.log(WorkerMessage);
+	
+	eval("FunctionHolder="+WorkerMessage.data.FunctionToRun+";");
+	var SimResult=FunctionHolder(WorkerMessage.data);
 	self.postMessage({WorkerMessage: WorkerMessage.data, Result: SimResult});//All simulation will end with this line
 }

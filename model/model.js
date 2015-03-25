@@ -28,7 +28,7 @@ function DebugStatement(ConsoleMessage){
 	}
 }
 
-function RunModel(WorkerMessage){
+function OptimiseModel(WorkerData){
 	//
 	
 	//In this section will be a message handler that allows calls
@@ -44,23 +44,23 @@ function RunModel(WorkerMessage){
 	// if intervention function is defined
 	//    go to intervention function. evaluate the function that executes at time=t
 
-	self.postMessage({Console: WorkerMessage.data});//This passes the data back to the console so we can look at it
+	self.postMessage({Console: WorkerData});//This passes the data back to the console so we can look at it
 	Rand.SetSeed();//note that this is an extremely important step to allow random numbers to be generated
 	var TimerStart = new Date().getTime() / 1000;
 	
 	//Load the notification data
-	Data=WorkerMessage.data.Common.Data;
+	Data=WorkerData.Common.Data;
 	//Load the parameters data
-	Param = WorkerMessage.data.SimData;
+	Param = WorkerData.SimData;
 	
 	
 	console.log("Note at some point we will simply merge the common and non-common Params into a single Param for simplicity");
 	// Load simulation settings
-	Settings=WorkerMessage.data.Common.Settings;
+	Settings=WorkerData.Common.Settings;
 	
-	SimID = WorkerMessage.data.SimID; // this value is used to select the appropriate parameter value
+	SimID = WorkerData.SimID; // this value is used to select the appropriate parameter value
 
-	var ThreadID = WorkerMessage.data.ThreadID;// this value can be used by the code to send specific messages to particular elements, e.g. progress bar 4 set to 60%
+	var ThreadID = WorkerData.ThreadID;// this value can be used by the code to send specific messages to particular elements, e.g. progress bar 4 set to 60%
 	
 	var StringForStatus="thread: "+ThreadID+" simID: "+SimID;
 	self.postMessage({StatusText: StringForStatus, StatusTextID: ThreadID});
@@ -78,7 +78,7 @@ function RunModel(WorkerMessage){
 	
 	
 	// Perform an optimisation of the number of injectors
-	if (true){
+	if (false){
 		// Get the data for the numbers by sex and age
 		var PWIDEntryOptimisationResults=OptimiseInjectionEntry(Data.PWID); 
 
