@@ -82,74 +82,7 @@ function MultiThreadSim(FolderName, NoSims, NoThreads, TerminateOnFinish){
 	this.StatusTextElementName="StatusTextElement";
 }
 
-MultiThreadSim.prototype.Start=function(Common, SimDataArray) {
-	this.Common=Common;
-	this.SimDataArray=SimDataArray;//an array of values or objects to be passed to the specified script
-	
-	//Check that nothing else is running
-	if (this.CurrentlyRunning==true){
-		console.log("Warning: this simulation has already been started. You may want to run .Terminate() ");
-		return 0;
-	};
-	this.CurrentlyRunning=true;
-	this.NoThreadsCurrentlyRunning=0;
-	this.Complete=false;
-	
-	// Set progress bar to zero
-	if (this.UseSimProgressBar==true){
-		document.getElementById(this.SimProgressBarID).value=0;
-	}
-	
-	// Set up the 'WorkerTerminated' array
-	for (var i=0; i<this.NoSims; i++){
-		this.WorkerTerminated[i]=false;
-	}
-	
-	//Create workers	
-	this.StartNextSim();
-};
 
-MultiThreadSim.prototype.StartNextSim=function() {
-
-	var MoreSimsToRun=true;//flag to prevent continually trying to run more sims
-	while (this.NoThreadsCurrentlyRunning<this.NoThreads &&  MoreSimsToRun==true){//there are spare Threads available
-		if (this.SimsStarted<this.NoSims){//if there are sims that have yet to be started
-			// Find a free thread
-			var ThreadCount=0;
-			while (this.ThreadInUse[ThreadCount]==true){
-				ThreadCount++;
-			}
-			this.ThreadInUse[ThreadCount]=true;
-			var ThreadID=ThreadCount;
-			
-			var SimID=this.SimsStarted++;//run this sim, increment by 1
-			this.NoThreadsCurrentlyRunning++;//indicate that another Thread has become used
-			
-			this.Worker[SimID]= new Worker(this.ScriptName);
-			
-			var BoundMessage=MultiThreadSimMessageHandler.bind(this);
-			this.Worker[SimID].onmessage = BoundMessage;
-			this.Worker[SimID].ThreadID=ThreadID;
-			
-			//Post message will soon become a handler for many commands, including starting the simulation, optimising the simulation, and requesting data
-			this.Worker[SimID].postMessage({ SimID: SimID, ThreadID: ThreadID, Common: this.Common, SimData: this.SimDataArray[SimID]});
-		}
-		else{ //there are no more sims to run
-			MoreSimsToRun=false;
-		}
-		
-	}
-	
-	//Determine if this is the last sim to complete
-	if (this.SimsComplete>=this.NoSims){
-		this.Complete=true;
-		
-		//this.Terminate();//close all the workers
-		if (this.RunFunctionOnCompletion== true){
-			this.FunctionToRunOnCompletion(this);
-		}
-	}
-}
 
 
 MultiThreadSim.prototype.Run=function(RunSettings){//FunctionName, Common, SimDataArray, TerminateOnFinish) {
@@ -227,11 +160,11 @@ MultiThreadSim.prototype.Run=function(RunSettings){//FunctionName, Common, SimDa
 	}
 	
 	//Create workers	
-	this.StartNextSim2();
+	this.StartNextSim();
 };
 
 
-MultiThreadSim.prototype.StartNextSim2=function() {
+MultiThreadSim.prototype.StartNextSim=function() {
 
 	var MoreSimsToRun=true;//flag to prevent continually trying to run more sims
 	while (this.NoThreadsCurrentlyRunning<this.NoThreads &&  MoreSimsToRun==true){//there are spare Threads available
@@ -251,7 +184,7 @@ MultiThreadSim.prototype.StartNextSim2=function() {
 			if (this.AllWorkersStarted==false){
 				this.Worker[SimID]= new Worker(this.ScriptName);
 				this.NoThreadsOpen++;
-				var BoundMessage=MultiThreadSimMessageHandler2.bind(this);
+				var BoundMessage=MultiThreadSimMessageHandler.bind(this);
 				this.Worker[SimID].onmessage = BoundMessage;
 			}
 			this.Worker[SimID].ThreadID=ThreadID;
@@ -292,68 +225,8 @@ MultiThreadSim.prototype.StartNextSim2=function() {
 
 
 
+
 MultiThreadSimMessageHandler=function(e) {
-	// There are 4 main message types that are handled
-	// Messages to the StatusText (to be put somewhere on screen to indicate what is currently occurring)
-	// Messages to the ProgressBar
-	// Message to return result/indicate completeness
-	// Receiving data from the Sim after a data request
-	
-	// Messages to the StatusText
-	if (typeof e.data.StatusText != 'undefined'){
-		// Example usage: self.postMessage({StatusText: "hello", StatusTextID: 2});// two identifies that is using thread 2's display text
-		document.getElementById(this.StatusTextElementName+e.data.StatusTextID).value=e.data.StatusText;
-	}
-	if (typeof e.data.Console != 'undefined'){//used to pass structured data to the console
-		console.log(e.data.Console);
-	}
-	// Messages to the ProgressBar
-	if (typeof e.data.ProgressBarValue != 'undefined'){
-		if (this.UseWithinSimProgressBar==true){
-			document.getElementById(this.WithinSimProgressBarID+this.ThreadID).value=e.data.ProgressBarValue;
-		}
-	}
-	
-	// Allow the function to run an arbitrary function
-	if (typeof e.data.Execute != 'undefined'){
-		var FunctionToRun;
-		eval("FunctionToRun=function(Data){"+e.data.Execute.Code+"};");
-		FunctionToRun(e.data.Execute.Data);
-		
-		//Example usage:
-		//SaySomething={};
-		//SaySomething.Data="This is data";//NOte that Data can be an object, So there may be Data.Colour Data.Temperature
-		//SaySomething.Code="console.log(Data);";
-		//self.postMessage({Execute: SaySomething});
-	}
-	
-	
-	// Collect up results from this simulation, try to run next simulation
-	if (typeof e.data.Result != 'undefined'){
-		this.NoThreadsCurrentlyRunning--;
-		var SimID=e.data.WorkerMessage.SimID;
-		this.Result[SimID]=e.data.Result;//Store the results of the simulation
-		this.SimsComplete++;
-		var ThreadID=e.data.WorkerMessage.ThreadID;
-		this.ThreadInUse[ThreadID]=false;
-		
-		if (this.TerminateOnFinish){
-			this.Worker[SimID].terminate();
-			this.WorkerTerminated[SimID]=true;
-		}
-		
-		this.StartNextSim();//Try to run more sims
-		
-		//Update the progress bar about completion
-		if (this.UseSimProgressBar==true){
-			document.getElementById(this.SimProgressBarID).value=this.SimsComplete/this.NoSims;
-		}
-	}
-};
-
-
-
-MultiThreadSimMessageHandler2=function(e) {
 	// There are 4 main message types that are handled
 	// Messages to the StatusText (to be put somewhere on screen to indicate what is currently occurring)
 	// Messages to the ProgressBar
@@ -404,7 +277,7 @@ MultiThreadSimMessageHandler2=function(e) {
 			this.WorkerTerminated[SimID]=true;
 		}
 		
-		this.StartNextSim2();//Try to run more sims
+		this.StartNextSim();//Try to run more sims
 		
 		//Update the progress bar about completion
 		if (this.UseSimProgressBar==true){
