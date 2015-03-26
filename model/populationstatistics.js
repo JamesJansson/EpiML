@@ -212,12 +212,14 @@ function CountStatistic(Settings, InputFunction){
 CountStatistic.prototype.Run=function(Population){
 	// Set up the Count array
 	if (this.MultipleCategories==false){// inspecting only a single category
-		this.Count=ZeroArray(this.NumberOfTimeSteps);
+		
 		
 		if (this.CountType.toLowerCase()=='instantaneous'){
+			this.Count=ZeroArray(this.NumberOfTimeSteps);
 			this.InstantaneousCount(Population);
 		}
 		else if (this.CountType.toLowerCase()=='events'){
+			this.Count=ZeroArray(this.NumberOfTimeSteps-1);
 			this.CountEvents(Population);
 		}
 	}
@@ -262,22 +264,12 @@ CountStatistic.prototype.InstantaneousCountCategorical= function (Population){//
 
 
 CountStatistic.prototype.CountEvents= function (Population){//Used to count how many times something happens over a number of finite periods
-	
-	throw "This function currently doesn't allow for variable time steps (still uses StepSize) and hasn't defined NumberInVector";
-	
-	// initialise vector with a zero vector
-	this.Count=ZeroArray(NumberInVector);
-
-	// for each time step
-	var TimeStep=StartTime;
-	for (var TimeStepIndex=0; TimeStepIndex<NumberInVector; TimeStepIndex++){
-		// for each person
-		for (var PIndex=0; PIndex<Population.length; PIndex++){
-			//run the SelectionFunction (takes the person, start and endpoints). If you only one once, the count function should express itself as (count between 
-			this.Count[TimeStepIndex]=this.Count[TimeStepIndex]+this.Function(Population[PIndex], TimeStep, TimeStep+this.StepSize);
-			
+	for (var PersonIndex=0; PersonIndex<Population.length; PersonIndex++){
+		for (var TimeIndex=0; TimeIndex<this.Time.length-1; TimeIndex++){
+			if (this.Function(Population[PersonIndex], this.Time[TimeIndex])==true){
+				this.Count[TimeIndex]+=this.Function(Population[PersonIndex], this.Time[TimeIndex], this.Time[TimeIndex+1]);
+			}
 		}
-		TimeStep=TimeStep+StepSize;// note that this may be a little off at the end (+/- 10^-6), but this should be OK for most statistical reporting
 	}
 };
 
