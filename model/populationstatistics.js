@@ -376,10 +376,11 @@ function SummaryStatistic(Settings, InputFunction){
 	
 	//Set whether the function will be a boolean operator or not.
 	if (typeof Settings.VectorFunction === 'boolean'){
+		console.error("VectorFunction is likely to be depreciated");
 		this.VectorFunction=Settings.VectorFunction;
 	}
 	else if (typeof Settings.VectorFunction != 'undefined'){
-		console.error("SummaryStatistic: VectorFunction must be a boolean operator");
+		console.error("SummaryStatistic: VectorFunction must be set to true or false");
 	}
 	
 	

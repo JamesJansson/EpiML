@@ -257,8 +257,17 @@ function CollectStatistic(){
 
 
 function TestMulticoreSim(WorkerMessage){
-	console.log(WorkerMessage);
-	return Param;
+	// RunSettings2={};
+	// RunSettings2.FunctionName="TestMulticoreSim";
+	// SimulationHolder.Run(RunSettings2);
+	
+	var StatsTime={};
+	StatsTime.Start=1980;
+	StatsTime.Stop=2030;
+	StatsTime.Step=1;
+
+	var SummaryStatResults=AgeInfected(PPNotification, StatsTime);
+	return SummaryStatResults;
 }
 
 
