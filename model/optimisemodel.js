@@ -9,3 +9,5 @@
 // Exit them out at a constant rate with time
 // TimeUntilEvent(PerYearProbabilityOfCeasing)
 
+// Get from the full model an number that corresponds to the number of diagnoses that occurred with time. 
+

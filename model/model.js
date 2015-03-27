@@ -28,7 +28,7 @@ function DebugStatement(ConsoleMessage){
 	}
 }
 
-function OptimiseModel(WorkerData){
+function NotificationBackProjection(WorkerData){
 	//
 	
 	//In this section will be a message handler that allows calls

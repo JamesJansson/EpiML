@@ -30,6 +30,7 @@ function FullModel(Param, Data, Intervention){
 		// determine number of individuals added the population of PWID
 		// Param.IDU.Add
 		
+		// Add new people to the IDU population
 		
 		// Start the individuals on IDU
 			// General moratlity

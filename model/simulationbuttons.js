@@ -34,7 +34,7 @@ function RunPersistentSim(){
 	SimulationHolder.SimProgressBarID="MainProgress";
 	
 	RunSettings={};
-	RunSettings.FunctionName="OptimiseModel";
+	RunSettings.FunctionName="NotificationBackProjection";
 	RunSettings.Common=Common;
 	RunSettings.SimDataArray=SimInputData;
 	RunSettings.TerminateOnFinish=false;
