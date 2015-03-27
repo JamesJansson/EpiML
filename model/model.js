@@ -4,13 +4,14 @@
 var DebugLoadingScripts=true;
 
 var Data={};
-var Param={};//This is the parameter holder for the simulation
-var OptimisedParam={};// This is the Param object which includes values for the optimised param 
 
+var Param={};//This is the parameter holder for the simulation. It is global in scope and changes as optimisation and interventions adjust it
+var OptimisedParam={};// This is the Param object which includes values for the optimised param 
+var StoredParam={}; // This is a space to store param 
 
 var Settings={};
 
-var OptimisedParam={};// The results are stored both here and in Param
+
 
 var PP=[];//This is the global array that holds the population
 var SimID;//This value is a global, used to reference the correct simulation in the Param structure
