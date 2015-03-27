@@ -37,7 +37,10 @@ function FullModel(Param, Data, Intervention){
 			// Determine staying probability
 			// Determine exit rate
 			// PWID additional mortality
-		
+			// Determine if the persons will practice receptive sharing of injecting equipment, and when the will stop if they do.
+			
+			
+			
 		// Determine transmissions that occur
 			// Number of infected active injectors * T0
 			
