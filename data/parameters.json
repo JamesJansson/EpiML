@@ -13,16 +13,9 @@
         "Upper95Range": 0.09249802286852665,
         "Lower95Range": 0.045676651986445826,
         "CalculatedMedian": 0.065,
-        "NumberOfSamples": 8,
+        "NumberOfSamples": 1,
         "Val": [
-            0.06526910714342253,
-            0.08970528897504007,
-            0.056883292566881086,
-            0.07799036724769755,
-            0.06965159406394959,
-            0.05997782042839599,
-            0.061792447047232614,
-            0.06285191215425992
+            0.06612209269309569
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -42,16 +35,9 @@
         "Upper95Range": 0.11543275048836145,
         "Lower95Range": 0.04872967139916797,
         "CalculatedMedian": 0.075,
-        "NumberOfSamples": 8,
+        "NumberOfSamples": 1,
         "Val": [
-            0.06578467198876337,
-            0.08187571376516163,
-            0.0782789518374407,
-            0.06587609012315448,
-            0.06672534063527516,
-            0.06640497772107191,
-            0.06426040723283857,
-            0.06811944948871508
+            0.06637645992427466
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -71,16 +57,9 @@
         "Upper95Range": 0.1648045704093932,
         "Lower95Range": 0.06689741657414384,
         "CalculatedMedian": 0.105,
-        "NumberOfSamples": 8,
+        "NumberOfSamples": 1,
         "Val": [
-            0.07688834024685517,
-            0.14679268936325457,
-            0.12718856904259268,
-            0.10207089349815737,
-            0.0914091601051787,
-            0.06528693709646981,
-            0.16251123526922387,
-            0.11110034396784052
+            0.14272091495902156
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -100,16 +79,9 @@
         "Upper95Range": 0.13187132475345717,
         "Lower95Range": 0.04853215823807981,
         "CalculatedMedian": 0.08,
-        "NumberOfSamples": 8,
+        "NumberOfSamples": 1,
         "Val": [
-            0.06619254721854553,
-            0.07950441311666849,
-            0.1257057968567139,
-            0.08837073447486825,
-            0.08235387968260184,
-            0.12716629702818355,
-            0.13225140037449265,
-            0.07238622711075414
+            0.06845001241493132
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -129,16 +101,9 @@
         "Upper95Range": 0.038545489,
         "Lower95Range": 0.026785489,
         "CalculatedMedian": 0.032665489,
-        "NumberOfSamples": 8,
+        "NumberOfSamples": 1,
         "Val": [
-            0.03361770075022657,
-            0.03410655363076883,
-            0.031187545063013338,
-            0.03313076024024107,
-            0.03258960064449187,
-            0.03312427499793722,
-            0.027258310268228007,
-            0.036815602679936735
+            0.02924201530600643
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -158,16 +123,9 @@
         "Upper95Range": 0.038164042999999995,
         "Lower95Range": 0.018564043,
         "CalculatedMedian": 0.028364043,
-        "NumberOfSamples": 8,
+        "NumberOfSamples": 1,
         "Val": [
-            0.023320235394239084,
-            0.028998254689163422,
-            0.0221497439791293,
-            0.032232074754056664,
-            0.02824588557882114,
-            0.02255209712219276,
-            0.03124386508752289,
-            0.026196075057941793
+            0.031389110920006257
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -187,16 +145,9 @@
         "Upper95Range": 0.12165269053343165,
         "Lower95Range": 0.08220122346781868,
         "CalculatedMedian": 0.1,
-        "NumberOfSamples": 8,
+        "NumberOfSamples": 1,
         "Val": [
-            0.07883580299956006,
-            0.11358660490916131,
-            0.09369751555911977,
-            0.08620233303016163,
-            0.10267408070368839,
-            0.09720655849217776,
-            0.09437137874678336,
-            0.09034098082948633
+            0.09326295273268427
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -216,16 +167,9 @@
         "Upper95Range": 0.08960000000000001,
         "Lower95Range": 0.05040000000000001,
         "CalculatedMedian": 0.07,
-        "NumberOfSamples": 8,
+        "NumberOfSamples": 1,
         "Val": [
-            0.0813502170126201,
-            0.07489056972304745,
-            0.09412106020009096,
-            0.06720578135937913,
-            0.07212596803258599,
-            0.09008485761616998,
-            0.05675343131455725,
-            0.0786703935182316
+            0.04865016311287149
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -245,16 +189,9 @@
         "Upper95Range": 0.43720000000000003,
         "Lower95Range": 0.16279999999999997,
         "CalculatedMedian": 0.3,
-        "NumberOfSamples": 8,
+        "NumberOfSamples": 1,
         "Val": [
-            0.3449529761076449,
-            0.339896897476929,
-            0.24983855756264678,
-            0.29674702990392166,
-            0.2671040743647365,
-            0.4216858496494833,
-            0.26694628316543134,
-            0.37206540531176235
+            0.30881569172298295
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -274,16 +211,9 @@
         "Upper95Range": 0.64773822,
         "Lower95Range": 0.4517382200000001,
         "CalculatedMedian": 0.54973822,
-        "NumberOfSamples": 8,
+        "NumberOfSamples": 1,
         "Val": [
-            0.6921793869603277,
-            0.5818034316039535,
-            0.47451161907402856,
-            0.5449268117476229,
-            0.6029667595270954,
-            0.4952922589922317,
-            0.5847355795351532,
-            0.4871162150934118
+            0.5606158403854797
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -303,15 +233,8 @@
         "Upper95Range": 0,
         "Lower95Range": 0,
         "CalculatedMedian": null,
-        "NumberOfSamples": 8,
+        "NumberOfSamples": 1,
         "Val": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
             0
         ],
         "MinValue": "",
@@ -332,15 +255,8 @@
         "Upper95Range": 0,
         "Lower95Range": 0,
         "CalculatedMedian": null,
-        "NumberOfSamples": 8,
+        "NumberOfSamples": 1,
         "Val": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
             0
         ],
         "MinValue": "",
@@ -361,15 +277,8 @@
         "Upper95Range": 0,
         "Lower95Range": 0,
         "CalculatedMedian": null,
-        "NumberOfSamples": 8,
+        "NumberOfSamples": 1,
         "Val": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
             0
         ],
         "MinValue": "",
@@ -390,15 +299,8 @@
         "Upper95Range": 0,
         "Lower95Range": 0,
         "CalculatedMedian": null,
-        "NumberOfSamples": 8,
+        "NumberOfSamples": 1,
         "Val": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
             0
         ],
         "MinValue": "",
@@ -419,15 +321,8 @@
         "Upper95Range": 0,
         "Lower95Range": 0,
         "CalculatedMedian": null,
-        "NumberOfSamples": 8,
+        "NumberOfSamples": 1,
         "Val": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
             0
         ],
         "MinValue": "",
@@ -448,16 +343,9 @@
         "Upper95Range": 2.599850351283737,
         "Lower95Range": 1.3885414590180072,
         "CalculatedMedian": 1.9,
-        "NumberOfSamples": 8,
+        "NumberOfSamples": 1,
         "Val": [
-            1.937021002804736,
-            1.2445048653219652,
-            1.6416818182799309,
-            2.538480678706705,
-            1.7241748239153458,
-            1.6300265160252065,
-            1.709541084250211,
-            1.9387856127167242
+            2.031880391199974
         ],
         "MinValue": "",
         "MaxValue": "",
@@ -477,16 +365,9 @@
         "Upper95Range": 2.729165249575723,
         "Lower95Range": 1.5099488756280466,
         "CalculatedMedian": 2.03,
-        "NumberOfSamples": 8,
+        "NumberOfSamples": 1,
         "Val": [
-            1.5605756980669898,
-            2.009709667269096,
-            2.2881821890665344,
-            2.022555107300454,
-            1.7330890361993365,
-            1.9719942413020606,
-            1.773746397188342,
-            2.1029823403052075
+            2.1079033851930564
         ],
         "MinValue": "",
         "MaxValue": "",
@@ -506,16 +387,9 @@
         "Upper95Range": 2.133283625311131,
         "Lower95Range": 1.0129454772732536,
         "CalculatedMedian": 1.47,
-        "NumberOfSamples": 8,
+        "NumberOfSamples": 1,
         "Val": [
-            1.1886045760537545,
-            1.6148718428106204,
-            1.5561363852251981,
-            1.366734887682615,
-            1.5560149756251669,
-            1.6430074850286505,
-            1.264671752103744,
-            1.2561575526294797
+            0.9697991956634622
         ],
         "MinValue": "",
         "MaxValue": "",
@@ -535,16 +409,9 @@
         "Upper95Range": 0.523,
         "Lower95Range": 0.32699999999999996,
         "CalculatedMedian": 0.425,
-        "NumberOfSamples": 8,
+        "NumberOfSamples": 1,
         "Val": [
-            0.4350781003400644,
-            0.44137029290992574,
-            0.4902750008191171,
-            0.4446737397338926,
-            0.4306284415487703,
-            0.44399893784533545,
-            0.47767547471246946,
-            0.40528164767118774
+            0.38201897096303494
         ],
         "MinValue": 0,
         "MaxValue": "",
@@ -564,16 +431,9 @@
         "Upper95Range": 0.409378367,
         "Lower95Range": 0.307458367,
         "CalculatedMedian": 0.358418367,
-        "NumberOfSamples": 8,
+        "NumberOfSamples": 1,
         "Val": [
-            0.3657152607719935,
-            0.35116984742450624,
-            0.38264283457784487,
-            0.35004022782633387,
-            0.3761661892886576,
-            0.3726608646102886,
-            0.36291674389331735,
-            0.34822125015431354
+            0.35918522354427246
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -593,16 +453,9 @@
         "Upper95Range": 0.47450000000000003,
         "Lower95Range": 0.4255,
         "CalculatedMedian": 0.45,
-        "NumberOfSamples": 8,
+        "NumberOfSamples": 1,
         "Val": [
-            0.4536984298562775,
-            0.44684745836451684,
-            0.4410728396754334,
-            0.4284442112988205,
-            0.45786745216181257,
-            0.4412803660985673,
-            0.44355296499984787,
-            0.4471116974899976
+            0.4655001557893132
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -622,16 +475,9 @@
         "Upper95Range": 0.7645,
         "Lower95Range": 0.7155,
         "CalculatedMedian": 0.74,
-        "NumberOfSamples": 8,
+        "NumberOfSamples": 1,
         "Val": [
-            0.7392892934275003,
-            0.766823807862094,
-            0.7108935278234345,
-            0.7408599911975545,
-            0.7286778158553393,
-            0.7446392911646406,
-            0.7306082083339596,
-            0.7431505907529379
+            0.7549156633917005
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -651,16 +497,9 @@
         "Upper95Range": 0.7745,
         "Lower95Range": 0.7255,
         "CalculatedMedian": 0.75,
-        "NumberOfSamples": 8,
+        "NumberOfSamples": 1,
         "Val": [
-            0.744276562279093,
-            0.7482798157869462,
-            0.7440934497223926,
-            0.770784927975432,
-            0.7734082392869053,
-            0.7565804562315688,
-            0.7530823052374006,
-            0.7749637270779408
+            0.7400330043232985
         ],
         "MinValue": "",
         "MaxValue": "",
@@ -680,16 +519,9 @@
         "Upper95Range": 3.0554937309176555,
         "Lower95Range": 2.3682260993632553,
         "CalculatedMedian": 2.69,
-        "NumberOfSamples": 8,
+        "NumberOfSamples": 1,
         "Val": [
-            2.732121273968664,
-            2.5683594896740676,
-            2.475933463911959,
-            2.5338842770798964,
-            2.925242726581969,
-            2.51442552035797,
-            2.5423243425376563,
-            2.555169234146513
+            2.824992714104638
         ],
         "MinValue": 0,
         "MaxValue": "",
@@ -709,16 +541,9 @@
         "Upper95Range": 2996,
         "Lower95Range": 2604,
         "CalculatedMedian": 2800,
-        "NumberOfSamples": 8,
+        "NumberOfSamples": 1,
         "Val": [
-            2719.9426432393893,
-            2908.2538408468913,
-            2783.8816390695683,
-            2827.953620418956,
-            2738.6691198532617,
-            2866.62886726322,
-            2745.8038907319797,
-            2773.053054672294
+            2878.4849555575706
         ],
         "MinValue": 0,
         "MaxValue": "",
@@ -738,16 +563,9 @@
         "Upper95Range": 1.475,
         "Lower95Range": 1.025,
         "CalculatedMedian": 1.25,
-        "NumberOfSamples": 8,
+        "NumberOfSamples": 1,
         "Val": [
-            1.001211024238728,
-            1.3981549551244825,
-            1.4947125656763092,
-            1.0514163449406624,
-            1.4095963424770162,
-            1.4699955417308956,
-            1.4471336054848507,
-            1.182703657541424
+            1.158660474116914
         ],
         "MinValue": "",
         "MaxValue": "",
@@ -767,15 +585,8 @@
         "Upper95Range": 1700,
         "Lower95Range": 1700,
         "CalculatedMedian": 1700,
-        "NumberOfSamples": 8,
+        "NumberOfSamples": 1,
         "Val": [
-            1700,
-            1700,
-            1700,
-            1700,
-            1700,
-            1700,
-            1700,
             1700
         ],
         "MinValue": "",
@@ -796,16 +607,9 @@
         "Upper95Range": 22.16079845169002,
         "Lower95Range": 19.900005000332857,
         "CalculatedMedian": 21,
-        "NumberOfSamples": 8,
+        "NumberOfSamples": 1,
         "Val": [
-            21.012881227065773,
-            20.643013482937153,
-            21.76133369249499,
-            20.6099430909846,
-            20.170017088961053,
-            22.306549370162756,
-            20.227382424871237,
-            20.686943450416816
+            22.06287803213326
         ],
         "MinValue": "",
         "MaxValue": "",
@@ -825,16 +629,9 @@
         "Upper95Range": 0.18750367346844635,
         "Lower95Range": 0.15413031363816654,
         "CalculatedMedian": 0.17,
-        "NumberOfSamples": 8,
+        "NumberOfSamples": 1,
         "Val": [
-            0.17478401445206257,
-            0.18143992487703273,
-            0.17730542244389388,
-            0.16347564193561168,
-            0.1695287770144643,
-            0.16848565452215253,
-            0.16389429981201895,
-            0.1610853707731112
+            0.1655977620955938
         ],
         "MinValue": "",
         "MaxValue": "",
@@ -854,8 +651,10 @@
         "Upper95Range": 2.9699999999999998,
         "Lower95Range": 0.030000000000000027,
         "CalculatedMedian": 1.5,
-        "NumberOfSamples": 100,
-        "Val": [],
+        "NumberOfSamples": 1,
+        "Val": [
+            1.41723676301504
+        ],
         "MinValue": "",
         "MaxValue": "",
         "Description": "This parameter allows the starting age to be slightly different based on the sex. It is generally assumed that females initiate injecting slightly earlier than males."
@@ -874,16 +673,9 @@
         "Upper95Range": 0.042196,
         "Lower95Range": 0.022204,
         "CalculatedMedian": 0.0322,
-        "NumberOfSamples": 8,
+        "NumberOfSamples": 1,
         "Val": [
-            0.027194626102321505,
-            0.024040194104018486,
-            0.027021133639196025,
-            0.03377134160519353,
-            0.03010630796805177,
-            0.03057838188738789,
-            0.045477027309869564,
-            0.02580963971282997
+            0.0299092747977762
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -903,16 +695,9 @@
         "Upper95Range": 0.218288,
         "Lower95Range": 0.128912,
         "CalculatedMedian": 0.1736,
-        "NumberOfSamples": 8,
+        "NumberOfSamples": 1,
         "Val": [
-            0.2047501426396842,
-            0.14428372248014398,
-            0.1660720255977774,
-            0.17161091782698207,
-            0.16778212103872536,
-            0.2126455978021615,
-            0.16974624927424886,
-            0.1861717880838372
+            0.18535896112349676
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -932,16 +717,9 @@
         "Upper95Range": 0.758,
         "Lower95Range": 0.562,
         "CalculatedMedian": 0.66,
-        "NumberOfSamples": 8,
+        "NumberOfSamples": 1,
         "Val": [
-            0.6239175136374722,
-            0.6515258094255091,
-            0.6704346488064766,
-            0.7072449733195517,
-            0.6836883702992673,
-            0.6998258593181884,
-            0.7312648404410902,
-            0.6712870614616857
+            0.6468765555752213
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -961,15 +739,8 @@
         "Upper95Range": 0,
         "Lower95Range": 0,
         "CalculatedMedian": null,
-        "NumberOfSamples": 8,
+        "NumberOfSamples": 1,
         "Val": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
             0
         ],
         "MinValue": "",
@@ -990,15 +761,8 @@
         "Upper95Range": 0.8,
         "Lower95Range": 0.8,
         "CalculatedMedian": 0.8,
-        "NumberOfSamples": 8,
+        "NumberOfSamples": 1,
         "Val": [
-            0.8,
-            0.8,
-            0.8,
-            0.8,
-            0.8,
-            0.8,
-            0.8,
             0.8
         ],
         "MinValue": "",
@@ -1006,7 +770,7 @@
         "Description": ""
     },
     {
-        "ParameterID": "IDU_RelationshipDuration_0",
+        "ParameterID": "IDU_RelationshipDuration_Val0",
         "ArrayName": "Param",
         "ArrayNumber": "35",
         "InterfaceID": "ParamHolder_35",
@@ -1019,14 +783,16 @@
         "Upper95Range": 0.45799999999999996,
         "Lower95Range": 0.262,
         "CalculatedMedian": 0.36,
-        "NumberOfSamples": 100,
-        "Val": [],
+        "NumberOfSamples": 1,
+        "Val": [
+            0.32268349058154294
+        ],
         "MinValue": "",
         "MaxValue": "",
         "Description": "Duration of relationship <1 year\nUsing Dyadic Data for a Network Analysis of HIV Infection and Risk Behaviors Among Injecting Drug Users\nAlan Neaigus, Samuel R. Friedman, Marjorie Goldstein, Gilbert Ildefonso, Richard Curtis, and Benny Jose\nTable 4, <1 year 36% 1-5 years 29% >5 Years 35%"
     },
     {
-        "ParameterID": "IDU_RelationshipDuration_1",
+        "ParameterID": "IDU_RelationshipDuration_Val1",
         "ArrayName": "Param",
         "ArrayNumber": "36",
         "InterfaceID": "ParamHolder_36",
@@ -1039,14 +805,16 @@
         "Upper95Range": 0.388,
         "Lower95Range": 0.19199999999999998,
         "CalculatedMedian": 0.29,
-        "NumberOfSamples": 100,
-        "Val": [],
+        "NumberOfSamples": 1,
+        "Val": [
+            0.30990460785246576
+        ],
         "MinValue": "",
         "MaxValue": "",
         "Description": "Duration of relationship 1-5 years\nUsing Dyadic Data for a Network Analysis of HIV Infection and Risk Behaviors Among Injecting Drug Users\nAlan Neaigus, Samuel R. Friedman, Marjorie Goldstein, Gilbert Ildefonso, Richard Curtis, and Benny Jose\nTable 4, <1 year 36% 1-5 years 29% >5 Years 35%"
     },
     {
-        "ParameterID": "IDU_RelationshipDuration_2",
+        "ParameterID": "IDU_RelationshipDuration_Val2",
         "ArrayName": "Param",
         "ArrayNumber": "37",
         "InterfaceID": "ParamHolder_37",
@@ -1059,8 +827,10 @@
         "Upper95Range": 0.44799999999999995,
         "Lower95Range": 0.252,
         "CalculatedMedian": 0.35,
-        "NumberOfSamples": 100,
-        "Val": [],
+        "NumberOfSamples": 1,
+        "Val": [
+            0.2411860379752981
+        ],
         "MinValue": "",
         "MaxValue": "",
         "Description": "Duration of relationship >5 years\nUsing Dyadic Data for a Network Analysis of HIV Infection and Risk Behaviors Among Injecting Drug Users\nAlan Neaigus, Samuel R. Friedman, Marjorie Goldstein, Gilbert Ildefonso, Richard Curtis, and Benny Jose\nTable 4, <1 year 36% 1-5 years 29% >5 Years 35%"
@@ -1079,16 +849,9 @@
         "Upper95Range": 0.28800000000000003,
         "Lower95Range": 0.092,
         "CalculatedMedian": 0.19,
-        "NumberOfSamples": 8,
+        "NumberOfSamples": 1,
         "Val": [
-            0.23481264442064734,
-            0.20680837792700335,
-            0.15866982766554738,
-            0.23787494772612433,
-            0.1738012553084812,
-            0.19020967464970975,
-            0.21076427067931613,
-            0.14427772084686685
+            0.17588077209777211
         ],
         "MinValue": "",
         "MaxValue": "",
@@ -1108,16 +871,9 @@
         "Upper95Range": 0.308,
         "Lower95Range": 0.11199999999999999,
         "CalculatedMedian": 0.21,
-        "NumberOfSamples": 8,
+        "NumberOfSamples": 1,
         "Val": [
-            0.22210308942171098,
-            0.2519268759022117,
-            0.2909428570412774,
-            0.28928498633817656,
-            0.31357914486710425,
-            0.26065795431386724,
-            0.19823623945636049,
-            0.21297898441971963
+            0.1695027099251262
         ],
         "MinValue": "",
         "MaxValue": "",
@@ -1137,16 +893,9 @@
         "Upper95Range": 0.158,
         "Lower95Range": -0.038000000000000006,
         "CalculatedMedian": 0.06,
-        "NumberOfSamples": 8,
+        "NumberOfSamples": 1,
         "Val": [
-            0.039976863227876955,
-            0.04696778355518241,
-            0.020155755295614475,
-            0.1255644799763998,
-            -0.02658807692681868,
-            0.07094797439564762,
-            0.03826152289284106,
-            0.006075820980965596
+            0.09655060966612941
         ],
         "MinValue": "",
         "MaxValue": "",
@@ -1166,16 +915,9 @@
         "Upper95Range": 0.44799999999999995,
         "Lower95Range": 0.252,
         "CalculatedMedian": 0.35,
-        "NumberOfSamples": 8,
+        "NumberOfSamples": 1,
         "Val": [
-            0.3974678002702052,
-            0.2921890148735689,
-            0.3525784544291213,
-            0.2767689202715898,
-            0.41172101365000396,
-            0.4378801537478654,
-            0.3112916810225191,
-            0.4081396785442376
+            0.3642058561903593
         ],
         "MinValue": "",
         "MaxValue": "",
@@ -1195,16 +937,9 @@
         "Upper95Range": 0.278,
         "Lower95Range": 0.08199999999999999,
         "CalculatedMedian": 0.18,
-        "NumberOfSamples": 8,
+        "NumberOfSamples": 1,
         "Val": [
-            0.260831466155358,
-            0.0773061300972811,
-            0.14278569548459036,
-            0.24983201984480602,
-            0.1987980405864117,
-            0.15916632736968817,
-            0.15302318859551053,
-            0.1276728962070149
+            0.24066394941576905
         ],
         "MinValue": "",
         "MaxValue": "",
@@ -1224,15 +959,8 @@
         "Upper95Range": 0.4,
         "Lower95Range": 0.4,
         "CalculatedMedian": 0.4,
-        "NumberOfSamples": 8,
+        "NumberOfSamples": 1,
         "Val": [
-            0.4,
-            0.4,
-            0.4,
-            0.4,
-            0.4,
-            0.4,
-            0.4,
             0.4
         ],
         "MinValue": 0,
@@ -1253,15 +981,8 @@
         "Upper95Range": 0.63,
         "Lower95Range": 0.63,
         "CalculatedMedian": 0.63,
-        "NumberOfSamples": 8,
+        "NumberOfSamples": 1,
         "Val": [
-            0.63,
-            0.63,
-            0.63,
-            0.63,
-            0.63,
-            0.63,
-            0.63,
             0.63
         ],
         "MinValue": 0,
