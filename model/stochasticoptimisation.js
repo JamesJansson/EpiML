@@ -3,7 +3,8 @@ function  StochasticOptimisation(Settings){
 	this.MeanError=[];
 	this.BestError=[];
 	
-	
+	this.ParameterFinal;
+	this.ResultsFinal;
 	
 	// Function: function to be optimised
 	if (typeof Settings.Function==="function"){
@@ -182,6 +183,9 @@ StochasticOptimisation.prototype.Run= function (FunctionInput){
 			}
 		}
 	}
+
+	this.ParameterFinal=GetBestParameterSet();
+	this.ResultsFinal=GetBestResults();
 }
 
 // Get a single value 

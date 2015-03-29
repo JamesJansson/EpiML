@@ -9,9 +9,9 @@
 // The mean and also the median age were 35
 
 function TestOptimisePartnerChangeRate(Input){
-	var OptimisationObject;
-	return OptimisationObject=OptimisePartnerChangeRate();//[0.36, 0.29, 0.35]
+	var OptimisationObject=OptimisePartnerChangeRate();//[0.36, 0.29, 0.35]
 	console.log(OptimisationObject);
+	return OptimisationObject;
 }
 
 
@@ -47,7 +47,7 @@ function OptimisePartnerChangeRate(){
 	OptimisationSettings.MaxIterations=100;// In this case, it will allow 10 000 different parameter selections, which gives a granularity of 1% of the range. Should be sufficient
 	OptimisationSettings.MaxTime=10;//stop after 10 seconds
 	
-	OptimisationObject=new StochasticOptimisation(OptimisationSettings);
+	var OptimisationObject=new StochasticOptimisation(OptimisationSettings);
 	OptimisationObject.AddParameter("PPartnerChangeYear1", 0, 1);
 	OptimisationObject.AddParameter("PPartnerChangeFollowing", 0, 1);
 	OptimisationObject.Run(FunctionInput);
