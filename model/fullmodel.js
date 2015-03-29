@@ -39,28 +39,29 @@ function FullModel(Param, Data, Intervention){
 			// PWID additional mortality
 			// determine number with regular sex partners (approximately 50%, NSP survey)
 			
-			// Duration of relationship
-			// Using Dyadic Data for a Network Analysis of HIV Infection and Risk Behaviors Among Injecting Drug Users
-			// Alan Neaigus, Samuel R. Friedman, Marjorie Goldstein, Gilbert Ildefonso, Richard Curtis, and Benny Jose
-			// Table 4, <1 year 36% 1-5 years 29% >5 Years 35%
-			
-			// TABLE 4. Duration of drug injectors’ relationships.
-			// Length of time they have: 1 Year > 1 Year,
-			// 5 years > 5 Years
-			// Injected with their drug injecting
-			// network members
-			// Known their drug-injecting
-			// network members
-			// 44% 33% 23%
-			// 28% 30% 42%
-			// Been having sex with their sex
-			// partners
-			// 36% 29% 35%
-
-			
 			// Determine if the persons will practice receptive sharing of injecting equipment, and when the will stop if they do.
 			
+		// Duration of relationship
+			// Determine how many relationships the population is missing
 			
+			// Give individuals relationships
+				// Using Dyadic Data for a Network Analysis of HIV Infection and Risk Behaviors Among Injecting Drug Users
+				// Alan Neaigus, Samuel R. Friedman, Marjorie Goldstein, Gilbert Ildefonso, Richard Curtis, and Benny Jose
+				// Table 4, <1 year 36% 1-5 years 29% >5 Years 35%
+				
+				// TABLE 4. Duration of drug injectors’ relationships.
+				// Length of time they have: 1 Year > 1 Year,
+				// 5 years > 5 Years
+				// Injected with their drug injecting
+				// network members
+				// Known their drug-injecting
+				// network members
+				// 44% 33% 23%
+				// 28% 30% 42%
+				// Been having sex with their sex
+				// partners
+				// 36% 29% 35%
+
 			
 		// Determine transmissions that occur
 			// Number of infected active injectors * T0
