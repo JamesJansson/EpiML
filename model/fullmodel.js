@@ -39,7 +39,10 @@ function FullModel(Param, Data, Intervention){
 			// PWID additional mortality
 			// determine number with regular sex partners (approximately 50%, NSP survey)
 			
-			// Determine if the persons will practice receptive sharing of injecting equipment, and when the will stop if they do.
+			// Risky injection. Determine 
+				// if the persons will practice receptive sharing of injecting equipment 
+				// when the will stop if they do.
+				// who they are sharing with
 			
 		// Duration of relationship
 			// Determine how many relationships the population is missing
