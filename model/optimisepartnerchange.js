@@ -27,10 +27,6 @@ function OptimisePartnerChangeRate(ProprotionByRelationshipDuration){
 	FunctionInput.NumberOfSamples=1000;
 	
 	// normalise the duration (because we are varying it in the lead into the 
-	console.log(ProprotionByRelationshipDuration);
-	console.log(Sum(ProprotionByRelationshipDuration));
-	throw "Stopping here";
-	
 	OptimisationSettings.Target=Divide(ProprotionByRelationshipDuration, Sum(ProprotionByRelationshipDuration));
 
 	
@@ -41,10 +37,7 @@ function OptimisePartnerChangeRate(ProprotionByRelationshipDuration){
 	};
 
 	OptimisationSettings.ErrorFunction=function(Results, Target){
-
-		
 		var TotalError=Sum(Pow(Minus(Target, Results), 2));
-		console.log(TotalError);
 		return TotalError;
 	};
 	
