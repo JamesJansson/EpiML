@@ -15,7 +15,7 @@
         "CalculatedMedian": 0.065,
         "NumberOfSamples": 1,
         "Val": [
-            0.06612209269309569
+            0.04541688864138799
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -37,7 +37,7 @@
         "CalculatedMedian": 0.075,
         "NumberOfSamples": 1,
         "Val": [
-            0.06637645992427466
+            0.07741216561091889
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -59,7 +59,7 @@
         "CalculatedMedian": 0.105,
         "NumberOfSamples": 1,
         "Val": [
-            0.14272091495902156
+            0.09626881566629734
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -81,7 +81,7 @@
         "CalculatedMedian": 0.08,
         "NumberOfSamples": 1,
         "Val": [
-            0.06845001241493132
+            0.06868693565591187
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -103,7 +103,7 @@
         "CalculatedMedian": 0.032665489,
         "NumberOfSamples": 1,
         "Val": [
-            0.02924201530600643
+            0.033168565715561905
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -125,7 +125,7 @@
         "CalculatedMedian": 0.028364043,
         "NumberOfSamples": 1,
         "Val": [
-            0.031389110920006257
+            0.021224431162058334
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -147,7 +147,7 @@
         "CalculatedMedian": 0.1,
         "NumberOfSamples": 1,
         "Val": [
-            0.09326295273268427
+            0.09946496921886981
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -169,7 +169,7 @@
         "CalculatedMedian": 0.07,
         "NumberOfSamples": 1,
         "Val": [
-            0.04865016311287149
+            0.07135966568932091
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -191,7 +191,7 @@
         "CalculatedMedian": 0.3,
         "NumberOfSamples": 1,
         "Val": [
-            0.30881569172298295
+            0.3268282019328185
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -213,7 +213,7 @@
         "CalculatedMedian": 0.54973822,
         "NumberOfSamples": 1,
         "Val": [
-            0.5606158403854797
+            0.5267294988439065
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -345,7 +345,7 @@
         "CalculatedMedian": 1.9,
         "NumberOfSamples": 1,
         "Val": [
-            2.031880391199974
+            2.215314595913791
         ],
         "MinValue": "",
         "MaxValue": "",
@@ -367,7 +367,7 @@
         "CalculatedMedian": 2.03,
         "NumberOfSamples": 1,
         "Val": [
-            2.1079033851930564
+            1.9869489895436614
         ],
         "MinValue": "",
         "MaxValue": "",
@@ -389,7 +389,7 @@
         "CalculatedMedian": 1.47,
         "NumberOfSamples": 1,
         "Val": [
-            0.9697991956634622
+            1.945065147042824
         ],
         "MinValue": "",
         "MaxValue": "",
@@ -411,7 +411,7 @@
         "CalculatedMedian": 0.425,
         "NumberOfSamples": 1,
         "Val": [
-            0.38201897096303494
+            0.4973989864964308
         ],
         "MinValue": 0,
         "MaxValue": "",
@@ -433,7 +433,7 @@
         "CalculatedMedian": 0.358418367,
         "NumberOfSamples": 1,
         "Val": [
-            0.35918522354427246
+            0.38886203368243055
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -455,7 +455,7 @@
         "CalculatedMedian": 0.45,
         "NumberOfSamples": 1,
         "Val": [
-            0.4655001557893132
+            0.4342291411529493
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -477,7 +477,7 @@
         "CalculatedMedian": 0.74,
         "NumberOfSamples": 1,
         "Val": [
-            0.7549156633917005
+            0.7405945310499832
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -499,7 +499,7 @@
         "CalculatedMedian": 0.75,
         "NumberOfSamples": 1,
         "Val": [
-            0.7400330043232985
+            0.7403390208101885
         ],
         "MinValue": "",
         "MaxValue": "",
@@ -521,7 +521,7 @@
         "CalculatedMedian": 2.69,
         "NumberOfSamples": 1,
         "Val": [
-            2.824992714104638
+            2.7809132825482363
         ],
         "MinValue": 0,
         "MaxValue": "",
@@ -543,7 +543,7 @@
         "CalculatedMedian": 2800,
         "NumberOfSamples": 1,
         "Val": [
-            2878.4849555575706
+            2912.697839031947
         ],
         "MinValue": 0,
         "MaxValue": "",
@@ -565,7 +565,7 @@
         "CalculatedMedian": 1.25,
         "NumberOfSamples": 1,
         "Val": [
-            1.158660474116914
+            1.0390417441958562
         ],
         "MinValue": "",
         "MaxValue": "",
@@ -609,7 +609,7 @@
         "CalculatedMedian": 21,
         "NumberOfSamples": 1,
         "Val": [
-            22.06287803213326
+            20.57435262241269
         ],
         "MinValue": "",
         "MaxValue": "",
@@ -631,7 +631,7 @@
         "CalculatedMedian": 0.17,
         "NumberOfSamples": 1,
         "Val": [
-            0.1655977620955938
+            0.17685328183376514
         ],
         "MinValue": "",
         "MaxValue": "",
@@ -653,7 +653,7 @@
         "CalculatedMedian": 1.5,
         "NumberOfSamples": 1,
         "Val": [
-            1.41723676301504
+            0.4779430368545583
         ],
         "MinValue": "",
         "MaxValue": "",
@@ -675,7 +675,7 @@
         "CalculatedMedian": 0.0322,
         "NumberOfSamples": 1,
         "Val": [
-            0.0299092747977762
+            0.03180466757890664
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -697,7 +697,7 @@
         "CalculatedMedian": 0.1736,
         "NumberOfSamples": 1,
         "Val": [
-            0.18535896112349676
+            0.17017299894685403
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -719,7 +719,7 @@
         "CalculatedMedian": 0.66,
         "NumberOfSamples": 1,
         "Val": [
-            0.6468765555752213
+            0.6458281988514518
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -785,10 +785,10 @@
         "CalculatedMedian": 0.36,
         "NumberOfSamples": 1,
         "Val": [
-            0.32268349058154294
+            0.4531674527240621
         ],
-        "MinValue": "",
-        "MaxValue": "",
+        "MinValue": 0,
+        "MaxValue": 1,
         "Description": "Duration of relationship <1 year\nUsing Dyadic Data for a Network Analysis of HIV Infection and Risk Behaviors Among Injecting Drug Users\nAlan Neaigus, Samuel R. Friedman, Marjorie Goldstein, Gilbert Ildefonso, Richard Curtis, and Benny Jose\nTable 4, <1 year 36% 1-5 years 29% >5 Years 35%"
     },
     {
@@ -807,10 +807,10 @@
         "CalculatedMedian": 0.29,
         "NumberOfSamples": 1,
         "Val": [
-            0.30990460785246576
+            0.25115780341094646
         ],
-        "MinValue": "",
-        "MaxValue": "",
+        "MinValue": 0,
+        "MaxValue": 1,
         "Description": "Duration of relationship 1-5 years\nUsing Dyadic Data for a Network Analysis of HIV Infection and Risk Behaviors Among Injecting Drug Users\nAlan Neaigus, Samuel R. Friedman, Marjorie Goldstein, Gilbert Ildefonso, Richard Curtis, and Benny Jose\nTable 4, <1 year 36% 1-5 years 29% >5 Years 35%"
     },
     {
@@ -829,11 +829,91 @@
         "CalculatedMedian": 0.35,
         "NumberOfSamples": 1,
         "Val": [
-            0.2411860379752981
+            0.33745309173015614
         ],
-        "MinValue": "",
-        "MaxValue": "",
+        "MinValue": 0,
+        "MaxValue": 1,
         "Description": "Duration of relationship >5 years\nUsing Dyadic Data for a Network Analysis of HIV Infection and Risk Behaviors Among Injecting Drug Users\nAlan Neaigus, Samuel R. Friedman, Marjorie Goldstein, Gilbert Ildefonso, Richard Curtis, and Benny Jose\nTable 4, <1 year 36% 1-5 years 29% >5 Years 35%"
+    },
+    {
+        "ParameterID": "IDU_Sex_AnyLastMonth",
+        "ArrayName": "Param",
+        "ArrayNumber": 45,
+        "InterfaceID": "ParamHolder_45",
+        "GroupName": "",
+        "DistributionType": "normal",
+        "Median": 0.682,
+        "StandardError": 0.047,
+        "LowerBound": null,
+        "UpperBound": null,
+        "Upper95Range": 0.77412,
+        "Lower95Range": 0.5898800000000001,
+        "CalculatedMedian": 0.682,
+        "NumberOfSamples": 100,
+        "Val": [],
+        "MinValue": 0,
+        "MaxValue": 1,
+        "Description": "From the NSP report 1995-2010. There does not seem to be any trend in relationship seeking. \n\nCalculations can be found in nspintimatepartner.xlsx\n\nSex last month (%)\n68.2%\nStandard deviation 0.046756668\n\nOf people who had sex\tSD\nOnly sex with a regular partner\t\n74.9%\t0.012921987\nOnly sex with non-regular partner\t\n22.4%\t0.022388323\nSex with both regular and non-regular partner\t\n6.8%\t0.031168392"
+    },
+    {
+        "ParameterID": "IDU_Sex_OtherLastMonth",
+        "ArrayName": "Param",
+        "ArrayNumber": 47,
+        "InterfaceID": "ParamHolder_47",
+        "GroupName": "",
+        "DistributionType": "normal",
+        "Median": 0.224,
+        "StandardError": 0.0223,
+        "LowerBound": null,
+        "UpperBound": null,
+        "Upper95Range": 0.267708,
+        "Lower95Range": 0.180292,
+        "CalculatedMedian": 0.224,
+        "NumberOfSamples": 100,
+        "Val": [],
+        "MinValue": 0,
+        "MaxValue": 1,
+        "Description": "From the NSP report 1995-2010. There does not seem to be any trend in relationship seeking. \n\nCalculations can be found in nspintimatepartner.xlsx\n\nSex last month (%)\n68.2%\nStandard deviation 0.046756668\n\nOf people who had sex\tSD\nOnly sex with a regular partner\t\n74.9%\t0.012921987\nOnly sex with non-regular partner\t\n22.4%\t0.022388323\nSex with both regular and non-regular partner\t\n6.8%\t0.031168392"
+    },
+    {
+        "ParameterID": "IDU_Sex_RegularAndOtherLastMonth",
+        "ArrayName": "Param",
+        "ArrayNumber": 48,
+        "InterfaceID": "ParamHolder_48",
+        "GroupName": "",
+        "DistributionType": "normal",
+        "Median": 0.068,
+        "StandardError": 0.031,
+        "LowerBound": null,
+        "UpperBound": null,
+        "Upper95Range": 0.12876,
+        "Lower95Range": 0.007240000000000003,
+        "CalculatedMedian": 0.068,
+        "NumberOfSamples": 100,
+        "Val": [],
+        "MinValue": 0,
+        "MaxValue": 1,
+        "Description": "From the NSP report 1995-2010. There does not seem to be any trend in relationship seeking. \n\nCalculations can be found in nspintimatepartner.xlsx\n\nSex last month (%)\n68.2%\nStandard deviation 0.046756668\n\nOf people who had sex\tSD\nOnly sex with a regular partner\t\n74.9%\t0.012921987\nOnly sex with non-regular partner\t\n22.4%\t0.022388323\nSex with both regular and non-regular partner\t\n6.8%\t0.031168392"
+    },
+    {
+        "ParameterID": "IDU_Sex_RegularLastMonth",
+        "ArrayName": "Param",
+        "ArrayNumber": 46,
+        "InterfaceID": "ParamHolder_46",
+        "GroupName": "",
+        "DistributionType": "normal",
+        "Median": 0.749,
+        "StandardError": 0.0129,
+        "LowerBound": null,
+        "UpperBound": null,
+        "Upper95Range": 0.774284,
+        "Lower95Range": 0.723716,
+        "CalculatedMedian": 0.749,
+        "NumberOfSamples": 100,
+        "Val": [],
+        "MinValue": 0,
+        "MaxValue": 1,
+        "Description": "From the NSP report 1995-2010. There does not seem to be any trend in relationship seeking. \n\nCalculations can be found in nspintimatepartner.xlsx\n\nSex last month (%)\n68.2%\nStandard deviation 0.046756668\n\nOf people who had sex\tSD\nOnly sex with a regular partner\t\n74.9%\t0.012921987\nOnly sex with non-regular partner\t\n22.4%\t0.022388323\nSex with both regular and non-regular partner\t\n6.8%\t0.031168392"
     },
     {
         "ParameterID": "IDU_Use_Daily",
@@ -851,7 +931,7 @@
         "CalculatedMedian": 0.19,
         "NumberOfSamples": 1,
         "Val": [
-            0.17588077209777211
+            0.24211578074106344
         ],
         "MinValue": "",
         "MaxValue": "",
@@ -873,7 +953,7 @@
         "CalculatedMedian": 0.21,
         "NumberOfSamples": 1,
         "Val": [
-            0.1695027099251262
+            0.24083733993815257
         ],
         "MinValue": "",
         "MaxValue": "",
@@ -895,7 +975,7 @@
         "CalculatedMedian": 0.06,
         "NumberOfSamples": 1,
         "Val": [
-            0.09655060966612941
+            0.08960133517708278
         ],
         "MinValue": "",
         "MaxValue": "",
@@ -917,7 +997,7 @@
         "CalculatedMedian": 0.35,
         "NumberOfSamples": 1,
         "Val": [
-            0.3642058561903593
+            0.38045886625959596
         ],
         "MinValue": "",
         "MaxValue": "",
@@ -939,7 +1019,7 @@
         "CalculatedMedian": 0.18,
         "NumberOfSamples": 1,
         "Val": [
-            0.24066394941576905
+            0.17478395661109095
         ],
         "MinValue": "",
         "MaxValue": "",
