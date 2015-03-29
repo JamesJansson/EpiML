@@ -184,8 +184,8 @@ StochasticOptimisation.prototype.Run= function (FunctionInput){
 		}
 	}
 
-	this.ParameterFinal=GetBestParameterSet();
-	this.ResultsFinal=GetBestResults();
+	this.ParameterFinal=this.GetBestParameterSet();
+	this.ResultsFinal=this.GetBestResults();
 }
 
 // Get a single value 

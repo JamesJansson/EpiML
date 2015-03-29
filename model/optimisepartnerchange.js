@@ -31,7 +31,7 @@ function OptimisePartnerChangeRate(){
 	OptimisationSettings.Target=Divide(ProprotionByRelationshipDuration, Sum(ProprotionByRelationshipDuration));
 
 	OptimisationSettings.Function=function(FunctionInput, ParameterSet){
-		return DeterminePartnerDuration(ParameterSet.PPartnerChangeYear1, ParameterSet.PPartnerChangeFollowing,FunctionInput.NumberOfSamples);
+		return DeterminePartnerDurationProportions(ParameterSet.PPartnerChangeYear1, ParameterSet.PPartnerChangeFollowing,FunctionInput.NumberOfSamples);
 	};
 
 	OptimisationSettings.ErrorFunction=function(Results, Target){
@@ -57,7 +57,7 @@ function OptimisePartnerChangeRate(){
 
 
 
-function DeterminePartnerDuration(PPartnerChangeYear1,PPartnerChangeFollowing, NumberOfSamples){
+function DeterminePartnerDurationProportions(PPartnerChangeYear1,PPartnerChangeFollowing, NumberOfSamples){
 	// Choose people at a random time 0 to 20 years at the start
 	var TimeToCheck=RandArray(0, 30, NumberOfSamples);
 	var TestedRelationshipLength=ZeroArray(NumberOfSamples);
@@ -69,12 +69,7 @@ function DeterminePartnerDuration(PPartnerChangeYear1,PPartnerChangeFollowing, N
 		var TotalDurationOfPreviousRelationships=0;
 		while (RelationshipFound==false){// keep adding relationships until you reach the time
 			NumberOfRelationships++;
-			ThisRelationshipDuration=TimeUntilEvent(PPartnerChangeYear1);
-			
-			if (ThisRelationshipDuration>1){// if it gets past 1 year, then use PPartnerChangeFollowing as the probability of ending 
-				ThisRelationshipDuration=1+TimeUntilEvent(PPartnerChangeFollowing);
-			}
-			// else - keep it as less than 1 year
+			ThisRelationshipDuration=DeterminePartnerDuration(PPartnerChangeYear1,PPartnerChangeFollowing);
 			
 			if (TotalDurationOfPreviousRelationships+ThisRelationshipDuration>TimeToCheck[Count]){
 				TestedRelationshipLength[Count]=TimeToCheck[Count]-TotalDurationOfPreviousRelationships;
@@ -93,4 +88,13 @@ function DeterminePartnerDuration(PPartnerChangeYear1,PPartnerChangeFollowing, N
 	var PropResult=Divide(HistogramResult.Count, Sum(HistogramResult.Count));
 	
 	return PropResult;
+}
+
+function DeterminePartnerDuration(PPartnerChangeYear1,PPartnerChangeFollowing){
+	var Duration=TimeUntilEvent(PPartnerChangeYear1);
+	if (Duration>1){// if it gets past 1 year, then use PPartnerChangeFollowing as the probability of ending 
+		Duration=1+TimeUntilEvent(PPartnerChangeFollowing);
+	}
+	// else - keep it as less than 1 year
+	return Duration;
 }
