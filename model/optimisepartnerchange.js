@@ -9,29 +9,27 @@
 // The mean and also the median age were 35
 
 function TestOptimisePartnerChangeRate(Input){
-	var ProprotionByRelationshipDuration=[];
-	ProprotionByRelationshipDuration[0]=Param.IDU.RelationshipDuration.Val0;
-	ProprotionByRelationshipDuration[1]=Param.IDU.RelationshipDuration.Val1;
-	ProprotionByRelationshipDuration[2]=Param.IDU.RelationshipDuration.Val2;
-	return OptimisePartnerChangeRate(ProprotionByRelationshipDuration);//[0.36, 0.29, 0.35]
+	var OptimisationObject;
+	return OptimisationObject=OptimisePartnerChangeRate();//[0.36, 0.29, 0.35]
+	console.log(OptimisationObject);
 }
 
 
 
 
-function OptimisePartnerChangeRate(ProprotionByRelationshipDuration){
+function OptimisePartnerChangeRate(){
+	var ProprotionByRelationshipDuration=[];//[0.36, 0.29, 0.35]
+	ProprotionByRelationshipDuration[0]=Param.IDU.RelationshipDuration.Val0;
+	ProprotionByRelationshipDuration[1]=Param.IDU.RelationshipDuration.Val1;
+	ProprotionByRelationshipDuration[2]=Param.IDU.RelationshipDuration.Val2;
 	
 	var FunctionInput={};
-	var OptimisationSettings={};
-	
 	FunctionInput.NumberOfSamples=1000;
 	
-	// normalise the duration (because we are varying it in the lead into the 
+	var OptimisationSettings={};
+	// normalise the duration (because we are varying it in the lead parameter page)
 	OptimisationSettings.Target=Divide(ProprotionByRelationshipDuration, Sum(ProprotionByRelationshipDuration));
 
-	
-	console.log("Started");
-	
 	OptimisationSettings.Function=function(FunctionInput, ParameterSet){
 		return DeterminePartnerDuration(ParameterSet.PPartnerChangeYear1, ParameterSet.PPartnerChangeFollowing,FunctionInput.NumberOfSamples);
 	};
@@ -41,25 +39,20 @@ function OptimisePartnerChangeRate(ProprotionByRelationshipDuration){
 		return TotalError;
 	};
 	
-	OptimisationSettings.ProgressFunction=function(SimulationNumber, Parameter, SimOutput, ErrorValues){
-		console.log("Params: "+SimulationNumber+ " P1 "+Mean(Parameter.PPartnerChangeYear1.CurrentVec)+ " P2 "+Mean(Parameter.PPartnerChangeFollowing.CurrentVec));
-	};
+	// OptimisationSettings.ProgressFunction=function(SimulationNumber, Parameter, SimOutput, ErrorValues){
+		// console.log("Params: "+SimulationNumber+ " P1 "+Mean(Parameter.PPartnerChangeYear1.CurrentVec)+ " P2 "+Mean(Parameter.PPartnerChangeFollowing.CurrentVec));
+	// };
 	
 	OptimisationSettings.NumberOfSamplesPerRound=10;// note we'll randomly select one of these results
 	OptimisationSettings.MaxIterations=100;// In this case, it will allow 10 000 different parameter selections, which gives a granularity of 1% of the range. Should be sufficient
 	OptimisationSettings.MaxTime=10;//stop after 10 seconds
-	
-	
 	
 	OptimisationObject=new StochasticOptimisation(OptimisationSettings);
 	OptimisationObject.AddParameter("PPartnerChangeYear1", 0, 1);
 	OptimisationObject.AddParameter("PPartnerChangeFollowing", 0, 1);
 	OptimisationObject.Run(FunctionInput);
 	
-	console.log(OptimisationObject);
-	
 	return OptimisationObject;
-	
 }
 
 
