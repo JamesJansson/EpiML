@@ -17,3 +17,4 @@ importScripts("generalmortality.js");
 importScripts("interventionobject.js");
 importScripts("interventions.js");
 importScripts("optimisepartnerchange.js");
+importScripts("optimisemodel.js");
