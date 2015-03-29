@@ -27,7 +27,7 @@ function OptimisePartnerChangeRate(ProprotionByTime){
 	console.log("Started");
 	
 	OptimisationSettings.Function=function(FunctionInput, ParameterSet){
-		return DeterminePartnerDuration(ParameterSet.ProbabilityOfChange, FunctionInput.NumberOfSamples);
+		return DeterminePartnerDuration(ParameterSet.PPartnerChangeYear1, ParameterSet.PPartnerChangeFollowing,FunctionInput.NumberOfSamples);
 	};
 
 	OptimisationSettings.ErrorFunction=function(Results, Target){
@@ -39,7 +39,7 @@ function OptimisePartnerChangeRate(ProprotionByTime){
 	};
 	
 	OptimisationSettings.ProgressFunction=function(SimulationNumber, Parameter, SimOutput, ErrorValues){
-		console.log("Params: "+SimulationNumber+ " P "+Mean(Parameter.ProbabilityOfChange.CurrentVec));
+		console.log("Params: "+SimulationNumber+ " P1 "+Mean(Parameter.PPartnerChangeYear1.CurrentVec)+ " P2 "+Mean(Parameter.PPartnerChangeFollowing.CurrentVec));
 	};
 	
 	OptimisationSettings.NumberOfSamplesPerRound=10;// note we'll randomly select one of these results
@@ -49,7 +49,8 @@ function OptimisePartnerChangeRate(ProprotionByTime){
 	
 	
 	OptimisationObject=new StochasticOptimisation(OptimisationSettings);
-	OptimisationObject.AddParameter("ProbabilityOfChange", 0, 1);
+	OptimisationObject.AddParameter("PPartnerChangeYear1", 0, 1);
+	OptimisationObject.AddParameter("PPartnerChangeFollowing", 0, 1);
 	OptimisationObject.Run(FunctionInput);
 	
 	console.log(OptimisationObject);
@@ -60,7 +61,7 @@ function OptimisePartnerChangeRate(ProprotionByTime){
 
 
 
-function DeterminePartnerDuration(ProbabilityOfChange, NumberOfSamples){
+function DeterminePartnerDuration(PPartnerChangeYear1,PPartnerChangeFollowing, NumberOfSamples){
 	// Choose people at a random time 0 to 20 years at the start
 	var TimeToCheck=RandArray(0, 30, NumberOfSamples);
 	var TestedRelationshipLength=ZeroArray(NumberOfSamples);
@@ -72,7 +73,13 @@ function DeterminePartnerDuration(ProbabilityOfChange, NumberOfSamples){
 		var TotalDurationOfPreviousRelationships=0;
 		while (RelationshipFound==false){// keep adding relationships until you reach the time
 			NumberOfRelationships++;
-			ThisRelationshipDuration=TimeUntilEvent(ProbabilityOfChange);
+			ThisRelationshipDuration=TimeUntilEvent(PPartnerChangeYear1);
+			
+			if (ThisRelationshipDuration>1){// if it gets past 1 year, then use PPartnerChangeFollowing as the probability of ending 
+				ThisRelationshipDuration=1+TimeUntilEvent(PPartnerChangeFollowing);
+			}
+			// else - keep it as less than 1 year
+			
 			if (TotalDurationOfPreviousRelationships+ThisRelationshipDuration>TimeToCheck[Count]){
 				TestedRelationshipLength[Count]=TimeToCheck[Count]-TotalDurationOfPreviousRelationships;
 				RelationshipFound=true;
