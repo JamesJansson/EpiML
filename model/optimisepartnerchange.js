@@ -9,20 +9,30 @@
 // The mean and also the median age were 35
 
 function TestOptimisePartnerChangeRate(Input){
-	return OptimisePartnerChangeRate([0.36, 0.29, 0.35]);
+	var ProprotionByRelationshipDuration=[];
+	ProprotionByRelationshipDuration[0]=Param.IDU.RelationshipDuration.Val0;
+	ProprotionByRelationshipDuration[1]=Param.IDU.RelationshipDuration.Val1;
+	ProprotionByRelationshipDuration[2]=Param.IDU.RelationshipDuration.Val2;
+	return OptimisePartnerChangeRate(ProprotionByRelationshipDuration);//[0.36, 0.29, 0.35]
 }
 
 
 
 
-function OptimisePartnerChangeRate(ProprotionByTime){
+function OptimisePartnerChangeRate(ProprotionByRelationshipDuration){
 	
 	var FunctionInput={};
 	var OptimisationSettings={};
 	
 	FunctionInput.NumberOfSamples=1000;
 	
-	OptimisationSettings.Target=[0.36, 0.29, 0.35];
+	// normalise the duration (because we are varying it in the lead into the 
+	console.log(ProprotionByRelationshipDuration);
+	console.log(Sum(ProprotionByRelationshipDuration));
+	throw "Stopping here";
+	
+	OptimisationSettings.Target=Divide(ProprotionByRelationshipDuration, Sum(ProprotionByRelationshipDuration));
+
 	
 	console.log("Started");
 	
