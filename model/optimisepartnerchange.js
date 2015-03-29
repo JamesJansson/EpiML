@@ -78,8 +78,8 @@ function DeterminePartnerDuration(PPartnerChangeYear1,PPartnerChangeFollowing, N
 			NumberOfRelationships++;
 			ThisRelationshipDuration=TimeUntilEvent(PPartnerChangeYear1);
 			
-			if (ThisRelationshipDuration>0.1){// if it gets past 1 year, then use PPartnerChangeFollowing as the probability of ending 
-				ThisRelationshipDuration=0.1+TimeUntilEvent(PPartnerChangeFollowing);
+			if (ThisRelationshipDuration>1){// if it gets past 1 year, then use PPartnerChangeFollowing as the probability of ending 
+				ThisRelationshipDuration=1+TimeUntilEvent(PPartnerChangeFollowing);
 			}
 			// else - keep it as less than 1 year
 			
