@@ -30,10 +30,10 @@ function FullModel(Param, Data, Intervention){
 		// determine number of individuals added the population of PWID
 		// Param.IDU.Add
 		
-		// Add new people to the IDU population
+		// Add new people to the IDU population for this time step
 		
 		// Start the individuals on IDU
-			// General moratlity
+			// General mortality
 			// Determine staying probability
 			// Determine exit rate
 			// PWID additional mortality
@@ -46,6 +46,44 @@ function FullModel(Param, Data, Intervention){
 			
 		// Duration of relationship
 			// Determine how many relationships the population is missing
+			var TotalSex=[];
+			TotalSex[0]=0;//None
+
+			TotalSex[1]=0;//Regular
+			TotalSex[2]=0;//Other
+			TotalSex[3]=0;//RegularAndOther
+			
+			var TotalSexAny=0;//Any
+			
+			for (var Pn in Person){
+				if (Person[Pn].CurrentlyAlive==true && Person[Pn].IDU.InjectingStatus==true){
+					var SexIndex=Person[Pn].RelationshipStatus.Get;
+					TotalSex[SexIndex]++;
+					if (SexIndex>0){
+						TotalSexAny++;
+					}
+				}
+			}
+			
+			//Find proportion having sex
+			var TotalPeople=TotalSex[0]+TotalSexAny;
+			var ProportionAnySex=TotalSexAny/TotalPeople;
+			var PropPartnerType=Divide(TotalSex, TotalSexAny);
+			
+			if (ProportionAnySex<Param.IDU.Sex.AnyLastMonth){
+				var NumberOfPeopleToStartAnyRelationship=Round(TotalPeople*(Param.IDU.Sex.AnyLastMonth-ProportionAnySex));
+				
+				// add people into relationship type as appropriate
+				PropPartnerType
+				//
+				
+				// Select partners at random to match
+				
+				// If regular, determine relationship length
+				var ThisPartnershipDuration=DeterminePartnerDuration(Param.IDU.Sex.PPartnerChangeYear1,Param.IDU.Sex.PPartnerChangeYear1);
+				// Add this to the partnership records
+				
+			}
 			
 			// Give individuals relationships
 				// Using Dyadic Data for a Network Analysis of HIV Infection and Risk Behaviors Among Injecting Drug Users
@@ -67,6 +105,12 @@ function FullModel(Param, Data, Intervention){
 
 			
 		// Determine transmissions that occur
+			// if either are HCV infected
+			// Determine, for each individual if they will receptively share needles
+			
+			// Use transmission probability to determine transmission rate
+			
+			
 			// Number of infected active injectors * T0
 			
 			// Run through infection
