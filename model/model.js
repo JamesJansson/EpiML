@@ -6,8 +6,9 @@ var DebugLoadingScripts=true;
 var Data={};
 
 var Param={};//This is the parameter holder for the simulation. It is global in scope and changes as optimisation and interventions adjust it
+var OriginalParam={}; // This is a space to store param 
 var OptimisedParam={};// This is the Param object which includes values for the optimised param 
-var StoredParam={}; // This is a space to store param 
+var InterventionParam={};// This is the 
 
 var Settings={};
 
