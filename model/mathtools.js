@@ -924,7 +924,50 @@ function Logit(x){//inverse of logistic. Must take value on(0,1)
 	return (-Math.log(1/x-1));
 }
 
+// 
+function RandSampleWeighted(Weights, Values){
+	// Normalised weights
+	var Total=Sum(Weights);
+	var NormalisedWeights=Divide(Weights, Total);
 
+	var Count=0;
+	var ChosenValue=Rand.Value();
+	var SelectedIndex=0;
+	var ValueFound=false;
+	while (ValueFound==false && SelectedIndex<Weights.length-1 ){// if it gets to the end, it must be the last element.
+		Count+=NormalisedWeights[SelectedIndex];
+		if (Count>ChosenValue){
+			ValueFound=true;
+		}
+		else {
+			SelectedIndex++;
+		}
+	}
+	
+	if (typeof(Values)==="undefined"){
+		return SelectedIndex;
+	}
+	else{	
+		if (Weights.length!=Values.length){
+			throw "The length of the weights and Values should be equal";
+		}
+		return Values[SelectedIndex];
+	}
+}
+
+function RandSampleWeightedArray(Weights, n, Values){
+	var ReturnArray=[];
+	
+	for (var Count=0; Count<n; Count++){
+		if (typeof(Values)==="undefined"){
+			ReturnArray[Count]=RandSampleWeighted(Weights);
+		}
+		else{
+			ReturnArray[Count]=RandSampleWeighted(Weights,Values);
+		}
+	}
+	return ReturnArray;
+}
 
 
 // Math.random is platform dependent, meaning we need to create or use a platform independent method 
