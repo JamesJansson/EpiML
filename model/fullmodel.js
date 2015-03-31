@@ -26,11 +26,14 @@ function FullModel(Param, Data, Intervention){
 	
 	
 	for (){// each time step
+		// Intervention(Time); 
+	
 	// this is a function that will be called "AdvanceModel(YearLast, YearCurrent, Param, Population)
 		// determine number of individuals added the population of PWID
 		// Param.IDU.Add
 		
 		// Add new people to the IDU population for this time step
+		
 		
 		// Start the individuals on IDU
 			// General mortality
@@ -38,6 +41,9 @@ function FullModel(Param, Data, Intervention){
 			// Determine exit rate
 			// PWID additional mortality
 			// determine number with regular sex partners (approximately 50%, NSP survey)
+			// determine number with casual sex partners
+			// Determine when the sexual partners begin their partnership (could be before starting injecting or after)
+			// what proportion had partners who did not inject drugs
 			
 			// Risky injection. Determine 
 				// if the persons will practice receptive sharing of injecting equipment 
@@ -77,12 +83,32 @@ function FullModel(Param, Data, Intervention){
 				PropPartnerType
 				//
 				
-				// Select partners at random to match
+				// Determine probability that an IDU individual will form a relationship with someone who is not an injector
+				
+				// If one injector, one not, use injectors' sex to determine the age difference
+				
+				// If both injectors, choose at random either male or female
+				
+				// choose a person based on a weighting by age (this is from a list of people compiled outside the loop
+					// each person is given a score out of 100 
+					// the total score for the population is determined
+					// a random number is chosen between 0 and the total
+					// run down the array, adding until the total is beaten 
+					// remove the element from the array
+					// reduce the total by the weighting of the individual removed
 				
 				// If regular, determine relationship length
 				var ThisPartnershipDuration=DeterminePartnerDuration(Param.IDU.Sex.PPartnerChangeYear1,Param.IDU.Sex.PPartnerChangeYear1);
-				// Add this to the partnership records
 				
+				// Determine if the regular partner also injects
+				// If true, find someone in the simulation to match with based on age
+				
+				// Select partners at random to match
+				
+				// Add this to the partnership records
+					
+					
+				// if it is a person outside the scope of the simulation, they get a negative number
 			}
 			
 			// Give individuals relationships

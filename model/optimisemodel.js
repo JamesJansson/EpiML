@@ -19,6 +19,15 @@
 // This will likely be insufficient data. A record of prevalence in the injecting group will be needed
 // A transition to 
 
+function OptimiseModel(){
+	IDUEntryOptimisation();
+	OptimisedRates=SexualPartnerRun;
+	Param.IDU.Sex.PartnerChange
+	OptimisedParam=DeepCopy(Param);
+	EntryExitRateOptimisationExponential
+}
+
+
 
 function EntryRateOptimisationExponential(TargetForThisOptimisation, EntryParams){
 	// First step is to assume increasing rates leading up to the end of the 1999 
