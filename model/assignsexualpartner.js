@@ -29,23 +29,29 @@ function AssignSexualPartner(Person, Time){
 	if (ProportionAnySex<Param.IDU.Sex.AnyLastMonth){
 		var NumberOfPeopleToStartAnyRelationship=Round(TotalPeople*(Param.IDU.Sex.AnyLastMonth-ProportionAnySex));
 		
-		var PropPartnerType=Divide([TotalSex[1], TotalSex[2], TotalSex[3]] , TotalSexAny);
+		var NumberInPartnerCategory=[TotalSex[1], TotalSex[2], TotalSex[3]];
 		var AimProp=[Param.IDU.RegularLastMonth, Param.IDU.OtherLastMonth, Param.IDU.RegularAndOtherLastMonth];
+		var AimNumberInPartnerCategory=Times(TotalSexAny, AimProp);
 	
 		// add people into relationship type as appropriate
 		TotalPeople*Param.IDU.Sex.AnyLastMonth;
 		
 		var Temp=[PropPartnerType[1
 		
-		// 
-		//
-		
 		for (var AddCount=0; AddCount<NumberOfPeopleToStartAnyRelationship; AddCount++){
-			var PropWeight=Minus(CurrentProp, AimProp);
-			
+			// Work out what the category will be
+			var CategorySelectionWeight=Minus(AimNumberInPartnerCategory, NumberInPartnerCategory);
 			// if the prop weight is negative, ignore unless they are all negative, then set all to one
+			for (var CSWR in CategorySelectionWeight){
+				if (CategorySelectionWeight[CSWR]<0){
+					CategorySelectionWeight[CSWR]=0;
+				}
+			}
+			var PartnershipType=RandSampleWeighted(CategorySelectionWeight)+1;
+			NumberInPartnerCategory[PartnershipType-1]++;// add people to category such that the proportions balance
 			
-			// Chose people at random until 
+			
+			// Chose people at random until you have 10 eligible
 			var SamplesFound=0;
 			var TestIndex;
 			var TestIndexSelectionVector=[];
@@ -53,14 +59,26 @@ function AssignSexualPartner(Person, Time){
 			while (SamplesFound<10){
 				TestIndex=Floor(Rand.Value()*Person.length);
 				// Check that the person is alive and eligible to start a new relationship
-				if (Person[TestIndex].Alive(Time) && Person[Pi].SexualPartner.Value(Time)!=1 && Person[Pi].SexualPartner.Value(Time)!=3 ){// if the person doesn't already have a sexual partner
-					// note: this section should probably include something that determines the probability that the person will be sexually active
-					TestIndexSelectionVector.push(TestIndex);
-					TestIndexSelectionWeight.push(SexualRelationship.RateOfSexAtAge(Person[TestIndex].Age(Time)));
+				if (Person[TestIndex].Alive(Time)){
+				
+					// Here is where you make the selection of the relationship type of the PWID
+					// if 1, then can only be zero
+					// 		reduce total by 1, add 1 to category
+					// if 2, then also can only be zero
+					// 		reduce total by 1, add 1 to category
+					// if 3, then can only be 1 or 2
+					// 		reduce total by 0, add 1 to category
+					// remember to perform the same test on the other partner!
+				
+					if (Person[Pi].SexualPartner.Value(Time)!=1 && Person[Pi].SexualPartner.Value(Time)!=3 ){// if the person doesn't already have a sexual partner
+						// note: this section should probably include something that determines the probability that the person will be sexually active
+						TestIndexSelectionVector.push(TestIndex);
+						TestIndexSelectionWeight.push(SexualRelationship.RateOfSexAtAge(Person[TestIndex].Age(Time)));
+					}
 				}
 			}
 			
-			// Do the simple index selection of a single element
+			// Do the simple index selection of a single element based on assumed sexual activity
 			var IndexOfTestIndexToSelect=RandSampleWeighted(TestIndexSelectionWeight);
 			var SelectedPersonIndex=TestIndexSelectionVector[IndexOfTestIndexToSelect];
 			
