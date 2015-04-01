@@ -36,31 +36,42 @@ function SexualRelationshipAge(){//(LowerAge, UpperAge, FemaleAgeDistribution,Ra
 	// the linear integral
 	
 	this.MaleLookUpTable;
+	
+	this.MaleSample=[];
+	this.FemaleSample=[];
 }
-// AA= new SexualRelationshipAge();
-// AA.CreateMaleTable();
 
-SexualRelationshipAge.prototype.CreateMaleTable = function (){
+
+SexualRelationshipAge.prototype.CreateSampleTable = function (){
 	// Create the big population of females
 	
 	var FemaleAgeDistributionIndex=RandSampleWeightedArray(this.FemaleWeighting, 100000)
 	var FemaleAge=[];
 	var MaleAge=[];
 	var MaleAgeArray=[];
+	var FemaleAgeArray=[];
 	var FemaleIndexArray=[];
 	for (var FCount in FemaleAgeDistributionIndex){
 		var FemaleIndex=FemaleAgeDistributionIndex[FCount];
 		FemaleAge[FCount]=this.LowerAge[FemaleIndex]+(this.UpperAge[FemaleIndex]-this.LowerAge[FemaleIndex])*Rand.Value();
 		//console.log("FCount " + FCount + " Index " + Index + " FemaleAge[FCount] " + FemaleAge[FCount]);
-		MaleAge[FCount]=this.ChooseMaleAge(FemaleAge[FCount]);
+		MaleAge[FCount]=this.ChooseMaleAgeFromDistribution(FemaleAge[FCount]);
 		
 		FlooredAge=Floor(MaleAge[FCount]);
-		
 		// Add the age to a sorted array by age
 		if (typeof(MaleAgeArray[FlooredAge])==="undefined"){
 			MaleAgeArray[FlooredAge]=[];
 		}
 		MaleAgeArray[FlooredAge].push(FemaleAge[FCount]);
+		
+		FlooredAge=Floor(FemaleAge[FCount]);
+		// Add the age to a sorted array by age
+		if (typeof(FemaleAgeArray[FlooredAge])==="undefined"){
+			FemaleAgeArray[FlooredAge]=[];
+		}
+		FemaleAgeArray[FlooredAge].push(MaleAge[FCount]);
+		
+		
 		
 		// Add the female age to the female index
 		// if (typeof(FemaleIndexArray[FemaleIndex])==="undefined"){
@@ -78,11 +89,15 @@ SexualRelationshipAge.prototype.CreateMaleTable = function (){
 	// }
 	// console.log(Proportion);
 	
+	this.MaleSample=MaleAgeArray;
+	this.FemaleSample=FemaleAgeArray;
+	
+	
 	
 	var HistResults=[];
 	var Proportion=[];
 	for (AgeIndex in MaleAgeArray){
-		HistResults[AgeIndex]=HistogramData(MaleAgeArray[AgeIndex], [-100, -3, 3, 6, 100]);
+		HistResults[AgeIndex]=HistogramData(MaleAgeArray[AgeIndex], [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100]);
 		Proportion[AgeIndex]=Divide(HistResults[AgeIndex].Count, Sum(HistResults[AgeIndex].Count));
 	}
 	
@@ -91,7 +106,7 @@ SexualRelationshipAge.prototype.CreateMaleTable = function (){
 	// if there is no data for an age, then it returns -1
 };
 
-SexualRelationshipAge.prototype.ChooseMaleAge = function (Age){
+SexualRelationshipAge.prototype.ChooseMaleAgeFromDistribution = function (Age){
 
 	// Find the age group they belong to
 	var AgeIndex;
@@ -178,14 +193,37 @@ SexualRelationshipAge.prototype.ChooseMaleAge = function (Age){
 	return MaleAge;
 };
 
-SexualRelationshipAge.prototype.ChooseFemaleAge = function (Age){
-	if (typeof(this.MaleLookUpTable)==="undefined"){
-		throw "The function .CreateMaleTable() must be run first";
+SexualRelationshipAge.prototype.ChooseMaleAge = function (FemaleAge){
+	return this.ChooseAge(FemaleAge, this.FemaleSample);
+}
+
+SexualRelationshipAge.prototype.ChooseFemaleAge = function (MaleAge){
+	return this.ChooseAge(MaleAge, this.MaleSample);
+}
+
+SexualRelationshipAge.prototype.ChooseAge = function (Age, SampleData){
+	if (typeof(SampleData)==="undefined"){
+		throw "The function .CreateSampleTable() must be run first";
 	}
 	
 	var AgeIndex=Floor(Age);
-	if (typeof(this.MaleLookUpTable[AgeIndex])==="undefined"){
-	
+	if (typeof(SampleData[AgeIndex])==="undefined"){
+		return Age;// return the person's age if there is no age data
 	}
-
+	
+	var IndexSelection=Floor(SampleData[AgeIndex].length*Rand.Value());
+	
+	return SampleData[AgeIndex][IndexSelection];
 }
+
+// AA= new SexualRelationshipAge();
+// AA.CreateSampleTable();
+// for (var Age=14; Age<85; Age++){
+	// MaleAge=[];
+	// FemaleAge=[];
+	// for (j=0; j<100; j++){
+		// MaleAge[j]=AA.ChooseMaleAge(Age);
+		// FemaleAge[j]=AA.ChooseFemaleAge(Age);
+	// }
+	// console.log("For the age group " + Age + " Male partners have " + Round(Median(FemaleAge)) + " year old female partners and females " + Round(Median(MaleAge)));
+// }
