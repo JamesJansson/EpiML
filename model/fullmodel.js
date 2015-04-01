@@ -83,11 +83,43 @@ function FullModel(Param, Data, Intervention){
 				PropPartnerType
 				//
 				
+				
+				var AgeAim;
+				if (SelectedPerson.Sex==0){
+					AgeAim=SexualRelationship.ChooseMaleAge();
+				}
+				else{
+					AgeAim=SexualRelationship.ChooseFemaleAge();
+				}
+				var PartnerSex=Abs(SelectedPerson.Sex-1);
+				
 				// Determine probability that an IDU individual will form a relationship with someone who is not an injector
+				// Note that there are more males than females. We can include this group 
+				if (Rand.Value()<(IDU.Sex.RegularPartnerInjects/2){
+					// Select partner from injecting population
+					
+					// Search injectors for matches
+					var AgeDiff;
+					var AgeDiffChosen=1e9;
+					var IndexChosen;
+					for (var Pi in Person){
+						if (Person[Pi].Sex==PartnerSex){
+							AgeDiff=Abs(AgeAim-Person[Pi].Age(Time));
+							if (AgeDiff<AgeDiffChosen){
+								IndexChosen=Pi;
+							}
+						}
+					}
+					// Add the sexual relationship to the person
+					
+					
+				}
+				else {// If one injector, one not
+					
+				}
 				
-				// If one injector, one not, use injectors' sex to determine the age difference
 				
-				// If both injectors, choose at random either male or female
+				
 				
 				// choose a person based on a weighting by age (this is from a list of people compiled outside the loop
 					// each person is given a score out of 100 
