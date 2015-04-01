@@ -13,7 +13,7 @@ function AssignSexualPartner(Person, Time){
 	var TotalSexAny=0;//Any
 	
 	for (var Pn in Person){
-		if (Person[Pn].CurrentlyAlive==true && Person[Pn].IDU.InjectingStatus==true){
+		if (Person[Pn].Alive(Time)==true && Person[Pn].IDU.InjectingStatus==true){
 			var SexIndex=Person[Pn].SexualPartner.Value(Time);
 			TotalSex[SexIndex]++;
 			if (SexIndex>0){
@@ -25,16 +25,22 @@ function AssignSexualPartner(Person, Time){
 	//Find proportion having sex
 	var TotalPeople=TotalSex[0]+TotalSexAny;
 	var ProportionAnySex=TotalSexAny/TotalPeople;
-	var PropPartnerType=Divide(TotalSex, TotalSexAny);
 	
 	if (ProportionAnySex<Param.IDU.Sex.AnyLastMonth){
 		var NumberOfPeopleToStartAnyRelationship=Round(TotalPeople*(Param.IDU.Sex.AnyLastMonth-ProportionAnySex));
 		
+		var PropPartnerType=Divide([TotalSex[1], TotalSex[2], TotalSex[3]] , TotalSexAny);
+		var AimProp=[Param.IDU.RegularLastMonth, Param.IDU.OtherLastMonth, Param.IDU.RegularAndOtherLastMonth];
+	
 		// add people into relationship type as appropriate
-		PropPartnerType
+		var Temp=[PropPartnerType[1
+		
+		// 
 		//
 		
 		for (var AddCount=0; AddCount<NumberOfPeopleToStartAnyRelationship; AddCount++){
+			var PropWeight=Minus(CurrentProp, AimProp);
+			
 			// Chose people at random until 
 			var SamplesFound=0;
 			var TestIndex;
@@ -43,7 +49,7 @@ function AssignSexualPartner(Person, Time){
 			while (SamplesFound<10){
 				TestIndex=Floor(Rand.Value()*Person.length);
 				// Check that the person is alive and eligible to start a new relationship
-				if (Person[TestIndex].Alive(Time) && Person[Pi].SexualPartner.Value(Time)<1){
+				if (Person[TestIndex].Alive(Time) && Person[Pi].SexualPartner.Value(Time)!=1 && Person[Pi].SexualPartner.Value(Time)!=3 ){// if the person doesn't already have a sexual partner
 					// note: this section should probably include something that determines the probability that the person will be sexually active
 					TestIndexSelectionVector.push(TestIndex);
 					TestIndexSelectionWeight.push(SexualRelationship.RateOfSexAtAge(Person[TestIndex].Age(Time)));
@@ -67,8 +73,8 @@ function AssignSexualPartner(Person, Time){
 			var PartnerSex=Abs(SelectedPerson.Sex-1);
 			
 			// Determine probability that an IDU individual will form a relationship with someone who is not an injector
-			// Note that there are more males than females. We can include this group 
-			if (Rand.Value()<(IDU.Sex.RegularPartnerInjects/2){
+			// Note that there are more males than females. 
+			if (Rand.Value()<(IDU.Sex.RegularPartnerInjects/2){// note that we divide by 2 to get the right proportion
 				// Select partner from injecting population
 				
 				// Search injectors for matches
@@ -84,7 +90,9 @@ function AssignSexualPartner(Person, Time){
 					}
 				}
 				// Add the sexual relationship to the person
-				Pi2;
+				this.SexualPartner.Set(1, Time);
+				this.SexualPartnerID.Set(Pi2, Time);
+				this.SexualPartnerInjects.Set(1, Time);
 				
 			}
 			else {// If the partner is not an injector
@@ -104,6 +112,12 @@ function AssignSexualPartner(Person, Time){
 			
 			// If regular, determine relationship length
 			var ThisPartnershipDuration=DeterminePartnerDuration(Param.IDU.Sex.PPartnerChangeYear1,Param.IDU.Sex.PPartnerChangeYear1);
+			
+			this.SexualPartner.Set(0, Time+ThisPartnershipDuration);
+			this.SexualPartnerID.Set(-1, Time+ThisPartnershipDuration);
+			this.SexualPartnerInjects.Set(0, Time+ThisPartnershipDuration);
+			
+			
 			
 			// Determine if the regular partner also injects
 			// If true, find someone in the simulation to match with based on age

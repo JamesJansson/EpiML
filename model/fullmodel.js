@@ -51,7 +51,7 @@ function FullModel(Param, Data, Intervention){
 				// who they are sharing with
 			
 		AssignSexualPartner(Person, Time);
-
+		
 			
 		// Determine transmissions that occur
 			// if either are HCV infected

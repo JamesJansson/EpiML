@@ -34,8 +34,12 @@ function PersonObject(YearOfBirth, Sex)//, YearOfObservation Param)
 	this.Haemophilia=0;
 	
 	this.SexualPartner=new EventVector;
+	this.SexualPartnerRegularID=new EventVector;
+	this.SexualPartnerOtherID=new EventVector;
 	this.SexualPartnerInjects=new EventVector;
 	this.SexualPartner.Set(0, this.YearOfBirth);
+	this.SexualPartnerRegularID.Set(-1, this.YearOfBirth);
+	this.SexualPartnerOtherID.Set(-1, this.YearOfBirth);
 	this.SexualPartnerInjects.Set(0, this.YearOfBirth);
 	
 	//QALY 
@@ -144,20 +148,28 @@ IDUObject.prototype.StartInjecting= function (Time){
 	this.Use.Set(1, Time);
 	
 	// Add the transition to occasional user
-	//if (Rand.Value()<Param.IDU.RegularInjectingProbability){
+	//if (Rand.Value()<Param.IDU.BecomeRegularInjector.P){
+		// this.Use.Set(2, Time+0.1);
+		// Param.IDU.BecomeRegularInjector.Time
+		// this.Use.Set(2, Time+TimeChosen);
+	
+	
+		//var TimeUntilCease=TimeUntilEvent(Param.IDU.RateOfCesssation);
+		// this.Use.Set(3, Time+TimeChosen+TimeUntilCease);
 		
+		// Add the transition to regular user
+		
+		// Add the transition to former user
+	
 	//}
 	
-	//var TimeUntilCease=TimeUntilEvent(Param.IDU.RateOfCesssation);
-	
-	
-	// Add the transition to regular user
-	
-	// Add the transition to former user
-	
 	// Determine excess death due to drug use
+	// From the date of regular usage to cease
 	
-	this.Person.Death.IDU;
+	// var TimeOfDeath=TimeUntilEvent(Param.IDU.ExcessMortality)
+	// if (TimeOfDeath<TimeUntilCease){
+		// this.Person.Death.IDU=Time+TimeChosen+TimeUntilCease;
+	//}
 }
 
 
