@@ -8,7 +8,7 @@ function SexualRelationshipAge(){//(LowerAge, UpperAge, FemaleAgeDistribution,Ra
 	FemaleAgeDistribution[0]=[0,65.5,29,5.5];
 	FemaleAgeDistribution[1]=[1.3,63,25.2,10.5];
 	FemaleAgeDistribution[2]=[4.4,60.8,19,15.8];
-	FemaleAgeDistribution[3]=[19.5,44.4,18.118.1];
+	FemaleAgeDistribution[3]=[19.5,44.4,18.1,18.1];
 	FemaleAgeDistribution[4]=[16.8,39.2,16,28];
 	FemaleAgeDistribution[5]=[19.7,34.8,16.1,29.5];
 	FemaleAgeDistribution[6]=[31.4,33.4,15.9,19.3];
@@ -35,21 +35,68 @@ function SexualRelationshipAge(){//(LowerAge, UpperAge, FemaleAgeDistribution,Ra
 	this.FemaleAgeDistribution=FemaleAgeDistribution;
 	// the linear integral
 	
+	this.MaleLookUpTable;
 }
-
+// AA= new SexualRelationshipAge();
+// AA.CreateMaleTable();
 
 SexualRelationshipAge.prototype.CreateMaleTable = function (){
 	// Create the big population of females
 	
-		RandSampleWeightedArray(this.FemaleWeighting, 100000)
+	var FemaleAgeDistributionIndex=RandSampleWeightedArray(this.FemaleWeighting, 100000)
+	var FemaleAge=[];
+	var MaleAge=[];
+	var MaleAgeArray=[];
+	var FemaleIndexArray=[];
+	for (var FCount in FemaleAgeDistributionIndex){
+		var FemaleIndex=FemaleAgeDistributionIndex[FCount];
+		FemaleAge[FCount]=this.LowerAge[FemaleIndex]+(this.UpperAge[FemaleIndex]-this.LowerAge[FemaleIndex])*Rand.Value();
+		//console.log("FCount " + FCount + " Index " + Index + " FemaleAge[FCount] " + FemaleAge[FCount]);
+		MaleAge[FCount]=this.ChooseMaleAge(FemaleAge[FCount]);
 		
+		FlooredAge=Floor(MaleAge[FCount]);
+		
+		// Add the age to a sorted array by age
+		if (typeof(MaleAgeArray[FlooredAge])==="undefined"){
+			MaleAgeArray[FlooredAge]=[];
+		}
+		MaleAgeArray[FlooredAge].push(FemaleAge[FCount]);
+		
+		// Add the female age to the female index
+		// if (typeof(FemaleIndexArray[FemaleIndex])==="undefined"){
+			// FemaleIndexArray[FemaleIndex]=[];
+		// }
+		// FemaleIndexArray[FemaleIndex].push(MaleAge[FCount]-FemaleAge[FCount]);
+	}
+	// Do a histogram of the female results
+	// This section is for testing of the code, and it was found that the ages were correctly generated
+	// var HistResults=[];
+	// var Proportion=[];
+	// for (AgeIndex in FemaleIndexArray){
+		// HistResults[AgeIndex]=HistogramData(FemaleIndexArray[AgeIndex], [-100, -3, 3, 6, 100]);
+		// Proportion[AgeIndex]=Divide(HistResults[AgeIndex].Count, Sum(HistResults[AgeIndex].Count));
+	// }
+	// console.log(Proportion);
 	
 	
+	var HistResults=[];
+	var Proportion=[];
+	for (AgeIndex in MaleAgeArray){
+		HistResults[AgeIndex]=HistogramData(MaleAgeArray[AgeIndex], [-100, -3, 3, 6, 100]);
+		Proportion[AgeIndex]=Divide(HistResults[AgeIndex].Count, Sum(HistResults[AgeIndex].Count));
+	}
+	
+	this.MaleLookUpTable=Proportion;
+	console.log(Proportion);
+	// if there is no data for an age, then it returns -1
 };
 
 SexualRelationshipAge.prototype.ChooseMaleAge = function (Age){
-	// find the age group they belong to
+
+	// Find the age group they belong to
 	var AgeIndex;
+	var MaleAge;
+	var DiffBetweenTopAndBottomAges
 	
 	if (Age<this.LowerAge[0]){
 		AgeIndex=0;
@@ -60,7 +107,7 @@ SexualRelationshipAge.prototype.ChooseMaleAge = function (Age){
 	else {
 		var AgeIndexFound=false;
 		AgeIndex=-1;
-		while (AgeIndexFound==false){
+		while (AgeIndexFound==false && AgeIndex<6){ // the AdeIndex is hard limited to 6, because that is all the data we have
 			AgeIndex++;
 			if (this.LowerAge[AgeIndex]<=Age && Age <this.UpperAge[AgeIndex]){
 				AgeIndexFound=true;
@@ -68,18 +115,77 @@ SexualRelationshipAge.prototype.ChooseMaleAge = function (Age){
 		}
 	}
 	
-	var MaleAgeIndex=RandSampleWeighted(this.FemaleAgeDistribution);
+	if (AgeIndexFound>6){
+		AgeIndexFound=6;
+	}
+	
+	
+	// Choose the male age
+	var MaleAgeIndex=RandSampleWeighted(this.FemaleAgeDistribution[AgeIndex]);
+	
+	//console.log("MaleAgeIndex" +MaleAgeIndex);
 	
 	if (MaleAgeIndex==0){// calculate from the minimum age up
 		// using a linearly increasing distribution
-		var DiffBetweenTopAndBottomAges=3;
-		var MaleAge=this.MinSexAge+3*Sqrt(Rand.Value());
-	}
-	else if (MaleAgeIndex==0){// calculate from the max age down
-		var MaxAge=Age+20;
-		var DiffBetweenTopAndBottomAges=20;
-		var MaleAge=MaxAge-20*Sqrt(Rand.Value());
+
+		BaseAgeDifference=this.MinSexAge-Age;
+		if (BaseAgeDifference>0){
+			BaseAgeDifference=0;
+		}
+		
+		TopAgeDifference=-3;
+		
+		DiffBetweenTopAndBottomAges=TopAgeDifference-BaseAgeDifference;
+		if (DiffBetweenTopAndBottomAges<1){// to prevent negative values
+			DiffBetweenTopAndBottomAges=1;
+		}
+		
+		BaseAge=Age+BaseAgeDifference;
+		MaleAge=BaseAge+DiffBetweenTopAndBottomAges*Sqrt(Rand.Value());// use the inversion of a linearly increasing probability distribution (3x as many in top half as bottom)
+		// console.log("BaseAgeDifference" + BaseAgeDifference);
+		// console.log("TopAgeDifference" + TopAgeDifference);
+		// console.log("DiffBetweenTopAndBottomAges" + DiffBetweenTopAndBottomAges);
+		// console.log("BaseAge" + BaseAge);
+		// console.log("MaleAge" + MaleAge);
 		
 	}
+	else if (MaleAgeIndex==3){// calculate from the max age down
+		var MaxAge=Age+20;
+		DiffBetweenTopAndBottomAges=20-6;
+		MaleAge=MaxAge-DiffBetweenTopAndBottomAges*Sqrt(Rand.Value());// use the inversion of a linearly increasing probability distribution (3x as many in top half as bottom)
+	}
+	else {
+		if (MaleAgeIndex==1){
+			BaseAgeDifference=-3;
+			TopAgeDifference=+3;
+		}
+		else{
+			BaseAgeDifference=+3;
+			TopAgeDifference=+6;
+		}
+		
+		TopAge=Age+TopAgeDifference;
+		BaseAge=Age+BaseAgeDifference;
+		if (BaseAge<this.MinSexAge){
+			BaseAge=this.MinSexAge;
+		}
+		AgeRange=TopAge-BaseAge;
+		
+		MaleAge=BaseAge+AgeRange*Rand.Value();
+	}
+	
+	
+	return MaleAge;
 };
 
+SexualRelationshipAge.prototype.ChooseFemaleAge = function (Age){
+	if (typeof(this.MaleLookUpTable)==="undefined"){
+		throw "The function .CreateMaleTable() must be run first";
+	}
+	
+	var AgeIndex=Floor(Age);
+	if (typeof(this.MaleLookUpTable[AgeIndex])==="undefined"){
+	
+	}
+
+}
