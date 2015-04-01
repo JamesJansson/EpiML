@@ -13,7 +13,7 @@ function AssignSexualPartner(Person, Time){
 	var TotalSexAny=0;//Any
 	
 	for (var Pn in Person){
-		if (Person[Pn].Alive(Time)==true && Person[Pn].IDU.InjectingStatus==true){
+		if (Person[Pn].Alive(Time)==true && Person[Pn].IDU.Use(Time)>2){// is a current alive injector
 			var SexIndex=Person[Pn].SexualPartner.Value(Time);
 			TotalSex[SexIndex]++;
 			if (SexIndex>0){
@@ -33,6 +33,8 @@ function AssignSexualPartner(Person, Time){
 		var AimProp=[Param.IDU.RegularLastMonth, Param.IDU.OtherLastMonth, Param.IDU.RegularAndOtherLastMonth];
 	
 		// add people into relationship type as appropriate
+		TotalPeople*Param.IDU.Sex.AnyLastMonth;
+		
 		var Temp=[PropPartnerType[1
 		
 		// 
@@ -40,6 +42,8 @@ function AssignSexualPartner(Person, Time){
 		
 		for (var AddCount=0; AddCount<NumberOfPeopleToStartAnyRelationship; AddCount++){
 			var PropWeight=Minus(CurrentProp, AimProp);
+			
+			// if the prop weight is negative, ignore unless they are all negative, then set all to one
 			
 			// Chose people at random until 
 			var SamplesFound=0;
@@ -62,7 +66,7 @@ function AssignSexualPartner(Person, Time){
 			
 			var SelectedPerson=Person[SelectedPersonIndex];
 			
-			
+			// Determine the age of the partner that we are aiming for.
 			var AgeAim;
 			if (SelectedPerson.Sex==0){
 				AgeAim=SexualRelationship.ChooseMaleAge();
@@ -70,6 +74,7 @@ function AssignSexualPartner(Person, Time){
 			else{
 				AgeAim=SexualRelationship.ChooseFemaleAge();
 			}
+			// Determine the sex of the partner
 			var PartnerSex=Abs(SelectedPerson.Sex-1);
 			
 			// Determine probability that an IDU individual will form a relationship with someone who is not an injector

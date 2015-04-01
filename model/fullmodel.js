@@ -24,8 +24,9 @@ function FullModel(Param, Data, Intervention){
 	var Population=[];
 	Population.concat(PWIDPopulation, HCVInfectedBloodRecipients);// Later add MSM and migrants
 	
-	
-	for (){// each time step
+	StartTime=1960;
+	EndTime=2010;
+	for (var Time=StartTime; Time<EndTime; Time+=TimeStep){// each time step
 		// Intervention(Time); 
 	
 	// this is a function that will be called "AdvanceModel(YearLast, YearCurrent, Param, Population)
