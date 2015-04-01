@@ -1,4 +1,4 @@
-function SexualRelationshipAge(){//(LowerAge, UpperAge, FemaleAgeDistribution,RateOfSex, FemaleWeighting){
+function SexualRelationshipAgeObject(){//(LowerAge, UpperAge, FemaleAgeDistribution,RateOfSex, FemaleWeighting){
 	// These results are calculated in the data folder
 	
 	var LowerAge=[15, 18, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80];
@@ -42,7 +42,7 @@ function SexualRelationshipAge(){//(LowerAge, UpperAge, FemaleAgeDistribution,Ra
 }
 
 
-SexualRelationshipAge.prototype.CreateSampleTable = function (){
+SexualRelationshipAgeObject.prototype.CreateSampleTable = function (){
 	// Create the big population of females
 	
 	var FemaleAgeDistributionIndex=RandSampleWeightedArray(this.FemaleWeighting, 100000)
@@ -106,7 +106,7 @@ SexualRelationshipAge.prototype.CreateSampleTable = function (){
 	// if there is no data for an age, then it returns -1
 };
 
-SexualRelationshipAge.prototype.ChooseMaleAgeFromDistribution = function (Age){
+SexualRelationshipAgeObject.prototype.ChooseMaleAgeFromDistribution = function (Age){
 
 	// Find the age group they belong to
 	var AgeIndex;
@@ -193,15 +193,15 @@ SexualRelationshipAge.prototype.ChooseMaleAgeFromDistribution = function (Age){
 	return MaleAge;
 };
 
-SexualRelationshipAge.prototype.ChooseMaleAge = function (FemaleAge){
+SexualRelationshipAgeObject.prototype.ChooseMaleAge = function (FemaleAge){
 	return this.ChooseAge(FemaleAge, this.FemaleSample);
 }
 
-SexualRelationshipAge.prototype.ChooseFemaleAge = function (MaleAge){
+SexualRelationshipAgeObject.prototype.ChooseFemaleAge = function (MaleAge){
 	return this.ChooseAge(MaleAge, this.MaleSample);
 }
 
-SexualRelationshipAge.prototype.ChooseAge = function (Age, SampleData){
+SexualRelationshipAgeObject.prototype.ChooseAge = function (Age, SampleData){
 	if (typeof(SampleData)==="undefined"){
 		throw "The function .CreateSampleTable() must be run first";
 	}
@@ -216,12 +216,15 @@ SexualRelationshipAge.prototype.ChooseAge = function (Age, SampleData){
 	return SampleData[AgeIndex][IndexSelection];
 }
 
-// AA= new SexualRelationshipAge();
+SexualRelationship=new SexualRelationshipAgeObject();
+SexualRelationship.CreateSampleTable();
+
+// AA= new SexualRelationshipAgeObject();
 // AA.CreateSampleTable();
 // for (var Age=14; Age<85; Age++){
 	// MaleAge=[];
 	// FemaleAge=[];
-	// for (j=0; j<100; j++){
+	// for (j=0; j<1000; j++){
 		// MaleAge[j]=AA.ChooseMaleAge(Age);
 		// FemaleAge[j]=AA.ChooseFemaleAge(Age);
 	// }
