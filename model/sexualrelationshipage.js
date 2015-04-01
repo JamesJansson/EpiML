@@ -216,7 +216,22 @@ SexualRelationshipAgeObject.prototype.ChooseAge = function (Age, SampleData){
 	return SampleData[AgeIndex][IndexSelection];
 }
 
-SexualRelationship=new SexualRelationshipAgeObject();
+SexualRelationshipAgeObject.prototype.RateOfSexAtAge = function (Age){
+	for (var IndexCount in this.LowerAge){
+		if (this.LowerAge[IndexCount]<=Age && Age<this.UpperAge[IndexCount]){
+			return this.RateOfSex[IndexCount];
+		}
+	}
+	return 0;
+}
+
+
+
+
+
+
+
+var SexualRelationship=new SexualRelationshipAgeObject();
 SexualRelationship.CreateSampleTable();
 
 // AA= new SexualRelationshipAgeObject();

@@ -33,6 +33,10 @@ function PersonObject(YearOfBirth, Sex)//, YearOfObservation Param)
 	
 	this.Haemophilia=0;
 	
+	this.SexualPartner=new EventVector;
+	this.SexualPartnerInjects=new EventVector;
+	this.SexualPartner.Set(0, this.YearOfBirth);
+	this.SexualPartnerInjects.Set(0, this.YearOfBirth);
 	
 	//QALY 
 	//this.QualityCalculation=function(time){(this.HCV, this.IDU, this.HIV, this.Age, time);}//
