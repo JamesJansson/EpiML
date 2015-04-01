@@ -82,7 +82,7 @@ function NotificationBackProjection(WorkerData){
 	
 	
 	// Perform an optimisation of the number of injectors
-	if (false){
+	if (true){
 		// Get the data for the numbers by sex and age
 		var PWIDEntryOptimisationResults=OptimiseInjectionEntry(Data.PWID); 
 

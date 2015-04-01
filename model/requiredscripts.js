@@ -18,5 +18,5 @@ importScripts("interventionobject.js");
 importScripts("interventions.js");
 importScripts("optimisepartnerchange.js");
 importScripts("optimisemodel.js");
-importScripts("fullmodel.js");
-importScripts("assignsexualpartner.js");
+//importScripts("fullmodel.js");
+//importScripts("assignsexualpartner.js");
