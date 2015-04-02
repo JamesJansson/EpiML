@@ -29,17 +29,16 @@ function AssignSexualPartner(Person, Time){
 	if (ProportionAnySex<Param.IDU.Sex.AnyLastMonth){
 		var NumberOfPeopleToStartAnyRelationship=Round(TotalPeople*(Param.IDU.Sex.AnyLastMonth-ProportionAnySex));
 		
+		// Work out what the category will be by maintaining the same ratio
 		var NumberInPartnerCategory=[TotalSex[1], TotalSex[2], TotalSex[3]];
 		var AimProp=[Param.IDU.RegularLastMonth, Param.IDU.OtherLastMonth, Param.IDU.RegularAndOtherLastMonth];
 		var AimNumberInPartnerCategory=Times(TotalSexAny, AimProp);
 	
-		// add people into relationship type as appropriate
-		TotalPeople*Param.IDU.Sex.AnyLastMonth;
-		
-		var Temp=[PropPartnerType[1
 		
 		for (var AddCount=0; AddCount<NumberOfPeopleToStartAnyRelationship; AddCount++){
-			// Work out what the category will be
+			// add people into relationship type as appropriate
+		
+			
 			var CategorySelectionWeight=Minus(AimNumberInPartnerCategory, NumberInPartnerCategory);
 			// if the prop weight is negative, ignore unless they are all negative, then set all to one
 			for (var CSWR in CategorySelectionWeight){
@@ -97,7 +96,7 @@ function AssignSexualPartner(Person, Time){
 			
 			// Determine probability that an IDU individual will form a relationship with someone who is not an injector
 			// Note that there are more males than females. 
-			if (Rand.Value()<(IDU.Sex.RegularPartnerInjects/2){// note that we divide by 2 to get the right proportion
+			if (Rand.Value()<(IDU.Sex.RegularPartnerInjects/2)){// note that we divide by 2 to get the right proportion
 				// Select partner from injecting population
 				
 				// Search injectors for matches

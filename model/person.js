@@ -134,6 +134,17 @@ function IDUObject(PersonPointer){
 	// 3: Regular user
 	// 4: Former user
 	
+	this.UseRate = new EventVector;
+	this.UseRate.Set(0, this.Person.YearOfBirth);
+	// IDU codes
+	// 0: Never used = 0
+	// 1: Tried once = once on the date of trying
+	// 2: Occasional user = once a month = <12
+	// 3: Regular user = 12-365*3 
+	// 4: Former user
+	
+	
+	
 	this.OST = new EventVector;
 	this.OST.Set(0, this.Person.YearOfBirth);
 	
@@ -158,6 +169,8 @@ IDUObject.prototype.StartInjecting= function (Time){
 		// this.Use.Set(3, Time+TimeChosen+TimeUntilCease);
 		
 		// Add the transition to regular user
+		
+		// determine the use rate by people who use regularly
 		
 		// Add the transition to former user
 	

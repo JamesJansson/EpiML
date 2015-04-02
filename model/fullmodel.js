@@ -55,21 +55,12 @@ function FullModel(Param, Data, Intervention){
 		
 			
 		// Determine transmissions that occur
-			// if either are HCV infected
-			// Determine, for each individual if they will receptively share needles
-			
-			// Use transmission probability to determine transmission rate
-			
-			
-			// Number of infected active injectors * T0
-			
-			// Run through infection
-			// Clearance
-
-			// HCV progression
-			// Determine additional mortality due to HCV
+		DetermineTransmissions(Person, StartTime, EndTime);
+		
 		
 		// Testing
+			// Directly remove all tested individuals
+			
 			// If testing occurs prior to death, add the time to Person.HCV.DiagnosisDate
 		
 			// Pull out all people who reach symptomatic testing
