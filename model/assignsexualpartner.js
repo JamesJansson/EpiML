@@ -113,15 +113,19 @@ function AssignSexualPartner(Person, Time){
 				}
 				// Add the sexual relationship to the person
 				this.SexualPartner.Set(1, Time);
-				this.SexualPartnerID.Set(Pi2, Time);
+				this.SexualPartnerID.Set(IndexChosen, Time);
 				this.SexualPartnerInjects.Set(1, Time);
 				
 			}
 			else {// If the partner is not an injector
+				// Create an individual of the appropriate age  
 				
 			}
 			
 			
+			// Choose partner by age 
+			// Randomly choose a person
+			// Check if they 
 			
 			
 			// choose a person based on a weighting by age (this is from a list of people compiled outside the loop
