@@ -8,7 +8,7 @@ function FullModel(Param, Data, Intervention){
 	// };
 	
 	// var PWIDPopulation=DistributePWIDPopulationExponential(Param.IDU.EntryParams);//Returns PWIDPopulation as defined to the MaxYear
-	var PWIDEntry=DeterminePWIDEntryRateExponential(Param.IDU.EntryParams);//Returns PWIDPopulation as defined to the MaxYear
+	var PWIDEntry=DeterminePWIDEntryRateExponential2(Param.IDU.EntryParams);//Returns PWIDPopulation as defined to the MaxYear
 	
 	// Run HCV blood recipients
 	var HCVInfectedBloodRecipients=CreateHCVInfectedBloodRecipients();
@@ -25,17 +25,18 @@ function FullModel(Param, Data, Intervention){
 	var Population=[];
 	Population.concat(PWIDPopulation, HCVInfectedBloodRecipients);// Later add MSM and migrants
 	
-	var StartTime=1960;
-	var EndTime=2010;
-	for (var Time=StartTime; Time<EndTime; Time+=Param.TimeStep){// each time step
+
+	for (var Time=Param.StartTime; Time<Param.EndTime; Time+=Param.TimeStep){// each time step
 		// Intervention(Time); 
 	
 		// this is a function that will be called "AdvanceModel(YearLast, YearCurrent, Param, Population)
 		// determine number of individuals added the population of PWID
-		// Param.IDU.Add
+		// Param.IDU.Add 
+		
+		NumberOfPeopleToAddThisStep=DeterminePWIDEntryRateExponential2(Param.IDU.EntryParams, Time, Param.TimeStep);
 		
 		// Add new people to the IDU population for this time step
-		
+		// Select some of the people who are already in sexual relationships with people who have already injected
 		
 		// Start the individuals on IDU
 			// General mortality
@@ -84,7 +85,7 @@ function FullModel(Param, Data, Intervention){
 		
 		
 		
-		// lots of points are lost for insufficient diagnoses 
+		// lots of points are lost for insufficient people to draw from diagnoses 
 		
 		
 		

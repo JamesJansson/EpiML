@@ -402,9 +402,60 @@ function DeterminePWIDEntryRateExponential(EntryParams){//MaxYear is not inclusi
 }	
 		
 		
+function DeterminePWIDEntryRateExponential2(EntryParams, Time, TimeStep){//MaxYear is not inclusive of this year
+	Time=Time+TimeStep/2;
+	
+	var NumberInYear, NumberInStep;
+	// Determine if in the initial exponential period
+	if (Time<EntryParams.EndExponential){
+		NumberInYear=EntryParams.A*Exp(Log(EntryParams.Logk1)*(EntryParams.EndExponential-Time));
+	}
+	else{
+		NumberInYear=EntryParams.A*EntryParams.B+EntryParams.A*(1-EntryParams.B)*Exp(Log(EntryParams.Logk2)*(Time-EntryParams.EndExponential));
+	}
+	NumberInStep=Round(NumberInYear*TimeStep);
+	
+	return NumberInStep;
+}	
+
+function CreatePWID(EntryParams, Time, TimeStep){	
+	var PWIDPopulation=[];
+	var SexIndex, LogMedianEntryAge;
+	
+	var LogMedianMaleEntryAge=Log(Param.IDU.InjectionStartAge.Median);
+	var LogMedianFemaleEntryAge=Log(Param.IDU.InjectionStartAge.Median-Param.IDU.InjectionStartAge.SexDifference);
+	
+	var LogSDEntryAge=Param.IDU.InjectionStartAge.SD;
+	
+	var NumberToAdd=DeterminePWIDEntryRateExponential2(EntryParams, Time, TimeStep);
+	
+	for (var TotalPWID=0; TotalPWID<NumberToAdd; TotalPWID++){//the total number in the group
+		// Determine the sex at random
+		if (Rand.Value()<Param.IDU.ProportionMale){
+			SexIndex=0;
+			LogMedianEntryAge=LogMedianMaleEntryAge;
+		}
+		else{
+			SexIndex=1;
+			LogMedianEntryAge=LogMedianFemaleEntryAge;
+		}
 		
+		// Determine a random age
+		var AgeAtFirstInjection=Exp(NormalRand(LogMedianEntryAge, LogSDEntryAge));// this needs to include the median and SD of the age at first injection
+		// Determine a random time of starting (between Year + [0, 1) )
+		var TimeOfStartingInjection=Time+TimeStep*Rand.Value();
+		var YearOfBirth=TimeOfStartingInjection-AgeAtFirstInjection;
+		PWIDPopulation[TotalPWID-1]=new PersonObject(YearOfBirth, EntryParams.SexIndex);
+		PWIDPopulation[TotalPWID-1].IDU.StartInjecting(TimeOfStartingInjection);
+	}
 
-
+	
+	
+	// Following entry, there is also a probability associated with becoming a regular user, and following that exiting at a certain probability
+	
+	
+	return PWIDPopulation;
+}
 
 
 function TESTDeterminePWIDEntryRateExponential(){
