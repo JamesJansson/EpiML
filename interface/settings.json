@@ -1,6 +1,6 @@
 {
-    "NoThreads": "1",
+    "NoThreads": "8",
     "ConcurrentSims": "1",
-    "SampleFactor": 100,
-    "NumberOfSimulations": 1
+    "SampleFactor": 10,
+    "NumberOfSimulations": 100
 }
