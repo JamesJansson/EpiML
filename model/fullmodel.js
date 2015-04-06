@@ -7,7 +7,8 @@ function FullModel(Param, Data, Intervention){
 	//     }
 	// };
 	
-	var PWIDPopulation=DistributePWIDPopulationExponential(Param.IDU.EntryParams);//Returns PWIDPopulation as defined to the MaxYear
+	// var PWIDPopulation=DistributePWIDPopulationExponential(Param.IDU.EntryParams);//Returns PWIDPopulation as defined to the MaxYear
+	var PWIDEntry=DeterminePWIDEntryRateExponential(Param.IDU.EntryParams);//Returns PWIDPopulation as defined to the MaxYear
 	
 	// Run HCV blood recipients
 	var HCVInfectedBloodRecipients=CreateHCVInfectedBloodRecipients();
@@ -24,12 +25,12 @@ function FullModel(Param, Data, Intervention){
 	var Population=[];
 	Population.concat(PWIDPopulation, HCVInfectedBloodRecipients);// Later add MSM and migrants
 	
-	StartTime=1960;
-	EndTime=2010;
-	for (var Time=StartTime; Time<EndTime; Time+=TimeStep){// each time step
+	var StartTime=1960;
+	var EndTime=2010;
+	for (var Time=StartTime; Time<EndTime; Time+=Param.TimeStep){// each time step
 		// Intervention(Time); 
 	
-	// this is a function that will be called "AdvanceModel(YearLast, YearCurrent, Param, Population)
+		// this is a function that will be called "AdvanceModel(YearLast, YearCurrent, Param, Population)
 		// determine number of individuals added the population of PWID
 		// Param.IDU.Add
 		
