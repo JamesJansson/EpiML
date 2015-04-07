@@ -8,3 +8,9 @@ self.onmessage = function (WorkerMessage) {
 	var SimResult=FunctionHolder(WorkerMessage.data);
 	self.postMessage({WorkerMessage: WorkerMessage.data, Result: SimResult});//All simulation will end with this line
 }
+
+function EvalText(InputText){
+	var ReturnResult={};
+	eval(InputText);
+	return ReturnResult;
+}

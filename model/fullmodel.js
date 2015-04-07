@@ -7,8 +7,18 @@ function FullModel(Param, Data, Intervention){
 	//     }
 	// };
 	
+	
+	// Set up some of the parameters
+	Param.IDU.TimeUntilRegular.LT1Week;
+	
+	
+	
 	// var PWIDPopulation=DistributePWIDPopulationExponential(Param.IDU.EntryParams);//Returns PWIDPopulation as defined to the MaxYear
 	var PWIDEntry=DeterminePWIDEntryRateExponential2(Param.IDU.EntryParams);//Returns PWIDPopulation as defined to the MaxYear
+	
+	
+	
+	
 	
 	// Run HCV blood recipients
 	var HCVInfectedBloodRecipients=CreateHCVInfectedBloodRecipients();

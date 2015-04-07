@@ -411,7 +411,7 @@ function DeterminePWIDEntryRateExponential2(EntryParams, Time, TimeStep){//MaxYe
 		NumberInYear=EntryParams.A*Exp(Log(EntryParams.Logk1)*(EntryParams.EndExponential-Time));
 	}
 	else{
-		NumberInYear=EntryParams.A*EntryParams.B+EntryParams.A*(1-EntryParams.B)*Exp(Log(EntryParams.Logk2)*(Time-EntryParams.EndExponential));
+		NumberInYear=EntryParams.A*(EntryParams.B+(1-EntryParams.B)*Exp(Log(EntryParams.Logk2)*(Time-EntryParams.EndExponential)));
 	}
 	NumberInStep=Round(NumberInYear*TimeStep);
 	
@@ -445,8 +445,15 @@ function CreatePWID(EntryParams, Time, TimeStep){
 		// Determine a random time of starting (between Year + [0, 1) )
 		var TimeOfStartingInjection=Time+TimeStep*Rand.Value();
 		var YearOfBirth=TimeOfStartingInjection-AgeAtFirstInjection;
-		PWIDPopulation[TotalPWID-1]=new PersonObject(YearOfBirth, EntryParams.SexIndex);
+		PWIDPopulation[TotalPWID-1]=new PersonObject(YearOfBirth, SexIndex);
 		PWIDPopulation[TotalPWID-1].IDU.StartInjecting(TimeOfStartingInjection);
+		
+		//
+		if (Rand.Value()<Param.IDU.BecomeRegularInjector.P){
+			// Chose a random time
+			Param.IDU.BecomeRegularInjector.Time*
+			
+		}
 	}
 
 	
@@ -456,6 +463,50 @@ function CreatePWID(EntryParams, Time, TimeStep){
 	
 	return PWIDPopulation;
 }
+
+// create PWID test
+function TestDeterminePWIDEntryRateExponential2(){
+	EntryParams=[];
+	EntryParams.A=2500;
+	EntryParams.B=0.20;
+	EntryParams.EndExponential=1995;
+	EntryParams.Logk2=0.3;
+	EntryParams.Logk1=0.4;
+	var TimeStep=0.1;
+	for (var Time=1990; Time<2010; Time+=TimeStep){
+		var Num=DeterminePWIDEntryRateExponential2(EntryParams, Time, TimeStep)
+		console.log("Year " + Time + " N " + Num);
+	}
+}
+
+//RunSettings2={};
+//RunSettings2.FunctionName="TestDeterminePWIDEntryRateExponential2";
+//SimulationHolder.Run(RunSettings2);
+
+
+function RegularInjectionTimeObject(RegularTimeP, RegularTimeT){
+	this.RegularTimeP=RegularTimeP;
+	this.RegularTimeP=RegularTimeT;
+}
+
+RegularInjectionTimeObject.Time(){
+	if (Rand.Value()<this.RegularTimeP[0]){
+		var Time=Rand.Value()*this.RegularTimeT[0];
+		return Time;
+	}
+	
+	for (var Count=1; Count<this.RegularTimeP.length-1; Count++){
+		
+	}
+	
+}
+
+
+
+
+
+
+
 
 
 function TESTDeterminePWIDEntryRateExponential(){
