@@ -8,6 +8,7 @@ importScripts("deepcopy.js");
 // Model specific functions
 importScripts("person.js");
 importScripts("hcv.js");
+importScripts("idu.js");
 importScripts("hiv.js");
 importScripts("assignpopulation.js");
 importScripts("assigninjectingpopulation.js");

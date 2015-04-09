@@ -450,9 +450,8 @@ function CreatePWID(EntryParams, Time, TimeStep){
 		
 		//
 		if (Rand.Value()<Param.IDU.BecomeRegularInjector.P){
-			// Chose a random time
-			//Param.IDU.BecomeRegularInjector.Time*
-			
+			// Chose a random time until the person becomes a regular injector
+			RegularInjectionTime.Time();
 		}
 	}
 
@@ -484,42 +483,7 @@ function TestDeterminePWIDEntryRateExponential2(){
 //SimulationHolder.Run(RunSettings2);
 
 
-function RegularInjectionTimeObject(){//(RegularTimeP, RegularTimeT){
-	// This function and the associated interface parts are an unfortunate example of how I haven't programmed and nice way to do arrays of parameters
 
-	var PTime=Param.IDU.BecomeRegularInjector.PTime;//.LT10Years
-	this.P=[];
-	this.P[0]=PTime.LT1Week;
-	this.P[1]=PTime.LT6Months;
-	this.P[2]=PTime.LT1Year;
-	this.P[3]=PTime.LT5Years;
-	this.P[4]=PTime.LT10Years;
-	
-	// Normalise P to make it level 
-	this.P=Divide(this.P, Sum(this.P));
-	
-	this.MaxTime=[];
-	this.MaxTime[0]=7/52;
-	this.MaxTime[1]=0.5;
-	this.MaxTime[2]=1;
-	this.MaxTime[3]=5;
-	this.MaxTime[4]=10;
-}
-
-RegularInjectionTimeObject.prototype.Time=function(){
-	var ProbToUse=Rand.Value();
-	var CummulativeProb=this.P[0];
-	if (ProbToUse<this.P[0]){
-		return Rand.Value()*this.MaxTime[0];
-	}
-	for (var Count=1; Count<this.P.length-1; Count++){
-		CummulativeProb+=this.P[Count];
-		if (ProbToUse<CummulativeProb){
-			return this.MaxTime[Count-1]+Rand.Value()*(this.MaxTime[Count]-this.MaxTime[Count-1]);
-		}
-	}
-	return this.MaxTime[Count-1]+Rand.Value()*(this.MaxTime[Count]-this.MaxTime[Count-1]);
-}
 
 
 // RunSettings2={};

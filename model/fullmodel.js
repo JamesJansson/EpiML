@@ -1,3 +1,7 @@
+
+var RegularInjectionTime;
+
+
 function FullModel(Param, Data, Intervention){ 
 	// Intervention[No]=function(Time){
 	// 	   if (Time<2016){
@@ -9,7 +13,7 @@ function FullModel(Param, Data, Intervention){
 	
 	
 	// Set up some of the parameters
-	Param.IDU.TimeUntilRegular.LT1Week;
+	RegularInjectionTime=new RegularInjectionTimeObject();
 	
 	
 	
