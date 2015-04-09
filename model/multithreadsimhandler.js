@@ -16,9 +16,9 @@ self.onmessage = function (WorkerMessage) {
 
 
 
-function EvalText(WorkerMessage){
+function EvalText(data){
 	var ReturnResult={};
-	eval(WorkerMessage.Data.Common);
+	eval(data.Common);
 	return ReturnResult;
 }
 

@@ -489,15 +489,16 @@ function RegularInjectionTimeObject(){//(RegularTimeP, RegularTimeT){
 
 	var PTime=Param.IDU.BecomeRegularInjector.PTime;//.LT10Years
 	this.P=[];
-	this.P[0]=LT1Week;
-	this.P[1]=LT6Months;
-	this.P[2]=LT1Year;
-	this.P[3]=LT5Years;
-	this.P[4]=LT10Years;
+	this.P[0]=PTime.LT1Week;
+	this.P[1]=PTime.LT6Months;
+	this.P[2]=PTime.LT1Year;
+	this.P[3]=PTime.LT5Years;
+	this.P[4]=PTime.LT10Years;
 	
 	// Normalise P to make it level 
 	this.P=Divide(this.P, Sum(this.P));
 	
+	this.MaxTime=[];
 	this.MaxTime[0]=7/52;
 	this.MaxTime[1]=0.5;
 	this.MaxTime[2]=1;
@@ -521,7 +522,10 @@ RegularInjectionTimeObject.prototype.Time=function(){
 }
 
 
-
+// RunSettings2={};
+// RunSettings2.FunctionName="EvalText";
+// RunSettings2.Common="BBB=new RegularInjectionTimeObject();var val=[];for(var i=0; i<100000; i++){val[i]=BBB.Time()};a=HistogramData(val, [0, 7/52, 0.5, 1, 5, 10]);console.log(a);";
+// SimulationHolder.Run(RunSettings2);
 
 
 
