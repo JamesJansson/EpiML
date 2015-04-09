@@ -68,7 +68,10 @@ function NotificationBackProjection(WorkerData){
 	var ThreadID = WorkerData.ThreadID;// this value can be used by the code to send specific messages to particular elements, e.g. progress bar 4 set to 60%
 	
 	var StringForStatus="thread: "+ThreadID+" simID: "+SimID;
-	self.postMessage({StatusText: StringForStatus, StatusTextID: ThreadID});
+	//self.postMessage({StatusText: StringForStatus, StatusTextID: ThreadID});
+	//MultithreadSimController.ThreadStatusText(StringForStatus);
+	MultithreadSimController.SetThreadStatusToSimNumber();
+	
 	
 	// Load up mortality data
 	MaleMortality=new MortalityCalculator(Data.Mortality.Male[1].Rates, Data.Mortality.Male[1].Year, Data.Mortality.Male[2].Rates, Data.Mortality.Male[2].Year);
