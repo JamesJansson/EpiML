@@ -1,0 +1,17 @@
+Discussion about model structure
+
+The fundamental assumption about this model that makes it different is two fold:
+1) The most important element of deciding the outcome of a hepatitis C infection is age. 
+2) The most important mode of transmission of hepatitis C in Australia is due to sexual partners sharing injecting equipment
+
+The individual based structure of the model allows age related calculations to be performed accurately, a limitation of non-individual based modelling. 
+Similarly, the sexual network modelling allows estimation of transmission speed in a way that is not possible in other models
+
+Looking at needle sharing, in people who inject drugs, 20% shared needles in the previous month. 
+Typically the needle was reused after a single person in 50-70% of cases.
+The sexual partner was by far the most to share equipment with. Of reported sharing people over 1995 to 2010
+Regular sexual partner 50.6%
+Casual sexual partner 5%
+Close friend 28%
+Acquaintance 11%
+Other 5.3% (which is likely to be family)

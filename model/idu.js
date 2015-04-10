@@ -34,43 +34,58 @@ function IDUObject(PersonPointer){
 }
 
 IDUObject.prototype.StartInjecting= function (Time){
+	// Risky injection. Determine 
+		// if the persons will practice receptive sharing of injecting equipment 
+		// when the will stop if they do.
+		// who they are sharing with
+	
+	
 	// Add the first date of injecting
 	this.Use.Set(1, Time);
 	
 	// Add the transition to occasional user
-	//if (Rand.Value()<Param.IDU.BecomeRegularInjector.P){
-		// this.Use.Set(2, Time+0.1);
-		// Param.IDU.BecomeRegularInjector.Time
-		// this.Use.Set(2, Time+TimeChosen);
+	if (Rand.Value()<Param.IDU.BecomeRegularInjector.P){
+		// Add time until occasional user
+		this.Use.Set(2, Time+0.1);
 	
-	
-		//var TimeUntilCease=TimeUntilEvent(Param.IDU.RateOfCesssation);
-		// this.Use.Set(3, Time+TimeChosen+TimeUntilCease);
-		
 		// Add the transition to regular user
+		var TimeUntilStartingRegularUse=RegularInjectionTime.Time();
+		var TimeOfRegularUse=Time+TimeUntilStartingRegularUse;
+		this.Use.Set(3, TimeOfRegularUse);
 		
-		// determine the use rate by people who use regularly
-		
+		// Determine the use rate by people who use regularly
+			
 		// Add the transition to former user
+		var TimeUntilStoppingInjecting=TimeUntilEvent(Param.IDU.RateOfCesssation);
+		var TimeOfStoppingInjecting=TimeOfRegularUse+TimeUntilStoppingInjecting;
+		this.Use.Set(4, TimeOfStoppingInjecting);
+		
+		// Determine excess death due to drug use
+		// From the date of regular usage to cease
+		
+		var TimeOfIDUDeath=TimeUntilEvent(Param.IDU.ExcessMortality);
+		if (TimeOfIDUDeath<TimeOfStoppingInjecting){
+			this.Person.Death.IDU=Time+TimeChosen+TimeUntilCease;
+		}
+	}
+	else {
+		// determine time until ceasing irregular use
+		this.Use.Set(4, TimeOfStoppingInjecting);
+	}
 	
-	//}
 	
-	// Determine excess death due to drug use
-	// From the date of regular usage to cease
-	
-	// var TimeOfDeath=TimeUntilEvent(Param.IDU.ExcessMortality)
-	// if (TimeOfDeath<TimeUntilCease){
-		// this.Person.Death.IDU=Time+TimeChosen+TimeUntilCease;
-	//}
 }
 
-
+IDUObject.prototype.StopInjecting= function (Time){
+	console.error("In order to hard stop someone injecting (through interventions etc)");
+	console.error("Excess mortality needs to be adjusted if it occurs between old injection date and new injection date.");
+}
 
 
 function RegularInjectionTimeObject(){//(RegularTimeP, RegularTimeT){
 	// This function and the associated interface parts are an unfortunate example of how I haven't programmed and nice way to do arrays of parameters
 
-	var PTime=Param.IDU.BecomeRegularInjector.PTime;//.LT10Years
+	var PTime=Param.IDU.BecomeRegularInjector.PTime;//
 	this.P=[];
 	this.P[0]=PTime.LT1Week;
 	this.P[1]=PTime.LT6Months;

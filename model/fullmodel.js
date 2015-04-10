@@ -26,6 +26,7 @@ function FullModel(Param, Data, Intervention){
 	
 	// Run HCV blood recipients
 	var HCVInfectedBloodRecipients=CreateHCVInfectedBloodRecipients();
+	
 	// Add proportions as mentioned in Greg's paper
 	// Determine how many end up as PWID
 
@@ -52,6 +53,8 @@ function FullModel(Param, Data, Intervention){
 		// Add new people to the IDU population for this time step
 		// Select some of the people who are already in sexual relationships with people who have already injected
 		
+		// Select other people at random based on age
+		
 		// Start the individuals on IDU
 			// General mortality
 			// Determine staying probability
@@ -62,13 +65,10 @@ function FullModel(Param, Data, Intervention){
 			// Determine when the sexual partners begin their partnership (could be before starting injecting or after)
 			// what proportion had partners who did not inject drugs
 			
-			// Risky injection. Determine 
-				// if the persons will practice receptive sharing of injecting equipment 
-				// when the will stop if they do.
-				// who they are sharing with
 			
-		AssignSexualPartner(Person, Time);
 		
+		// Balance sexual partnerships
+		AssignSexualPartner(Person, Time);
 			
 		// Determine transmissions that occur
 		DetermineTransmissions(Person, StartTime, EndTime);
