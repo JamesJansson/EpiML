@@ -32,6 +32,22 @@ This power imbalance is also played out in the much higher prevalence in young f
 Given the low number of people who are who have never tested for HCV in the NSP population, it is expected that there are very few cases of undiagnosed HCV. 
 
 
+Optimisation
+The optimisation is trying to minimise the error in the output as measured by various sources of data
+Parameters to optimise
+Probability of entering NSP per year while injecting
+Parameters that determine entry into the population
+Parameters that determine exit from  the population
+Parameters that determine transmission rate
+
+Data to optimise against
+AIHW ever injector by age
+AIHW injected in the last 12 month data
+Prevalence in the NSP population
+
+
+
+
 
 
 Following optimisation, the testing rate of the system is determined. This is a multivariate testing rate that is dependent on stage of infection, age 
