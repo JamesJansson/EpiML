@@ -23,3 +23,15 @@ For people who have been injecting more than 3 years, the likelihood of HCV anti
 This suggests that people who have not receptively shared in the last month are not always safe injectors, simply that they are safe more often.
 In particular, those people who did not receptively share recently may have been receptively sharing at younger ages (due to power or age imbalance in relationships)
 This power imbalance is also played out in the much higher prevalence in young females who inject drugs.
+
+
+
+
+
+
+Given the low number of people who are who have never tested for HCV in the NSP population, it is expected that there are very few cases of undiagnosed HCV. 
+
+
+
+
+Following optimisation, the testing rate of the system is determined. This is a multivariate testing rate that is dependent on stage of infection, age 
