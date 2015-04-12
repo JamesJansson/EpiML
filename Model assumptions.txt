@@ -31,6 +31,7 @@ This power imbalance is also played out in the much higher prevalence in young f
 
 Given the low number of people who are who have never tested for HCV in the NSP population, it is expected that there are very few cases of undiagnosed HCV. 
 
+Additionally, HCV antibody prevalence is quite low (~50%). This includes people who have cleared HCV. The implication is that there are very few people who have an active HCV infection at any point in time. 
 
 Optimisation
 The optimisation is trying to minimise the error in the output as measured by various sources of data
