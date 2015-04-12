@@ -866,7 +866,7 @@
         "Description": "An annual rate that is optimised in the simulation."
     },
     {
-        "ParameterID": "IDU_ReceptiveSharing20",
+        "ParameterID": "IDU_ReceptiveSharing18",
         "ArrayName": "Param",
         "ArrayNumber": "40",
         "InterfaceID": "ParamHolder_40",
@@ -876,8 +876,8 @@
         "StandardError": null,
         "LowerBound": null,
         "UpperBound": null,
-        "Upper95Range": 0,
-        "Lower95Range": 0,
+        "Upper95Range": null,
+        "Lower95Range": null,
         "CalculatedMedian": null,
         "NumberOfSamples": 1,
         "Val": [
@@ -888,32 +888,10 @@
         "Description": ""
     },
     {
-        "ParameterID": "IDU_ReceptiveSharingReductionAt40",
-        "ArrayName": "Param",
-        "ArrayNumber": "41",
-        "InterfaceID": "ParamHolder_41",
-        "GroupName": "",
-        "DistributionType": "normal",
-        "Median": 0.8,
-        "StandardError": null,
-        "LowerBound": null,
-        "UpperBound": null,
-        "Upper95Range": 0.8,
-        "Lower95Range": 0.8,
-        "CalculatedMedian": 0.8,
-        "NumberOfSamples": 1,
-        "Val": [
-            0.8
-        ],
-        "MinValue": "",
-        "MaxValue": "",
-        "Description": ""
-    },
-    {
         "ParameterID": "IDU_ReceptiveSharing_RiskReduction",
         "ArrayName": "Param",
-        "ArrayNumber": 62,
-        "InterfaceID": "ParamHolder_62",
+        "ArrayNumber": "42",
+        "InterfaceID": "ParamHolder_42",
         "GroupName": "",
         "DistributionType": "normal",
         "Median": 0.59,
@@ -932,8 +910,8 @@
     {
         "ParameterID": "IDU_RelationshipDuration_Val0",
         "ArrayName": "Param",
-        "ArrayNumber": "42",
-        "InterfaceID": "ParamHolder_42",
+        "ArrayNumber": "43",
+        "InterfaceID": "ParamHolder_43",
         "GroupName": "",
         "DistributionType": "normal",
         "Median": 0.36,
@@ -954,8 +932,8 @@
     {
         "ParameterID": "IDU_RelationshipDuration_Val1",
         "ArrayName": "Param",
-        "ArrayNumber": "43",
-        "InterfaceID": "ParamHolder_43",
+        "ArrayNumber": "44",
+        "InterfaceID": "ParamHolder_44",
         "GroupName": "",
         "DistributionType": "normal",
         "Median": 0.29,
@@ -976,8 +954,8 @@
     {
         "ParameterID": "IDU_RelationshipDuration_Val2",
         "ArrayName": "Param",
-        "ArrayNumber": "44",
-        "InterfaceID": "ParamHolder_44",
+        "ArrayNumber": "45",
+        "InterfaceID": "ParamHolder_45",
         "GroupName": "",
         "DistributionType": "normal",
         "Median": 0.35,
@@ -998,8 +976,8 @@
     {
         "ParameterID": "IDU_Sex_AnyLastMonth",
         "ArrayName": "Param",
-        "ArrayNumber": "45",
-        "InterfaceID": "ParamHolder_45",
+        "ArrayNumber": "46",
+        "InterfaceID": "ParamHolder_46",
         "GroupName": "",
         "DistributionType": "normal",
         "Median": 0.682,
@@ -1018,8 +996,8 @@
     {
         "ParameterID": "IDU_Sex_FirstInjectionHadSexualPartner",
         "ArrayName": "Param",
-        "ArrayNumber": "46",
-        "InterfaceID": "ParamHolder_46",
+        "ArrayNumber": "47",
+        "InterfaceID": "ParamHolder_47",
         "GroupName": "",
         "DistributionType": "normal",
         "Median": null,
@@ -1038,8 +1016,8 @@
     {
         "ParameterID": "IDU_Sex_OtherLastMonth",
         "ArrayName": "Param",
-        "ArrayNumber": "47",
-        "InterfaceID": "ParamHolder_47",
+        "ArrayNumber": "48",
+        "InterfaceID": "ParamHolder_48",
         "GroupName": "",
         "DistributionType": "normal",
         "Median": 0.224,
@@ -1058,8 +1036,8 @@
     {
         "ParameterID": "IDU_Sex_RegularAndOtherLastMonth",
         "ArrayName": "Param",
-        "ArrayNumber": "48",
-        "InterfaceID": "ParamHolder_48",
+        "ArrayNumber": "49",
+        "InterfaceID": "ParamHolder_49",
         "GroupName": "",
         "DistributionType": "normal",
         "Median": 0.068,
@@ -1078,8 +1056,8 @@
     {
         "ParameterID": "IDU_Sex_RegularLastMonth",
         "ArrayName": "Param",
-        "ArrayNumber": "49",
-        "InterfaceID": "ParamHolder_49",
+        "ArrayNumber": "50",
+        "InterfaceID": "ParamHolder_50",
         "GroupName": "",
         "DistributionType": "normal",
         "Median": 0.749,
@@ -1098,8 +1076,8 @@
     {
         "ParameterID": "IDU_Sex_RegularPartnerInjects",
         "ArrayName": "Param",
-        "ArrayNumber": "50",
-        "InterfaceID": "ParamHolder_50",
+        "ArrayNumber": "51",
+        "InterfaceID": "ParamHolder_51",
         "GroupName": "",
         "DistributionType": "normal",
         "Median": 0.45,
@@ -1118,8 +1096,8 @@
     {
         "ParameterID": "IDU_TransmissionP",
         "ArrayName": "Param",
-        "ArrayNumber": "51",
-        "InterfaceID": "ParamHolder_51",
+        "ArrayNumber": "52",
+        "InterfaceID": "ParamHolder_52",
         "GroupName": "",
         "DistributionType": "optimisedsample",
         "Median": null,
@@ -1138,8 +1116,8 @@
     {
         "ParameterID": "IDU_Use_Daily",
         "ArrayName": "Param",
-        "ArrayNumber": "52",
-        "InterfaceID": "ParamHolder_52",
+        "ArrayNumber": "53",
+        "InterfaceID": "ParamHolder_53",
         "GroupName": "",
         "DistributionType": "normal",
         "Median": 0.19,
@@ -1160,8 +1138,8 @@
     {
         "ParameterID": "IDU_Use_Daily2or3Times",
         "ArrayName": "Param",
-        "ArrayNumber": "53",
-        "InterfaceID": "ParamHolder_53",
+        "ArrayNumber": "54",
+        "InterfaceID": "ParamHolder_54",
         "GroupName": "",
         "DistributionType": "normal",
         "Median": 0.21,
@@ -1182,8 +1160,8 @@
     {
         "ParameterID": "IDU_Use_DailyMore3",
         "ArrayName": "Param",
-        "ArrayNumber": "54",
-        "InterfaceID": "ParamHolder_54",
+        "ArrayNumber": "55",
+        "InterfaceID": "ParamHolder_55",
         "GroupName": "",
         "DistributionType": "normal",
         "Median": 0.06,
@@ -1204,8 +1182,8 @@
     {
         "ParameterID": "IDU_Use_MoreThanWeekly",
         "ArrayName": "Param",
-        "ArrayNumber": "55",
-        "InterfaceID": "ParamHolder_55",
+        "ArrayNumber": "56",
+        "InterfaceID": "ParamHolder_56",
         "GroupName": "",
         "DistributionType": "normal",
         "Median": 0.35,
@@ -1226,8 +1204,8 @@
     {
         "ParameterID": "IDU_Use_WeeklyToMonthly",
         "ArrayName": "Param",
-        "ArrayNumber": "56",
-        "InterfaceID": "ParamHolder_56",
+        "ArrayNumber": "57",
+        "InterfaceID": "ParamHolder_57",
         "GroupName": "",
         "DistributionType": "normal",
         "Median": 0.18,
@@ -1248,8 +1226,8 @@
     {
         "ParameterID": "Prison_Females",
         "ArrayName": "Param",
-        "ArrayNumber": "57",
-        "InterfaceID": "ParamHolder_57",
+        "ArrayNumber": "58",
+        "InterfaceID": "ParamHolder_58",
         "GroupName": "",
         "DistributionType": "normal",
         "Median": 0.4,
@@ -1270,8 +1248,8 @@
     {
         "ParameterID": "Prison_Males",
         "ArrayName": "Param",
-        "ArrayNumber": "58",
-        "InterfaceID": "ParamHolder_58",
+        "ArrayNumber": "59",
+        "InterfaceID": "ParamHolder_59",
         "GroupName": "",
         "DistributionType": "normal",
         "Median": 0.63,
@@ -1292,8 +1270,8 @@
     {
         "ParameterID": "Settings_EndYear",
         "ArrayName": "Param",
-        "ArrayNumber": "59",
-        "InterfaceID": "ParamHolder_59",
+        "ArrayNumber": "60",
+        "InterfaceID": "ParamHolder_60",
         "GroupName": "",
         "DistributionType": "normal",
         "Median": 2013,
@@ -1312,8 +1290,8 @@
     {
         "ParameterID": "Settings_StartYear",
         "ArrayName": "Param",
-        "ArrayNumber": "60",
-        "InterfaceID": "ParamHolder_60",
+        "ArrayNumber": "61",
+        "InterfaceID": "ParamHolder_61",
         "GroupName": "",
         "DistributionType": "normal",
         "Median": 1960,
@@ -1332,8 +1310,8 @@
     {
         "ParameterID": "Settings_TimeStep",
         "ArrayName": "Param",
-        "ArrayNumber": "61",
-        "InterfaceID": "ParamHolder_61",
+        "ArrayNumber": "62",
+        "InterfaceID": "ParamHolder_62",
         "GroupName": "",
         "DistributionType": "normal",
         "Median": 0.1,
@@ -1348,5 +1326,27 @@
         "MinValue": 0,
         "MaxValue": 1,
         "Description": "The time step is variable to allow the model to be checked for sensitivity to time step selection."
+    },
+    {
+        "ParameterID": "xxxIDU_ReceptiveSharingReductionAt40",
+        "ArrayName": "Param",
+        "ArrayNumber": "41",
+        "InterfaceID": "ParamHolder_41",
+        "GroupName": "",
+        "DistributionType": "normal",
+        "Median": 0.8,
+        "StandardError": null,
+        "LowerBound": null,
+        "UpperBound": null,
+        "Upper95Range": null,
+        "Lower95Range": null,
+        "CalculatedMedian": 0.8,
+        "NumberOfSamples": 1,
+        "Val": [
+            0.8
+        ],
+        "MinValue": "",
+        "MaxValue": "",
+        "Description": ""
     }
 ]
