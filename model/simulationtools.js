@@ -135,12 +135,8 @@ EventVector.prototype.TimeOf= function (EventValue){
 			DatesThisEventOccurred.push(this.Time[i]);
 		}
 	}
-	if (DatesThisEventOccurred.length>0){
-		return DatesThisEventOccurred;
-	}
-	// or if no events occurred, return a NaN in a 1 element array
-	DatesThisEventOccurred=[NaN];
 	return DatesThisEventOccurred;
+	
 }
 
 

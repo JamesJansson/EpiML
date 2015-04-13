@@ -54,6 +54,9 @@ function  HCVObject(PersonPointer){
 	this.UltraSound=new EventVector;
 	this.Treatment=new EventVector;
 	
+	this.Treatment.Set(0, this.Person.YearOfBirth);
+	
+	
 	
 	// Determine if the person is a reinfection protected
 	if (Rand.Value()<Param.HCV.PReinfectionProtected){
@@ -180,6 +183,7 @@ HCVObject.prototype.FirstInfected= function (Year){//returns a
 	if (typeof this.Infected=="undefined"){
 		return NaN;
 	}
+	throw "This method no longer works";
 	return this.Infected.Time[0];
 };
 
@@ -206,40 +210,55 @@ HCVObject.prototype.L4ToHCCTime= function (Param){
 
 
 HCVObject.prototype.Treatment= function (Year, TreatmentType){//returns a 
-	
-	// Set the treatment duration
+	// Show on the person that treatment is occurring
+	this.Treatment.Set(TreatmentType.ID, Year);
+	var TreatmentStopDate=Year+TreatmentType.Duration;
+	this.Treatment.Set(0, Year+TreatmentType.Duration);
 	
 	// Get the genotype combination at this point time
 	var GenotypeArray=this.Genotype.Value(Year);
-	var EfficacyArray=[];
-	for (Genotype in GenotypeArray){
-		if TreatmentType.Efficacy
-	var EfficacyArray=
-	if typeof genotype is undefined
-	use numerical genotype
-	
-	}
-	
-	IndexToSelect is all the genotypes
-	// Show on the person that treatment is occurring
-	var MinEfficacy=Min(Select(TreatmentType.Efficacy, IndexToSelect));
-	
-	if the person is multiply 
+	var PClearanceArray=[];
+	for (GenotypeCount in GenotypeArray){
+		var GenotypeName="Genotype"+GenotypeArray[GenotypeCount];
+		if (typeof(TreatmentType.PClearance[GenotypeName]!="undefined"){
+			PClearanceArray.push(TreatmentType.PClearance[GenotypeName]);
+		}
+		else{
+			// if PClearance undefined use numerical genotype
+			var GenotypeName="Genotype"+GenotypeName.charAt(0);
+			PClearanceArray.push(TreatmentType.PClearance[GenotypeName]);
+		}
+	}	
+	// If the person is multiply infected, choose the lowest efficacy genotype
+	var MinPClearanceArray=Min(PClearanceArray);
 	
 	
 	// Determine if clearance occurs
-	if (Rand.Value()<TreatmentType.PClearance)[
-	
+	if (Rand.Value()<MinPClearanceArray){
+		// If cleared change future history of HCV
+		// HCV.TreatmentClearance(TreatmentStopDate)
+			
+		
+		// Remove HCV related future death
+		if (Year<this.Person.Death.HCV){
+			
+			this.HCV=1E9;
+			this.HCC=1E9;
+			this.LF=1E9;
+		}
+		
+		// Determine retraction of liver disease
+		
+		
+		// Once we determine when the retraction to fibrosis level 3 occurs, we'll look at if there are HCC, HCV death, and LF that occurs later
+		
+		
+		// Remove HCV related future HCC
+		this.HCC.Set(0, Year);// this should remove future cases of HCC
+		// Remove HCV related future liver disease advancement
+		this.LF.Set(0, Year);
+		
 	}
-
-
-	// If treated change future history of HCV
-		// HCV.TreatmentClearance(date)
-			// Remove HCV related future death
-				// Remove HCV related future HCC
-				// Remove HCV related future liver disease advancement
-				// Determine retraction of liver disease
-	
 }
 
 

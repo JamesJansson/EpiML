@@ -133,7 +133,13 @@ self.onmessage = function (WorkerMessage) {
 		if (TimeUntilDiagnosis<0){TimeUntilDiagnosis=0}//correct 
 		
 		YearOfDiagnosisVector=PPNotification[i].HCV.Diagnosed.TimeOf(1);//Returns when "Diagnosed==1"
-		YearOfDiagnosis=YearOfDiagnosisVector[0];
+		if (DatesThisEventOccurred.length>0){
+			YearOfDiagnosis=YearOfDiagnosisVector[0];
+		}
+		else{
+			YearOfDiagnosis=NaN;
+		}
+		
 		YearOfInfection=YearOfDiagnosis-TimeUntilDiagnosis;// Zero is the first year of diagnosis
 		
 		PPNotification[i].HCV.Infection(YearOfInfection, GenotypeValue );//In future iterations, HCVParam will become Param.HCV
