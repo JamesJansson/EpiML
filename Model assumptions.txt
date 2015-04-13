@@ -25,13 +25,31 @@ In particular, those people who did not receptively share recently may have been
 This power imbalance is also played out in the much higher prevalence in young females who inject drugs.
 
 
-
-
-
-
 Given the low number of people who are who have never tested for HCV in the NSP population, it is expected that there are very few cases of undiagnosed HCV. 
 
 Additionally, HCV antibody prevalence is quite low (~50%). This includes people who have cleared HCV. The implication is that there are very few people who have an active HCV infection at any point in time. 
+
+Following treatment, there are substantial improvements to the histological outcomes of patients
+Brian L. Pearlman and Nomi Traub, (2011) Sustained Virologic Response to Antiviral Therapy for Chronic Hepatitis C Virus Infection: A Cure and So Much More
+10, 11, 46, 48, 53, 55
+
+Cirrohsis leading to HCC: "Patients with cirrhosis pretreatment are at a low but real risk of HCC after SVR."
+Start at Stage 2
+82% had improved fibrosis scores
+20% had nearly normal livers
+George SL (2009), Clinical, virologic, histologic, and biochemical outcomes after successful HCV therapy: a 5-year follow-up of 150 patients.
+
+"In 62% of patients, the last biopsy done showed normal or nearly normal histologic findings." Last biopsy was 5-6 years
+Marcellin P (1997) Long-term histologic improvement and loss of detectable intrahepatic HCV RNA in patients with chronic hepatitis C and sustained response to interferon-alpha therapy.
+
+
+Table 4
+In people who are treated at F2-F4 and are sustained responders, fibrosis stage reverses at −0.591 (−0.627;−0.550) steps per year.
+Sustained response only occurred in 31% of people in the F2-F4 categories. However this study included numerous observations of people who had treatments that weren't effective. 
+Sustained virologic response appears to be worse in treating people with cirrohsis
+Poynard 2002 Impact of pegylated interferon alfa-2b and ribavirin on liver fibrosis in patients with chronic hepatitis C
+
+Marcellin and Poynard agree: in 5-6 years, at -0.591 stages per year, an improvement of 3.25 stages
 
 Optimisation
 The optimisation is trying to minimise the error in the output as measured by various sources of data

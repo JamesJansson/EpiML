@@ -79,6 +79,7 @@ function FullModel(Param, Data, Intervention){
 					// 
 				// Reduce diagnoses in that year/sex/age group 
 				// Directly remove all tested individuals
+					// Sort people into age and sex categories of HCV infected and undiagnosed (i.e. index)
 					// Keep track of diagnoses that could not be pulled out of that group. penalise that sim heavily
 				// Simply pull out the number of diagnoses in the age/sex group as it appears in the table
 			

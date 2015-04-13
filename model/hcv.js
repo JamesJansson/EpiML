@@ -9,6 +9,8 @@ function  HCVObject(PersonPointer){
 	this.DiagnosedState=0;
 	this.GenotypeState=[0, 0, 0, 0, 0, 0]; 
 	
+	
+	
 	//History variables
 	this.Infected=new EventVector;
 	this.AntibodyYear=NaN;
@@ -16,19 +18,28 @@ function  HCVObject(PersonPointer){
 	//AntibodyDiagnosis
 	this.Fibrosis=new EventVector;//including liver failure
 	this.HCC=new EventVector;
-	this.Genotype=[];
-	this.Genotype[0]=new EventVector;
-	this.Genotype[1]=new EventVector;
-	this.Genotype[2]=new EventVector;
-	this.Genotype[3]=new EventVector;
-	this.Genotype[4]=new EventVector;
-	this.Genotype[5]=new EventVector;
+	this.Genotype=new EventVector;
+	
+	
+	
+	// this.Genotype[0]=new EventVector;//1a
+	// this.Genotype[1]=new EventVector;//1b
+	// this.Genotype[2]=new EventVector;//2
+	// this.Genotype[3]=new EventVector;//3
+	// this.Genotype[4]=new EventVector;//4
+	// this.Genotype[5]=new EventVector;//5
+	// this.Genotype[5]=new EventVector;//6
+	
 	
 	//Initialise history variables
 	this.Infected.Set(0, this.Person.YearOfBirth);
 	this.Diagnosed.Set(0, this.Person.YearOfBirth);
 	this.Fibrosis.Set(0, this.Person.YearOfBirth);
 	this.HCC.Set(0, this.Person.YearOfBirth);
+	// Set the genotype to an empty array at birth. To add a new 
+	this.Genotype.Set([], this.Person.YearOfBirth);
+	
+	
 	//this.Genotype[0].Set(0, this.Person.YearOfBirth);
 	//this.Genotype[1].Set(0, this.Person.YearOfBirth);
 	//this.Genotype[2].Set(0, this.Person.YearOfBirth);
@@ -60,18 +71,6 @@ HCVObject.prototype.Infection= function (Year, GenotypeValue){//, Age, Sex, Alco
 	//Special note about recalculating Fibrosis: if fibrosis needs to be recalculated, care should be taken to avoid extending time until Fibrosis, as a person who is late F3 would  
 	//This will become especially important in cases where alcoholism begins. In such cases, the remaining time (e.g. 3.5 years to F4) should be shortened accordingly, not recalculated from scratch)
 	
-	this.GenotypeState[GenotypeValue]=1;
-	this.Genotype[GenotypeValue].Set(1, Year);
-	// convert this to the this.g1a, this.g1b, g2, g3, g4, 
-	// if genotype 1 does not exist
-	//     create it
-	//     set genotype to 1
-	// else if it is not currently set to 1
-	//     set HCV.genotype
-	//
-	
-	
-	
 	// Do some calculations on reinfection
 	// Mehta, 2002 Lancet 359:1478  Reinfection 8.6/100 py -> 5.4/100 py
 	// Grebely, 2006 Hepat 44:1139 Reinfection 8.1/100 py -> 1.8/100 py
@@ -81,9 +80,33 @@ HCVObject.prototype.Infection= function (Year, GenotypeValue){//, Age, Sex, Alco
 	// Currie, 2008 Drug Alc Dep 93:148
 	// Backmund, 2004 Clin Inf Dis 39:1540 
 	// Grebely, 2010 J Gastr Hepat 25:1281
-	if (this.ReinfectionProtected==true && this.AntibodyState==1){
-		return 0;
+	if (!isNaN(this.AntibodyYear)){// if it has been set
+		if (this.ReinfectionProtected==true && this.AntibodyYear<Year && this.Infected.Value(Year)==1){
+			return 0;
+		}
 	}
+	
+	
+	
+	this.GenotypeState[GenotypeValue]=1;
+	this.Genotype[GenotypeValue].Set(1, Year);
+	// Superinfection is common, so we assume all people who get infected with a second strain are infected again http://www.cdc.gov/hepatitis/Resources/MtgsConf/HCVSymposium2011-PDFs/20_Blackard.pdf 
+	// Super infection does not change the course of Fibrosis in the model
+	var NewGenotypeArray=DeepCopy(this.Genotype.Value(Year));// note that sine this is an array, we need to copy it before we operate on it.
+	// Check if any of the Genotypes in GenotypeValue exist in the current array
+	NewGenotypeArray.push(GenotypeValue);
+	var UniqueGenotypeArray = NewGenotypeArray.filter(function(item, pos, self) {
+		return self.indexOf(item) == pos;// if the item under inspection is equal to the first occurrence of the item, then keep
+	})
+	this.Genotype.Set(UniqueGenotypeArray, Year);
+	
+	// convert this to the this.g1a, this.g1b, g2, g3, g4, 
+	// if genotype 1 does not exist
+	//     create it
+	//     set genotype to 1
+	// else if it is not currently set to 1
+	//     set HCV.genotype
+	//
 	
 	
 	
@@ -102,7 +125,7 @@ HCVObject.prototype.Infection= function (Year, GenotypeValue){//, Age, Sex, Alco
 		if (Rand.Value()<Param.HCV.SpontaneousClearance.p){
 			var TimeUntilClearance=ExpDistributionRand(Param.HCV.SpontaneousClearance.MedianTime);
 			this.Infected.Set(0, Year+TimeUntilClearance);
-			this.Genotype[GenotypeValue].Set(0, Year+TimeUntilClearance);
+			this.Genotype.Set([], Year+TimeUntilClearance);
 		}
 		else {//progress to fibrosis
 			var Time;
@@ -142,13 +165,8 @@ HCVObject.prototype.Infection= function (Year, GenotypeValue){//, Age, Sex, Alco
 			
 			// Also look at
 				// http://jid.oxfordjournals.org/content/206/4/469.long
-
-		}
-		
-		
+		}	
 	}
-	
-	
 };
 
 //function Treatment
@@ -187,13 +205,40 @@ HCVObject.prototype.L4ToHCCTime= function (Param){
 
 
 
-HCVObject.prototype.Treatment= function (Year, Treatment){//returns a 
+HCVObject.prototype.Treatment= function (Year, TreatmentType){//returns a 
+	
+	// Set the treatment duration
+	
+	// Get the genotype combination at this point time
+	var GenotypeArray=this.Genotype.Value(Year);
+	var EfficacyArray=[];
+	for (Genotype in GenotypeArray){
+		if TreatmentType.Efficacy
+	var EfficacyArray=
+	if typeof genotype is undefined
+	use numerical genotype
+	
+	}
+	
+	IndexToSelect is all the genotypes
+	// Show on the person that treatment is occurring
+	var MinEfficacy=Min(Select(TreatmentType.Efficacy, IndexToSelect));
+	
+	if the person is multiply 
+	
+	
+	// Determine if clearance occurs
+	if (Rand.Value()<TreatmentType.PClearance)[
+	
+	}
+
+
 	// If treated change future history of HCV
 		// HCV.TreatmentClearance(date)
-			// Removes HCV related future death
-				// Removes HCV related future HCC
-				// Removes HCV related future liver disease advancement
-				// Determines retraction of liver disease
+			// Remove HCV related future death
+				// Remove HCV related future HCC
+				// Remove HCV related future liver disease advancement
+				// Determine retraction of liver disease
 	
 }
 
