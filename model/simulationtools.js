@@ -147,6 +147,35 @@ EventVector.prototype.TimeOf= function (EventValue){
 }
 
 EventVector.prototype.Next= function (Time){
+	var Current={};
+	if (this.NumberOfEvents==0){// if no times are set
+		Current.Value=Number.NaN;
+		Current.Time=Number.NaN;
+		Current.Pos=Number.NaN;
+		return Current;
+	}
+	else if (this.Time[this.NumberOfEvents-1]<=Time){ // if after the last time
+		Current.Value=NaN;
+		Current.Time=NaN;
+		Current.Pos=NaN;// indicates thar there are no future events
+		return Current;
+	}
+	else {//loop through all the middle places (the above should have ensured that there are at least 2 items in the array)
+		for (var i=0; i<this.NumberOfEvents-1; i++){
+			if (Time<this.Time[i]){
+				Current.Value=this.ValueVec[i];
+				Current.Time=this.Time[i];
+				Current.Pos=i;
+				return Current;
+			}
+		}
+	}
+
+
+
+
+
+
 	var Current=this.Get(Time);
 	
 	//if it is the last

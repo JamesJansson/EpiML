@@ -250,6 +250,7 @@ HCVObject.prototype.Treatment= function (Year, TreatmentType){//returns a
 			var YearBelowF4=Year;
 			var CurrentFibrosisValue=this.Fibroris.Value(Year);
 			// Find the percentage of the amount of time through this stage
+			
 		}
 		
 		
