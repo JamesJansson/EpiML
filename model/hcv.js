@@ -243,12 +243,14 @@ HCVObject.prototype.Treatment= function (Year, TreatmentType){//returns a
 			// Choose a random time until exiting stage 4 fibrosis
 			// We'll choose a random time between the equivalent taking a whole stage change and a partial stage change to exit
 			// In doing this it will give between 0 and about 2 years until movement out of the F4 to F3 fibrosis levels based on a 0.5 per year stage transition rate
-			
+			var YearBelowF4=Year+Rand.Value()/Param.HCV.FibrosisReversalRate;
 			// Once we determine when the retraction to fibrosis level 3 occurs, we'll look at if there are HCC, HCV death, and LF that occurs later
-			var YearBelowF4=Year+1/Param.HCV.;
+			
 		}
 		else{
 			var YearBelowF4=Year;
+			var CurrentFibrosisValue=this.Fibroris.Value(Year);
+			
 		}
 		
 		
