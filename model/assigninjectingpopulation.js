@@ -447,17 +447,10 @@ function CreatePWID(EntryParams, Time, TimeStep){
 		var YearOfBirth=TimeOfStartingInjection-AgeAtFirstInjection;
 		PWIDPopulation[TotalPWID-1]=new PersonObject(YearOfBirth, SexIndex);
 		PWIDPopulation[TotalPWID-1].IDU.StartInjecting(TimeOfStartingInjection);
-		
-		//
-		if (Rand.Value()<Param.IDU.BecomeRegularInjector.P){
-			// Chose a random time until the person becomes a regular injector
-			RegularInjectionTime.Time();
-		}
 	}
 
 	
 	
-	// Following entry, there is also a probability associated with becoming a regular user, and following that exiting at a certain probability
 	
 	
 	return PWIDPopulation;

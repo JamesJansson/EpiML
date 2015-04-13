@@ -36,7 +36,8 @@ Additionally, HCV antibody prevalence is quite low (~50%). This includes people 
 Optimisation
 The optimisation is trying to minimise the error in the output as measured by various sources of data
 Parameters to optimise
-Probability of entering NSP per year while injecting
+Probability of entering NSP per year while injecting - set? 
+Probability of leaving NSP
 Parameters that determine entry into the population
 Parameters that determine exit from  the population
 Parameters that determine transmission rate
@@ -45,6 +46,22 @@ Data to optimise against
 AIHW ever injector by age
 AIHW injected in the last 12 month data
 Prevalence in the NSP population
+HCV notifications
+Median age in NSP group
+Median years IDU in NSP group
+Duration of injection in NSP group
+HCV risk of sharing with time? - maybe this will be hard set
+HCV antibody in NSP group
+HCV antibody by age in NSP group
+HCV antibody by duration of injection in NSP group
+
+
+
+
+Things to add to the simulation
+Treatment
+Injecting partner
+
 
 
 

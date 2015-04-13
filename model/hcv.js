@@ -43,7 +43,14 @@ function  HCVObject(PersonPointer){
 	this.UltraSound=new EventVector;
 	this.Treatment=new EventVector;
 	
-	this.HIVCoinfectionTreatment=0;
+	
+	// Determine if the person is a reinfection protected
+	if (Rand.Value()<Param.HCV.PReinfectionProtected){
+		this.ReinfectionProtected=true;
+	}
+	else{
+		this.ReinfectionProtected=false;
+	}
 }
 
 
@@ -62,6 +69,24 @@ HCVObject.prototype.Infection= function (Year, GenotypeValue){//, Age, Sex, Alco
 	// else if it is not currently set to 1
 	//     set HCV.genotype
 	//
+	
+	
+	
+	// Do some calculations on reinfection
+	// Mehta, 2002 Lancet 359:1478  Reinfection 8.6/100 py -> 5.4/100 py
+	// Grebely, 2006 Hepat 44:1139 Reinfection 8.1/100 py -> 1.8/100 py
+	// Micallef, 2007 J Viral Hepat 14:413 
+	// Aitken, 2008 Hepat 48:1746 
+	// Osburn, 2010 Gastro 138:315 
+	// Currie, 2008 Drug Alc Dep 93:148
+	// Backmund, 2004 Clin Inf Dis 39:1540 
+	// Grebely, 2010 J Gastr Hepat 25:1281
+	if (this.ReinfectionProtected==true && this.AntibodyState==1){
+		return 0;
+	}
+	
+	
+	
 	
 	//Pre-Calculate fibrosis
 	if (this.InfectedState==0){//if not already infected (don't want to start fibrosis from f1)
@@ -159,6 +184,21 @@ HCVObject.prototype.L4ToHCCTime= function (Param){
 	
 	
 };
+
+
+
+HCVObject.prototype.Treatment= function (Year, Treatment){//returns a 
+	// If treated change future history of HCV
+		// HCV.TreatmentClearance(date)
+			// Removes HCV related future death
+				// Removes HCV related future HCC
+				// Removes HCV related future liver disease advancement
+				// Determines retraction of liver disease
+	
+}
+
+
+
 
 
 

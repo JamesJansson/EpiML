@@ -42,58 +42,57 @@ function FullModel(Param, Data, Intervention){
 	
 
 	for (var Time=Param.StartTime; Time<Param.EndTime; Time+=Param.TimeStep){// each time step
-		// Intervention(Time); 
+		// RunInterventions(Time); 
 	
 		// this is a function that will be called "AdvanceModel(YearLast, YearCurrent, Param, Population)
 		// determine number of individuals added the population of PWID
 		// Param.IDU.Add 
 		
-		NumberOfPeopleToAddThisStep=DeterminePWIDEntryRateExponential2(Param.IDU.EntryParams, Time, Param.TimeStep);
+		var NumberOfPeopleToAddThisStep=DeterminePWIDEntryRateExponential2(Param.IDU.EntryParams, Time, Param.TimeStep);
 		
 		// Add new people to the IDU population for this time step
-		// Select some of the people who are already in sexual relationships with people who have already injected
+		var PWIDToAdd=CreatePWID(Param.IDU.EntryParams, Time, Param.TimeStep);
 		
-		// Select other people at random based on age
-		
-		// Start the individuals on IDU
-			// General mortality
-			// Determine staying probability
-			// Determine exit rate
-			// PWID additional mortality
+		// Match some of the PWID, in particular females, to existing PWID sexual partners
+		// select by finding ProportionOfFirstInjectionsSexualPartner
+		// PWIDToAdd=
 			// determine number with regular sex partners (approximately 50%, NSP survey)
 			// determine number with casual sex partners
 			// Determine when the sexual partners begin their partnership (could be before starting injecting or after)
 			// what proportion had partners who did not inject drugs
-			
-			
 		
+		
+				
 		// Balance sexual partnerships
 		AssignSexualPartner(Person, Time);
-			
+		
 		// Determine transmissions that occur
 		DetermineTransmissions(Person, StartTime, EndTime);
 		
 		
 		// Testing
-			// Directly remove all tested individuals
+			// if (Time<Common.LastYearOfHCVDiagnosisData)
+				// Pull out all people who reach symptomatic testing
+					// for each person
+						// determine if they are symptomatic AND as yet undiagnosed
+						
+					// 
+				// Reduce diagnoses in that year/sex/age group 
+				// Directly remove all tested individuals
+					// Keep track of diagnoses that could not be pulled out of that group. penalise that sim heavily
+				// Simply pull out the number of diagnoses in the age/sex group as it appears in the table
 			
-			// If testing occurs prior to death, add the time to Person.HCV.DiagnosisDate
+			// else 
+				// Pull out all people who reach symptomatic testing
+				// remove people at a rate that matches the last 5 years of testing rates
+			
 		
-			// Pull out all people who reach symptomatic testing
-			// Reduce diagnoses in that year/sex/age group
 			
-			// Simply pull out the number of diagnoses in the age/sex group as it appears in the table
+			// add the time to Person.HCV.DiagnosisDate
 			
-			// Keep track of diagnoses that could not be pulled out of that group. penalise that sim heavily
-		
 		// Determine treatment
 			// X number per year are treated out of those who are diagnosed
-			// If treated change future history of HCV
-				// HCV.TreatmentClearance(date)
-					// Removes HCV related death
-					// Removes HCV related HCC
-					// Removes HCV related liver disease advancement
-					// Determines retraction of liver disease
+			DetermineTreatment(Person, StartTime, EndTime, TreatmentNumbers);//Treatment rates is an array of each of the treatment types
 		
 		
 		
@@ -106,20 +105,8 @@ function FullModel(Param, Data, Intervention){
 		// If the year is the first year of the simulation
 			// Give the injecting
 		
-		// Join diagnoses in model to the expected 
-		
-		// Keep 
-	
-		// Run the individuals through exit
-		// PWIDExit(PWIDPopulation);
-		
 
-		// Keep HCV prevalence flat in line with data from NSP surveys
-		// 
-	
-		// HCV transmission
-		// Run HCV transmission
-		
+
 		
 		
 		
@@ -145,8 +132,11 @@ function FullModel(Param, Data, Intervention){
 		// Find the number of diagnoses in the earlier model
 		// For every diagnosis, 
 	
+	var Results={};
+	Results.Population=Population;
+	Results.UnaccountedForDiagnoses=UnaccountedForDiagnoses;
 	
-	return Population;
+	return Results;
 }
 
 function CreateHCVInfectedBloodRecipients(){

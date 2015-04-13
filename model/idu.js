@@ -30,7 +30,9 @@ function IDUObject(PersonPointer){
 	this.NSP = new EventVector;
 	this.NSP.Set(0, this.Person.YearOfBirth);
 	
-	
+	this.InjectingPartners=[];// 
+	this.InjectingPartnersRegularSexual=[];
+	this.InjectingPartnersCasualSexual=[];
 }
 
 IDUObject.prototype.StartInjecting= function (Time){
@@ -44,6 +46,8 @@ IDUObject.prototype.StartInjecting= function (Time){
 	this.Use.Set(1, Time);
 	
 	// Add the transition to occasional user
+	
+	// Following entry, there is a probability associated with becoming a regular user, and following that exiting at a certain probability
 	if (Rand.Value()<Param.IDU.BecomeRegularInjector.P){
 		// Add time until occasional user
 		this.Use.Set(2, Time+0.1);
@@ -54,7 +58,9 @@ IDUObject.prototype.StartInjecting= function (Time){
 		this.Use.Set(3, TimeOfRegularUse);
 		
 		// Determine the use rate by people who use regularly
-			
+		console.error("The rate at which people use has not been set.");
+		
+		
 		// Add the transition to former user
 		var TimeUntilStoppingInjecting=TimeUntilEvent(Param.IDU.RateOfCesssation);
 		var TimeOfStoppingInjecting=TimeOfRegularUse+TimeUntilStoppingInjecting;
@@ -70,10 +76,12 @@ IDUObject.prototype.StartInjecting= function (Time){
 	}
 	else {
 		// determine time until ceasing irregular use
+		console.error("TimeOfStoppingInjecting has not been set.");
 		this.Use.Set(4, TimeOfStoppingInjecting);
 	}
 	
-	
+	// PWID additional mortality
+	console.error("PWID additional mortality has not been set.");
 }
 
 IDUObject.prototype.StopInjecting= function (Time){

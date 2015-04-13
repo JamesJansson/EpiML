@@ -189,7 +189,6 @@ ParameterClass.prototype.Save=function(){
 				
 				// Special case for min and max values
 				if (isNaN(this[FieldNames[Field]])&& (FieldNames[Field]=='MinValue' || FieldNames[Field]=='MaxValue')){
-					console.log("Got in");
 					this[FieldNames[Field]]="";
 				}
 			}

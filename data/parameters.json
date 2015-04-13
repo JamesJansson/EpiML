@@ -330,6 +330,26 @@
         "Description": ""
     },
     {
+        "ParameterID": "HCV_PReinfectionProtected",
+        "ArrayName": "Param",
+        "ArrayNumber": 63,
+        "InterfaceID": "ParamHolder_63",
+        "GroupName": "",
+        "DistributionType": "normal",
+        "Median": 0.5,
+        "StandardError": 0.2,
+        "LowerBound": null,
+        "UpperBound": null,
+        "Upper95Range": 0.892,
+        "Lower95Range": 0.10799999999999998,
+        "CalculatedMedian": 0.5,
+        "NumberOfSamples": 100,
+        "Val": [],
+        "MinValue": 0,
+        "MaxValue": 1,
+        "Description": "Mehta, 2002 Lancet 359:1478  Reinfection 8.6/100 py -> 5.4/100 py\nGrebely, 2006 Hepat 44:1139 Reinfection 8.1/100 py -> 1.8/100 py\nMicallef, 2007 J Viral Hepat 14:413 \nAitken, 2008 Hepat 48:1746 \nOsburn, 2010 Gastro 138:315 \nCurrie, 2008 Drug Alc Dep 93:148\nBackmund, 2004 Clin Inf Dis 39:1540 \nGrebely, 2010 J Gastr Hepat 25:1281"
+    },
+    {
         "ParameterID": "HCV_SpontaneousClearance_CCGenotypeHR",
         "ArrayName": "Param",
         "ArrayNumber": "15",
@@ -876,8 +896,8 @@
         "StandardError": null,
         "LowerBound": null,
         "UpperBound": null,
-        "Upper95Range": null,
-        "Lower95Range": null,
+        "Upper95Range": 0,
+        "Lower95Range": 0,
         "CalculatedMedian": null,
         "NumberOfSamples": 1,
         "Val": [
@@ -1338,8 +1358,8 @@
         "StandardError": null,
         "LowerBound": null,
         "UpperBound": null,
-        "Upper95Range": null,
-        "Lower95Range": null,
+        "Upper95Range": 0.8,
+        "Lower95Range": 0.8,
         "CalculatedMedian": 0.8,
         "NumberOfSamples": 1,
         "Val": [
