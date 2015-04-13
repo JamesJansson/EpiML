@@ -35,7 +35,7 @@ EventVector.prototype.DeleteFutureEvents= function (Time){
 		//Determine if the current time is prior the last time
 		if (Time<=this.Time[this.NumberOfEvents-1]){//falls directly on that time, delete because we don't want zero time events
 			//Determine where the current event would sit
-			Current=this.Get(Time);
+			var Current=this.Get(Time);
 			if (Current.Time==Time){//falls directly on that time, delete because we don't want zero time events
 				PosToDelete=Current.Pos;
 			}else{
@@ -112,14 +112,17 @@ EventVector.prototype.GetRange= function (Time1, Time2, StepSize){
 	// This function returns the value of the variable from Time1 to Time2 with time between determined by StepSize
 	//Note that this algorithm is pretty inefficient. We'll need to vectorise this 
 	
+	console.error("this is highly inefficient and should not be used. Instead, convert to an event counting/displying function");
+	
 	var ReturnVec=[];
 	tCount=0;
 	for (var t=Time1; t<Time2; StepSize){
-		ValueVec[tcount]=this.Value(t);
+		ReturnVec[tcount]=this.Value(t);
 		tCount++;
 	}
-	ValueVec[tcount]=this.Value(Time2);// Note that this value is here to avoid rounding error
+	ReturnVec[tcount]=this.Value(Time2);// Note that this value is here to avoid rounding error
 
+	return ReturnVec;
 }
 
 // (Value, Time1, Time2, StepSize) 
@@ -141,8 +144,21 @@ EventVector.prototype.TimeOf= function (EventValue){
 		}
 	}
 	return DatesThisEventOccurred;
-	
 }
+
+EventVector.prototype.Next= function (Time){
+	var Current=this.Get(Time);
+	
+	//if it is the last
+	if (Current.Pos==this.NumberOfEvents-1){
+		return NaN;
+	}
+	// return the next one
+	return this.ValueVec[Current.Pos+1];
+}
+
+
+
 
 
 EventVector.prototype.CountEvents= function (EventValue, Time1, Time2){

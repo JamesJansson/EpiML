@@ -220,7 +220,7 @@ HCVObject.prototype.Treatment= function (Year, TreatmentType){//returns a
 	var PClearanceArray=[];
 	for (GenotypeCount in GenotypeArray){
 		var GenotypeName="Genotype"+GenotypeArray[GenotypeCount];
-		if (typeof(TreatmentType.PClearance[GenotypeName]!="undefined"){
+		if (typeof(TreatmentType.PClearance[GenotypeName])!="undefined"){
 			PClearanceArray.push(TreatmentType.PClearance[GenotypeName]);
 		}
 		else{
@@ -239,36 +239,37 @@ HCVObject.prototype.Treatment= function (Year, TreatmentType){//returns a
 		// HCV.TreatmentClearance(TreatmentStopDate)
 		
 		// Determine retraction of liver disease
-		if (this.Fibroris.Value(Year)==4){ // what happens if it is level 5 (fibrosis)
+		if (this.Fibroris.Value(Year)>=4){ // what happens if it is level 5 (fibrosis)
 			// Choose a random time until exiting stage 4 fibrosis
 			// We'll choose a random time between the equivalent taking a whole stage change and a partial stage change to exit
 			// In doing this it will give between 0 and about 2 years until movement out of the F4 to F3 fibrosis levels based on a 0.5 per year stage transition rate
 			var YearBelowF4=Year+Rand.Value()/Param.HCV.FibrosisReversalRate;
 			// Once we determine when the retraction to fibrosis level 3 occurs, we'll look at if there are HCC, HCV death, and LF that occurs later
-			
 		}
 		else{
 			var YearBelowF4=Year;
 			var CurrentFibrosisValue=this.Fibroris.Value(Year);
-			
+			// Find the percentage of the amount of time through this stage
 		}
 		
 		
 		// Remove HCV related future HCC
 		this.HCC.DeleteFutureEvents(Year);// this should remove future cases of HCC
 		// Remove HCV related future liver disease advancement
-		this.LF.DeleteFutureEvents(Year);
+		//this.LF.DeleteFutureEvents(Year);
 		
 		
 		
 		// Remove HCV related future death
 		if (YearBelowF4<this.Person.Death.HCV){
-			
 			this.HCV=1E9;
+		}
+		if (YearBelowF4<this.Person.Death.HCC){
 			this.HCC=1E9;
+		}
+		if (YearBelowF4<this.Person.Death.LF){
 			this.LF=1E9;
 		}
-		
 		
 		
 		
