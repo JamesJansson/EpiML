@@ -23,6 +23,14 @@ function EventVector(){
 }
 
 EventVector.prototype.Set= function (InputValue, Time){
+	this.DeleteFutureEvents(Time);
+	//Add new items to the end of the array
+	this.ValueVec.push(InputValue);
+	this.Time.push(Time);
+	this.NumberOfEvents++;
+};
+
+EventVector.prototype.DeleteFutureEvents= function (Time){
 	if (this.NumberOfEvents>0){
 		//Determine if the current time is prior the last time
 		if (Time<=this.Time[this.NumberOfEvents-1]){//falls directly on that time, delete because we don't want zero time events
@@ -40,11 +48,8 @@ EventVector.prototype.Set= function (InputValue, Time){
 			this.NumberOfEvents=PosToDelete;
 		} 
 	}
-	//Add new items to the end of the array
-	this.ValueVec.push(InputValue);
-	this.Time.push(Time);
-	this.NumberOfEvents++;
-};
+}
+
 
 EventVector.prototype.Get= function (Time){
 	//Current.Value=Value at this time
