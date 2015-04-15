@@ -7,7 +7,7 @@ function  HCVObject(PersonPointer){
 	this.InfectedState=0;
 	this.AntibodyState=0;
 	this.DiagnosedState=0;
-	this.GenotypeState=[0, 0, 0, 0, 0, 0]; 
+
 	
 	
 	
@@ -91,11 +91,16 @@ HCVObject.prototype.Infection= function (Year, GenotypeValue){//, Age, Sex, Alco
 	
 	
 	
-	this.GenotypeState[GenotypeValue]=1;
-	this.Genotype[GenotypeValue].Set(1, Year);
+	if (typeof(GenotypeValue)!="object"){
+		GenotypeValue=[GenotypeValue];
+	}
+	//this.Genotype.Set(GenotypeValue, Year);
 	// Superinfection is common, so we assume all people who get infected with a second strain are infected again http://www.cdc.gov/hepatitis/Resources/MtgsConf/HCVSymposium2011-PDFs/20_Blackard.pdf 
 	// Super infection does not change the course of Fibrosis in the model
 	var NewGenotypeArray=DeepCopy(this.Genotype.Value(Year));// note that sine this is an array, we need to copy it before we operate on it.
+	console.log(NewGenotypeArray);
+	console.log(this.Person);
+	console.log(Year);
 	// Check if any of the Genotypes in GenotypeValue exist in the current array
 	NewGenotypeArray.push(GenotypeValue);
 	var UniqueGenotypeArray = NewGenotypeArray.filter(function(item, pos, self) {
@@ -122,7 +127,9 @@ HCVObject.prototype.Infection= function (Year, GenotypeValue){//, Age, Sex, Alco
 		
 		//History variables
 		this.Infected.Set(1, Year);
-		this.AntibodyYear=Year;
+		if (isNaN(this.AntibodyYear)){// if it has not been set
+			this.AntibodyYear=Year;
+		}
 		
 		//Determine if spontaneous clearance occurs
 		if (Rand.Value()<Param.HCV.SpontaneousClearance.p){
@@ -135,6 +142,9 @@ HCVObject.prototype.Infection= function (Year, GenotypeValue){//, Age, Sex, Alco
 			//Determine time until Fibrosis
 			//F0-F4-LF are mutually exclusive, HCC is not mutually exclusive to the other states
 			//F0F1
+			
+			// determine the level of Fibrosis, and start from that level. 
+			
 			Time=TimeUntilEvent(Param.HCV.F0F1);
 			var DateF1=Year+Time;
 			this.Fibrosis.Set(1, DateF1);
@@ -281,17 +291,17 @@ HCVObject.prototype.Treatment= function (Year, TreatmentType){//returns a
 		
 		// Remove HCV related future death
 		if (YearBelowF4<this.Person.Death.HCV){
-			this.HCV=1E9;
+			this.Person.Death.HCV=1E9;
 		}
 		if (YearBelowF4<this.Person.Death.LF){
-			this.LF=1E9;
+			this.Person.Death.LF=1E9;
 		}
 		
 		// Remove HCV related future HCC
 		if (this.HCC.Next(YearBelowF4)==1){
 			this.HCC.DeleteFutureEvents(YearBelowF4);// this should remove future cases of HCC
 			if (YearBelowF4<this.Person.Death.HCC){
-				this.HCC=1E9;
+				this.Person.Death.HCC=1E9;
 			}
 		}
 		// Remove HCV related future liver disease advancement

@@ -23,7 +23,7 @@ var FemaleMortality;
 var IndigenousMaleMortality;
 var IndigenousFemaleMortality;
 
-var ShowDebugStatements=false;
+var ShowDebugStatements=true;
 function DebugStatement(ConsoleMessage){
 	if (ShowDebugStatements){
 		console.log(ConsoleMessage);
@@ -111,7 +111,7 @@ function NotificationBackProjection(WorkerData){
     var TotalTime=TimerFinish -TimerStart;
 	DebugStatement("Memory allocation stopped after "+TotalTime+" seconds");
 	
-	DebugStatement("Starting to HCV progression");
+	DebugStatement("Starting HCV progression");
 	
 	var YearOfInfection;
 	var YearOfDiagnosis;
@@ -128,6 +128,9 @@ function NotificationBackProjection(WorkerData){
 		YearOfDiagnosis=YearOfDiagnosisVector[0];
 		YearOfInfection=YearOfDiagnosis-TimeUntilDiagnosis;// Zero is the first year of diagnosis
 		
+		if (){
+		
+		}
 		PPNotification[i].HCV.Infection(YearOfInfection, GenotypeValue );//In future iterations, HCVParam will become Param.HCV
 		if (i%ProgressDisplay==0){
 			self.postMessage({ProgressBarValue: i/PPNotification.length});
