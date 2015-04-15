@@ -128,8 +128,9 @@ function NotificationBackProjection(WorkerData){
 		YearOfDiagnosis=YearOfDiagnosisVector[0];
 		YearOfInfection=YearOfDiagnosis-TimeUntilDiagnosis;// Zero is the first year of diagnosis
 		
-		if (){
-		
+		if (YearOfInfection<PPNotification[i].YearOfBirth){
+			// just choose a random date. This simulation will be destroyed anyway
+			YearOfInfection=PPNotification[i].YearOfBirth+Rand.Value()*(YearOfDiagnosis-PPNotification[i].YearOfBirth);
 		}
 		PPNotification[i].HCV.Infection(YearOfInfection, GenotypeValue );//In future iterations, HCVParam will become Param.HCV
 		if (i%ProgressDisplay==0){
