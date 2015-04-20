@@ -61,7 +61,7 @@ function HCVDataDiagnosisNumbers(Data, Time, TimeStep){
 
 	// Choose the age and sex from the notifications table
 	// For each of the sexes
-	var Notifications={};
+	var Notifications={}; // This should go into the outer loop
 	Notifications.Year=Data.MaleNotifications.Year;
 	Notifications.Age=Data.MaleNotifications.Age;
 	Notifications.Table=[];
@@ -94,6 +94,7 @@ function HCVDataDiagnosisNumbers(Data, Time, TimeStep){
 	var Diff=Win(DiffProb);
 	NumberDiagnosedThisStep.Count += Diff;// add the rand element back to the expected number to be diagnosed in this step
 	
+	console.error("needs testing");
 
 	return NumberDiagnosedThisStep;
 }
