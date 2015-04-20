@@ -28,13 +28,19 @@ function FullModel(Param, Data, Intervention){
 	var HCVInfectedBloodRecipients=CreateHCVInfectedBloodRecipients();
 	
 	// Add proportions as mentioned in Greg's paper
+	
+	
 	// Determine how many end up as PWID
-
+	
+	
 	// Run MSM
+	
 	
 	// Run migrants
 	
+		
 	// Determine proportion of each that end up PWID
+	
 	
 	// Join populations
 	var Population=[];
