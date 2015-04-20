@@ -28,17 +28,9 @@ function FullModel(Param, Data, Intervention){
 	var HCVInfectedBloodRecipients=CreateHCVInfectedBloodRecipients();
 	
 	// Add proportions as mentioned in Greg's paper
-	
-	
 	// Determine how many end up as PWID
-	
-	
 	// Run MSM
-	
-	
 	// Run migrants
-	
-		
 	// Determine proportion of each that end up PWID
 	
 	
@@ -46,7 +38,9 @@ function FullModel(Param, Data, Intervention){
 	var Population=[];
 	Population.concat(PWIDPopulation, HCVInfectedBloodRecipients);// Later add MSM and migrants
 	
-
+	// Create a very basic early population that has a set distribution 
+	
+	
 	for (var Time=Param.StartTime; Time<Param.EndTime; Time+=Param.TimeStep){// each time step
 		// RunInterventions(Time); 
 	
