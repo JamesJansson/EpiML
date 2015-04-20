@@ -680,7 +680,7 @@ function Sqrt(Input){ return  Apply(Math.sqrt, Input);}
 function Tan(Input){ return  Apply(Math.tan, Input);}
 function Tanh(Input){ return  Apply(Math.tanh, Input);}
 function Trunc(Input){ return  Apply(Math.trunc, Input);}
-
+function Win(Input){ return  Apply(WinSingleProbability, Input);}
 
 
 
@@ -891,7 +891,7 @@ function TestRandSpeed(){
 }
 
 
-function Win(p){//Given a probability p of winning, return true or false. Note, no error checking occurs in this function
+function WinSingleProbability(p){//Given a probability p of winning, return true or false. Note, no error checking occurs in this function
 	if (Rand.Value()<p){
 		return true;
 	}
@@ -902,7 +902,7 @@ function Win(p){//Given a probability p of winning, return true or false. Note, 
 // Fisher–Yates shuffle
 // This code is copied from : http://bost.ocks.org/mike/shuffle/
 function Shuffle(inputarray) {
-	array=inputarray.slice();
+	var array=inputarray.slice();
 	var m = array.length, t, i;
 	// While there remain elements to shuffle…
 	while (m) {

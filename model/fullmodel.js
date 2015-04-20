@@ -56,6 +56,9 @@ function FullModel(Param, Data, Intervention){
 		// Match some of the PWID, in particular females, to existing PWID sexual partners
 		// select by finding ProportionOfFirstInjectionsSexualPartner
 		// PWIDToAdd=
+		
+		// determine the number that will inject the first time with a sexual partners
+		JoinToSexualPartners(Person, PWIDToAdd, Data.FirstExperienceSexualPartner.Male, Data.FirstExperienceSexualPartner.Female);
 			// determine number with regular sex partners (approximately 50%, NSP survey)
 			// determine number with casual sex partners
 			// Determine when the sexual partners begin their partnership (could be before starting injecting or after)
@@ -67,11 +70,22 @@ function FullModel(Param, Data, Intervention){
 		AssignSexualPartner(Person, Time);
 		
 		// Determine transmissions that occur
-		DetermineTransmissions(Person, StartTime, EndTime);
+		DetermineTransmissions(Person, Time, Param.TimeStep);
 		
 		
 		// Testing
-			// if (Time<Common.LastYearOfHCVDiagnosisData)
+		if (Time<Common.LastYearOfHCVDiagnosisData){
+			HCVDataDiagnosis(Person, Data, Time, Param.TimeStep);
+		}
+		else{
+			if (typeof(PostDataDiagnosisDataRate)=="undefined"){
+				var PostDataDiagnosisDataRate=DeterminePostDataDiagnosisDataRate(Person, Data);
+			}
+			HCVRateDiagnosis(Person, PostDataDiagnosisDataRate, Time, Param.TimeStep);
+		}
+			
+		
+			// 
 				// Pull out all people who reach symptomatic testing
 					// for each person
 						// determine if they are symptomatic AND as yet undiagnosed
