@@ -15,7 +15,15 @@ function FullModel(Param, Data, Intervention){
 	// Set up some of the parameters
 	RegularInjectionTime=new RegularInjectionTimeObject();
 	
-	
+	// Notification data
+	var Notifications={}; // This should go into the outer loop
+	Notifications.Year=Data.MaleNotifications.Year;
+	Notifications.Age=Data.MaleNotifications.Age;
+	Notifications.Table=[];
+	Notifications.Table[0]=[];
+	Notifications.Table[0]=Data.MaleNotifications.Table;
+	Notifications.Table[1]=[];
+	Notifications.Table[1]=Data.FemaleNotifications.Table;
 	
 	// var PWIDPopulation=DistributePWIDPopulationExponential(Param.IDU.EntryParams);//Returns PWIDPopulation as defined to the MaxYear
 	var PWIDEntry=DeterminePWIDEntryRateExponential2(Param.IDU.EntryParams);//Returns PWIDPopulation as defined to the MaxYear
@@ -75,11 +83,11 @@ function FullModel(Param, Data, Intervention){
 		
 		// Testing
 		if (Time<Common.LastYearOfHCVDiagnosisData){
-			HCVDataDiagnosis(Person, Data, Time, Param.TimeStep);
+			HCVDataDiagnosis(Person, Notifications, Time, Param.TimeStep);
 		}
 		else{
 			if (typeof(PostDataDiagnosisDataRate)=="undefined"){
-				var PostDataDiagnosisDataRate=DeterminePostDataDiagnosisDataRate(Person, Data);
+				var PostDataDiagnosisDataRate=DeterminePostDataDiagnosisDataRate(Person, Notifications);
 			}
 			HCVRateDiagnosis(Person, PostDataDiagnosisDataRate, Time, Param.TimeStep);
 		}
@@ -192,6 +200,8 @@ function CreateHCVInfectedBloodRecipients(){
 	Param.Haemophilia.HCV.Prevalence1990;
 	
 	Param.HCV.Prevalence.Haemophiliacs1960;
+	
+	return
 	
 }
 

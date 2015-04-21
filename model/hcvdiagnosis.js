@@ -1,17 +1,16 @@
-function HCVDataDiagnosis(Person, Data, Time, TimeStep){
+function HCVDataDiagnosis(Person, Notifications, Time, TimeStep){
 	
 
 
 
 	// Decide the number of diagnoses in this step
-	var NumberDiagnosedThisStep=HCVDataDiagnosisNumbers();
+	var NumberDiagnosedThisStep=HCVDataDiagnosisNumbers(Notifications, Time, TimeStep);
 	
 	// Perform symptomatic diagnosis
-	var NumberDiagnosedSymptomatic=SymptomaticDiagnosis(Person, Time, TimeStep );
+	var NumberDiagnosedSymptomatic=HCVSymptomaticDiagnosis(Person, Notifications, Time, TimeStep );
 	
-	
-	
-	// Reduce Data diagnosis by the symptomatic diagnosis rate
+	// Reduce Data diagnosis by the symptomatic diagnosis numbers
+	var RemainingDiagnoses=Minus(NumberDiagnosedThisStep, NumberDiagnosedSymptomatic);
 	
 	// if it results in negative levels remaining, this results in a penalty
 	
@@ -22,12 +21,14 @@ function HCVDataDiagnosis(Person, Data, Time, TimeStep){
 		var UndiagnosedHCV=[];
 		// for all people 
 		// determine if unidagnosed with HCV at that point in time. 
+		if (){
+			UndiagnosedHCV.push(Person[Pn]);
+		}
 		
-		// Create a vector of numbers 0 to name
 		// Randomise them
 		var RandomisedUndiagnosedHCV=Shuffle(UndiagnosedHCV);
 		// Choose the next person in the list
-		while (Count<RandomisedUndiagnosedHCV.length && Sum){// while the people have been fully explored
+		while (Count<RandomisedUndiagnosedHCV.length && SumOfRemainingUndiagnosed>0){// while the people have been fully explored
 			// determine the age and sex
 			var SexIndex=RandomisedUndiagnosedHCV[Count].Sex;
 			var Age=RandomisedUndiagnosedHCV[Count].Age(Time);
@@ -47,8 +48,9 @@ function HCVDataDiagnosis(Person, Data, Time, TimeStep){
 		}
 		
 		// if there are people yet to be diagnosed in this step, return the penalty. Zero penalty if a-ok. 
+		if (SumOfRemainingUndiagnosed>0){
 		
-	
+		}
 }
 
 
@@ -56,19 +58,11 @@ function HCVDataDiagnosis(Person, Data, Time, TimeStep){
 
 
 
-function HCVDataDiagnosisNumbers(Data, Time, TimeStep){
+function HCVDataDiagnosisNumbers(Notifications, Time, TimeStep){
 	// Select the notification year
 
 	// Choose the age and sex from the notifications table
-	// For each of the sexes
-	var Notifications={}; // This should go into the outer loop
-	Notifications.Year=Data.MaleNotifications.Year;
-	Notifications.Age=Data.MaleNotifications.Age;
-	Notifications.Table=[];
-	Notifications.Table[0]=[];
-	Notifications.Table[0]=Data.MaleNotifications.Table;
-	Notifications.Table[1]=[];
-	Notifications.Table[1]=Data.FemaleNotifications.Table;
+	
 	
 
 	//Notifications.Table[SexIndex][AgeIndex][YearIndex]
@@ -94,7 +88,7 @@ function HCVDataDiagnosisNumbers(Data, Time, TimeStep){
 	var Diff=Win(DiffProb);
 	NumberDiagnosedThisStep.Count += Diff;// add the rand element back to the expected number to be diagnosed in this step
 	
-	console.error("needs testing");
+	console.error("needs testing: not sure if it works appropriately");
 
 	return NumberDiagnosedThisStep;
 }
@@ -104,38 +98,54 @@ function HCVDataDiagnosisNumbers(Data, Time, TimeStep){
 
 
 
-function HCVRateDiagnosis(Person, PostDataDiagnosisDataRate, Time, TimeStep){
-	// Perform symptomatic diagnosis
-}
 
-function SymptomaticDiagnosis(Person, Time, TimeStep ){
+
+function HCVSymptomaticDiagnosis(Person, Notifications, Time, TimeStep ){
+	var StructureOfDiagnosedPeople=[];
+	StructureOfDiagnosedPeople.Age=Notifications.Age;
+	
+	var AgeList=[];
+	AgeList[0]=[];
+	AgeList[1]=[];
+	
 	for (var Pn in Person){
-		if (Person.Alive(Year)){
+		var CurrentPerson=Person[Pn];
+		if (CurrentPerson.Alive(Year)){
 			// Determine if undiagnosed and how symptomatic they are
-			if (Person.HCV.UndiagnosedHCC() || Person.HCV.UndiagnosedDecompensatedCirrhosis()){
-			
-			
-				// Make sure that the diagnosis date is prior to death. Otherwise it is not discovered
-				Person.Death.Year();
+			if (CurrentPerson.HCV.UndiagnosedHCC() || CurrentPerson.HCV.UndiagnosedDecompensatedCirrhosis()){
+				var TimeUntilDiagnosis=TimeUntilEvent(Param.HCV.SyptomaticTesting);
+				if (TimeUntilDiagnosis<TimeStep){
+					if (Time+TimeUntilDiagnosis<CurrentPerson.Death.Year()){// Make sure that the diagnosis date is prior to death. Otherwise it is not discovered
+						// Add the person to the numbers of people diagnosed due to symptoms
+						var SexIndex=CurrentPerson.Sex;
+						AgeList[SexIndex].push(CurrentPerson.Age(Time));
+					}
+				}
 			}
-			// Add the person to the numbers of people diagnosed due to symptoms
-			
-			
-			
 		}
-		
-		// 
-		// 
 	}
+	
+	// Collect up all the results for removal from the data driven testing
+	var Bins=DeepCopy(StructureOfDiagnosedPeople.Age)
+	Bins.push(1000);
+	
+	var HistResult=HistogramData(AgeList[0], Bins);
+	StructureOfDiagnosedPeople.Count[0]=HistResult.Count;
+	HistResult=HistogramData(AgeList[1], Bins);
+	StructureOfDiagnosedPeople.Count[1]=HistResult.Count;
+	
 	return StructureOfDiagnosedPeople;
 };
 
 
-function DeterminePostDataDiagnosisDataRate(Person, Data){
+function DeterminePostDataDiagnosisDataRate(Person, Notifications){
 
+	// return PostDataDiagnosisDataRate
 };
 
-
+function HCVRateDiagnosis(Person, PostDataDiagnosisDataRate, Time, TimeStep){
+	// Perform symptomatic diagnosis
+}
 
 
 function SelectIndex(Bounds){
