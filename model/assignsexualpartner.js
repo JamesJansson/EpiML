@@ -1,7 +1,9 @@
 //
 
 function AssignSexualPartner(Person, Time){
-	// Duration of relationship
+	// The purpose of this function is to assign the duration of relationship and the relevant connection in the relationship
+	// It does so by trying to bring the population rates up to the levels of sexual partnership expected for the population as releationships end
+	
 	// Determine how many relationships the population is missing
 	var TotalSex=[];
 	TotalSex[0]=0;//None
@@ -42,7 +44,7 @@ function AssignSexualPartner(Person, Time){
 			var CategorySelectionWeight=Minus(AimNumberInPartnerCategory, NumberInPartnerCategory);
 			// if the prop weight is negative, ignore unless they are all negative, then set all to one
 			for (var CSWR in CategorySelectionWeight){
-				if (CategorySelectionWeight[CSWR]<0){
+				if (CategorySelectionWeight[CSWR]<0){// to avoid situations where a 
 					CategorySelectionWeight[CSWR]=0;
 				}
 			}
@@ -96,13 +98,18 @@ function AssignSexualPartner(Person, Time){
 			
 			// Determine probability that an IDU individual will form a relationship with someone who is not an injector
 			// Note that there are more males than females. 
-			if (Rand.Value()<(IDU.Sex.RegularPartnerInjects/2)){// note that we divide by 2 to get the right proportion
+			if (Rand.Value()<(IDU.Sex.RegularPartnerInjects/2)){// note that we divide by 2 to get the right proportion because this creates a new link between 2 people who are not in a regular relationship
 				// Select partner from injecting population
 				
 				// Search injectors for matches
 				var AgeDiff;
 				var AgeDiffChosen=1e9;
 				var IndexChosen;
+				
+				// The function keeps looking for someone until a level of difference in age is reached that cannot be expected to be beaten. 
+				// a random index is chosen, and a limited number of selections take place (e.g. only 1000 people are taken into account when selecting) 
+				// an eventuality needs to be taken into consideration where people don't make a partnership, i.e. there is no one in the group that matches their needs
+				
 				for (var Pi2 in Person){
 					if (Person[Pi2].Sex==PartnerSex && Pi2!=SelectedPersonIndex){
 						AgeDiff=Abs(AgeAim-Person[Pi2].Age(Time));
