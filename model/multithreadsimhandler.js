@@ -5,7 +5,6 @@ var MultithreadSimController;
 
 self.onmessage = function (WorkerMessage) {
 	var FunctionHolder;
-	console.log(WorkerMessage);
 	
 	MultithreadSimController=new MultithreadSimControllerObject(WorkerMessage);
 	
@@ -21,6 +20,13 @@ function EvalText(data){
 	eval(data.Common);
 	return ReturnResult;
 }
+
+// RunSettings2={};
+// RunSettings2.FunctionName="EvalText";
+// RunSettings2.Common="BBB=new RegularInjectionTimeObject;console.log(BBB.Time());";
+// SimulationHolder.Run(RunSettings2);
+
+
 
 // Create a holder that allows the simulations to draw on some of the higher level aspects of the multithreadsim
 function MultithreadSimControllerObject(WorkerMessage){

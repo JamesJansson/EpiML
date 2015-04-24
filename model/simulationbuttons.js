@@ -1,6 +1,90 @@
 // This file contains the scripts that are called when the buttons on the interface are pressed.
 
 
+function MultiFunctionRun(){
+	// the purpose of this function is to run one function, and when it is done, run the next. This object determines which one should happen next
+	// It is important to note that each function should only be executed once
+	// FunctionRunner=new MultiFunctionRun;
+	// FunctionRunner.FunctionArray[0]=Function0;
+	// FunctionRunner.FunctionArray[1]=Function1;
+	// Function0 should call FunctionRunner.RunNextFunction() once only. If it calls it twice, the function index will reach 2, but there is no FunctionArray[2] and this will cause an error
+	
+	this.StepRunning=-1;
+	this.FunctionArray=[];
+}
+
+MultiFunctionRun.prototype.RunNextFunction= function (){
+	this.StepRunning++;
+	if (this.StepRunning<this.FunctionArray.length){
+		this.FunctionArray[this.StepRunning]();
+	}
+	else {
+		console.error("The function runner has run out of functions in the array to run")
+	}
+};
+
+MultiFunctionRun.prototype.Reset= function (){
+	this.StepRunning=-1;
+};
+
+
+var FunctionRunner;
+
+
+function RunFullOptimisationAndDataExtration(){
+	var ModelDirectory='model';
+	// Load the values from the files
+	ExtractDataFromFiles();
+	
+	// The following is required for all programs
+	SimSettings.SampleFactor=Settings.SampleFactor;
+	
+	// Save into the Common holder
+	var Common={};
+	Common.Data=Data;
+	Common.Param=[];//this where parameters that are the same between simulations are entered
+	Common.Settings=SimSettings;
+	
+	//Creating the data to be used in the simulations
+	var RecalculateDistribution=true;
+	var SimInputData=ParameterSplit(Param, Settings.NumberOfSimulations, RecalculateDistribution);
+	
+	//Creating the simulation holder
+	var TerminateOnFinish=false;
+	SimulationHolder=new MultiThreadSim(ModelDirectory, Settings.NumberOfSimulations , Settings.NoThreads, TerminateOnFinish); //Common is the same between all sims
+	SimulationHolder.UseSimProgressBar=true;
+	SimulationHolder.SimProgressBarID="MainProgress";
+	
+	FunctionRunner=new MultiFunctionRun();
+	
+	FunctionRunner.FunctionArray[0]=OptimiseParameters;
+	FunctionRunner.FunctionArray[1]=RunSimulation1;
+	
+}
+
+
+function OptimiseParameters(){
+	
+	
+	
+	RunSettings={};
+	RunSettings.FunctionName="NotificationBackProjection";
+	RunSettings.Common=Common;
+	RunSettings.SimDataArray=SimInputData;
+	RunSettings.TerminateOnFinish=false;
+	RunSettings.FunctionToRunOnCompletion=function(){
+		SimOutput=RearrangeSimResults(this.Result);//here 'this' refers to the .Result  stored in simulation holder
+		AggregatedResults=AggregateSimResults(SimOutput);
+
+		// NotificationSimPlot();
+	}
+	
+	
+	// Run the simulation
+	SimulationHolder.Run(RunSettings);
+
+	return 0;
+}
 
 
 function RunPersistentSim(){
@@ -47,7 +131,7 @@ function RunPersistentSim(){
 	
 	
 	// Run the simulation
-	SimulationHolder.Run(RunSettings)
+	SimulationHolder.Run(RunSettings);
 
 	return 0;
 }

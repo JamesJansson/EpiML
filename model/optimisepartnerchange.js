@@ -8,10 +8,12 @@
 //OptimisePartnerChangeRate([0.36, 0.29, 0.35]);
 // The mean and also the median age were 35
 
-function TestOptimisePartnerChangeRate(Input){
+function TestOptimisePartnerChangeRate(){
 	var OptimisationObject=OptimisePartnerChangeRate();//[0.36, 0.29, 0.35]
 	console.log(OptimisationObject);
-	return OptimisationObject;
+	
+	
+	return 0;
 }
 
 
@@ -52,6 +54,16 @@ function OptimisePartnerChangeRate(){
 	OptimisationObject.AddParameter("PPartnerChangeFollowing", 0, 1);
 	OptimisationObject.Run(FunctionInput);
 	
+	
+	// Save the optimised results to Param
+	// Param.PPartnerChangeYear1
+	// Param.PPartnerChangeFollowing
+	// 
+	
+	
+	
+	
+	
 	return OptimisationObject;
 }
 
@@ -59,7 +71,7 @@ function OptimisePartnerChangeRate(){
 
 function DeterminePartnerDurationProportions(PPartnerChangeYear1,PPartnerChangeFollowing, NumberOfSamples){
 	// Choose people at a random time 0 to 20 years at the start
-	var TimeToCheck=RandArray(0, 30, NumberOfSamples);
+	var TimeToCheck=RandArray(0, 20, NumberOfSamples); // this has been checked for sensitivity, and changing the value to 30 has a limited effect on the optimised result
 	var TestedRelationshipLength=ZeroArray(NumberOfSamples);
 	var ThisRelationshipDuration;
 	var TotalDurationOfPreviousRelationships;
