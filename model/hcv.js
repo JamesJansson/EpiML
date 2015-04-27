@@ -12,23 +12,17 @@ function  HCVObject(PersonPointer){
 	
 	
 	//History variables
-	this.Infected=new EventVector;
+	this.Infected=new EventVector; // 0= unifected 1= infected
 	this.AntibodyYear=NaN;
 	this.Diagnosed=new EventVector;
 	//AntibodyDiagnosis
 	this.Fibrosis=new EventVector;//including liver failure
 	this.HCC=new EventVector;
-	this.Genotype=new EventVector;
+	this.Genotype=new EventVector; // an array that holds all current genotypes
 	
 	
 	
-	// this.Genotype[0]=new EventVector;//1a
-	// this.Genotype[1]=new EventVector;//1b
-	// this.Genotype[2]=new EventVector;//2
-	// this.Genotype[3]=new EventVector;//3
-	// this.Genotype[4]=new EventVector;//4
-	// this.Genotype[5]=new EventVector;//5
-	// this.Genotype[5]=new EventVector;//6
+
 	
 	
 	//Initialise history variables
@@ -39,13 +33,7 @@ function  HCVObject(PersonPointer){
 	// Set the genotype to an empty array at birth. To add a new 
 	this.Genotype.Set([], this.Person.YearOfBirth);
 	
-	
-	//this.Genotype[0].Set(0, this.Person.YearOfBirth);
-	//this.Genotype[1].Set(0, this.Person.YearOfBirth);
-	//this.Genotype[2].Set(0, this.Person.YearOfBirth);
-	//this.Genotype[3].Set(0, this.Person.YearOfBirth);
-	//this.Genotype[4].Set(0, this.Person.YearOfBirth);
-	//this.Genotype[5].Set(0, this.Person.YearOfBirth);
+
 	
 	//Cascade of care
     this.Assessment=new EventVector;//
@@ -310,9 +298,22 @@ HCVObject.prototype.Treatment= function (Year, TreatmentType){//returns a
 	}
 }
 
-HCVObject.prototype.UndiagnosedHCV= function (Time){
-	
+HCVObject.prototype.UndiagnosedHCVInfection= function (Time){
+	if (this.Infected.Value(Time)==1 && this.Diagnosed.Value(Time)==0){
+		return true;
+	}
+	return false;
 };
+
+
+HCVObject.prototype.UndiagnosedHCVAntibody= function (Time){
+	if (Time>this.AntibodyYear && this.Diagnosed.Value(Time)==0){
+		return true;
+	}
+	return false;
+};
+
+
 
 
 HCVObject.prototype.UndiagnosedHCC= function (Time){

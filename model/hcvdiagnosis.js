@@ -1,5 +1,5 @@
 function HCVDataDiagnosis(Person, Notifications, Time, TimeStep){
-	
+	var ReturnData=[];
 
 
 
@@ -20,13 +20,23 @@ function HCVDataDiagnosis(Person, Notifications, Time, TimeStep){
 		// Simply add the person to a vector of undiagnosed people
 		var UndiagnosedHCV=[];
 		// for all people 
-		// determine if unidagnosed with HCV at that point in time. 
-		if (){
-			UndiagnosedHCV.push(Person[Pn]);
+		for (Pn in Person){
+			// determine if unidagnosed with HCV at that point in time. 
+			if (Person[Pn].HCV.UndiagnosedHCVAntibody){// note we use antibody undiagnosed because of the nature of the data: includes those who have cleared
+				UndiagnosedHCV.push(Person[Pn]);
+			}
 		}
-		
 		// Randomise them
 		var RandomisedUndiagnosedHCV=Shuffle(UndiagnosedHCV);
+		
+		
+		
+		
+		
+		ReturnData.HCVAsymptomaticTestingRateForThisStep=RandomisedUndiagnosedHCV.length/SumOfRemainingUndiagnosed;
+		
+		
+		
 		// Choose the next person in the list
 		while (Count<RandomisedUndiagnosedHCV.length && SumOfRemainingUndiagnosed>0){// while the people have been fully explored
 			// determine the age and sex
@@ -49,8 +59,15 @@ function HCVDataDiagnosis(Person, Notifications, Time, TimeStep){
 		
 		// if there are people yet to be diagnosed in this step, return the penalty. Zero penalty if a-ok. 
 		if (SumOfRemainingUndiagnosed>0){
-		
+			ReturnData.InsufficientDiagnoses=SumOfRemainingUndiagnosed;
 		}
+		else{
+			ReturnData.InsufficientDiagnoses=0;
+		}
+	
+	
+	
+	return ReturnData;
 }
 
 
@@ -59,13 +76,15 @@ function HCVDataDiagnosis(Person, Notifications, Time, TimeStep){
 
 
 function HCVDataDiagnosisNumbers(Notifications, Time, TimeStep){
-	// Select the notification year
+	
 
 	// Choose the age and sex from the notifications table
 	
 	
 
 	//Notifications.Table[SexIndex][AgeIndex][YearIndex]
+	
+	// Select the notification year
 	var YearIndex=Notifications.Year.indexOf(Floor(Time));
 	
 	var NumberDiagnosedThisStep={};
@@ -139,7 +158,9 @@ function HCVSymptomaticDiagnosis(Person, Notifications, Time, TimeStep ){
 
 
 function DeterminePostDataDiagnosisDataRate(Person, Notifications){
-
+	// This function determines the rate at which people are generally going to get diagnosed when they are asymptomatic
+	
+	
 	// return PostDataDiagnosisDataRate
 };
 

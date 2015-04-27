@@ -91,7 +91,7 @@ function FullModel(Param, Data, Intervention){
 			}
 			HCVRateDiagnosis(Person, PostDataDiagnosisDataRate, Time, Param.TimeStep);
 		}
-			
+		
 		
 			// 
 				// Pull out all people who reach symptomatic testing
