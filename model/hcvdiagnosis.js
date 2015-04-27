@@ -6,10 +6,11 @@ function HCVDataDiagnosis(Person, Notifications, Time, TimeStep){
 	var NumberDiagnosedThisStep=HCVDataDiagnosisNumbers(Notifications, Time, TimeStep);
 	
 	// Perform symptomatic diagnosis
-	var NumberDiagnosedSymptomatic=HCVSymptomaticDiagnosis(Person, Notifications, Time, TimeStep );
+	var DiagnosedSymptomatic=HCVSymptomaticDiagnosis(Person, Notifications, Time, TimeStep);
+	ReturnData.DiagnosedSymptomatic=DiagnosedSymptomatic;
 	
 	// Reduce Data diagnosis by the symptomatic diagnosis numbers
-	var RemainingToBeDiagnosed=Minus(NumberDiagnosedThisStep.Count, NumberDiagnosedSymptomatic.Count);
+	var RemainingToBeDiagnosed=Minus(NumberDiagnosedThisStep.Count, DiagnosedSymptomatic.Count);
 	
 	// if it results in negative levels remaining, this results in a penalty. 
 	ReturnData.Penalty.InsufficientSymptomaticDiagnoses=Apply(ReturnNegativeValues, RemainingToBeDiagnosed);
@@ -62,6 +63,8 @@ function HCVDataDiagnosis(Person, Notifications, Time, TimeStep){
 			}
 			
 			if (RemainingToBeDiagnosed[SexIndex][AgeIndex]>0){ // diagnose them if there are spaces left in the notifications
+				RandomisedUndiagnosedHCV[UndiagCount].HCV.Diagnosed.Set(Time+Rand.Value()*TimeStep);// at a random time during this timestep
+				
 				RemainingToBeDiagnosed[SexIndex][AgeIndex]--; // reduce remaining to be diagnosed
 				SumOfRemainingToBeDiagnosed--;
 			}
@@ -94,12 +97,7 @@ function FilterNegativeValues(Value){
 
 
 function HCVDataDiagnosisNumbers(Notifications, Time, TimeStep){
-	
-
 	// Choose the age and sex from the notifications table
-	
-	
-
 	//Notifications.Table[SexIndex][AgeIndex][YearIndex]
 	
 	// Select the notification year
@@ -110,7 +108,6 @@ function HCVDataDiagnosisNumbers(Notifications, Time, TimeStep){
 	NumberDiagnosedThisStep.Count=[];
 	NumberDiagnosedThisStep.Count[0]=[];
 	NumberDiagnosedThisStep.Count[1]=[];
-	
 	
 	// copy out this into a vector that can be used later
 	for (var AgeIndex=0; AgeIndex<Notifications.Age.length; AgeIndex++){
@@ -131,12 +128,6 @@ function HCVDataDiagnosisNumbers(Notifications, Time, TimeStep){
 }
 
 
-
-
-
-
-
-
 function HCVSymptomaticDiagnosis(Person, Notifications, Time, TimeStep ){
 	var StructureOfDiagnosedPeople=[];
 	StructureOfDiagnosedPeople.Age=Notifications.Age;
@@ -153,6 +144,8 @@ function HCVSymptomaticDiagnosis(Person, Notifications, Time, TimeStep ){
 				var TimeUntilDiagnosis=TimeUntilEvent(Param.HCV.SyptomaticTesting);
 				if (TimeUntilDiagnosis<TimeStep){// if the testing occurs during this step
 					if (Time+TimeUntilDiagnosis<CurrentPerson.Death.Year()){// Make sure that the diagnosis date is prior to death. Otherwise it is not discovered
+						CurrentPerson.HCV.Diagnosis.Set(Time+TimeUntilDiagnosis);
+						
 						// Add the person to the numbers of people diagnosed due to symptoms
 						var SexIndex=CurrentPerson.Sex;
 						AgeList[SexIndex].push(CurrentPerson.Age(Time));
@@ -175,16 +168,59 @@ function HCVSymptomaticDiagnosis(Person, Notifications, Time, TimeStep ){
 };
 
 
-function DeterminePostDataDiagnosisDataRate(ArrayOfNumberUndiagnosed, ArrayOfNumberTested){
+function DeterminePostDataDiagnosisDataRate(TimeArray, ArrayOfNumberUndiagnosed, ArrayOfNumberTested, YearToStartAverage){
 	// This function determines the rate at which people are generally going to get diagnosed when they are asymptomatic
+	var UndiagnosedTotal=0;
+	var DiagnosedTotal=0;
 	
+	for (var Count in TimeArray){
+		if (TimeArray[Count]>=YearToStartAverage){
+			UndiagnosedTotal+=ArrayOfNumberUndiagnosed[Count];
+			DiagnosedTotal+=ArrayOfNumberTested[Count];
+		}
+	}
 	
-	// return PostDataDiagnosisDataRate
+	var PerStepProbOfDiagnosis=DiagnosedTotal/UndiagnosedTotal;
+	
+	return PerStepProbOfDiagnosis;
+
 };
 
-//function HCVRateDiagnosis(Person, PostDataDiagnosisDataRate, Time, TimeStep){
+function HCVRateDiagnosis(Person, PostDataDiagnosisDataRate, Time, TimeStep){
+	var ReturnData={};
+	ReturnData.Penalty={};
+	
 	// Perform symptomatic diagnosis
-//}
+	var DiagnosedSymptomatic=HCVSymptomaticDiagnosis(Person, Notifications, Time, TimeStep);
+	
+	ReturnData.DiagnosedSymptomatic=DiagnosedSymptomatic;
+	
+	// Remove additional people at the specified rates in Notifications
+		// Sort population into HCV undiagnosed
+		// Simply add the person to a vector of undiagnosed people
+		var UndiagnosedHCV=[];
+		// for all people 
+		for (var Pn in Person){
+			// determine if unidagnosed with HCV at that point in time. 
+			if (Person[Pn].HCV.UndiagnosedHCVAntibody(Time)){// note we use antibody undiagnosed because of the nature of the data: includes those who have cleared
+				UndiagnosedHCV.push(Person[Pn]);
+			}
+		}
+		
+		for (var UndiagCount in UndiagnosedHCV){
+			if (Rand.Value()<PerStepProbOfDiagnosis){
+				UndiagnosedHCV[UndiagCount].HCV.Diagnosed.Set(Time+Rand.Value()*TimeStep);// at a random time during this timestep
+			}
+		}
+		
+		// Non-symptomatic diagnoses
+		ReturnData.NonsymptomaticDiagnoses=SumOfRemainingToBeDiagnosed;
+		// Total undiagnosed in this step
+		ReturnData.Undiagnosed=RandomisedUndiagnosedHCV.length;
+		
+	return ReturnData;
+	
+}
 
 
 // function SelectIndex(Bounds){

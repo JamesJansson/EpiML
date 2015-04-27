@@ -86,10 +86,10 @@ function FullModel(Param, Data, Intervention){
 			HCVDataDiagnosisResults=HCVDataDiagnosis(Person, Notifications, Time, Param.TimeStep);
 		}
 		else{
-			if (typeof(PostDataDiagnosisDataRate)=="undefined"){
-				var PostDataDiagnosisDataRate=DeterminePostDataDiagnosisDataRate(Person, Notifications);
+			if (typeof(PerStepProbOfDiagnosis)=="undefined"){
+				var PerStepProbOfDiagnosis=DeterminePostDataDiagnosisDataRate(Person, Notifications);
 			}
-			HCVRateDiagnosis(Person, PostDataDiagnosisDataRate, Time, Param.TimeStep);
+			HCVRateDiagnosis(Person, PerStepProbOfDiagnosis, Time, Param.TimeStep);
 		}
 		
 		
