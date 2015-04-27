@@ -83,7 +83,7 @@ function FullModel(Param, Data, Intervention){
 		
 		// Testing
 		if (Time<Common.LastYearOfHCVDiagnosisData){
-			HCVDataDiagnosis(Person, Notifications, Time, Param.TimeStep);
+			HCVDataDiagnosisResults=HCVDataDiagnosis(Person, Notifications, Time, Param.TimeStep);
 		}
 		else{
 			if (typeof(PostDataDiagnosisDataRate)=="undefined"){
