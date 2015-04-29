@@ -1,5 +1,6 @@
 function HCVDataDiagnosis(Person, Notifications, Time, TimeStep){
 	var ReturnData={};
+	ReturnData.Time=Time;
 	ReturnData.Penalty={};
 
 	// Decide the number of diagnoses in this step
@@ -168,25 +169,23 @@ function HCVSymptomaticDiagnosis(Person, Notifications, Time, TimeStep ){
 };
 
 
-function DeterminePostDataDiagnosisDataRate(TimeArray, ArrayOfNumberUndiagnosed, ArrayOfNumberTested, YearToStartAverage){
+function DeterminePostDataDiagnosisDataRate(DiagnosisDataArray, YearToStartAverage){// TimeArray, ArrayOfNumberUndiagnosed, ArrayOfNumberTested
 	// This function determines the rate at which people are generally going to get diagnosed when they are asymptomatic
 	var UndiagnosedTotal=0;
 	var DiagnosedTotal=0;
 	
-	for (var Count in TimeArray){
-		if (TimeArray[Count]>=YearToStartAverage){
-			UndiagnosedTotal+=ArrayOfNumberUndiagnosed[Count];
-			DiagnosedTotal+=ArrayOfNumberTested[Count];
+	for (var Count in DiagnosisDataArray){
+		if (DiagnosisDataArray[Count].Time>=YearToStartAverage){
+			UndiagnosedTotal+=DiagnosisDataArray[Count].Undiagnosed;
+			DiagnosedTotal+=DiagnosisDataArray[Count].NonsymptomaticDiagnoses;
 		}
 	}
 	
 	var PerStepProbOfDiagnosis=DiagnosedTotal/UndiagnosedTotal;
-	
 	return PerStepProbOfDiagnosis;
-
 };
 
-function HCVRateDiagnosis(Person, PostDataDiagnosisDataRate, Time, TimeStep){
+function HCVRateDiagnosis(Person, PerStepProbOfDiagnosis, Time, TimeStep){
 	var ReturnData={};
 	ReturnData.Penalty={};
 	

@@ -3,6 +3,9 @@ var RegularInjectionTime;
 
 
 function FullModel(Param, Data, Intervention){ 
+	var YearToStartAverage=2008;
+	console.error("Warning: year to start average diagnosis rate is hard set here");
+
 	// Intervention[No]=function(Time){
 	// 	   if (Time<2016){
 	//         Param.HCV.TreatmentRate=1000;
@@ -49,7 +52,11 @@ function FullModel(Param, Data, Intervention){
 	// Create a very basic early population that has a set distribution 
 	
 	
+	var SimulationHistory=[];
+	SimulationHistory.DiagnosisResults;
+	var StepCount=-1;
 	for (var Time=Param.StartTime; Time<Param.EndTime; Time+=Param.TimeStep){// each time step
+		StepCount++;
 		// RunInterventions(Time); 
 	
 		// this is a function that will be called "AdvanceModel(YearLast, YearCurrent, Param, Population)
@@ -78,16 +85,16 @@ function FullModel(Param, Data, Intervention){
 		AssignSexualPartner(Person, Time);
 		
 		// Determine transmissions that occur
-		DetermineTransmissions(Person, Time, Param.TimeStep);
+		DetermineHCVTransmissions(Person, Time, Param.TimeStep);
 		
 		
 		// Testing
 		if (Time<Common.LastYearOfHCVDiagnosisData){
-			HCVDataDiagnosisResults=HCVDataDiagnosis(Person, Notifications, Time, Param.TimeStep);
+			SimulationHistory.DiagnosisResults[StepCount]=HCVDataDiagnosis(Person, Notifications, Time, Param.TimeStep);
 		}
 		else{
 			if (typeof(PerStepProbOfDiagnosis)=="undefined"){
-				var PerStepProbOfDiagnosis=DeterminePostDataDiagnosisDataRate(Person, Notifications);
+				var PerStepProbOfDiagnosis=DeterminePostDataDiagnosisDataRate(SimulationHistory.DiagnosisResults, YearToStartAverage);
 			}
 			HCVRateDiagnosis(Person, PerStepProbOfDiagnosis, Time, Param.TimeStep);
 		}
@@ -115,7 +122,7 @@ function FullModel(Param, Data, Intervention){
 			
 		// Determine treatment
 			// X number per year are treated out of those who are diagnosed
-			DetermineTreatment(Person, StartTime, EndTime, TreatmentNumbers);//Treatment rates is an array of each of the treatment types
+			DetermineTreatment(Person, Time, EndTime, TreatmentNumbers);//Treatment rates is an array of each of the treatment types
 		
 		
 		

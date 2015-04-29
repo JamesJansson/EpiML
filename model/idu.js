@@ -22,7 +22,8 @@ function IDUObject(PersonPointer){
 	// 3: Regular user = 12-365*3 
 	// 4: Former user
 	
-	
+	this.Sharing= new EventVector;
+	this.Sharing.Set(0, this.Person.YearOfBirth);
 	
 	this.OST = new EventVector;
 	this.OST.Set(0, this.Person.YearOfBirth);
@@ -79,6 +80,16 @@ IDUObject.prototype.StartInjecting= function (Time){
 		console.error("TimeOfStoppingInjecting has not been set.");
 		this.Use.Set(4, TimeOfStoppingInjecting);
 	}
+	
+	
+	// Determine if the person is a sharer
+	console.error("Determination of sharing has not been set.");
+	// Determine when the person ceases sharing
+	console.error("Determination of sharing cease has not been set.");
+	
+	
+	
+	
 	
 	// PWID additional mortality
 	console.error("PWID additional mortality has not been set.");
