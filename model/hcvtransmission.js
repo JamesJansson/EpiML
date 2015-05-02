@@ -1,7 +1,16 @@
 function DetermineHCVTransmissions(Person, Time, TimeStep){
-	DetermineInjectingTransmissions(Person, Time, TimeStep);
-	DetermineMSMTransmissions(Person, Time, TimeStep);
-	DetermineSexualTransmissions(Person, Time, TimeStep);
+	// start by determining who is alive and who is not (to save time in sub functions)
+	AlivePerson=[];
+	for (var Pi in Person){
+		if (Person[Pi].Alive(Time)){
+			AlivePerson.push(Person[Pi]);
+		}
+	}
+		
+	
+	DetermineInjectingTransmissions(AlivePerson, Time, TimeStep);
+	DetermineMSMTransmissions(AlivePerson, Time, TimeStep);
+	DetermineSexualTransmissions(AlivePerson, Time, TimeStep);
 }
 
 
@@ -11,9 +20,9 @@ function DetermineHCVTransmissions(Person, Time, TimeStep){
 function DetermineInjectingTransmissions(Person, Time, TimeStep){
 	for (var Pi in Person){
 		// Determine if the person is an injector 
-		if (Person.IDU.Use.Value(Time)==1){
+		if (Person[Pi].IDU.Use.Value(Time)==1){
 			// Determine if they will receptively share needles
-			if (Person.IDU.Sharing.Value(Time)==1){
+			if (Person[Pi].IDU.Sharing.Value(Time)==1){
 				// Determine contacts
 					// Sexual regular
 					// sexual casual
@@ -28,6 +37,18 @@ function DetermineInjectingTransmissions(Person, Time, TimeStep){
 				
 				// Run through infection
 				Person[Pi].HCV.Infection(Time+Rand.Value()*TimeStep, GenotypeValue);
+			}
+		}
+	}
+}
+
+function DetermineMSMTransmissions(Person, Time, TimeStep){
+	for (var Pi in Person){
+		// Determine if the person is MSM 
+		if (Person[Pi].MSM==true){
+			if (Person[Pi].Alive(Time)==true){// determine if the person is alive
+				// Determine sexual partners
+				
 			}
 		}
 	}

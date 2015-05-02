@@ -49,7 +49,20 @@ function FullModel(Param, Data, Intervention){
 	var Population=[];
 	Population.concat(PWIDPopulation, HCVInfectedBloodRecipients);// Later add MSM and migrants
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	// Create a very basic early population that has a set distribution 
+	var Person=InitialDistribution 
 	
 	
 	var SimulationHistory=[];
@@ -73,14 +86,15 @@ function FullModel(Param, Data, Intervention){
 		// PWIDToAdd=
 		
 		// determine the number that will inject the first time with a sexual partners
-		JoinToSexualPartners(Person, PWIDToAdd, Data.FirstExperienceSexualPartner.Male, Data.FirstExperienceSexualPartner.Female);
+		var RemainderToAdd=JoinToSexualPartners(Person, PWIDToAdd, Data.FirstExperienceSexualPartner.Male, Data.FirstExperienceSexualPartner.Female);
 			// determine number with regular sex partners (approximately 50%, NSP survey)
 			// determine number with casual sex partners
 			// Determine when the sexual partners begin their partnership (could be before starting injecting or after)
 			// what proportion had partners who did not inject drugs
 		
+		JoinToFriends(Person, RemainderToAdd);
 		
-				
+		
 		// Balance sexual partnerships
 		AssignSexualPartner(Person, Time);
 		
@@ -100,30 +114,14 @@ function FullModel(Param, Data, Intervention){
 		}
 		
 		
-			// 
-				// Pull out all people who reach symptomatic testing
-					// for each person
-						// determine if they are symptomatic AND as yet undiagnosed
-						
-					// 
-				// Reduce diagnoses in that year/sex/age group 
-				// Directly remove all tested individuals
-					// Sort people into age and sex categories of HCV infected and undiagnosed (i.e. index)
-					// Keep track of diagnoses that could not be pulled out of that group. penalise that sim heavily
-				// Simply pull out the number of diagnoses in the age/sex group as it appears in the table
-			
-			// else 
-				// Pull out all people who reach symptomatic testing
-				// remove people at a rate that matches the last 5 years of testing rates
-			
-		
-			
-			// add the time to Person.HCV.DiagnosisDate
-			
 		// Determine treatment
 			// X number per year are treated out of those who are diagnosed
-			DetermineTreatment(Person, Time, EndTime, TreatmentNumbers);//Treatment rates is an array of each of the treatment types
-		
+		if (Time<Common.LastYearOfHCVDiagnosisData){
+			DetermineHistoricalTreatment(Person, Time, Param.TimeStep, TreatmentNumbers);//Treatment rates is an array of each of the treatment types
+		}
+		else{
+			DetermineTreatment(Person, Time, Param.TimeStep);	
+		}
 		
 		
 		

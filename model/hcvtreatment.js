@@ -71,3 +71,13 @@ HCVTreatment.prototype.StartTreatment= function (Person, Year){
 	// Set the time at which treatment starts and ends
 };
 
+function DetermineHistoricalTreatment(Person, Time, Param.TimeStep, TreatmentNumbers){//TreatmentNumbers is an array of each of the treatment types
+
+}
+
+function DetermineTreatment(Person, Time, Param.TimeStep){
+	
+}
+	
+
+
