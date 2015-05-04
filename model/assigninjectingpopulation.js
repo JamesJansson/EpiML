@@ -449,10 +449,6 @@ function CreatePWID(EntryParams, Time, TimeStep){
 		PWIDPopulation[TotalPWID-1].IDU.StartInjecting(TimeOfStartingInjection);
 	}
 
-	
-	
-	
-	
 	return PWIDPopulation;
 }
 

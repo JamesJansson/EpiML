@@ -1,5 +1,6 @@
 // requiredscripts.js
 importScripts("model.js");
+importScripts("fullmodel.js");
 
 importScripts("simulationtools.js");
 importScripts("mathtools.js");

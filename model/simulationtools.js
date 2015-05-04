@@ -48,7 +48,7 @@ EventVector.prototype.DeleteFutureEvents= function (Time){
 			this.NumberOfEvents=PosToDelete;
 		} 
 	}
-}
+};
 
 
 EventVector.prototype.Get= function (Time){
@@ -84,7 +84,7 @@ EventVector.prototype.Get= function (Time){
 			}
 		}
 	}
-}
+};
 
 EventVector.prototype.Value= function (Time){
 
@@ -104,7 +104,7 @@ EventVector.prototype.Value= function (Time){
 			}
 		}
 	}
-}
+};
 
 
 
@@ -123,7 +123,7 @@ EventVector.prototype.GetRange= function (Time1, Time2, StepSize){
 	ReturnVec[tcount]=this.Value(Time2);// Note that this value is here to avoid rounding error
 
 	return ReturnVec;
-}
+};
 
 // (Value, Time1, Time2, StepSize) 
 // Return a 0 or 1, depending on whether this value is true or not
@@ -144,7 +144,18 @@ EventVector.prototype.TimeOf= function (EventValue){
 		}
 	}
 	return DatesThisEventOccurred;
-}
+};
+
+EventVector.prototype.FirstTimeOf= function (EventValue){
+	for (var i=0; i<this.ValueVec.length; i++){
+		if (EventValue==this.ValueVec[i]){
+			return this.Time[i];
+		}
+	}
+	return NaN;
+};
+
+
 
 EventVector.prototype.Next= function (Time){
 	var Current={};
@@ -184,7 +195,7 @@ EventVector.prototype.Next= function (Time){
 	}
 	// return the next one
 	return this.ValueVec[Current.Pos+1];
-}
+};
 
 
 
@@ -194,7 +205,7 @@ EventVector.prototype.CountEvents= function (EventValue, Time1, Time2){
 	// Counts the number of times the event happens in the period [Year1, Year2)
 	
 
-}
+};
 
 
 

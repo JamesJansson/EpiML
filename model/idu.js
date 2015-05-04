@@ -81,7 +81,7 @@ IDUObject.prototype.StartInjecting= function (Time){
 	else {
 		// determine time until ceasing irregular use
 		var TimeOfStoppingInjecting=TimeUntilEvent(Param.IDU.RateOfCessation);
-		this.Use.Set(4, TimeOfStoppingInjecting);
+		this.Use.Set(4, Time+TimeOfStoppingInjecting);
 	}
 	
 	
@@ -104,6 +104,25 @@ IDUObject.prototype.StopInjecting= function (Time){
 	console.error("In order to hard stop someone injecting (through interventions etc)");
 	console.error("Excess mortality needs to be adjusted if it occurs between old injection date and new injection date.");
 };
+
+IDUObject.prototype.CurrentlyInjecting= function (Time){
+	var UseValue=this.Use.Value(Time);
+	if (UseValue>0 && UseValue<4){
+		return true;
+	}
+	return false;
+};
+
+IDUObject.prototype.InjectingDuration= function (Time){
+	var UseValue=this.Use.Value(Time);
+	if (UseValue>0 && UseValue<4){
+		// Find when the person first starts injecting
+		
+	}
+	return -1;// not currently injecting
+};
+
+
 
 
 function RegularInjectionTimeObject(){//(RegularTimeP, RegularTimeT){

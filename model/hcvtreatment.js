@@ -133,6 +133,21 @@ function SelectPeopleAlive(Person, Time){
 	return AliveArray;
 }
 
+function SelectPWID(Person, Time){
+	var AliveArray=[];
+	for (var Pn in Person){
+		if (Person[Pn].Alive(Time)){
+			if (Person[Pn].CurrentlyInjecting(Time)==1){
+				AliveArray.push(Person[Pn]);
+			}
+		}
+	}
+	return AliveArray;
+}
+
+
+
+
 function SelectPeopleHCVInfection(Person, Time){
 	var HCVInfectedArray=[];
 	for (var Pn in Person){

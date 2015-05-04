@@ -59,6 +59,10 @@ function FullModel(Param, Data, Intervention){
 	
 	
 	
+	TotalTimeOfAllInfections should 
+	
+	
+	May need to cycle through again and again until the simualtion is successful	
 	
 	
 	// Create a very basic early population that has a set distribution 
@@ -166,6 +170,93 @@ function FullModel(Param, Data, Intervention){
 	
 	return Results;
 }
+
+
+
+function SetInitialHCVLevels(Person){
+	var Time=Param.InitialHCV.Time;
+	var PropWithHCVInitially=Param.InitialHCV.Prop;
+	var PWID=SelectPWID(Person, Time);
+	
+	var InjectionHistory={};
+	InjectionHistory.Duration=[];
+	InjectionHistory.TimeStart=[];
+	for (var Pn in PWID){
+		var ThisTimeStartInjection=PWID[Pn].IDU.Use.FirstTimeOf(1);	
+		InjectionHistory.Duration.push(ThisTimeStartInjection);
+		InjectionHistory.TimeStart.push(Time-ThisTimeStartInjection);
+	}
+	// do a very rough optimisation to get the right proportion at the time
+	new StochasticOptimise
+	
+	
+	var FunctionInput=InjectionHistory;
+	var OptimisationSettings={};
+	OptimisationSettings.Target=PropWithHCVInitially;
+	
+	OptimisationSettings.Function=function(FunctionInput, ParameterSet){
+		var TotalIDU=0;
+		var TotalHCV=0;
+		for (DCount in FunctionInput.Duration){
+			TotalIDU++;
+			var TimeOfHCV=TimeUntilEvent(ParameterSet.AnnualPHCV);
+			if (TimeOfHCV<FunctionInput.Duration[DCount]){
+				TotalHCV++;
+			}
+		}
+		
+		var Results=TotalIDU/TotalHCV;
+		return Results;
+	};
+
+	OptimisationSettings.ErrorFunction=function(Results, Target){
+		var TotalError=Abs(Results-Target);
+		return TotalError;
+	};
+
+	
+	OptimisationSettings.MaxTime=10;//stop after 10 seconds
+		
+	OptimisationObject=new StochasticOptimisation(OptimisationSettings);
+	OptimisationObject.AddParameter("AnnualPHCV", 0, 1);
+	OptimisationObject.Run(FunctionInput);
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	// MeanTimeOfSharing should result in the expected percent probability of infection
+	var MeanDurationOfInjection=TotalDurationOfInjection/PWIDCount;
+	
+	
+	var PerYearProbabilityOfInfection=
+	
+	
+	
+	// AT A SET TIME, MAKE X% PEOPLE HAVE HCV AT RANDOM (with back projected incidence)
+	// Each person is given a weight according to how long they have been injecting (later make it sharing)
+	// Weights are summed 
+	// Total
+	var ShuffledPWID=Shuffle(PWID);
+	
+	Weighting=ThisPersonsSharingTime/TotalSharingtime
+	Rate=TotalINfections/TotalPeople
+	
+	ProbabilityOfHCV=
+	
+	
+}
+
+
+
+
 
 
 function PWIDInitialDistribution(){
