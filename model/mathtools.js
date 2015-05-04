@@ -970,6 +970,21 @@ function RandSampleWeightedArray(Weights, n, Values){
 }
 
 
+// The following section is not yet implemented
+// function RandIntArray(Num, Min, Max){// this function is useful for selecting elements 
+	// there are two ways to calculate this. 
+	// selecting a small number of items from a broad range
+	// selecting a large proportion of elements 
+	
+//	if (Num>Max-Min+1){
+//		throw("Number of selections cannot be greater than the available integers");
+//	}	
+//	return }
+
+
+
+
+
 // Math.random is platform dependent, meaning we need to create or use a platform independent method 
 // This topic is discussed here http://bocoup.com/weblog/random-numbers/
 // The code below was found here https://gist.github.com/Protonk/5367430

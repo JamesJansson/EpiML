@@ -82,12 +82,99 @@ HCVTreatment.prototype.Cost=function(Time){
 
 
 function DetermineHistoricalTreatment(Person, Time, TimeStep, TreatmentNumbers){//TreatmentNumbers is an array of each of the treatment types
-	
+	// Determine number of treatments handed out in this step of each type
+		// Find appropriate year
+		// Amount
+		
+	// Randomly assign treatement 
 }
 
 function DetermineTreatment(Person, Time, TimeStep){
 	
 }
 	
+function TreatmentScenario1(Person, Time, TimeStep){
+	// people are given treatment at roughly existing rates
+	// Randomly send off 1000 new treatments per year of existing 
+	// work out the number to be given treatment this time step
+	var NumberTreatedPerYear=1000;
+	var TreatedThisStep=TimeStep*NumberTreatedPerYear;
+	
+	var HCVInfectedPop=SelectPeopleHCVInfection(Person, Time);
+	var ShuffledHCVInfectedPop=Shuffle(HCVInfectedPop);
+	
+	HCVTreatmentArray["PegIA2aRiba"].StartTreatment(ShuffledHCVInfectedPop[PCount], Time);
+	
+	
+	
+	// Count all people that are Alive with an active HCV infection
+	// add them to a list 
+	// choose the 1000 at random
+	// treat
+}
 
+// below is an example of a meta treatment scenario, which include an extension of the status quo, but a switch to  TreatementScenario2 in 2016
+function TreatementScenario3(Person, Time, TimeStep){
+	if (Time<2016){
+		TreatementScenario1(Person, Time, TimeStep);
+	}
+	else {
+		TreatementScenario2(Person, Time, TimeStep);
+	}
+}
 
+function SelectPeopleAlive(Person, Time){
+	var AliveArray=[];
+	for (var Pn in Person){
+		if (Person[Pn].Alive(Time)){
+			AliveArray.push(Person[Pn]);
+		}
+	}
+	return AliveArray;
+}
+
+function SelectPeopleHCVInfection(Person, Time){
+	var HCVInfectedArray=[];
+	for (var Pn in Person){
+		if (Person[Pn].Alive(Time)){
+			if (Person[Pn].HCV.Infected.Value(Time)==1){
+				HCVInfectedArray.push(Person[Pn]);
+			}
+		}
+	}
+	return HCVInfectedArray;
+}
+
+function SelectPeopleHCVInfectionGenotype(Person, Time, Genotype){
+	var GenotypeArray=[];
+	
+	if (typeof(Genotype)=='object'){// select the person if any of the genotypes present in the Genotype array are present
+		for (var Pn in Person){
+			if (Person[Pn].Alive(Time)){
+				if (Person[Pn].HCV.Infected.Value(Time)==1){
+					var GenotypesAtCurrentTime=Person[Pn].HCV.Genotype.Value(Time);
+					var PersonAdded=false;
+					for (var GenotypeIndex in Genotype){// this is probably slow given that the person is selected after the first match
+						if (GenotypesAtCurrentTime.indexOf(Genotype[GenotypeIndex])>-1 && PersonAdded==false){
+							GenotypeArray.push(Person[Pn]);
+							PersonAdded=true;
+						}
+					}
+				}
+			}
+		}
+	}
+	else{// do the simple fast search for the value stored in Genotype
+		for (var Pn in Person){
+			if (Person[Pn].Alive(Time)){
+				if (Person[Pn].HCV.Infected.Value(Time)==1){
+					var GenotypeAtCurrentTime =Person[Pn].HCV.Genotype.Value(Time);
+					if (GenotypeAtCurrentTime.indexOf(Genotype)>-1){
+						GenotypeArray.push(Person[Pn]);
+					}
+				}
+			}
+		}
+	}
+	return GenotypeArray;
+}
