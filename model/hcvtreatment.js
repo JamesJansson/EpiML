@@ -1,5 +1,6 @@
 function  HCVTreatment(Name, Duration, GeneralEfficacy,  GenotypeEfficacy, PatentExpires, OnPatentCost, OffPatentCost, AdverseEvents, Restrictions){
 	this.Name=Name;
+	this.ShortName=ShortName;
 	
 	this.Duration=Duration;
 	
