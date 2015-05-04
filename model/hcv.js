@@ -88,6 +88,8 @@ HCVObject.prototype.Infection= function (Year, GenotypeValue){//, Age, Sex, Alco
 	// Super infection does not change the course of Fibrosis in the model
 	var NewGenotypeArray=DeepCopy(this.Genotype.Value(Year));// note that since this is an array, we need to copy it before we operate on it.
 
+	console.log(this.Genotype.Value(Year));
+
 	// Check if any of the Genotypes in GenotypeValue exist in the current array
 	NewGenotypeArray.push(GenotypeValue);
 	var UniqueGenotypeArray = NewGenotypeArray.filter(function(item, pos, self) {

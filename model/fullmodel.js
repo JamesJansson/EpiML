@@ -190,10 +190,10 @@ function SetInitialHCVLevels(Person){
 	OptimisationSettings.Function=function(FunctionInput, ParameterSet){
 		var TotalIDU=0;
 		var TotalHCV=0;
-		for (DCount in FunctionInput.Duration){
+		for (var Pn in FunctionInput.Duration){
 			TotalIDU++;
 			var TimeOfHCV=TimeUntilEvent(ParameterSet.AnnualPHCV);
-			if (TimeOfHCV<FunctionInput.Duration[DCount]){
+			if (TimeOfHCV<FunctionInput.Duration[Pn]){
 				TotalHCV++;
 			}
 		}
@@ -211,16 +211,23 @@ function SetInitialHCVLevels(Person){
 	OptimisationSettings.NumberOfSamplesPerRound=10;
 	OptimisationSettings.MaxIterations=10;
 	
-	OptimisationObject=new StochasticOptimisation(OptimisationSettings);
-	OptimisationObject.AddParameter("AnnualPHCV", 0, 1);
-	OptimisationObject.Run(FunctionInput);
+	var HCVPOptimisation=new StochasticOptimisation(OptimisationSettings);
+	HCVPOptimisation.AddParameter("AnnualPHCV", 0, 1);
+	HCVPOptimisation.Run(FunctionInput);
 	
-	console.log(OptimisationObject);
+	console.log(HCVPOptimisation);
 	
 	console.log(Mean(InjectionHistory.Duration));
 	
-	
-	
+	var AnnualPHCV=HCVPOptimisation.ParameterFinal.AnnualPHCV;
+	// Now apply this to all people in the simulation thus far
+	for (var Pn in PWID){
+		var TimeOfHCV=TimeUntilEvent(AnnualPHCV);
+		if (TimeOfHCV<InjectionHistory.Duration[Pn]){
+			PWID[Pn].HCV.Infection(InjectionHistory.TimeStart+TimeOfHCV);
+		}
+	}
+	console.log(PWID);
 	
 	
 	
