@@ -44,6 +44,7 @@ function  HCVObject(PersonPointer){
 	
 	this.Treatment.Set(0, this.Person.YearOfBirth);
 	
+	this.TreatmentCosts=new EventVector;
 	this.TreatmentCosts.Set(0, this.Person.YearOfBirth);
 	
 	// Determine if the person is a reinfection protected

@@ -59,7 +59,10 @@ IDUObject.prototype.StartInjecting= function (Time){
 		this.Use.Set(3, TimeOfRegularUse);
 		
 		// Determine the use rate by people who use regularly
-		console.error("The rate at which people use has not been set.");
+		
+		
+		
+		
 		
 		
 		// Add the transition to former user
@@ -77,28 +80,30 @@ IDUObject.prototype.StartInjecting= function (Time){
 	}
 	else {
 		// determine time until ceasing irregular use
-		console.error("TimeOfStoppingInjecting has not been set.");
+		var TimeOfStoppingInjecting=TimeUntilEvent(Param.IDU.RateOfCessation);
 		this.Use.Set(4, TimeOfStoppingInjecting);
 	}
 	
 	
 	// Determine if the person is a sharer
-	console.error("Determination of sharing has not been set.");
+	
+	
+	
 	// Determine when the person ceases sharing
-	console.error("Determination of sharing cease has not been set.");
 	
 	
 	
 	
 	
 	// PWID additional mortality
-	console.error("PWID additional mortality has not been set.");
-}
+	
+	
+};
 
 IDUObject.prototype.StopInjecting= function (Time){
 	console.error("In order to hard stop someone injecting (through interventions etc)");
 	console.error("Excess mortality needs to be adjusted if it occurs between old injection date and new injection date.");
-}
+};
 
 
 function RegularInjectionTimeObject(){//(RegularTimeP, RegularTimeT){

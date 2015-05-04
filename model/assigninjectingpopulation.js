@@ -477,6 +477,44 @@ function TestDeterminePWIDEntryRateExponential2(){
 
 
 
+// optimise entry in new system
+function TestCreatePWID(){
+	// Globals that need to be run before code will work
+	RegularInjectionTime=new RegularInjectionTimeObject();
+	// OptimisedValues that need to be set by an external function
+	Param.IDU.RateOfCesssation=0.25;
+	var EntryParams=[];
+	EntryParams.A=2500;
+	EntryParams.B=0.20;
+	EntryParams.EndExponential=1995;
+	EntryParams.Logk2=0.3;
+	EntryParams.Logk1=0.4;
+	
+	// 
+	var Population=[];
+	
+
+	var TimeStep=0.1;
+	for (var Time=1990; Time<2010; Time+=TimeStep){
+		var Num=DeterminePWIDEntryRateExponential2(EntryParams, Time, TimeStep)
+		
+		var PeopleToAdd=CreatePWID(EntryParams, Time, TimeStep);
+		console.log("Year " + Time + " N " + PeopleToAdd.length);
+		
+		Population.push(PeopleToAdd);
+	}
+	
+	// for all people, apply the exit rate
+	
+}
+
+//RunSettings2={};
+//RunSettings2.FunctionName="TestCreatePWID";
+//SimulationHolder.Run(RunSettings2);
+
+
+
+
 
 
 // RunSettings2={};

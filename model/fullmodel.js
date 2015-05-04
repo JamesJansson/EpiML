@@ -62,7 +62,7 @@ function FullModel(Param, Data, Intervention){
 	
 	
 	// Create a very basic early population that has a set distribution 
-	var Person=InitialDistribution 
+	var Person=InitialDistribution();
 	
 	
 	var SimulationHistory=[];
@@ -83,7 +83,7 @@ function FullModel(Param, Data, Intervention){
 		
 		// Match some of the PWID, in particular females, to existing PWID sexual partners
 		// select by finding ProportionOfFirstInjectionsSexualPartner
-		// PWIDToAdd=
+
 		
 		// determine the number that will inject the first time with a sexual partners
 		var RemainderToAdd=JoinToSexualPartners(Person, PWIDToAdd, Data.FirstExperienceSexualPartner.Male, Data.FirstExperienceSexualPartner.Female);
@@ -120,7 +120,7 @@ function FullModel(Param, Data, Intervention){
 			DetermineHistoricalTreatment(Person, Time, Param.TimeStep, TreatmentNumbers);//Treatment rates is an array of each of the treatment types
 		}
 		else{
-			DetermineTreatment(Person, Time, Param.TimeStep);	
+			TreatmentFunction(Person, Time, Param.TimeStep);	
 		}
 		
 		
@@ -166,6 +166,33 @@ function FullModel(Param, Data, Intervention){
 	
 	return Results;
 }
+
+
+function PWIDInitialDistribution(){
+	var Population=[];
+	
+	Param.InitialDistribution.AgePWID.Median=35;
+	Param.InitialDistribution.AgePWID.LogSD=0.17;
+	
+	Param.InitialDistribution.AgeInitiatePWID.Median=20;
+	Param.InitialDistribution.AgeInitiatePWID.Median=20;
+	
+	
+	Param.InitialDistribution.TimeUntilHCV.Median=3.5;
+	Param.InitialDistribution.TimeUntilHCV.LogSD=1;
+	
+	Param.InitialDistribution.Year=1980;// this can vary too!
+	
+	
+	
+	
+	
+	return Population;
+}
+
+
+
+
 
 function CreateHCVInfectedBloodRecipients(){
 	Param.Haemophilia.Total2013;
