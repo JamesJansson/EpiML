@@ -169,8 +169,8 @@ function FullModel(Param, Data, Intervention){
 
 
 function SetInitialHCVLevels(Person){
-	var Time=Param.InitialHCV.Time;
-	var PropWithHCVInitially=Param.InitialHCV.Prop;
+	var Time=1993;//Param.InitialHCV.Time;
+	var PropWithHCVInitially=0.7; //Param.InitialHCV.Prop;
 	var PWID=SelectPWID(Person, Time);
 	
 	var InjectionHistory={};
@@ -178,13 +178,11 @@ function SetInitialHCVLevels(Person){
 	InjectionHistory.TimeStart=[];
 	for (var Pn in PWID){
 		var ThisTimeStartInjection=PWID[Pn].IDU.Use.FirstTimeOf(1);	
-		InjectionHistory.Duration.push(ThisTimeStartInjection);
-		InjectionHistory.TimeStart.push(Time-ThisTimeStartInjection);
+		InjectionHistory.TimeStart.push(ThisTimeStartInjection);
+		InjectionHistory.Duration.push(Time-ThisTimeStartInjection);
 	}
 	// do a very rough optimisation to get the right proportion at the time
-	new StochasticOptimise
-	
-	
+
 	var FunctionInput=InjectionHistory;
 	var OptimisationSettings={};
 	OptimisationSettings.Target=PropWithHCVInitially;
@@ -199,8 +197,7 @@ function SetInitialHCVLevels(Person){
 				TotalHCV++;
 			}
 		}
-		
-		var Results=TotalIDU/TotalHCV;
+		var Results=TotalHCV/TotalIDU;
 		return Results;
 	};
 
@@ -210,15 +207,17 @@ function SetInitialHCVLevels(Person){
 	};
 
 	
-	OptimisationSettings.MaxTime=10;//stop after 10 seconds
-		
+	//OptimisationSettings.MaxTime=10;//stop after 10 seconds
+	OptimisationSettings.NumberOfSamplesPerRound=10;
+	OptimisationSettings.MaxIterations=10;
+	
 	OptimisationObject=new StochasticOptimisation(OptimisationSettings);
 	OptimisationObject.AddParameter("AnnualPHCV", 0, 1);
 	OptimisationObject.Run(FunctionInput);
 	
 	console.log(OptimisationObject);
 	
-	
+	console.log(Mean(InjectionHistory.Duration));
 	
 	
 	
@@ -239,10 +238,10 @@ function SetInitialHCVLevels(Person){
 	// Each person is given a weight according to how long they have been injecting (later make it sharing)
 	// Weights are summed 
 	// Total
-	var ShuffledPWID=Shuffle(PWID);
+	//var ShuffledPWID=Shuffle(PWID);
 	
-	Weighting=ThisPersonsSharingTime/TotalSharingtime;
-	Rate=TotalINfections/TotalPeople;
+	//Weighting=ThisPersonsSharingTime/TotalSharingtime;
+	//Rate=TotalINfections/TotalPeople;
 	
 	//ProbabilityOfHCV=
 	
