@@ -59,11 +59,6 @@ function FullModel(Param, Data, Intervention){
 	
 	
 	
-	TotalTimeOfAllInfections should 
-	
-	
-	May need to cycle through again and again until the simualtion is successful	
-	
 	
 	// Create a very basic early population that has a set distribution 
 	var Person=InitialDistribution();
@@ -221,7 +216,7 @@ function SetInitialHCVLevels(Person){
 	OptimisationObject.AddParameter("AnnualPHCV", 0, 1);
 	OptimisationObject.Run(FunctionInput);
 	
-	
+	console.log(OptimisationObject);
 	
 	
 	
@@ -233,10 +228,10 @@ function SetInitialHCVLevels(Person){
 	
 	
 	// MeanTimeOfSharing should result in the expected percent probability of infection
-	var MeanDurationOfInjection=TotalDurationOfInjection/PWIDCount;
+	//var MeanDurationOfInjection=TotalDurationOfInjection/PWIDCount;
 	
 	
-	var PerYearProbabilityOfInfection=
+	//var PerYearProbabilityOfInfection=
 	
 	
 	
@@ -246,10 +241,10 @@ function SetInitialHCVLevels(Person){
 	// Total
 	var ShuffledPWID=Shuffle(PWID);
 	
-	Weighting=ThisPersonsSharingTime/TotalSharingtime
-	Rate=TotalINfections/TotalPeople
+	Weighting=ThisPersonsSharingTime/TotalSharingtime;
+	Rate=TotalINfections/TotalPeople;
 	
-	ProbabilityOfHCV=
+	//ProbabilityOfHCV=
 	
 	
 }

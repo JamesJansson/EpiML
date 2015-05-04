@@ -86,10 +86,8 @@ HCVObject.prototype.Infection= function (Year, GenotypeValue){//, Age, Sex, Alco
 	//this.Genotype.Set(GenotypeValue, Year);
 	// Superinfection is common, so we assume all people who get infected with a second strain are infected again http://www.cdc.gov/hepatitis/Resources/MtgsConf/HCVSymposium2011-PDFs/20_Blackard.pdf 
 	// Super infection does not change the course of Fibrosis in the model
-	var NewGenotypeArray=DeepCopy(this.Genotype.Value(Year));// note that sine this is an array, we need to copy it before we operate on it.
-	console.log(NewGenotypeArray);
-	console.log(this.Person);
-	console.log(Year);
+	var NewGenotypeArray=DeepCopy(this.Genotype.Value(Year));// note that since this is an array, we need to copy it before we operate on it.
+
 	// Check if any of the Genotypes in GenotypeValue exist in the current array
 	NewGenotypeArray.push(GenotypeValue);
 	var UniqueGenotypeArray = NewGenotypeArray.filter(function(item, pos, self) {
