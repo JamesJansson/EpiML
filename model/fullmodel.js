@@ -224,63 +224,45 @@ function SetInitialHCVLevels(Person){
 	for (var Pn in PWID){
 		var TimeOfHCV=TimeUntilEvent(AnnualPHCV);
 		if (TimeOfHCV<InjectionHistory.Duration[Pn]){
-			PWID[Pn].HCV.Infection(InjectionHistory.TimeStart+TimeOfHCV);
+			PWID[Pn].HCV.Infection(InjectionHistory.TimeStart[Pn]+TimeOfHCV, ChooseInitialGenotype());
 		}
 	}
 	console.log(PWID);
 	
+	// At this point, a plot should be created of 
+		// PWID by year
+		// HCV infections by year
 	
 	
+}
+
+function ChooseInitialGenotype(){
+	// the intention of this function is to set the genotype in the proportions stated
 	
+	// weightedrand([0.2, 0.3, 0.4], ['1a', '1b', '2'])
 	
-	// MeanTimeOfSharing should result in the expected percent probability of infection
-	//var MeanDurationOfInjection=TotalDurationOfInjection/PWIDCount;
-	
-	
-	//var PerYearProbabilityOfInfection=
-	
-	
-	
-	// AT A SET TIME, MAKE X% PEOPLE HAVE HCV AT RANDOM (with back projected incidence)
-	// Each person is given a weight according to how long they have been injecting (later make it sharing)
-	// Weights are summed 
-	// Total
-	//var ShuffledPWID=Shuffle(PWID);
-	
-	//Weighting=ThisPersonsSharingTime/TotalSharingtime;
-	//Rate=TotalINfections/TotalPeople;
-	
-	//ProbabilityOfHCV=
-	
-	
+	return '1';
 }
 
 
 
 
-
-
-function PWIDInitialDistribution(){
-	var Population=[];
+//function PWIDInitialDistribution(){
+//	var Population=[];
 	
-	Param.InitialDistribution.AgePWID.Median=35;
-	Param.InitialDistribution.AgePWID.LogSD=0.17;
+//	Param.InitialDistribution.AgePWID.Median=35;
+//	Param.InitialDistribution.AgePWID.LogSD=0.17;
 	
-	Param.InitialDistribution.AgeInitiatePWID.Median=20;
-	Param.InitialDistribution.AgeInitiatePWID.Median=20;
+//	Param.InitialDistribution.AgeInitiatePWID.Median=20;
+//	Param.InitialDistribution.AgeInitiatePWID.Median=20;
 	
 	
-	Param.InitialDistribution.TimeUntilHCV.Median=3.5;
-	Param.InitialDistribution.TimeUntilHCV.LogSD=1;
+//	Param.InitialDistribution.TimeUntilHCV.Median=3.5;
+//	Param.InitialDistribution.TimeUntilHCV.LogSD=1;
 	
-	Param.InitialDistribution.Year=1980;// this can vary too!
-	
-	
-	
-	
-	
-	return Population;
-}
+//	Param.InitialDistribution.Year=1980;// this can vary too!
+//	return Population;
+//}
 
 
 
