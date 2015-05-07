@@ -1,6 +1,18 @@
 
 var RegularInjectionTime;
 
+// Put the following into the console
+// RunSettings2={};
+// RunSettings2.FunctionName="RunFullModel";
+// SimulationHolder.Run(RunSettings2);
+
+
+function RunFullModel(){
+	
+	var Results=FullModel(Param, Data, Intervention);
+	return Results;
+}
+
 
 function FullModel(Param, Data, Intervention){ 
 	var YearToStartAverage=2008;
@@ -29,14 +41,13 @@ function FullModel(Param, Data, Intervention){
 	Notifications.Table[1]=Data.FemaleNotifications.Table;
 	
 	// var PWIDPopulation=DistributePWIDPopulationExponential(Param.IDU.EntryParams);//Returns PWIDPopulation as defined to the MaxYear
-	var PWIDEntry=DeterminePWIDEntryRateExponential2(Param.IDU.EntryParams);//Returns PWIDPopulation as defined to the MaxYear
+	// this is probably antiquated var PWIDEntry=DeterminePWIDEntryRateExponential2(Param.IDU.EntryParams);//Returns PWIDPopulation as defined to the MaxYear
 	
 	
 	
 	
 	
-	// Run HCV blood recipients
-	var HCVInfectedBloodRecipients=CreateHCVInfectedBloodRecipients();
+	
 	
 	// Add proportions as mentioned in Greg's paper
 	// Determine how many end up as PWID
@@ -45,9 +56,9 @@ function FullModel(Param, Data, Intervention){
 	// Determine proportion of each that end up PWID
 	
 	
-	// Join populations
+	
 	var Population=[];
-	Population.concat(PWIDPopulation, HCVInfectedBloodRecipients);// Later add MSM and migrants
+	
 	
 	
 	
@@ -63,9 +74,14 @@ function FullModel(Param, Data, Intervention){
 	// Create a very basic early population that has a set distribution 
 	var Person=InitialDistribution();
 	
+	// Run HCV blood recipients
+	console.error("Below is not running but should be implemented prior to creating results");
+	//var HCVInfectedBloodRecipients=CreateHCVInfectedBloodRecipients();
+	// Join populations
+	// Person=Person.concat(HCVInfectedBloodRecipients);// Later add MSM and migrants
 	
 	var SimulationHistory=[];
-	SimulationHistory.DiagnosisResults;
+	SimulationHistory.DiagnosisResults=[];
 	var StepCount=-1;
 	for (var Time=Param.StartTime; Time<Param.EndTime; Time+=Param.TimeStep){// each time step
 		StepCount++;
@@ -75,7 +91,7 @@ function FullModel(Param, Data, Intervention){
 		// determine number of individuals added the population of PWID
 		// Param.IDU.Add 
 		
-		var NumberOfPeopleToAddThisStep=DeterminePWIDEntryRateExponential2(Param.IDU.EntryParams, Time, Param.TimeStep);
+		// this is probably antiquated var NumberOfPeopleToAddThisStep=DeterminePWIDEntryRateExponential2(Param.IDU.EntryParams, Time, Param.TimeStep);
 		
 		// Add new people to the IDU population for this time step
 		var PWIDToAdd=CreatePWID(Param.IDU.EntryParams, Time, Param.TimeStep);
@@ -91,8 +107,8 @@ function FullModel(Param, Data, Intervention){
 			// Determine when the sexual partners begin their partnership (could be before starting injecting or after)
 			// what proportion had partners who did not inject drugs
 		
+		// All new people are joined to "friends" in the model
 		JoinToFriends(Person, RemainderToAdd);
-		
 		
 		// Balance sexual partnerships
 		AssignSexualPartner(Person, Time);
@@ -123,10 +139,7 @@ function FullModel(Param, Data, Intervention){
 		}
 		
 		
-		
-		
 		// lots of points are lost for insufficient people to draw from diagnoses 
-		
 		
 		
 		// If the year is the first year of the simulation
@@ -165,6 +178,19 @@ function FullModel(Param, Data, Intervention){
 	
 	return Results;
 }
+
+function InitialDistribution(){
+	// Run CreatePWID multiple times
+	var Person=[];
+	for (var Time=Param.Time.InitialDistribution.Start; Time<Param.Time.InitialDistribution.End){
+		var PWIDToAdd=CreatePWID(Param.IDU.EntryParams, Time, Param.TimeStep);
+		Person=Person.concat(PWIDToAdd);
+	}
+	SetInitialHCVLevels(Person);
+	InitialiseNetwork(Person, Param.Time.InitialDistribution.End);// we only need it to be a correct network at the end of this period because this is the start of the dynamic period
+	
+}
+
 
 
 
