@@ -107,6 +107,8 @@ function FullModel(Param, Data, Intervention){
 			// Determine when the sexual partners begin their partnership (could be before starting injecting or after)
 			// what proportion had partners who did not inject drugs
 		
+		// not the above should add the correct number of PWID to Person
+		
 		// All new people are joined to "friends" in the model
 		JoinToFriends(Person, RemainderToAdd);
 		
@@ -182,20 +184,21 @@ function FullModel(Param, Data, Intervention){
 function InitialDistribution(){
 	// Run CreatePWID multiple times
 	var Person=[];
-	for (var Time=Param.Time.InitialDistribution.Start; Time<Param.Time.InitialDistribution.End){
+	for (var Time=Param.Time.InitialDistribution.Start; Time<Param.Time.InitialDistribution.End; Time+=Param.TimeStep){
 		var PWIDToAdd=CreatePWID(Param.IDU.EntryParams, Time, Param.TimeStep);
 		Person=Person.concat(PWIDToAdd);
 	}
 	SetInitialHCVLevels(Person);
 	InitialiseNetwork(Person, Param.Time.InitialDistribution.End);// we only need it to be a correct network at the end of this period because this is the start of the dynamic period
 	
+	return Person;
 }
 
 
 
 
 function SetInitialHCVLevels(Person){
-	var Time=1993;//Param.InitialHCV.Time;
+	var Time=1993;//Param.Model.DynamicHCV.Time;
 	var PropWithHCVInitially=0.7; //Param.InitialHCV.Prop;
 	var PWID=SelectPWID(Person, Time);
 	

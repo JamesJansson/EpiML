@@ -1308,19 +1308,41 @@
         "Description": "Ref 1: Key findings from the 2012 IDRS: a survey of people who inject drugs \n"
     },
     {
-        "ParameterID": "Settings_EndYear",
+        "ParameterID": "Time_EndData",
+        "ArrayName": "Param",
+        "ArrayNumber": "64",
+        "InterfaceID": "ParamHolder_64",
+        "GroupName": "",
+        "DistributionType": "normal",
+        "Median": 0.8,
+        "StandardError": null,
+        "LowerBound": null,
+        "UpperBound": null,
+        "Upper95Range": null,
+        "Lower95Range": null,
+        "CalculatedMedian": 0.8,
+        "NumberOfSamples": 1,
+        "Val": [
+            0.8
+        ],
+        "MinValue": "",
+        "MaxValue": "",
+        "Description": ""
+    },
+    {
+        "ParameterID": "Time_StartDynamicModel",
         "ArrayName": "Param",
         "ArrayNumber": "61",
         "InterfaceID": "ParamHolder_61",
         "GroupName": "",
         "DistributionType": "normal",
-        "Median": 2013,
+        "Median": 1980,
         "StandardError": 0,
         "LowerBound": null,
         "UpperBound": null,
-        "Upper95Range": 2013,
-        "Lower95Range": 2013,
-        "CalculatedMedian": 2013,
+        "Upper95Range": 1980,
+        "Lower95Range": 1980,
+        "CalculatedMedian": 1980,
         "NumberOfSamples": 100,
         "Val": [],
         "MinValue": "",
@@ -1328,7 +1350,7 @@
         "Description": ""
     },
     {
-        "ParameterID": "Settings_StartYear",
+        "ParameterID": "Time_StartNonDynamicModel",
         "ArrayName": "Param",
         "ArrayNumber": "62",
         "InterfaceID": "ParamHolder_62",
@@ -1348,7 +1370,7 @@
         "Description": ""
     },
     {
-        "ParameterID": "Settings_TimeStep",
+        "ParameterID": "Time_TimeStep",
         "ArrayName": "Param",
         "ArrayNumber": "63",
         "InterfaceID": "ParamHolder_63",
@@ -1366,27 +1388,5 @@
         "MinValue": 0,
         "MaxValue": 1,
         "Description": "The time step is variable to allow the model to be checked for sensitivity to time step selection."
-    },
-    {
-        "ParameterID": "xxxIDU_ReceptiveSharingReductionAt40",
-        "ArrayName": "Param",
-        "ArrayNumber": "64",
-        "InterfaceID": "ParamHolder_64",
-        "GroupName": "",
-        "DistributionType": "normal",
-        "Median": 0.8,
-        "StandardError": null,
-        "LowerBound": null,
-        "UpperBound": null,
-        "Upper95Range": 0.8,
-        "Lower95Range": 0.8,
-        "CalculatedMedian": 0.8,
-        "NumberOfSamples": 1,
-        "Val": [
-            0.8
-        ],
-        "MinValue": "",
-        "MaxValue": "",
-        "Description": ""
     }
 ]
