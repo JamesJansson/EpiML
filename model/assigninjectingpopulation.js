@@ -452,6 +452,83 @@ function CreatePWID(EntryParams, Time, TimeStep){
 	return PWIDPopulation;
 }
 
+function SetInitialHCVLevels(Person){
+	var Time=1993;//Param.Model.DynamicHCV.Time;
+	var PropWithHCVInitially=0.7; //Param.InitialHCV.Prop;
+	var PWID=SelectPWID(Person, Time);
+	
+	var InjectionHistory={};
+	InjectionHistory.Duration=[];
+	InjectionHistory.TimeStart=[];
+	for (var Pn in PWID){
+		var ThisTimeStartInjection=PWID[Pn].IDU.Use.FirstTimeOf(1);	
+		InjectionHistory.TimeStart.push(ThisTimeStartInjection);
+		InjectionHistory.Duration.push(Time-ThisTimeStartInjection);
+	}
+	// do a very rough optimisation to get the right proportion at the time
+
+	var FunctionInput=InjectionHistory;
+	var OptimisationSettings={};
+	OptimisationSettings.Target=PropWithHCVInitially;
+	
+	OptimisationSettings.Function=function(FunctionInput, ParameterSet){
+		var TotalIDU=0;
+		var TotalHCV=0;
+		for (var Pn in FunctionInput.Duration){
+			TotalIDU++;
+			var TimeOfHCV=TimeUntilEvent(ParameterSet.AnnualPHCV);
+			if (TimeOfHCV<FunctionInput.Duration[Pn]){
+				TotalHCV++;
+			}
+		}
+		var Results=TotalHCV/TotalIDU;
+		return Results;
+	};
+
+	OptimisationSettings.ErrorFunction=function(Results, Target){
+		var TotalError=Abs(Results-Target);
+		return TotalError;
+	};
+
+	
+	//OptimisationSettings.MaxTime=10;//stop after 10 seconds
+	OptimisationSettings.NumberOfSamplesPerRound=10;
+	OptimisationSettings.MaxIterations=10;
+	
+	var HCVPOptimisation=new StochasticOptimisation(OptimisationSettings);
+	HCVPOptimisation.AddParameter("AnnualPHCV", 0, 1);
+	HCVPOptimisation.Run(FunctionInput);
+	
+	console.log(HCVPOptimisation);
+	
+	console.log(Mean(InjectionHistory.Duration));
+	
+	var AnnualPHCV=HCVPOptimisation.ParameterFinal.AnnualPHCV;
+	// Now apply this to all people in the simulation thus far
+	for (var Pn in PWID){
+		var TimeOfHCV=TimeUntilEvent(AnnualPHCV);
+		if (TimeOfHCV<InjectionHistory.Duration[Pn]){
+			PWID[Pn].HCV.Infection(InjectionHistory.TimeStart[Pn]+TimeOfHCV, ChooseInitialGenotype());
+		}
+	}
+	console.log(PWID);
+	
+	// At this point, a plot should be created of 
+		// PWID by year
+		// HCV infections by year
+	
+	
+}
+
+function ChooseInitialGenotype(){
+	// the intention of this function is to set the genotype in the proportions stated
+	
+	// weightedrand([0.2, 0.3, 0.4], ['1a', '1b', '2'])
+	
+	return '1';
+}
+
+
 // create PWID test
 function TestDeterminePWIDEntryRateExponential2(){
 	EntryParams=[];

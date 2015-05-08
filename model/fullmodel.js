@@ -184,12 +184,12 @@ function FullModel(Param, Data, Intervention){
 function InitialDistribution(){
 	// Run CreatePWID multiple times
 	var Person=[];
-	for (var Time=Param.Time.InitialDistribution.Start; Time<Param.Time.InitialDistribution.End; Time+=Param.TimeStep){
+	for (var Time=Param.Time.StartNonDynamicModel; Time<Param.Time.StartDynamicModel; Time+=Param.TimeStep){
 		var PWIDToAdd=CreatePWID(Param.IDU.EntryParams, Time, Param.TimeStep);
 		Person=Person.concat(PWIDToAdd);
 	}
 	SetInitialHCVLevels(Person);
-	InitialiseNetwork(Person, Param.Time.InitialDistribution.End);// we only need it to be a correct network at the end of this period because this is the start of the dynamic period
+	InitialiseNetwork(Person, Param.Time.StartDynamicModel);// we only need it to be a correct network at the end of this period because this is the start of the dynamic period
 	
 	return Person;
 }
