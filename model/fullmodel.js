@@ -30,8 +30,6 @@ function RunFullModel(){
 
 
 function FullModel(Param, Notifications, Intervention){ 
-	var YearToStartAverage=2008;
-	console.error("Warning: year to start average diagnosis rate is hard set here");
 
 	// Intervention[No]=function(Time){
 	// 	   if (Time<2016){
@@ -135,12 +133,12 @@ function FullModel(Param, Notifications, Intervention){
 		
 		
 		// Testing
-		if (Time<Common.LastYearOfHCVDiagnosisData){
+		if (Time<Param.Time.EndData){
 			SimulationHistory.DiagnosisResults[StepCount]=HCVDataDiagnosis(Person, Notifications, Time, Param.TimeStep);
 		}
 		else{
 			if (typeof(PerStepProbOfDiagnosis)=="undefined"){
-				var PerStepProbOfDiagnosis=DeterminePostDataDiagnosisDataRate(SimulationHistory.DiagnosisResults, YearToStartAverage);
+				var PerStepProbOfDiagnosis=DeterminePostDataDiagnosisDataRate(SimulationHistory.DiagnosisResults, Param.Time.DurationToAverageOver);
 			}
 			HCVRateDiagnosis(Person, PerStepProbOfDiagnosis, Time, Param.TimeStep);
 		}
@@ -148,8 +146,8 @@ function FullModel(Param, Notifications, Intervention){
 		
 		// Determine treatment
 			// X number per year are treated out of those who are diagnosed
-		if (Time<Common.LastYearOfHCVDiagnosisData){
-			DetermineHistoricalTreatment(Person, Time, Param.TimeStep, TreatmentNumbers);//Treatment rates is an array of each of the treatment types
+		if (Time<Param.Time.EndData){
+			DetermineHistoricalTreatment(Person, Time, Param.TimeStep, Data.TreatmentNumbers);//Treatment rates is an array of each of the treatment types
 		}
 		else{
 			TreatmentFunction(Person, Time, Param.TimeStep);	
