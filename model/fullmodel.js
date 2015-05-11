@@ -21,7 +21,7 @@ function RunFullModel(){
 	Notifications.Table[1]=[];
 	Notifications.Table[1]=Data.FemaleNotifications.Table;
 	
-	
+	console.log(Param);
 	
 	
 	var Results=FullModel(Param, Notifications, Intervention);
@@ -90,7 +90,13 @@ function FullModel(Param, Notifications, Intervention){
 	var SimulationHistory=[];
 	SimulationHistory.DiagnosisResults=[];
 	var StepCount=-1;
-	for (var Time=Param.StartTime; Time<Param.EndTime; Time+=Param.TimeStep){// each time step
+	
+	console.error("fix times below");
+	
+	
+	
+	
+	for (var Time=Param.Time.StartDynamicModel; Time<Param.Time.EndData; Time+=Param.TimeStep){// each time step
 		StepCount++;
 		// RunInterventions(Time); 
 	
@@ -101,6 +107,8 @@ function FullModel(Param, Notifications, Intervention){
 		// this is probably antiquated var NumberOfPeopleToAddThisStep=DeterminePWIDEntryRateExponential2(Param.IDU.EntryParams, Time, Param.TimeStep);
 		
 		// Add new people to the IDU population for this time step
+		console.log("looking at param inside full model");
+		console.log(Param);
 		var PWIDToAdd=CreatePWID(Param.IDU.Entry, Time, Param.TimeStep);
 		
 		// Match some of the PWID, in particular females, to existing PWID sexual partners

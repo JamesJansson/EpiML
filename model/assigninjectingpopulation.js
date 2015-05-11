@@ -407,6 +407,7 @@ function DeterminePWIDEntryRateExponential2(EntryParams, Time, TimeStep){//MaxYe
 	
 	var NumberInYear, NumberInStep;
 	// Determine if in the initial exponential period
+	console.log(EntryParams);
 	if (Time<EntryParams.YearPeakIDU){
 		NumberInYear=EntryParams.A*Exp(Log(EntryParams.Logk1)*(EntryParams.YearPeakIDU-Time));
 	}
