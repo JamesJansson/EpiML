@@ -80,10 +80,7 @@ function FullModel(Param, Notifications, Intervention){
 	// Run migrants
 	// Determine proportion of each that end up PWID
 	
-	
-	
-	var Population=[];
-	
+
 	
 	
 	
@@ -208,8 +205,8 @@ function FullModel(Param, Notifications, Intervention){
 		// For every diagnosis, 
 	
 	var Results={};
-	Results.Population=Population;
-	Results.UnaccountedForDiagnoses=UnaccountedForDiagnoses;
+	Results.Population=Person;
+	Results.SimulationHistory=SimulationHistory;
 	
 	return Results;
 }
@@ -220,6 +217,7 @@ function InitialDistribution() {
 	
 	// Run CreatePWID multiple times
 	var Person = [];
+	
 	for (var Time = Param.Time.StartNonDynamicModel; Time < Param.Time.StartDynamicModel; Time += Param.TimeStep) {
 		console.log(Param.IDU.Entry);
 		var PWIDToAdd = CreatePWID(Param.IDU.Entry, Time, Param.TimeStep);
@@ -227,6 +225,9 @@ function InitialDistribution() {
 		
 		console.log("Year " + Time + " N " + PWIDToAdd.length);
 	}
+	console.log(Time);
+	console.log("exitted the loop");
+	
 	SetInitialHCVLevels(Person);
 	//InitialiseNetwork(Person, Param.Time.StartDynamicModel);// we only need it to be a correct network at the end of this period because this is the start of the dynamic period
 	
