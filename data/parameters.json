@@ -1348,7 +1348,7 @@
         "Description": ""
     },
     {
-        "ParameterID": "Time_EndData",
+        "ParameterID": "Time_EndTreatmentData",
         "ArrayName": "Param",
         "ArrayNumber": "63",
         "InterfaceID": "ParamHolder_63",

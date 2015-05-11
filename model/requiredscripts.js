@@ -24,3 +24,4 @@ importScripts("fullmodel.js");
 importScripts("assignsexualpartner.js");
 importScripts("hcvtransmission.js");
 importScripts("hcvtreatment.js");
+importScripts("hcvdiagnosis.js");

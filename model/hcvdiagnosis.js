@@ -99,7 +99,7 @@ function FilterNegativeValues(Value){
 
 function HCVDataDiagnosisNumbers(Notifications, Time, TimeStep){
 	// Choose the age and sex from the notifications table
-	//Notifications.Table[SexIndex][AgeIndex][YearIndex]
+	//Notifications.Count[SexIndex][AgeIndex][YearIndex]
 	
 	// Select the notification year
 	var YearIndex=Notifications.Year.indexOf(Floor(Time));
@@ -113,11 +113,15 @@ function HCVDataDiagnosisNumbers(Notifications, Time, TimeStep){
 	// copy out this into a vector that can be used later
 	for (var AgeIndex=0; AgeIndex<Notifications.Age.length; AgeIndex++){
 		for (var SexIndex=0; SexIndex<2; SexIndex++){
-			NumberDiagnosedThisStep.Count[SexIndex][AgeIndex]=Notifications.Table[SexIndex][AgeIndex][YearIndex];
+			NumberDiagnosedThisStep.Count[SexIndex][AgeIndex]=Notifications.Count[SexIndex][AgeIndex][YearIndex];
 		}
 	}
 	// Decide the number of diagnoses in this step
+	console.log(Notifications);
+	console.log("Multiply: testing this line 1");
+	console.log(NumberDiagnosedThisStep);
 	NumberDiagnosedThisStep.Count=Multiply(NumberDiagnosedThisStep.Count, TimeStep);
+	console.log("Multiply: testing this line 2");
 	var FlooredResult=Floor(NumberDiagnosedThisStep.Count);
 	var DiffProb=NumberDiagnosedThisStep.Count-FlooredResult;
 	var Diff=Win(DiffProb);

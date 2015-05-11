@@ -1,16 +1,28 @@
 function DetermineHCVTransmissions(Person, Time, TimeStep){
 	// start by determining who is alive and who is not (to save time in sub functions)
-	AlivePerson=[];
-	for (var Pi in Person){
-		if (Person[Pi].Alive(Time)){
-			AlivePerson.push(Person[Pi]);
+
+	var PWID=SelectPWID(Person, Time);
+	var TotalPWID=PWID.length;
+	for (var Pn in PWID){
+		// choose a person at random in all PWID (to get the right ratio of non-)
+		var IndexOfPartner=Floor(TotalPWID*Rand.Value());
+		if (PWID[IndexOfPartner].HCV.Infected.Value(Time)==1){
+			// Determine genotype of the person, then create a new infection 
+			var GenotypeArray=PWID[IndexOfPartner].HCV.Genotype.Value(Time);
+			
+			PWID[Pn].HCV.Infection(Time+TimeStep*Rand.Value(), GenotypeArray);
 		}
-	}
 		
+	}
 	
-	DetermineInjectingTransmissions(AlivePerson, Time, TimeStep);
-	DetermineMSMTransmissions(AlivePerson, Time, TimeStep);
-	DetermineSexualTransmissions(AlivePerson, Time, TimeStep);
+	
+	
+	
+	//DetermineInjectingTransmissions(AlivePerson, Time, TimeStep);
+	//DetermineMSMTransmissions(AlivePerson, Time, TimeStep);
+	//DetermineSexualTransmissions(AlivePerson, Time, TimeStep);
+
+
 }
 
 

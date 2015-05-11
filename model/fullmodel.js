@@ -11,17 +11,37 @@ function RunFullModel(){
 	
 	var Intervention=function(){};
 	
+	
+	// Globals that need to be run before code will work
+	RegularInjectionTime=new RegularInjectionTimeObject();
+	// OptimisedValues that need to be set by an external function
+	Param.IDU.RateOfCesssation=0.25;
+
+	Param.IDU.Entry.A=2500;
+	Param.IDU.Entry.B=0.20;
+	Param.IDU.Entry.Logk2=0.3;
+	Param.IDU.Entry.Logk1=0.8;
+	
 	// Notification data
 	var Notifications={}; // This should go into the outer loop
+	
+	console.log(Data);
+
+	
 	Notifications.Year=Data.MaleNotifications.Year;
 	Notifications.Age=Data.MaleNotifications.Age;
-	Notifications.Table=[];
-	Notifications.Table[0]=[];
-	Notifications.Table[0]=Data.MaleNotifications.Table;
-	Notifications.Table[1]=[];
-	Notifications.Table[1]=Data.FemaleNotifications.Table;
+	Notifications.Count=[];
+	Notifications.Count[0]=[];
+	Notifications.Count[0]=Data.MaleNotifications.Table;
+	Notifications.Count[1]=[];
+	Notifications.Count[1]=Data.FemaleNotifications.Table;
+	Notifications.FirstYearOfData=Notifications.Year[0];
+	Notifications.LastYearOfData=Notifications.Year[Notifications.Year.length-1];
 	
-	console.log(Param);
+	
+	
+	console.log(Notifications);
+	//throw("stopping");
 	
 	
 	var Results=FullModel(Param, Notifications, Intervention);
@@ -112,19 +132,19 @@ function FullModel(Param, Notifications, Intervention){
 		// Match some of the PWID, in particular females, to existing PWID sexual partners
 		// select by finding ProportionOfFirstInjectionsSexualPartner
 
-		
-		// determine the number that will inject the first time with a sexual partners
-		var RemainderToAdd=JoinToSexualPartners(Person, PWIDToAdd, Data.FirstExperienceSexualPartner.Male, Data.FirstExperienceSexualPartner.Female);
-			// determine number with regular sex partners (approximately 50%, NSP survey)
-			// determine number with casual sex partners
-			// Determine when the sexual partners begin their partnership (could be before starting injecting or after)
-			// what proportion had partners who did not inject drugs
-		
-		// not the above should add the correct number of PWID to Person
-		
-		// All new people are joined to "friends" in the model
-		JoinToFriends(Person, RemainderToAdd);
-		
+		if (false){// add once this section is complete
+			// determine the number that will inject the first time with a sexual partners
+			var RemainderToAdd=JoinToSexualPartners(Person, PWIDToAdd, Data.FirstExperienceSexualPartner.Male, Data.FirstExperienceSexualPartner.Female);
+				// determine number with regular sex partners (approximately 50%, NSP survey)
+				// determine number with casual sex partners
+				// Determine when the sexual partners begin their partnership (could be before starting injecting or after)
+				// what proportion had partners who did not inject drugs
+			
+			// not the above should add the correct number of PWID to Person
+			
+			// All new people are joined to "friends" in the model
+			JoinToFriends(Person, RemainderToAdd);
+		}
 		// Balance sexual partnerships
 		AssignSexualPartner(Person, Time);
 		
@@ -132,11 +152,11 @@ function FullModel(Param, Notifications, Intervention){
 		DetermineHCVTransmissions(Person, Time, Param.TimeStep);
 		
 		
-		// Testing
-		if (Time<Param.Time.EndData){
+		// Testing 
+		if (Notifications.FirstYearOfData<=Time && Time<Notifications.LastYearOfData){ // only if there is data
 			SimulationHistory.DiagnosisResults[StepCount]=HCVDataDiagnosis(Person, Notifications, Time, Param.TimeStep);
 		}
-		else{
+		else if (Notifications.LastYearOfData < Time){
 			if (typeof(PerStepProbOfDiagnosis)=="undefined"){
 				var PerStepProbOfDiagnosis=DeterminePostDataDiagnosisDataRate(SimulationHistory.DiagnosisResults, Param.Time.DurationToAverageOver);
 			}
@@ -146,7 +166,7 @@ function FullModel(Param, Notifications, Intervention){
 		
 		// Determine treatment
 			// X number per year are treated out of those who are diagnosed
-		if (Time<Param.Time.EndData){
+		if (Time<Param.Time.EndTreatmentData){
 			DetermineHistoricalTreatment(Person, Time, Param.TimeStep, Data.TreatmentNumbers);//Treatment rates is an array of each of the treatment types
 		}
 		else{
@@ -194,15 +214,21 @@ function FullModel(Param, Notifications, Intervention){
 	return Results;
 }
 
-function InitialDistribution(){
+function InitialDistribution() {
+	console.log("in InitialDistribution");
+	
+	
 	// Run CreatePWID multiple times
-	var Person=[];
-	for (var Time=Param.Time.StartNonDynamicModel; Time<Param.Time.StartDynamicModel; Time+=Param.TimeStep){
-		var PWIDToAdd=CreatePWID(Param.IDU.EntryParams, Time, Param.TimeStep);
-		Person=Person.concat(PWIDToAdd);
+	var Person = [];
+	for (var Time = Param.Time.StartNonDynamicModel; Time < Param.Time.StartDynamicModel; Time += Param.TimeStep) {
+		console.log(Param.IDU.Entry);
+		var PWIDToAdd = CreatePWID(Param.IDU.Entry, Time, Param.TimeStep);
+		Person = Person.concat(PWIDToAdd);
+		
+		console.log("Year " + Time + " N " + PWIDToAdd.length);
 	}
 	SetInitialHCVLevels(Person);
-	InitialiseNetwork(Person, Param.Time.StartDynamicModel);// we only need it to be a correct network at the end of this period because this is the start of the dynamic period
+	//InitialiseNetwork(Person, Param.Time.StartDynamicModel);// we only need it to be a correct network at the end of this period because this is the start of the dynamic period
 	
 	return Person;
 }

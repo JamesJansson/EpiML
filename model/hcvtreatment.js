@@ -124,44 +124,65 @@ function TreatementScenario3(Person, Time, TimeStep){
 }
 
 function SelectPeopleAlive(Person, Time){
-	var AliveArray=[];
+	var PersonArray=[];
 	for (var Pn in Person){
 		if (Person[Pn].Alive(Time)){
-			AliveArray.push(Person[Pn]);
+			PersonArray.push(Person[Pn]);
 		}
 	}
-	return AliveArray;
+	return PersonArray;
 }
 
 function SelectPWID(Person, Time){
-	var AliveArray=[];
+	var PersonArray=[];
 	for (var Pn in Person){
 		if (Person[Pn].Alive(Time)){
 			if (Person[Pn].IDU.CurrentlyInjecting(Time)==1){
-				AliveArray.push(Person[Pn]);
+				PersonArray.push(Person[Pn]);
 			}
 		}
 	}
-	return AliveArray;
+	return PersonArray;
 }
 
 
 
 
 function SelectPeopleHCVInfection(Person, Time){
-	var HCVInfectedArray=[];
+	var PersonArray=[];
 	for (var Pn in Person){
 		if (Person[Pn].Alive(Time)){
 			if (Person[Pn].HCV.Infected.Value(Time)==1){
-				HCVInfectedArray.push(Person[Pn]);
+				PersonArray.push(Person[Pn]);
 			}
 		}
 	}
-	return HCVInfectedArray;
+	return PersonArray;
 }
 
+
+function SelectPWIDHCVInfected(Person, Time){
+	var PersonArray=[];
+	for (var Pn in Person){
+		if (Person[Pn].Alive(Time)){
+			if (Person[Pn].IDU.CurrentlyInjecting(Time)==1){
+				if (Person[Pn].HCV.Infected.Value(Time)==1){
+					PersonArray.push(Person[Pn]);
+				}
+			}
+		}
+	}
+	return PersonArray;
+}
+
+
+
+
+
+
+
 function SelectPeopleHCVInfectionGenotype(Person, Time, Genotype){
-	var GenotypeArray=[];
+	var PersonArray=[];
 	
 	if (typeof(Genotype)=='object'){// select the person if any of the genotypes present in the Genotype array are present
 		for (var Pn in Person){
@@ -171,7 +192,7 @@ function SelectPeopleHCVInfectionGenotype(Person, Time, Genotype){
 					var PersonAdded=false;
 					for (var GenotypeIndex in Genotype){// this is probably slow given that the person is selected after the first match
 						if (GenotypesAtCurrentTime.indexOf(Genotype[GenotypeIndex])>-1 && PersonAdded==false){
-							GenotypeArray.push(Person[Pn]);
+							PersonArray.push(Person[Pn]);
 							PersonAdded=true;
 						}
 					}
@@ -185,11 +206,11 @@ function SelectPeopleHCVInfectionGenotype(Person, Time, Genotype){
 				if (Person[Pn].HCV.Infected.Value(Time)==1){
 					var GenotypeAtCurrentTime =Person[Pn].HCV.Genotype.Value(Time);
 					if (GenotypeAtCurrentTime.indexOf(Genotype)>-1){
-						GenotypeArray.push(Person[Pn]);
+						PersonArray.push(Person[Pn]);
 					}
 				}
 			}
 		}
 	}
-	return GenotypeArray;
+	return PersonArray;
 }
