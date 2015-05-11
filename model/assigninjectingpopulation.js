@@ -523,9 +523,9 @@ function SetInitialHCVLevels(Person){
 
 function ChooseInitialGenotype(){
 	// the intention of this function is to set the genotype in the proportions stated
-	
-	// weightedrand([0.2, 0.3, 0.4], ['1a', '1b', '2'])
-	
+	console.log(Param.HCV);
+	var Val=RandSampleWeighted([Param.HCV.GenotypePrevalence['1'], Param.HCV.GenotypePrevalence['2'], Param.HCV.GenotypePrevalence['3'], Param.HCV.GenotypePrevalence['4']], ['1', '2', '3', '4']);
+	console.log(Val);
 	return '1';
 }
 
@@ -578,7 +578,7 @@ function TestCreatePWID(){
 		
 		Population=Population.concat(PeopleToAdd);
 	}
-	
+	console.log("SetInitialHCVLevels");
 	// for all people, apply the exit rate
 	SetInitialHCVLevels(Population);
 	
