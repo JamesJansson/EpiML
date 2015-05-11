@@ -8,6 +8,8 @@ self.onmessage = function (WorkerMessage) {
 	
 	MultithreadSimController=new MultithreadSimControllerObject(WorkerMessage);
 	
+	console.log(WorkerMessage.data.FunctionToRun);
+	
 	eval("FunctionHolder="+WorkerMessage.data.FunctionToRun+";");
 	var SimResult=FunctionHolder(WorkerMessage.data);
 	self.postMessage({WorkerMessage: WorkerMessage.data, Result: SimResult});//All simulation will end with this line

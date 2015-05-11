@@ -293,7 +293,7 @@ function EntryRateOptimisationExponential(TargetForThisOptimisation, EntryParams
 	
 	
 	FunctionInput.EntryParams.Year=TargetForThisOptimisation.Year.slice();
-	FunctionInput.EntryParams.EndExponential=1995;
+	FunctionInput.EntryParams.YearPeakIDU=1995;
 	FunctionInput.EntryParams.FirstYear=FunctionInput.EntryParams.Year[0]-40;// 40 years prior to the first available data
 	FunctionInput.EntryParams.MaxYear=FunctionInput.EntryParams.Year[FunctionInput.EntryParams.Year.length-1];//last year of data
 	console.log("Last year of data set manually");	
@@ -388,11 +388,11 @@ function DeterminePWIDEntryRateExponential(EntryParams){//MaxYear is not inclusi
 		InitiatingIVDrugUse.Year[YearCount]=CurrentYear;//Add the year label
 		
 		// Determine if in the initial exponential period
-		if (MidCurrentYear<EntryParams.EndExponential){
-			NumberInYear=EntryParams.A*Exp(Log(EntryParams.Logk1)*(EntryParams.EndExponential-MidCurrentYear));
+		if (MidCurrentYear<EntryParams.YearPeakIDU){
+			NumberInYear=EntryParams.A*Exp(Log(EntryParams.Logk1)*(EntryParams.YearPeakIDU-MidCurrentYear));
 		}
 		else{
-			NumberInYear=EntryParams.A*EntryParams.B+EntryParams.A*(1-EntryParams.B)*Exp(Log(EntryParams.Logk2)*(MidCurrentYear-EntryParams.EndExponential));
+			NumberInYear=EntryParams.A*EntryParams.B+EntryParams.A*(1-EntryParams.B)*Exp(Log(EntryParams.Logk2)*(MidCurrentYear-EntryParams.YearPeakIDU));
 		}
 		
 		InitiatingIVDrugUse.Number[YearCount]=NumberInYear;
@@ -407,11 +407,11 @@ function DeterminePWIDEntryRateExponential2(EntryParams, Time, TimeStep){//MaxYe
 	
 	var NumberInYear, NumberInStep;
 	// Determine if in the initial exponential period
-	if (Time<EntryParams.EndExponential){
-		NumberInYear=EntryParams.A*Exp(Log(EntryParams.Logk1)*(EntryParams.EndExponential-Time));
+	if (Time<EntryParams.YearPeakIDU){
+		NumberInYear=EntryParams.A*Exp(Log(EntryParams.Logk1)*(EntryParams.YearPeakIDU-Time));
 	}
 	else{
-		NumberInYear=EntryParams.A*(EntryParams.B+(1-EntryParams.B)*Exp(Log(EntryParams.Logk2)*(Time-EntryParams.EndExponential)));
+		NumberInYear=EntryParams.A*(EntryParams.B+(1-EntryParams.B)*Exp(Log(EntryParams.Logk2)*(Time-EntryParams.YearPeakIDU)));
 	}
 	NumberInStep=Round(NumberInYear*TimeStep);
 	
@@ -534,7 +534,7 @@ function TestDeterminePWIDEntryRateExponential2(){
 	EntryParams=[];
 	EntryParams.A=2500;
 	EntryParams.B=0.20;
-	EntryParams.EndExponential=1995;
+	EntryParams.YearPeakIDU=1995;
 	EntryParams.Logk2=0.3;
 	EntryParams.Logk1=0.4;
 	var TimeStep=0.1;
@@ -559,13 +559,14 @@ function TestCreatePWID(){
 	var EntryParams=[];
 	EntryParams.A=2500;
 	EntryParams.B=0.20;
-	EntryParams.EndExponential=1995;
+	EntryParams.YearPeakIDU=1995;
 	EntryParams.Logk2=0.3;
 	EntryParams.Logk1=0.8;
 	
 	// 
 	var Population=[];
 	
+	console.log("Started TestCreatePWID");
 
 	var TimeStep=0.1;
 	for (var Time=1980; Time<2010; Time+=TimeStep){
@@ -580,6 +581,7 @@ function TestCreatePWID(){
 	// for all people, apply the exit rate
 	SetInitialHCVLevels(Population);
 	
+	console.log("Finished TestCreatePWID");
 	
 	return 0;
 }
@@ -606,7 +608,7 @@ function TestCreatePWID(){
 function TESTDeterminePWIDEntryRateExponential(){
 	// Example usage
 	var EntryParams={};
-	EntryParams.EndExponential=2000;
+	EntryParams.YearPeakIDU=2000;
 	EntryParams.FirstYear=1959;
 	EntryParams.A=5000;
 	EntryParams.Logk1=0.8;

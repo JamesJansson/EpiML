@@ -9,12 +9,27 @@ var RegularInjectionTime;
 
 function RunFullModel(){
 	
-	var Results=FullModel(Param, Data, Intervention);
+	var Intervention=function(){};
+	
+	// Notification data
+	var Notifications={}; // This should go into the outer loop
+	Notifications.Year=Data.MaleNotifications.Year;
+	Notifications.Age=Data.MaleNotifications.Age;
+	Notifications.Table=[];
+	Notifications.Table[0]=[];
+	Notifications.Table[0]=Data.MaleNotifications.Table;
+	Notifications.Table[1]=[];
+	Notifications.Table[1]=Data.FemaleNotifications.Table;
+	
+	
+	
+	
+	var Results=FullModel(Param, Notifications, Intervention);
 	return Results;
 }
 
 
-function FullModel(Param, Data, Intervention){ 
+function FullModel(Param, Notifications, Intervention){ 
 	var YearToStartAverage=2008;
 	console.error("Warning: year to start average diagnosis rate is hard set here");
 
@@ -30,15 +45,7 @@ function FullModel(Param, Data, Intervention){
 	// Set up some of the parameters
 	RegularInjectionTime=new RegularInjectionTimeObject();
 	
-	// Notification data
-	var Notifications={}; // This should go into the outer loop
-	Notifications.Year=Data.MaleNotifications.Year;
-	Notifications.Age=Data.MaleNotifications.Age;
-	Notifications.Table=[];
-	Notifications.Table[0]=[];
-	Notifications.Table[0]=Data.MaleNotifications.Table;
-	Notifications.Table[1]=[];
-	Notifications.Table[1]=Data.FemaleNotifications.Table;
+	
 	
 	// var PWIDPopulation=DistributePWIDPopulationExponential(Param.IDU.EntryParams);//Returns PWIDPopulation as defined to the MaxYear
 	// this is probably antiquated var PWIDEntry=DeterminePWIDEntryRateExponential2(Param.IDU.EntryParams);//Returns PWIDPopulation as defined to the MaxYear
@@ -94,7 +101,7 @@ function FullModel(Param, Data, Intervention){
 		// this is probably antiquated var NumberOfPeopleToAddThisStep=DeterminePWIDEntryRateExponential2(Param.IDU.EntryParams, Time, Param.TimeStep);
 		
 		// Add new people to the IDU population for this time step
-		var PWIDToAdd=CreatePWID(Param.IDU.EntryParams, Time, Param.TimeStep);
+		var PWIDToAdd=CreatePWID(Param.IDU.Entry, Time, Param.TimeStep);
 		
 		// Match some of the PWID, in particular females, to existing PWID sexual partners
 		// select by finding ProportionOfFirstInjectionsSexualPartner
@@ -197,81 +204,9 @@ function InitialDistribution(){
 
 
 
-function SetInitialHCVLevels(Person){
-	var Time=1993;//Param.Model.DynamicHCV.Time;
-	var PropWithHCVInitially=0.7; //Param.InitialHCV.Prop;
-	var PWID=SelectPWID(Person, Time);
-	
-	var InjectionHistory={};
-	InjectionHistory.Duration=[];
-	InjectionHistory.TimeStart=[];
-	for (var Pn in PWID){
-		var ThisTimeStartInjection=PWID[Pn].IDU.Use.FirstTimeOf(1);	
-		InjectionHistory.TimeStart.push(ThisTimeStartInjection);
-		InjectionHistory.Duration.push(Time-ThisTimeStartInjection);
-	}
-	// do a very rough optimisation to get the right proportion at the time
 
-	var FunctionInput=InjectionHistory;
-	var OptimisationSettings={};
-	OptimisationSettings.Target=PropWithHCVInitially;
-	
-	OptimisationSettings.Function=function(FunctionInput, ParameterSet){
-		var TotalIDU=0;
-		var TotalHCV=0;
-		for (var Pn in FunctionInput.Duration){
-			TotalIDU++;
-			var TimeOfHCV=TimeUntilEvent(ParameterSet.AnnualPHCV);
-			if (TimeOfHCV<FunctionInput.Duration[Pn]){
-				TotalHCV++;
-			}
-		}
-		var Results=TotalHCV/TotalIDU;
-		return Results;
-	};
 
-	OptimisationSettings.ErrorFunction=function(Results, Target){
-		var TotalError=Abs(Results-Target);
-		return TotalError;
-	};
 
-	
-	//OptimisationSettings.MaxTime=10;//stop after 10 seconds
-	OptimisationSettings.NumberOfSamplesPerRound=10;
-	OptimisationSettings.MaxIterations=10;
-	
-	var HCVPOptimisation=new StochasticOptimisation(OptimisationSettings);
-	HCVPOptimisation.AddParameter("AnnualPHCV", 0, 1);
-	HCVPOptimisation.Run(FunctionInput);
-	
-	console.log(HCVPOptimisation);
-	
-	console.log(Mean(InjectionHistory.Duration));
-	
-	var AnnualPHCV=HCVPOptimisation.ParameterFinal.AnnualPHCV;
-	// Now apply this to all people in the simulation thus far
-	for (var Pn in PWID){
-		var TimeOfHCV=TimeUntilEvent(AnnualPHCV);
-		if (TimeOfHCV<InjectionHistory.Duration[Pn]){
-			PWID[Pn].HCV.Infection(InjectionHistory.TimeStart[Pn]+TimeOfHCV, ChooseInitialGenotype());
-		}
-	}
-	console.log(PWID);
-	
-	// At this point, a plot should be created of 
-		// PWID by year
-		// HCV infections by year
-	
-	
-}
-
-function ChooseInitialGenotype(){
-	// the intention of this function is to set the genotype in the proportions stated
-	
-	// weightedrand([0.2, 0.3, 0.4], ['1a', '1b', '2'])
-	
-	return '1';
-}
 
 
 
