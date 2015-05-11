@@ -44,12 +44,12 @@ function RunFullModel(){
 	//throw("stopping");
 	
 	
-	var Results=FullModel(Param, Notifications, Intervention);
+	var Results=FullModel(Param, Notifications, Param.Time.EndSimulation, Intervention);
 	return Results;
 }
 
 
-function FullModel(Param, Notifications, Intervention){ 
+function FullModel(Param, Notifications, EndSimulation, Intervention){ 
 
 	// Intervention[No]=function(Time){
 	// 	   if (Time<2016){
@@ -111,7 +111,7 @@ function FullModel(Param, Notifications, Intervention){
 	
 	
 	
-	for (var Time=Param.Time.StartDynamicModel; Time<Param.Time.EndData; Time+=Param.TimeStep){// each time step
+	for (var Time=Param.Time.StartDynamicModel; Time<EndSimulation; Time+=Param.TimeStep){// each time step
 		StepCount++;
 		// RunInterventions(Time); 
 	

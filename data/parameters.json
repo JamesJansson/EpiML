@@ -15,7 +15,7 @@
         "CalculatedMedian": 0.065,
         "NumberOfSamples": 1,
         "Val": [
-            0.04541688864138799
+            0.07788440340766091
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -37,7 +37,7 @@
         "CalculatedMedian": 0.075,
         "NumberOfSamples": 1,
         "Val": [
-            0.07741216561091889
+            0.0755616396207349
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -59,7 +59,7 @@
         "CalculatedMedian": 0.105,
         "NumberOfSamples": 1,
         "Val": [
-            0.09626881566629734
+            0.10949727586336569
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -81,7 +81,7 @@
         "CalculatedMedian": 0.08,
         "NumberOfSamples": 1,
         "Val": [
-            0.06868693565591187
+            0.0945054949873176
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -103,7 +103,7 @@
         "CalculatedMedian": 0.032665489,
         "NumberOfSamples": 1,
         "Val": [
-            0.033168565715561905
+            0.03575619373805173
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -125,7 +125,7 @@
         "CalculatedMedian": 0.028364043,
         "NumberOfSamples": 1,
         "Val": [
-            0.021224431162058334
+            0.027178143176485946
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -147,7 +147,7 @@
         "CalculatedMedian": 0.1,
         "NumberOfSamples": 1,
         "Val": [
-            0.09946496921886981
+            0.11466027449192079
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -169,7 +169,7 @@
         "CalculatedMedian": 0.07,
         "NumberOfSamples": 1,
         "Val": [
-            0.07135966568932091
+            0.07078875921422177
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -191,7 +191,7 @@
         "CalculatedMedian": 0.3,
         "NumberOfSamples": 1,
         "Val": [
-            0.3268282019328185
+            0.3545111410178726
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -211,8 +211,10 @@
         "Upper95Range": 0.6282399999999999,
         "Lower95Range": 0.55376,
         "CalculatedMedian": 0.591,
-        "NumberOfSamples": 100,
-        "Val": [],
+        "NumberOfSamples": 1,
+        "Val": [
+            0.5734327055166838
+        ],
         "MinValue": "",
         "MaxValue": "",
         "Description": "Table 4\nIn people who are treated at F2-F4 and are sustained responders, fibrosis stage reverses at −0.591 (−0.627;−0.550) steps per year.\nSustained response only occurred in 31% of people in the F2-F4 categories. However this study included numerous observations of people who had treatments that weren't effective. \nSustained virologic response appears to be worse in treating people with cirrohsis\nPoynard 2002 Impact of pegylated interferon alfa-2b and ribavirin on liver fibrosis in patients with chronic hepatitis C\n\nMarcellin and Poynard agree: in 5-6 years, at -0.591 stages per year, an improvement of 3.25 stages\n\n\"In 62% of patients, the last biopsy done showed normal or nearly normal histologic findings.\" Last biopsy was 5-6 years\nMarcellin P (1997) Long-term histologic improvement and loss of detectable intrahepatic HCV RNA in patients with chronic hepatitis C and sustained response to interferon-alpha therapy.\n\nCirrohsis leading to HCC: \"Patients with cirrhosis pretreatment are at a low but real risk of HCC after SVR.\"\nStart at Stage 2\n82% had improved fibrosis scores\n20% had nearly normal livers\nGeorge SL (2009), Clinical, virologic, histologic, and biochemical outcomes after successful HCV therapy: a 5-year follow-up of 150 patients."
@@ -233,7 +235,7 @@
         "CalculatedMedian": 0.54973822,
         "NumberOfSamples": 1,
         "Val": [
-            0.5267294988439065
+            0.5316863634724641
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -255,7 +257,7 @@
         "CalculatedMedian": 0.081151832,
         "NumberOfSamples": 1,
         "Val": [
-            0
+            0.08467166245574832
         ],
         "MinValue": "",
         "MaxValue": "",
@@ -277,7 +279,7 @@
         "CalculatedMedian": 0.331588133,
         "NumberOfSamples": 1,
         "Val": [
-            0
+            0.36559195678126327
         ],
         "MinValue": "",
         "MaxValue": "",
@@ -299,7 +301,7 @@
         "CalculatedMedian": 0.02617801,
         "NumberOfSamples": 1,
         "Val": [
-            0
+            0.032723236709765506
         ],
         "MinValue": "",
         "MaxValue": "",
@@ -363,8 +365,10 @@
         "Upper95Range": 0.892,
         "Lower95Range": 0.10799999999999998,
         "CalculatedMedian": 0.5,
-        "NumberOfSamples": 100,
-        "Val": [],
+        "NumberOfSamples": 1,
+        "Val": [
+            0.48569533642701024
+        ],
         "MinValue": 0,
         "MaxValue": 1,
         "Description": "Mehta, 2002 Lancet 359:1478  Reinfection 8.6/100 py -> 5.4/100 py\nGrebely, 2006 Hepat 44:1139 Reinfection 8.1/100 py -> 1.8/100 py\nMicallef, 2007 J Viral Hepat 14:413 \nAitken, 2008 Hepat 48:1746 \nOsburn, 2010 Gastro 138:315 \nCurrie, 2008 Drug Alc Dep 93:148\nBackmund, 2004 Clin Inf Dis 39:1540 \nGrebely, 2010 J Gastr Hepat 25:1281"
@@ -385,7 +389,7 @@
         "CalculatedMedian": 1.9,
         "NumberOfSamples": 1,
         "Val": [
-            2.215314595913791
+            1.7412382782875948
         ],
         "MinValue": "",
         "MaxValue": "",
@@ -407,7 +411,7 @@
         "CalculatedMedian": 2.03,
         "NumberOfSamples": 1,
         "Val": [
-            1.9869489895436614
+            2.3295497216775773
         ],
         "MinValue": "",
         "MaxValue": "",
@@ -429,7 +433,7 @@
         "CalculatedMedian": 1.47,
         "NumberOfSamples": 1,
         "Val": [
-            1.945065147042824
+            1.4829926906895174
         ],
         "MinValue": "",
         "MaxValue": "",
@@ -451,7 +455,7 @@
         "CalculatedMedian": 0.425,
         "NumberOfSamples": 1,
         "Val": [
-            0.4973989864964308
+            0.38555424204613875
         ],
         "MinValue": 0,
         "MaxValue": "",
@@ -473,7 +477,7 @@
         "CalculatedMedian": 0.358418367,
         "NumberOfSamples": 1,
         "Val": [
-            0.38886203368243055
+            0.3916926935384716
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -495,7 +499,7 @@
         "CalculatedMedian": 0.45,
         "NumberOfSamples": 1,
         "Val": [
-            0.4342291411529493
+            0.461143823362778
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -517,7 +521,7 @@
         "CalculatedMedian": 0.74,
         "NumberOfSamples": 1,
         "Val": [
-            0.7405945310499832
+            0.7406828013524117
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -539,7 +543,7 @@
         "CalculatedMedian": 0.75,
         "NumberOfSamples": 1,
         "Val": [
-            0.7403390208101885
+            0.7366986271216927
         ],
         "MinValue": "",
         "MaxValue": "",
@@ -561,7 +565,7 @@
         "CalculatedMedian": 2.69,
         "NumberOfSamples": 1,
         "Val": [
-            2.7809132825482363
+            2.697400881634127
         ],
         "MinValue": 0,
         "MaxValue": "",
@@ -583,7 +587,7 @@
         "CalculatedMedian": 2800,
         "NumberOfSamples": 1,
         "Val": [
-            2912.697839031947
+            2777.7964656443
         ],
         "MinValue": 0,
         "MaxValue": "",
@@ -605,7 +609,7 @@
         "CalculatedMedian": 1.25,
         "NumberOfSamples": 1,
         "Val": [
-            1.0390417441958562
+            1.0583150730235502
         ],
         "MinValue": "",
         "MaxValue": "",
@@ -647,8 +651,10 @@
         "Upper95Range": 0.3796,
         "Lower95Range": 0.3404,
         "CalculatedMedian": 0.36,
-        "NumberOfSamples": 100,
-        "Val": [],
+        "NumberOfSamples": 1,
+        "Val": [
+            0.35994631419825474
+        ],
         "MinValue": 0,
         "MaxValue": 1,
         "Description": "Gender Differences in Circumstances Surrounding First Injection Experience of Rural Injection Drug Users in the United States\nhttp://www.ncbi.nlm.nih.gov/pmc/articles/PMC3874445/\nTable 1"
@@ -667,8 +673,10 @@
         "Upper95Range": 0.0669,
         "Lower95Range": -0.0115,
         "CalculatedMedian": 0.0277,
-        "NumberOfSamples": 100,
-        "Val": [],
+        "NumberOfSamples": 1,
+        "Val": [
+            0.005538618484969254
+        ],
         "MinValue": 0,
         "MaxValue": 1,
         "Description": "Gender Differences in Circumstances Surrounding First Injection Experience of Rural Injection Drug Users in the United States\nhttp://www.ncbi.nlm.nih.gov/pmc/articles/PMC3874445/\nTable 1"
@@ -687,8 +695,10 @@
         "Upper95Range": 0.4912,
         "Lower95Range": 0.4128,
         "CalculatedMedian": 0.452,
-        "NumberOfSamples": 100,
-        "Val": [],
+        "NumberOfSamples": 1,
+        "Val": [
+            0.4785260338634554
+        ],
         "MinValue": 0,
         "MaxValue": 1,
         "Description": "Gender Differences in Circumstances Surrounding First Injection Experience of Rural Injection Drug Users in the United States\nhttp://www.ncbi.nlm.nih.gov/pmc/articles/PMC3874445/\nTable 1"
@@ -707,8 +717,10 @@
         "Upper95Range": 0.1062,
         "Lower95Range": 0.027800000000000005,
         "CalculatedMedian": 0.067,
-        "NumberOfSamples": 100,
-        "Val": [],
+        "NumberOfSamples": 1,
+        "Val": [
+            0.07810043895988107
+        ],
         "MinValue": 0,
         "MaxValue": 1,
         "Description": "Gender Differences in Circumstances Surrounding First Injection Experience of Rural Injection Drug Users in the United States\nhttp://www.ncbi.nlm.nih.gov/pmc/articles/PMC3874445/\nTable 1"
@@ -727,8 +739,10 @@
         "Upper95Range": 0.1542,
         "Lower95Range": 0.0758,
         "CalculatedMedian": 0.115,
-        "NumberOfSamples": 100,
-        "Val": [],
+        "NumberOfSamples": 1,
+        "Val": [
+            0.10335301637614872
+        ],
         "MinValue": 0,
         "MaxValue": 1,
         "Description": "Gender Differences in Circumstances Surrounding First Injection Experience of Rural Injection Drug Users in the United States\nhttp://www.ncbi.nlm.nih.gov/pmc/articles/PMC3874445/\nTable 1"
@@ -747,8 +761,10 @@
         "Upper95Range": 0.37620000000000003,
         "Lower95Range": 0.2978,
         "CalculatedMedian": 0.337,
-        "NumberOfSamples": 100,
-        "Val": [],
+        "NumberOfSamples": 1,
+        "Val": [
+            0.36379372436858554
+        ],
         "MinValue": "",
         "MaxValue": "",
         "Description": "Gender Differences in Circumstances Surrounding First Injection Experience of Rural Injection Drug Users in the United States\nhttp://www.ncbi.nlm.nih.gov/pmc/articles/PMC3874445/\nTable 1"
@@ -767,8 +783,10 @@
         "Upper95Range": 1999,
         "Lower95Range": 1999,
         "CalculatedMedian": 1999,
-        "NumberOfSamples": 100,
-        "Val": [],
+        "NumberOfSamples": 1,
+        "Val": [
+            1999
+        ],
         "MinValue": "",
         "MaxValue": "",
         "Description": ""
@@ -789,7 +807,7 @@
         "CalculatedMedian": 21,
         "NumberOfSamples": 1,
         "Val": [
-            20.57435262241269
+            21.366738456290083
         ],
         "MinValue": "",
         "MaxValue": "",
@@ -811,7 +829,7 @@
         "CalculatedMedian": 0.17,
         "NumberOfSamples": 1,
         "Val": [
-            0.17685328183376514
+            0.16289956284205362
         ],
         "MinValue": "",
         "MaxValue": "",
@@ -833,7 +851,7 @@
         "CalculatedMedian": 1.5,
         "NumberOfSamples": 1,
         "Val": [
-            0.4779430368545583
+            0.05110787934760963
         ],
         "MinValue": "",
         "MaxValue": "",
@@ -855,7 +873,7 @@
         "CalculatedMedian": 0.0322,
         "NumberOfSamples": 1,
         "Val": [
-            0.03180466757890664
+            0.0262165015759426
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -877,7 +895,7 @@
         "CalculatedMedian": 0.1736,
         "NumberOfSamples": 1,
         "Val": [
-            0.17017299894685403
+            0.13158698190024165
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -899,7 +917,7 @@
         "CalculatedMedian": 0.66,
         "NumberOfSamples": 1,
         "Val": [
-            0.6458281988514518
+            0.658540797846224
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -919,7 +937,7 @@
         "Upper95Range": null,
         "Lower95Range": null,
         "CalculatedMedian": null,
-        "NumberOfSamples": 100,
+        "NumberOfSamples": 1,
         "Val": [],
         "MinValue": "",
         "MaxValue": "",
@@ -961,8 +979,10 @@
         "Upper95Range": 0.688,
         "Lower95Range": 0.492,
         "CalculatedMedian": 0.59,
-        "NumberOfSamples": 100,
-        "Val": [],
+        "NumberOfSamples": 1,
+        "Val": [
+            0.578474004747585
+        ],
         "MinValue": 0,
         "MaxValue": 1,
         "Description": "This parameter indicates the risk reduction of receptively sharing needles going from the age of 18 to the age of 40. It is based off:\nThe relationship between age and risky injecting behaviours among a sample of Australian people who inject drugs.\nhttp://www.ncbi.nlm.nih.gov/pubmed/23664499\n\nCalculations related to this figure can be found in the file \"Receptive sharing risk.xlsx\""
@@ -983,7 +1003,7 @@
         "CalculatedMedian": 0.36,
         "NumberOfSamples": 1,
         "Val": [
-            0.4531674527240621
+            0.2988111795260838
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -1005,7 +1025,7 @@
         "CalculatedMedian": 0.29,
         "NumberOfSamples": 1,
         "Val": [
-            0.25115780341094646
+            0.2877531017218557
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -1027,7 +1047,7 @@
         "CalculatedMedian": 0.35,
         "NumberOfSamples": 1,
         "Val": [
-            0.33745309173015614
+            0.4323985954916082
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -1047,8 +1067,10 @@
         "Upper95Range": 0.77412,
         "Lower95Range": 0.5898800000000001,
         "CalculatedMedian": 0.682,
-        "NumberOfSamples": 100,
-        "Val": [],
+        "NumberOfSamples": 1,
+        "Val": [
+            0.6949169518604842
+        ],
         "MinValue": 0,
         "MaxValue": 1,
         "Description": "From the NSP report 1995-2010. There does not seem to be any trend in relationship seeking. \n\nCalculations can be found in nspintimatepartner.xlsx\n\nSex last month (%)\n68.2%\nStandard deviation 0.046756668\n\nOf people who had sex\tSD\nOnly sex with a regular partner\t\n74.9%\t0.012921987\nOnly sex with non-regular partner\t\n22.4%\t0.022388323\nSex with both regular and non-regular partner\t\n6.8%\t0.031168392"
@@ -1067,8 +1089,10 @@
         "Upper95Range": 0,
         "Lower95Range": 0,
         "CalculatedMedian": null,
-        "NumberOfSamples": 100,
-        "Val": [],
+        "NumberOfSamples": 1,
+        "Val": [
+            0
+        ],
         "MinValue": "",
         "MaxValue": "",
         "Description": "Gender Differences in Circumstances Surrounding First Injection Experience of Rural Injection Drug Users in the United States\nhttp://www.ncbi.nlm.nih.gov/pmc/articles/PMC3874445/\nTable 1\n7% of men had partner present, 36% of women had partner present"
@@ -1087,8 +1111,10 @@
         "Upper95Range": 0.267708,
         "Lower95Range": 0.180292,
         "CalculatedMedian": 0.224,
-        "NumberOfSamples": 100,
-        "Val": [],
+        "NumberOfSamples": 1,
+        "Val": [
+            0.23179186276829303
+        ],
         "MinValue": 0,
         "MaxValue": 1,
         "Description": "From the NSP report 1995-2010. There does not seem to be any trend in relationship seeking. \n\nCalculations can be found in nspintimatepartner.xlsx\n\nSex last month (%)\n68.2%\nStandard deviation 0.046756668\n\nOf people who had sex\tSD\nOnly sex with a regular partner\t\n74.9%\t0.012921987\nOnly sex with non-regular partner\t\n22.4%\t0.022388323\nSex with both regular and non-regular partner\t\n6.8%\t0.031168392"
@@ -1107,8 +1133,10 @@
         "Upper95Range": 0.12876,
         "Lower95Range": 0.007240000000000003,
         "CalculatedMedian": 0.068,
-        "NumberOfSamples": 100,
-        "Val": [],
+        "NumberOfSamples": 1,
+        "Val": [
+            0.07038862556268893
+        ],
         "MinValue": 0,
         "MaxValue": 1,
         "Description": "From the NSP report 1995-2010. There does not seem to be any trend in relationship seeking. \n\nCalculations can be found in nspintimatepartner.xlsx\n\nSex last month (%)\n68.2%\nStandard deviation 0.046756668\n\nOf people who had sex\tSD\nOnly sex with a regular partner\t\n74.9%\t0.012921987\nOnly sex with non-regular partner\t\n22.4%\t0.022388323\nSex with both regular and non-regular partner\t\n6.8%\t0.031168392"
@@ -1127,8 +1155,10 @@
         "Upper95Range": 0.774284,
         "Lower95Range": 0.723716,
         "CalculatedMedian": 0.749,
-        "NumberOfSamples": 100,
-        "Val": [],
+        "NumberOfSamples": 1,
+        "Val": [
+            0.7492325671405039
+        ],
         "MinValue": 0,
         "MaxValue": 1,
         "Description": "From the NSP report 1995-2010. There does not seem to be any trend in relationship seeking. \n\nCalculations can be found in nspintimatepartner.xlsx\n\nSex last month (%)\n68.2%\nStandard deviation 0.046756668\n\nOf people who had sex\tSD\nOnly sex with a regular partner\t\n74.9%\t0.012921987\nOnly sex with non-regular partner\t\n22.4%\t0.022388323\nSex with both regular and non-regular partner\t\n6.8%\t0.031168392"
@@ -1147,8 +1177,10 @@
         "Upper95Range": 0.548,
         "Lower95Range": 0.352,
         "CalculatedMedian": 0.45,
-        "NumberOfSamples": 100,
-        "Val": [],
+        "NumberOfSamples": 1,
+        "Val": [
+            0.3782284447928985
+        ],
         "MinValue": 0,
         "MaxValue": 1,
         "Description": "http://www.tandfonline.com/doi/pdf/10.1080/09540128908260235\nTable 6 and 7\n\nAbout 50% of sexual partners a non-injectors. The proportion of people who have any sexual partners and regular partners line up quite well with the ANSP Survey\n\nTable 7\nTime 1: 32/(32+36)= 47%\nTime 2: 21/(21+31)= 40%\n"
@@ -1167,7 +1199,7 @@
         "Upper95Range": null,
         "Lower95Range": null,
         "CalculatedMedian": null,
-        "NumberOfSamples": 100,
+        "NumberOfSamples": 1,
         "Val": [],
         "MinValue": "",
         "MaxValue": "",
@@ -1189,7 +1221,7 @@
         "CalculatedMedian": 0.19,
         "NumberOfSamples": 1,
         "Val": [
-            0.24211578074106344
+            0.17492532483222123
         ],
         "MinValue": "",
         "MaxValue": "",
@@ -1211,7 +1243,7 @@
         "CalculatedMedian": 0.21,
         "NumberOfSamples": 1,
         "Val": [
-            0.24083733993815257
+            0.2765839423882627
         ],
         "MinValue": "",
         "MaxValue": "",
@@ -1233,7 +1265,7 @@
         "CalculatedMedian": 0.06,
         "NumberOfSamples": 1,
         "Val": [
-            0.08960133517708278
+            0.1178708806464961
         ],
         "MinValue": "",
         "MaxValue": "",
@@ -1255,7 +1287,7 @@
         "CalculatedMedian": 0.35,
         "NumberOfSamples": 1,
         "Val": [
-            0.38045886625959596
+            0.49716772701703804
         ],
         "MinValue": "",
         "MaxValue": "",
@@ -1277,7 +1309,7 @@
         "CalculatedMedian": 0.18,
         "NumberOfSamples": 1,
         "Val": [
-            0.17478395661109095
+            0.1834256958209071
         ],
         "MinValue": "",
         "MaxValue": "",
@@ -1341,8 +1373,10 @@
         "Upper95Range": 0.1392,
         "Lower95Range": 0.06080000000000001,
         "CalculatedMedian": 0.1,
-        "NumberOfSamples": 100,
-        "Val": [],
+        "NumberOfSamples": 1,
+        "Val": [
+            0.11513894461688431
+        ],
         "MinValue": 0,
         "MaxValue": 1,
         "Description": "The time step is variable to allow the model to be checked for sensitivity to time step selection."
@@ -1361,8 +1395,32 @@
         "Upper95Range": 5,
         "Lower95Range": 5,
         "CalculatedMedian": 5,
-        "NumberOfSamples": 100,
-        "Val": [],
+        "NumberOfSamples": 1,
+        "Val": [
+            5
+        ],
+        "MinValue": "",
+        "MaxValue": "",
+        "Description": ""
+    },
+    {
+        "ParameterID": "Time_EndSimulation",
+        "ArrayName": "Param",
+        "ArrayNumber": "64",
+        "InterfaceID": "ParamHolder_64",
+        "GroupName": "",
+        "DistributionType": "normal",
+        "Median": 2020,
+        "StandardError": 0,
+        "LowerBound": null,
+        "UpperBound": null,
+        "Upper95Range": 2020,
+        "Lower95Range": 2020,
+        "CalculatedMedian": 2020,
+        "NumberOfSamples": 1,
+        "Val": [
+            0
+        ],
         "MinValue": "",
         "MaxValue": "",
         "Description": ""
@@ -1370,8 +1428,8 @@
     {
         "ParameterID": "Time_EndTreatmentData",
         "ArrayName": "Param",
-        "ArrayNumber": "64",
-        "InterfaceID": "ParamHolder_64",
+        "ArrayNumber": "65",
+        "InterfaceID": "ParamHolder_65",
         "GroupName": "",
         "DistributionType": "normal",
         "Median": 2013,
@@ -1383,7 +1441,7 @@
         "CalculatedMedian": 2013,
         "NumberOfSamples": 1,
         "Val": [
-            0.8
+            2013
         ],
         "MinValue": "",
         "MaxValue": "",
@@ -1392,8 +1450,8 @@
     {
         "ParameterID": "Time_StartDynamicModel",
         "ArrayName": "Param",
-        "ArrayNumber": "65",
-        "InterfaceID": "ParamHolder_65",
+        "ArrayNumber": "66",
+        "InterfaceID": "ParamHolder_66",
         "GroupName": "",
         "DistributionType": "normal",
         "Median": 1980,
@@ -1403,8 +1461,10 @@
         "Upper95Range": 1980,
         "Lower95Range": 1980,
         "CalculatedMedian": 1980,
-        "NumberOfSamples": 100,
-        "Val": [],
+        "NumberOfSamples": 1,
+        "Val": [
+            1980
+        ],
         "MinValue": "",
         "MaxValue": "",
         "Description": ""
@@ -1412,8 +1472,8 @@
     {
         "ParameterID": "Time_StartNonDynamicModel",
         "ArrayName": "Param",
-        "ArrayNumber": "66",
-        "InterfaceID": "ParamHolder_66",
+        "ArrayNumber": "67",
+        "InterfaceID": "ParamHolder_67",
         "GroupName": "",
         "DistributionType": "normal",
         "Median": 1960,
@@ -1423,28 +1483,10 @@
         "Upper95Range": 1960,
         "Lower95Range": 1960,
         "CalculatedMedian": 1960,
-        "NumberOfSamples": 100,
-        "Val": [],
-        "MinValue": "",
-        "MaxValue": "",
-        "Description": ""
-    },
-    {
-        "ParameterID": "xxx",
-        "ArrayName": "Param",
-        "ArrayNumber": "67",
-        "InterfaceID": "ParamHolder_67",
-        "GroupName": "",
-        "DistributionType": "normal",
-        "Median": null,
-        "StandardError": null,
-        "LowerBound": null,
-        "UpperBound": null,
-        "Upper95Range": null,
-        "Lower95Range": null,
-        "CalculatedMedian": null,
-        "NumberOfSamples": 100,
-        "Val": [],
+        "NumberOfSamples": 1,
+        "Val": [
+            1960
+        ],
         "MinValue": "",
         "MaxValue": "",
         "Description": ""
