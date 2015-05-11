@@ -15,7 +15,7 @@ function AssignSexualPartner(Person, Time){
 	var TotalSexAny=0;//Any
 	
 	for (var Pn in Person){
-		if (Person[Pn].Alive(Time)==true && Person[Pn].IDU.Use(Time)>2){// is a current alive injector
+		if (Person[Pn].Alive(Time)==true && Person[Pn].IDU.Use.Value(Time)>2){// is a current alive injector
 			var SexIndex=Person[Pn].SexualPartner.Value(Time);
 			TotalSex[SexIndex]++;
 			if (SexIndex>0){
