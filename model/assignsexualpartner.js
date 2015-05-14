@@ -34,12 +34,14 @@ function AssignSexualPartner(Person, Time){
 		// Work out what the category will be by maintaining the same ratio
 		var NumberInPartnerCategory=[TotalSex[1], TotalSex[2], TotalSex[3]];
 		var AimProp=[Param.IDU.RegularLastMonth, Param.IDU.OtherLastMonth, Param.IDU.RegularAndOtherLastMonth];
-		var AimNumberInPartnerCategory=Times(TotalSexAny, AimProp);
+		var AimNumberInPartnerCategory=Multiply(TotalSexAny, AimProp);
 	
 		
 		for (var AddCount=0; AddCount<NumberOfPeopleToStartAnyRelationship; AddCount++){
 			// add people into relationship type as appropriate
 		
+			console.log(AimNumberInPartnerCategory);// undefined?
+			console.log(NumberInPartnerCategory);
 			
 			var CategorySelectionWeight=Minus(AimNumberInPartnerCategory, NumberInPartnerCategory);
 			// if the prop weight is negative, ignore unless they are all negative, then set all to one
