@@ -40,6 +40,8 @@ function AssignSexualPartner(Person, Time){
 		for (var AddCount=0; AddCount<NumberOfPeopleToStartAnyRelationship; AddCount++){
 			// add people into relationship type as appropriate
 		
+			console.log(TotalSexAny);
+			console.log(AimProp);// undiagnosed
 			console.log(AimNumberInPartnerCategory);// undefined?
 			console.log(NumberInPartnerCategory);
 			
