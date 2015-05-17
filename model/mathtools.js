@@ -20,7 +20,7 @@ function Sum(arr) {
 	} else if (typeof arr[i] == 'number'){
 		sum += arr[i];
 	}else{
-		console.log("An error occured");throw "A non-array/non-number type was found using Sum.";
+		console.error("An error occured");throw "A non-array/non-number type was found using Sum.";
 	}
   }
   return sum;
@@ -247,14 +247,14 @@ function SortIndex(SNInputVector){
 function ApplyIndex(AIInputVector, AIIndex){
 	// Applies the index AIIndex to AIInputVector. Note that this function does not return the array, it simply operates on AIInputVector
 	if (AIInputVector.length!=AIIndex.length){
-		console.log("An error occured");throw("Arrays incorrect length");
+		console.error("An error occured");throw("Arrays incorrect length");
 	}
 	//Back up the array
 	var Temp= AIInputVector.slice();
 	//Apply the array
 	for (var i=0; i<AIInputVector.length; i++){
 		if (AIIndex[i]>=AIInputVector.length){
-			console.log("An error occured");throw("Index exceeds size of array.");
+			console.error("An error occured");throw("Index exceeds size of array.");
 		}
 		AIInputVector[i]=Temp[AIIndex[i]];
 	}
@@ -266,7 +266,7 @@ function Select(InputVector, IndexToSelect){
 	var ReturnArray=[];
 	for (var i=0; i<IndexToSelect.length; i++){
 		if (IndexToSelect[i]>=InputVector.length){
-			console.log("An error occured");throw("Index exceeds size of array.");
+			console.error("An error occured");throw("Index exceeds size of array.");
 		}
 		ReturnArray[i]=InputVector[IndexToSelect[i]];
 	}
@@ -325,19 +325,19 @@ function Multiply(A, B){
 		return A*B;
 	}
 
-	console.log("An error occured");throw("The input arguments to Multiply should be either two arrays of equal size or a number and an array");
+	console.error("An error occured");throw("The input arguments to Multiply should be either two arrays of equal size or a number and an array");
 }
 
 function MultiplyArrayByArray(A, B){// Multiplies each element in A by the corresponding element in B
 	var NewArray=[];
 	if (typeof A === 'object' && typeof B === 'object'){
 		if (A.length!=B.length){// if the arrays are the wrong length 
-			console.log("An error occured");
+			console.error("An error occured");
 			throw("The size and structure of the two objects being multiplied must be identical.");// send error
 		}
 		for (var key in A) {
 			if (typeof A[key] != typeof B[key]){//If A and B are not the same, including if it is not defined
-				console.log("An error occured");throw("The size and structure of the two objects being multiplied must be identical.");// send error
+				console.error("An error occured");throw("The size and structure of the two objects being multiplied must be identical.");// send error
 			}
 			else if (typeof A[key] === 'number'){// and so is B[key]
 				NewArray[key]=A[key]*B[key];
@@ -350,7 +350,7 @@ function MultiplyArrayByArray(A, B){// Multiplies each element in A by the corre
 		return NewArray;
 	}
 	else{// if the inputs are not both arrays
-		console.log("An error occured");throw("The inputs of MultiplyArrayByArray should both be arrays.");// send an error
+		console.error("An error occured");throw("The inputs of MultiplyArrayByArray should both be arrays.");// send an error
 	}
 }
 
@@ -387,7 +387,7 @@ function Add(A, B){
 		return A+B;
 	}
 
-	console.log("An error occured");throw("The input arguments to Add should be either two arrays of equal size or a number and an array");
+	console.error("An error occured");throw("The input arguments to Add should be either two arrays of equal size or a number and an array");
 }
 
 function AddArrayToArray(A, B){// Adds each element in A by the corresponding element in B
@@ -412,7 +412,7 @@ function AddArrayToArray(A, B){// Adds each element in A by the corresponding el
 		return NewArray;
 	}
 	else{// if the inputs are not both arrays
-		console.log("An error occured");throw("The inputs of AddArrayToArray should both be arrays.");// send an error
+		console.error("An error occured");throw("The inputs of AddArrayToArray should both be arrays.");// send an error
 	}
 }
 
@@ -493,19 +493,19 @@ function Divide(A, B){
 		return A/B;
 	}
 
-	console.log("An error occured");throw("The input arguments to Divide should be either two arrays of equal size or a number and an array");
+	console.error("An error occured");throw("The input arguments to Divide should be either two arrays of equal size or a number and an array");
 }
 
 function DivideArrayByArray(A, B){// Divides each element in A by the corresponding element in B
 	var NewArray=[];
 	if (typeof A === 'object' && typeof B === 'object'){
 		if (A.length!=B.length){// if the arrays are the wrong length 
-			console.log("An error occured");
+			console.error("An error occured");
 			throw("The size and structure of the two objects being multiplied must be identical.");// send error
 		}
 		for (var key in A) {
 			if (typeof A[key] != typeof B[key]){//If A and B are not the same, including if it is not defined
-				console.log("An error occured");throw("The size and structure of the two objects being multiplied must be identical.");// send error
+				console.error("An error occured");throw("The size and structure of the two objects being multiplied must be identical.");// send error
 			}
 			else if (typeof A[key] === 'number'){// and so is B[key]
 				NewArray[key]=A[key]/B[key];
@@ -518,7 +518,7 @@ function DivideArrayByArray(A, B){// Divides each element in A by the correspond
 		return NewArray;
 	}
 	else{// if the inputs are not both arrays
-		console.log("An error occured");throw("The inputs of DivideArrayByArray should both be arrays.");// send an error
+		console.error("An error occured");throw("The inputs of DivideArrayByArray should both be arrays.");// send an error
 	}
 }
 
@@ -573,19 +573,19 @@ function Pow(A, B){
 		return Math.pow(A, B);
 	}
 
-	console.log("An error occured");throw("The input arguments to Pow should be either two arrays of equal size or a number and an array");
+	console.error("An error occured");throw("The input arguments to Pow should be either two arrays of equal size or a number and an array");
 }
 
 function PowArrayByArray(A, B){// Pows each element in A by the corresponding element in B
 	var NewArray=[];
 	if (typeof A === 'object' && typeof B === 'object'){
 		if (A.length!=B.length){// if the arrays are the wrong length 
-			console.log("An error occured");
+			console.error("An error occured");
 			throw("The size and structure of the two objects being multiplied must be identical.");// send error
 		}
 		for (var key in A) {
 			if (typeof A[key] != typeof B[key]){//If A and B are not the same, including if it is not defined
-				console.log("An error occured");throw("The size and structure of the two objects being multiplied must be identical.");// send error
+				console.error("An error occured");throw("The size and structure of the two objects being multiplied must be identical.");// send error
 			}
 			else if (typeof A[key] === 'number'){// and so is B[key]
 				NewArray[key]=Math.pow(A[key], B[key]);
@@ -598,7 +598,7 @@ function PowArrayByArray(A, B){// Pows each element in A by the corresponding el
 		return NewArray;
 	}
 	else{// if the inputs are not both arrays
-		console.log("An error occured");throw("The inputs of PowArrayByArray should both be arrays.");// send an error
+		console.error("An error occured");throw("The inputs of PowArrayByArray should both be arrays.");// send an error
 	}
 }
 
@@ -752,7 +752,7 @@ function Win(Input){ return  Apply(WinSingleProbability, Input);}
 
 
 function CopyArray(Arr){
-	console.log("Warning: CopyArray is not tested");
+	console.error("Warning: CopyArray is not tested");
 	return MultiplyArrayByNumber(Arr, 1);
 }
 
@@ -823,7 +823,7 @@ function NormalRandArrayBounded(Mean, SD, Num, Min, Max, MaxTries){
 		}
 	}
 	if (FoundVals<Num){
-		console.log("An error occured");throw "Not enough values were found before time out. Try setting larger MaxTries";
+		console.error("An error occured");throw "Not enough values were found before time out. Try setting larger MaxTries";
 	}
 	//StopTime = new Date().getTime();
 	//console.log(StopTime-StartTime);
@@ -957,7 +957,7 @@ function RandSampleWeighted(Weights, Values){
 	}
 	else{	
 		if (Weights.length!=Values.length){
-			console.log("An error occured");throw "The length of the weights and Values should be equal";
+			console.error("An error occured");throw "The length of the weights and Values should be equal";
 		}
 		return Values[SelectedIndex];
 	}

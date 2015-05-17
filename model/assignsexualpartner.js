@@ -7,7 +7,6 @@ function AssignSexualPartner(Person, Time){
 	// Determine how many relationships the population is missing
 	var TotalSex=[];
 	TotalSex[0]=0;//None
-
 	TotalSex[1]=0;//Regular
 	TotalSex[2]=0;//Other
 	TotalSex[3]=0;//RegularAndOther
@@ -93,10 +92,10 @@ function AssignSexualPartner(Person, Time){
 				var PartnerSex=Abs(SelectedPerson.Sex-1);// a new algorithm needs to go here to determine the sexual partner sex
 				var AgeAim;
 				if (SelectedPerson.Sex==0){
-					AgeAim=SexualRelationship.ChooseMaleAge();
+					AgeAim=SexualRelationship.ChooseMaleAge(SelectedPerson.Age(Time));
 				}
 				else{
-					AgeAim=SexualRelationship.ChooseFemaleAge();
+					AgeAim=SexualRelationship.ChooseFemaleAge(SelectedPerson.Age(Time));
 				}
 			
 			
@@ -108,7 +107,7 @@ function AssignSexualPartner(Person, Time){
 				
 				// Search injectors for matches
 				var AgeDiff;
-				var AgeDiffChosen=1e9;
+				var AgeDiffAcceptable=0.1;
 				console.log("Needs a proper set here");
 				var Pi2;
 				
@@ -116,31 +115,40 @@ function AssignSexualPartner(Person, Time){
 				// a random index is chosen, and a limited number of selections take place (e.g. only 1000 people are taken into account when selecting) 
 				// an eventuality needs to be taken into consideration where people don't make a partnership, i.e. there is no one in the group that matches their needs
 				
+				
+				var SelectedPersonIndex2=-1;
+				var BestDiff=1e9;
 				for (var Pi2 in Person){
 					if (Person[Pi2].Sex==PartnerSex && Pi2!=SelectedPersonIndex){
 						AgeDiff=Abs(AgeAim-Person[Pi2].Age(Time));
-						if (AgeDiff<AgeDiffChosen){
+
+						if (AgeDiff<BestDiff){
+							// An alternative test could assume that even if it isn't right on the mark, they are candidates for selection
+							// this condition would be good for people who are selected at random
+							// AgeAim*(1-AgeDiffAcceptable)<AgeAim && AgeAim<=AgeAim*(1+AgeDiffAcceptable) && 
+							BestDiff=AgeDiff;
 							SelectedPersonIndex2=Pi2;
 						}
 					}
 				}
-				// Add the sexual relationship to the person
-				Person[SelectedPersonIndex].SexualPartner.Set(1, Time);
-				Person[SelectedPersonIndex].SexualPartnerRegularID.Set(SelectedPersonIndex2, Time);
-				//Person[SelectedPersonIndex].SexualPartnerInjects.Set(1, Time);
 				
-				
-				// Add the sexual partnership to this other person 
-				Person[SelectedPersonIndex2].SexualPartner.Set(1, Time);
-				Person[SelectedPersonIndex2].SexualPartnerRegularID.Set(SelectedPersonIndex, Time);
-				//Person[SelectedPersonIndex2].SexualPartnerInjects.Set(1, Time);
+				if (SelectedPersonIndex2<0){
+					console.error("The person index has not been found");
+				}
 				
 				// If regular, determine relationship length
 				var ThisPartnershipDuration=DeterminePartnerDuration(Param.IDU.Sex.PPartnerChangeYear1,Param.IDU.Sex.PPartnerChangeYear1);
 				
-				this.SexualPartner.Set(0, Time+ThisPartnershipDuration);
-				this.SexualPartnerID.Set(-1, Time+ThisPartnershipDuration);
-				this.SexualPartnerInjects.Set(0, Time+ThisPartnershipDuration);
+				// Add the sexual relationship to the person
+				Person[SelectedPersonIndex].SexualPartnerRegularID.Set(SelectedPersonIndex2, Time);
+				Person[SelectedPersonIndex].SexualPartnerRegularID.Set(-1, Time+ThisPartnershipDuration);
+				
+				
+				// Add the sexual partnership to this other person 
+				Person[SelectedPersonIndex2].SexualPartnerRegularID.Set(SelectedPersonIndex, Time);
+				Person[SelectedPersonIndex].SexualPartnerRegularID.Set(-1, Time+ThisPartnershipDuration);
+
+
 				
 				
 			}

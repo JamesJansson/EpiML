@@ -134,7 +134,7 @@ function HCVDataDiagnosisNumbers(Notifications, Time, TimeStep){
 
 
 function HCVSymptomaticDiagnosis(Person, Notifications, Time, TimeStep ){
-	var StructureOfDiagnosedPeople=[];
+	var StructureOfDiagnosedPeople={};
 	StructureOfDiagnosedPeople.Age=Notifications.Age;
 	
 	var AgeList=[];
@@ -143,7 +143,7 @@ function HCVSymptomaticDiagnosis(Person, Notifications, Time, TimeStep ){
 	
 	for (var Pn in Person){
 		var CurrentPerson=Person[Pn];
-		if (CurrentPerson.Alive(Year)){
+		if (CurrentPerson.Alive(Time)){
 			// Determine if undiagnosed and how symptomatic they are
 			if (CurrentPerson.HCV.UndiagnosedHCC() || CurrentPerson.HCV.UndiagnosedDecompensatedCirrhosis()){
 				var TimeUntilDiagnosis=TimeUntilEvent(Param.HCV.SyptomaticTesting);
@@ -163,6 +163,8 @@ function HCVSymptomaticDiagnosis(Person, Notifications, Time, TimeStep ){
 	// Collect up all the results for removal from the data driven testing
 	var Bins=DeepCopy(StructureOfDiagnosedPeople.Age); // 
 	Bins.push(1000);
+	
+	StructureOfDiagnosedPeople.Count=[]
 	
 	var HistResult=HistogramData(AgeList[0], Bins);
 	StructureOfDiagnosedPeople.Count[0]=HistResult.Count;
