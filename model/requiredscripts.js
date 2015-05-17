@@ -22,6 +22,7 @@ importScripts("optimisepartnerchange.js");
 importScripts("optimisemodel.js");
 importScripts("fullmodel.js");
 importScripts("assignsexualpartner.js");
+importScripts("sexualrelationshipage.js");
 importScripts("hcvtransmission.js");
 importScripts("hcvtreatment.js");
 importScripts("hcvdiagnosis.js");

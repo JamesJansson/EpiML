@@ -39,11 +39,6 @@ function AssignSexualPartner(Person, Time){
 		
 		for (var AddCount=0; AddCount<NumberOfPeopleToStartAnyRelationship; AddCount++){
 			// add people into relationship type as appropriate
-		
-			console.log(TotalSexAny);
-			console.log(AimProp);// undiagnosed
-			console.log(AimNumberInPartnerCategory);// undefined?
-			console.log(NumberInPartnerCategory);
 			
 			var CategorySelectionWeight=Minus(AimNumberInPartnerCategory, NumberInPartnerCategory);
 			// if the prop weight is negative, ignore unless they are all negative, then set all to one
@@ -75,7 +70,7 @@ function AssignSexualPartner(Person, Time){
 					// 		reduce total by 0, add 1 to category
 					// remember to perform the same test on the other partner!
 				
-					if (Person[Pi].SexualPartner.Value(Time)!=1 && Person[Pi].SexualPartner.Value(Time)!=3 ){// if the person doesn't already have a sexual partner
+					if (Person[TestIndex].SexualPartner.Value(Time)!=1 && Person[TestIndex].SexualPartner.Value(Time)!=3 ){// if the person doesn't already have a sexual partner
 						// note: this section should probably include something that determines the probability that the person will be sexually active
 						TestIndexSelectionVector.push(TestIndex);
 						TestIndexSelectionWeight.push(SexualRelationship.RateOfSexAtAge(Person[TestIndex].Age(Time)));
@@ -108,12 +103,13 @@ function AssignSexualPartner(Person, Time){
 			
 			// Determine probability that an IDU individual will form a relationship with someone who is not an injector
 			// Note that there are more males than females. 
-			if (Rand.Value()<(IDU.Sex.RegularPartnerInjects/2)){// note that we divide by 2 to get the right proportion because this creates a new link between 2 people who are not in a regular relationship
+			if (Rand.Value()<(Param.IDU.Sex.RegularPartnerInjects/2)){// note that we divide by 2 to get the right proportion because this creates a new link between 2 people who are not in a regular relationship
 				// Select partner from injecting population
 				
 				// Search injectors for matches
 				var AgeDiff;
 				var AgeDiffChosen=1e9;
+				console.log("Needs a proper set here");
 				var Pi2;
 				
 				// The function keeps looking for someone until a level of difference in age is reached that cannot be expected to be beaten. 
@@ -130,12 +126,14 @@ function AssignSexualPartner(Person, Time){
 				}
 				// Add the sexual relationship to the person
 				Person[SelectedPersonIndex].SexualPartner.Set(1, Time);
-				Person[SelectedPersonIndex].SexualPartnerID.Set(SelectedPersonIndex2, Time);
-				Person[SelectedPersonIndex].SexualPartnerInjects.Set(1, Time);
+				Person[SelectedPersonIndex].SexualPartnerRegularID.Set(SelectedPersonIndex2, Time);
+				//Person[SelectedPersonIndex].SexualPartnerInjects.Set(1, Time);
+				
+				
 				// Add the sexual partnership to this other person 
 				Person[SelectedPersonIndex2].SexualPartner.Set(1, Time);
-				Person[SelectedPersonIndex2].SexualPartnerID.Set(SelectedPersonIndex, Time);
-				Person[SelectedPersonIndex2].SexualPartnerInjects.Set(1, Time);
+				Person[SelectedPersonIndex2].SexualPartnerRegularID.Set(SelectedPersonIndex, Time);
+				//Person[SelectedPersonIndex2].SexualPartnerInjects.Set(1, Time);
 				
 				// If regular, determine relationship length
 				var ThisPartnershipDuration=DeterminePartnerDuration(Param.IDU.Sex.PPartnerChangeYear1,Param.IDU.Sex.PPartnerChangeYear1);
