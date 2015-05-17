@@ -11,6 +11,10 @@ function HCVDataDiagnosis(Person, Notifications, Time, TimeStep){
 	ReturnData.DiagnosedSymptomatic=DiagnosedSymptomatic;
 	
 	// Reduce Data diagnosis by the symptomatic diagnosis numbers
+	console.log(HCVDataDiagnosisNumbers);
+	console.log(NumberDiagnosedThisStep.Count);
+	console.log(DiagnosedSymptomatic.Count);
+	
 	var RemainingToBeDiagnosed=Minus(NumberDiagnosedThisStep.Count, DiagnosedSymptomatic.Count);
 	
 	// if it results in negative levels remaining, this results in a penalty. 
