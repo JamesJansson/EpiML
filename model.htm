@@ -185,12 +185,12 @@ Papa.parse("data/summarynotifications.csv", {download: true, complete: function(
 		<h1>HCV</h1>
 		
 		<p>HCV Treatment Scenario</p>
-			<select id="HCVTreatmentScenarioSelector" onchange="Settings.HCVTreatmentScenario=this.value;SaveSettings();">
+			<select id="HCVTreatmentScenarioSelector" onchange="Settings.HCVTreatmentScenario=this.value;SaveSettings();UpdateHCVTreatmentScenarioSelector(this.value)">
 			</select>
 		<p>Description (note changes here are never saved)</p>
-		<textarea id="HCVTreatmentScenarioDescription"></textarea>
+		<textarea cols="100" rows="10" id="HCVTreatmentScenarioDescription"></textarea>
 		<p>Code (note changes here are never saved)</p>
-		<textarea id="HCVTreatmentScenarioCode"></textarea>
+		<textarea cols="100" rows="20" id="HCVTreatmentScenarioCode"></textarea>
 		
 		<div id="HCVParamHolder"> 
 			

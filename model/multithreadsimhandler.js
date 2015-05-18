@@ -13,9 +13,24 @@ self.onmessage = function (WorkerMessage) {
 	eval("FunctionHolder="+WorkerMessage.data.FunctionToRun+";");
 	var SimResult=FunctionHolder(WorkerMessage.data);
 	self.postMessage({WorkerMessage: WorkerMessage.data, Result: SimResult});//All simulation will end with this line
-}
+};
+
+// ---------------------------------------------------------------------------------
+// Running a function
+// RunSettings2={};
+// RunSettings2.FunctionName="RunFullModel";
+// RunSettings2.Common={};
+// RunSettings2.Common.HCVTretmentFunctionID=Settings.HCVTreatmentScenario;
+// RunSettings2.SimDataArray=[1, 2, 3];
+// SimulationHolder.Run(RunSettings2);
 
 
+
+
+
+
+// ---------------------------------------------------------------------------------
+// Running arbitrary text
 
 function EvalText(data){
 	var ReturnResult={};
@@ -27,7 +42,7 @@ function EvalText(data){
 // RunSettings2.FunctionName="EvalText";
 // RunSettings2.Common="BBB=new RegularInjectionTimeObject;console.log(BBB.Time());";
 // SimulationHolder.Run(RunSettings2);
-
+// ---------------------------------------------------------------------------------
 
 
 // Create a holder that allows the simulations to draw on some of the higher level aspects of the multithreadsim

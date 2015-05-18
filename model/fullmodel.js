@@ -5,13 +5,19 @@ var PostDataTreatmentFunction;// (Person[Array], Time, TimeStep)
 // Put the following into the console
 // RunSettings2={};
 // RunSettings2.FunctionName="RunFullModel";
+// RunSettings2.Common={};
+// RunSettings2.Common.HCVTretmentFunctionID=Settings.HCVTreatmentScenario;
+// RunSettings2.SimDataArray=[1];
 // SimulationHolder.Run(RunSettings2);
 
 
 
-
-function RunFullModel(){
+function RunFullModel(Stuff1){
 	
+	console.log(Stuff1);
+	
+	
+	var HCVTretmentFunctionID=Stuff1.Common.HCVTretmentFunctionID;
 	
 	
 	// Globals that need to be run before code will work
@@ -34,7 +40,8 @@ function RunFullModel(){
 	//throw("stopping");
 	
 	// Set up the treatment function
-	PostDataTreatmentFunction=TreatmentScenario1;
+	console.log(HCVTretmentFunctionID);
+	PostDataTreatmentFunction=HCVTreatmentScenario[HCVTretmentFunctionID].Function;
 	
 	
 	
@@ -117,8 +124,16 @@ function FullModel(Param, Notifications, EndSimulation, Intervention){
 	
 	console.error("fix times below");
 	
-	
-	
+	var TimerStart, TimerFinish;
+	var Timers={};
+	Time.CreatePWID={};
+	Time.CreatePWID.Old=0;
+	Time.CreatePWID.New=0;
+	Time.CreatePWID.Increase=0;
+	Time.JoinToSexualPartners={};
+	Time.JoinToSexualPartners.Old=0;
+	Time.JoinToSexualPartners.New=0;
+	Time.JoinToSexualPartners.Increase=0;
 	
 	for (var Time=Param.Time.StartDynamicModel; Time<EndSimulation; Time+=Param.TimeStep){// each time step
 		StepCount++;
@@ -133,7 +148,12 @@ function FullModel(Param, Notifications, EndSimulation, Intervention){
 		// Add new people to the IDU population for this time step
 		console.log("looking at param inside full model");
 		console.log(Param);
-		var PWIDToAdd=CreatePWID(Param.IDU.Entry, Time, Param.TimeStep);
+		
+		TimerStart = new Date().getTime() / 1000;
+    	var PWIDToAdd=CreatePWID(Param.IDU.Entry, Time, Param.TimeStep);
+		TimerFinish = new Date().getTime() / 1000;
+    	TotalTime=TimerFinish -TimerStart;
+		
 		
 		// Match some of the PWID, in particular females, to existing PWID sexual partners
 		// select by finding ProportionOfFirstInjectionsSexualPartner
@@ -151,6 +171,10 @@ function FullModel(Param, Notifications, EndSimulation, Intervention){
 			// All new people are joined to "friends" in the model
 			JoinToFriends(Person, RemainderToAdd);
 		}
+		
+		
+		Person=Person.concat(PWIDToAdd);
+		
 		// Balance sexual partnerships
 		AssignSexualPartner(Person, Time);
 		
@@ -178,6 +202,16 @@ function FullModel(Param, Notifications, EndSimulation, Intervention){
 		else{
 			PostDataTreatmentFunction(Person, Time, Param.TimeStep);	
 		}
+		
+		
+		
+		console.log("Time: "+Time);
+		console.log("People "+Person.length);
+		
+		
+		
+		
+		
 		
 		
 		// lots of points are lost for insufficient people to draw from diagnoses 

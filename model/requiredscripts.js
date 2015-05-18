@@ -25,4 +25,5 @@ importScripts("assignsexualpartner.js");
 importScripts("sexualrelationshipage.js");
 importScripts("hcvtransmission.js");
 importScripts("hcvtreatment.js");
+importScripts("hcvtreatmentscenarios.js");
 importScripts("hcvdiagnosis.js");

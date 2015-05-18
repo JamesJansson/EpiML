@@ -7,7 +7,8 @@ function MultiFunctionRun(){
 	// FunctionRunner=new MultiFunctionRun;
 	// FunctionRunner.FunctionArray[0]=Function0;
 	// FunctionRunner.FunctionArray[1]=Function1;
-	// Function0 should call FunctionRunner.RunNextFunction() once only. If it calls it twice, the function index will reach 2, but there is no FunctionArray[2] and this will cause an error
+	// Function0 should call FunctionRunner.RunNextFunction() once only when it is done. 
+	// If it calls it twice, the function index will reach 2, but there is no FunctionArray[2] and this will cause an error
 	
 	this.StepRunning=-1;
 	this.FunctionArray=[];
@@ -28,9 +29,13 @@ MultiFunctionRun.prototype.Reset= function (){
 };
 
 
+
+
+
+
+
+
 var FunctionRunner;
-
-
 function RunFullOptimisationAndDataExtration(){
 	var ModelDirectory='model';
 	// Load the values from the files
@@ -56,7 +61,6 @@ function RunFullOptimisationAndDataExtration(){
 	SimulationHolder.SimProgressBarID="MainProgress";
 	
 	FunctionRunner=new MultiFunctionRun();
-	
 	FunctionRunner.FunctionArray[0]=OptimiseParameters;
 	FunctionRunner.FunctionArray[1]=RunSimulation1;
 	
@@ -96,8 +100,6 @@ function RunPersistentSim(){
 	SimSettings={};
 	SimSettings.RunOptimisation=true;
 	console.error("SimSettings.RunOptimisation hard set above");
-	
-	
 	// The following is required for all programs
 	SimSettings.SampleFactor=Settings.SampleFactor;
 	
