@@ -124,16 +124,31 @@ function FullModel(Param, Notifications, EndSimulation, Intervention){
 	
 	console.error("fix times below");
 	
+	function RecordingTimer(){
+		this.TimerStart;
+		this.TimerFinish;
+		this.Time=0;
+		this.Increase=0;
+	};
+	
+	RecordingTimer.prototype.Start= function (){
+		this.TimerStart = new Date().getTime() / 1000;
+	}
+	
+	RecordingTimer.prototype.Stop= function (){
+		this.TimerStop = new Date().getTime() / 1000;
+		var Current=this.TimerStop-this.TimerStart;
+		this.Increase=Current/this.Time;
+		this.Time=Current;
+	}
+	
+	
+	
 	var TimerStart, TimerFinish;
 	var Timers={};
-	Time.CreatePWID={};
-	Time.CreatePWID.Old=0;
-	Time.CreatePWID.New=0;
-	Time.CreatePWID.Increase=0;
-	Time.JoinToSexualPartners={};
-	Time.JoinToSexualPartners.Old=0;
-	Time.JoinToSexualPartners.New=0;
-	Time.JoinToSexualPartners.Increase=0;
+	Timers.CreatePWID=new RecordingTimer();
+	Timers.AssignSexualPartner=new RecordingTimer();
+
 	
 	for (var Time=Param.Time.StartDynamicModel; Time<EndSimulation; Time+=Param.TimeStep){// each time step
 		StepCount++;
@@ -149,10 +164,17 @@ function FullModel(Param, Notifications, EndSimulation, Intervention){
 		console.log("looking at param inside full model");
 		console.log(Param);
 		
-		TimerStart = new Date().getTime() / 1000;
-    	var PWIDToAdd=CreatePWID(Param.IDU.Entry, Time, Param.TimeStep);
-		TimerFinish = new Date().getTime() / 1000;
-    	TotalTime=TimerFinish -TimerStart;
+
+
+
+
+    	Timers.CreatePWID.Start();
+
+		var PWIDToAdd=CreatePWID(Param.IDU.Entry, Time, Param.TimeStep);
+
+		Timers.CreatePWID.Stop();
+		console.log("CreatePWID time " + Timers.CreatePWID.Time + " Increase " +Timers.CreatePWID.Increase);
+		
 		
 		
 		// Match some of the PWID, in particular females, to existing PWID sexual partners
@@ -175,8 +197,14 @@ function FullModel(Param, Notifications, EndSimulation, Intervention){
 		
 		Person=Person.concat(PWIDToAdd);
 		
+		Timers.AssignSexualPartner.Start();
 		// Balance sexual partnerships
 		AssignSexualPartner(Person, Time);
+		Timers.AssignSexualPartner.Stop();
+		console.log("AssignSexualPartner time " + Timers.AssignSexualPartner.Time + " Increase " +Timers.AssignSexualPartner.Increase);
+		
+		
+		
 		
 		// Determine transmissions that occur
 		DetermineHCVTransmissions(Person, Time, Param.TimeStep);

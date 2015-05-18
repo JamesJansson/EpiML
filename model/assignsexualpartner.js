@@ -107,8 +107,8 @@ function AssignSexualPartner(Person, Time){
 				
 				// Search injectors for matches
 				var AgeDiff;
-				var AgeDiffAcceptable=0.1;
-				console.log("Needs a proper set here");
+				// var AgeDiffAcceptable=0.1;
+				// console.log("Needs a proper set here");
 				var Pi2;
 				
 				// The function keeps looking for someone until a level of difference in age is reached that cannot be expected to be beaten. 
@@ -118,16 +118,21 @@ function AssignSexualPartner(Person, Time){
 				
 				var SelectedPersonIndex2=-1;
 				var BestDiff=1e9;
-				for (var Pi2 in Person){
-					if (Person[Pi2].Sex==PartnerSex && Pi2!=SelectedPersonIndex){
-						AgeDiff=Abs(AgeAim-Person[Pi2].Age(Time));
-
+				//for (var TestIndex in Person){
+				SamplesFound=0;
+				while (SamplesFound<100 || SelectedPersonIndex2<0){
+					// choose from the array at random
+					TestIndex=Floor(Rand.Value()*Person.length);
+					
+					if (Person[TestIndex].Sex==PartnerSex && TestIndex!=SelectedPersonIndex){
+						SamplesFound++;
+						AgeDiff=Abs(AgeAim-Person[TestIndex].Age(Time));
 						if (AgeDiff<BestDiff){
 							// An alternative test could assume that even if it isn't right on the mark, they are candidates for selection
 							// this condition would be good for people who are selected at random
 							// AgeAim*(1-AgeDiffAcceptable)<AgeAim && AgeAim<=AgeAim*(1+AgeDiffAcceptable) && 
 							BestDiff=AgeDiff;
-							SelectedPersonIndex2=Pi2;
+							SelectedPersonIndex2=TestIndex;
 						}
 					}
 				}
