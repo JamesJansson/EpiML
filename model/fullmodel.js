@@ -1,5 +1,6 @@
 
 var RegularInjectionTime;
+var PostDataTreatmentFunction;// (Person[Array], Time, TimeStep)
 
 // Put the following into the console
 // RunSettings2={};
@@ -7,27 +8,19 @@ var RegularInjectionTime;
 // SimulationHolder.Run(RunSettings2);
 
 
+
+
 function RunFullModel(){
 	
-	var Intervention=function(){};
 	
 	
 	// Globals that need to be run before code will work
 	RegularInjectionTime=new RegularInjectionTimeObject();
-	// OptimisedValues that need to be set by an external function
-	Param.IDU.RateOfCesssation=0.25;
-
-	Param.IDU.Entry.A=2500;
-	Param.IDU.Entry.B=0.20;
-	Param.IDU.Entry.Logk2=0.3;
-	Param.IDU.Entry.Logk1=0.8;
 	
-	// Notification data
-	var Notifications={}; // This should go into the outer loop
-	
+	// This should go into the outer loop
 	console.log(Data);
-
-	
+	// Notification data
+	var Notifications={}; 
 	Notifications.Year=Data.MaleNotifications.Year;
 	Notifications.Age=Data.MaleNotifications.Age;
 	Notifications.Count=[];
@@ -37,11 +30,27 @@ function RunFullModel(){
 	Notifications.Count[1]=Data.FemaleNotifications.Table;
 	Notifications.FirstYearOfData=Notifications.Year[0];
 	Notifications.LastYearOfData=Notifications.Year[Notifications.Year.length-1];
-	
-	
-	
 	console.log(Notifications);
 	//throw("stopping");
+	
+	// Set up the treatment function
+	PostDataTreatmentFunction=TreatmentScenario1;
+	
+	
+	
+	var Intervention=function(){};
+	
+	
+	
+	
+	// OptimisedValues that need to be set by an external function
+	Param.IDU.RateOfCesssation=0.25;
+
+	Param.IDU.Entry.A=2500;
+	Param.IDU.Entry.B=0.20;
+	Param.IDU.Entry.Logk2=0.3;
+	Param.IDU.Entry.Logk1=0.8;
+	
 	
 	
 	var Results=FullModel(Param, Notifications, Param.Time.EndSimulation, Intervention);
@@ -167,7 +176,7 @@ function FullModel(Param, Notifications, EndSimulation, Intervention){
 			DetermineHistoricalTreatment(Person, Time, Param.TimeStep, Data.TreatmentNumbers);//Treatment rates is an array of each of the treatment types
 		}
 		else{
-			TreatmentFunction(Person, Time, Param.TimeStep);	
+			PostDataTreatmentFunction(Person, Time, Param.TimeStep);	
 		}
 		
 		

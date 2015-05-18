@@ -33,7 +33,7 @@
 <script type="text/javascript" src="interface/filesaver/filesaver.js"></script>
 <script type="text/javascript" src="interface/fullscreen.js"></script>
 
-<!-- Loading methods that are used in the model -->
+<!-- Loading methods that are used in the model and interface -->
 <script type="text/javascript" src="model/simulationtools.js"></script>
 <script type="text/javascript" src="model/mathtools.js"></script>
 <script type="text/javascript" src="model/populationstatistics.js"></script>
@@ -41,6 +41,9 @@
 <script type="text/javascript" src="model/parameter.js"></script>
 <script type="text/javascript" src="model/simulationbuttons.js"></script>
 <script type="text/javascript" src="model/stochasticoptimisation.js"></script>
+<script type="text/javascript" src="model/hcvtreatmentscenarios.js"></script>
+
+
 
 <!-- Loading model javascript -->
 <script type="text/javascript" src="model/person.js"></script>
@@ -180,7 +183,20 @@ Papa.parse("data/summarynotifications.csv", {download: true, complete: function(
 	
 	<div id="HCVContent" class="Content">
 		<h1>HCV</h1>
-		<div id="HCVParamHolder"> </div>
+		
+		<p>HCV Treatment Scenario</p>
+			<select id="HCVTreatmentScenarioSelector" onchange="Settings.HCVTreatmentScenario=this.value;SaveSettings();">
+			</select>
+		<p>Description (note changes here are never saved)</p>
+		<textarea id="HCVTreatmentScenarioDescription"></textarea>
+		<p>Code (note changes here are never saved)</p>
+		<textarea id="HCVTreatmentScenarioCode"></textarea>
+		
+		<div id="HCVParamHolder"> 
+			
+			
+			
+		</div>
 	</div>
 	
 	<div id="DataContent" class="Content">

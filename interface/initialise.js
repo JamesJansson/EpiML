@@ -52,6 +52,10 @@ function InitialisePage(){
 	//BuildParameterPage(Param.HCV, "HCVParamHolder", "Param.HCV");
 	
 	
+	// Set up the HCV Treatment Scenarios
+	SetupHCVTreatmentScenarioSelector();
+	
+	
 	console.log("It might be a good idea to compress simulation output to save on time using LZAA in lz-string http://pieroxy.net/blog/pages/lz-string/demo.html");
 }
 
@@ -59,7 +63,7 @@ function TestingPageRequirements(){
 	//Testing the required elements for EpiML
 	//Web workers
 	if(typeof(Worker) == "undefined") {
-	alert("Webworkers are not supported in this browser. EpiML requires webworkers to run. Try upgrading your browser");
+		alert("Webworkers are not supported in this browser. EpiML requires webworkers to run. Try upgrading your browser");
 	}
 	//Local storage
 
@@ -145,3 +149,30 @@ function LoadDataFiles(){
 }
 
 
+
+
+
+function SetupHCVTreatmentScenarioSelector(){
+    var SelectorObj = document.getElementById("HCVTreatmentScenarioSelector");
+	
+	for (var ScenarioID in HCVTreatmentScenario){
+	    var optionobj = document.createElement("option");
+	    optionobj.text = HCVTreatmentScenario[ScenarioID].Name;
+	    optionobj.value = ScenarioID;
+	    SelectorObj.add(optionobj);
+	}
+	
+	if (Settings.HCVTreatmentScenario){
+		SelectorObj.value=Settings.HCVTreatmentScenario;
+		UpdateHCVTreatmentScenarioSelector(Settings.HCVTreatmentScenario);
+	}
+	else {
+		SelectorObj.value=0;
+		UpdateHCVTreatmentScenarioSelector(0);
+	}
+}
+
+function UpdateHCVTreatmentScenarioSelector(ScanrioNum){
+	document.getElementById('HCVTreatmentScenarioDescription').value=HCVTreatmentScenario[ScanrioNum].Description;
+	document.getElementById('HCVTreatmentScenarioCode').value=HCVTreatmentScenario[ScanrioNum].Function;
+}
