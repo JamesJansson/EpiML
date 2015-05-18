@@ -155,9 +155,9 @@ function FullModel(Param, Notifications, EndSimulation, Intervention){
 		}
 		else if (Notifications.LastYearOfData < Time){
 			if (typeof(PerStepProbOfDiagnosis)=="undefined"){
-				var PerStepProbOfDiagnosis=DeterminePostDataDiagnosisDataRate(SimulationHistory.DiagnosisResults, Param.Time.DurationToAverageOver);
+				var PerStepProbOfDiagnosis=DeterminePostDataDiagnosisDataRate(SimulationHistory.DiagnosisResults, Notifications.LastYearOfData-Param.Time.DurationToAverageOver);
 			}
-			HCVRateDiagnosis(Person, PerStepProbOfDiagnosis, Time, Param.TimeStep);
+			HCVRateDiagnosis(Person, Notifications.Age, PerStepProbOfDiagnosis, Time, Param.TimeStep);
 		}
 		
 		

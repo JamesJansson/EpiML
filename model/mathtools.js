@@ -644,7 +644,7 @@ function PowNumberByArray(Num, Arr){// Pows num by each element in Arr
 
 
 function Apply(FunctionToApply, Input){
-	if (typeof Input === 'number'){
+	if (typeof Input === 'number' || typeof Input === 'boolean' ){
 		return FunctionToApply(Input);
 	}
 	else if (typeof Input === 'object'){
