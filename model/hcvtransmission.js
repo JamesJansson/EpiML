@@ -14,6 +14,7 @@ function DetermineHCVTransmissions(Person, Time, TimeStep){
 				var GenotypeArray=PWID[IndexOfPartner].HCV.Genotype.Value(Time);
 				PWID[Pn].HCV.Infection(Time+TimeStep*Rand.Value(), GenotypeArray);
 				NumberOfTransmissions++;
+				
 			}
 		}
 	}

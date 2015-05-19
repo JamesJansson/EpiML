@@ -89,7 +89,7 @@ HCVObject.prototype.Infection= function (Year, GenotypeValue){//, Age, Sex, Alco
 	var NewGenotypeArray=DeepCopy(this.Genotype.Value(Year));// note that since this is an array, we need to copy it before we operate on it.
 
 	// Check if any of the Genotypes in GenotypeValue exist in the current array
-	NewGenotypeArray.push(GenotypeValue);
+	NewGenotypeArray.concat(GenotypeValue);
 	var UniqueGenotypeArray = NewGenotypeArray.filter(function(item, pos, self) {
 		return self.indexOf(item) == pos;// if the item under inspection is equal to the first occurrence of the item, then keep
 	})
