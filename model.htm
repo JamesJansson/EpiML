@@ -116,6 +116,9 @@ Papa.parse("data/summarynotifications.csv", {download: true, complete: function(
 		<h1>Home</h1>
 		<p> This model is a work in progress. The results have not yet been confirmed. Please contact jjansson@kirby.unsw.edu.au for enquiries. </p>
 		
+		<p> <b> Run model using network</b> </p>
+		<input type="checkbox" onClick="Settings.ModelNetwork=this.checked;SaveSettings();">Model network interactions<br>
+		
 		<p> <b>Use existing optimisation (if it exists) </b> </p>
 		<input type="checkbox" onClick="FutureCheckBox=this.checked;">PWID Entry Optimisation<br>
 		<input type="checkbox" onClick="FutureCheckBox=this.checked;">PWID Progression and Exit<br>

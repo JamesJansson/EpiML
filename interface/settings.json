@@ -3,5 +3,6 @@
     "ConcurrentSims": "1",
     "SampleFactor": 100,
     "NumberOfSimulations": 1,
-    "HCVTreatmentScenario": "0"
+    "HCVTreatmentScenario": "0",
+    "ModelNetwork": true
 }
