@@ -23,37 +23,21 @@ var SimulationRunning=0;//set to 1 if running
 
 	
 function InitialisePage(){
+	// Load data
 	TestingPageRequirements();
 	LoadDataFiles();
 	LoadSettingsFiles();
 	Param=LoadParameters();
 	
-	//Wait?
-	
-	
-	
-	// Param.HCV={};
-	// Param.HCV.AAA=new ParameterClass('AAA');
-	// Param.HCV.AAA.Description="This is what will appear in the textarea box";
-	// Param.HCV.BBB=new ParameterClass('BBB');
-	
-	//Param.HCV.F0F1;
-	
-	// 
-	
 	//Initialise interface
-	//Param=[];
-	//Param=LoadParameters();
 	PPage=new ParameterPage(Param, "Param", "PPage", "ParamHolder", 100);
 	PPage.Build();
 	
 	
 	
-	//BuildParameterPage(Param.HCV, "HCVParamHolder", "Param.HCV");
 	
 	
-	// Set up the HCV Treatment Scenarios
-	SetupHCVTreatmentScenarioSelector();
+	
 	
 	
 	console.log("It might be a good idea to compress simulation output to save on time using LZAA in lz-string http://pieroxy.net/blog/pages/lz-string/demo.html");
@@ -88,6 +72,26 @@ function LoadSettingsFiles(){
 		else{
 			Settings = JSON.parse(data);
 		}
+		
+		// Set up the HCV Treatment Scenarios
+		SetupHCVTreatmentScenarioSelector();
+		
+		// Set up settings options
+		var CheckboxValue;
+		console.log(Settings);
+		console.log(typeof(Settings.ModelNetwork));
+		if (typeof(Settings.ModelNetwork)!="undefined"){
+			CheckboxValue=Settings.ModelNetwork;
+		}
+		else {
+			CheckboxValue=false;
+		}
+		document.getElementById('ModelNetworkCheckbox').checked=CheckboxValue;
+		
+		
+		
+		
+		
 		document.getElementById("NumberOfSimulationsTextbox").value=Settings.NumberOfSimulations;
 		document.getElementById("NoThreadsDropdown").value=Settings.NoThreads;
 		document.getElementById("ConcurrentSimsDropdown").value=Settings.ConcurrentSims;
@@ -155,6 +159,7 @@ function LoadDataFiles(){
 function SetupHCVTreatmentScenarioSelector(){
     var SelectorObj = document.getElementById("HCVTreatmentScenarioSelector");
 	
+	// Create the drop down options
 	for (var ScenarioID in HCVTreatmentScenario){
 	    var optionobj = document.createElement("option");
 	    optionobj.text = HCVTreatmentScenario[ScenarioID].Name;
@@ -162,14 +167,14 @@ function SetupHCVTreatmentScenarioSelector(){
 	    SelectorObj.add(optionobj);
 	}
 	
-	if (Settings.HCVTreatmentScenario){
+	// Select the relevant drop down option
+	if (typeof(Settings.HCVTreatmentScenario)!="undefined"){
 		SelectorObj.value=Settings.HCVTreatmentScenario;
-		UpdateHCVTreatmentScenarioSelector(Settings.HCVTreatmentScenario);
 	}
 	else {
 		SelectorObj.value=0;
-		UpdateHCVTreatmentScenarioSelector(0);
 	}
+	UpdateHCVTreatmentScenarioSelector(SelectorObj.value);
 }
 
 function UpdateHCVTreatmentScenarioSelector(ScanrioNum){
