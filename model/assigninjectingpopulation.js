@@ -454,20 +454,30 @@ function CreatePWID(EntryParams, Time, TimeStep){
 }
 
 function SetInitialHCVLevels(Person){
-	var Time=1993;//Param.Model.DynamicHCV.Time;
+	//var Time=//1993;//Param.Model.DynamicHCV.Time;
 	var PropWithHCVInitially=0.7; //Param.InitialHCV.Prop;
-	var PWID=SelectPWID(Person, Time);
+	var PWID=SelectPWID(Person, Param.Time.StartDynamicModel);
 	
+	console.error("The size of the extracted group is below");
+	console.log(PWID);
+	
+	
+	// Do a very rough optimisation to get the right proportion at the time
+	
+	// Extract injection durations
 	var InjectionHistory={};
 	InjectionHistory.Duration=[];
 	InjectionHistory.TimeStart=[];
 	for (var Pn in PWID){
 		var ThisTimeStartInjection=PWID[Pn].IDU.Use.FirstTimeOf(1);	
 		InjectionHistory.TimeStart.push(ThisTimeStartInjection);
-		InjectionHistory.Duration.push(Time-ThisTimeStartInjection);
+		InjectionHistory.Duration.push(Param.Time.StartDynamicModel-ThisTimeStartInjection);
 	}
-	// do a very rough optimisation to get the right proportion at the time
-
+	
+	console.log("InjectionHistory.Duration");
+	console.log(InjectionHistory.Duration);
+	
+	// Set up the optimisation
 	var FunctionInput=InjectionHistory;
 	var OptimisationSettings={};
 	OptimisationSettings.Target=PropWithHCVInitially;
@@ -512,6 +522,7 @@ function SetInitialHCVLevels(Person){
 			PWID[Pn].HCV.Infection(InjectionHistory.TimeStart[Pn]+TimeOfHCV, ChooseInitialGenotype());
 		}
 	}
+	console.log("PWID below");
 	console.log(PWID);
 	
 	// At this point, a plot should be created of 

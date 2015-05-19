@@ -88,10 +88,7 @@ function LoadSettingsFiles(){
 		}
 		document.getElementById('ModelNetworkCheckbox').checked=CheckboxValue;
 		
-		
-		
-		
-		
+		console.error("Note: all the below should have checking and defaults implemented as above.");		
 		document.getElementById("NumberOfSimulationsTextbox").value=Settings.NumberOfSimulations;
 		document.getElementById("NoThreadsDropdown").value=Settings.NoThreads;
 		document.getElementById("ConcurrentSimsDropdown").value=Settings.ConcurrentSims;

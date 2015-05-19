@@ -16,8 +16,15 @@ function RunFullModel(Stuff1){
 	
 	console.log(Stuff1);
 	
-	
+	// Reading in settings
 	var HCVTretmentFunctionID=Stuff1.Common.HCVTretmentFunctionID;
+	
+	
+	// This needs to be established by the optimisation 
+	Param.HCV.ProbabilityOfTransmission=0.5;
+	console.error("The above is hard set and poorly defined");
+	
+	
 	
 	
 	// Globals that need to be run before code will work
@@ -109,7 +116,7 @@ function FullModel(Param, Notifications, EndSimulation, Intervention){
 	
 	
 	
-	// Create a very basic early population that has a set distribution 
+	// Create a very basic early population that has a set distribution of IDU and HCV
 	var Person=InitialDistribution();
 	
 	// Run HCV blood recipients
@@ -124,6 +131,11 @@ function FullModel(Param, Notifications, EndSimulation, Intervention){
 	
 	console.error("fix times below");
 	
+	
+	
+	
+	
+	// Timers functions
 	function RecordingTimer(){
 		this.TimerStart;
 		this.TimerFinish;
@@ -143,12 +155,12 @@ function FullModel(Param, Notifications, EndSimulation, Intervention){
 	}
 	
 	
-	
+	// Set up timers
 	var TimerStart, TimerFinish;
 	var Timers={};
 	Timers.CreatePWID=new RecordingTimer();
 	Timers.AssignSexualPartner=new RecordingTimer();
-
+	Timers.DetermineHCVTransmissions=new RecordingTimer();
 	
 	for (var Time=Param.Time.StartDynamicModel; Time<EndSimulation; Time+=Param.TimeStep){// each time step
 		StepCount++;
@@ -201,21 +213,40 @@ function FullModel(Param, Notifications, EndSimulation, Intervention){
 		
 		
 		
-		Timers.AssignSexualPartner.Start();
-		// Balance sexual partnerships
-		AssignSexualPartner(Person, Time);
-		Timers.AssignSexualPartner.Stop();
-		console.log("AssignSexualPartner time " + Timers.AssignSexualPartner.Time + " Increase " +Timers.AssignSexualPartner.Increase);
+
 		
 		
 		
 		if (Settings.ModelNetwork){
-			// Determine transmissions that occur
-			DetermineHCVTransmissions(Person, Time, Param.TimeStep);
+			// Balance sexual partnerships
+			Timers.AssignSexualPartner.Start();
+			AssignSexualPartner(Person, Time);
+			Timers.AssignSexualPartner.Stop();
+			console.log("AssignSexualPartner time " + Timers.AssignSexualPartner.Time + " Increase " +Timers.AssignSexualPartner.Increase);
 		}
 		else {
 			// 
 		}
+		
+		
+		
+		
+		
+		// Determine transmissions that occur
+		//if (Settings.ModelNetwork){
+			Timers.DetermineHCVTransmissions.Start();
+			DetermineHCVTransmissions(Person, Time, Param.TimeStep);
+			Timers.DetermineHCVTransmissions.Stop();
+			console.log("DetermineHCVTransmissions time " + Timers.DetermineHCVTransmissions.Time + " Increase " +Timers.DetermineHCVTransmissions.Increase);
+		//}
+		//else {
+			
+		//}
+		
+		
+		
+		
+		
 		
 		// Testing 
 		if (Notifications.FirstYearOfData<=Time && Time<Notifications.LastYearOfData){ // only if there is data
@@ -290,7 +321,7 @@ function FullModel(Param, Notifications, EndSimulation, Intervention){
 }
 
 function InitialDistribution() {
-	console.log("in InitialDistribution");
+	console.log("Starting InitialDistribution");
 	
 	
 	// Run CreatePWID multiple times
@@ -305,6 +336,10 @@ function InitialDistribution() {
 	}
 	console.log(Time);
 	console.log("exitted the loop");
+	
+	console.log(Person);
+	
+	
 	
 	SetInitialHCVLevels(Person);
 	//InitialiseNetwork(Person, Param.Time.StartDynamicModel);// we only need it to be a correct network at the end of this period because this is the start of the dynamic period
