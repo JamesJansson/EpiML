@@ -176,26 +176,30 @@ function FullModel(Param, Notifications, EndSimulation, Intervention){
 		console.log("CreatePWID time " + Timers.CreatePWID.Time + " Increase " +Timers.CreatePWID.Increase);
 		
 		
-		
-		// Match some of the PWID, in particular females, to existing PWID sexual partners
-		// select by finding ProportionOfFirstInjectionsSexualPartner
-
-		if (false){// add once this section is complete
-			// determine the number that will inject the first time with a sexual partners
-			var RemainderToAdd=JoinToSexualPartners(Person, PWIDToAdd, Data.FirstExperienceSexualPartner.Male, Data.FirstExperienceSexualPartner.Female);
-				// determine number with regular sex partners (approximately 50%, NSP survey)
-				// determine number with casual sex partners
-				// Determine when the sexual partners begin their partnership (could be before starting injecting or after)
-				// what proportion had partners who did not inject drugs
-			
-			// not the above should add the correct number of PWID to Person
-			
-			// All new people are joined to "friends" in the model
-			JoinToFriends(Person, RemainderToAdd);
+		if (Settings.ModelNetwork){
+			if (false){// add once this section is complete
+				// Match some of the PWID, in particular females, to existing PWID sexual partners
+				// select by finding ProportionOfFirstInjectionsSexualPartner
+				// determine the number that will inject the first time with a sexual partners
+				var RemainderToAdd=JoinToSexualPartners(Person, PWIDToAdd, Data.FirstExperienceSexualPartner.Male, Data.FirstExperienceSexualPartner.Female);
+					// determine number with regular sex partners (approximately 50%, NSP survey)
+					// determine number with casual sex partners
+					// Determine when the sexual partners begin their partnership (could be before starting injecting or after)
+					// what proportion had partners who did not inject drugs
+				
+				// not the above should add the correct number of PWID to Person
+				
+				// All new people are joined to "friends" in the model
+				JoinToFriends(Person, RemainderToAdd);
+			}
 		}
 		
 		
 		Person=Person.concat(PWIDToAdd);
+		
+		
+		
+		
 		
 		Timers.AssignSexualPartner.Start();
 		// Balance sexual partnerships
@@ -205,10 +209,13 @@ function FullModel(Param, Notifications, EndSimulation, Intervention){
 		
 		
 		
-		
-		// Determine transmissions that occur
-		DetermineHCVTransmissions(Person, Time, Param.TimeStep);
-		
+		if (Settings.ModelNetwork){
+			// Determine transmissions that occur
+			DetermineHCVTransmissions(Person, Time, Param.TimeStep);
+		}
+		else {
+			// 
+		}
 		
 		// Testing 
 		if (Notifications.FirstYearOfData<=Time && Time<Notifications.LastYearOfData){ // only if there is data
