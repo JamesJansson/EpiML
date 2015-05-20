@@ -81,10 +81,10 @@ function RunFullModel(Stuff1){
 	StatsTime.StepSize=1;
 	
 	var ReturnResults={};
-	ReturnResults.LivingWithHCVInfection=LivingWithHCVInfectionStats(Person, Settings.SampleFactor, StatsTime);
-	ReturnResults.CurrentIDU=CurrentIDUStats(Person, Settings.SampleFactor, StatsTime);
-	ReturnResults.EverIDU=EverIDUStats(Person, Settings.SampleFactor, StatsTime);
-	ReturnResults.EverIDUHCVAntibody=EverIDUHCVAntibodyStats(Person, Settings.SampleFactor, StatsTime);
+	ReturnResults.LivingWithHCVInfection=LivingWithHCVInfectionStats(Person, StatsTime);
+	ReturnResults.CurrentIDU=CurrentIDUStats(Person, StatsTime);
+	ReturnResults.EverIDU=EverIDUStats(Person, StatsTime);
+	ReturnResults.EverIDUHCVAntibody=EverIDUHCVAntibodyStats(Person, StatsTime);
 	
 	
 	
