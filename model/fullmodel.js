@@ -21,7 +21,7 @@ function RunFullModel(Stuff1){
 	
 	
 	// This needs to be established by the optimisation 
-	Param.HCV.ProbabilityOfTransmission=0.5;
+	Param.HCV.ProbabilityOfTransmission=0.1;
 	console.error("The above is hard set and poorly defined");
 	
 	
@@ -84,14 +84,18 @@ function RunFullModel(Stuff1){
 	ReturnResults.LivingWithHCVInfection=LivingWithHCVInfectionStats(Person, Settings.SampleFactor, StatsTime);
 	ReturnResults.CurrentIDU=CurrentIDUStats(Person, Settings.SampleFactor, StatsTime);
 	ReturnResults.EverIDU=EverIDUStats(Person, Settings.SampleFactor, StatsTime);
-	
+	ReturnResults.EverIDUHCVAntibody=EverIDUHCVAntibodyStats(Person, Settings.SampleFactor, StatsTime);
 	
 	
 	
 	// console.log(SimulationHolder.Result[0].LivingWithHCVInfection.Count);
 	// console.log(SimulationHolder.Result[0].CurrentIDU.Count);
 	// console.log(SimulationHolder.Result[0].EverIDU.Count);
-	// 	
+	// console.log(SimulationHolder.Result[0].EverIDUHCVAntibody.Count);
+	// console.log(Divide(SimulationHolder.Result[0].EverIDUHCVAntibody.Count, SimulationHolder.Result[0].EverIDU.Count));
+	
+	
+	// Note: number of people living with HCV is somewhat lower thant the people who have ever IDU	
 	// console.log(Divide(SimulationHolder.Result[0].LivingWithHCVInfection.Count, SimulationHolder.Result[0].EverIDU.Count));
 	
 	

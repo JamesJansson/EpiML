@@ -249,3 +249,39 @@ function EverIDUStats(PPLocal, SampleFactorMultiplier, Time){
 	
 	return InjectingResult;
 }
+
+
+function EverIDUHCVAntibodyStats(PPLocal, SampleFactorMultiplier, Time){
+	//Create settings
+	var Settings={};
+	Settings.Name="Number of people ever injecting drugs who have HCV antibodies";
+	Settings.CountType="Instantaneous";
+	Settings.XLabel="Year";
+	Settings.YLabel="Count";
+	Settings.StartTime=Time.Start;
+	Settings.EndTime=Time.Stop;
+	Settings.TimeStep=Time.Step;
+	
+
+	
+	//Define the selection function
+	var StatsFunction= function (Person, Time){
+		if (Person.IDU.EverInjectedAtTime(Time)){
+			if (Person.HCV.AntibodyPresent(Time)){
+				return 1;
+			}
+		}
+		return 0;
+	};
+	
+	// Run the statistic
+	var EverIDUHCVResult=new CountStatistic(Settings, StatsFunction);
+	EverIDUHCVResult.Run(PPLocal);
+
+	EverIDUHCVResult.Adjust(SampleFactorMultiplier);// Make this representative sample actually reflect the real number of diagnoses
+	
+	return EverIDUHCVResult;
+}
+
+
+
