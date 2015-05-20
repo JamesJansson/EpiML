@@ -31,7 +31,36 @@ function DebugStatement(ConsoleMessage){
 }
 
 
-
+function SimSetup(WorkerData){
+	// The purpose of this function is to create globals that will persis over multiple simulations
+	
+	//In this section will be a message handler that allows calls
+	// Initialise (set data and parameters)
+	
+	
+	DebugStatement("Data passed to the simulation");
+	DebugStatement(WorkerData);//This passes the data back to the console so we can look at it
+	Rand.SetSeed();//note that this is an extremely important step to allow random numbers to be generated
+	var TimerStart = new Date().getTime() / 1000;
+	
+	//Load the notification data
+	Data=WorkerData.Common.Data;
+	//Load the parameters data
+	Param = WorkerData.SimData;
+	// Load the settings
+	Settings=WorkerData.Common.Settings;
+	
+	MultithreadSimController.SetThreadStatusToSimNumber();
+	
+	
+	// Load up mortality data
+	MaleMortality=new MortalityCalculator(Data.Mortality.Male[1].Rates, Data.Mortality.Male[1].Year, Data.Mortality.Male[2].Rates, Data.Mortality.Male[2].Year);
+	FemaleMortality=new MortalityCalculator(Data.Mortality.Female[1].Rates, Data.Mortality.Female[1].Year, Data.Mortality.Female[2].Rates, Data.Mortality.Female[2].Year);
+	
+	// Adjust data according to beliefs about inaccuracies 
+	AdjustDataForKnownBiases();
+	
+}
 
 
 
@@ -81,12 +110,17 @@ function NotificationBackProjection(WorkerData){
 	
 	SimID = WorkerData.SimID; // this value is used to select the appropriate parameter value
 
-	var ThreadID = WorkerData.ThreadID;// this value can be used by the code to send specific messages to particular elements, e.g. progress bar 4 set to 60%
+	// var ThreadID = WorkerData.ThreadID;// this value can be used by the code to send specific messages to particular elements, e.g. progress bar 4 set to 60%
 	
-	var StringForStatus="thread: "+ThreadID+" simID: "+SimID;
+	// var StringForStatus="thread: "+ThreadID+" simID: "+SimID;
 	//self.postMessage({StatusText: StringForStatus, StatusTextID: ThreadID});
 	//MultithreadSimController.ThreadStatusText(StringForStatus);
 	MultithreadSimController.SetThreadStatusToSimNumber();
+	
+	
+	
+	
+	
 	
 	
 	// Load up mortality data
@@ -95,7 +129,7 @@ function NotificationBackProjection(WorkerData){
 	
 	
 	// Adjust data according to beliefs about inaccuracies 
-	AdjustData();
+	AdjustDataForKnownBiases();
 	
 	
 	
@@ -253,11 +287,11 @@ function NotificationBackProjection(WorkerData){
 
 };
 
-function AdjustData(){
-	AdjustPWID();//(Data, AdjustmentFactor);
+function AdjustDataForKnownBiases(){
+	AdjustPWIDUnderReporting();//(Data, AdjustmentFactor);
 }
 
-function AdjustPWID(){//Data, AdjustmentFactor){// This should occur prior to passing the data to the function
+function AdjustPWIDUnderReporting(){//Data, AdjustmentFactor){// This should occur prior to passing the data to the function
 	// FunctionInput.EntryParams.AIHWHouseholdSurveryUncertaintySD=0.1;// a value that gives variation in the result due to the small numbers
 		
 	// FunctionInput.EntryParams.AIHWHouseholdSurveryUnderstimate=1.2;

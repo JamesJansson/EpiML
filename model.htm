@@ -116,8 +116,9 @@ Papa.parse("data/summarynotifications.csv", {download: true, complete: function(
 		<h1>Home</h1>
 		<p> This model is a work in progress. The results have not yet been confirmed. Please contact jjansson@kirby.unsw.edu.au for enquiries. </p>
 		
-		<p> <b> Run model using network</b> </p>
+		<p> <b> Settings </b> </p>
 		<input id="ModelNetworkCheckbox" type="checkbox" onClick="Settings.ModelNetwork=this.checked;SaveSettings();">Model network interactions<br>
+		<input id="RecalculateParamCheckbox" type="checkbox" onClick="Settings.RecalculateParam=this.checked;SaveSettings();">Recalculate Param<br>
 		
 		<p> <b>Use existing optimisation (if it exists) </b> </p>
 		<input type="checkbox" onClick="FutureCheckBox=this.checked;">PWID Entry Optimisation<br>
@@ -125,8 +126,12 @@ Papa.parse("data/summarynotifications.csv", {download: true, complete: function(
 		<input type="checkbox" onClick="FutureCheckBox=this.checked;">PWID Intervention<br>
 		
 		<p>Run the simulation but keep sims alive to extract results from </p>
-		<div id="RunPersistentSimButton" class="SolidButton" onClick="RunPersistentSim();"> Run persistent simulation </div>
-		<p>Terminate the simulation </p>
+		<div id="RunPersistentSimButton" class="SolidButton" onClick="RunPersistentSim();"> Run Notification Sim </div>
+		<div id="RunSimSetupButton" class="SolidButton" onClick="RunSimSetup();"> Run SimSetup </div>
+		<div id="RunFullModelTestButton" class="SolidButton" onClick="RunFullModelTest();"> Run FullModel test </div>
+		<div id="RunOptimisationButton" class="SolidButton" onClick="RunOptimisationOfParam();"> Run Optimisation </div>
+		
+		
 		<div id="RunSimButton" class="SolidButton" onClick="SimulationHolder.Terminate();"> Terminate simulation </div>
 		
 		

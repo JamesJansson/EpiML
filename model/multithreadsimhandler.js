@@ -52,9 +52,18 @@ function MultithreadSimControllerObject(WorkerMessage){
 
 MultithreadSimControllerObject.prototype.ThreadStatusText=function(StringForStatus){
 	self.postMessage({StatusText: StringForStatus, StatusTextID: this.WorkerMessage.data.ThreadID});
-}
+};
 
 MultithreadSimControllerObject.prototype.SetThreadStatusToSimNumber=function(){
 	var StringForStatus="thread: "+this.WorkerMessage.data.ThreadID+" simID: "+this.WorkerMessage.data.SimID;
 	this.ThreadStatusText(StringForStatus);
-}
+};
+
+MultithreadSimControllerObject.prototype.ThreadID=function(){
+	return this.WorkerMessage.data.ThreadID;
+};
+
+
+MultithreadSimControllerObject.prototype.SimID=function(){
+	return this.WorkerMessage.data.SimID;
+};

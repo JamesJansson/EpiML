@@ -78,8 +78,7 @@ function LoadSettingsFiles(){
 		
 		// Set up settings options
 		var CheckboxValue;
-		console.log(Settings);
-		console.log(typeof(Settings.ModelNetwork));
+
 		if (typeof(Settings.ModelNetwork)!="undefined"){
 			CheckboxValue=Settings.ModelNetwork;
 		}
@@ -87,6 +86,17 @@ function LoadSettingsFiles(){
 			CheckboxValue=false;
 		}
 		document.getElementById('ModelNetworkCheckbox').checked=CheckboxValue;
+		
+		if (typeof(Settings.RecalculateParam)!="undefined"){
+			CheckboxValue=Settings.RecalculateParam;
+		}
+		else {
+			CheckboxValue=false;
+		}
+		document.getElementById('RecalculateParamCheckbox').checked=CheckboxValue;
+		
+		
+		
 		
 		console.error("Note: all the below should have checking and defaults implemented as above.");		
 		document.getElementById("NumberOfSimulationsTextbox").value=Settings.NumberOfSimulations;

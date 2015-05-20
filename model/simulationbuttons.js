@@ -51,8 +51,8 @@ function RunFullOptimisationAndDataExtration(){
 	Common.Settings=SimSettings;
 	
 	//Creating the data to be used in the simulations
-	var RecalculateDistribution=true;
-	var SimInputData=ParameterSplit(Param, Settings.NumberOfSimulations, RecalculateDistribution);
+	// var Settings.RecalculateParam=true;
+	var SimInputData=ParameterSplit(Param, Settings.NumberOfSimulations, Settings.RecalculateParam);
 	
 	//Creating the simulation holder
 	var TerminateOnFinish=false;
@@ -97,21 +97,22 @@ function RunPersistentSim(){
 	// Load the values from the files
 	ExtractDataFromFiles();
 	
-	SimSettings={};
-	SimSettings.RunOptimisation=true;
-	console.error("SimSettings.RunOptimisation hard set above");
+	//var SimSettings={};
+	//SimSettings.RunOptimisation=true;
+	//console.error("SimSettings.RunOptimisation hard set above");
 	// The following is required for all programs
-	SimSettings.SampleFactor=Settings.SampleFactor;
+	//SimSettings.SampleFactor=Settings.SampleFactor;
 	
 	// Save into the Common holder
 	var Common={};
 	Common.Data=Data;
 	Common.Param=[];//this where parameters that are the same between simulations are entered
-	Common.Settings=SimSettings;
+	Common.Settings=Settings;
 	
 	//Creating the data to be used in the simulations
-	var RecalculateDistribution=true;
-	var SimInputData=ParameterSplit(Param, Settings.NumberOfSimulations, RecalculateDistribution);
+	Settings.RecalculateParam=true;
+	console.error("Settings.RecalculateParam hard set here. ");
+	var ParamArray=ParameterSplit(Param, Settings.NumberOfSimulations, Settings.RecalculateParam);
 	
 	//Creating the simulation holder
 	var TerminateOnFinish=false;
@@ -122,7 +123,7 @@ function RunPersistentSim(){
 	RunSettings={};
 	RunSettings.FunctionName="NotificationBackProjection";
 	RunSettings.Common=Common;
-	RunSettings.SimDataArray=SimInputData;
+	RunSettings.SimDataArray=ParamArray;
 	RunSettings.TerminateOnFinish=false;
 	RunSettings.FunctionToRunOnCompletion=function(){
 		SimOutput=RearrangeSimResults(this.Result);//here 'this' refers to the .Result  stored in simulation holder
@@ -139,10 +140,63 @@ function RunPersistentSim(){
 }
 
 
+function RunSimSetup(){
+	var ModelDirectory='model';
 
+	// Load the values from the files
+	ExtractDataFromFiles();
+	
+	//var SimSettings={};
+	//SimSettings.RunOptimisation=true;
+	//console.error("SimSettings.RunOptimisation hard set above");
+	// The following is required for all programs
+	//SimSettings.SampleFactor=Settings.SampleFactor;
+	
+	// Save into the Common holder
+	var Common={};
+	Common.Data=Data;
+	Common.Param=[];//this where parameters that are the same between simulations are entered
+	Common.Settings=Settings;
+	
+	//Creating the data to be used in the simulations
+	Settings.RecalculateParam=true;
+	console.error("Settings.RecalculateParam hard set here. ");
+	var ParamArray=ParameterSplit(Param, Settings.NumberOfSimulations, Settings.RecalculateParam);
+	
+	//Creating the simulation holder
+	var TerminateOnFinish=false;
+	SimulationHolder=new MultiThreadSim(ModelDirectory, Settings.NumberOfSimulations , Settings.NoThreads, TerminateOnFinish); //Common is the same between all sims
+	SimulationHolder.UseSimProgressBar=true;
+	SimulationHolder.SimProgressBarID="MainProgress";
+	
+	RunSettings={};
+	RunSettings.FunctionName="SimSetup";
+	RunSettings.Common=Common;
+	RunSettings.SimDataArray=ParamArray;
+	RunSettings.TerminateOnFinish=false;
+	RunSettings.FunctionToRunOnCompletion=function(){
+		SimOutput=RearrangeSimResults(this.Result);//here 'this' refers to the .Result  stored in simulation holder
+		AggregatedResults=AggregateSimResults(SimOutput);
 
+		NotificationSimPlot();
+	}
+	
+	
+	// Run the simulation
+	SimulationHolder.Run(RunSettings);
 
+	return 0;
+}
 
+function RunFullModel(){
+	RunSettings2={};
+	
+	RunSettings2.FunctionName="FullModel";
+	RunSettings2.Common={};
+	RunSettings2.Common.HCVTretmentFunctionID=Settings.HCVTreatmentScenario;
+	
+	SimulationHolder.Run(RunSettings2);
+}
 
 
 function RearrangeSimResults(ResultsArray){

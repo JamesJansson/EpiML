@@ -85,6 +85,7 @@ function RunFullModel(Stuff1){
 	ReturnResults.CurrentIDU=CurrentIDUStats(Person, StatsTime);
 	ReturnResults.EverIDU=EverIDUStats(Person, StatsTime);
 	ReturnResults.EverIDUHCVAntibody=EverIDUHCVAntibodyStats(Person, StatsTime);
+	ReturnResults.PWIDAge=PWIDAgeStats(Person, StatsTime);
 	
 	
 	

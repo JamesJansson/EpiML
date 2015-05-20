@@ -274,3 +274,67 @@ function EverIDUHCVAntibodyStats(PPLocal, Time){
 
 
 
+
+
+function PWIDAgeStats(PPLocal, Time){
+	//Create StatSettings
+	var StatSettings={};
+	StatSettings.Name="Number of People by Fibrosis Level";
+	StatSettings.CountType="Instantaneous";
+	StatSettings.XLabel="Year";
+	StatSettings.YLabel="Count";
+	StatSettings.MultipleCategories=true;
+	StatSettings.NumberOfCategories=8;	
+	
+	StatSettings.Time=Time;
+	
+	// Define the  category description
+	StatSettings.CategoryLabel=[];
+	StatSettings.CategoryLabel[0]="0-15";
+	StatSettings.CategoryLabel[1]="15-18";
+	StatSettings.CategoryLabel[2]="18-25";
+	StatSettings.CategoryLabel[3]="25-35";
+	StatSettings.CategoryLabel[4]="35-45";
+	StatSettings.CategoryLabel[5]="45-55";
+	StatSettings.CategoryLabel[6]="55-65";
+	StatSettings.CategoryLabel[7]="65+";
+	
+	
+	//Define the selection function
+	var StatsFunction= function (Person, Time){
+		if (Person.IDU.CurrentlyInjecting(Time)){
+			var Age=Person.Age(Time);
+			if (Age<15){
+				return 0;
+			}
+			else if (Age<18){
+				return 1;
+			}
+			else if (Age<25){
+				return 2;
+			}
+			else if (Age<35){
+				return 3;
+			}
+			else if (Age<45){
+				return 4;
+			}
+			else if (Age<55){
+				return 5;
+			}
+			else if (Age<65){
+				return 6;
+			}
+			return 7;
+		}
+		return NaN;
+	};
+	
+	// Run the statistic
+	var StatResult=new CountStatistic(StatSettings, StatsFunction);
+	StatResult.Run(PPLocal);
+
+	StatResult.Adjust(Settings.SampleFactor);// Make this representative sample actually reflect the real number of PWID
+	
+	return StatResult;
+}

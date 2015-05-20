@@ -4,5 +4,6 @@
     "SampleFactor": 100,
     "NumberOfSimulations": 1,
     "HCVTreatmentScenario": "0",
-    "ModelNetwork": false
+    "ModelNetwork": false,
+    "RecalculateParam": true
 }
