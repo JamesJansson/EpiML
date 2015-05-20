@@ -204,7 +204,14 @@ function NotificationSimPlot(){
 	FibrosisArray=IndividualStat.Count;
 	TimeAxis=IndividualStat.Time;
 	
+	console.log(IndividualStat);
+	console.log(FibrosisArray);
+	console.log(TimeAxis);
+	
 	// convert to a form that plot will accept
+	console.log("TimeAxis then FibrosisArray");
+	console.log(TimeAxis);
+	console.log(FibrosisArray);
 	PlotData=PlotStyles_ConvertDataToLinePlot(TimeAxis, FibrosisArray);
 	//Set up plot appearance // http://www.pikemere.co.uk/blog/flot-tutorial-how-to-create-area-charts/ 
 	PlotSettings={xaxis: {

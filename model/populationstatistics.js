@@ -160,53 +160,7 @@ function CountStatistic(Settings, InputFunction){
 		console.error("A function must be set that returns the value to be included in the statistic");
 	}
 	
-	// Set the times for the summary statistic
-	// The user can set either
-	// Settings.Time to a vector of times or
-	// Settings.StartTime, Settings.EndTime and Settings.StepSize (optional)
-	if (typeof Settings.Time != 'undefined'){ // if the user set the times individually
-		if (typeof Settings.Time.length == 'undefined'){
-			throw "Settings.Time should be an array of times";
-		}
-		else{
-			this.StartTime=Settings.Time[0];
-			this.EndTime=Settings.Time[Settings.Time.length-1];
-			this.Time=Settings.Time;
-			this.NumberOfTimeSteps=Settings.Time.length;
-		}
-	}
-	else{
-		// Check required input variables exist
-		if (typeof Settings.StartTime === 'number'){
-			this.StartTime=Settings.StartTime;
-		}
-		else{
-			console.error("CountStatistic: StartTime and EndTime or Time[] must be set");
-		}
-		
-		if (typeof Settings.EndTime === 'number'){
-			this.EndTime=Settings.EndTime;
-			if (this.EndTime<this.StartTime){
-				console.error("End time cannot be before start time");
-			}
-		}
-		else{
-			console.error("CountStatistic: StartTime and EndTime or Time[] must be set");
-		}
-		
-		this.StepSize=1;//set by default to 1
-		if (typeof Settings.StepSize === 'number'){
-			this.StepSize=Settings.StepSize;
-		}
-		// Set up the time vector
-		var CurrentTimeStep=this.StartTime;
-		this.NumberOfTimeSteps=Math.round((this.EndTime-this.StartTime)/this.StepSize)+1; //This is used to avoid rounding errors
-		for (var TimeIndex=0; TimeIndex<this.NumberOfTimeSteps; TimeIndex++){
-			this.Time[TimeIndex]=CurrentTimeStep;
-			CurrentTimeStep=CurrentTimeStep+this.StepSize;// Increment the time step
-		}
-	}
-
+	PopStatStepUpTime(Settings.Time, this);
 }
 
 CountStatistic.prototype.Run=function(Population){
@@ -313,7 +267,65 @@ function DownloadCountStatisticCSV(InputStat, FileName){
 }
 
 
-
+//****************************************************************************************************
+function PopStatStepUpTime(Time, ThisStatistic){
+	// Set the times for the summary statistic
+	// The user can set either
+	// Settings.Time to a vector of times or
+	// Settings.StartTime, Settings.EndTime and Settings.StepSize (optional)
+	if (typeof Time != 'undefined'){ // if the user set the times individually
+		if (typeof Time.length == 'undefined'){
+			// This is where we set up the time using the timestep (i.e. if Time is not an array)
+			
+			// Check required input variables exist
+			if (typeof Time.StartTime === 'number'){
+				ThisStatistic.StartTime=Time.StartTime;
+			}
+			else{
+				console.log(Time);
+				console.error("CountStatistic: StartTime must be set");
+				throw "Statistic cannot be calculated";
+			}
+			
+			if (typeof Time.EndTime === 'number'){
+				ThisStatistic.EndTime=Time.EndTime;
+				if (ThisStatistic.EndTime<ThisStatistic.StartTime){
+					console.error("End time cannot be before start time");
+					throw "Statistic cannot be calculated";
+				}
+			}
+			else{
+				console.error("CountStatistic: StartTime and EndTime or Time[] must be set");
+				throw "Statistic cannot be calculated";
+			}
+			
+			ThisStatistic.StepSize=1;//set by default to 1
+			if (typeof Time.StepSize === 'number'){
+				ThisStatistic.StepSize=Time.StepSize;
+			}
+			// Set up the time vector
+			var CurrentTimeStep=ThisStatistic.StartTime;
+			ThisStatistic.NumberOfTimeSteps=Math.round((ThisStatistic.EndTime-ThisStatistic.StartTime)/ThisStatistic.StepSize)+1; //This is used to avoid rounding errors
+			for (var TimeIndex=0; TimeIndex<ThisStatistic.NumberOfTimeSteps; TimeIndex++){
+				ThisStatistic.Time[TimeIndex]=CurrentTimeStep;
+				CurrentTimeStep=CurrentTimeStep+ThisStatistic.StepSize;// Increment the time step
+			}
+			
+			
+			
+		}
+		else{
+			ThisStatistic.StartTime=Time[0];
+			ThisStatistic.EndTime=Time[Settings.Time.length-1];
+			ThisStatistic.Time=Time;
+			ThisStatistic.NumberOfTimeSteps=Time.length;
+		}
+	}
+	else{
+		throw "Settings.Time should be set. Time can either be an array, OR can have Time.Start, Time.End, Time.Step ";
+		
+	}
+}
 
 //****************************************************************************************************
 
@@ -373,6 +385,14 @@ function SummaryStatistic(Settings, InputFunction){
 		this.YLabel=Settings.YLabel;
 	}
 	
+	// Set the function for the summary statistic
+	if (typeof InputFunction === 'function'){
+		this.Function=InputFunction;
+	}
+	else{
+		console.error("A function must be set that returns the value to be included in the statistic");
+	}
+	
 	
 	//Set whether the function will be a boolean operator or not.
 	if (typeof Settings.VectorFunction === 'boolean'){
@@ -384,36 +404,10 @@ function SummaryStatistic(Settings, InputFunction){
 	}
 	
 	
+	PopStatStepUpTime(Settings.Time, this);
 	
-	// Set the function for the summary statistic
-	if (typeof InputFunction === 'function'){
-		this.Function=InputFunction;
-	}
-	else{
-		console.error("A function must be set that returns the value to be included in the statistic");
-	}
 	
-	// Set the times for the summary statistic
-	if (typeof Settings.StartTime === 'number'){
-		this.StartTime=Settings.StartTime;
-	}
-	else{
-		console.error("SummaryStatistic: StartTime and EndTime must be set");
-	}
-	if (typeof Settings.EndTime === 'number'){
-		this.EndTime=Settings.EndTime;
-		if (this.EndTime<this.StartTime){
-			console.error("End time cannot be before start time");
-		}
-	}
-	else{
-		console.error("SummaryStatistic: StartTime and EndTime must be set");
-	}
-	if (typeof Settings.StepSize === 'number'){
-		this.StepSize=Settings.StepSize;
-	}
-	
-
+	console.log(this.Time);
 }
 
 SummaryStatistic.prototype.Run=function(Population){
@@ -580,6 +574,7 @@ function CalculateRate(Numerator, Denominator){
 // Finally, a function that groups the results across multiple instances of the simulations to create 
 
 function MultiSimCountStat(InputStatArray){
+	"use strict";
 	// Use the details of the first simulation to form the general properties of this aggregate statistic
 	this.Name=InputStatArray[0].Name;
 	this.XLabel=InputStatArray[0].XLabel;
@@ -609,9 +604,9 @@ function MultiSimCountStat(InputStatArray){
 		
 		// Data re-arranged to allow vector access to each Statistic.Data[Year][SimNum]
 		this.Data=[];
-		for (TimeIndex in this.Time){
+		for (var TimeIndex in this.Time){
 			this.Data[TimeIndex]=[];
-			for (SimIndex in InputStatArray){
+			for (var SimIndex in InputStatArray){
 				this.Data[TimeIndex][SimIndex]=InputStatArray[SimIndex].Count[TimeIndex];
 			}
 		}

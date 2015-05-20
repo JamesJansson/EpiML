@@ -199,7 +199,7 @@ function PlotStyles_ConvertDataToLinePlot(x, InputMatrix){//Accepts [param][time
 	var NumberOfLines=InputMatrix.length;
 	for (var i=0; i<NumberOfLines; i++){
 		if (x.length!=InputMatrix[i].length){
-			console.error("Input data is incorrect lengths.");
+			console.error("Input data is incorrect lengths. x.length; " + x.length + " InputMatrix[i].length: " +InputMatrix[i].length);
 		}
 		var ThisLine=[];
 		for (var j = 0; j < InputMatrix[i].length; j++) {

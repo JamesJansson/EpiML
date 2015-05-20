@@ -76,9 +76,9 @@ function RunFullModel(Stuff1){
 	
 	
 	var StatsTime={};
-	StatsTime.Start=1980;
-	StatsTime.Stop=2030;
-	StatsTime.Step=1;
+	StatsTime.StartTime=1980;
+	StatsTime.EndTime=2030;
+	StatsTime.StepSize=1;
 	
 	var ReturnResults={};
 	ReturnResults.LivingWithHCVInfection=LivingWithHCVInfectionStats(Person, Settings.SampleFactor, StatsTime);

@@ -19,29 +19,30 @@
 
 
 
-function FibrosisCount(PPLocal, SampleFactorMultiplier, Time){
-	//Create settings
-	var Settings={};
-	Settings.Name="Number of People by Fibrosis Level";
-	Settings.CountType="Instantaneous";
-	Settings.XLabel="Year";
-	Settings.YLabel="Count";
-	Settings.StartTime=Time.Start;
-	Settings.EndTime=Time.Stop;
-	Settings.TimeStep=Time.Step;
-	Settings.MultipleCategories=true;
-	Settings.NumberOfCategories=8;
+function FibrosisCount(PPLocal, Time){
+	//Create StatSettings
+	var StatSettings={};
+	StatSettings.Name="Number of People by Fibrosis Level";
+	StatSettings.CountType="Instantaneous";
+	StatSettings.XLabel="Year";
+	StatSettings.YLabel="Count";
+	StatSettings.MultipleCategories=true;
+	StatSettings.NumberOfCategories=8;	
+	
+	StatSettings.Time=Time;
+	
+
 	
 	// Define the  category description
-	Settings.CategoryLabel=[];
-	Settings.CategoryLabel[0]="F0";
-	Settings.CategoryLabel[1]="F1";
-	Settings.CategoryLabel[2]="F2";
-	Settings.CategoryLabel[3]="F3";
-	Settings.CategoryLabel[4]="F4";
-	Settings.CategoryLabel[5]="Liver Failure";
-	Settings.CategoryLabel[6]="HCC";
-	Settings.CategoryLabel[7]="Antibody positive, cleared";
+	StatSettings.CategoryLabel=[];
+	StatSettings.CategoryLabel[0]="F0";
+	StatSettings.CategoryLabel[1]="F1";
+	StatSettings.CategoryLabel[2]="F2";
+	StatSettings.CategoryLabel[3]="F3";
+	StatSettings.CategoryLabel[4]="F4";
+	StatSettings.CategoryLabel[5]="Liver Failure";
+	StatSettings.CategoryLabel[6]="HCC";
+	StatSettings.CategoryLabel[7]="Antibody positive, cleared";
 	
 	//Define the selection function
 	var FibrosisFunction= function (Person, Year){
@@ -64,36 +65,35 @@ function FibrosisCount(PPLocal, SampleFactorMultiplier, Time){
 	
 	
 	// Run the statistic
-	var FibrosisResult=new CountStatistic(Settings, FibrosisFunction);
+	var FibrosisResult=new CountStatistic(StatSettings, FibrosisFunction);
 	FibrosisResult.Run(PPLocal);
 
 	
-	FibrosisResult.Adjust(SampleFactorMultiplier);// Make this representative sample actually reflect the real number of diagnoses
+	FibrosisResult.Adjust(Settings.SampleFactor);// Make this representative sample actually reflect the real number of diagnoses
 	
 	return FibrosisResult;
 }
 
 
 
-function LivingDxAndUDx(PPLocal, SampleFactorMultiplier, Time){
-	//Create settings
-	var Settings={};
-	Settings.Name="Number of people living with diagnosed and undiagnosed HCV";
-	Settings.CountType="Instantaneous";
-	Settings.XLabel="Year";
-	Settings.YLabel="Count";
-	Settings.StartTime=Time.Start;
-	Settings.EndTime=Time.Stop;
-	Settings.TimeStep=Time.Step;
-	Settings.MultipleCategories=true;
-	Settings.NumberOfCategories=4;
+function LivingDxAndUDx(PPLocal, Time){
+	//Create StatSettings
+	var StatSettings={};
+	StatSettings.Name="Number of people living with diagnosed and undiagnosed HCV";
+	StatSettings.CountType="Instantaneous";
+	StatSettings.XLabel="Year";
+	StatSettings.YLabel="Count";
+	StatSettings.Time=Time;
+	
+	StatSettings.MultipleCategories=true;
+	StatSettings.NumberOfCategories=4;
 	
 	// Define the  category description
-	Settings.CategoryLabel=[];
-	Settings.CategoryLabel[0]="Undiagnosed & infected";
-	Settings.CategoryLabel[1]="Diagnosed & infected";
-	Settings.CategoryLabel[2]="Undiagnosed, uninfected & antibody+";
-	Settings.CategoryLabel[3]="Diagnosed, uninfected & antibody+";
+	StatSettings.CategoryLabel=[];
+	StatSettings.CategoryLabel[0]="Undiagnosed & infected";
+	StatSettings.CategoryLabel[1]="Diagnosed & infected";
+	StatSettings.CategoryLabel[2]="Undiagnosed, uninfected & antibody+";
+	StatSettings.CategoryLabel[3]="Diagnosed, uninfected & antibody+";
 	
 	//Define the selection function
 	var DiagnosisFunction= function (Person, Year){
@@ -118,24 +118,22 @@ function LivingDxAndUDx(PPLocal, SampleFactorMultiplier, Time){
 	};
 	
 	// Run the statistic
-	var DiagnosisResult=new CountStatistic(Settings, DiagnosisFunction);
+	var DiagnosisResult=new CountStatistic(StatSettings, DiagnosisFunction);
 	DiagnosisResult.Run(PPLocal);
 
-	DiagnosisResult.Adjust(SampleFactorMultiplier);// Make this representative sample actually reflect the real number of diagnoses
+	DiagnosisResult.Adjust(Settings.SampleFactor);// Make this representative sample actually reflect the real number of diagnoses
 	
 	return DiagnosisResult;
 }
 
 
 function AgeInfected(PPLocal, Time){
-//Create settings
-	var Settings={};
-	Settings.Name="Age of people currently infected";
-	Settings.XLabel="Year";
-	Settings.YLabel="Age";
-	Settings.StartTime=Time.Start;
-	Settings.EndTime=Time.Stop;
-	Settings.TimeStep=Time.Step;
+//Create StatSettings
+	var StatSettings={};
+	StatSettings.Name="Age of people currently infected";
+	StatSettings.XLabel="Year";
+	StatSettings.YLabel="Age";
+	StatSettings.Time=Time;
 
 	//Define the selection/statistic function
 	var AgeFunction= function (Person, Year){
@@ -148,23 +146,21 @@ function AgeInfected(PPLocal, Time){
 	};
 	
 	// Run the statistic
-	var AgeInfectedResult=new SummaryStatistic(Settings, AgeFunction);
+	var AgeInfectedResult=new SummaryStatistic(StatSettings, AgeFunction);
 	AgeInfectedResult.Run(PPLocal);
 
 	return AgeInfectedResult;
 
 }
 
-function LivingWithHCVInfectionStats(PPLocal, SampleFactorMultiplier, Time){
-	//Create settings
-	var Settings={};
-	Settings.Name="Number of people living with HCV";
-	Settings.CountType="Instantaneous";
-	Settings.XLabel="Year";
-	Settings.YLabel="Count";
-	Settings.StartTime=Time.Start;
-	Settings.EndTime=Time.Stop;
-	Settings.TimeStep=Time.Step;
+function LivingWithHCVInfectionStats(PPLocal, Time){
+	//Create StatSettings
+	var StatSettings={};
+	StatSettings.Name="Number of people living with HCV";
+	StatSettings.CountType="Instantaneous";
+	StatSettings.XLabel="Year";
+	StatSettings.YLabel="Count";
+	StatSettings.Time=Time;
 	
 
 	
@@ -180,26 +176,24 @@ function LivingWithHCVInfectionStats(PPLocal, SampleFactorMultiplier, Time){
 	};
 	
 	// Run the statistic
-	var DiagnosisResult=new CountStatistic(Settings, DiagnosisFunction);
+	var DiagnosisResult=new CountStatistic(StatSettings, DiagnosisFunction);
 	DiagnosisResult.Run(PPLocal);
 
-	console.log(SampleFactorMultiplier);
+	console.log(Settings.SampleFactor);
 
-	DiagnosisResult.Adjust(SampleFactorMultiplier);// Make this representative sample actually reflect the real number of diagnoses
+	DiagnosisResult.Adjust(Settings.SampleFactor);// Make this representative sample actually reflect the real number of diagnoses
 	
 	return DiagnosisResult;
 }
 
-function CurrentIDUStats(PPLocal, SampleFactorMultiplier, Time){
-	//Create settings
-	var Settings={};
-	Settings.Name="Number of people who inject drugs";
-	Settings.CountType="Instantaneous";
-	Settings.XLabel="Year";
-	Settings.YLabel="Count";
-	Settings.StartTime=Time.Start;
-	Settings.EndTime=Time.Stop;
-	Settings.TimeStep=Time.Step;
+function CurrentIDUStats(PPLocal, Time){
+	//Create StatSettings
+	var StatSettings={};
+	StatSettings.Name="Number of people who inject drugs";
+	StatSettings.CountType="Instantaneous";
+	StatSettings.XLabel="Year";
+	StatSettings.YLabel="Count";
+	StatSettings.Time=Time;
 	
 
 	
@@ -212,24 +206,22 @@ function CurrentIDUStats(PPLocal, SampleFactorMultiplier, Time){
 	};
 	
 	// Run the statistic
-	var InjectingResult=new CountStatistic(Settings, CurrentInjectorFunction);
+	var InjectingResult=new CountStatistic(StatSettings, CurrentInjectorFunction);
 	InjectingResult.Run(PPLocal);
 
-	InjectingResult.Adjust(SampleFactorMultiplier);// Make this representative sample actually reflect the real number of diagnoses
+	InjectingResult.Adjust(Settings.SampleFactor);// Make this representative sample actually reflect the real number of diagnoses
 	
 	return InjectingResult;
 }
 
-function EverIDUStats(PPLocal, SampleFactorMultiplier, Time){
-	//Create settings
-	var Settings={};
-	Settings.Name="Number of people ever injecting drugs";
-	Settings.CountType="Instantaneous";
-	Settings.XLabel="Year";
-	Settings.YLabel="Count";
-	Settings.StartTime=Time.Start;
-	Settings.EndTime=Time.Stop;
-	Settings.TimeStep=Time.Step;
+function EverIDUStats(PPLocal, Time){
+	//Create StatSettings
+	var StatSettings={};
+	StatSettings.Name="Number of people ever injecting drugs";
+	StatSettings.CountType="Instantaneous";
+	StatSettings.XLabel="Year";
+	StatSettings.YLabel="Count";
+	StatSettings.Time=Time;
 	
 
 	
@@ -242,26 +234,23 @@ function EverIDUStats(PPLocal, SampleFactorMultiplier, Time){
 	};
 	
 	// Run the statistic
-	var InjectingResult=new CountStatistic(Settings, CurrentInjectorFunction);
+	var InjectingResult=new CountStatistic(StatSettings, CurrentInjectorFunction);
 	InjectingResult.Run(PPLocal);
 
-	InjectingResult.Adjust(SampleFactorMultiplier);// Make this representative sample actually reflect the real number of diagnoses
+	InjectingResult.Adjust(Settings.SampleFactor);// Make this representative sample actually reflect the real number of diagnoses
 	
 	return InjectingResult;
 }
 
 
-function EverIDUHCVAntibodyStats(PPLocal, SampleFactorMultiplier, Time){
-	//Create settings
-	var Settings={};
-	Settings.Name="Number of people ever injecting drugs who have HCV antibodies";
-	Settings.CountType="Instantaneous";
-	Settings.XLabel="Year";
-	Settings.YLabel="Count";
-	Settings.StartTime=Time.Start;
-	Settings.EndTime=Time.Stop;
-	Settings.TimeStep=Time.Step;
-	
+function EverIDUHCVAntibodyStats(PPLocal, Time){
+	//Create StatSettings
+	var StatSettings={};
+	StatSettings.Name="Number of people ever injecting drugs who have HCV antibodies";
+	StatSettings.CountType="Instantaneous";
+	StatSettings.XLabel="Year";
+	StatSettings.YLabel="Count";
+	StatSettings.Time=Time; // Time can either be an array, OR can have Time.StartTime, Time.EndTime, Time.StepSize
 
 	
 	//Define the selection function
@@ -275,10 +264,10 @@ function EverIDUHCVAntibodyStats(PPLocal, SampleFactorMultiplier, Time){
 	};
 	
 	// Run the statistic
-	var EverIDUHCVResult=new CountStatistic(Settings, StatsFunction);
+	var EverIDUHCVResult=new CountStatistic(StatSettings, StatsFunction);
 	EverIDUHCVResult.Run(PPLocal);
 
-	EverIDUHCVResult.Adjust(SampleFactorMultiplier);// Make this representative sample actually reflect the real number of diagnoses
+	EverIDUHCVResult.Adjust(Settings.SampleFactor);// Make this representative sample actually reflect the real number of diagnoses
 	
 	return EverIDUHCVResult;
 }
