@@ -53,10 +53,10 @@ function FullModelTest(Stuff1){
 	// OptimisedValues that need to be set by an external function
 	Param.IDU.RateOfCesssation=0.25;
 
-	Param.IDU.Entry.A=100;
+	Param.IDU.Entry.A=1000;
 	Param.IDU.Entry.B=0.20;
 	Param.IDU.Entry.Logk2=0.3;
-	Param.IDU.Entry.Logk1=0.8;
+	Param.IDU.Entry.Logk1=0.9;
 	
 	
 	
@@ -189,8 +189,7 @@ function FullModel(Param, Notifications, EndSimulation, Intervention){
 		// this is probably antiquated var NumberOfPeopleToAddThisStep=DeterminePWIDEntryRateExponential2(Param.IDU.EntryParams, Time, Param.TimeStep);
 		
 		// Add new people to the IDU population for this time step
-		console.log("looking at param inside full model");
-		console.log(Param);
+
 		
 
 
