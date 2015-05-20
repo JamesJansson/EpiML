@@ -169,9 +169,9 @@ function LivingWithHCV(PPLocal, SampleFactorMultiplier, Time){
 
 	
 	//Define the selection function
-	var DiagnosisFunction= function (Person, Year){
-		if (Person.Alive(Year)==true){
-			var InfectionStatus=Person.HCV.Infected.Value(Year);
+	var DiagnosisFunction= function (Person, Time){
+		if (Person.Alive(Time)==true){
+			var InfectionStatus=Person.HCV.Infected.Value(Time);
 			if (InfectionStatus==1){
 				return 1;
 			}
@@ -183,7 +183,39 @@ function LivingWithHCV(PPLocal, SampleFactorMultiplier, Time){
 	var DiagnosisResult=new CountStatistic(Settings, DiagnosisFunction);
 	DiagnosisResult.Run(PPLocal);
 
+	console.log(SampleFactorMultiplier);
+
 	DiagnosisResult.Adjust(SampleFactorMultiplier);// Make this representative sample actually reflect the real number of diagnoses
 	
 	return DiagnosisResult;
+}
+
+function CurrentIDU(PPLocal, SampleFactorMultiplier, Time){
+	//Create settings
+	var Settings={};
+	Settings.Name="Number of people living with HCV";
+	Settings.CountType="Instantaneous";
+	Settings.XLabel="Year";
+	Settings.YLabel="Count";
+	Settings.StartTime=Time.Start;
+	Settings.EndTime=Time.Stop;
+	Settings.TimeStep=Time.Step;
+	
+
+	
+	//Define the selection function
+	var CurrentInjectorFunction= function (Person, Time){
+		if (Person.IDU.CurrentlyInjecting(Time)){
+			return 1;
+		}
+		return 0;
+	};
+	
+	// Run the statistic
+	var InjectingResult=new CountStatistic(Settings, CurrentInjectorFunction);
+	InjectingResult.Run(PPLocal);
+
+	InjectingResult.Adjust(SampleFactorMultiplier);// Make this representative sample actually reflect the real number of diagnoses
+	
+	return InjectingResult;
 }

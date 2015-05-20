@@ -106,9 +106,11 @@ IDUObject.prototype.StopInjecting= function (Time){
 };
 
 IDUObject.prototype.CurrentlyInjecting= function (Time){
-	var UseValue=this.Use.Value(Time);
-	if (UseValue>0 && UseValue<4){
-		return true;
+	if (this.Person.Alive(Time)){
+		var UseValue=this.Use.Value(Time);
+		if (UseValue>0 && UseValue<4){
+			return true;
+		}
 	}
 	return false;
 };
@@ -121,6 +123,14 @@ IDUObject.prototype.InjectingDuration= function (Time){
 	}
 	return -1;// not currently injecting
 };
+
+
+
+
+
+
+
+
 
 
 

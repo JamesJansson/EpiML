@@ -67,8 +67,28 @@ function RunFullModel(Stuff1){
 	
 	
 	
-	var Results=FullModel(Param, Notifications, Param.Time.EndSimulation, Intervention);
-	return Results;
+	var FullModelResults=FullModel(Param, Notifications, Param.Time.EndSimulation, Intervention);
+	
+	var Person=FullModelResults.Population;
+	
+	
+	
+	
+	
+	var StatsTime={};
+	StatsTime.Start=1980;
+	StatsTime.Stop=2030;
+	StatsTime.Step=1;
+	
+	var ReturnResults={};
+	ReturnResults.LivingWithHCV=LivingWithHCV(Person, Settings.SampleFactor, StatsTime);
+	ReturnResults.CurrentIDU=CurrentIDU(Person, Settings.SampleFactor, StatsTime);
+	
+	// console.log(SimulationHolder.Result[0].LivingWithHCV.Count);
+	// console.log(SimulationHolder.Result[0].CurrentIDU.Count);
+	// console.log(Divide(SimulationHolder.Result[0].LivingWithHCV.Count, SimulationHolder.Result[0].CurrentIDU.Count));
+	
+	return ReturnResults;
 }
 
 
