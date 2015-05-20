@@ -120,12 +120,13 @@ function RunPersistentSim(){
 	SimulationHolder.UseSimProgressBar=true;
 	SimulationHolder.SimProgressBarID="MainProgress";
 	
-	RunSettings={};
+	var RunSettings={};
 	RunSettings.FunctionName="NotificationBackProjection";
 	RunSettings.Common=Common;
 	RunSettings.SimDataArray=ParamArray;
 	RunSettings.TerminateOnFinish=false;
 	RunSettings.FunctionToRunOnCompletion=function(){
+		console.error("Not sure if we want the below in global scope");
 		SimOutput=RearrangeSimResults(this.Result);//here 'this' refers to the .Result  stored in simulation holder
 		AggregatedResults=AggregateSimResults(SimOutput);
 
@@ -159,8 +160,6 @@ function RunSimSetup(){
 	Common.Settings=Settings;
 	
 	//Creating the data to be used in the simulations
-	Settings.RecalculateParam=true;
-	console.error("Settings.RecalculateParam hard set here. ");
 	var ParamArray=ParameterSplit(Param, Settings.NumberOfSimulations, Settings.RecalculateParam);
 	
 	//Creating the simulation holder
@@ -169,17 +168,17 @@ function RunSimSetup(){
 	SimulationHolder.UseSimProgressBar=true;
 	SimulationHolder.SimProgressBarID="MainProgress";
 	
-	RunSettings={};
+	var RunSettings={};
 	RunSettings.FunctionName="SimSetup";
 	RunSettings.Common=Common;
 	RunSettings.SimDataArray=ParamArray;
 	RunSettings.TerminateOnFinish=false;
 	RunSettings.FunctionToRunOnCompletion=function(){
-		SimOutput=RearrangeSimResults(this.Result);//here 'this' refers to the .Result  stored in simulation holder
-		AggregatedResults=AggregateSimResults(SimOutput);
+		// SimOutput=RearrangeSimResults(this.Result);//here 'this' refers to the .Result  stored in simulation holder
+		// AggregatedResults=AggregateSimResults(SimOutput);
 
-		NotificationSimPlot();
-	}
+		// NotificationSimPlot();
+	};
 	
 	
 	// Run the simulation
@@ -188,10 +187,10 @@ function RunSimSetup(){
 	return 0;
 }
 
-function RunFullModel(){
+function RunFullModelTest(){
 	RunSettings2={};
 	
-	RunSettings2.FunctionName="FullModel";
+	RunSettings2.FunctionName="FullModelTest";
 	RunSettings2.Common={};
 	RunSettings2.Common.HCVTretmentFunctionID=Settings.HCVTreatmentScenario;
 	

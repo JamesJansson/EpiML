@@ -60,6 +60,7 @@ function SimSetup(WorkerData){
 	// Adjust data according to beliefs about inaccuracies 
 	AdjustDataForKnownBiases();
 	
+	return 0;
 }
 
 

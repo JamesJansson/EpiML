@@ -12,18 +12,9 @@ var PostDataTreatmentFunction;// (Person[Array], Time, TimeStep)
 
 
 
-function RunFullModel(Stuff1){
+function FullModelTest(Stuff1){
 	
-	console.log(Stuff1);
-	
-	// Reading in settings
-	var HCVTretmentFunctionID=Stuff1.Common.HCVTretmentFunctionID;
-	
-	
-	// This needs to be established by the optimisation 
-	Param.HCV.ProbabilityOfTransmission=0.1;
-	console.error("The above is hard set and poorly defined");
-	
+
 	
 	
 	
@@ -47,8 +38,7 @@ function RunFullModel(Stuff1){
 	//throw("stopping");
 	
 	// Set up the treatment function
-	console.log(HCVTretmentFunctionID);
-	PostDataTreatmentFunction=HCVTreatmentScenario[HCVTretmentFunctionID].Function;
+	PostDataTreatmentFunction=HCVTreatmentScenario[Settings.HCVTreatmentScenario].Function;
 	
 	
 	
@@ -56,6 +46,9 @@ function RunFullModel(Stuff1){
 	
 	
 	
+	// This needs to be established by the optimisation 
+	Param.HCV.ProbabilityOfTransmission=0.1;
+	console.error("The above is hard set and poorly defined");
 	
 	// OptimisedValues that need to be set by an external function
 	Param.IDU.RateOfCesssation=0.25;
@@ -98,6 +91,8 @@ function RunFullModel(Stuff1){
 	
 	// Note: number of people living with HCV is somewhat lower thant the people who have ever IDU	
 	// console.log(Divide(SimulationHolder.Result[0].LivingWithHCVInfection.Count, SimulationHolder.Result[0].EverIDU.Count));
+	
+	console.log(Person);
 	
 	
 	return ReturnResults;
