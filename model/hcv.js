@@ -56,7 +56,14 @@ function  HCVObject(PersonPointer){
 	}
 }
 
-
+HCVObject.prototype.AntibodyPresent= function (Time){
+	if (!isNaN(this.AntibodyYear)){// if it has been set
+		if (this.AntibodyYear<Time){
+			return true;
+		}
+	}
+	return false;
+};
 
 
 HCVObject.prototype.Infection= function (Year, GenotypeValue){//, Age, Sex, Alcohol, HCVParam ){
@@ -72,8 +79,8 @@ HCVObject.prototype.Infection= function (Year, GenotypeValue){//, Age, Sex, Alco
 	// Currie, 2008 Drug Alc Dep 93:148
 	// Backmund, 2004 Clin Inf Dis 39:1540 
 	// Grebely, 2010 J Gastr Hepat 25:1281
-	if (!isNaN(this.AntibodyYear)){// if it has been set
-		if (this.ReinfectionProtected==true && this.AntibodyYear<Year && this.Infected.Value(Year)==1){
+	if (this.AntibodyPresent(Year)){// if it has been set
+		if (this.ReinfectionProtected==true && this.Infected.Value(Year)==1){
 			return 0;
 		}
 	}

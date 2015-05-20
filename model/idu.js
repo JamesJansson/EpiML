@@ -124,7 +124,23 @@ IDUObject.prototype.InjectingDuration= function (Time){
 	return -1;// not currently injecting
 };
 
-
+IDUObject.prototype.EverInjectedAtTime= function (Time){
+	if (this.Person.Alive(Time)){
+		var FirstUseTime=this.Use.FirstTimeOf(1);
+		if (isNaN(FirstUseTime)){
+			return false;
+		}
+		else{
+			if (FirstUseTime<Time){
+				return true;
+			}
+			else {
+				return false;
+			}
+		} 
+	}
+	return false;
+};
 
 
 

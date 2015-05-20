@@ -133,7 +133,7 @@ function SelectPeopleAlive(Person, Time){
 	return PersonArray;
 }
 
-function SelectPWID(Person, Time){
+function SelectCurrentPWID(Person, Time){
 	var PersonArray=[];
 	for (var Pn in Person){
 		if (Person[Pn].Alive(Time)){

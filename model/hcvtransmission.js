@@ -3,7 +3,7 @@ function DetermineHCVTransmissions(Person, Time, TimeStep){
 	var NumberOfTransmissions=0;
 	
 	// start by determining who is alive and who is not (to save time in sub functions)
-	var PWID=SelectPWID(Person, Time);
+	var PWID=SelectCurrentPWID(Person, Time);
 	var TotalPWID=PWID.length;
 	for (var Pn in PWID){
 		// choose a person at random in all PWID (to get the right ratio of non-)

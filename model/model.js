@@ -203,7 +203,7 @@ function NotificationBackProjection(WorkerData){
 	SimResult.Intervention[IntCount][0]=FibrosisCount(PPNotification, Settings.SampleFactor, StatsTime);//Determine fibrosis levels with year
 	SimResult.Intervention[IntCount][1]=LivingDxAndUDx(PPNotification, Settings.SampleFactor, StatsTime);//Determine fibrosis levels with year
 	SimResult.Intervention[IntCount][2]=AgeInfected(PPNotification, StatsTime);
-	SimResult.Intervention[IntCount][3]=LivingWithHCV(PPNotification, Settings.SampleFactor, StatsTime);// Determines a simple count of people living with HCV by year
+	SimResult.Intervention[IntCount][3]=LivingWithHCVInfectionStats(PPNotification, Settings.SampleFactor, StatsTime);// Determines a simple count of people living with HCV by year
 
 	DebugStatement("Total individuals in model: " + PPNotification.length);
 		

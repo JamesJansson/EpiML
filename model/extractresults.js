@@ -155,7 +155,7 @@ function AgeInfected(PPLocal, Time){
 
 }
 
-function LivingWithHCV(PPLocal, SampleFactorMultiplier, Time){
+function LivingWithHCVInfectionStats(PPLocal, SampleFactorMultiplier, Time){
 	//Create settings
 	var Settings={};
 	Settings.Name="Number of people living with HCV";
@@ -190,10 +190,10 @@ function LivingWithHCV(PPLocal, SampleFactorMultiplier, Time){
 	return DiagnosisResult;
 }
 
-function CurrentIDU(PPLocal, SampleFactorMultiplier, Time){
+function CurrentIDUStats(PPLocal, SampleFactorMultiplier, Time){
 	//Create settings
 	var Settings={};
-	Settings.Name="Number of people living with HCV";
+	Settings.Name="Number of people who inject drugs";
 	Settings.CountType="Instantaneous";
 	Settings.XLabel="Year";
 	Settings.YLabel="Count";
@@ -206,6 +206,36 @@ function CurrentIDU(PPLocal, SampleFactorMultiplier, Time){
 	//Define the selection function
 	var CurrentInjectorFunction= function (Person, Time){
 		if (Person.IDU.CurrentlyInjecting(Time)){
+			return 1;
+		}
+		return 0;
+	};
+	
+	// Run the statistic
+	var InjectingResult=new CountStatistic(Settings, CurrentInjectorFunction);
+	InjectingResult.Run(PPLocal);
+
+	InjectingResult.Adjust(SampleFactorMultiplier);// Make this representative sample actually reflect the real number of diagnoses
+	
+	return InjectingResult;
+}
+
+function EverIDUStats(PPLocal, SampleFactorMultiplier, Time){
+	//Create settings
+	var Settings={};
+	Settings.Name="Number of people ever injecting drugs";
+	Settings.CountType="Instantaneous";
+	Settings.XLabel="Year";
+	Settings.YLabel="Count";
+	Settings.StartTime=Time.Start;
+	Settings.EndTime=Time.Stop;
+	Settings.TimeStep=Time.Step;
+	
+
+	
+	//Define the selection function
+	var CurrentInjectorFunction= function (Person, Time){
+		if (Person.IDU.EverInjectedAtTime(Time)){
 			return 1;
 		}
 		return 0;

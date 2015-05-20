@@ -81,12 +81,19 @@ function RunFullModel(Stuff1){
 	StatsTime.Step=1;
 	
 	var ReturnResults={};
-	ReturnResults.LivingWithHCV=LivingWithHCV(Person, Settings.SampleFactor, StatsTime);
-	ReturnResults.CurrentIDU=CurrentIDU(Person, Settings.SampleFactor, StatsTime);
+	ReturnResults.LivingWithHCVInfection=LivingWithHCVInfectionStats(Person, Settings.SampleFactor, StatsTime);
+	ReturnResults.CurrentIDU=CurrentIDUStats(Person, Settings.SampleFactor, StatsTime);
+	ReturnResults.EverIDU=EverIDUStats(Person, Settings.SampleFactor, StatsTime);
 	
-	// console.log(SimulationHolder.Result[0].LivingWithHCV.Count);
+	
+	
+	
+	// console.log(SimulationHolder.Result[0].LivingWithHCVInfection.Count);
 	// console.log(SimulationHolder.Result[0].CurrentIDU.Count);
-	// console.log(Divide(SimulationHolder.Result[0].LivingWithHCV.Count, SimulationHolder.Result[0].CurrentIDU.Count));
+	// console.log(SimulationHolder.Result[0].EverIDU.Count);
+	// 	
+	// console.log(Divide(SimulationHolder.Result[0].LivingWithHCVInfection.Count, SimulationHolder.Result[0].EverIDU.Count));
+	
 	
 	return ReturnResults;
 }
@@ -122,17 +129,6 @@ function FullModel(Param, Notifications, EndSimulation, Intervention){
 	// Run MSM
 	// Run migrants
 	// Determine proportion of each that end up PWID
-	
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	
