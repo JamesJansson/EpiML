@@ -80,27 +80,41 @@ HCVObject.prototype.Infection= function (Year, GenotypeValue){//, Age, Sex, Alco
 	// Backmund, 2004 Clin Inf Dis 39:1540 
 	// Grebely, 2010 J Gastr Hepat 25:1281
 	if (this.AntibodyPresent(Year)){// if it has been set
-		if (this.ReinfectionProtected==true && this.Infected.Value(Year)==1){
+		if (this.ReinfectionProtected==true){
 			return 0;
 		}
+		
 	}
 	
-	
-	
+
+	// Convert the genotype to an array	
 	if (typeof(GenotypeValue)!="object"){
 		GenotypeValue=[GenotypeValue];
 	}
-	//this.Genotype.Set(GenotypeValue, Year);
+
 	// Superinfection is common, so we assume all people who get infected with a second strain are infected again http://www.cdc.gov/hepatitis/Resources/MtgsConf/HCVSymposium2011-PDFs/20_Blackard.pdf 
 	// Super infection does not change the course of Fibrosis in the model
-	var NewGenotypeArray=DeepCopy(this.Genotype.Value(Year));// note that since this is an array, we need to copy it before we operate on it.
+	
+		
+	// var OriginalGenotypeArray=DeepCopy(this.Genotype.Value(Year));// note that since this is an array, we need to copy it before we operate on it.
+	var OriginalGenotypeArray=this.Genotype.Value(Year);// we are not operating on this, so no need to copy
 
+	// determine the potential new genotype	
+	var NewGenotypeArray=OriginalGenotypeArray.concat(GenotypeValue);;
+	
 	// Check if any of the Genotypes in GenotypeValue exist in the current array
-	NewGenotypeArray.concat(GenotypeValue);
 	var UniqueGenotypeArray = NewGenotypeArray.filter(function(item, pos, self) {
 		return self.indexOf(item) == pos;// if the item under inspection is equal to the first occurrence of the item, then keep
-	})
-	this.Genotype.Set(UniqueGenotypeArray, Year);
+	});
+
+	
+	
+	// If the new array not is identical to the old, add to the history of genotypes
+	if (!(ArraysEqual(UniqueGenotypeArray, OriginalGenotypeArray))){
+		this.Genotype.Set(UniqueGenotypeArray, Year);
+	}
+	
+	
 	
 	// convert this to the this.g1a, this.g1b, g2, g3, g4, 
 	// if genotype 1 does not exist

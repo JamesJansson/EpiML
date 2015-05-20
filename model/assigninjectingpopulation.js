@@ -519,10 +519,11 @@ function SetInitialHCVLevels(Person){
 	for (var Pn in PWID){
 		var TimeOfHCV=TimeUntilEvent(AnnualPHCV);
 		if (TimeOfHCV<InjectionHistory.Duration[Pn]){
+			console.error("set HCV genotype below, must be a problem with the add");
 			PWID[Pn].HCV.Infection(InjectionHistory.TimeStart[Pn]+TimeOfHCV, ChooseInitialGenotype());
 		}
 	}
-	console.log("PWID below");
+	console.error("PWID below");
 	console.log(PWID);
 	
 	// At this point, a plot should be created of 
@@ -534,9 +535,7 @@ function SetInitialHCVLevels(Person){
 
 function ChooseInitialGenotype(){
 	// the intention of this function is to set the genotype in the proportions stated
-	console.log(Param.HCV);
 	var Val=RandSampleWeighted([Param.HCV.GenotypePrevalence['1'], Param.HCV.GenotypePrevalence['2'], Param.HCV.GenotypePrevalence['3'], Param.HCV.GenotypePrevalence['4']], ['1', '2', '3', '4']);
-	console.log(Val);
 	return '1';
 }
 
