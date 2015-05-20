@@ -122,11 +122,14 @@ function HCVDataDiagnosisNumbers(Notifications, Time, TimeStep){
 	// copy out this into a vector that can be used later
 	for (var AgeIndex=0; AgeIndex<Notifications.Age.length; AgeIndex++){
 		for (var SexIndex=0; SexIndex<2; SexIndex++){
-			NumberDiagnosedThisStep.Count[SexIndex][AgeIndex]=Notifications.Count[SexIndex][AgeIndex][YearIndex];
+			
+			// Decide the number of diagnoses in this step
+			var DataNotificationsThisStep=Notifications.Count[SexIndex][AgeIndex][YearIndex];
+			NumberDiagnosedThisStep.Count[SexIndex][AgeIndex]=DataNotificationsThisStep*TimeStep/Settings.SampleFactor;
 		}
 	}
-	// Decide the number of diagnoses in this step
-	NumberDiagnosedThisStep.Count=Multiply(NumberDiagnosedThisStep.Count, TimeStep);
+	
+
 
 	var FlooredResult=Floor(NumberDiagnosedThisStep.Count);
 	var DiffProb=Minus(NumberDiagnosedThisStep.Count, FlooredResult);
@@ -137,7 +140,7 @@ function HCVDataDiagnosisNumbers(Notifications, Time, TimeStep){
 
 	
 	
-	NumberDiagnosedThisStep.Count=Add(NumberDiagnosedThisStep.Count, Diff);// add the rand element back to the expected number to be diagnosed in this step
+	NumberDiagnosedThisStep.Count=Add(FlooredResult, Diff);// add the rand element back to the expected number to be diagnosed in this step
 	
 
 

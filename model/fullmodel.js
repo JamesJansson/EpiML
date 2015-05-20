@@ -329,6 +329,10 @@ function FullModel(Param, Notifications, EndSimulation, Intervention){
 		// Find the number of diagnoses in the earlier model
 		// For every diagnosis, 
 	
+	console.error("This is where the diagnoses are displayed");
+	console.log(SimulationHistory.DiagnosisResults);
+	
+	
 	var Results={};
 	Results.Population=Person;
 	Results.SimulationHistory=SimulationHistory;
