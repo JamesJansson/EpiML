@@ -573,36 +573,72 @@ function CalculateRate(Numerator, Denominator){
 // ****************************************************************
 // Finally, a function that groups the results across multiple instances of the simulations to create 
 
-function SeparateResultsByIntervention(ResultsByIntervention){
-	// Convert Result[Sim][Intervention][Statistic] to Result[Intervention][Sim][Statistic]
+function SeparateResultsByIntervention(ResultsBySim){
+	// Convert Result[Sim][Intervention][Statistic] to Result[Intervention][Statistic][Sim]
+	var ResultsByIntervention=Transpose(ResultsBySim);
+	// Result[Intervention][Sim][Statistic] // arr arr obj
+	
+	var ResultsByInterventionStat=[];
+	for (var InterventionCount in ResultsByIntervention){
+		ResultsByInterventionStat[InterventionCount]=TransposeArrObj(ResultsByIntervention[InterventionCount]);
+	}
+	// Result[Intervention][Sim][Statistic] // arr arr obj
+	return ResultsByInterventionStat;
 }
 
 
-function ConverToResultsByStatistic(ResultBySimArray){
-	// This works on simulations in which there is only one level (i.e. there isn't an intervention e.g. Result[Sim][Intervention][Statistic])
-	
-	var ReturnArray={};
-	
-	// look at the first simulation
-	
-	
-	for (var ResultName in ResultBySimArray[0]){
-		// sort into an array
-		ReturnArray[ResultName]=[];
-		for (var SimNum in ResultBySimArray){
-			ReturnArray[ResultName][SimNum]=ResultBySimArray[SimNum][ResultName];
-		}
-		
-		
-		if (typeof(ResultBySimArray[0][ResultName].StatisticType)!="undefined"){
-			
-			
-		}
+function PerformStatisticsByIntervention(Results){
+	var ResultsByInterventionStat=SeparateResultsByIntervention(ResultsBySim);
+	var ReturnResults=[];
+	for (var InterventionCount in ResultsByInterventionStat){
+		// what ever the statistics function is 
+		ExtractStatistics(ResultsByInterventionStat[InterventionCount]);
 	}
 	
+	return ReturnResults;
+}
+
+function SeparateResultsByStat(ResultsBySim){
+	// Convert Result[Sim][Statistic] to Result[Statistic][Sim]
+	var ResultsByStat=TransposeArrObj(ResultsBySim);
+	return ResultsByStat;
+}
+
+function PerformStatisticsByStat(Results){
+	var ResultsByStat=SeparateResultsByStat(Results);
+	console.log(ResultsByStat);
+	
+	var ExtractedStats=ExtractStatistics(ResultsByStat);
+	return ExtractedStats;
+}
+
+
+
+function ExtractStatistics(ResultsByStat){
+	var ReturnArray={};
+	for (var ResultName in ResultsByStat){
+		if (typeof(ResultsByStat[ResultName][0].StatisticType)!="undefined"){// Check that it is actuall defined
+			if (ResultsByStat[ResultName][0].StatisticType=="countstatistic"){// Check that it is actuall defined
+				ReturnArray[ResultName]=new MultiSimCountStat(ResultsByStat[ResultName]);
+			}
+		}
+	}
 	return ReturnArray;
 }
 
+
+
+function Transpose(DataMatrix){// into arr-arr
+	// transpose the matrix
+	var TDataMatrix=[];
+	for (var Dim2 in DataMatrix[0]){// Dim2 is arr
+		TDataMatrix[Dim2]=[];
+		for (var Dim1 in DataMatrix){// Dim1 is arr
+			TDataMatrix[Dim2][Dim1]=DataMatrix[Dim1][Dim2];
+		}
+	}
+	return TDataMatrix;
+}
 
 function TransposeArrObj(DataMatrix){// into obj-arr
 	// transpose the matrix
@@ -668,8 +704,6 @@ function MultiSimCountStat(InputStatArray){
 	this.Min=[];
 	
 	if (this.MultipleCategories==false){
-		console.log("got into MultiSimCountStat");
-		
 		// Data re-arranged to allow vector access to each Statistic.Data[Year][SimNum]
 		this.Data=[];
 		for (var TimeIndex in this.Time){
@@ -694,6 +728,7 @@ function MultiSimCountStat(InputStatArray){
 	}
 	else {
 		// Data re-arranged to allow vector access to each Statistic.Data[Subcategory][Year][SimNum]
+		
 	}
 }
 
