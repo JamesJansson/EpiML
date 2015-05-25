@@ -573,6 +573,74 @@ function CalculateRate(Numerator, Denominator){
 // ****************************************************************
 // Finally, a function that groups the results across multiple instances of the simulations to create 
 
+function SeparateResultsByIntervention(ResultsByIntervention){
+	// Convert Result[Sim][Intervention][Statistic] to Result[Intervention][Sim][Statistic]
+}
+
+
+function ConverToResultsByStatistic(ResultBySimArray){
+	// This works on simulations in which there is only one level (i.e. there isn't an intervention e.g. Result[Sim][Intervention][Statistic])
+	
+	var ReturnArray={};
+	
+	// look at the first simulation
+	
+	
+	for (var ResultName in ResultBySimArray[0]){
+		// sort into an array
+		ReturnArray[ResultName]=[];
+		for (var SimNum in ResultBySimArray){
+			ReturnArray[ResultName][SimNum]=ResultBySimArray[SimNum][ResultName];
+		}
+		
+		
+		if (typeof(ResultBySimArray[0][ResultName].StatisticType)!="undefined"){
+			
+			
+		}
+	}
+	
+	return ReturnArray;
+}
+
+
+function TransposeArrObj(DataMatrix){// into obj-arr
+	// transpose the matrix
+	var TDataMatrix={};
+	for (var Dim2 in DataMatrix[0]){// Dim2 is obj
+		TDataMatrix[Dim2]=[];
+		for (var Dim1 in DataMatrix){// Dim1 is arr
+			TDataMatrix[Dim2][Dim1]=DataMatrix[Dim1][Dim2];
+		}
+	}
+	return TDataMatrix;
+}
+
+function TransposeObjArr(DataMatrix){// into arr-obj
+	// transpose the matrix
+	var TDataMatrix=[];
+	// Establish what the object contents are 
+	var ObjIds=[];
+	var ObjIdCount=-1;
+	for (var Dim1 in DataMatrix){
+		ObjIdCount++;
+		ObjIds[ObjIdCount]=Dim1;
+	}
+
+	for (var Dim2 in DataMatrix[ObjIds[0]]){// Dim2 is arr
+		TDataMatrix[Dim2]={};
+		for (var Dim1 in DataMatrix){// Dim1 is obj
+			TDataMatrix[Dim2][Dim1]=DataMatrix[Dim1][Dim2];
+		}
+	}
+	return TDataMatrix;
+}
+
+
+
+
+
+
 function MultiSimCountStat(InputStatArray){
 	"use strict";
 	// Use the details of the first simulation to form the general properties of this aggregate statistic
