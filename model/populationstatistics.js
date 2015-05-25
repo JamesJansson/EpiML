@@ -618,7 +618,7 @@ function ExtractStatistics(ResultsByStat){
 	var ReturnArray={};
 	for (var ResultName in ResultsByStat){
 		if (typeof(ResultsByStat[ResultName][0].StatisticType)!="undefined"){// Check that it is actuall defined
-			if (ResultsByStat[ResultName][0].StatisticType=="countstatistic"){// Check that it is actuall defined
+			if (ResultsByStat[ResultName][0].StatisticType=="countstatistic" && ResultsByStat[ResultName][0].MultipleCategories!=true){// Check that it is actuall defined
 				ReturnArray[ResultName]=new MultiSimCountStat(ResultsByStat[ResultName]);
 			}
 		}
@@ -732,6 +732,8 @@ function MultiSimCountStat(InputStatArray){
 	}
 }
 
+
+// Downloader Prototype MultiSimCountStat.Download()
 
 
 function MultiSimSummaryStat(SummaryStatArray){

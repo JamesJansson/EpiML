@@ -46,19 +46,47 @@ function ExtractDataFromSimulationByTime (SimulationHolder, RefString){
 // Simulated 
 
 function PlotAGraph(){
-	var PlotSettings=ExtractDataFromSimulationByTime (SimulationHolder, "CurrentIDU");
+	//var PlotSettings=ExtractDataFromSimulationByTime (SimulationHolder, "CurrentIDU");
 	
-	//PlotSettings=[];
+	var SummarisedResult=PerformStatisticsByStat(SimulationHolder.Result);
+	
+	var StructureForGraph95CI=function(InputStat){
+		ReturnObject={};
+		ReturnObject.Y=InputStat.Median;
+		ReturnObject.X=InputStat.Time;
+		ReturnObject.Lower=InputStat.Lower95Percentile;
+		ReturnObject.Upper=InputStat.Upper95Percentile;
+		return ReturnObject;
+	};
+	
+	var SettingsForGraph=function(InputStat){
+		PlotSettings={};
+		PlotSettings.Name=InputStat.Name;
+		PlotSettings.XLabel=InputStat.XLabel;
+		PlotSettings.YLabel=InputStat.YLabel;
+		return PlotSettings;
+	};
+	
+	
+	
+	//var PlotData=StructureForGraph95CI(SummarisedResult.CurrentIDU);
+	//var PlotSettings=SettingsForGraph(SummarisedResult.CurrentIDU);
+	//var PlotData=StructureForGraph95CI(SummarisedResult.EverIDU);
+	//var PlotSettings=SettingsForGraph(SummarisedResult.EverIDU);
+	var PlotData=StructureForGraph95CI(SummarisedResult.LivingWithHCVInfection);
+	var PlotSettings=SettingsForGraph(SummarisedResult.LivingWithHCVInfection);
+
 	PlotSettings.Name="PWIDEntryPlotObject";// what the object will be called later
 	PlotSettings.ID="plot1";
 	PlotSettings.PlotFunction=function(PlotPlaceholder, PlotData){
+		console.log(PlotData);
 		return OptimisationPlot(PlotPlaceholder, PlotData.Data, PlotData.Results);
 	};
 	PlotSettings.PlotData=[];
 	PlotSettings.PlotData.Plot=[];
 	
-	PlotSettings.PlotData.Data=PlotSettings;
-	PlotSettings.PlotData.Results=PlotSettings;
+	PlotSettings.PlotData.Data=PlotData;
+	PlotSettings.PlotData.Results=PlotData;
 
 	//PlotSettings.XLabel="Year";
 	//PlotSettings.YLabel="Number ever injected drugs";
@@ -71,9 +99,4 @@ function PlotAGraph(){
 }
 
 
-function (SimulationHolder){
-	
-	for  
-	
-}
 
