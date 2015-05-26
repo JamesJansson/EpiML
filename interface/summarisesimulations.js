@@ -42,8 +42,9 @@ function ExtractDataFromSimulationByTime (SimulationHolder, RefString){
 	return StructuredResults;
 };
 
-// Coupling with original data
-// Simulated 
+
+
+
 
 function PlotAGraph(){
 	//var PlotSettings=ExtractDataFromSimulationByTime (SimulationHolder, "CurrentIDU");
