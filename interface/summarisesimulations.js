@@ -69,12 +69,12 @@ function PlotAGraph(){
 	
 	
 	
-	//var PlotData=StructureForGraph95CI(SummarisedResult.CurrentIDU);
-	//var PlotSettings=SettingsForGraph(SummarisedResult.CurrentIDU);
+	var PlotData=StructureForGraph95CI(SummarisedResult.CurrentIDU);
+	var PlotSettings=SettingsForGraph(SummarisedResult.CurrentIDU);
 	//var PlotData=StructureForGraph95CI(SummarisedResult.EverIDU);
 	//var PlotSettings=SettingsForGraph(SummarisedResult.EverIDU);
-	var PlotData=StructureForGraph95CI(SummarisedResult.LivingWithHCVInfection);
-	var PlotSettings=SettingsForGraph(SummarisedResult.LivingWithHCVInfection);
+	//var PlotData=StructureForGraph95CI(SummarisedResult.LivingWithHCVInfection);
+	//var PlotSettings=SettingsForGraph(SummarisedResult.LivingWithHCVInfection);
 
 	PlotSettings.Name="PWIDEntryPlotObject";// what the object will be called later
 	PlotSettings.ID="plot1";
