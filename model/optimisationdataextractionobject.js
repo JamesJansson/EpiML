@@ -16,13 +16,40 @@ function OptimisationDataExtractionObject(){
 	this.Name;
 	this.GraphInterfaceID;
 	this.StatisticType;
+	this.ResultFunction;// ResultFunction(Population, Time)
+	
+	this.Data;// speficified
+	this.Results;
+	this.DataTime;// uses the time specified in the data 
+	this.GraphTime;// uses the range of times specified to show the full activity of the model
+	
+	this.ErrorFunction;// specifies how the error is determined. 
 }
 
 
-// prototype CreateStatisticToRun
+// prototype CreateStatistic
 
-// Get error
-// SimResult=
+
+
+
+
+prototype  ExtractDataAndFindError(SimulationResult){// SimulationResult
+SimResult=ResultFunction(SimulationResult,  this.DataTime);
+
+
+
+return Error;
+}
+// CREATE A SUB ELEMENT THAT DOES THE OPTIMSIATION
+// Results.Optimisation.Stats // the arrays match
+// Results.Optimisation.Data
+
+
+
+
+
+
+
 
 
 function SetupOptimisationDataExtractionObjects(){
@@ -30,11 +57,17 @@ function SetupOptimisationDataExtractionObjects(){
 	var DEO=[];//Array of OptimisationDataExtractionObject
 	
 	new NewDEO=new OptimisationDataExtractionObject();
-	NewDEO.Name;
+	NewDEO.Name="EverIDU";
+	this.ResultFunction=EverIDUStats;
+	this.ErrorFunction=function(){
+		this.Results.Count
+	};
 	
 	
+	for both sexes{
+		for all ages in the 
 	
-	
+	}
 	
 	
 	for (var Count in DEO){
