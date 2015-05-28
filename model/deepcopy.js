@@ -27,7 +27,7 @@ function DeepCopyProto(obj) {// copies functions in addition to the data
     return obj;
 }
 
-function DeepCopy(obj) {// copies functions in addition to the data
+function DeepCopy(obj) {
     if (Object.prototype.toString.call(obj) === '[object Array]') {
         var out = [], i = 0, len = obj.length;
         for ( ; i < len; i++ ) {

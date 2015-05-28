@@ -604,10 +604,11 @@ function SeparateResultsByStat(ResultsBySim){
 	return ResultsByStat;
 }
 
+
 function PerformStatisticsByStat(Results){
+	// 
 	var ResultsByStat=SeparateResultsByStat(Results);
-	console.log(ResultsByStat);
-	
+
 	var ExtractedStats=ExtractStatistics(ResultsByStat);
 	return ExtractedStats;
 }
@@ -615,16 +616,44 @@ function PerformStatisticsByStat(Results){
 
 
 function ExtractStatistics(ResultsByStat){
+	// go through each stat
+	
 	var ReturnArray={};
 	for (var ResultName in ResultsByStat){
-		if (typeof(ResultsByStat[ResultName][0].StatisticType)!="undefined"){// Check that it is actuall defined
-			if (ResultsByStat[ResultName][0].StatisticType=="countstatistic" && ResultsByStat[ResultName][0].MultipleCategories!=true){// Check that it is actuall defined
-				ReturnArray[ResultName]=new MultiSimCountStat(ResultsByStat[ResultName]);
-			}
+		var ReturnedStatisticalSummary=StatisticSelector(ResultsByStat[ResultName]);
+		if (typeof(ReturnedStatisticalSummary)!="undefined"){// Check that it is actuall defined
+			ReturnArray[ResultName]=ReturnedStatisticalSummary;
 		}
+		
+		
+		
 	}
 	return ReturnArray;
 }
+
+function StatisticSelector(StatArray){
+	// 1) Determines the statistic type
+	// 2) Runs statistic
+	// 3) returns Statistic (returns undefined if statistic type not determined/run)
+	
+	// StatArray[Sim].Count[Year]
+
+	if (typeof(StatArray[0].StatisticType)!="undefined"){// Check that it is actually defined
+		if (StatArray[0].StatisticType=="countstatistic" && StatArray[0].MultipleCategories!=true){// Check that it is actuall defined
+			var ReturnedStatisticalSummary=new MultiSimCountStat(StatArray);
+			return ReturnedStatisticalSummary;
+		}
+		// MultiSimSummaryStat
+		// MultiSimRatioStat
+		
+		
+	}
+}
+
+
+
+
+
 
 
 

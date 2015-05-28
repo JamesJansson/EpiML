@@ -52,7 +52,7 @@ function PlotAGraph(){
 	var SummarisedResult=PerformStatisticsByStat(SimulationHolder.Result);
 	
 	var StructureForGraph95CI=function(InputStat){
-		ReturnObject={};
+		var ReturnObject={};
 		ReturnObject.Y=InputStat.Median;
 		ReturnObject.X=InputStat.Time;
 		ReturnObject.Lower=InputStat.Lower95Percentile;
@@ -61,7 +61,7 @@ function PlotAGraph(){
 	};
 	
 	var SettingsForGraph=function(InputStat){
-		PlotSettings={};
+		var PlotSettings={};
 		PlotSettings.Name=InputStat.Name;
 		PlotSettings.XLabel=InputStat.XLabel;
 		PlotSettings.YLabel=InputStat.YLabel;
