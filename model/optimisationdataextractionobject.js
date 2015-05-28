@@ -29,6 +29,9 @@ function OptimisationDataExtractionObject(){
 	
 	this.MultiSimResult;
 	this.MultiSimData;
+	
+	this.GraphObject;
+	this.DownloadData;
 }
 
 
@@ -38,7 +41,7 @@ function OptimisationDataExtractionObject(){
 
 
 
-OptimisationDataExtractionObject.prototype.ExtractDataAndFindError=function(SimulationResult){// SimulationResult
+OptimisationDataExtractionObject.prototype.ExtractDataAndFindError=function(SimulationResult){// SimulationResult.Population
 	this.SimResult=this.ResultFunction(SimulationResult,  this.DataTime);
 	var Error=this.ErrorFunction();
 	
@@ -53,7 +56,7 @@ OptimisationDataExtractionObject.prototype.ErrorFunction=function(){// Simulatio
 };
 
 
-OptimisationDataExtractionObject.prototype.CreateGraphData=function(){
+OptimisationDataExtractionObject.prototype.CreateGraphData=function(SimulationResult){
 	
 	
 	// Create names and titles 
@@ -71,36 +74,34 @@ OptimisationDataExtractionObject.prototype.CreateGraphData=function(){
 OptimisationDataExtractionObject.prototype.SummariseMultipleSimulations=function(ArrayOfResults){
 	// ArrayOfResult[Sim].Data, ArrayOfResult[Sim].Result
 	
-	// Take an array of Result, sort into data/sim results
+	
+	var FirstResult=ArrayOfResults[0];
+	if (typeof(FirstResult.Name)!="undefined"){
+		this.Name=FirstResult.Name;
+	}
+	if (typeof(FirstResult.GraphInterfaceID)!="undefined"){
+		this.GraphInterfaceID=FirstResult.GraphInterfaceID;
+	}
+	if (typeof(FirstResult.StatisticType)!="undefined"){
+		this.StatisticType=FirstResult.StatisticType;
+	}
+	if (typeof(FirstResult.XLabel)!="undefined"){
+		this.XLabel=FirstResult.XLabel;
+	}
+	if (typeof(FirstResult.YLabel)!="undefined"){
+		this.YLabel=FirstResult.YLabel;
+	}
+	
+	
+	
+	// Take ArrayOfResults, sort into data/sim results
 	var SplitDataResult=TransposeArrObj(ArrayOfResults);
-	// SplitDataResult.Data[Sim], SplitDataResult.Result[Sim]
-	
-	
-	if (typeof(SplitDataResult.Result[0].Name)!="undefined"){
-		this.Name=SplitDataResult.Result[0].Name;
-	}
-	if (typeof(SplitDataResult.Result[0].GraphInterfaceID)!="undefined"){
-		this.GraphInterfaceID=SplitDataResult.Result[0].GraphInterfaceID;
-	}
-	if (){
-		
-	}
-	this.StatisticType;
-	this.ResultFunction;// ResultFunction(Population, Time), returns a vector of times. Should be a population statistic
-	this.XLabel;
-	this.YLabel;
-	
+	// SplitDataResult.Data[Sim], SplitDataResult.Result[Sim], and other SplitDataResult.Things that are quite useless
 	
 	// Performs summary statistics on data
 	this.MultiSimData=StatisticSelector(SplitDataResult.Data);
 	// Performs summary statistics on the results
 	this.MultiSimResult=StatisticSelector(SplitDataResult.Result);
-	
-	
-	
-	console.error("Here's where we need to pull in information from the this.MultiSimResult")
-	
-	
 	
 	
 };
@@ -128,19 +129,10 @@ OptimisationDataExtractionObject.prototype.Graph=function(){
 	PlotSettings.Name=this.Name;
 	PlotSettings.XLabel=this.XLabel;
 	PlotSettings.YLabel=this.YLabel;
-
-	var PlotData=
-	
-	
-	
-
-	//var PlotData=StructureForGraph95CI(SummarisedResult.EverIDU);
-	//var PlotSettings=SettingsForGraph(SummarisedResult.EverIDU);
-	//var PlotData=StructureForGraph95CI(SummarisedResult.LivingWithHCVInfection);
-	//var PlotSettings=SettingsForGraph(SummarisedResult.LivingWithHCVInfection);
-
-	PlotSettings.Name=this.Name;// what the object will be called later
 	PlotSettings.ID=this.GraphInterfaceID;
+	
+	
+	
 	
 	PlotSettings.PlotData={};
 	//	 PlotSettings.PlotData.Plot=[]; can this be deleted?
@@ -159,8 +151,8 @@ OptimisationDataExtractionObject.prototype.Graph=function(){
 	PlotSettings.Data=[];
 	PlotSettings.Data.Download=function (){console.log('This runs when the button is pushed')};
 
-	PWIDEntryPlotObject=new GeneralPlot(PlotSettings);// this must be global
-	PWIDEntryPlotObject.Draw();
+	this.GraphObject=new GeneralPlot(PlotSettings);// this must be global
+	this.GraphObject.Draw();
 	
 	
 	
