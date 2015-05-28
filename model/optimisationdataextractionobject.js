@@ -42,7 +42,7 @@ function OptimisationDataExtractionObject(){
 
 
 OptimisationDataExtractionObject.prototype.ExtractDataAndFindError=function(SimulationResult){// SimulationResult.Population
-	this.Result=this.ResultFunction(SimulationResult,  this.DataTime);
+	this.Result=this.Result.Run(SimulationResult);
 	var Error=this.ErrorFunction();
 	
 	return Error;
@@ -50,6 +50,7 @@ OptimisationDataExtractionObject.prototype.ExtractDataAndFindError=function(Simu
 
 OptimisationDataExtractionObject.prototype.ErrorFunction=function(){// SimulationResult
 	// Note that this can be alterred by setting obj.Errorfunction=SomeFunction;
+	console.error("Needs to find a way to convert .Count to some generalised value");
 	var ErrorVec=Minus(this.Data, this.Result);
 	var Error=Sum(ErrorVec);
 	return Error;
@@ -58,9 +59,9 @@ OptimisationDataExtractionObject.prototype.ErrorFunction=function(){// Simulatio
 
 OptimisationDataExtractionObject.prototype.CreateGraphData=function(SimulationResult){
 	
+	this.Result.SetTime(this.GraphTime);
 
-
-	this.ResultRun(SimulationResult,  this.GraphTime);
+	this.Result.Run(SimulationResult);
 	
 	var ThisCopy=DeepCopy(this);
 	
@@ -240,12 +241,13 @@ function SetupOptimisationDataExtractionObjects(){
 		return StatSettings;
 	}
 	
-	function CreateEverInjectorByAgeStat(Sex, LowerAge, UpperAge){
-		
-		
-		
-		
+
+ 	function CountStatisticErrorFunction(){
+		var ErrorVec=Minus(this.Data.Count, this.Result.Count);
+		var Error=Sum(ErrorVec);
+		return Error;
 	}
+	
 	
 
 	for (var Sex=0; Sex<1; Sex++){
@@ -256,9 +258,14 @@ function SetupOptimisationDataExtractionObjects(){
 			var EverInjectorByAgeStatSettings=CreateEverInjectorByAgeStatSettings(Sex, LowerAge, UpperAge, Time);
 			
 			
-			
-			
 			var NewDEO=new OptimisationDataExtractionObject();
+			
+			NewDEO.Result=new CountStatistic(EverInjectorByAgeStatSettings, EverInjectorByAgeFunction);
+			
+			NewDEO.ErrorFunction=CountStatisticErrorFunction;
+			
+			
+			
 			
 			NewDEO.Name;
 
