@@ -163,7 +163,7 @@ OptimisationDataExtractionObject.prototype.Graph=function(){
 };
 
 // Needs to be a 
-function ExtractOptimisationResults(ResultsBySim){
+function ExtractOptimisationObjects(ResultsBySim){
 	// ResultsBySim[Sim].Optimisation[SpecificStatCount]
 	
 	// Transpose to get at all the .Optimisation results
