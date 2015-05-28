@@ -109,7 +109,7 @@ OptimisationDataExtractionObject.prototype.Graph=function(){
 	
 	// function to extract	data into the correct form
 	var StructureForGraph95CI=function(InputStat){
-		ReturnObject={};
+		var ReturnObject={};
 		ReturnObject.Y=InputStat.Median;
 		ReturnObject.X=InputStat.Time;
 		ReturnObject.Lower=InputStat.Lower95Percentile;
