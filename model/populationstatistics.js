@@ -234,7 +234,22 @@ CountStatistic.prototype.CountEvents= function (Population){//Used to count how 
 CountStatistic.prototype.Adjust= function (Multiplier){
 	// for all of the counting functions
 	this.Count=Multiply(this.Count, Multiplier);
-}
+};
+
+
+CountStatistic.prototype.SetTime= function (Time){
+	// Used to change the time after the 
+	
+	PopStatStepUpTime(Time, this);
+};
+
+
+
+
+
+
+
+
 
 function DownloadCountStatisticCSV(InputStat, FileName){
 	// This function creates a formatted CSV that allows the data to be manipulated in a program like excel

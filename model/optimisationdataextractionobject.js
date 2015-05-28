@@ -58,7 +58,9 @@ OptimisationDataExtractionObject.prototype.ErrorFunction=function(){// Simulatio
 
 OptimisationDataExtractionObject.prototype.CreateGraphData=function(SimulationResult){
 	
-	this.Result=this.ResultFunction(SimulationResult,  this.GraphTime);
+
+
+	this.ResultRun(SimulationResult,  this.GraphTime);
 	
 	var ThisCopy=DeepCopy(this);
 	
@@ -220,7 +222,7 @@ function SetupOptimisationDataExtractionObjects(){
 	function CreateEverInjectorByAgeStatSettings(Sex, LowerAge, UpperAge, Time){
 		// not that this uses closures to limit the scope of LowerAge and UpperAge so that the function can be generalised
 		var StatSettings={};
-		StatSettings.Name="Number of people ever injecting drugs";
+
 		StatSettings.CountType="Instantaneous";
 		StatSettings.XLabel="Year";
 		StatSettings.YLabel="Count";
@@ -238,6 +240,12 @@ function SetupOptimisationDataExtractionObjects(){
 		return StatSettings;
 	}
 	
+	function CreateEverInjectorByAgeStat(Sex, LowerAge, UpperAge){
+		
+		
+		
+		
+	}
 	
 
 	for (var Sex=0; Sex<1; Sex++){
@@ -245,7 +253,9 @@ function SetupOptimisationDataExtractionObjects(){
 			var LowerAge=Data.PWID.AgeRange[0];
 			var UpperAge=Data.PWID.AgeRange[1];
 			var EverInjectorByAgeFunction=CreateEverInjectorByAgeFunction(Sex, LowerAge, UpperAge);
-			var EverInjectorByAgeStatSettings=CreateEverInjectorByAgeStatSettings(Sex, LowerAge, UpperAge);
+			var EverInjectorByAgeStatSettings=CreateEverInjectorByAgeStatSettings(Sex, LowerAge, UpperAge, Time);
+			
+			
 			
 			
 			var NewDEO=new OptimisationDataExtractionObject();
