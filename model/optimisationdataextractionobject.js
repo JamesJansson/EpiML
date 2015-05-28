@@ -51,7 +51,7 @@ OptimisationDataExtractionObject.prototype.ExtractDataAndFindError=function(Simu
 OptimisationDataExtractionObject.prototype.ErrorFunction=function(){// SimulationResult
 	// Note that this can be alterred by setting obj.Errorfunction=SomeFunction;
 	console.error("Needs to find a way to convert .Count to some generalised value");
-	var ErrorVec=Minus(this.Data, this.Result);
+	var ErrorVec=Abs(Minus(this.Data, this.Result));
 	var Error=Sum(ErrorVec);
 	return Error;
 };
@@ -242,8 +242,8 @@ function SetupOptimisationDataExtractionObjects(){
 	}
 	
 
- 	function CountStatisticErrorFunction(){
-		var ErrorVec=Minus(this.Data.Count, this.Result.Count);
+ 	function CountStatisticErrorFunction(Data, Result){
+		var ErrorVec=Abs(Minus(Data.Count, Result.Count));
 		var Error=Sum(ErrorVec);
 		return Error;
 	}
