@@ -42,7 +42,7 @@ function OptimisationDataExtractionObject(){
 
 
 OptimisationDataExtractionObject.prototype.ExtractDataAndFindError=function(SimulationResult){// SimulationResult.Population
-	this.SimResult=this.ResultFunction(SimulationResult,  this.DataTime);
+	this.Result=this.ResultFunction(SimulationResult,  this.DataTime);
 	var Error=this.ErrorFunction();
 	
 	return Error;
@@ -57,12 +57,6 @@ OptimisationDataExtractionObject.prototype.ErrorFunction=function(){// Simulatio
 
 
 OptimisationDataExtractionObject.prototype.CreateGraphData=function(SimulationResult){
-	
-	
-	// Create names and titles 
-	
-
-	//this.Data.StatisticType="Data";
 	
 	this.Result=this.ResultFunction(SimulationResult,  this.GraphTime);
 	
@@ -162,7 +156,7 @@ OptimisationDataExtractionObject.prototype.Graph=function(){
 	
 };
 
-// Needs to be a 
+// This function is run outside the loop after all optimisations have occurred. 
 function ExtractOptimisationObjects(ResultsBySim){
 	// ResultsBySim[Sim].Optimisation[SpecificStatCount]
 	
@@ -171,7 +165,7 @@ function ExtractOptimisationObjects(ResultsBySim){
 	// ResultsByStat.Optimisation[Sim][SpecificStatCount]
 	var OptimisationArrayBySim=ResultsByStat.Optimisation;// Choose to operate only on the Optimisation results
 	// OptimisationStatArray[Sim][SpecificStatCount]
-	var OptimisationArrayByStat=Transpose(OptimisationArrayBySim);
+	var OptimisationArrayByStat=Transpose(OptimisationArrayBySim);// Stat count is an array
 	//OptimisationStatArray[SpecificStatCount][Sim]
 	
 	var Optimisation=[];
@@ -197,17 +191,87 @@ function ExtractOptimisationObjects(ResultsBySim){
 
 
 
-
+// This function is run internally in each instance of the model
 function SetupOptimisationDataExtractionObjects(){
-	// this function is run both internally to the model and on the interface
+	
 	var DEO=[];//Array of OptimisationDataExtractionObject
 	
 	new NewDEO=new OptimisationDataExtractionObject();
 	NewDEO.Name="EverIDU";
-	this.ResultFunction=EverIDUStats;
-	this.ErrorFunction=function(){
-		this.Result.Count
-	};
+	this.ResultFunction=new ;
+
+	// This section deals with the creation of summary statistics for ever injectors
+
+	function CreateEverInjectorByAgeFunction(Sex, LowerAge, UpperAge){
+		// not that this uses closures to limit the scope of LowerAge and UpperAge so that the function can be generalised
+		var FunctionHolder= function (Person, Time){
+			if (Person.Sex==Sex){
+				if (Person.Alive(Time)){
+					if (Person.IDU.EverInjectedAtTime(Time)){
+						if (LowerAge<=Person.Age(Time) && Person.Age(Time)<UpperAge)
+						return 1;
+					}
+				}
+			}
+			return 0;
+		};
+		return FunctionHolder;
+	}
+	function CreateEverInjectorByAgeStatSettings(Sex, LowerAge, UpperAge, Time){
+		// not that this uses closures to limit the scope of LowerAge and UpperAge so that the function can be generalised
+		var StatSettings={};
+		StatSettings.Name="Number of people ever injecting drugs";
+		StatSettings.CountType="Instantaneous";
+		StatSettings.XLabel="Year";
+		StatSettings.YLabel="Count";
+		StatSettings.Time=Time;
+		
+		var SexText;
+		if (Sex==0){
+			SexText="Male"; 
+		}
+		else {
+			SexText="Female"; 
+		}
+		StatSettings.Name="Number of people ever injecting drugs("+SexText+", "+LowerAge+"-"+UpperAge+")";
+		
+		return StatSettings;
+	}
+	
+	
+
+	for (var Sex=0; Sex<1; Sex++){
+		for (var AgeIndex in Data.PWID.AgeRange){
+			var LowerAge=Data.PWID.AgeRange[0];
+			var UpperAge=Data.PWID.AgeRange[1];
+			var EverInjectorByAgeFunction=CreateEverInjectorByAgeFunction(Sex, LowerAge, UpperAge);
+			var EverInjectorByAgeStatSettings=CreateEverInjectorByAgeStatSettings(Sex, LowerAge, UpperAge);
+			
+			
+			var NewDEO=new OptimisationDataExtractionObject();
+			
+			NewDEO.Name;
+
+			NewDEO.StatisticType;
+			NewDEO.ResultFunction=ResultFunction(Population, Time), returns a vector of times. Should be a population statistic
+			NewDEO.XLabel;
+			NewDEO.YLabel;
+			
+			NewDEO.Data;// specified follwing setup (must be a statistic type (count, summary, ratio))
+			NewDEO.Result;
+			NewDEO.DataTime;// uses the time specified in the data 
+			NewDEO.GraphTime;// uses the range of times specified to show the full activity of the model
+			
+			
+			Data.PWID.Year
+			
+			DEO.push(NewDEO);
+		}
+	}
+	
+	
+
+	
 	
 	
 	// For age based ever injected
