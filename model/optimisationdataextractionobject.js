@@ -13,36 +13,58 @@
 
 
 function OptimisationDataExtractionObject(){
-	this.Name;
-	this.GraphInterfaceID;
-	this.StatisticType;
-	this.ResultFunction;// ResultFunction(Population, Time), returns a vector of times. Should be a population statistic
-	this.XLabel;
-	this.YLabel;
+	this.Name="";
+	this.GraphInterfaceID="";
+	this.StatisticType="";
+	this.ResultFunction;// ResultFunction(SimResult, Time), returns a single value.
+	this.XLabel="";
+	this.YLabel="";
 	
-	this.Data;// specified follwing setup (must be a statistic type (count, summary, ratio))
-	this.Result;
-	this.DataTime;// uses the time specified in the data 
-	this.GraphTime;// uses the range of times specified to show the full activity of the model
+	this.Opt={};// specified follwing setup (must be a statistic type (count, summary, ratio))
+	this.Opt.Data=[];// uses the time specified in the data 
+	this.Opt.Time=[];// uses the time specified in the data 
+	this.Opt.Result=[];// uses the time specified in the data 
 	
-	this.ErrorFunction;// specifies how the error is determined. function() 
+	this.Graph={};
+	this.Graph.Data={};
+	this.Graph.Data.Time;// uses the range of times specified to show the full activity of the model
+	this.Graph.Data.Value;
+	this.Graph.Result={};
+	this.Graph.Result.Time;// uses the range of times specified to show the full activity of the model
+	this.Graph.Result.Value;
 	
-	this.MultiSimResult;
-	this.MultiSimData;
+	
+	//this.ErrorFunction;// specifies how the error is determined. function() 
+	
+	this.MultiSimResult=[];
+	this.MultiSimData=[];
+	
+	this.MultiSimResultGraph;
+	this.MultiSimDataGraph;
+	
 	
 	this.GraphObject;
 	this.DownloadData;
 }
 
+OptimisationDataExtractionObject.prototype.SetData=function(Data){// SimulationResult.Population
+	this.Opt.Data=Data.Value;
+	this.Opt.Time=Data.Time;
+};
 
-// prototype CreateStatistic
+OptimisationDataExtractionObject.prototype.SetGraphTime=function(TimeArray){// SimulationResult.Population
+	this.Graph.Result.Time=TimeArray;
+};
 
 
 
 
+OptimisationDataExtractionObject.prototype.RunDataAndFindError=function(SimulationResult){// SimulationResult.Population
+	this.Opt.Result=[];
+	for (var TimeCount in this.Opt.Time){
+		this.Opt.Result[TimeCount]=this.ResultFunction(SimulationResult, this.Opt.Time[TimeCount])
+	}
 
-OptimisationDataExtractionObject.prototype.ExtractDataAndFindError=function(SimulationResult){// SimulationResult.Population
-	this.Result=this.Result.Run(SimulationResult);
 	var Error=this.ErrorFunction();
 	
 	return Error;
@@ -50,20 +72,26 @@ OptimisationDataExtractionObject.prototype.ExtractDataAndFindError=function(Simu
 
 OptimisationDataExtractionObject.prototype.ErrorFunction=function(){// SimulationResult
 	// Note that this can be alterred by setting obj.Errorfunction=SomeFunction;
-	console.error("Needs to find a way to convert .Count to some generalised value");
-	var ErrorVec=Abs(Minus(this.Data, this.Result));
+
+	var ErrorVec=Abs(Minus(this.Opt.Data, this.Opt.Result));
 	var Error=Sum(ErrorVec);
 	return Error;
 };
 
 
 OptimisationDataExtractionObject.prototype.CreateGraphData=function(SimulationResult){
+	this.Graph.Data.Time=this.Opt.Time;// uses the range of times specified to show the full activity of the model
+	this.Graph.Data.Value=this.Opt.Data;
 	
-	this.Result.SetTime(this.GraphTime);
-
-	this.Result.Run(SimulationResult);
+	this.Graph.Result.Value=[];
+	this.Graph.Result.Value=[];
 	
-	var ThisCopy=DeepCopy(this);
+	
+	
+	this.Opt.Result=[];
+	for (var TimeCount in this.Opt.Time){
+		this.Opt.Result[TimeCount]=this.ResultFunction(SimulationResult, this.Opt.Time[TimeCount])
+	}
 	
 	return ThisCopy;// this is safe to return over the worker-worker divide
 };
@@ -90,22 +118,56 @@ OptimisationDataExtractionObject.prototype.SummariseMultipleSimulations=function
 	}
 	
 	
+	ArrayOfResults[Sim].Graph.Data.Time;// uses the range of times specified to show the full activity of the model
+	this.Graph.Result.Time;// uses the range of times specified to show the full activity of the model
+	
+	
+	
+	// ArrayOfResults[Sim].Graph.Data.Time[Time];
+	// ArrayOfResults[Sim].Graph.Data.Value[Time];
+	// ArrayOfResults[Sim].Graph.Result.Time[Time];
+	// ArrayOfResults[Sim].Graph.Result.Value[Time];
+	
 	
 	// Take ArrayOfResults, sort into data/sim results
-	var SplitDataResult=TransposeArrObj(ArrayOfResults);
-	// SplitDataResult.Data[Sim], SplitDataResult.Result[Sim], and other SplitDataResult.Things that are quite useless
+	for (var SimCount in ArrayOfResults){
+		this.MultiSimData[SimCount]=ArrayOfResults[SimCount].Graph.Data;
+		this.MultiSimResult[SimCount]=ArrayOfResults[SimCount].Graph.Result;
+	}
+	// this.MultiSimData[Sim].Time[Time]
+	// this.MultiSimData[Sim].Value[Time]
+	// this.MultiSimResult[Sim].Time[Time]
+	// this.MultiSimResult[Sim].Value[Time]
 	
-	// Performs summary statistics on data
-	this.MultiSimData=StatisticSelector(SplitDataResult.Data);
-	// Performs summary statistics on the results
-	this.MultiSimResult=StatisticSelector(SplitDataResult.Result);
+	// MultiSimData.X[Time];
+	// MultiSimData.Y[Time][Sim];
 	
+	function PerformSummaryStats(Input){
+		var NumSims=Input.length;
+		var NumTimes=Input[0].Time.length;
+		
+		var SummaryStat={};
+		SummaryStat.Time=Input[0].Time;
+		
+		for (var TimeCount=0; TimeCount<NumTimes; TimeCount++){
+			for (var SimCount=0; SimCount<NumSims; SimCount++){
+				SummaryStat.Value[TimeCount][SimCount]=Input[SimCount].Value[TimeCount];
+			}
+			SummaryStat.Median[TimeCount]=Median(SummaryStat.Value[TimeCount]);
+			SummaryStat.Upper95Percentile[TimeCount]=Percentile(SummaryStat.Value[TimeCount], 97.5);
+			SummaryStat.Lower95Percentile[TimeCount]=Percentile(SummaryStat.Value[TimeCount], 2.5);
+		}
+
+		return SummaryStat;
+	}
 	
+	this.MultiSimDataSummary=PerformSummaryStats(this.MultiSimData);
+	this.MultiSimResultSummary=PerformSummaryStats(this.MultiSimResult);
+		
 };
 
 OptimisationDataExtractionObject.prototype.Graph=function(){
-	// Takes summarised results  this.MultiSimResult this.MultiSimData
-	
+
 	
 	// function to extract	data into the correct form
 	var StructureForGraph95CI=function(InputStat){
@@ -117,10 +179,6 @@ OptimisationDataExtractionObject.prototype.Graph=function(){
 		return ReturnObject;
 	};
 	
-	console.error("Below is not a great way to set up the x and y labels");
-	this.XLabel=this.MultiSimResult
-	
-	
 
 	var PlotSettings={};
 	PlotSettings.Name=this.Name;
@@ -129,21 +187,14 @@ OptimisationDataExtractionObject.prototype.Graph=function(){
 	PlotSettings.ID=this.GraphInterfaceID;
 	
 	
-	
-	
-	PlotSettings.PlotData={};
-	//	 PlotSettings.PlotData.Plot=[]; can this be deleted?
-	
-	PlotSettings.PlotData.Data=StructureForGraph95CI(this.MultiSimData);
-	PlotSettings.PlotData.Result=StructureForGraph95CI(this.MultiSimResult);
-
-
 	PlotSettings.PlotFunction=function(PlotPlaceholder, PlotData){
-		console.log(PlotData);
 		return OptimisationPlot(PlotPlaceholder, PlotData.Data, PlotData.Result);
 	};
 
-
+	PlotSettings.PlotData={};
+	//	 PlotSettings.PlotData.Plot=[]; can this be deleted?
+	PlotSettings.PlotData.Data=StructureForGraph95CI(this.MultiSimDataSummary);
+	PlotSettings.PlotData.Result=StructureForGraph95CI(this.MultiSimResultSummary);
 
 	PlotSettings.Data=[];
 	PlotSettings.Data.Download=function (){console.log('This runs when the button is pushed')};
@@ -152,10 +203,6 @@ OptimisationDataExtractionObject.prototype.Graph=function(){
 	this.GraphObject.Draw();
 	
 	
-	
-	
-		
-	// 
 	
 };
 
@@ -188,11 +235,85 @@ function ExtractOptimisationObjects(ResultsBySim){
 // Results.Optimisation.Data
 
 
+// This function is run internally in each instance of the model
+function SetupOptimisationDataExtractionObjects2(){
+	
+	var DEO=[];//Array of OptimisationDataExtractionObject
+	
+
+	// This section deals with the creation of summary statistics for ever injectors
+
+	function CreateEverInjectorByAgeFunction(Sex, LowerAge, UpperAge){
+		// not that this uses closures to limit the scope of LowerAge and UpperAge so that the function can be generalised
+		var FunctionHolder= function (SimulationResult, Time){
+			for (var PersonCount in SimulationResult.Population){
+				var Person=SimulationResult.Population[PersonCount];
+				if (Person.Sex==Sex){
+					if (Person.Alive(Time)){
+						if (Person.IDU.EverInjectedAtTime(Time)){
+							if (LowerAge<=Person.Age(Time) && Person.Age(Time)<UpperAge)
+							return 1;
+						}
+					}
+				}
+			}
+			return 0;
+		};
+		return FunctionHolder;
+	}
 
 
+	for (var Sex=0; Sex<1; Sex++){
+		for (var AgeIndex in Data.PWID.AgeRange){
+			var LowerAge=Data.PWID.AgeRange[AgeIndex][0];
+			var UpperAge=Data.PWID.AgeRange[AgeIndex][1];
+			var EverInjectorByAgeFunction=CreateEverInjectorByAgeFunction(Sex, LowerAge, UpperAge);
+			
+			
+			var NewDEO=new OptimisationDataExtractionObject();
+			
+
+			NewDEO.CountType="Instantaneous";
+			NewDEO.XLabel="Year";
+			NewDEO.YLabel="Count";
+			NewDEO.Time=Time;
+			
+			var SexText;
+			if (Sex==0){
+				SexText="Male"; 
+			}
+			else {
+				SexText="Female"; 
+			}
+			NewDEO.Name="Number of people ever injecting drugs("+SexText+", "+LowerAge+"-"+UpperAge+")";
+				
+			NewDEO.ResultFunction=EverInjectorByAgeFunction;
+
+			DEO.push(NewDEO);
+		}
+	}
+	
+
+	
+	
+	for (var Count in DEO){
+		DEO[Count].GraphInterfaceID="OptimisationPlot"+Count;
+	}
+	
+	return DEO;//Array of OptimisationDataExtractionObject
+}
 
 
+////////////////////////////////////////////////////////////////////////
 
+////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////
 
 // This function is run internally in each instance of the model
 function SetupOptimisationDataExtractionObjects(){
