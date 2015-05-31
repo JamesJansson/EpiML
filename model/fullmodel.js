@@ -121,8 +121,10 @@ function FullModelTest(Stuff1){
 	
 	console.log(Person);
 	
+
 	
-	return ReturnResults;
+	
+	return DeepCopyData(ReturnResults);
 }
 
 

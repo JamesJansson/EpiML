@@ -248,7 +248,7 @@ function ExtractOptimisationObjects(ResultsBySim){
 // This function is run internally in each instance of the model
 function SetupOptimisationDataExtractionObjects(){
 	
-	var GraphTime=AscendingArray(1970, 2020, Param.TimeStep);
+	var GraphTime=AscendingArray(1970, 2020, 1);
 	
 	var DEO=[];//Array of OptimisationDataExtractionObject
 	

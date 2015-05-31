@@ -519,7 +519,6 @@ function SetInitialHCVLevels(Person){
 	for (var Pn in PWID){
 		var TimeOfHCV=TimeUntilEvent(AnnualPHCV);
 		if (TimeOfHCV<InjectionHistory.Duration[Pn]){
-			console.error("set HCV genotype below, must be a problem with the add");
 			PWID[Pn].HCV.Infection(InjectionHistory.TimeStart[Pn]+TimeOfHCV, ChooseInitialGenotype());
 		}
 	}
