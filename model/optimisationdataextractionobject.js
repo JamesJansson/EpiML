@@ -62,7 +62,7 @@ OptimisationDataExtractionObject.prototype.SetGraphTime=function(TimeArray){// S
 OptimisationDataExtractionObject.prototype.RunDataAndFindError=function(SimulationResult){// SimulationResult.Population
 	this.Opt.Result=[];
 	for (var TimeCount in this.Opt.Time){
-		this.Opt.Result[TimeCount]=this.ResultFunction(SimulationResult, this.Opt.Time[TimeCount])
+		this.Opt.Result[TimeCount]=this.ResultFunction(SimulationResult, this.Opt.Time[TimeCount]);
 	}
 
 	var Error=this.ErrorFunction();
@@ -84,13 +84,9 @@ OptimisationDataExtractionObject.prototype.GenerateGraphData=function(Simulation
 	this.Graph.Data.Value=this.Opt.Data;
 	
 	this.Graph.Result.Value=[];
-	this.Graph.Result.Value=[];
 	
-	
-	
-	this.Opt.Result=[];
-	for (var TimeCount in this.Opt.Time){
-		this.Opt.Result[TimeCount]=this.ResultFunction(SimulationResult, this.Opt.Time[TimeCount])
+	for (var TimeCount in this.Graph.Result.Time){
+		this.Graph.Result.Value[TimeCount]=this.ResultFunction(SimulationResult, this.Graph.Result.Time[TimeCount]);
 	}
 };
 
@@ -199,17 +195,17 @@ OptimisationDataExtractionObject.prototype.Graph=function(){
 	
 };
 
-function RunAllODEOError(ODEOArray){
+function RunAllODEOError(ODEOArray, SimulationResult){
 	var ErrorSum=0;
 	for (var ODEOCount in ODEOArray){
-	    ErrorSum+=ODEOArray[ODEOCount].RunDataAndFindError();
+	    ErrorSum+=ODEOArray[ODEOCount].RunDataAndFindError(SimulationResult);
 	}
 	return ErrorSum;
 }
 	
-function RunAllODEOGenerateGraphData(ODEOArray){
+function RunAllODEOGenerateGraphData(ODEOArray, SimulationResult){
 	for (var ODEOCount in ODEOArray){
-	    ODEOArray[ODEOCount].GenerateGraphData();
+	    ODEOArray[ODEOCount].GenerateGraphData(SimulationResult);
 	}
 }
 	
@@ -258,18 +254,20 @@ function SetupOptimisationDataExtractionObjects(){
 	function CreateEverInjectorByAgeFunction(Sex, LowerAge, UpperAge){
 		// not that this uses closures to limit the scope of LowerAge and UpperAge so that the function can be generalised
 		var FunctionHolder= function (SimulationResult, Time){
+			var MatchCount=0;
 			for (var PersonCount in SimulationResult.Population){
 				var Person=SimulationResult.Population[PersonCount];
 				if (Person.Sex==Sex){
 					if (Person.Alive(Time)){
 						if (Person.IDU.EverInjectedAtTime(Time)){
-							if (LowerAge<=Person.Age(Time) && Person.Age(Time)<UpperAge)
-							return 1;
+							if (LowerAge<=Person.Age(Time) && Person.Age(Time)<UpperAge){
+								MatchCount++;
+							}
 						}
 					}
 				}
 			}
-			return 0;
+			return MatchCount;
 		};
 		return FunctionHolder;
 	}
@@ -283,13 +281,8 @@ function SetupOptimisationDataExtractionObjects(){
 			
 			
 			var NewDEO=new OptimisationDataExtractionObject();
-			
-
 			NewDEO.CountType="Instantaneous";
-			NewDEO.XLabel="Year";
-			NewDEO.YLabel="Count";
-			NewDEO.Time=GraphTime;
-			
+			// Name the Statistic and give labels
 			var SexText;
 			if (Sex==0){
 				SexText="Male"; 
@@ -298,6 +291,24 @@ function SetupOptimisationDataExtractionObjects(){
 				SexText="Female"; 
 			}
 			NewDEO.Name="Number of people ever injecting drugs("+SexText+", "+LowerAge+"-"+UpperAge+")";
+			
+			NewDEO.XLabel="Year";
+			NewDEO.YLabel="Count";
+			
+			// Load the data into the function 
+			var DataStruct={};
+			DataStruct.Time=Data.PWID.Year;
+			if (Sex==0){
+				DataStruct.Value=Data.PWID.Ever.Male[AgeIndex];
+			}
+			else {
+				DataStruct.Value=Data.PWID.Ever.Female[AgeIndex];
+			}
+			NewDEO.SetData(DataStruct);
+			
+			NewDEO.SetGraphTime(GraphTime);
+			
+			
 				
 			NewDEO.ResultFunction=EverInjectorByAgeFunction;
 

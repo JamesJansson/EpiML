@@ -100,11 +100,11 @@ function FullModelTest(Stuff1){
 	
 	
 	// Store a run for data as it would appear in the optimisation 
-	RunAllODEOError(ODEOArray);
+	RunAllODEOError(ODEOArray, FullModelResults);
 	
 	
 	// Generate graph data (external to the optimisation)
-	RunAllODEOGenerateGraphData(ODEOArray);
+	RunAllODEOGenerateGraphData(ODEOArray, FullModelResults);
 	// Store a run for data as it would appear in the optimisation 
 	ReturnResults.Optimisation=ODEOArray;
 	
@@ -124,7 +124,7 @@ function FullModelTest(Stuff1){
 
 	
 	
-	return DeepCopyData(ReturnResults);
+	return ReturnResults;
 }
 
 

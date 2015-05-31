@@ -12,7 +12,8 @@ self.onmessage = function (WorkerMessage) {
 	
 	eval("FunctionHolder="+WorkerMessage.data.FunctionToRun+";");
 	var SimResult=FunctionHolder(WorkerMessage.data);
-	self.postMessage({WorkerMessage: WorkerMessage.data, Result: SimResult});//All simulation will end with this line
+	var ResultWithFunctionsRemoved=DeepCopyData(SimResult);//functions crash the thread if passed back to the main thread
+	self.postMessage({WorkerMessage: WorkerMessage.data, Result: ResultWithFunctionsRemoved});//All simulation will end with this line
 };
 
 // ---------------------------------------------------------------------------------
