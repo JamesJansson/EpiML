@@ -44,7 +44,7 @@
 <script type="text/javascript" src="model/simulationbuttons.js"></script>
 <script type="text/javascript" src="model/stochasticoptimisation.js"></script>
 <script type="text/javascript" src="model/hcvtreatmentscenarios.js"></script>
-
+<script type="text/javascript" src="model/optimisationdataextractionobject.js"></script>
 
 
 <!-- Loading model javascript -->
@@ -229,15 +229,17 @@ Papa.parse("data/summarynotifications.csv", {download: true, complete: function(
 	<div id="PlotsContent" class="Content">
 		<h1>Plots</h1>
 		
+		<p>Plot 0</p>
+		<div class="plot" id="OptimisationPlot0" ></div>
+		
 		<p>Plot 1</p>
-		<div class="plot" id="plot1" ></div>
+		<div class="plot" id="OptimisationPlot1" ></div>
 		
 		<p>Plot 2</p>
-		<div class="plot" id="plot2" ></div>
-		
-		<p>Plot 3</p>
-		<div class="plot" id="plot3" ></div>
+		<div class="plot" id="OptimisationPlot2" ></div>
 
+		<p>Plot 3</p>
+		<div class="plot" id="OptimisationPlot3" ></div>
 		
 	</div>
 	

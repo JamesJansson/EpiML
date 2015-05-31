@@ -132,16 +132,27 @@ OptimisationDataExtractionObject.prototype.SummariseMultipleSimulations=function
 	// MultiSimData.Y[Time][Sim];
 	
 	function PerformSummaryStats(Input){
+		
+		console.log(Input);
+		
 		var NumSims=Input.length;
 		var NumTimes=Input[0].Time.length;
 		
 		var SummaryStat={};
 		SummaryStat.Time=Input[0].Time;
+		SummaryStat.Value=[];
+		SummaryStat.Median=[];
+		SummaryStat.Upper95Percentile=[];
+		SummaryStat.Lower95Percentile=[];
 		
 		for (var TimeCount=0; TimeCount<NumTimes; TimeCount++){
+			SummaryStat.Value[TimeCount]=[];
 			for (var SimCount=0; SimCount<NumSims; SimCount++){
 				SummaryStat.Value[TimeCount][SimCount]=Input[SimCount].Value[TimeCount];
 			}
+			console.log(SummaryStat);
+			console.log(SummaryStat.Value);
+			console.log(SummaryStat.Value[TimeCount]);
 			SummaryStat.Median[TimeCount]=Median(SummaryStat.Value[TimeCount]);
 			SummaryStat.Upper95Percentile[TimeCount]=Percentile(SummaryStat.Value[TimeCount], 97.5);
 			SummaryStat.Lower95Percentile[TimeCount]=Percentile(SummaryStat.Value[TimeCount], 2.5);
@@ -150,12 +161,14 @@ OptimisationDataExtractionObject.prototype.SummariseMultipleSimulations=function
 		return SummaryStat;
 	}
 	
+	console.log("SumStat on Data");
 	this.MultiSimDataSummary=PerformSummaryStats(this.MultiSimData);
+	console.log("SumStat on Result");
 	this.MultiSimResultSummary=PerformSummaryStats(this.MultiSimResult);
 		
 };
 
-OptimisationDataExtractionObject.prototype.Graph=function(){
+OptimisationDataExtractionObject.prototype.DrawGraph=function(){
 
 	
 	// function to extract	data into the correct form
@@ -215,24 +228,32 @@ function RunAllODEOGenerateGraphData(ODEOArray, SimulationResult){
 // This function is run outside the simulation after all optimisations have occurred (i.e. this is summarising all results). 
 function ExtractOptimisationObjects(ResultsBySim){
 	// ResultsBySim[Sim].Optimisation[SpecificStatCount]
+	var OptimisationResultsBySim=[];
+	for (var SimCount in ResultsBySim){
+		OptimisationResultsBySim[SimCount]=ResultsBySim[SimCount].Optimisation;
+	}
+	// OptimisationResultsBySim[SimCount][SpecificStatCount]
+	var OptimisationArrayByStat=Transpose(OptimisationResultsBySim);
 	
+	console.log(OptimisationArrayByStat);
 	// Transpose to get at all the .Optimisation results
-	var ResultsByStat=TransposeArrObj(ResultsBySim);
+	//var ResultsByStat=TransposeArrObj(ResultsBySim);
 	// ResultsByStat.Optimisation[Sim][SpecificStatCount]
-	var OptimisationArrayBySim=ResultsByStat.Optimisation;// Choose to operate only on the Optimisation results
+	//var OptimisationArrayBySim=ResultsByStat.Optimisation;// Choose to operate only on the Optimisation results
 	// OptimisationStatArray[Sim][SpecificStatCount]
-	var OptimisationArrayByStat=Transpose(OptimisationArrayBySim);// Stat count is an array
+	//var OptimisationArrayByStat=Transpose(OptimisationArrayBySim);// Stat count is an array
 	//OptimisationStatArray[SpecificStatCount][Sim]
 	
 	var Optimisation=[];
 	for (var SpecificStatCount in OptimisationArrayByStat){
 		Optimisation[SpecificStatCount]= new OptimisationDataExtractionObject();
 		Optimisation[SpecificStatCount].SummariseMultipleSimulations(OptimisationArrayByStat[SpecificStatCount]);
+		Optimisation[SpecificStatCount].DrawGraph();
 	}
 	
 	return Optimisation;
 }
-
+// A=ExtractOptimisationObjects(SimulationHolder.Result);
 
 
 
