@@ -248,6 +248,8 @@ function ExtractOptimisationObjects(ResultsBySim){
 // This function is run internally in each instance of the model
 function SetupOptimisationDataExtractionObjects(){
 	
+	var GraphTime=AscendingArray(1970, 2020, Param.TimeStep);
+	
 	var DEO=[];//Array of OptimisationDataExtractionObject
 	
 
@@ -286,7 +288,7 @@ function SetupOptimisationDataExtractionObjects(){
 			NewDEO.CountType="Instantaneous";
 			NewDEO.XLabel="Year";
 			NewDEO.YLabel="Count";
-			NewDEO.Time=Time;
+			NewDEO.Time=GraphTime;
 			
 			var SexText;
 			if (Sex==0){
