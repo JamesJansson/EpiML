@@ -50,6 +50,15 @@ function FullModelTest(Stuff1){
 	Param.HCV.ProbabilityOfTransmission=0.1;
 	console.error("The above is hard set and poorly defined");
 	
+	
+	// Set up the optimisation
+	var ODEOArray = SetupOptimisationDataExtractionObjects();
+	
+	
+	
+	
+	
+	
 	// OptimisedValues that need to be set by an external function
 	Param.IDU.RateOfCesssation=0.25;
 
@@ -60,10 +69,19 @@ function FullModelTest(Stuff1){
 	
 	
 	
+	
+	
+	
+	
+	
+	
 	var FullModelResults=FullModel(Param, Notifications, Param.Time.EndSimulation, Intervention);
 	
 	var Person=FullModelResults.Population;
 	
+	
+	
+
 	
 	
 	
@@ -80,6 +98,15 @@ function FullModelTest(Stuff1){
 	ReturnResults.EverIDUHCVAntibody=EverIDUHCVAntibodyStats(Person, StatsTime);
 	ReturnResults.PWIDAge=PWIDAgeStats(Person, StatsTime);
 	
+	
+	// Store a run for data as it would appear in the optimisation 
+	RunAllODEOError(ODEOArray);
+	
+	
+	// Generate graph data (external to the optimisation)
+	RunAllODEOGenerateGraphData(ODEOArray);
+	// Store a run for data as it would appear in the optimisation 
+	ReturnResults.Optimisation=ODEOArray;
 	
 	
 	// console.log(SimulationHolder.Result[0].LivingWithHCVInfection.Count);

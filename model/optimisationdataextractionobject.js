@@ -79,7 +79,7 @@ OptimisationDataExtractionObject.prototype.ErrorFunction=function(){// Simulatio
 };
 
 
-OptimisationDataExtractionObject.prototype.CreateGraphData=function(SimulationResult){
+OptimisationDataExtractionObject.prototype.GenerateGraphData=function(SimulationResult){
 	this.Graph.Data.Time=this.Opt.Time;// uses the range of times specified to show the full activity of the model
 	this.Graph.Data.Value=this.Opt.Data;
 	
@@ -92,8 +92,6 @@ OptimisationDataExtractionObject.prototype.CreateGraphData=function(SimulationRe
 	for (var TimeCount in this.Opt.Time){
 		this.Opt.Result[TimeCount]=this.ResultFunction(SimulationResult, this.Opt.Time[TimeCount])
 	}
-	
-	return ThisCopy;// this is safe to return over the worker-worker divide
 };
 
 OptimisationDataExtractionObject.prototype.SummariseMultipleSimulations=function(ArrayOfResults){
@@ -116,11 +114,6 @@ OptimisationDataExtractionObject.prototype.SummariseMultipleSimulations=function
 	if (typeof(FirstResult.YLabel)!="undefined"){
 		this.YLabel=FirstResult.YLabel;
 	}
-	
-	
-	ArrayOfResults[Sim].Graph.Data.Time;// uses the range of times specified to show the full activity of the model
-	this.Graph.Result.Time;// uses the range of times specified to show the full activity of the model
-	
 	
 	
 	// ArrayOfResults[Sim].Graph.Data.Time[Time];
@@ -206,7 +199,24 @@ OptimisationDataExtractionObject.prototype.Graph=function(){
 	
 };
 
-// This function is run outside the loop after all optimisations have occurred. 
+function RunAllODEOError(ODEOArray){
+	var ErrorSum=0;
+	for (var ODEOCount in ODEOArray){
+	    ErrorSum+=ODEOArray[ODEOCount].RunDataAndFindError();
+	}
+	return ErrorSum;
+}
+	
+function RunAllODEOGenerateGraphData(ODEOArray){
+	for (var ODEOCount in ODEOArray){
+	    ODEOArray[ODEOCount].GenerateGraphData();
+	}
+}
+	
+
+
+
+// This function is run outside the simulation after all optimisations have occurred (i.e. this is summarising all results). 
 function ExtractOptimisationObjects(ResultsBySim){
 	// ResultsBySim[Sim].Optimisation[SpecificStatCount]
 	
@@ -236,7 +246,7 @@ function ExtractOptimisationObjects(ResultsBySim){
 
 
 // This function is run internally in each instance of the model
-function SetupOptimisationDataExtractionObjects2(){
+function SetupOptimisationDataExtractionObjects(){
 	
 	var DEO=[];//Array of OptimisationDataExtractionObject
 	
@@ -294,129 +304,6 @@ function SetupOptimisationDataExtractionObjects2(){
 	}
 	
 
-	
-	
-	for (var Count in DEO){
-		DEO[Count].GraphInterfaceID="OptimisationPlot"+Count;
-	}
-	
-	return DEO;//Array of OptimisationDataExtractionObject
-}
-
-
-////////////////////////////////////////////////////////////////////////
-
-////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////
-
-// This function is run internally in each instance of the model
-function SetupOptimisationDataExtractionObjects(){
-	
-	var DEO=[];//Array of OptimisationDataExtractionObject
-	
-	new NewDEO=new OptimisationDataExtractionObject();
-	NewDEO.Name="EverIDU";
-	this.ResultFunction=new ;
-
-	// This section deals with the creation of summary statistics for ever injectors
-
-	function CreateEverInjectorByAgeFunction(Sex, LowerAge, UpperAge){
-		// not that this uses closures to limit the scope of LowerAge and UpperAge so that the function can be generalised
-		var FunctionHolder= function (Person, Time){
-			if (Person.Sex==Sex){
-				if (Person.Alive(Time)){
-					if (Person.IDU.EverInjectedAtTime(Time)){
-						if (LowerAge<=Person.Age(Time) && Person.Age(Time)<UpperAge)
-						return 1;
-					}
-				}
-			}
-			return 0;
-		};
-		return FunctionHolder;
-	}
-	function CreateEverInjectorByAgeStatSettings(Sex, LowerAge, UpperAge, Time){
-		// not that this uses closures to limit the scope of LowerAge and UpperAge so that the function can be generalised
-		var StatSettings={};
-
-		StatSettings.CountType="Instantaneous";
-		StatSettings.XLabel="Year";
-		StatSettings.YLabel="Count";
-		StatSettings.Time=Time;
-		
-		var SexText;
-		if (Sex==0){
-			SexText="Male"; 
-		}
-		else {
-			SexText="Female"; 
-		}
-		StatSettings.Name="Number of people ever injecting drugs("+SexText+", "+LowerAge+"-"+UpperAge+")";
-		
-		return StatSettings;
-	}
-	
-
- 	function CountStatisticErrorFunction(Data, Result){
-		var ErrorVec=Abs(Minus(Data.Count, Result.Count));
-		var Error=Sum(ErrorVec);
-		return Error;
-	}
-	
-	
-
-	for (var Sex=0; Sex<1; Sex++){
-		for (var AgeIndex in Data.PWID.AgeRange){
-			var LowerAge=Data.PWID.AgeRange[0];
-			var UpperAge=Data.PWID.AgeRange[1];
-			var EverInjectorByAgeFunction=CreateEverInjectorByAgeFunction(Sex, LowerAge, UpperAge);
-			var EverInjectorByAgeStatSettings=CreateEverInjectorByAgeStatSettings(Sex, LowerAge, UpperAge, Time);
-			
-			
-			var NewDEO=new OptimisationDataExtractionObject();
-			
-			NewDEO.Result=new CountStatistic(EverInjectorByAgeStatSettings, EverInjectorByAgeFunction);
-			
-			NewDEO.ErrorFunction=CountStatisticErrorFunction;
-			
-			
-			
-			
-			NewDEO.Name;
-
-			NewDEO.StatisticType;
-			NewDEO.ResultFunction=ResultFunction(Population, Time), returns a vector of times. Should be a population statistic
-			NewDEO.XLabel;
-			NewDEO.YLabel;
-			
-			NewDEO.Data;// specified follwing setup (must be a statistic type (count, summary, ratio))
-			NewDEO.Result;
-			NewDEO.DataTime;// uses the time specified in the data 
-			NewDEO.GraphTime;// uses the range of times specified to show the full activity of the model
-			
-			
-			Data.PWID.Year
-			
-			DEO.push(NewDEO);
-		}
-	}
-	
-	
-
-	
-	
-	
-	// For age based ever injected
-	//for both sexes{
-	//	for all ages in the Data
-	
-	//}
 	
 	
 	for (var Count in DEO){
