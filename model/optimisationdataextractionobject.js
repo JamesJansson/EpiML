@@ -288,6 +288,7 @@ function SetupOptimisationDataExtractionObjects(){
 					}
 				}
 			}
+			MatchCount=Multiply(MatchCount, Settings.SampleFactor);
 			return MatchCount;
 		};
 		return FunctionHolder;
