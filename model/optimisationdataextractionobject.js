@@ -295,7 +295,7 @@ function SetupOptimisationDataExtractionObjects(){
 	}
 
 
-	for (var Sex=0; Sex<1; Sex++){
+	for (var Sex=0; Sex<2; Sex++){
 		for (var AgeIndex in Data.PWID.AgeRange){
 			var LowerAge=Data.PWID.AgeRange[AgeIndex][0];
 			var UpperAge=Data.PWID.AgeRange[AgeIndex][1];
@@ -326,12 +326,9 @@ function SetupOptimisationDataExtractionObjects(){
 			else {
 				DataStruct.Value=Data.PWID.Ever.Female[AgeIndex];
 			}
+			
 			NewDEO.SetData(DataStruct);
-			
 			NewDEO.SetGraphTime(GraphTime);
-			
-			
-				
 			NewDEO.ResultFunction=EverInjectorByAgeFunction;
 
 			DEO.push(NewDEO);
