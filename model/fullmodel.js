@@ -17,7 +17,6 @@ function FullModelTest(Stuff1){
 
 	
 	
-	
 	// Globals that need to be run before code will work
 	RegularInjectionTime=new RegularInjectionTimeObject();
 	
@@ -121,7 +120,6 @@ function FullModelTest(Stuff1){
 	
 	console.log(Person);
 	
-
 	
 	
 	return ReturnResults;
