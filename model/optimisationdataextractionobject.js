@@ -312,7 +312,12 @@ function SetupOptimisationDataExtractionObjects(){
 			else {
 				SexText="Female"; 
 			}
-			NewDEO.Name="Number of people ever injecting drugs("+SexText+", "+LowerAge+"-"+UpperAge+")";
+			console.error("We need to work out a way of refrencing this.");
+			
+			var ObjectName="NumberOfPeopleEverInjectingDrugs"+SexText+""+LowerAge+"-"+UpperAge;
+			NewDEO.Name=ObjectName;
+			
+			NewDEO.Title="Number of people ever injecting drugs("+SexText+", "+LowerAge+"-"+UpperAge+")";
 			
 			NewDEO.XLabel="Year";
 			NewDEO.YLabel="Count";
@@ -330,7 +335,10 @@ function SetupOptimisationDataExtractionObjects(){
 			NewDEO.SetData(DataStruct);
 			NewDEO.SetGraphTime(GraphTime);
 			NewDEO.ResultFunction=EverInjectorByAgeFunction;
-
+			
+			// CReate a referenece that can be used to download the data in the future
+			eval(ObjectName+"=NewDEO;");
+			// Add the object to the array of all ODEOS
 			DEO.push(NewDEO);
 		}
 	}
