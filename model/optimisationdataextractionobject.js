@@ -154,9 +154,6 @@ OptimisationDataExtractionObject.prototype.SummariseMultipleSimulations=function
 			for (var SimCount=0; SimCount<NumSims; SimCount++){
 				SummaryStat.Value[TimeCount][SimCount]=Input[SimCount].Value[TimeCount];
 			}
-			console.log(SummaryStat);
-			console.log(SummaryStat.Value);
-			console.log(SummaryStat.Value[TimeCount]);
 			SummaryStat.Median[TimeCount]=Median(SummaryStat.Value[TimeCount]);
 			SummaryStat.Upper95Percentile[TimeCount]=Percentile(SummaryStat.Value[TimeCount], 97.5);
 			SummaryStat.Lower95Percentile[TimeCount]=Percentile(SummaryStat.Value[TimeCount], 2.5);
