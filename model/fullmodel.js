@@ -118,7 +118,7 @@ function FullModelTest(Stuff1){
 	// Note: number of people living with HCV is somewhat lower thant the people who have ever IDU	
 	// console.log(Divide(SimulationHolder.Result[0].LivingWithHCVInfection.Count, SimulationHolder.Result[0].EverIDU.Count));
 	
-	console.log(Person);
+	// console.log(Person);
 	
 	
 	

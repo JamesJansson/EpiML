@@ -26,12 +26,13 @@
 
 
 .plot_positioner{/* note: plot positioner refuses to work and is probably unnecessary*/
-	float:right;
+	position: absolute;
+	
 	width: 95%;
-	width: calc(100% - 1em);
-	height: 90%;
-	height: calc(100% - 3em);
-	top:8%;
+	width: calc(100% - 2em);
+	height: 80%;
+	height: calc(100% - 4em);
+	right: 0em;
 	top: 2em;
 	
 }

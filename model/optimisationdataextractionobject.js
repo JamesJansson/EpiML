@@ -319,7 +319,7 @@ function SetupOptimisationDataExtractionObjects(){
 			var ObjectName="NumberOfPeopleEverInjectingDrugs"+SexText+LowerAge+"_"+UpperAge;
 			NewDEO.Name=ObjectName;
 			
-			NewDEO.Title="Number of people ever injecting drugs("+SexText+", "+LowerAge+"-"+UpperAge+")";
+			NewDEO.Title="Number of people ever injecting drugs ("+SexText+", "+LowerAge+"-"+UpperAge+")";
 			
 			NewDEO.XLabel="Year";
 			NewDEO.YLabel="Count";

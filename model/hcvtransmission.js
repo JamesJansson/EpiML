@@ -19,7 +19,7 @@ function DetermineHCVTransmissions(Person, Time, TimeStep){
 		}
 	}
 	
-	console.log("NumberOfTransmissions "+ NumberOfTransmissions);
+	// console.log("NumberOfTransmissions "+ NumberOfTransmissions);
 	
 	return NumberOfTransmissions;
 	
