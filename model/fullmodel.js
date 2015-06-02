@@ -61,7 +61,7 @@ function FullModelTest(Stuff1){
 	// OptimisedValues that need to be set by an external function
 	Param.IDU.RateOfCesssation=0.25;
 
-	Param.IDU.Entry.A=1000;
+	Param.IDU.Entry.A=500;
 	Param.IDU.Entry.B=0.20;
 	Param.IDU.Entry.Logk2=0.3;
 	Param.IDU.Entry.Logk1=0.9;
