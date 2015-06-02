@@ -127,7 +127,7 @@ function GeneralPlot(Settings){
 	// Build HTML
 	this.InnerHTMLForPlot="";
 	this.InnerHTMLForPlot+="    <div class='fullscreenbox' id='"+this.ID+"_fullscreenbox' >\n";
-	this.InnerHTMLForPlot+="        <div class='plot_title'>"+this.Title+"</div>\n";
+	this.InnerHTMLForPlot+="        <div class='plot_title' >"+this.Title+"</div>\n";
 	this.InnerHTMLForPlot+="        <div class='fullscreenbutton' title='Fullscreen' id='"+this.ID+"_fullscreenbutton' onclick=\"ToggleFullScreen('"+this.ID+"_fullscreenbox');\">&#10063</div>\n";
 	this.InnerHTMLForPlot+=DownloadButtonHTML;
 	this.InnerHTMLForPlot+="        <div class='plot_positioner'>\n";

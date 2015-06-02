@@ -19,6 +19,7 @@ function OptimisationDataExtractionObject(){
 	this.ResultFunction;// ResultFunction(SimResult, Time), returns a single value.
 	this.XLabel="";
 	this.YLabel="";
+	this.Title="";
 	
 	this.Opt={};// specified follwing setup (must be a statistic type (count, summary, ratio))
 	this.Opt.Data=[];// uses the time specified in the data 
@@ -104,6 +105,9 @@ OptimisationDataExtractionObject.prototype.SummariseMultipleSimulations=function
 	if (typeof(FirstResult.StatisticType)!="undefined"){
 		this.StatisticType=FirstResult.StatisticType;
 	}
+	if (typeof(FirstResult.Title)!="undefined"){
+		this.Title=FirstResult.Title;
+	}
 	if (typeof(FirstResult.XLabel)!="undefined"){
 		this.XLabel=FirstResult.XLabel;
 	}
@@ -184,6 +188,7 @@ OptimisationDataExtractionObject.prototype.DrawGraph=function(){
 
 	var PlotSettings={};
 	PlotSettings.Name=this.Name;
+	PlotSettings.Title=this.Title;
 	PlotSettings.XLabel=this.XLabel;
 	PlotSettings.YLabel=this.YLabel;
 	PlotSettings.ID=this.GraphInterfaceID;
@@ -314,7 +319,7 @@ function SetupOptimisationDataExtractionObjects(){
 			}
 			console.error("We need to work out a way of refrencing this.");
 			
-			var ObjectName="NumberOfPeopleEverInjectingDrugs"+SexText+""+LowerAge+"-"+UpperAge;
+			var ObjectName="NumberOfPeopleEverInjectingDrugs"+SexText+LowerAge+"_"+UpperAge;
 			NewDEO.Name=ObjectName;
 			
 			NewDEO.Title="Number of people ever injecting drugs("+SexText+", "+LowerAge+"-"+UpperAge+")";
