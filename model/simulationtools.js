@@ -172,7 +172,7 @@ EventVector.prototype.Next= function (Time){
 		return Current;
 	}
 	else {//loop through all the middle places (the above should have ensured that there are at least 2 items in the array)
-		for (var i=0; i<this.NumberOfEvents-1; i++){
+		for (var i=0; i<this.NumberOfEvents-1 && Time<this.Time[i]; i++){// this is a rare example of the double for loop condition. Care needs to be taken that the period is inclusive. That is, i++ is different to ++i
 			if (Time<this.Time[i]){
 				Current.Value=this.ValueVec[i];
 				Current.Time=this.Time[i];
@@ -182,20 +182,18 @@ EventVector.prototype.Next= function (Time){
 		}
 	}
 
-
-
-
-
-
-	var Current=this.Get(Time);
-	
-	//if it is the last
-	if (Current.Pos==this.NumberOfEvents-1){
-		return NaN;
-	}
-	// return the next one
-	return this.ValueVec[Current.Pos+1];
+	// if an element is not fount, return an empty vector
+	Current.Value=Number.NaN;
+	Current.Time=Number.NaN;
+	Current.Pos=Number.NaN;
+	return Current;
 };
+
+
+
+
+
+
 
 
 
@@ -203,7 +201,7 @@ EventVector.prototype.Next= function (Time){
 
 EventVector.prototype.CountEvents= function (EventValue, Time1, Time2){
 	// Counts the number of times the event happens in the period [Year1, Year2)
-	
+	console.error("This function is not yet implemented.");
 
 };
 

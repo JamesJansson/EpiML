@@ -271,7 +271,9 @@ function SetupOptimisationDataExtractionObjects(){
 	
 	var DEO=[];//Array of OptimisationDataExtractionObject
 	
-
+// ******************************************************************************************************
+// ******************************************************************************************************
+// ******************************************************************************************************
 	// This section deals with the creation of summary statistics for ever injectors
 
 	function CreateEverInjectorByAgeFunction(Sex, LowerAge, UpperAge){
@@ -345,6 +347,81 @@ function SetupOptimisationDataExtractionObjects(){
 		}
 	}
 	
+// ******************************************************************************************************
+// ******************************************************************************************************
+// ******************************************************************************************************
+// This section deals with the creation of summary statistics for ever injectors
+
+	function CreateRecentInjectorByAgeFunction(Sex, LowerAge, UpperAge){
+		// not that this uses closures to limit the scope of LowerAge and UpperAge so that the function can be generalised
+		var FunctionHolder= function (SimulationResult, Time){
+			var MatchCount=0;
+			for (var PersonCount in SimulationResult.Population){
+				var Person=SimulationResult.Population[PersonCount];
+				if (Person.Sex==Sex){
+					if (Person.Alive(Time)){
+						if (Person.IDU.EverInjectedAtTime(Time)){
+							if (LowerAge<=Person.Age(Time) && Person.Age(Time)<UpperAge){
+								MatchCount++;
+							}
+						}
+					}
+				}
+			}
+			MatchCount=Multiply(MatchCount, Settings.SampleFactor);
+			return MatchCount;
+		};
+		return FunctionHolder;
+	}
+
+
+	for (var Sex=0; Sex<2; Sex++){
+		for (var AgeIndex in Data.PWID.AgeRange){
+			var LowerAge=Data.PWID.AgeRange[AgeIndex][0];
+			var UpperAge=Data.PWID.AgeRange[AgeIndex][1];
+			var EverInjectorByAgeFunction=CreateEverInjectorByAgeFunction(Sex, LowerAge, UpperAge);
+			
+			
+			var NewDEO=new OptimisationDataExtractionObject();
+			NewDEO.CountType="Instantaneous";
+			// Name the Statistic and give labels
+			var SexText;
+			if (Sex==0){
+				SexText="Male"; 
+			}
+			else {
+				SexText="Female"; 
+			}
+			console.error("We need to work out a way of refrencing this.");
+			
+			var ObjectName="NumberOfPeopleEverInjectingDrugs"+SexText+LowerAge+"_"+UpperAge;
+			NewDEO.Name=ObjectName;
+			
+			NewDEO.Title="Number of people ever injecting drugs ("+SexText+", "+LowerAge+"-"+UpperAge+")";
+			
+			NewDEO.XLabel="Year";
+			NewDEO.YLabel="Count";
+			
+			// Load the data into the function 
+			var DataStruct={};
+			DataStruct.Time=Data.PWID.Year;
+			if (Sex==0){
+				DataStruct.Value=Data.PWID.Ever.Male[AgeIndex];
+			}
+			else {
+				DataStruct.Value=Data.PWID.Ever.Female[AgeIndex];
+			}
+			
+			NewDEO.SetData(DataStruct);
+			NewDEO.SetGraphTime(GraphTime);
+			NewDEO.ResultFunction=EverInjectorByAgeFunction;
+			
+			// CReate a referenece that can be used to download the data in the future
+			eval(ObjectName+"=NewDEO;");
+			// Add the object to the array of all ODEOS
+			DEO.push(NewDEO);
+		}
+	}
 
 	
 	
