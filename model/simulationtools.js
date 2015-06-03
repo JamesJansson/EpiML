@@ -166,13 +166,14 @@ EventVector.prototype.Next= function (Time){
 		return Current;
 	}
 	else if (this.Time[this.NumberOfEvents-1]<=Time){ // if after the last time
+		// Note that this is non-inclusive
 		Current.Value=NaN;
 		Current.Time=NaN;
 		Current.Pos=NaN;// indicates thar there are no future events
 		return Current;
 	}
 	else {//loop through all the middle places (the above should have ensured that there are at least 2 items in the array)
-		for (var i=0; i<this.NumberOfEvents-1 && Time<this.Time[i]; i++){// this is a rare example of the double for loop condition. Care needs to be taken that the period is inclusive. That is, i++ is different to ++i
+		for (var i=0; i<this.NumberOfEvents && Time<this.Time[i]; i++){// this is a rare example of the double for loop condition. Care needs to be taken that the period is inclusive. That is, i++ is different to ++i
 			if (Time<this.Time[i]){
 				Current.Value=this.ValueVec[i];
 				Current.Time=this.Time[i];
@@ -182,16 +183,56 @@ EventVector.prototype.Next= function (Time){
 		}
 	}
 
-	// if an element is not fount, return an empty vector
+	// if an element is not fount, return a NaN result
 	Current.Value=Number.NaN;
 	Current.Time=Number.NaN;
 	Current.Pos=Number.NaN;
 	return Current;
 };
 
+EventVector.prototype.EventsBetween= function (Time1, Time2){
+	// Note that this function only returns values between
+	// It is left side inclusive, so if there is an event '22' at 2010, b=a.EventsBetween(2010, 2011); gives b[0].Value=22
+	// It does not count events priot to Time1, so if there is an event '22' at 2010 and so if there is an event '11' at 1999, b=a.EventsBetween(2010, 2011); gives b[0].Value=22, not 11
+	
+	if (Time1>Time2){
+		console.error("Error trace");
+		throw "An error occured in determining events. See error trace above";
+	}
+	
+	var Current=[];
+	var EventCount=-1;
+	if (this.NumberOfEvents==0){// if no times are set
+		return Current;
+	}
+	else if (this.Time[this.NumberOfEvents-1]<Time1){ // if after the start time
+		return Current;
+	}
+	else {//loop through all the middle places (the above should have ensured that there are at least 2 items in the array)
+		console.log("Got to the point");
+		for (var i=0; i<this.NumberOfEvents && this.Time[i]<Time2; i++){// this is a rare example of the double for loop condition. Care needs to be taken that the period is inclusive. That is, i++ is different to ++i
+			if (Time1<=this.Time[i] && this.Time[i]<Time2){
+				EventCount++;
+				Current[EventCount]={};
+				
+				Current[EventCount].Value=this.ValueVec[i];
+				Current[EventCount].Time=this.Time[i];
+				Current[EventCount].Pos=i;
+			}
+		}
+	}
 
+	// if an element is not fount, return an empty vector
+	return Current;
+};
 
-
+//a=new EventVector();
+//a.Set(0, 1985);
+//a.Set(10, 1990);
+//a.Set(20, 1997);
+//a.Set(30, 2003);
+//a.Set(40, 2007);
+//a.Set(50, 2010);
 
 
 
