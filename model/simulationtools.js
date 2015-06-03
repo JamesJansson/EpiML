@@ -173,7 +173,7 @@ EventVector.prototype.Next= function (Time){
 		return Current;
 	}
 	else {//loop through all the middle places (the above should have ensured that there are at least 2 items in the array)
-		for (var i=0; i<this.NumberOfEvents && Time<this.Time[i]; i++){// this is a rare example of the double for loop condition. Care needs to be taken that the period is inclusive. That is, i++ is different to ++i
+		for (var i=0; i<this.NumberOfEvents; i++){
 			if (Time<this.Time[i]){
 				Current.Value=this.ValueVec[i];
 				Current.Time=this.Time[i];
@@ -189,6 +189,20 @@ EventVector.prototype.Next= function (Time){
 	Current.Pos=Number.NaN;
 	return Current;
 };
+
+// a=new EventVector();
+// a.Set(0, 1985);
+// a.Set(10, 1990);
+// a.Set(20, 1997);
+// a.Set(30, 2003);
+// a.Set(40, 2007);
+// a.Set(50, 2010);
+// b=a.Next(1)
+// b=a.Next(1980)
+// b=a.Next(1985)
+// b=a.Next(2009)
+// b=a.Next(2010)
+
 
 EventVector.prototype.EventsBetween= function (Time1, Time2){
 	// Note that this function only returns values between
@@ -233,11 +247,12 @@ EventVector.prototype.EventsBetween= function (Time1, Time2){
 //a.Set(30, 2003);
 //a.Set(40, 2007);
 //a.Set(50, 2010);
-
-
-
-
-
+// b=a.EventsBetween(1990, 1986);
+// b=a.EventsBetween(1970, 1986);
+// b=a.EventsBetween(1970, 1971);
+// b=a.EventsBetween(1970, 2011);
+// b=a.EventsBetween(2010, 2011);
+// b=a.EventsBetween(2011, 2012);
 
 
 EventVector.prototype.CountEvents= function (EventValue, Time1, Time2){
