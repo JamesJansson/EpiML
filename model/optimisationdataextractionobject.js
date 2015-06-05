@@ -257,7 +257,7 @@ function ExtractOptimisationObjects(ResultsBySim){
 	return Optimisation;
 }
 // Set up the plots page
-// for (var i=0; i<100; i++){document.getElementById("PlotsPageHolder").innerHTML+='<div class="plot" id="OptimisationPlot'+i+'" ></div>';}
+// for (var i=0; i<100; i++){document.getElementById("OptimisatoinPlotsHolder").innerHTML+='<div class="plot" id="OptimisationPlot'+i+'" ></div>';}
 
 
 // A=ExtractOptimisationObjects(SimulationHolder.Result);
