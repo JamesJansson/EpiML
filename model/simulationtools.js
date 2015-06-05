@@ -223,7 +223,6 @@ EventVector.prototype.EventsBetween= function (Time1, Time2){
 		return Current;
 	}
 	else {//loop through all the middle places (the above should have ensured that there are at least 2 items in the array)
-		console.log("Got to the point");
 		for (var i=0; i<this.NumberOfEvents && this.Time[i]<Time2; i++){// this is a rare example of the double for loop condition. Care needs to be taken that the period is inclusive. That is, i++ is different to ++i
 			if (Time1<=this.Time[i] && this.Time[i]<Time2){
 				EventCount++;

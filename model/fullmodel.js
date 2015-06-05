@@ -374,16 +374,13 @@ function InitialDistribution() {
 	var Person = [];
 	
 	for (var Time = Param.Time.StartNonDynamicModel; Time < Param.Time.StartDynamicModel; Time += Param.TimeStep) {
-		console.log(Param.IDU.Entry);
 		var PWIDToAdd = CreatePWID(Param.IDU.Entry, Time, Param.TimeStep);
 		Person = Person.concat(PWIDToAdd);
 		
 		console.log("Year " + Time + " N " + PWIDToAdd.length);
 	}
-	console.log(Time);
-	console.log("exitted the loop");
 	
-	console.log(Person);
+
 	
 	
 	

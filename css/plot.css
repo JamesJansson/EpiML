@@ -89,6 +89,7 @@ div.plot {
 	height: 400px;
     
     position: relative;
+	float: left;
 }
 
 div.plot plotarea {
@@ -127,7 +128,7 @@ white-space: nowrap;
 	text-align: center;
 	
 	width: 100%;
-	color: #00000;
+	color: #000000;
 	position: absolute;
 	left: 5%;
 	left: calc(-50% + 1em);
@@ -136,7 +137,7 @@ white-space: nowrap;
 
 .xlabel {
 	text-align: center;
-	color: #00000;
+	color: #000000;
 	position: absolute;
 	left: 10%; 
 	width:80%;

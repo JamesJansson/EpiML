@@ -250,11 +250,16 @@ function ExtractOptimisationObjects(ResultsBySim){
 	for (var SpecificStatCount in OptimisationArrayByStat){
 		Optimisation[SpecificStatCount]= new OptimisationDataExtractionObject();
 		Optimisation[SpecificStatCount].SummariseMultipleSimulations(OptimisationArrayByStat[SpecificStatCount]);
+		// Draw the graph, but wait until the above has processed
 		Optimisation[SpecificStatCount].DrawGraph();
 	}
 	
 	return Optimisation;
 }
+// Set up the plots page
+// for (var i=0; i<100; i++){document.getElementById("PlotsPageHolder").innerHTML+='<div class="plot" id="OptimisationPlot'+i+'" ></div>';}
+
+
 // A=ExtractOptimisationObjects(SimulationHolder.Result);
 
 
@@ -379,7 +384,7 @@ function SetupOptimisationDataExtractionObjects(){
 		for (var AgeIndex in Data.PWID.AgeRange){
 			var LowerAge=Data.PWID.AgeRange[AgeIndex][0];
 			var UpperAge=Data.PWID.AgeRange[AgeIndex][1];
-			var EverInjectorByAgeFunction=CreateEverInjectorByAgeFunction(Sex, LowerAge, UpperAge);
+			var RecentInjectorByAgeFunction=CreateRecentInjectorByAgeFunction(Sex, LowerAge, UpperAge);
 			
 			
 			var NewDEO=new OptimisationDataExtractionObject();
@@ -392,12 +397,11 @@ function SetupOptimisationDataExtractionObjects(){
 			else {
 				SexText="Female"; 
 			}
-			console.error("We need to work out a way of refrencing this.");
 			
-			var ObjectName="NumberOfPeopleEverInjectingDrugs"+SexText+LowerAge+"_"+UpperAge;
+			var ObjectName="NumberOfPeopleRecentlyInjectingDrugs"+SexText+LowerAge+"_"+UpperAge;
 			NewDEO.Name=ObjectName;
 			
-			NewDEO.Title="Number of people ever injecting drugs ("+SexText+", "+LowerAge+"-"+UpperAge+")";
+			NewDEO.Title="Number of people recently injecting drugs ("+SexText+", "+LowerAge+"-"+UpperAge+")";
 			
 			NewDEO.XLabel="Year";
 			NewDEO.YLabel="Count";
@@ -406,15 +410,15 @@ function SetupOptimisationDataExtractionObjects(){
 			var DataStruct={};
 			DataStruct.Time=Data.PWID.Year;
 			if (Sex==0){
-				DataStruct.Value=Data.PWID.Ever.Male[AgeIndex];
+				DataStruct.Value=Data.PWID.Recent.Male[AgeIndex];
 			}
 			else {
-				DataStruct.Value=Data.PWID.Ever.Female[AgeIndex];
+				DataStruct.Value=Data.PWID.Recent.Female[AgeIndex];
 			}
 			
 			NewDEO.SetData(DataStruct);
 			NewDEO.SetGraphTime(GraphTime);
-			NewDEO.ResultFunction=EverInjectorByAgeFunction;
+			NewDEO.ResultFunction=RecentInjectorByAgeFunction;
 			
 			// CReate a referenece that can be used to download the data in the future
 			eval(ObjectName+"=NewDEO;");
@@ -424,7 +428,7 @@ function SetupOptimisationDataExtractionObjects(){
 	}
 
 	
-	
+	// Give all plots an id in the intereface
 	for (var Count in DEO){
 		DEO[Count].GraphInterfaceID="OptimisationPlot"+Count;
 	}
