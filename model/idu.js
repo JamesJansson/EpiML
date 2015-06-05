@@ -148,25 +148,10 @@ IDUObject.prototype.InjectedBetween= function (Time1, Time2){
 	if (this.CurrentlyInjecting(Time1)==true){
 		return true;
 	}
-	
-	// if wasn't injecting at the start of the period, find any evidence in the 12 months following by looking for times at which injection was initiated
-	
-	
-	
-	
-	if (this.Person.Alive(Time)){
-		var FirstUseTime=this.Use.FirstTimeOf(1);
-		if (isNaN(FirstUseTime)){
-			return false;
+	var InjectingChanges=this.Use.EventsBetween(Time1, Time2);
+	for (var ICCount in InjectingChanges){
+			return true;
 		}
-		else{
-			if (FirstUseTime<Time){
-				return true;
-			}
-			else {
-				return false;
-			}
-		} 
 	}
 	return false;
 };

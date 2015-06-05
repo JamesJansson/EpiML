@@ -350,7 +350,7 @@ function SetupOptimisationDataExtractionObjects(){
 // ******************************************************************************************************
 // ******************************************************************************************************
 // ******************************************************************************************************
-// This section deals with the creation of summary statistics for ever injectors
+// This section deals with the creation of summary statistics for recent injectors
 
 	function CreateRecentInjectorByAgeFunction(Sex, LowerAge, UpperAge){
 		// not that this uses closures to limit the scope of LowerAge and UpperAge so that the function can be generalised
@@ -360,7 +360,7 @@ function SetupOptimisationDataExtractionObjects(){
 				var Person=SimulationResult.Population[PersonCount];
 				if (Person.Sex==Sex){
 					if (Person.Alive(Time)){
-						if (Person.IDU.EverInjectedAtTime(Time)){
+						if (Person.IDU.InjectedBetween(Time-1, Time)){
 							if (LowerAge<=Person.Age(Time) && Person.Age(Time)<UpperAge){
 								MatchCount++;
 							}
