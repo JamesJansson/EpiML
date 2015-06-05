@@ -150,9 +150,11 @@ IDUObject.prototype.InjectedBetween= function (Time1, Time2){
 	}
 	var InjectingChanges=this.Use.EventsBetween(Time1, Time2);
 	for (var ICCount in InjectingChanges){
+		if (InjectingChanges[ICCount].Value>0 && InjectingChanges[ICCount].Value<4){
 			return true;
 		}
 	}
+	// if no injecting events found
 	return false;
 };
 
