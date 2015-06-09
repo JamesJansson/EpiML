@@ -189,7 +189,7 @@ function EntryRateOptimisationExponential(TargetForThisOptimisation, EntryParams
 		FunctionInput.EntryParams.Logk2=ParametersToOptimise.Logk2;
 		// Note that normalised A attempts to put a constant number of people into the years prior to the end of exponential growth period
 		// This is to improve the optimisation rate of the algorithm
-		FunctionInput.EntryParams.A=-ParametersToOptimise.NormalisedA*Log(ParametersToOptimise.Logk1);
+		FunctionInput.EntryParams.PeakEntryPerYear=-ParametersToOptimise.NormalisedPeakEntryPerYear*Log(ParametersToOptimise.Logk1);
 		FunctionInput.EntryParams.B=ParametersToOptimise.B;
 
 		var PWIDPopulation=DistributePWIDPopulationExponential(FunctionInput.EntryParams);//Returns PWIDPopulation as defined to the MaxYear
@@ -311,7 +311,7 @@ function EntryRateOptimisationExponential(TargetForThisOptimisation, EntryParams
 	OptimisationObject=new StochasticOptimisation(EntryRateOptimisationSettings);
 	OptimisationObject.AddParameter("Logk1", 0, 1);
 	OptimisationObject.AddParameter("Logk2", 0, 1);
-	OptimisationObject.AddParameter("NormalisedA", 0, MaxEntryRateAtPeak);
+	OptimisationObject.AddParameter("NormalisedPeakEntryPerYear", 0, MaxEntryRateAtPeak);
 	OptimisationObject.AddParameter("B", 0, 1);
 	
 	console.log(OptimisationObject);
@@ -321,7 +321,7 @@ function EntryRateOptimisationExponential(TargetForThisOptimisation, EntryParams
 	// Choose the best optimisation results
 	var SelectedParameters=OptimisationObject.GetBestParameterSet();
 	// Adjust the A back 
-	SelectedParameters.A=-SelectedParameters.NormalisedA*Log(SelectedParameters.Logk1);
+	SelectedParameters.PeakEntryPerYear=-SelectedParameters.NormalisedPeakEntryPerYear*Log(SelectedParameters.Logk1);
 	// Save the Optimisation results so that it can be graphed later
 	var Results={};
 	Results.Year=[];
@@ -341,7 +341,7 @@ function EntryRateOptimisationExponential(TargetForThisOptimisation, EntryParams
 	
 	
 	// Here we put a pretty serious warning to inform the user if something is amiss with the optimisation
-	if (SelectedParameters.NormalisedA> 0.9*MaxEntryRateAtPeak){
+	if (SelectedParameters.NormalisedPeakEntryPerYear> 0.9*MaxEntryRateAtPeak){
 		console.error("The optimised result is very close to the upper bound of the optmisation ranges. This may represent that a minimum was not properly found.");
 	}
 	
@@ -349,7 +349,7 @@ function EntryRateOptimisationExponential(TargetForThisOptimisation, EntryParams
 	// Place the best parameters into the unchanging parameterisation 
 	FunctionInput.EntryParams.Logk1=SelectedParameters.Logk1;
 	FunctionInput.EntryParams.Logk2=SelectedParameters.Logk2;
-	FunctionInput.EntryParams.A=SelectedParameters.A;
+	FunctionInput.EntryParams.PeakEntryPerYear=SelectedParameters.PeakEntryPerYear;
 	FunctionInput.EntryParams.B=SelectedParameters.B;
 	
 	
@@ -389,10 +389,10 @@ function DeterminePWIDEntryRateExponential(EntryParams){//MaxYear is not inclusi
 		
 		// Determine if in the initial exponential period
 		if (MidCurrentYear<EntryParams.YearPeakIDU){
-			NumberInYear=EntryParams.A*Exp(Log(EntryParams.Logk1)*(EntryParams.YearPeakIDU-MidCurrentYear));
+			NumberInYear=EntryParams.PeakEntryPerYear*Exp(Log(EntryParams.Logk1)*(EntryParams.YearPeakIDU-MidCurrentYear));
 		}
 		else{
-			NumberInYear=EntryParams.A*EntryParams.B+EntryParams.A*(1-EntryParams.B)*Exp(Log(EntryParams.Logk2)*(MidCurrentYear-EntryParams.YearPeakIDU));
+			NumberInYear=EntryParams.PeakEntryPerYear*EntryParams.B+EntryParams.PeakEntryPerYear*(1-EntryParams.B)*Exp(Log(EntryParams.Logk2)*(MidCurrentYear-EntryParams.YearPeakIDU));
 		}
 		
 		InitiatingIVDrugUse.Number[YearCount]=NumberInYear;
@@ -407,12 +407,12 @@ function DeterminePWIDEntryRateExponential2(EntryParams, Time, TimeStep){//MaxYe
 	
 	var NumberInYear, NumberInStep;
 	// Determine if in the initial exponential period
-	console.log(EntryParams);
+
 	if (Time<EntryParams.YearPeakIDU){
-		NumberInYear=EntryParams.A*Exp(Log(EntryParams.Logk1)*(EntryParams.YearPeakIDU-Time));
+		NumberInYear=EntryParams.PeakEntryPerYear*Exp(Log(EntryParams.Logk1)*(EntryParams.YearPeakIDU-Time));
 	}
 	else{
-		NumberInYear=EntryParams.A*(EntryParams.B+(1-EntryParams.B)*Exp(Log(EntryParams.Logk2)*(Time-EntryParams.YearPeakIDU)));
+		NumberInYear=EntryParams.PeakEntryPerYear*(EntryParams.B+(1-EntryParams.B)*Exp(Log(EntryParams.Logk2)*(Time-EntryParams.YearPeakIDU)));
 	}
 	NumberInStep=Round(NumberInYear*TimeStep);
 	
@@ -542,7 +542,7 @@ function ChooseInitialGenotype(){
 // create PWID test
 function TestDeterminePWIDEntryRateExponential2(){
 	EntryParams=[];
-	EntryParams.A=2500;
+	EntryParams.PeakEntryPerYear=2500;
 	EntryParams.B=0.20;
 	EntryParams.YearPeakIDU=1995;
 	EntryParams.Logk2=0.3;
@@ -567,7 +567,7 @@ function TestCreatePWID(){
 	// OptimisedValues that need to be set by an external function
 	Param.IDU.RateOfCesssation=0.25;
 	var EntryParams=[];
-	EntryParams.A=2500;
+	EntryParams.PeakEntryPerYear=2500;
 	EntryParams.B=0.20;
 	EntryParams.YearPeakIDU=1995;
 	EntryParams.Logk2=0.3;
@@ -620,7 +620,7 @@ function TESTDeterminePWIDEntryRateExponential(){
 	var EntryParams={};
 	EntryParams.YearPeakIDU=2000;
 	EntryParams.FirstYear=1959;
-	EntryParams.A=5000;
+	EntryParams.PeakEntryPerYear=5000;
 	EntryParams.Logk1=0.8;
 	EntryParams.Logk2=0.9;
 	EntryParams.B=0.6;
