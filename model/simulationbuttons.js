@@ -189,8 +189,8 @@ function RunSimSetup(){
 
 function RunFullModelTest(){
 	// Set up the plots page
-	document.getElementById("OptimisatoinPlotsHolder").innerHTML="";
-	for (var i=0; i<100; i++){document.getElementById("OptimisatoinPlotsHolder").innerHTML+='<div class="plot" id="OptimisationPlot'+i+'" ></div>';}
+	document.getElementById("OptimisationPlotsHolder").innerHTML="";
+	for (var i=0; i<100; i++){document.getElementById("OptimisationPlotsHolder").innerHTML+='<div class="plot" id="OptimisationPlot'+i+'" ></div>';}
 
 	
 	var RunSettings2={};
