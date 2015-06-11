@@ -188,11 +188,22 @@ function RunSimSetup(){
 }
 
 function RunFullModelTest(){
-	RunSettings2={};
+	// Set up the plots page
+	document.getElementById("OptimisatoinPlotsHolder").innerHTML="";
+	for (var i=0; i<100; i++){document.getElementById("OptimisatoinPlotsHolder").innerHTML+='<div class="plot" id="OptimisationPlot'+i+'" ></div>';}
+
+	
+	var RunSettings2={};
 	
 	RunSettings2.FunctionName="FullModelTest";
 	RunSettings2.Common={};
 	RunSettings2.Common.HCVTretmentFunctionID=Settings.HCVTreatmentScenario;
+	
+	RunSettings2.FunctionToRunOnCompletion=function(){
+		// Display all results
+		SummarisedOptimisationResults=ExtractOptimisationObjects(SimulationHolder.Result);
+	};
+	
 	
 	SimulationHolder.Run(RunSettings2);
 }
