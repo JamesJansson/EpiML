@@ -136,6 +136,7 @@ function LoadDataFiles(){
 	DataFile.PWID=new CSVFile('./data/pwid_size.csv');
 	DataFile.GeneralPopulation=new CSVFile('./data/generalpopulation.csv');
 	
+	DataFile.NSP=new CSVFile('./data/nspsurveydata.csv');
 
 	// Originally it was thought this would run both in a web browser and in nw.js. Now it will only run in nw.js 
 	// var RunOther=true;if (typeof (RunningNodeJS)!=='undefined'){console.log("got in1");if (RunningNodeJS==true){RunOther=false;

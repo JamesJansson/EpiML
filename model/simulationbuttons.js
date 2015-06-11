@@ -360,6 +360,16 @@ function ExtractDataFromFiles(){
 	Data.GeneralPopulation.Births=DataFile.GeneralPopulation.GetColumn(2, 1, 43);
 	Data.GeneralPopulation.Migration=DataFile.GeneralPopulation.GetColumn(2, 1, 43);
 	Data.GeneralPopulation.Deaths=DataFile.GeneralPopulation.GetColumn(3, 1, 43);
+
+
+	// Extract 
+	Data.NSP.Year=DataFile.NSP.GetRow(0, 1, 19);
+	Data.NSP.SexId.Heterosexual=DataFile.NSP.GetRow(3, 1, 43);
+	Data.NSP.SexId.Bisexual=DataFile.NSP.GetRow(3, 1, 43);
+	Data.NSP.SexId.Homosexual=DataFile.NSP.GetRow(3, 1, 43);
+	
+	Data.NSP.SexId.Total=DataFile.NSP.GetRow(3, 1, 43);
+
 }
 
 
