@@ -428,10 +428,91 @@ function SetupOptimisationDataExtractionObjects(){
 	}
 
 	
+
+	
+// ******************************************************************************************************
+// ******************************************************************************************************
+// ******************************************************************************************************
+// This section deals with the creation of summary statistics for NSP survey data
+	
+	
+	// 
+	HomosexualNSPPropDEO=new OptimisationDataExtractionObject();
+	
+	
+	
+	
+	
+	
+	// Load the data into the function 
+	var DataStruct={};
+	DataStruct.Time=Data.NSP.Year;
+	DataStruct.Value=Divide(Data.NSP.SexId.Homosexual, Data.NSP.SexId.Homosexual);
+	
+	HomosexualNSPPropDEO.SetData(DataStruct);
+	HomosexualNSPPropDEO.SetGraphTime(GraphTime);
+	HomosexualNSPPropDEO.Name="HomosexualNSPProp";
+	
+	HomosexualNSPPropDEO.Title="Proportion of NSP ";
+	
+	HomosexualNSPPropDEO.XLabel="Year";
+	HomosexualNSPPropDEO.YLabel="Proportion";
+	
+	
+	
+	HomosexualNSPPropDEO.ResultFunction= function (SimulationResult, Time){
+		var Homosexual=0;
+		var NSPTotal=0;
+		for (var PersonCount in SimulationResult.Population){
+			var Person=SimulationResult.Population[PersonCount];
+			if (Person.Alive(Time)){
+				
+				// Check if NSP
+				
+				
+				
+				
+				NSPTotal++;
+				if (Person.IDU.InjectedBetween(Time-1, Time)){
+					if (LowerAge<=Person.Age(Time) && Person.Age(Time)<UpperAge){
+						MatchCount++;
+					}
+				}
+			}
+		}
+		MatchCount=Multiply(MatchCount, Settings.SampleFactor);
+		return MatchCount;
+	};
+	
+	
+	
+	// Add the object to the array of all ODEOS
+	DEO.push(HomosexualNSPPropDEO);
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	// Give all plots an id in the intereface
 	for (var Count in DEO){
 		DEO[Count].GraphInterfaceID="OptimisationPlot"+Count;
 	}
+	
+	
 	
 	return DEO;//Array of OptimisationDataExtractionObject
 }

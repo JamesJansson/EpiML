@@ -58,6 +58,11 @@ IDUObject.prototype.StartInjecting= function (Time){
 		var TimeOfRegularUse=Time+TimeUntilStartingRegularUse;
 		this.Use.Set(3, TimeOfRegularUse);
 		
+		// Add the transition to NSP user
+		var TimeUntilStartNSP=TimeUntilEvent(Param.IDU.NSP.P);
+		this.NSP.Set(1, TimeUntilStartNSP+TimeOfRegularUse);
+		
+		
 		// Determine the use rate by people who use regularly
 		
 		
@@ -69,6 +74,9 @@ IDUObject.prototype.StartInjecting= function (Time){
 		var TimeUntilStoppingInjecting=TimeUntilEvent(Param.IDU.RateOfCesssation);
 		var TimeOfStoppingInjecting=TimeOfRegularUse+TimeUntilStoppingInjecting;
 		this.Use.Set(4, TimeOfStoppingInjecting);
+		// Stop NSP attendance- note, adding this should delete future events
+		this.NSP.Set(0, TimeOfStoppingInjecting);
+		
 		
 		// Determine excess death due to drug use
 		// From the date of regular usage to cease

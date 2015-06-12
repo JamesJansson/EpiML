@@ -363,13 +363,20 @@ function ExtractDataFromFiles(){
 
 
 	// Extract 
-	Data.NSP.Year=DataFile.NSP.GetRow(0, 1, 19);
-	Data.NSP.SexId.Heterosexual=DataFile.NSP.GetRow(3, 1, 43);
-	Data.NSP.SexId.Bisexual=DataFile.NSP.GetRow(3, 1, 43);
-	Data.NSP.SexId.Homosexual=DataFile.NSP.GetRow(3, 1, 43);
+	var NoNSPDataPoints=19;
+	Data.NSP={};
+	Data.NSP.Year=DataFile.NSP.GetRow(0, 1, NoNSPDataPoints);
+	Data.NSP.SexId={};
+	Data.NSP.SexId.Heterosexual=DataFile.NSP.GetRow(9, 1, NoNSPDataPoints);
+	Data.NSP.SexId.Bisexual=DataFile.NSP.GetRow(10, 1, NoNSPDataPoints);
+	Data.NSP.SexId.Homosexual=DataFile.NSP.GetRow(11, 1, NoNSPDataPoints);
 	
-	Data.NSP.SexId.Total=DataFile.NSP.GetRow(3, 1, 43);
-
+	var SexIDCumulativeTotal=Add(Data.NSP.SexId.Heterosexual, Data.NSP.SexId.Bisexual);
+	SexIDCumulativeTotal=Add(SexIDCumulativeTotal, Data.NSP.SexId.Homosexual);
+	Data.NSP.SexId.Total=SexIDCumulativeTotal;
+	
+	
+	
 }
 
 

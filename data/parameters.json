@@ -1701,6 +1701,26 @@
         "Description": "Injecting behaviour in MSM (HIV positive and negative) Table 27\t\t\t\t\t\t\t\nRecent\t2009\t2010\t2011\t2012\t2013\tMean\tSD\nHIV-positive\t20.40%\t16.40%\t14.20%\t18.20%\t17.60%\t17.36%\t0.02286482\nHIV-negative\t4.00%\t3.40%\t2.70%\t2.90%\t3.10%\t3.22%\t0.005069517\nhttps://csrh.arts.unsw.edu.au/media/CSRHFile/GCPS_Sydney_2013_Report.pdf"
     },
     {
+        "ParameterID": "IDU_NSP_P",
+        "ArrayName": "Param",
+        "ArrayNumber": 69,
+        "InterfaceID": "ParamHolder_69",
+        "GroupName": "",
+        "DistributionType": "optimisedsample",
+        "Median": null,
+        "StandardError": null,
+        "LowerBound": 0,
+        "UpperBound": 1,
+        "Upper95Range": null,
+        "Lower95Range": null,
+        "CalculatedMedian": null,
+        "NumberOfSamples": 100,
+        "Val": [],
+        "MinValue": "",
+        "MaxValue": "",
+        "Description": ""
+    },
+    {
         "ParameterID": "IDU_ProportionMale",
         "ArrayName": "Param",
         "ArrayNumber": "42",
