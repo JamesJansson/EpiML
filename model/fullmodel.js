@@ -66,47 +66,50 @@ function FullModelTest(Stuff1){
 	console.error("The above is hard set and poorly defined");
 	
 	// 
-	ReturnResults.OptimisedParam.HCV.ProbabilityOfTransmission
+	//ReturnResults.OptimisedParam.HCV.ProbabilityOfTransmission
 	
 	// On the outside, when a calculation is performed, 
-	function EnterDeeperLevel(SimObj, SummaryObject){
-		for (var ObjName in SimObj){
-			if (typeof(SimObj[ObjName])=="object"){
-				// if it is not created already make a new object in SummaryObject to put sub objects in
-				if (typeof(SummaryObject[ObjName])=="undefined"){
-					SummaryObject[ObjName]={};
+	function TransferIndividualOptimisationResults(SimulationHolder){
+		function EnterDeeperLevel(SimObj, SummaryObject){
+			for (var ObjName in SimObj){
+				if (typeof(SimObj[ObjName])=="object"){
+					// if it is not created already make a new object in SummaryObject to put sub objects in
+					if (typeof(SummaryObject[ObjName])=="undefined"){
+						SummaryObject[ObjName]={};
+					}
+					EnterDeeperLevel(SimObj[ObjName], SummaryObject[ObjName]);
 				}
-				EnterDeeperLevel(SimObj[ObjName], SummaryObject[ObjName]);
-			}
-			else if (typeof(SimObj[ObjName])=="number"){
-				// if it is not created alread make a new array in SummaryObject to put numbers in
-				if (typeof(SummaryObject[ObjName])=="undefined"){
-					SummaryObject[ObjName]=[];
+				else if (typeof(SimObj[ObjName])=="number"){
+					// if it is not created alread make a new array in SummaryObject to put numbers in
+					if (typeof(SummaryObject[ObjName])=="undefined"){
+						SummaryObject[ObjName]=[];
+					}
+					SummaryObject[ObjName].push(SimObj[ObjName])
 				}
-				SummaryObject[ObjName].push(SimObj[ObjName])
 			}
+		};
+		// Testing
+		//var A=[];
+		//A[0]={};
+		//A[0].B = 3;
+		//A[0].C = {};
+		//A[0].C.D = 5;
+		//A[0].C.E = 7;
+		//A[1] = {};
+		//A[1].B = 33;
+		//A[1].C = {};
+		//A[1].C.D = 55;
+		//A[1].C.E = 77;
+		//SumObj = {};
+		//EnterDeeperLevel(A[0], SumObj);
+		//EnterDeeperLevel(A[1], SumObj);
+		// For each sim
+		
+		var SummaryOfOptimisations={};
+		for (var OptCount in SimulationHolder.Results){
+			EnterDeeperLevel(SimulationHolder.Results[OptCount].OptimisedParam, SummaryObject);
 		}
-	};
-	// Testing
-	var A=[];
-	A[0]={};
-	A[0].B=3;
-	A[0].C={};
-	A[0].C.D=5;
-	A[0].C.E=7;
-	A[1]={};
-	A[1].B=33;
-	A[1].C={};
-	A[1].C.D=55;
-	A[1].C.E=77;
-	SumObj={};
-	EnterDeeperLevel(A[0], SumObj);
-	EnterDeeperLevel(A[1], SumObj);
-	// For each sim
-	
-	
-	
-	
+	}
 	
 	var FullModelResults=FullModel(Param, Notifications, Param.Time.EndSimulation, Intervention);
 	
