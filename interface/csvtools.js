@@ -8,6 +8,7 @@ function CSVFile(FileName){//file name in this instance is the URL
 
 	console.log(FileName);
 	if (typeof(RunningNodeJS)=='undefined'){
+		console.log("Note that the global variable 'RunningNodeJS' is not currently set, which defaults behaviour to webpage javascript.. This means that this library uses httprequests, not the file system to open the files. To hide this, set 'RunningNodeJS' to true if using in node locally, or false if using on a webpage.");
 		Papa.parse(FileName, {download: true, complete: function(PapaResults){TempOpenCSVHolder.Data=PapaResults.data;TempOpenCSVHolder.CurrentlyLoading=false;} });
 	}
 	else if (RunningNodeJS==false){
@@ -15,7 +16,7 @@ function CSVFile(FileName){//file name in this instance is the URL
 	}
 	else{
 		// Load the actual local file
-		var fs=require('fs')
+		var fs=require('fs');
 		var FileContents=fs.readFileSync(FileName, {encoding: 'utf8'});
 		// Parse the file
 		Papa.parse(FileContents, { complete: function(PapaResults, FileContents){TempOpenCSVHolder.Data=PapaResults.data;TempOpenCSVHolder.CurrentlyLoading=false;} });
@@ -28,14 +29,19 @@ CSVFile.prototype.GetValues= function (y1, y2, x1, x2){//Changing to (row1, row2
 	//checking input is good
 	if (x1>x2 || y1>y2 || x1<0 || y1<0 || this.IsNaturalNumber(x1)==false || this.IsNaturalNumber(x2)==false || this.IsNaturalNumber(y1)==false || this.IsNaturalNumber(y2)==false ){
 		console.error("The range of values requested is invalid");
+		throw "See above for error trace";
+	}
+	if (this.FileLength()<=y2){
+		console.error("The y2 spefied is too long. Max value " +(this.FileLength()-1));
+		throw "See above for error trace";
 	}
 
-	ReturnArray=[];
-	newyindex=0;
-	for (yindex=y1; yindex<=y2; yindex++){
+	var ReturnArray=[];
+	var newyindex=0;
+	for (var yindex=y1; yindex<=y2; yindex++){
 		ReturnArray[newyindex]=[];
-		newxindex=0;
-		for (xindex=x1; xindex<=x2; xindex++){
+		var newxindex=0;
+		for (var xindex=x1; xindex<=x2; xindex++){
 			if (typeof this.Data[yindex][xindex]==="undefined"){// If this value is bigger than the largest value of data
 				ReturnArray[newyindex][newxindex]=NaN;
 			}
@@ -52,6 +58,7 @@ CSVFile.prototype.GetValues= function (y1, y2, x1, x2){//Changing to (row1, row2
 CSVFile.prototype.GetColumn= function (ColumnNum, StartRow, EndRow){//
 	if (StartRow>EndRow || ColumnNum<0 || StartRow<0 || this.IsNaturalNumber(ColumnNum)==false || this.IsNaturalNumber(StartRow)==false || this.IsNaturalNumber(EndRow)==false){
 		console.error("The range of values requested is invalid");
+		throw "See above for error trace";
 	}
 	
 	var TempVec=this.GetValues(StartRow, EndRow, ColumnNum, ColumnNum);
@@ -62,26 +69,87 @@ CSVFile.prototype.GetColumn= function (ColumnNum, StartRow, EndRow){//
 		ReturnVec[i]=TempVec[i][0];
 	}
 	return ReturnVec;
-}
+};
 
 
 CSVFile.prototype.GetRow= function (RowNum, StartColumn, EndColumn){//
 	if (StartColumn>EndColumn || RowNum<0 || StartColumn<0 || this.IsNaturalNumber(RowNum)==false || this.IsNaturalNumber(StartColumn)==false || this.IsNaturalNumber(EndColumn)==false){
 		console.error("The range of values requested is invalid");
+		throw "See above for error trace";
 	}
 	
 	var ReturnVec=this.GetValues(RowNum, RowNum, StartColumn, EndColumn);
 	return ReturnVec[0];
-}
+};
 
 
-CSVFile.prototype.Entries= function (y1, y2, x1, x2){
+CSVFile.prototype.GetEntries= function (y1, y2, x1, x2){
 	//checking input is good
 	if (x1>x2 || y1>y2 || x1<0 || y1<0 || this.IsNaturalNumber(x1)==false || this.IsNaturalNumber(x2)==false || this.IsNaturalNumber(y1)==false || this.IsNaturalNumber(y2)==false ){
 		console.error("The range of values requested is invalid");
+		throw "See above for error trace";
+	}
+	if (this.FileLength()<=y2){
+		console.error("The y2 spefied is too long. Max value " +(this.FileLength()-1));
+		throw "See above for error trace";
+	}
+	var ReturnArray=[];
+	var newyindex=0;
+	for (var yindex=y1; yindex<=y2; yindex++){
+		ReturnArray[newyindex]=[];
+		var newxindex=0;
+		for (var xindex=x1; xindex<=x2; xindex++){
+			if (typeof this.Data[yindex][xindex]==="undefined"){// If this value is bigger than the largest value of data
+				ReturnArray[newyindex][newxindex]=NaN;
+			}
+			else{
+				ReturnArray[newyindex][newxindex]=this.Data[yindex][xindex];
+			}
+			newxindex++;
+		}
+		newyindex++;
+	}
+	return ReturnArray;
+	
+};
+
+
+CSVFile.prototype.GetEntriesColumn= function (ColumnNum, StartRow, EndRow){//
+	if (StartRow>EndRow || ColumnNum<0 || StartRow<0 || this.IsNaturalNumber(ColumnNum)==false || this.IsNaturalNumber(StartRow)==false || this.IsNaturalNumber(EndRow)==false){
+		console.error("The range of values requested is invalid");
+		throw "See above for error trace";
 	}
 	
+	var TempVec=this.GetEntries(StartRow, EndRow, ColumnNum, ColumnNum);
 	
+	//Refactor the vector into a proper vector
+	var ReturnVec=[];
+	for (var i=0; i<TempVec.length; i++ ){
+		ReturnVec[i]=TempVec[i][0];
+	}
+	return ReturnVec;
+};
+
+
+CSVFile.prototype.GetEntriesRow= function (RowNum, StartColumn, EndColumn){//
+	if (StartColumn>EndColumn || RowNum<0 || StartColumn<0 || this.IsNaturalNumber(RowNum)==false || this.IsNaturalNumber(StartColumn)==false || this.IsNaturalNumber(EndColumn)==false){
+		console.error("The range of values requested is invalid");
+		throw "See above for error trace";
+	}
+	
+	var ReturnVec=this.GetEntries(RowNum, RowNum, StartColumn, EndColumn);
+	return ReturnVec[0];
+};
+
+
+
+
+
+
+
+
+CSVFile.prototype.FileLength= function (){
+	return this.Data.length;
 };
 
 
