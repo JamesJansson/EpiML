@@ -436,58 +436,41 @@ function SetupOptimisationDataExtractionObjects(){
 // This section deals with the creation of summary statistics for NSP survey data
 	
 	
-	// 
-	HomosexualNSPPropDEO=new OptimisationDataExtractionObject();
-	
-	
-	
-	
-	
+	// Create a new object
+	NewDEO=new OptimisationDataExtractionObject();
 	
 	// Load the data into the function 
 	var DataStruct={};
 	DataStruct.Time=Data.NSP.Year;
-	DataStruct.Value=Divide(Data.NSP.SexId.Homosexual, Data.NSP.SexId.Homosexual);
+	DataStruct.Value=Divide(Data.NSP.SexId.Homosexual, Data.NSP.SexId.Total);
+	NewDEO.SetData(DataStruct);
+	NewDEO.SetGraphTime(GraphTime);
+	NewDEO.Name="HomosexualNSPProp";
+	NewDEO.Title="Proportion of NSP Homosexual";
+	NewDEO.XLabel="Year";
+	NewDEO.YLabel="Proportion";
 	
-	HomosexualNSPPropDEO.SetData(DataStruct);
-	HomosexualNSPPropDEO.SetGraphTime(GraphTime);
-	HomosexualNSPPropDEO.Name="HomosexualNSPProp";
-	
-	HomosexualNSPPropDEO.Title="Proportion of NSP ";
-	
-	HomosexualNSPPropDEO.XLabel="Year";
-	HomosexualNSPPropDEO.YLabel="Proportion";
-	
-	
-	
-	HomosexualNSPPropDEO.ResultFunction= function (SimulationResult, Time){
+	NewDEO.ResultFunction= function (SimulationResult, Time){
 		var Homosexual=0;
 		var NSPTotal=0;
 		for (var PersonCount in SimulationResult.Population){
 			var Person=SimulationResult.Population[PersonCount];
 			if (Person.Alive(Time)){
-				
 				// Check if NSP
-				
-				
-				
-				
-				NSPTotal++;
-				if (Person.IDU.InjectedBetween(Time-1, Time)){
-					if (LowerAge<=Person.Age(Time) && Person.Age(Time)<UpperAge){
-						MatchCount++;
+				if (Person.IDU.NSP.Value(Time)){
+					NSPTotal++;
+					// Check if homosexual
+					if (Person.Sexuality==2){
+						Homosexual++;
 					}
 				}
 			}
 		}
-		MatchCount=Multiply(MatchCount, Settings.SampleFactor);
-		return MatchCount;
+		return Homosexual/NSPTotal;
 	};
 	
-	
-	
 	// Add the object to the array of all ODEOS
-	DEO.push(HomosexualNSPPropDEO);
+	DEO.push(NewDEO);
 	
 	
 	

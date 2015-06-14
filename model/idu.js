@@ -60,7 +60,7 @@ IDUObject.prototype.StartInjecting= function (Time){
 		
 		// Add the transition to NSP user
 		var TimeUntilStartNSP=TimeUntilEvent(Param.IDU.NSP.P);
-		this.NSP.Set(1, TimeUntilStartNSP+TimeOfRegularUse);
+		this.NSP.Set(1, TimeUntilStartNSP+TimeOfRegularUse);// Stop NSP attendance below- should ensure this event only happens before 
 		
 		
 		// Determine the use rate by people who use regularly

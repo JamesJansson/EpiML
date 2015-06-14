@@ -63,12 +63,15 @@ function AssignPopulation(Data, SampleFactor){
 				InThisGroup=EstimateInThisGroup1+Win(EstimateInThisGroup2);
 				
 				for (var CountInThisGroup=0; CountInThisGroup<InThisGroup; CountInThisGroup++){
-					YearOfDiagnosis=YearThisStep+Rand.Value();
-					AgeAtDiagnosis=AgeVector[AgeIndex]+5*Rand.Value();
-					YearOfBirth=YearOfDiagnosis-AgeAtDiagnosis;
+					var YearOfDiagnosis=YearThisStep+Rand.Value();
+					var AgeAtDiagnosis=AgeVector[AgeIndex]+5*Rand.Value();
+					var YearOfBirth=YearOfDiagnosis-AgeAtDiagnosis;
+					
+					
+					var Sexuality=RandSampleWeighted([Param.IDU.Sexuality.Heterosexual, Param.IDU.Sexuality.Homosexual, Param.IDU.Sexuality.Bisexual], [1, 2,3]);
 					
 					// Create the new person
-					PNotification[PCount]=new PersonObject(YearOfBirth, SexIndex);
+					PNotification[PCount]=new PersonObject(YearOfBirth, SexIndex, Sexuality);
 					
 					// Set the diagnosis date for the individual
 					PNotification[PCount].HCV.Diagnosed.Set(1, YearOfDiagnosis);

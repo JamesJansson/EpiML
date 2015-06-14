@@ -2,7 +2,7 @@
 // * mortality
 
 
-function PersonObject(YearOfBirth, Sex)//, YearOfObservation Param)
+function PersonObject(YearOfBirth, Sex, Sexuality)//, YearOfObservation Param)
 {
 	//Active
 	this.Active=0;// status variable
@@ -10,6 +10,13 @@ function PersonObject(YearOfBirth, Sex)//, YearOfObservation Param)
 	this.Sex=Sex;
 	//Alive
 	//this.AliveStatus=1;// status variable
+	
+	this.Sexuality=1;// 1= heterosexual, 2= homosexual, 3= bisexual 
+	if (typeof(Sexuality)!="undefined"){
+		this.Sexuality=Sexuality;
+	}
+	
+	
 	this.YearOfBirth=YearOfBirth;
 	
 
