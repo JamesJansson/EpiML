@@ -436,7 +436,45 @@ function SetupOptimisationDataExtractionObjects(){
 // This section deals with the creation of summary statistics for NSP survey data
 	
 	
-	// Create a new object
+	// Create a new object to extract heterosexual identity from NSP
+	NewDEO=new OptimisationDataExtractionObject();
+	
+	// Load the data into the function 
+	var DataStruct={};
+	DataStruct.Time=Data.NSP.Year;
+	DataStruct.Value=Divide(Data.NSP.SexId.Heterosexual, Data.NSP.SexId.Total);
+	NewDEO.SetData(DataStruct);
+	NewDEO.SetGraphTime(GraphTime);
+	NewDEO.Name="HeterosexualNSPProp";
+	NewDEO.Title="Proportion of NSP Heterosexualsexual";
+	NewDEO.XLabel="Year";
+	NewDEO.YLabel="Proportion";
+	
+	NewDEO.ResultFunction= function (SimulationResult, Time){
+		var Heterosexual=0;
+		var NSPTotal=0;
+		for (var PersonCount in SimulationResult.Population){
+			var Person=SimulationResult.Population[PersonCount];
+			if (Person.Alive(Time)){
+				// Check if NSP
+				if (Person.IDU.NSP.Value(Time)){
+					NSPTotal++;
+					// Check if Heterosexual
+					if (Person.Sexuality==1){
+						Heterosexual++;
+					}
+				}
+			}
+		}
+		return Heterosexual/NSPTotal;
+	};
+	
+	// Add the object to the array of all ODEOS
+	DEO.push(NewDEO);
+	
+	
+	
+	// Create a new object to extract homosexual identity from NSP
 	NewDEO=new OptimisationDataExtractionObject();
 	
 	// Load the data into the function 
@@ -472,7 +510,41 @@ function SetupOptimisationDataExtractionObjects(){
 	// Add the object to the array of all ODEOS
 	DEO.push(NewDEO);
 	
+	// Create a new object to extract bisexual identity from NSP
+	NewDEO=new OptimisationDataExtractionObject();
 	
+	// Load the data into the function 
+	var DataStruct={};
+	DataStruct.Time=Data.NSP.Year;
+	DataStruct.Value=Divide(Data.NSP.SexId.Bisexual, Data.NSP.SexId.Total);
+	NewDEO.SetData(DataStruct);
+	NewDEO.SetGraphTime(GraphTime);
+	NewDEO.Name="BisexualNSPProp";
+	NewDEO.Title="Proportion of NSP Bisexual";
+	NewDEO.XLabel="Year";
+	NewDEO.YLabel="Proportion";
+	
+	NewDEO.ResultFunction= function (SimulationResult, Time){
+		var Bisexual=0;
+		var NSPTotal=0;
+		for (var PersonCount in SimulationResult.Population){
+			var Person=SimulationResult.Population[PersonCount];
+			if (Person.Alive(Time)){
+				// Check if NSP
+				if (Person.IDU.NSP.Value(Time)){
+					NSPTotal++;
+					// Check if bisexual
+					if (Person.Sexuality==2){
+						Bisexual++;
+					}
+				}
+			}
+		}
+		return Bisexual/NSPTotal;
+	};
+	
+	// Add the object to the array of all ODEOS
+	DEO.push(NewDEO);
 	
 	
 	
