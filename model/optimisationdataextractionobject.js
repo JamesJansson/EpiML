@@ -66,7 +66,9 @@ OptimisationDataExtractionObject.prototype.RunDataAndFindError=function(Simulati
 		this.Opt.Result[TimeCount]=this.ResultFunction(SimulationResult, this.Opt.Time[TimeCount]);
 	}
 
-	var Error=this.ErrorFunction();
+	var Error=this.ErrorFunction(SimulationResult);
+	// Error function is calculated once for the entire run of the simualtion 
+	// note that the error function receives the simulation result, although it does not have to use it. 
 	
 	return Error;
 };
@@ -577,15 +579,12 @@ function SetupOptimisationDataExtractionObjects(){
 	NewDEO=new OptimisationDataExtractionObject();
 	
 	// Load the data into the function 
-	var DataStruct={};
-	DataStruct.Time=Data.NSP.Year;
-	DataStruct.Value=Divide(Data.NSP.SexId.Homosexual, Data.NSP.SexId.Total);
-	NewDEO.SetData(DataStruct);
+	NewDEO.SetData(TotalNotifications);
 	NewDEO.SetGraphTime(GraphTime);
-	NewDEO.Name="HomosexualNSPProp";
-	NewDEO.Title="Proportion of NSP Homosexual";
+	NewDEO.Name="TotalNotificationsPlot";
+	NewDEO.Title="Total HCV Notifications";
 	NewDEO.XLabel="Year";
-	NewDEO.YLabel="Proportion";
+	NewDEO.YLabel="Number of Notifications";
 	
 	NewDEO.ResultFunction= function (SimulationResult, Time){
 		var TotalInfected=0;
@@ -606,6 +605,11 @@ function SetupOptimisationDataExtractionObjects(){
 	};
 	
 	NewDEO.ErrorFunction=function(SimulationResults){
+		// There is a value in the simulation results that indicates the shortfall in the number of notifications
+		// This value is calculated by age group
+		
+		
+		
 		return 0;
 	};
 	
@@ -624,8 +628,45 @@ function SetupOptimisationDataExtractionObjects(){
 	// NewDEO.ErrorFunction=function(){	return 0;};
 	
 	
+	// ******************************************************************************************************
+	// ******************************************************************************************************
+	// ******************************************************************************************************
+	// Display of infections (no data)
+	NewDEO=new OptimisationDataExtractionObject();
 	
+	var EmptyData={};
+	EmptyData.Value=[];
+	EmptyData.Time=[];
 	
+	// Load the data into the function 
+	NewDEO.SetData(EmptyData);
+	NewDEO.SetGraphTime(GraphTime);
+	NewDEO.Name="TotalInfectedPlot";
+	NewDEO.Title="Total People Living with HCV";
+	NewDEO.XLabel="Year";
+	NewDEO.YLabel="Number of people";
+	
+	NewDEO.ResultFunction= function (SimulationResult, Time){
+		var TotalInfected=0;
+		for (var PersonCount in SimulationResult.Population){
+			var Person=SimulationResult.Population[PersonCount];
+			if (Person.Alive(Time)){
+				// Check if NSP
+				if (Person.HCV.CurrentlyInfected(Time)){
+					TotalInfected++;
+				}
+			}
+		}
+		return TotalInfected;
+	};
+	
+	NewDEO.ErrorFunction=function(SimulationResults){
+		// There is a value in the simulation results that indicates the shortfall in the number of notifications
+		// This value is calculated by age group
+		return 0;
+	};
+	// Add the object to the array of all ODEOS
+	DEO.push(NewDEO);
 	
 	
 	
@@ -634,8 +675,6 @@ function SetupOptimisationDataExtractionObjects(){
 	for (var Count in DEO){
 		DEO[Count].GraphInterfaceID="OptimisationPlot"+Count;
 	}
-	
-	
 	
 	return DEO;//Array of OptimisationDataExtractionObject
 }
