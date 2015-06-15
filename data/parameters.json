@@ -656,6 +656,26 @@
         "Description": ""
     },
     {
+        "ParameterID": "HCV_InitialPrevalence",
+        "ArrayName": "Param",
+        "ArrayNumber": 73,
+        "InterfaceID": "ParamHolder_73",
+        "GroupName": "",
+        "DistributionType": "normal",
+        "Median": 0.6,
+        "StandardError": 0.05,
+        "LowerBound": null,
+        "UpperBound": null,
+        "Upper95Range": 0.698,
+        "Lower95Range": 0.502,
+        "CalculatedMedian": 0.6,
+        "NumberOfSamples": 100,
+        "Val": [],
+        "MinValue": 0,
+        "MaxValue": 1,
+        "Description": ""
+    },
+    {
         "ParameterID": "HCV_PReinfectionProtected",
         "ArrayName": "Param",
         "ArrayNumber": "16",

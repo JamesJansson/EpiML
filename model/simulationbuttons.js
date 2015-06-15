@@ -366,6 +366,8 @@ function ExtractDataFromFiles(){
 	var NoNSPDataPoints=19;
 	Data.NSP={};
 	Data.NSP.Year=DataFile.NSP.GetRow(0, 1, NoNSPDataPoints);
+	
+	// NSP sexual identity
 	Data.NSP.SexId={};
 	Data.NSP.SexId.Heterosexual=DataFile.NSP.GetRow(9, 1, NoNSPDataPoints);
 	Data.NSP.SexId.Bisexual=DataFile.NSP.GetRow(10, 1, NoNSPDataPoints);
@@ -374,6 +376,46 @@ function ExtractDataFromFiles(){
 	var SexIDCumulativeTotal=Add(Data.NSP.SexId.Heterosexual, Data.NSP.SexId.Bisexual);
 	SexIDCumulativeTotal=Add(SexIDCumulativeTotal, Data.NSP.SexId.Homosexual);
 	Data.NSP.SexId.Total=SexIDCumulativeTotal;
+	
+	// NSP HCV antibody total
+	Data.NSP.HCVAntiBody={};
+	Data.NSP.HCVAntiBody.Total={};
+	Data.NSP.HCVAntiBody.Total.Tested=DataFile.NSP.GetRow(300, 1, NoNSPDataPoints);
+	Data.NSP.HCVAntiBody.Total.Positive=DataFile.NSP.GetRow(301, 1, NoNSPDataPoints);
+	Data.NSP.HCVAntiBody.Total.Proportion=Divide(Data.NSP.HCVAntiBody.Total.Positive, Data.NSP.HCVAntiBody.Total.Tested);
+	
+	// NSP HCV antibody male
+	Data.NSP.HCVAntiBody.Male={};
+	Data.NSP.HCVAntiBody.Male.AUnder25={};
+	Data.NSP.HCVAntiBody.Male.AUnder25.Tested=DataFile.NSP.GetRow(305, 1, NoNSPDataPoints);
+	Data.NSP.HCVAntiBody.Male.AUnder25.Positive=DataFile.NSP.GetRow(306, 1, NoNSPDataPoints);
+	Data.NSP.HCVAntiBody.Male.AUnder25.Proportion=Divide(Data.NSP.HCVAntiBody.Male.AUnder25.Positive, Data.NSP.HCVAntiBody.Male.AUnder25.Tested);
+	Data.NSP.HCVAntiBody.Male.A25to35={};
+	Data.NSP.HCVAntiBody.Male.A25to35.Tested=DataFile.NSP.GetRow(307, 1, NoNSPDataPoints);
+	Data.NSP.HCVAntiBody.Male.A25to35.Positive=DataFile.NSP.GetRow(308, 1, NoNSPDataPoints);
+	Data.NSP.HCVAntiBody.Male.A25to35.Proportion=Divide(Data.NSP.HCVAntiBody.Male.A25to35.Positive, Data.NSP.HCVAntiBody.Male.A25to35.Tested);
+	Data.NSP.HCVAntiBody.Male.A35plus={};
+	Data.NSP.HCVAntiBody.Male.A35plus.Tested=DataFile.NSP.GetRow(309, 1, NoNSPDataPoints);
+	Data.NSP.HCVAntiBody.Male.A35plus.Positive=DataFile.NSP.GetRow(310, 1, NoNSPDataPoints);
+	Data.NSP.HCVAntiBody.Male.A35plus.Proportion=Divide(Data.NSP.HCVAntiBody.Male.A35plus.Positive, Data.NSP.HCVAntiBody.Male.A35plus.Tested);
+	
+	// NSP HCV antibody female
+	Data.NSP.HCVAntiBody.Female={};
+	Data.NSP.HCVAntiBody.Female.AUnder25={};
+	Data.NSP.HCVAntiBody.Female.AUnder25.Tested=DataFile.NSP.GetRow(312, 1, NoNSPDataPoints);
+	Data.NSP.HCVAntiBody.Female.AUnder25.Positive=DataFile.NSP.GetRow(313, 1, NoNSPDataPoints);
+	Data.NSP.HCVAntiBody.Female.AUnder25.Proportion=Divide(Data.NSP.HCVAntiBody.Female.AUnder25.Positive, Data.NSP.HCVAntiBody.Female.AUnder25.Tested);
+	Data.NSP.HCVAntiBody.Female.A25to35={};
+	Data.NSP.HCVAntiBody.Female.A25to35.Tested=DataFile.NSP.GetRow(314, 1, NoNSPDataPoints);
+	Data.NSP.HCVAntiBody.Female.A25to35.Positive=DataFile.NSP.GetRow(315, 1, NoNSPDataPoints);
+	Data.NSP.HCVAntiBody.Female.A25to35.Proportion=Divide(Data.NSP.HCVAntiBody.Female.A25to35.Positive, Data.NSP.HCVAntiBody.Female.A25to35.Tested);
+	Data.NSP.HCVAntiBody.Female.A35plus={};
+	Data.NSP.HCVAntiBody.Female.A35plus.Tested=DataFile.NSP.GetRow(316, 1, NoNSPDataPoints);
+	Data.NSP.HCVAntiBody.Female.A35plus.Positive=DataFile.NSP.GetRow(317, 1, NoNSPDataPoints);
+	Data.NSP.HCVAntiBody.Female.A35plus.Proportion=Divide(Data.NSP.HCVAntiBody.Female.A35plus.Positive, Data.NSP.HCVAntiBody.Female.A35plus.Tested);
+
+	
+	
 	
 	
 	

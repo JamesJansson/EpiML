@@ -673,6 +673,48 @@ function SetupOptimisationDataExtractionObjects(){
 	// ******************************************************************************************************
 	// ******************************************************************************************************
 	// HCV prevalence in IDU - HCV prevalence in NSP users
+	// Create a new object to extract heterosexual identity from NSP
+	NewDEO=new OptimisationDataExtractionObject();
+	
+	// Load the data into the function 
+	var DataStruct={};
+	DataStruct.Time=Data.NSP.Year;
+	DataStruct.Value=Data.NSP.HCVAntiBody.Total.Proportion;// NSP HCV antibody prevalence !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	NewDEO.SetData(DataStruct);
+	NewDEO.SetGraphTime(GraphTime);
+	NewDEO.Name="NSPHCVPntibodyProp";
+	NewDEO.Title="Proportion of NSP with HCV Antibodies";
+	NewDEO.XLabel="Year";
+	NewDEO.YLabel="Proportion";
+	
+	NewDEO.ResultFunction= function (SimulationResult, Time){
+		var AntibodyPresent=0;
+		var NSPTotal=0;
+		for (var PersonCount in SimulationResult.Population){
+			var Person=SimulationResult.Population[PersonCount];
+			if (Person.Alive(Time)){
+				// Check if NSP
+				if (Person.IDU.NSP.Value(Time)){
+					NSPTotal++;
+					// Check if Heterosexual
+					if (Person.HCV.AntibodyPresent(Time)){
+						AntibodyPresent++;
+					}
+				}
+			}
+		}
+		return AntibodyPresent/NSPTotal;
+	};
+	
+	// Add the object to the array of all ODEOS
+	DEO.push(NewDEO);
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	

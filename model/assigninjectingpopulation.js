@@ -459,7 +459,6 @@ function CreatePWID(EntryParams, Time, TimeStep){
 
 function SetInitialHCVLevels(Person){
 	//var Time=//1993;//Param.Model.DynamicHCV.Time;
-	var PropWithHCVInitially=0.7; //Param.InitialHCV.Prop;
 	var PWID=SelectCurrentPWID(Person, Param.Time.StartDynamicModel);
 	
 	console.error("The size of the extracted group is below");
@@ -484,7 +483,7 @@ function SetInitialHCVLevels(Person){
 	// Set up the optimisation
 	var FunctionInput=InjectionHistory;
 	var OptimisationSettings={};
-	OptimisationSettings.Target=PropWithHCVInitially;
+	OptimisationSettings.Target=Param.HCV.InitialPrevalence;
 	
 	OptimisationSettings.Function=function(FunctionInput, ParameterSet){
 		var TotalIDU=0;

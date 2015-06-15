@@ -253,11 +253,11 @@ HCVObject.prototype.Treatment= function (Year, TreatmentType){//returns a
 		}
 	}	
 	// If the person is multiply infected, choose the lowest efficacy genotype
-	var MinPClearanceArray=Min(PClearanceArray);
+	var MinPClearance=Min(PClearanceArray);
 	
 	
 	// Determine if clearance occurs
-	if (Rand.Value()<MinPClearanceArray){
+	if (Rand.Value()<MinPClearance){
 		// If cleared change future history of HCV
 		// HCV.TreatmentClearance(TreatmentStopDate)
 		
