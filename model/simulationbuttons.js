@@ -415,6 +415,7 @@ function ExtractDataFromFiles(){
 	Data.NSP.HCVAntiBody.Female.A35plus.Proportion=Divide(Data.NSP.HCVAntiBody.Female.A35plus.Positive, Data.NSP.HCVAntiBody.Female.A35plus.Tested);
 
 	
+	// Table 1.28 will provide very useful information that will allow us to determine a rate of infection and a decay rate for reduction risk activity of joining NSP
 	
 	
 	

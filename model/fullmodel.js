@@ -403,7 +403,7 @@ function FullModel(Param, Notifications, EndSimulation, Intervention){
 	
 	var Results={};
 	Results.Population=Person;
-	Results.HCVDataDiagnosisResults;
+	Results.HCVDataDiagnosisResults=HCVDataDiagnosisResults;
 	
 	return Results;
 }
