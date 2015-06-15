@@ -548,11 +548,67 @@ function SetupOptimisationDataExtractionObjects(){
 	
 	
 	
+// ******************************************************************************************************
+// ******************************************************************************************************
+// ******************************************************************************************************
+// This section deals with the display of notifications in the simulations
+	
+	// Add all male notifications together
+	
+	
+	// Add all female notifications together
+	
+	
+	// Create a new object to extract homosexual identity from NSP
+	NewDEO=new OptimisationDataExtractionObject();
+	
+	// Load the data into the function 
+	var DataStruct={};
+	DataStruct.Time=Data.NSP.Year;
+	DataStruct.Value=Divide(Data.NSP.SexId.Homosexual, Data.NSP.SexId.Total);
+	NewDEO.SetData(DataStruct);
+	NewDEO.SetGraphTime(GraphTime);
+	NewDEO.Name="HomosexualNSPProp";
+	NewDEO.Title="Proportion of NSP Homosexual";
+	NewDEO.XLabel="Year";
+	NewDEO.YLabel="Proportion";
+	
+	NewDEO.ResultFunction= function (SimulationResult, Time){
+		var TotalInfected=0;
+		for (var PersonCount in SimulationResult.Population){
+			var Person=SimulationResult.Population[PersonCount];
+			if (Person.Alive(Time)){
+				// Check if NSP
+				if (Person.HCV.CurrentlyInfected(Time)){
+					TotalInfected++;
+					// Check if homosexual
+					if (Person.Sexuality==2){
+						Homosexual++;
+					}
+				}
+			}
+		}
+		return Homosexual/NSPTotal;
+	};
+	
+	NewDEO.ErrorFunction(){
+		
+		
+	}
+	
+	
+	// Add the object to the array of all ODEOS
+	DEO.push(NewDEO);
 	
 	
 	
+	// ******************************************************************************************************
+	// ******************************************************************************************************
+	// ******************************************************************************************************
+	// This section deals with the display of notifications in the simulations
 	
 	
+	// ErrorFunction=function(){return 0;};
 	
 	
 	

@@ -198,16 +198,14 @@ HCVObject.prototype.Infection= function (Year, GenotypeValue){//, Age, Sex, Alco
 // this.Infected=0
 // determine time until fibrosis recovery
 
-HCVObject.prototype.FirstInfected= function (Year){//returns a 
-	if (typeof this.Infected=="undefined"){
-		return NaN;
-	}
-	throw "This method no longer works";
-	return this.Infected.Time[0];
-};
+
 
 
 HCVObject.prototype.CurrentlyInfected= function (Year){
+	if (this.Infected.Value(Year)==1){
+		return true;
+	}
+	return false;
 
 	// rather than doing this, why not simply do Person[i].HCV.Infected.Get(1999)?
 };
