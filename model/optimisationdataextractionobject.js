@@ -587,21 +587,17 @@ function SetupOptimisationDataExtractionObjects(){
 	NewDEO.YLabel="Number of Notifications";
 	
 	NewDEO.ResultFunction= function (SimulationResult, Time){
-		var TotalInfected=0;
+		var Notifications=0;
 		for (var PersonCount in SimulationResult.Population){
 			var Person=SimulationResult.Population[PersonCount];
-			if (Person.Alive(Time)){
-				// Check if NSP
-				if (Person.HCV.CurrentlyInfected(Time)){
-					TotalInfected++;
-					// Check if homosexual
-					if (Person.Sexuality==2){
-						Homosexual++;
-					}
-				}
+			// Determine date of diagnosis
+			var NotificationDate=Person.HCV.Diagnosed.FirstTimeOf(1);
+			
+			if (Time<=NotificationDate && NotificationDate<Time+1){
+				Notifications++;
 			}
 		}
-		return Homosexual/NSPTotal;
+		return Notifications;
 	};
 	
 	NewDEO.ErrorFunction=function(SimulationResults){
@@ -622,7 +618,7 @@ function SetupOptimisationDataExtractionObjects(){
 	// ******************************************************************************************************
 	// ******************************************************************************************************
 	// ******************************************************************************************************
-	// This section deals with the display of notifications in the simulations
+	// This section deals with the display of all notifications in the simulations
 	
 	
 	// NewDEO.ErrorFunction=function(){	return 0;};
