@@ -34,12 +34,21 @@ function HCVDataDiagnosis(Person, Notifications, Time, TimeStep){
 		}
 	}
 	
+	console.error(-1);
+	console.log(NumberDiagnosedThisStep.Count);
+	console.log(DiagnosedSymptomatic.Count);
+	console.log(RemainingToBeDiagnosed);
 	
 	// if it results in negative levels remaining, this results in a penalty. 
-	ReturnData.Penalty.InsufficientSymptomaticDiagnoses=Apply(ReturnNegativeValues, RemainingToBeDiagnosed);
-	
+	var InsufficientSymptomaticDiagnosesBySexAge=Apply(ReturnNegativeValues, RemainingToBeDiagnosed);
+	var InsufficientSymptomaticDiagnosesByAgeONLY=Add(InsufficientSymptomaticDiagnosesBySexAge[0], InsufficientSymptomaticDiagnosesBySexAge[1]);
+	ReturnData.Penalty.InsufficientSymptomaticDiagnosesBySexAge=InsufficientSymptomaticDiagnosesBySexAge;
+	ReturnData.Penalty.InsufficientSymptomaticDiagnosesTotal=Sum(InsufficientSymptomaticDiagnosesByAgeONLY);
+
 	// Remove negative values to continue to simulate the remaining diagnoses
 	RemainingToBeDiagnosed=Apply(FilterNegativeValues, RemainingToBeDiagnosed);
+	
+	
 	
 	// Remove additional people at the specified rates in Notifications
 		// Sort population into HCV undiagnosed
@@ -55,11 +64,13 @@ function HCVDataDiagnosis(Person, Notifications, Time, TimeStep){
 		// Randomise them
 		var RandomisedUndiagnosedHCV=Shuffle(UndiagnosedHCV);
 		
-		var SumOfRemainingToBeDiagnosed=Sum(RemainingToBeDiagnosed);
+		var RemainingToBeDiagnosedByAgeONLY=Add(RemainingToBeDiagnosed[0], RemainingToBeDiagnosed[1]);
+		var SumOfRemainingToBeDiagnosed=Sum(RemainingToBeDiagnosedByAgeONLY);// double sum because this is a 2D vector (sex + age)
 		
 		// Determine the testing rate of the population in this time step 
 		//ReturnData.HCVAsymptomaticTestingRateForThisStep=SumOfRemainingToBeDiagnosed/RandomisedUndiagnosedHCV.length;
 		
+		console.error("SumOfRemainingToBeDiagnosed: "+SumOfRemainingToBeDiagnosed);
 		
 		// Non-symptomatic diagnoses
 		ReturnData.NonsymptomaticDiagnoses=SumOfRemainingToBeDiagnosed;
@@ -86,11 +97,14 @@ function HCVDataDiagnosis(Person, Notifications, Time, TimeStep){
 				}
 			}
 			
-			if (RemainingToBeDiagnosed[SexIndex][AgeIndex]>0){ // diagnose them if there are spaces left in the notifications
-				RandomisedUndiagnosedHCV[UndiagCount].HCV.Diagnose(Time+Rand.Value()*TimeStep);// at a random time during this timestep
-				
-				RemainingToBeDiagnosed[SexIndex][AgeIndex]--; // reduce remaining to be diagnosed
+			//if there are spaces left in the notifications
+			if (RemainingToBeDiagnosed[SexIndex][AgeIndex]>0){ 
+				// diagnose them at a random time during this timestep
+				RandomisedUndiagnosedHCV[UndiagCount].HCV.Diagnose(Time+Rand.Value()*TimeStep);
+				// reduce remaining to be diagnosed
+				RemainingToBeDiagnosed[SexIndex][AgeIndex]--; 
 				SumOfRemainingToBeDiagnosed--;
+				console.log("People got diagnosed !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
 			}
 			
 			UndiagCount++;
@@ -99,7 +113,7 @@ function HCVDataDiagnosis(Person, Notifications, Time, TimeStep){
 		// if there are people yet to be diagnosed in this step, return the penalty. Zero penalty if a-ok. 
 		
 		ReturnData.Penalty.InsufficientInfectedToDiagnose=RemainingToBeDiagnosed;
-	
+		ReturnData.Penalty.InsufficientInfectedToDiagnoseTotal=SumOfRemainingToBeDiagnosed;
 	return ReturnData;
 }
 

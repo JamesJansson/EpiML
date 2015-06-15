@@ -227,10 +227,12 @@ HCVObject.prototype.L4ToHCCTime= function (Param){
 
 HCVObject.prototype.Diagnose= function (Time){
 	if (Time<this.Person.Death.Year()){// Make sure that the diagnosis date is prior to death. Otherwise it is not discovered
-		this.Diagnosed.Set(Time);
+		this.Diagnosed.Set(1, Time);
 	}
-	// Below here we put further information, such as a probability that a genotyping occurs
-}
+	// Below here we put further information, such as
+	// a probability that a genotyping occurs
+	// a probability that an assessment occurs
+};
 
 HCVObject.prototype.Treatment= function (Year, TreatmentType){//returns a 
 	// Show on the person that treatment is occurring

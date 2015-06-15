@@ -5,7 +5,7 @@
 // Code is especially ripped from https://github.com/jstat/jstat/blob/master/src/vector.js
 // As such, this library is licensed using the MIT license 
 
-MathToolsRunning=true;
+var MathToolsRunning=true;
 
 // STATISTICAL FUNCTIONS
 

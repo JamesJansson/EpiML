@@ -110,6 +110,7 @@ function FullModelTest(Stuff1){
 			EnterDeeperLevel(SimulationHolder.Results[OptCount].OptimisedParam, SummaryObject);
 		}
 	}
+	console.error("The above code will transfered to the interface to transfer optimised parameters into the parameter interface.");
 	
 	var FullModelResults=FullModel(Param, Notifications, Param.Time.EndSimulation, Intervention);
 	
@@ -156,8 +157,7 @@ function FullModelTest(Stuff1){
 	// console.log(Divide(SimulationHolder.Result[0].LivingWithHCVInfection.Count, SimulationHolder.Result[0].EverIDU.Count));
 	
 	// console.log(Person);
-	
-	
+
 	
 	return ReturnResults;
 }

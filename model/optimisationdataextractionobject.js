@@ -592,9 +592,12 @@ function SetupOptimisationDataExtractionObjects(){
 			var Person=SimulationResult.Population[PersonCount];
 			// Determine date of diagnosis
 			var NotificationDate=Person.HCV.Diagnosed.FirstTimeOf(1);
-			
-			if (Time<=NotificationDate && NotificationDate<Time+1){
-				Notifications++;
+
+			// If the person actually is diagnosed
+			if (!isNaN(NotificationDate)){
+				if (Time<=NotificationDate && NotificationDate<Time+1){
+					Notifications++;
+				}
 			}
 		}
 		Notifications=Notifications*Settings.SampleFactor;
