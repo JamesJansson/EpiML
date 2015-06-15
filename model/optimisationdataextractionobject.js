@@ -299,7 +299,7 @@ function SetupOptimisationDataExtractionObjects(){
 					}
 				}
 			}
-			MatchCount=Multiply(MatchCount, Settings.SampleFactor);
+			MatchCount=MatchCount*Settings.SampleFactor;
 			return MatchCount;
 		};
 		return FunctionHolder;
@@ -597,6 +597,7 @@ function SetupOptimisationDataExtractionObjects(){
 				Notifications++;
 			}
 		}
+		Notifications=Notifications*Settings.SampleFactor;
 		return Notifications;
 	};
 	
@@ -653,6 +654,7 @@ function SetupOptimisationDataExtractionObjects(){
 				}
 			}
 		}
+		TotalInfected=TotalInfected*Settings.SampleFactor;
 		return TotalInfected;
 	};
 	

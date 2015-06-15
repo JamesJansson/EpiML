@@ -25,7 +25,9 @@ function AssignPopulation(Data, SampleFactor){
 
 	// For each year
 	for (var YearIndex=0; YearIndex<Data.StateNotifications.Year.length; YearIndex++){
-		YearThisStep=Data.StateNotifications.Year[YearIndex];
+		var YearThisStep=Data.StateNotifications.Year[YearIndex];
+		
+		console.error(YearThisStep);
 		
 		StateVector=[];//reset
 		TotalInStateThisYear=0;
