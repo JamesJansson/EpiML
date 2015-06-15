@@ -34,11 +34,6 @@ function HCVDataDiagnosis(Person, Notifications, Time, TimeStep){
 		}
 	}
 	
-	console.error(-1);
-	console.log(NumberDiagnosedThisStep.Count);
-	console.log(DiagnosedSymptomatic.Count);
-	console.log(RemainingToBeDiagnosed);
-	
 	// if it results in negative levels remaining, this results in a penalty. 
 	var InsufficientSymptomaticDiagnosesBySexAge=Apply(ReturnNegativeValues, RemainingToBeDiagnosed);
 	var InsufficientSymptomaticDiagnosesByAgeONLY=Add(InsufficientSymptomaticDiagnosesBySexAge[0], InsufficientSymptomaticDiagnosesBySexAge[1]);
@@ -69,8 +64,6 @@ function HCVDataDiagnosis(Person, Notifications, Time, TimeStep){
 		
 		// Determine the testing rate of the population in this time step 
 		//ReturnData.HCVAsymptomaticTestingRateForThisStep=SumOfRemainingToBeDiagnosed/RandomisedUndiagnosedHCV.length;
-		
-		console.error("SumOfRemainingToBeDiagnosed: "+SumOfRemainingToBeDiagnosed);
 		
 		// Non-symptomatic diagnoses
 		ReturnData.NonsymptomaticDiagnoses=SumOfRemainingToBeDiagnosed;
@@ -104,9 +97,7 @@ function HCVDataDiagnosis(Person, Notifications, Time, TimeStep){
 				// reduce remaining to be diagnosed
 				RemainingToBeDiagnosed[SexIndex][AgeIndex]--; 
 				SumOfRemainingToBeDiagnosed--;
-				console.log("People got diagnosed !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
 			}
-			
 			UndiagCount++;
 		}
 		

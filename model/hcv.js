@@ -206,8 +206,6 @@ HCVObject.prototype.CurrentlyInfected= function (Year){
 		return true;
 	}
 	return false;
-
-	// rather than doing this, why not simply do Person[i].HCV.Infected.Get(1999)?
 };
 
 HCVObject.prototype.L4ToHCCTime= function (Param){

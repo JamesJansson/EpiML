@@ -146,6 +146,10 @@ function FullModelTest(Stuff1){
 	ReturnResults.Optimisation=ODEOArray;
 	
 	
+	ReturnResults.HCVDataDiagnosisResults=FullModelResults.HCVDataDiagnosisResults;
+	
+	
+	
 	// console.log(SimulationHolder.Result[0].LivingWithHCVInfection.Count);
 	// console.log(SimulationHolder.Result[0].CurrentIDU.Count);
 	// console.log(SimulationHolder.Result[0].EverIDU.Count);
@@ -205,8 +209,8 @@ function FullModel(Param, Notifications, EndSimulation, Intervention){
 	// Join populations
 	// Person=Person.concat(HCVInfectedBloodRecipients);// Later add MSM and migrants
 	
-	var SimulationHistory=[];
-	SimulationHistory.DiagnosisResults=[];
+
+	var HCVDataDiagnosisResults=[];
 	var StepCount=-1;
 	
 	console.error("fix times below");
@@ -329,11 +333,12 @@ function FullModel(Param, Notifications, EndSimulation, Intervention){
 		
 		// Testing 
 		if (Notifications.FirstYearOfData<=Time && Time<Notifications.LastYearOfData){ // only if there is data
-			SimulationHistory.DiagnosisResults[StepCount]=HCVDataDiagnosis(Person, Notifications, Time, Param.TimeStep);
+			var HCVDataDiagnosisResultsThisStep=HCVDataDiagnosis(Person, Notifications, Time, Param.TimeStep);
+			HCVDataDiagnosisResults.push(HCVDataDiagnosisResultsThisStep);
 		}
 		else if (Notifications.LastYearOfData < Time){
 			if (typeof(PerStepProbOfDiagnosis)=="undefined"){
-				var PerStepProbOfDiagnosis=DeterminePostDataDiagnosisDataRate(SimulationHistory.DiagnosisResults, Notifications.LastYearOfData-Param.Time.DurationToAverageOver);
+				var PerStepProbOfDiagnosis=DeterminePostDataDiagnosisDataRate(HCVDataDiagnosisResults, Notifications.LastYearOfData-Param.Time.DurationToAverageOver);
 			}
 			HCVRateDiagnosis(Person, Notifications.Age, PerStepProbOfDiagnosis, Time, Param.TimeStep);
 		}
@@ -393,12 +398,12 @@ function FullModel(Param, Notifications, EndSimulation, Intervention){
 		// For every diagnosis, 
 	
 	console.error("This is where the diagnoses are displayed");
-	console.log(SimulationHistory.DiagnosisResults);
+	console.log(HCVDataDiagnosisResults);
 	
 	
 	var Results={};
 	Results.Population=Person;
-	Results.SimulationHistory=SimulationHistory;
+	Results.HCVDataDiagnosisResults;
 	
 	return Results;
 }
