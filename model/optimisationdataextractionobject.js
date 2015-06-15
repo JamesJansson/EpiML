@@ -608,6 +608,7 @@ function SetupOptimisationDataExtractionObjects(){
 		// There is a value in the simulation results that indicates the shortfall in the number of notifications
 		// This value is calculated by age group
 		
+		// SimulationResults.HCVDataDiagnosisResults
 		
 		
 		return 0;

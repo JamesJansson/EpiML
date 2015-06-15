@@ -135,15 +135,12 @@ function HCVDataDiagnosisNumbers(Notifications, Time, TimeStep){
 	}
 	
 
-
+	// Use a probability function to determine how many infections are actually diagnosed if any
+	// of NumberDiagnosedThisStep.Count is fractional
 	var FlooredResult=Floor(NumberDiagnosedThisStep.Count);
 	var DiffProb=Minus(NumberDiagnosedThisStep.Count, FlooredResult);
-	var Diff=Win(DiffProb);
-	
-	Diff=Apply(Number, Diff);
-	
-
-	
+	var DiffTrueFalse=Apply(Win, DiffProb);
+	var Diff=Apply(Number, DiffTrueFalse);
 	
 	NumberDiagnosedThisStep.Count=Add(FlooredResult, Diff);// add the rand element back to the expected number to be diagnosed in this step
 	

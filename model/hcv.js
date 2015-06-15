@@ -331,7 +331,7 @@ HCVObject.prototype.UndiagnosedHCVInfection= function (Time){
 
 
 HCVObject.prototype.UndiagnosedHCVAntibody= function (Time){
-	if (Time>this.AntibodyYear && this.Diagnosed.Value(Time)==0){
+	if (this.Person.Alive(Time) && Time>this.AntibodyYear && this.Diagnosed.Value(Time)==0){
 		return true;
 	}
 	return false;
