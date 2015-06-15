@@ -551,13 +551,27 @@ function SetupOptimisationDataExtractionObjects(){
 // ******************************************************************************************************
 // ******************************************************************************************************
 // ******************************************************************************************************
-// This section deals with the display of notifications in the simulations
+// This section deals with the display of total notifications in the simulations
 	
 	// Add all male notifications together
-	
-	
+	var TotalMaleNotifications={};
+	TotalMaleNotifications.Time=Data.MaleNotifications.Year;
+	TotalMaleNotifications.Value=ZeroArray(Data.MaleNotifications.Year.length);
+	for (var Count in Data.MaleNotifications.Table){
+		TotalMaleNotifications.Value=Add(TotalMaleNotifications.Value, Data.MaleNotifications.Table[Count]);
+	}
 	// Add all female notifications together
+	var TotalFemaleNotifications={};
+	TotalFemaleNotifications.Time=Data.FemaleNotifications.Year;
+	TotalFemaleNotifications.Value=ZeroArray(Data.FemaleNotifications.Year.length);
+	for (var Count in Data.FemaleNotifications.Table){
+		TotalFemaleNotifications.Value=Add(TotalFemaleNotifications.Value, Data.FemaleNotifications.Table[Count]);
+	}
 	
+	// Add all notifications together
+	var TotalNotifications={};
+	TotalNotifications.Time=TotalMaleNotifications.Time;
+	TotalNotifications.Value=Add(TotalMaleNotifications.Value, TotalFemaleNotifications.Value);
 	
 	// Create a new object to extract homosexual identity from NSP
 	NewDEO=new OptimisationDataExtractionObject();
@@ -591,10 +605,9 @@ function SetupOptimisationDataExtractionObjects(){
 		return Homosexual/NSPTotal;
 	};
 	
-	NewDEO.ErrorFunction(){
-		
-		
-	}
+	NewDEO.ErrorFunction=function(SimulationResults){
+		return 0;
+	};
 	
 	
 	// Add the object to the array of all ODEOS
@@ -608,8 +621,7 @@ function SetupOptimisationDataExtractionObjects(){
 	// This section deals with the display of notifications in the simulations
 	
 	
-	// ErrorFunction=function(){return 0;};
-	
+	// NewDEO.ErrorFunction=function(){	return 0;};
 	
 	
 	
