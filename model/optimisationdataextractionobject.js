@@ -608,10 +608,23 @@ function SetupOptimisationDataExtractionObjects(){
 		// There is a value in the simulation results that indicates the shortfall in the number of notifications
 		// This value is calculated by age group
 		
-		// SimulationResults.HCVDataDiagnosisResults
-		
-		
-		return 0;
+		// 
+		var TotalPenalty=0;
+		for (var Count in SimulationResults.HCVDataDiagnosisResults){
+			var Pen=SimulationResults.HCVDataDiagnosisResults[Count].Penalty;
+			TotalPenalty+=Pen.InsufficientInfectedToDiagnoseTotal+Pen.InsufficientSymptomaticDiagnosesTotal;
+		}
+		//return TotalPenalty;
+		console.error("This section needs to be deleted!");
+		var TotalPenalty=[];
+		TotalPenalty[0]=0;
+		TotalPenalty[1]=0;
+		for (var Count in SimulationResults.HCVDataDiagnosisResults){
+			var Pen=SimulationResults.HCVDataDiagnosisResults[Count].Penalty;
+			TotalPenalty[0]+=Pen.InsufficientInfectedToDiagnoseTotal;
+			TotalPenalty[1]+=Pen.InsufficientSymptomaticDiagnosesTotal;
+		}
+		return TotalPenalty;
 	};
 	
 	
@@ -674,9 +687,8 @@ function SetupOptimisationDataExtractionObjects(){
 	// ******************************************************************************************************
 	// ******************************************************************************************************
 	// HCV prevalence in IDU - HCV prevalence in NSP users
-	// Create a new object to extract heterosexual identity from NSP
-	NewDEO=new OptimisationDataExtractionObject();
 	
+	NewDEO=new OptimisationDataExtractionObject();
 	// Load the data into the function 
 	var DataStruct={};
 	DataStruct.Time=Data.NSP.Year;
@@ -711,6 +723,52 @@ function SetupOptimisationDataExtractionObjects(){
 	DEO.push(NewDEO);
 	
 	
+	
+	
+	// ******************************************************************************************************
+	// ******************************************************************************************************
+	// ******************************************************************************************************
+	// HCV prevalence in all IDU 
+	
+	// Display of infections (no data)
+	NewDEO=new OptimisationDataExtractionObject();
+	
+	var EmptyData={};
+	EmptyData.Value=[];
+	EmptyData.Time=[];
+	
+	// Load the data into the function 
+	NewDEO.SetData(EmptyData);
+	NewDEO.SetGraphTime(GraphTime);
+	NewDEO.Name="PropIDUInfectedPlot";
+	NewDEO.Title="Proportion of IDU with HCV Antibodies";
+	NewDEO.XLabel="Year";
+	NewDEO.YLabel="Proportion";
+	
+	NewDEO.ResultFunction= function (SimulationResult, Time){
+		var TotalInfected=0;
+		var TotalInjecting=0;
+		for (var PersonCount in SimulationResult.Population){
+			var Person=SimulationResult.Population[PersonCount];
+			// Check if CurrentlyInjecting
+			if (Person.IDU.CurrentlyInjecting(Time)){
+				TotalInjecting++;
+				// Check if CurrentlyInfected
+				if (Person.HCV.CurrentlyInfected(Time)){
+					TotalInfected++;
+				}
+			}
+		}
+		return TotalInfected/TotalInjecting;
+	};
+	
+	NewDEO.ErrorFunction=function(SimulationResults){
+		// There is a value in the simulation results that indicates the shortfall in the number of notifications
+		// This value is calculated by age group
+		return 0;
+	};
+	// Add the object to the array of all ODEOS
+	DEO.push(NewDEO);
 	
 	
 	

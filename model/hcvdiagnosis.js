@@ -60,7 +60,11 @@ function HCVDataDiagnosis(Person, Notifications, Time, TimeStep){
 		var RandomisedUndiagnosedHCV=Shuffle(UndiagnosedHCV);
 		
 		var RemainingToBeDiagnosedByAgeONLY=Add(RemainingToBeDiagnosed[0], RemainingToBeDiagnosed[1]);
-		var SumOfRemainingToBeDiagnosed=Sum(RemainingToBeDiagnosedByAgeONLY);// double sum because this is a 2D vector (sex + age)
+		var SumOfRemainingToBeDiagnosed=Sum(RemainingToBeDiagnosedByAgeONLY);
+		
+		console.error(Time);
+		console.log(SumOfRemainingToBeDiagnosed);
+		
 		
 		// Determine the testing rate of the population in this time step 
 		//ReturnData.HCVAsymptomaticTestingRateForThisStep=SumOfRemainingToBeDiagnosed/RandomisedUndiagnosedHCV.length;

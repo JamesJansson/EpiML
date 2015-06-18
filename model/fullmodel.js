@@ -112,11 +112,31 @@ function FullModelTest(Stuff1){
 	}
 	console.error("The above code will transfered to the interface to transfer optimised parameters into the parameter interface.");
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	// Run the full model
 	var FullModelResults=FullModel(Param, Notifications, Param.Time.EndSimulation, Intervention);
 	
 	var Person=FullModelResults.Population;
 	
 	
+	console.error("ODEOArray[19].ErrorFunction");
+	console.error(ODEOArray[19].RunDataAndFindError(FullModelResults));
 	
 
 	
@@ -147,6 +167,10 @@ function FullModelTest(Stuff1){
 	
 	
 	ReturnResults.HCVDataDiagnosisResults=FullModelResults.HCVDataDiagnosisResults;
+	
+	
+	// Rearrange the 
+	
 	
 	
 	
@@ -404,6 +428,16 @@ function FullModel(Param, Notifications, EndSimulation, Intervention){
 	Results.Population=Person;
 	Results.HCVDataDiagnosisResults=HCVDataDiagnosisResults;
 	
+	// Summarise the HCVDataDiagnosisResults in to results by 
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	return Results;
 }
 
@@ -501,7 +535,7 @@ function CreateHCVInfectedBloodRecipients(){
 	
 	Param.HCV.Prevalence.Haemophiliacs1960;
 	
-	return
+	return 0;
 	
 }
 
