@@ -21,6 +21,7 @@ function OptimisationDataExtractionObject(){
 	this.YLabel="";
 	this.Title="";
 	
+	this.Optimise=false;
 	this.Opt={};// specified follwing setup (must be a statistic type (count, summary, ratio))
 	this.Opt.Data=[];// uses the time specified in the data 
 	this.Opt.Time=[];// uses the time specified in the data 

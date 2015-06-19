@@ -54,7 +54,7 @@ function FullModelTest(Stuff1){
 	
 	
 	// This needs to be established by the optimisation 
-	Param.HCV.ProbabilityOfTransmission=0.1;
+	Param.HCV.ProbabilityOfTransmission=0.15;
 	Param.IDU.NSP.P=0.3;
 	Param.IDU.RateOfCesssation=0.25;
 
