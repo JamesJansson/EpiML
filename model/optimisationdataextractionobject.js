@@ -779,6 +779,149 @@ function SetupOptimisationDataExtractionObjects(){
 	
 	
 	
+	// ******************************************************************************************************
+	// ******************************************************************************************************
+	// ******************************************************************************************************
+	// NSP in methadone maintenance
+	
+	NewDEO=new OptimisationDataExtractionObject();
+	
+	// Load the data into the function 
+	var DataStruct={};
+	DataStruct.Time=Data.NSP.Year;
+	DataStruct.Value=Data.NSP.Methadone.CurrentProp;// NSP HCV antibody prevalence !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	NewDEO.SetData(DataStruct);
+	
+	NewDEO.SetGraphTime(GraphTime);
+	NewDEO.Name="PropNSPCurrentMethdone";
+	NewDEO.Title="Proportion of NSP currently in methadone maintenance treatment";
+	NewDEO.XLabel="Year";
+	NewDEO.YLabel="Proportion";
+	
+	NewDEO.ResultFunction= function (SimulationResult, Time){
+		var AntibodyPresent=0;
+		var NSPTotal=0;
+		for (var PersonCount in SimulationResult.Population){
+			var Person=SimulationResult.Population[PersonCount];
+			if (Person.Alive(Time)){
+				// Check if NSP
+				if (Person.IDU.NSP.Value(Time)){
+					NSPTotal++;
+					// Check if Heterosexual
+					if (Person.HCV.AntibodyPresent(Time)){
+						AntibodyPresent++;
+					}
+				}
+			}
+		}
+		console.error("Not currently extracting");
+		
+		return 0;
+	};
+	
+	// Add the object to the array of all ODEOS
+	DEO.push(NewDEO);
+	
+	
+	
+	
+	// Proportion previously 
+	NewDEO=new OptimisationDataExtractionObject();
+	
+	// Load the data into the function 
+	var DataStruct={};
+	DataStruct.Time=Data.NSP.Year;
+	DataStruct.Value=Data.NSP.Methadone.PreviousProp;// NSP HCV antibody prevalence !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	NewDEO.SetData(DataStruct);
+	
+	NewDEO.SetGraphTime(GraphTime);
+	NewDEO.Name="PropNSPPreviousMethdone";
+	NewDEO.Title="Proportion of NSP previously in methadone maintenance treatment";
+	NewDEO.XLabel="Year";
+	NewDEO.YLabel="Proportion";
+	
+	NewDEO.ResultFunction= function (SimulationResult, Time){
+		var AntibodyPresent=0;
+		var NSPTotal=0;
+		for (var PersonCount in SimulationResult.Population){
+			var Person=SimulationResult.Population[PersonCount];
+			if (Person.Alive(Time)){
+				// Check if NSP
+				if (Person.IDU.NSP.Value(Time)){
+					NSPTotal++;
+					// Check if Heterosexual
+					if (Person.HCV.AntibodyPresent(Time)){
+						AntibodyPresent++;
+					}
+				}
+			}
+		}
+		console.error("Not currently extracting");
+		
+		return 0;
+	};
+	
+	// Add the object to the array of all ODEOS
+	DEO.push(NewDEO);
+	
+	
+	
+	// Proportion never 
+	NewDEO=new OptimisationDataExtractionObject();
+	
+	// Load the data into the function 
+	var DataStruct={};
+	DataStruct.Time=Data.NSP.Year;
+	DataStruct.Value=Data.NSP.Methadone.NeverProp;// NSP HCV antibody prevalence !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	NewDEO.SetData(DataStruct);
+	
+	NewDEO.SetGraphTime(GraphTime);
+	NewDEO.Name="PropNSPNeverMethdone";
+	NewDEO.Title="Proportion of NSP never in methadone maintenance treatment";
+	NewDEO.XLabel="Year";
+	NewDEO.YLabel="Proportion";
+	
+	NewDEO.ResultFunction= function (SimulationResult, Time){
+		var AntibodyPresent=0;
+		var NSPTotal=0;
+		for (var PersonCount in SimulationResult.Population){
+			var Person=SimulationResult.Population[PersonCount];
+			if (Person.Alive(Time)){
+				// Check if NSP
+				if (Person.IDU.NSP.Value(Time)){
+					NSPTotal++;
+					// Check if Heterosexual
+					if (Person.HCV.AntibodyPresent(Time)){
+						AntibodyPresent++;
+					}
+				}
+			}
+		}
+		console.error("Not currently extracting");
+		
+		return 0;
+	};
+	
+	// Add the object to the array of all ODEOS
+	DEO.push(NewDEO);
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	// Give all plots an id in the intereface
 	for (var Count in DEO){

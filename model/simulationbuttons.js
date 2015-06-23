@@ -419,6 +419,18 @@ function ExtractDataFromFiles(){
 	
 	
 	
+	// Methadone maintenance
+	Data.NSP.Methadone={};
+	Data.NSP.Methadone.Current=DataFile.NSP.GetRow(229, 1, NoNSPDataPoints);
+	Data.NSP.Methadone.Previous=DataFile.NSP.GetRow(230, 1, NoNSPDataPoints);
+	Data.NSP.Methadone.Never=DataFile.NSP.GetRow(231, 1, NoNSPDataPoints);
+	var MethadoneTemp=Add(Data.NSP.Methadone.Current, Data.NSP.Methadone.Previous);
+	Data.NSP.Methadone.Total=Add(MethadoneTemp, Data.NSP.Methadone.Never);
+	
+	Data.NSP.Methadone.CurrentProp=Divide(Data.NSP.Methadone.Current, Data.NSP.Methadone.Total);
+	Data.NSP.Methadone.PreviousProp=Divide(Data.NSP.Methadone.Previous, Data.NSP.Methadone.Total);
+	Data.NSP.Methadone.NeverProp=Divide(Data.NSP.Methadone.Never, Data.NSP.Methadone.Total);
+		
 	
 }
 
