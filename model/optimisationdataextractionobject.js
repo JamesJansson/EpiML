@@ -908,17 +908,236 @@ function SetupOptimisationDataExtractionObjects(){
 	
 	
 	
+	// ******************************************************************************************************
+	// ******************************************************************************************************
+	// ******************************************************************************************************
+	// Fibrosis staging in all PLHCV
+	
+	// F0
+	NewDEO=new OptimisationDataExtractionObject();
+	
+	var EmptyData={};
+	EmptyData.Value=[];
+	EmptyData.Time=[];
+	
+	// Load the data into the function 
+	NewDEO.SetData(EmptyData);
+	NewDEO.SetGraphTime(GraphTime);
+	NewDEO.Name="NumHCVWithF0";
+	NewDEO.Title="Number of people with HCV - F0";
+	NewDEO.XLabel="Year";
+	NewDEO.YLabel="Number of people";
+	
+	NewDEO.ResultFunction= function (SimulationResult, Time){
+		var Total=0;
+		for (var PersonCount in SimulationResult.Population){
+			var Person=SimulationResult.Population[PersonCount];
+			// Check if CurrentlyInjecting
+			if (Person.HCV.CurrentlyInfected(Time)){
+				if (Person.HCV.Fibrosis.Value(Time)==0){
+					Total++;
+				}
+			}
+		}
+		return Total*Settings.SampleFactor;
+	};
+	
+	NewDEO.ErrorFunction=function(SimulationResults){
+		// There is a value in the simulation results that indicates the shortfall in the number of notifications
+		// This value is calculated by age group
+		return 0;
+	};
+	// Add the object to the array of all ODEOS
+	DEO.push(NewDEO);	
+	
+	
+	// F1
+	NewDEO=new OptimisationDataExtractionObject();
+	
+	var EmptyData={};
+	EmptyData.Value=[];
+	EmptyData.Time=[];
+	
+	// Load the data into the function 
+	NewDEO.SetData(EmptyData);
+	NewDEO.SetGraphTime(GraphTime);
+	NewDEO.Name="NumHCVWithF1";
+	NewDEO.Title="Number of people with HCV - F1";
+	NewDEO.XLabel="Year";
+	NewDEO.YLabel="Number of people";
+	
+	NewDEO.ResultFunction= function (SimulationResult, Time){
+		var Total=0;
+		for (var PersonCount in SimulationResult.Population){
+			var Person=SimulationResult.Population[PersonCount];
+			// Check if CurrentlyInjecting
+			if (Person.HCV.CurrentlyInfected(Time)){
+				if (Person.HCV.Fibrosis.Value(Time)==1){
+					Total++;
+				}
+			}
+		}
+		return Total*Settings.SampleFactor;
+	};
+	
+	NewDEO.ErrorFunction=function(SimulationResults){
+		// There is a value in the simulation results that indicates the shortfall in the number of notifications
+		// This value is calculated by age group
+		return 0;
+	};
+	// Add the object to the array of all ODEOS
+	DEO.push(NewDEO);	
+	
+	// F2
+	NewDEO=new OptimisationDataExtractionObject();
+	
+	var EmptyData={};
+	EmptyData.Value=[];
+	EmptyData.Time=[];
+	
+	// Load the data into the function 
+	NewDEO.SetData(EmptyData);
+	NewDEO.SetGraphTime(GraphTime);
+	NewDEO.Name="NumHCVWithF2";
+	NewDEO.Title="Number of people with HCV - F2";
+	NewDEO.XLabel="Year";
+	NewDEO.YLabel="Number of people";
+	
+	NewDEO.ResultFunction= function (SimulationResult, Time){
+		var Total=0;
+		for (var PersonCount in SimulationResult.Population){
+			var Person=SimulationResult.Population[PersonCount];
+			// Check if CurrentlyInjecting
+			if (Person.HCV.CurrentlyInfected(Time)){
+				if (Person.HCV.Fibrosis.Value(Time)==2){
+					Total++;
+				}
+			}
+		}
+		return Total*Settings.SampleFactor;
+	};
+	
+	NewDEO.ErrorFunction=function(SimulationResults){
+		// There is a value in the simulation results that indicates the shortfall in the number of notifications
+		// This value is calculated by age group
+		return 0;
+	};
+	// Add the object to the array of all ODEOS
+	DEO.push(NewDEO);
+	
+	// F3
+	NewDEO=new OptimisationDataExtractionObject();
+	
+	var EmptyData={};
+	EmptyData.Value=[];
+	EmptyData.Time=[];
+	
+	// Load the data into the function 
+	NewDEO.SetData(EmptyData);
+	NewDEO.SetGraphTime(GraphTime);
+	NewDEO.Name="NumHCVWithF3";
+	NewDEO.Title="Number of people with HCV - F3";
+	NewDEO.XLabel="Year";
+	NewDEO.YLabel="Number of people";
+	
+	NewDEO.ResultFunction= function (SimulationResult, Time){
+		var Total=0;
+		for (var PersonCount in SimulationResult.Population){
+			var Person=SimulationResult.Population[PersonCount];
+			// Check if CurrentlyInjecting
+			if (Person.HCV.CurrentlyInfected(Time)){
+				if (Person.HCV.Fibrosis.Value(Time)==3){
+					Total++;
+				}
+			}
+		}
+		return Total*Settings.SampleFactor;
+	};
+	
+	NewDEO.ErrorFunction=function(SimulationResults){
+		// There is a value in the simulation results that indicates the shortfall in the number of notifications
+		// This value is calculated by age group
+		return 0;
+	};
+	// Add the object to the array of all ODEOS
+	DEO.push(NewDEO);
+	
+	
+	// F4
+	NewDEO=new OptimisationDataExtractionObject();
+	
+	var EmptyData={};
+	EmptyData.Value=[];
+	EmptyData.Time=[];
+	
+	// Load the data into the function 
+	NewDEO.SetData(EmptyData);
+	NewDEO.SetGraphTime(GraphTime);
+	NewDEO.Name="NumHCVWithF4";
+	NewDEO.Title="Number of people with HCV - F4";
+	NewDEO.XLabel="Year";
+	NewDEO.YLabel="Number of people";
+	
+	NewDEO.ResultFunction= function (SimulationResult, Time){
+		var Total=0;
+		for (var PersonCount in SimulationResult.Population){
+			var Person=SimulationResult.Population[PersonCount];
+			// Check if CurrentlyInjecting
+			if (Person.HCV.CurrentlyInfected(Time)){
+				if (Person.HCV.Fibrosis.Value(Time)==4){
+					Total++;
+				}
+			}
+		}
+		return Total*Settings.SampleFactor;
+	};
+	
+	NewDEO.ErrorFunction=function(SimulationResults){
+		// There is a value in the simulation results that indicates the shortfall in the number of notifications
+		// This value is calculated by age group
+		return 0;
+	};
+	// Add the object to the array of all ODEOS
+	DEO.push(NewDEO);
 	
 	
 	
+	// Liver failure
+	NewDEO=new OptimisationDataExtractionObject();
 	
+	var EmptyData={};
+	EmptyData.Value=[];
+	EmptyData.Time=[];
 	
+	// Load the data into the function 
+	NewDEO.SetData(EmptyData);
+	NewDEO.SetGraphTime(GraphTime);
+	NewDEO.Name="NumHCVWithLF";
+	NewDEO.Title="Number of people with HCV - LiverFailure";
+	NewDEO.XLabel="Year";
+	NewDEO.YLabel="Number of people";
 	
+	NewDEO.ResultFunction= function (SimulationResult, Time){
+		var Total=0;
+		for (var PersonCount in SimulationResult.Population){
+			var Person=SimulationResult.Population[PersonCount];
+			// Check if CurrentlyInjecting
+			if (Person.HCV.CurrentlyInfected(Time)){
+				if (Person.HCV.Fibrosis.Value(Time)==5){
+					Total++;
+				}
+			}
+		}
+		return Total*Settings.SampleFactor;
+	};
 	
-	
-	
-	
-	
+	NewDEO.ErrorFunction=function(SimulationResults){
+		// There is a value in the simulation results that indicates the shortfall in the number of notifications
+		// This value is calculated by age group
+		return 0;
+	};
+	// Add the object to the array of all ODEOS
+	DEO.push(NewDEO);
 	
 	
 	
