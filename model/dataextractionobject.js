@@ -12,7 +12,7 @@
 // Outside the model, it tells it where to find the results. 
 
 
-function OptimisationDataExtractionObject(){
+function DataExtractionObject(){
 	this.Name="";
 	this.GraphInterfaceID="";
 	this.StatisticType="";
@@ -49,19 +49,19 @@ function OptimisationDataExtractionObject(){
 	this.DownloadData;
 }
 
-OptimisationDataExtractionObject.prototype.SetData=function(Data){// SimulationResult.Population
+DataExtractionObject.prototype.SetData=function(Data){// SimulationResult.Population
 	this.Opt.Data=Data.Value;
 	this.Opt.Time=Data.Time;
 };
 
-OptimisationDataExtractionObject.prototype.SetGraphTime=function(TimeArray){// SimulationResult.Population
+DataExtractionObject.prototype.SetGraphTime=function(TimeArray){// SimulationResult.Population
 	this.Graph.Result.Time=TimeArray;
 };
 
 
 
 
-OptimisationDataExtractionObject.prototype.RunDataAndFindError=function(SimulationResult){// SimulationResult.Population
+DataExtractionObject.prototype.RunDataAndFindError=function(SimulationResult){// SimulationResult.Population
 	this.Opt.Result=[];
 	for (var TimeCount in this.Opt.Time){
 		this.Opt.Result[TimeCount]=this.ResultFunction(SimulationResult, this.Opt.Time[TimeCount]);
@@ -74,7 +74,7 @@ OptimisationDataExtractionObject.prototype.RunDataAndFindError=function(Simulati
 	return Error;
 };
 
-OptimisationDataExtractionObject.prototype.ErrorFunction=function(){// SimulationResult
+DataExtractionObject.prototype.ErrorFunction=function(){// SimulationResult
 	// Note that this can be alterred by setting obj.Errorfunction=SomeFunction;
 
 	var ErrorVec=Abs(Minus(this.Opt.Data, this.Opt.Result));
@@ -83,7 +83,7 @@ OptimisationDataExtractionObject.prototype.ErrorFunction=function(){// Simulatio
 };
 
 
-OptimisationDataExtractionObject.prototype.GenerateGraphData=function(SimulationResult){
+DataExtractionObject.prototype.GenerateGraphData=function(SimulationResult){
 	this.Graph.Data.Time=this.Opt.Time;// uses the range of times specified to show the full activity of the model
 	this.Graph.Data.Value=this.Opt.Data;
 	
@@ -94,7 +94,7 @@ OptimisationDataExtractionObject.prototype.GenerateGraphData=function(Simulation
 	}
 };
 
-OptimisationDataExtractionObject.prototype.SummariseMultipleSimulations=function(ArrayOfResults){
+DataExtractionObject.prototype.SummariseMultipleSimulations=function(ArrayOfResults){
 	// ArrayOfResult[Sim].Data, ArrayOfResult[Sim].Result
 	
 	
@@ -172,7 +172,7 @@ OptimisationDataExtractionObject.prototype.SummariseMultipleSimulations=function
 		
 };
 
-OptimisationDataExtractionObject.prototype.DrawGraph=function(){
+DataExtractionObject.prototype.DrawGraph=function(){
 
 	
 	// function to extract	data into the correct form
@@ -251,7 +251,7 @@ function ExtractOptimisationObjects(ResultsBySim){
 	
 	var Optimisation=[];
 	for (var SpecificStatCount in OptimisationArrayByStat){
-		Optimisation[SpecificStatCount]= new OptimisationDataExtractionObject();
+		Optimisation[SpecificStatCount]= new DataExtractionObject();
 		Optimisation[SpecificStatCount].SummariseMultipleSimulations(OptimisationArrayByStat[SpecificStatCount]);
 		// Draw the graph, but wait until the above has processed
 		Optimisation[SpecificStatCount].DrawGraph();
@@ -273,11 +273,11 @@ function ExtractOptimisationObjects(ResultsBySim){
 
 
 // This function is run internally in each instance of the model
-function SetupOptimisationDataExtractionObjects(){
+function SetupDataExtractionObjects(){
 	
 	var GraphTime=AscendingArray(1970, 2020, 1);
 	
-	var DEO=[];//Array of OptimisationDataExtractionObject
+	var DEO=[];//Array of DataExtractionObject
 	
 // ******************************************************************************************************
 // ******************************************************************************************************
@@ -314,7 +314,7 @@ function SetupOptimisationDataExtractionObjects(){
 			var EverInjectorByAgeFunction=CreateEverInjectorByAgeFunction(Sex, LowerAge, UpperAge);
 			
 			
-			var NewDEO=new OptimisationDataExtractionObject();
+			var NewDEO=new DataExtractionObject();
 			NewDEO.CountType="Instantaneous";
 			// Name the Statistic and give labels
 			var SexText;
@@ -390,7 +390,7 @@ function SetupOptimisationDataExtractionObjects(){
 			var RecentInjectorByAgeFunction=CreateRecentInjectorByAgeFunction(Sex, LowerAge, UpperAge);
 			
 			
-			var NewDEO=new OptimisationDataExtractionObject();
+			var NewDEO=new DataExtractionObject();
 			NewDEO.CountType="Instantaneous";
 			// Name the Statistic and give labels
 			var SexText;
@@ -440,7 +440,7 @@ function SetupOptimisationDataExtractionObjects(){
 	
 	
 	// Create a new object to extract heterosexual identity from NSP
-	NewDEO=new OptimisationDataExtractionObject();
+	NewDEO=new DataExtractionObject();
 	
 	// Load the data into the function 
 	var DataStruct={};
@@ -478,7 +478,7 @@ function SetupOptimisationDataExtractionObjects(){
 	
 	
 	// Create a new object to extract homosexual identity from NSP
-	NewDEO=new OptimisationDataExtractionObject();
+	NewDEO=new DataExtractionObject();
 	
 	// Load the data into the function 
 	var DataStruct={};
@@ -514,7 +514,7 @@ function SetupOptimisationDataExtractionObjects(){
 	DEO.push(NewDEO);
 	
 	// Create a new object to extract bisexual identity from NSP
-	NewDEO=new OptimisationDataExtractionObject();
+	NewDEO=new DataExtractionObject();
 	
 	// Load the data into the function 
 	var DataStruct={};
@@ -577,7 +577,7 @@ function SetupOptimisationDataExtractionObjects(){
 	TotalNotifications.Value=Add(TotalMaleNotifications.Value, TotalFemaleNotifications.Value);
 	
 	// Create a new object to extract homosexual identity from NSP
-	NewDEO=new OptimisationDataExtractionObject();
+	NewDEO=new DataExtractionObject();
 	
 	// Load the data into the function 
 	NewDEO.SetData(TotalNotifications);
@@ -647,7 +647,7 @@ function SetupOptimisationDataExtractionObjects(){
 	// ******************************************************************************************************
 	// ******************************************************************************************************
 	// Display of infections (no data)
-	NewDEO=new OptimisationDataExtractionObject();
+	NewDEO=new DataExtractionObject();
 	
 	var EmptyData={};
 	EmptyData.Value=[];
@@ -689,7 +689,7 @@ function SetupOptimisationDataExtractionObjects(){
 	// ******************************************************************************************************
 	// HCV prevalence in IDU - HCV prevalence in NSP users
 	
-	NewDEO=new OptimisationDataExtractionObject();
+	NewDEO=new DataExtractionObject();
 	// Load the data into the function 
 	var DataStruct={};
 	DataStruct.Time=Data.NSP.Year;
@@ -732,7 +732,7 @@ function SetupOptimisationDataExtractionObjects(){
 	// HCV prevalence in all IDU 
 	
 	// Display of infections (no data)
-	NewDEO=new OptimisationDataExtractionObject();
+	NewDEO=new DataExtractionObject();
 	
 	var EmptyData={};
 	EmptyData.Value=[];
@@ -784,7 +784,7 @@ function SetupOptimisationDataExtractionObjects(){
 	// ******************************************************************************************************
 	// NSP in methadone maintenance
 	
-	NewDEO=new OptimisationDataExtractionObject();
+	NewDEO=new DataExtractionObject();
 	
 	// Load the data into the function 
 	var DataStruct={};
@@ -826,7 +826,7 @@ function SetupOptimisationDataExtractionObjects(){
 	
 	
 	// Proportion previously 
-	NewDEO=new OptimisationDataExtractionObject();
+	NewDEO=new DataExtractionObject();
 	
 	// Load the data into the function 
 	var DataStruct={};
@@ -867,7 +867,7 @@ function SetupOptimisationDataExtractionObjects(){
 	
 	
 	// Proportion never 
-	NewDEO=new OptimisationDataExtractionObject();
+	NewDEO=new DataExtractionObject();
 	
 	// Load the data into the function 
 	var DataStruct={};
@@ -914,7 +914,7 @@ function SetupOptimisationDataExtractionObjects(){
 	// Fibrosis staging in all PLHCV
 	
 	// F0
-	NewDEO=new OptimisationDataExtractionObject();
+	NewDEO=new DataExtractionObject();
 	
 	var EmptyData={};
 	EmptyData.Value=[];
@@ -950,7 +950,7 @@ function SetupOptimisationDataExtractionObjects(){
 	
 	
 	// F1
-	NewDEO=new OptimisationDataExtractionObject();
+	NewDEO=new DataExtractionObject();
 	
 	var EmptyData={};
 	EmptyData.Value=[];
@@ -985,7 +985,7 @@ function SetupOptimisationDataExtractionObjects(){
 	DEO.push(NewDEO);	
 	
 	// F2
-	NewDEO=new OptimisationDataExtractionObject();
+	NewDEO=new DataExtractionObject();
 	
 	var EmptyData={};
 	EmptyData.Value=[];
@@ -1020,7 +1020,7 @@ function SetupOptimisationDataExtractionObjects(){
 	DEO.push(NewDEO);
 	
 	// F3
-	NewDEO=new OptimisationDataExtractionObject();
+	NewDEO=new DataExtractionObject();
 	
 	var EmptyData={};
 	EmptyData.Value=[];
@@ -1056,7 +1056,7 @@ function SetupOptimisationDataExtractionObjects(){
 	
 	
 	// F4
-	NewDEO=new OptimisationDataExtractionObject();
+	NewDEO=new DataExtractionObject();
 	
 	var EmptyData={};
 	EmptyData.Value=[];
@@ -1093,7 +1093,7 @@ function SetupOptimisationDataExtractionObjects(){
 	
 	
 	// Liver failure
-	NewDEO=new OptimisationDataExtractionObject();
+	NewDEO=new DataExtractionObject();
 	
 	var EmptyData={};
 	EmptyData.Value=[];
@@ -1145,6 +1145,6 @@ function SetupOptimisationDataExtractionObjects(){
 		DEO[Count].GraphInterfaceID="OptimisationPlot"+Count;
 	}
 	
-	return DEO;//Array of OptimisationDataExtractionObject
+	return DEO;//Array of DataExtractionObject
 }
 

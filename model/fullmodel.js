@@ -49,7 +49,7 @@ function FullModelTest(Stuff1){
 	
 	
 	// Set up the optimisation
-	var ODEOArray = SetupOptimisationDataExtractionObjects();
+	var ODEOArray = SetupDataExtractionObjects();
 	
 	
 	
