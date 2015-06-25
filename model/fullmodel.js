@@ -133,25 +133,21 @@ function FullModelTest(Stuff1){
 	
 	// Run the full model
 	var FullModelResults=FullModel(Param, Notifications, Param.Time.EndSimulation, Intervention);
-	
-	
-	
-	
-	console.error("DEOArray[19].FindError");
-	console.error(DEOArray[19].FindError(FullModelResults));
-	
 
-	
-	
-	
-	
-	
-	
-	
 	// Store a run for data as it would appear in the optimisation 
-	var TotalError=RunAllDEOError(DEOArray, FullModelResults);
+	var TotalOptimisationError=FindTotalDEOErrorForOptimisation(DEOArray, FullModelResults);
 	
-	console.error(""+TotalError)
+	
+	
+	
+	
+	
+	
+	// Find the data for the full set in which there are data points
+	var TotalError=FindAllDEOError(DEOArray, FullModelResults);
+	
+	console.error("The total error is "+TotalError)
+	
 	
 	
 	// Generate graph data (external to the optimisation)

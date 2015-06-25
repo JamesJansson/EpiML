@@ -152,8 +152,7 @@ DataExtractionObject.prototype.SummariseMultipleSimulations=function(ArrayOfResu
 	// MultiSimData.Y[Time][Sim];
 	
 	function PerformSummaryStats(Input){
-		
-		console.log(Input);
+
 		
 		var NumSims=Input.length;
 		var NumTimes=Input[0].Time.length;
@@ -178,9 +177,7 @@ DataExtractionObject.prototype.SummariseMultipleSimulations=function(ArrayOfResu
 		return SummaryStat;
 	}
 	
-	console.log("SumStat on Data");
 	this.MultiSimDataSummary=PerformSummaryStats(this.MultiSimData);
-	console.log("SumStat on Result");
 	this.MultiSimResultSummary=PerformSummaryStats(this.MultiSimResult);
 		
 };
@@ -217,22 +214,32 @@ DataExtractionObject.prototype.DrawGraph=function(){
 	PlotSettings.PlotData.Result=StructureForGraph95CI(this.MultiSimResultSummary);
 
 	PlotSettings.Data=[];
-	PlotSettings.Data.Download=function (){console.log('This runs when the button is pushed')};
+	PlotSettings.Data.Download=function (){console.log('This runs when the button is pushed');};
 
 	this.GraphObject=new GeneralPlot(PlotSettings);// this must be global
 	this.GraphObject.Draw();
-	
-	
-	
 };
 
-function RunAllDEOError(ODEOArray, SimulationResult){
+function FindAllDEOError(DEOArray, SimulationResult){
 	var ErrorSum=0;
-	for (var ODEOCount in ODEOArray){
-	    ErrorSum+=ODEOArray[ODEOCount].FindError(SimulationResult);
+	for (var DEOCount in DEOArray){
+	    ErrorSum+=DEOArray[DEOCount].FindError(SimulationResult);
 	}
 	return ErrorSum;
 }
+
+function FindTotalDEOErrorForOptimisation(DEOArray, SimulationResult){
+	var ErrorSum=0;
+	for (var DEOCount in DEOArray){
+		if (DEOArray[DEOCount].Optimise==true){
+	    	ErrorSum+=DEOArray[DEOCount].FindError(SimulationResult);
+		}
+	}
+	return ErrorSum;
+}
+
+
+
 	
 function RunAllDEOGenerateGraphData(ODEOArray, SimulationResult){
 	for (var ODEOCount in ODEOArray){
