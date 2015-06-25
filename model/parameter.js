@@ -8,9 +8,7 @@ function ParameterClass(ParameterID, ArrayName, ArrayNumber, InterfaceHolder, Nu
 	
 	this.SetInterfaceID(InterfaceHolder);// e.g. HCV.LFHCCProbability
 	
-	// Note that GroupName is primarily used for interface design. It is updated at load to represent the true structure of the objects in which it resides, so it cannot be relied upon to be consistent between builds.
-	this.GroupName="";//e.g. HCV, or in the case of it being a struct of a struct, Param.HCV
-	//GroupName+'.'+ParameterID gives the full name that the function can call. 
+
 	
 	this.DistributionType="normal";
 	
@@ -70,7 +68,6 @@ ParameterClass.prototype.Load= function (InputStructure){
 	
 ParameterClass.prototype.Name= function (){
 	return (this.ArrayName+'['+this.ArrayNumber+']');
-	//return (this.GroupName+'.'+this.ParameterID);
 };
 	
 ParameterClass.prototype.UpdateTypeDisplay= function (){
