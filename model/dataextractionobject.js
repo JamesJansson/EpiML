@@ -21,11 +21,11 @@ function DataExtractionObject(){
 	this.YLabel="";
 	this.Title="";
 	
-	this.Optimise=false;
-	this.Opt={};// specified follwing setup (must be a statistic type (count, summary, ratio))
-	this.Opt.Data=[];// uses the time specified in the data 
-	this.Opt.Time=[];// uses the time specified in the data 
-	this.Opt.Result=[];// uses the time specified in the data 
+	this.Data={};// specified follwing setup (must be a statistic type (count, summary, ratio))
+	
+	
+	this.Data.Value=[];// uses the time specified in the data 
+	this.Data.Time=[];// uses the time specified in the data 
 	
 	this.Graph={};
 	this.Graph.Data={};
@@ -35,8 +35,16 @@ function DataExtractionObject(){
 	this.Graph.Result.Time;// uses the range of times specified to show the full activity of the model
 	this.Graph.Result.Value;
 	
+	this.Optimise=false;// is a flag used to determine if the object will be optimised or not
+	
+	this.Optimisation={};
+	this.Optimisation.Value;
+	this.Optimisation.Time;
+	
 	
 	//this.ErrorFunction;// specifies how the error is determined. function() 
+	
+	// The following sections are used to summarise multiple simulations
 	
 	this.MultiSimResult=[];
 	this.MultiSimData=[];
@@ -50,8 +58,8 @@ function DataExtractionObject(){
 }
 
 DataExtractionObject.prototype.SetData=function(Data){// SimulationResult.Population
-	this.Opt.Data=Data.Value;
-	this.Opt.Time=Data.Time;
+	this.Data.Value=Data.Value;
+	this.Data.Time=Data.Time;
 };
 
 DataExtractionObject.prototype.SetGraphTime=function(TimeArray){// SimulationResult.Population
@@ -59,12 +67,12 @@ DataExtractionObject.prototype.SetGraphTime=function(TimeArray){// SimulationRes
 };
 
 
-
-
 DataExtractionObject.prototype.RunDataAndFindError=function(SimulationResult){// SimulationResult.Population
-	this.Opt.Result=[];
-	for (var TimeCount in this.Opt.Time){
-		this.Opt.Result[TimeCount]=this.ResultFunction(SimulationResult, this.Opt.Time[TimeCount]);
+	this.Optimisation.Value=[];
+	this.Optimisation.Time=this.Data.Time;
+	
+	for (var TimeCount in this.Data.Time){
+		this.Optimisation.Value[TimeCount]=this.ResultFunction(SimulationResult, this.Data.Time[TimeCount]);
 	}
 
 	var Error=this.ErrorFunction(SimulationResult);
@@ -77,15 +85,15 @@ DataExtractionObject.prototype.RunDataAndFindError=function(SimulationResult){//
 DataExtractionObject.prototype.ErrorFunction=function(){// SimulationResult
 	// Note that this can be alterred by setting obj.Errorfunction=SomeFunction;
 
-	var ErrorVec=Abs(Minus(this.Opt.Data, this.Opt.Result));
+	var ErrorVec=Abs(Minus(this.Data.Value, this.Optimisation.Value));
 	var Error=Sum(ErrorVec);
 	return Error;
 };
 
 
 DataExtractionObject.prototype.GenerateGraphData=function(SimulationResult){
-	this.Graph.Data.Time=this.Opt.Time;// uses the range of times specified to show the full activity of the model
-	this.Graph.Data.Value=this.Opt.Data;
+	this.Graph.Data.Time=this.Data.Time;// uses the range of times specified to show the full activity of the model
+	this.Graph.Data.Value=this.Data.Value;
 	
 	this.Graph.Result.Value=[];
 	
@@ -231,39 +239,37 @@ function RunAllDEOGenerateGraphData(ODEOArray, SimulationResult){
 
 
 // This function is run outside the simulation after all optimisations have occurred (i.e. this is summarising all results). 
-function ExtractOptimisationObjects(ResultsBySim){
+function SummariseAllDEO(ResultsBySim){
 	// ResultsBySim[Sim].Optimisation[SpecificStatCount]
-	var OptimisationResultsBySim=[];
+	var DEOResultsBySim=[];
 	for (var SimCount in ResultsBySim){
-		OptimisationResultsBySim[SimCount]=ResultsBySim[SimCount].Optimisation;
+		DEOResultsBySim[SimCount]=ResultsBySim[SimCount].Optimisation;
 	}
-	// OptimisationResultsBySim[SimCount][SpecificStatCount]
-	var OptimisationArrayByStat=Transpose(OptimisationResultsBySim);
+	// DEOResultsBySim[SimCount][SpecificStatCount]
+	var DEOArrayByStat=Transpose(DEOResultsBySim);
 	
-	console.log(OptimisationArrayByStat);
+	console.log(DEOArrayByStat);
 	// Transpose to get at all the .Optimisation results
 	//var ResultsByStat=TransposeArrObj(ResultsBySim);
 	// ResultsByStat.Optimisation[Sim][SpecificStatCount]
 	//var OptimisationArrayBySim=ResultsByStat.Optimisation;// Choose to operate only on the Optimisation results
 	// OptimisationStatArray[Sim][SpecificStatCount]
-	//var OptimisationArrayByStat=Transpose(OptimisationArrayBySim);// Stat count is an array
+	//var DEOArrayByStat=Transpose(OptimisationArrayBySim);// Stat count is an array
 	//OptimisationStatArray[SpecificStatCount][Sim]
 	
-	var Optimisation=[];
-	for (var SpecificStatCount in OptimisationArrayByStat){
-		Optimisation[SpecificStatCount]= new DataExtractionObject();
-		Optimisation[SpecificStatCount].SummariseMultipleSimulations(OptimisationArrayByStat[SpecificStatCount]);
+	var SumarisedDEOArray=[];
+	for (var SpecificStatCount in DEOArrayByStat){
+		SumarisedDEOArray[SpecificStatCount]= new DataExtractionObject();
+		SumarisedDEOArray[SpecificStatCount].SummariseMultipleSimulations(DEOArrayByStat[SpecificStatCount]);
 		// Draw the graph, but wait until the above has processed
-		Optimisation[SpecificStatCount].DrawGraph();
+		SumarisedDEOArray[SpecificStatCount].DrawGraph();
 	}
 	
-	return Optimisation;
+	return SumarisedDEOArray;
 }
 // Set up the plots page
 // for (var i=0; i<100; i++){document.getElementById("OptimisatoinPlotsHolder").innerHTML+='<div class="plot" id="OptimisationPlot'+i+'" ></div>';}
 
-
-// SummarisedOptimisationResults=ExtractOptimisationObjects(SimulationHolder.Result);
 
 
 
@@ -615,16 +621,9 @@ function SetupDataExtractionObjects(){
 			var Pen=SimulationResults.HCVDataDiagnosisResults[Count].Penalty;
 			TotalPenalty+=Pen.InsufficientInfectedToDiagnoseTotal+Pen.InsufficientSymptomaticDiagnosesTotal;
 		}
-		//return TotalPenalty;
-		console.error("This section needs to be deleted!");
-		var TotalPenalty=[];
-		TotalPenalty[0]=0;
-		TotalPenalty[1]=0;
-		for (var Count in SimulationResults.HCVDataDiagnosisResults){
-			var Pen=SimulationResults.HCVDataDiagnosisResults[Count].Penalty;
-			TotalPenalty[0]+=Pen.InsufficientInfectedToDiagnoseTotal;
-			TotalPenalty[1]+=Pen.InsufficientSymptomaticDiagnosesTotal;
-		}
+		
+		console.log("Total penalty for notifications: "+TotalPenalty);
+		
 		return TotalPenalty;
 	};
 	
@@ -814,7 +813,7 @@ function SetupDataExtractionObjects(){
 				}
 			}
 		}
-		console.error("Not currently extracting");
+		console.log("Not currently extracting");
 		
 		return 0;
 	};
@@ -856,7 +855,7 @@ function SetupDataExtractionObjects(){
 				}
 			}
 		}
-		console.error("Not currently extracting");
+		console.log("Not currently extracting");
 		
 		return 0;
 	};
@@ -897,7 +896,7 @@ function SetupDataExtractionObjects(){
 				}
 			}
 		}
-		console.error("Not currently extracting");
+		console.log("Not currently extracting");
 		
 		return 0;
 	};

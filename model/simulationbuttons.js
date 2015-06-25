@@ -201,7 +201,7 @@ function RunFullModelTest(){
 	
 	RunSettings2.FunctionToRunOnCompletion=function(){
 		// Display all results
-		SummarisedOptimisationResults=ExtractOptimisationObjects(SimulationHolder.Result);
+		SummarisedOptimisationResults=SummariseAllDEO(SimulationHolder.Result);
 	};
 	
 	
