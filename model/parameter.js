@@ -59,6 +59,11 @@ ParameterClass.prototype.Load= function (InputStructure){
 			this[Key]=InputStructure[Key];
 		}
 	}
+	// Check if there are problems
+	if (this.ParameterID===""){
+		console.error("Error trace here.");
+		throw "ParameterID is not set";
+	} 
 };
 
 
@@ -71,7 +76,7 @@ ParameterClass.prototype.Name= function (){
 ParameterClass.prototype.UpdateTypeDisplay= function (){
 	// Set up the name and parameter type
 	var ParameterHTML=""+
-	"<input type='text' name='ParameterID' value='" + this.ParameterID + "'>\n"+ 
+	"<input type='text' name='ParameterID' value='" + this.ParameterID + "' style='width:250px;'>\n"+ 
 	"<select name='DistributionType'  onchange='"+this.Name()+".DistributionType=this.value;"+this.Name()+".UpdateTypeDisplay();'>\n"+//change the type, then redisplay
 	
 	"	<option value='normal'>Normal</option>\n"+
@@ -512,38 +517,22 @@ ParameterPage.prototype.UpdateArrayPositions= function(){
 	}
 };
 
-
+// Load parameters from a file
 function LoadParameters(ParameterFileName){
 	// e.g. ParameterFileName="./model/parameters.json";
 	
+	try {
+		var ParamStruct=fs.readFileSync(ParameterFileName, 'utf8');
+	}
+	catch(err){
+		console.error("The file " + ParameterFileName+" could not be loaded. Error: ");
+		console.error(err);
+		throw "Stopping LoadParameters";
+	}
 	
-	// Open the file	
-	var ParamStruct=fs.readFileSync(ParameterFileName, 'utf8');
-	
-	console.error("Note that file error handling has not yet been implemented. Maybe use a try/catch system. Determine how to use readFileSync properly to ensure that the lack of the file is handled properly.");
-	// var ParamStruct=fs.readFileSync("./model/parameters.json", 'utf8', function (err, data) {
-		// console.log("1");
-		// if (err){
-			// console.error("The file " + ParameterFileName+" could not be loaded. Error: ");
-			// console.error(err);
-			// var ParsedStruct={};
-			// ParsedStruct.ParamLoadingError=err;
-			// return ParsedStruct;
-		// }
-		// else{
-			// //Parse the JSON
-			// var ParsedStruct= JSON.parse(data);
-			// return ParsedStruct;
-		// }
-	// });
 	
 	//Parse the JSON
 	 var ParsedStruct= JSON.parse(ParamStruct);
-	
-	// Check for error
-	if (typeof(ParsedStruct.ParamLoadingError)!='undefined'){
-		return ParsedStruct;
-	}
 	
 	// Check for problems
 
@@ -552,54 +541,10 @@ function LoadParameters(ParameterFileName){
 	// Parse into each subgroup
 	for (var Key in ParsedStruct){
 		// Create a new parameter for each value in the group
+		//(ParameterID, ArrayName, ArrayNumber, InterfaceHolder, NumberOfSamples)
 		Param[Key]=new ParameterClass("", "", Key, "", 1);// ParameterID, ArrayName, ArrayNumber, InterfaceHolder, NumberOfSamples
 		Param[Key].Load(ParsedStruct[Key]);
 	}
 	return Param;
 }
-
-
-// Load parameters from a file
-function OLDLoadParameters(ParameterFileName){
-	// Open the file	
-	var ParamStruct=fs.readFileSync("./data/parameters.json", 'utf8');
-	
-	console.error("Note that file error handling has not yet been implemented. Maybe use a try/catch system. Determine how to use readFileSync properly to ensure that the lack of the file is handled properly.");
-	// var ParamStruct=fs.readFileSync("./model/parameters.json", 'utf8', function (err, data) {
-		// console.log("1");
-		// if (err){
-			// console.error("The file " + ParameterFileName+" could not be loaded. Error: ");
-			// console.error(err);
-			// var ParsedStruct={};
-			// ParsedStruct.ParamLoadingError=err;
-			// return ParsedStruct;
-		// }
-		// else{
-			// //Parse the JSON
-			// var ParsedStruct= JSON.parse(data);
-			// return ParsedStruct;
-		// }
-	// });
-	
-	//Parse the JSON
-	 var ParsedStruct= JSON.parse(ParamStruct);
-	
-	// Check for error
-	if (typeof(ParsedStruct.ParamLoadingError)!='undefined'){
-		return ParsedStruct;
-	}
-	
-	// Check for problems
-
-	
-	var Param=[];
-	// Parse into each subgroup
-	for (var Key in ParsedStruct){
-		// Create a new parameter for each value in the group
-		Param[Key]=new ParameterClass("", "", Key, "", 1);// ParameterID, ArrayName, ArrayNumber, InterfaceHolder, NumberOfSamples
-		Param[Key].Load(ParsedStruct[Key]);
-	}
-	return Param;
-}
-
 
