@@ -44,6 +44,7 @@ function DataExtractionObject(){
 	this.Simulation.Value;
 	this.Simulation.Time;
 	
+	this.Error;// A place to store error, is a number (not an array)
 	
 	//this.ErrorFunction;// specifies how the error is determined. 
 	// A custom error function can be set using DEOName.ErrorFunction=function() 
@@ -71,7 +72,7 @@ DataExtractionObject.prototype.SetGraphTime=function(TimeArray){// SimulationRes
 };
 
 
-DataExtractionObject.prototype.RunDataAndFindError=function(SimulationResult){// SimulationResult.Population
+DataExtractionObject.prototype.FindError=function(SimulationResult){// SimulationResult.Population
 	this.Simulation.Value=[];
 	this.Simulation.Time=this.Data.Time;
 	
@@ -79,11 +80,11 @@ DataExtractionObject.prototype.RunDataAndFindError=function(SimulationResult){//
 		this.Simulation.Value[TimeCount]=this.ResultFunction(SimulationResult, this.Data.Time[TimeCount]);
 	}
 
-	var Error=this.ErrorFunction(SimulationResult);
+	this.Error=this.ErrorFunction(SimulationResult);
 	// Error function is calculated once for the entire run of the simualtion 
 	// note that the error function receives the simulation result, although it does not have to use it. 
 	
-	return Error;
+	return this.Error;
 };
 
 DataExtractionObject.prototype.ErrorFunction=function(){// SimulationResult
@@ -228,7 +229,7 @@ DataExtractionObject.prototype.DrawGraph=function(){
 function RunAllDEOError(ODEOArray, SimulationResult){
 	var ErrorSum=0;
 	for (var ODEOCount in ODEOArray){
-	    ErrorSum+=ODEOArray[ODEOCount].RunDataAndFindError(SimulationResult);
+	    ErrorSum+=ODEOArray[ODEOCount].FindError(SimulationResult);
 	}
 	return ErrorSum;
 }

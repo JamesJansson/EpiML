@@ -137,8 +137,8 @@ function FullModelTest(Stuff1){
 	
 	
 	
-	console.error("DEOArray[19].ErrorFunction");
-	console.error(DEOArray[19].RunDataAndFindError(FullModelResults));
+	console.error("DEOArray[19].FindError");
+	console.error(DEOArray[19].FindError(FullModelResults));
 	
 
 	
