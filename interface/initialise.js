@@ -30,7 +30,7 @@ function InitialisePage(){
 	Param=LoadParameters("./data/parameters.json");
 	
 	//Initialise interface
-	PPage=new ParameterPage(Param, "Param", "PPage", "ParamHolder", 100);
+	PPage=new ParameterPage(Param, "Param", "PPage", "ParamHolder","./data/parameters.json", 100);
 	PPage.Build();
 	
 	

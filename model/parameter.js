@@ -415,7 +415,7 @@ function ParameterSplitTest(){
 //**************************************************************************************************************************
 // From this point, the code is no longer dealing with individual parameters, but with displaying groups of parameters in a page
 
-function ParameterPage(ParamArray, ParamArrayName, PageName, InterfaceHolder, NumberOfSamples){
+function ParameterPage(ParamArray, ParamArrayName, PageName, InterfaceHolder, FileSaveLocation, NumberOfSamples){
 	// Note that Param is passed as a pointer, and hence any changes internal to here affect the entire page
 	this.ParamArray=ParamArray;
 	this.ParamArrayName=ParamArrayName;
@@ -425,7 +425,7 @@ function ParameterPage(ParamArray, ParamArrayName, PageName, InterfaceHolder, Nu
 	
 	this.NumberOfSamples=NumberOfSamples;
 	
-	this.FileSaveLocation=[];
+	this.FileSaveLocation=FileSaveLocation;
 	
 	
 	// for each element in the ParamArray, set the InterfaceID
@@ -438,6 +438,14 @@ function ParameterPage(ParamArray, ParamArrayName, PageName, InterfaceHolder, Nu
 ParameterPage.prototype.Build= function (){
 
 	var BuildText="";
+	
+	//This next section is very naughty, because it breaks the div by setting the inner HTML. It will probably break.
+	BuildText=BuildText+"<div class='SolidButton' onClick='"+this.PageName+".AddNewParameter(); '>Add parameter</div>";
+	BuildText=BuildText+"<div class='SolidButton' onClick='"+this.PageName+".SaveParameters(); '>Save to file</div>"
+	
+	BuildText=BuildText+"<div id='"+this.PageName+"NewParamBox' style='border-style:solid; border-color: #ffaaaa;'> </div>";
+	
+	
 	for (var key in this.ParamArray) {// Code inspired by http://stackoverflow.com/questions/208016/how-to-list-the-properties-of-a-javascript-object
 		//if (this.ParamArray.hasOwnProperty(key)) {
 		//	this.ParamArray[key].InterfaceID=ParamGroupDivId+key;
@@ -445,10 +453,10 @@ ParameterPage.prototype.Build= function (){
 		//}
 	}
 	
-	//This next section is very naughty, because it breaks the div by setting the inner HTML. It will probably break.
-	BuildText=BuildText+"<div class='SolidButton' onClick='"+this.PageName+".AddNewParameter(); '>Add parameter</div>";
-	BuildText=BuildText+"<div class='SolidButton' onClick='"+this.PageName+".SaveParameters(); '>Save to file</div>"
-	BuildText=BuildText+"<p>Unsaved parameters <\p>";
+
+
+	
+	// Set the inner text to the Build text
 	document.getElementById(this.InterfaceHolder).innerHTML = BuildText;
 	
 	//Load each of the holders with the parameters that should be held
@@ -468,11 +476,19 @@ ParameterPage.prototype.AddNewParameter= function(){
 	
 	// Create the HTML that will be added to the interface
 	var HTMLToAdd="\n                <form class=\"ParamContainer\" id=\""+this.ParamArray[ArrayNumber].InterfaceID+"\"></form>";
-	document.getElementById(this.InterfaceHolder).innerHTML = document.getElementById(this.InterfaceHolder).innerHTML + HTMLToAdd;
+	var NewParameterHolderName=this.PageName+"NewParamBox";
+	
+	document.getElementById(NewParameterHolderName).innerHTML = document.getElementById(NewParameterHolderName).innerHTML + HTMLToAdd;
 	for (Key in this.ParamArray){
 		this.ParamArray[Key].UpdateTypeDisplay();//Update all parameters because changing the HTML forces it to a normal distr. option.
 	}
 };
+
+
+
+
+
+
 
 
 ParameterPage.prototype.SaveParameters= function(){
@@ -499,9 +515,9 @@ ParameterPage.prototype.SaveParameters= function(){
 	var ParamJSONString=JSON.stringify(this.ParamArray, null, 4);//gives 4 spaces between elements
 	var blob = new Blob([ParamJSONString], {type: "text/plain;charset=utf-8"});
 	
-	fs.writeFile("./data/parameters.json", ParamJSONString , function(err) {
+	fs.writeFile(this.FileSaveLocation, ParamJSONString , function(err) {
 		if(err) {
-			alert("There was an error writing to the parameters.json file. See console for details.");
+			alert("There was an error writing to the "+this.FileSaveLocation+ " file. See console for details.");
 			console.log(err);
 		}
 	});
