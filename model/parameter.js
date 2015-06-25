@@ -1,12 +1,12 @@
 // This library requires mathtools.js to work
 
 function ParameterClass(ParameterID, ArrayName, ArrayNumber, InterfaceHolder, NumberOfSamples){// InterfacePrefix
-	this.ParameterID=ParameterID;// e.g. HCV_LFHCCProbability
+	this.ParameterID=ParameterID;// e.g. HCV.LFHCCProbability
 	this.ArrayName=ArrayName;
 	this.ArrayNumber=ArrayNumber;
 	this.InterfaceID=[];
 	
-	this.SetInterfaceID(InterfaceHolder);// e.g. HCV_LFHCCProbability
+	this.SetInterfaceID(InterfaceHolder);// e.g. HCV.LFHCCProbability
 	
 	// Note that GroupName is primarily used for interface design. It is updated at load to represent the true structure of the objects in which it resides, so it cannot be relied upon to be consistent between builds.
 	this.GroupName="";//e.g. HCV, or in the case of it being a struct of a struct, Param.HCV
@@ -364,29 +364,6 @@ function ParameterSplitByPeriod(ParamObject, ParamName, Value){
 }
 
 
-function ParameterSplitByUnderscore(ParamObject, ParamName, Value){
-	// If there is no underscore in the name
-	if(ParamName.indexOf('_') == -1){
-		ParamObject[ParamName]=Value;// return the value of the param to store
-	}
-	else{
-		//Split off the first part
-		var FirstPart=ParamName.substr(0,ParamName.indexOf('_'));
-		var SecondPart=ParamName.substr(ParamName.indexOf('_')+1);
-		
-		if (typeof(ParamObject[FirstPart])==="number"){
-			throw "There is a problem with defining the object, which could mean that a parameter group is called the same thing as a parameter";
-		}
-		if (typeof(ParamObject[FirstPart])==="undefined"){
-			// Create the subelement
-			ParamObject[FirstPart]={};
-		}
-		
-		ParameterSplitByUnderscore(ParamObject[FirstPart], SecondPart, Value);
-	}
-	// There is no return, because under javascript, the modifications made to ParamObject should be maintained as it is passed back through the recursions
-}
-
 // testing
 function ParameterSplitTest(){
 	console.error("This function is to be used for testing purposes only");
@@ -399,28 +376,28 @@ function ParameterSplitTest(){
 	TestParam[0].NumberOfSamples=100;
 	TestParam[0].CreateDistribution();
 	
-	TestParam[1]=new ParameterClass("KKK_Subjjj", "empty");
+	TestParam[1]=new ParameterClass("KKK.Subjjj", "empty");
 	TestParam[1].DistributionType="uniform";
 	TestParam[1].LowerBound=10;
 	TestParam[1].UpperBound=20;
 	TestParam[1].NumberOfSamples=100;
 	TestParam[1].CreateDistribution();
 	
-	TestParam[2]=new ParameterClass("KKK_Subkkk", "empty");
+	TestParam[2]=new ParameterClass("KKK.Subkkk", "empty");
 	TestParam[2].DistributionType="lognormal";
 	TestParam[2].Median=21;
 	TestParam[2].StandardError=0.17;
 	TestParam[2].NumberOfSamples=100;
 	TestParam[2].CreateDistribution();
 	
-	TestParam[3]=new ParameterClass("AAA_1", "empty");
+	TestParam[3]=new ParameterClass("AAA.1", "empty");
 	TestParam[3].DistributionType="lognormal";
 	TestParam[3].Median=21;
 	TestParam[3].StandardError=0.17;
 	TestParam[3].NumberOfSamples=100;
 	TestParam[3].CreateDistribution();
 	
-	TestParam[4]=new ParameterClass("AAA_2", "empty");
+	TestParam[4]=new ParameterClass("AAA.2", "empty");
 	TestParam[4].DistributionType="lognormal";
 	TestParam[4].Median=100;
 	TestParam[4].StandardError=0.17;
