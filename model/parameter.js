@@ -71,17 +71,24 @@ ParameterClass.prototype.Name= function (){
 };
 	
 ParameterClass.prototype.UpdateTypeDisplay= function (){
+	var ParameterHTML="";
+	// Draw the expand and save buttons
+	ParameterHTML+="<a onClick=\"ToggleDisplay(this, 'ParamInfoBox');\" style='background-color: #acf;'>[+]</a>\n"+"&nbsp;"+
+		"<a  onClick='"+this.Name()+".Save();' style='background-color: #acf;'>Save</a>  \n";
+	
+	
+	
+	
 	// Set up the name and parameter type
-	var ParameterHTML=""+
-	"<input type='text' name='ParameterID' value='" + this.ParameterID + "' style='width:250px;'>\n"+ 
-	"<select name='DistributionType'  onchange='"+this.Name()+".DistributionType=this.value;"+this.Name()+".UpdateTypeDisplay();'>\n"+//change the type, then redisplay
-	
-	"	<option value='normal'>Normal</option>\n"+
-	"	<option value='lognormal'>Log Normal</option>\n"+
-	"	<option value='uniform'>Uniform</option>\n"+
-	"	<option value='optimisedsample'>Optimised Sample</option>\n"+
-	
-	"</select>\n ";
+	ParameterHTML+="<input type='text' name='ParameterID' value='" + this.ParameterID + "' style='width:250px;'>\n"+ 
+		"<select name='DistributionType'  onchange='"+this.Name()+".DistributionType=this.value;"+this.Name()+".UpdateTypeDisplay();'>\n"+//change the type, then redisplay
+		
+		"	<option value='normal'>Normal</option>\n"+
+		"	<option value='lognormal'>Log Normal</option>\n"+
+		"	<option value='uniform'>Uniform</option>\n"+
+		"	<option value='optimisedsample'>Optimised Sample</option>\n"+
+		
+		"</select>\n ";
 	
 	
 	if (this.DistributionType=="normal"){
@@ -114,8 +121,6 @@ ParameterClass.prototype.UpdateTypeDisplay= function (){
 	
 	// This information exists for all parameters
 	ParameterHTML=ParameterHTML+
-		"<a  onClick='"+this.Name()+".Save();' style='background-color: #acf;'> Save</a>  \n"+
-		"<a onClick=\"ToggleDisplay(this, 'ParamInfoBox');\" style='background-color: #acf;'> + More info </a>\n"+
 		"<div class='ParamInfoBox' style='display: none;'>\n"+
 		"<p>\n"+
 		"    Hard bounds: Min <input type='text' name='MinValue' value='" + this.MinValue + " '>\n"+

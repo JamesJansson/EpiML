@@ -213,7 +213,7 @@ DataExtractionObject.prototype.DrawGraph=function(){
 	
 };
 
-function RunAllODEOError(ODEOArray, SimulationResult){
+function RunAllDEOError(ODEOArray, SimulationResult){
 	var ErrorSum=0;
 	for (var ODEOCount in ODEOArray){
 	    ErrorSum+=ODEOArray[ODEOCount].RunDataAndFindError(SimulationResult);
@@ -221,7 +221,7 @@ function RunAllODEOError(ODEOArray, SimulationResult){
 	return ErrorSum;
 }
 	
-function RunAllODEOGenerateGraphData(ODEOArray, SimulationResult){
+function RunAllDEOGenerateGraphData(ODEOArray, SimulationResult){
 	for (var ODEOCount in ODEOArray){
 	    ODEOArray[ODEOCount].GenerateGraphData(SimulationResult);
 	}

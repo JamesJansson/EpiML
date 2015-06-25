@@ -56,7 +56,9 @@ function FullModelTest(Stuff1){
 	// This needs to be established by the optimisation 
 	Param.HCV.ProbabilityOfTransmission=0.15;
 	Param.IDU.NSP.P=0.3;
-	Param.IDU.RateOfCesssation=0.25;
+	Param.IDU.RateOfCesssation=0.10;
+
+	Param.IDU.BecomeRegularInjector.P=0.50;
 
 	Param.IDU.Entry.PeakEntryPerYear=500;
 	Param.IDU.Entry.B=0.20;
@@ -157,11 +159,11 @@ function FullModelTest(Stuff1){
 	
 	
 	// Store a run for data as it would appear in the optimisation 
-	RunAllODEOError(ODEOArray, FullModelResults);
+	var TotalError=RunAllDEOError(ODEOArray, FullModelResults);
 	
 	
 	// Generate graph data (external to the optimisation)
-	RunAllODEOGenerateGraphData(ODEOArray, FullModelResults);
+	RunAllDEOGenerateGraphData(ODEOArray, FullModelResults);
 	// Store a run for data as it would appear in the optimisation 
 	ReturnResults.Optimisation=ODEOArray;
 	
