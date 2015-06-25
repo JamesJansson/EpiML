@@ -462,7 +462,7 @@ ParameterPage.prototype.Build= function (){
 			this.ParamArray[key].UpdateTypeDisplay();
 		}
 	}
-}
+};
 
 
 ParameterPage.prototype.AddNewParameter= function(){
@@ -476,7 +476,7 @@ ParameterPage.prototype.AddNewParameter= function(){
 	for (Key in this.ParamArray){
 		this.ParamArray[Key].UpdateTypeDisplay();//Update all parameters because changing the HTML forces it to a normal distr. option.
 	}
-}
+};
 
 
 ParameterPage.prototype.SaveParameters= function(){
@@ -490,6 +490,10 @@ ParameterPage.prototype.SaveParameters= function(){
 	}
 	this.ParamArray.sort(compare);
 	
+	//Update the array positions
+	this.UpdateArrayPositions();
+	this.Build();
+	
 	
 	var ParamJSONString=JSON.stringify(this.ParamArray, null, 4);//gives 4 spaces between elements
 	var blob = new Blob([ParamJSONString], {type: "text/plain;charset=utf-8"});
@@ -500,44 +504,17 @@ ParameterPage.prototype.SaveParameters= function(){
 			console.log(err);
 		}
 	});
-	
-	//Update the array positions
-	
-	this.UpdateArrayPositions();
-	this.Build();
-
-}
+};
 
 ParameterPage.prototype.UpdateArrayPositions= function(){
 	for (Key in this.ParamArray){
 		this.ParamArray[Key].ArrayNumber=Key;
 		this.ParamArray[Key].SetInterfaceID(this.InterfaceHolder);
 	}
-}
+};
 
 
-// function SaveParameters(ParamToSave, FileName){
-	// //Sort the Parameters by ID
-	// function compare(a,b) {
-	  // if (a.ParameterID < b.ParameterID)
-		 // return -1;
-	  // if (a.ParameterID > b.ParameterID)
-		// return 1;
-	  // return 0;
-	// }
-	// ParamToSave.sort(compare);
-	
-	
-	// var ParamJSONString=JSON.stringify(ParamToSave, null, 4);//gives 4 spaces between elements
-	// var blob = new Blob([ParamJSONString], {type: "text/plain;charset=utf-8"});
-	
-	// fs.writeFile("./data/parameters.json", ParamJSONString , function(err) {
-		// if(err) {
-			// alert("There was an error writing to the parameters.json file. See console for details.");
-			// console.log(err);
-		// }
-	// });
-// }
+
 
 
 // Load parameters from a file
