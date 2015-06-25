@@ -80,7 +80,7 @@ DataExtractionObject.prototype.FindError=function(SimulationResult){// Simulatio
 		this.Simulation.Value[TimeCount]=this.ResultFunction(SimulationResult, this.Data.Time[TimeCount]);
 	}
 
-	this.Error=this.ErrorFunction(SimulationResult);
+	this.Error=this.Weight*this.ErrorFunction(SimulationResult);
 	// Error function is calculated once for the entire run of the simualtion 
 	// note that the error function receives the simulation result, although it does not have to use it. 
 	
