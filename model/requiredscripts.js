@@ -6,6 +6,7 @@ importScripts("simulationtools.js");
 importScripts("mathtools.js");
 importScripts("stochasticoptimisation.js");
 importScripts("deepcopy.js");
+importScripts("dataextractionobject.js");
 // Model specific functions
 importScripts("person.js");
 importScripts("hcv.js");
@@ -27,4 +28,5 @@ importScripts("hcvtransmission.js");
 importScripts("hcvtreatment.js");
 importScripts("hcvtreatmentscenarios.js");
 importScripts("hcvdiagnosis.js");
-importScripts("dataextractionobject.js");
+
+importScripts("hcvdataextractionobject.js");
