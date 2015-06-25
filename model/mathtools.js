@@ -906,6 +906,18 @@ function WinSingleProbability(p){//Given a probability p of winning, return true
 	return false;// didn't win.
 }
 
+// Determines the time between now and an event which occurs on a probabilistic basis
+function TimeUntilEvent(PerTimeProbability){
+	// r=per time probability
+	// p=random number between 0 and 1
+	// p=r^t
+	// p=e^(ln(r)t)
+	// t=ln(p)/ln(r)
+	return (Math.log(Rand.Value())/Math.log(1-PerTimeProbability));
+}
+
+
+
 
 // Fisher–Yates shuffle
 // This code is copied from : http://bost.ocks.org/mike/shuffle/
