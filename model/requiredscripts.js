@@ -2,7 +2,7 @@
 importScripts("model.js");
 importScripts("fullmodel.js");
 
-importScripts("simulationtools.js");
+importScripts("eventvector.js");
 importScripts("mathtools.js");
 importScripts("stochasticoptimisation.js");
 importScripts("deepcopy.js");
