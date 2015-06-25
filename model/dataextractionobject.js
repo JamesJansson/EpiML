@@ -89,9 +89,15 @@ DataExtractionObject.prototype.FindError=function(SimulationResult){// Simulatio
 
 DataExtractionObject.prototype.ErrorFunction=function(){// SimulationResult
 	// Note that this can be alterred by setting obj.Errorfunction=SomeFunction;
-
-	var ErrorVec=Abs(Minus(this.Data.Value, this.Simulation.Value));
-	var Error=Sum(ErrorVec);
+	var Error;
+	var DiffVec=Abs(Minus(this.Data.Value, this.Simulation.Value));
+	if (this.Optimisation.ProportionalError){
+		var PropDiffVec=Divide(DiffVec, Max(this.Data.Value));
+		Error=Sum(PropDiffVec);
+	}
+	else {
+		Error=Sum(DiffVec);
+	}
 	return Error;
 };
 

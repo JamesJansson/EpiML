@@ -79,6 +79,8 @@ function SetupDataExtractionObjects(){
 			NewDEO.SetData(DataStruct);
 			NewDEO.SetGraphTime(GraphTime);
 			NewDEO.ResultFunction=EverInjectorByAgeFunction;
+			NewDEO.Optimise=true;
+			
 			
 			// CReate a referenece that can be used to download the data in the future
 			eval(ObjectName+"=NewDEO;");
