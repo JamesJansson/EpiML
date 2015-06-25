@@ -36,13 +36,17 @@ function DataExtractionObject(){
 	this.Graph.Result.Value;
 	
 	this.Optimise=false;// is a flag used to determine if the object will be optimised or not
-	
 	this.Optimisation={};
-	this.Optimisation.Value;
-	this.Optimisation.Time;
+	this.Optimisation.Weight=1;// Set to 1 by standard, but can be set higher or lower to more heavily weight certain parameters higher or lower
+	this.Optimisation.ProportionalError=false;// Sets error to a function that is proportional to the data given
+	
+	this.Simulation={};
+	this.Simulation.Value;
+	this.Simulation.Time;
 	
 	
-	//this.ErrorFunction;// specifies how the error is determined. function() 
+	//this.ErrorFunction;// specifies how the error is determined. 
+	// A custom error function can be set using DEOName.ErrorFunction=function() 
 	
 	// The following sections are used to summarise multiple simulations
 	
@@ -68,11 +72,11 @@ DataExtractionObject.prototype.SetGraphTime=function(TimeArray){// SimulationRes
 
 
 DataExtractionObject.prototype.RunDataAndFindError=function(SimulationResult){// SimulationResult.Population
-	this.Optimisation.Value=[];
-	this.Optimisation.Time=this.Data.Time;
+	this.Simulation.Value=[];
+	this.Simulation.Time=this.Data.Time;
 	
 	for (var TimeCount in this.Data.Time){
-		this.Optimisation.Value[TimeCount]=this.ResultFunction(SimulationResult, this.Data.Time[TimeCount]);
+		this.Simulation.Value[TimeCount]=this.ResultFunction(SimulationResult, this.Data.Time[TimeCount]);
 	}
 
 	var Error=this.ErrorFunction(SimulationResult);
@@ -85,7 +89,7 @@ DataExtractionObject.prototype.RunDataAndFindError=function(SimulationResult){//
 DataExtractionObject.prototype.ErrorFunction=function(){// SimulationResult
 	// Note that this can be alterred by setting obj.Errorfunction=SomeFunction;
 
-	var ErrorVec=Abs(Minus(this.Data.Value, this.Optimisation.Value));
+	var ErrorVec=Abs(Minus(this.Data.Value, this.Simulation.Value));
 	var Error=Sum(ErrorVec);
 	return Error;
 };
@@ -236,23 +240,21 @@ function RunAllDEOGenerateGraphData(ODEOArray, SimulationResult){
 }
 	
 
-
-
 // This function is run outside the simulation after all optimisations have occurred (i.e. this is summarising all results). 
 function SummariseAllDEO(ResultsBySim){
-	// ResultsBySim[Sim].Optimisation[SpecificStatCount]
+	// ResultsBySim[Sim].DEOArray[SpecificStatCount]
 	var DEOResultsBySim=[];
 	for (var SimCount in ResultsBySim){
-		DEOResultsBySim[SimCount]=ResultsBySim[SimCount].Optimisation;
+		DEOResultsBySim[SimCount]=ResultsBySim[SimCount].DEOArray;
 	}
 	// DEOResultsBySim[SimCount][SpecificStatCount]
 	var DEOArrayByStat=Transpose(DEOResultsBySim);
 	
 	console.log(DEOArrayByStat);
-	// Transpose to get at all the .Optimisation results
+	// Transpose to get at all the .DEOArray results
 	//var ResultsByStat=TransposeArrObj(ResultsBySim);
-	// ResultsByStat.Optimisation[Sim][SpecificStatCount]
-	//var OptimisationArrayBySim=ResultsByStat.Optimisation;// Choose to operate only on the Optimisation results
+	// ResultsByStat.DEOArray[Sim][SpecificStatCount]
+	//var OptimisationArrayBySim=ResultsByStat.DEOArray;// Choose to operate only on the Optimisation results
 	// OptimisationStatArray[Sim][SpecificStatCount]
 	//var DEOArrayByStat=Transpose(OptimisationArrayBySim);// Stat count is an array
 	//OptimisationStatArray[SpecificStatCount][Sim]
@@ -273,9 +275,6 @@ function SummariseAllDEO(ResultsBySim){
 
 
 
-// CREATE A SUB ELEMENT THAT DOES THE OPTIMSIATION
-// Results.Optimisation.Stats // the arrays match
-// Results.Optimisation.Data
 
 
 // This function is run internally in each instance of the model

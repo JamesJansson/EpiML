@@ -49,7 +49,7 @@ function FullModelTest(Stuff1){
 	
 	
 	// Set up the optimisation
-	var ODEOArray = SetupDataExtractionObjects();
+	var DEOArray = SetupDataExtractionObjects();
 	
 	
 	
@@ -134,15 +134,38 @@ function FullModelTest(Stuff1){
 	// Run the full model
 	var FullModelResults=FullModel(Param, Notifications, Param.Time.EndSimulation, Intervention);
 	
-	var Person=FullModelResults.Population;
 	
 	
-	console.error("ODEOArray[19].ErrorFunction");
-	console.error(ODEOArray[19].RunDataAndFindError(FullModelResults));
+	
+	console.error("DEOArray[19].ErrorFunction");
+	console.error(DEOArray[19].RunDataAndFindError(FullModelResults));
 	
 
 	
 	
+	
+	
+	
+	
+	
+	// Store a run for data as it would appear in the optimisation 
+	var TotalError=RunAllDEOError(DEOArray, FullModelResults);
+	
+	console.error(""+TotalError)
+	
+	
+	// Generate graph data (external to the optimisation)
+	RunAllDEOGenerateGraphData(DEOArray, FullModelResults);
+	
+	
+	
+	
+	var ReturnResults={};
+	// Store a run for data as it would appear in the optimisation 
+	ReturnResults.DEOArray=DEOArray;
+	
+	
+	ReturnResults.HCVDataDiagnosisResults=FullModelResults.HCVDataDiagnosisResults;
 	
 	
 	var StatsTime={};
@@ -150,7 +173,9 @@ function FullModelTest(Stuff1){
 	StatsTime.EndTime=2030;
 	StatsTime.StepSize=1;
 	
-	var ReturnResults={};
+	
+	var Person=FullModelResults.Population;
+	
 	ReturnResults.LivingWithHCVInfection=LivingWithHCVInfectionStats(Person, StatsTime);
 	ReturnResults.CurrentIDU=CurrentIDUStats(Person, StatsTime);
 	ReturnResults.EverIDU=EverIDUStats(Person, StatsTime);
@@ -158,17 +183,8 @@ function FullModelTest(Stuff1){
 	ReturnResults.PWIDAge=PWIDAgeStats(Person, StatsTime);
 	
 	
-	// Store a run for data as it would appear in the optimisation 
-	var TotalError=RunAllDEOError(ODEOArray, FullModelResults);
 	
 	
-	// Generate graph data (external to the optimisation)
-	RunAllDEOGenerateGraphData(ODEOArray, FullModelResults);
-	// Store a run for data as it would appear in the optimisation 
-	ReturnResults.Optimisation=ODEOArray;
-	
-	
-	ReturnResults.HCVDataDiagnosisResults=FullModelResults.HCVDataDiagnosisResults;
 	
 	
 	// Rearrange the 
