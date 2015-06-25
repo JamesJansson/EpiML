@@ -1,59 +1,53 @@
 // This library requires mathtools.js to work
 
 function ParameterClass(ParameterID, ArrayName, ArrayNumber, InterfaceHolder, NumberOfSamples){// InterfacePrefix
-
-
-this.ParameterID=ParameterID;// e.g. HCV_LFHCCProbability
-this.ArrayName=ArrayName;
-this.ArrayNumber=ArrayNumber;
-this.InterfaceID=[];
-
-this.SetInterfaceID(InterfaceHolder);// e.g. HCV_LFHCCProbability
-
-
-
-// Note that GroupName is primarily used for interface design. It is updated at load to represent the true structure of the objects in which it resides, so it cannot be relied upon to be consistent between builds.
-this.GroupName="";//e.g. HCV, or in the case of it being a struct of a struct, Param.HCV
-//GroupName+'.'+ParameterID gives the full name that the function can call. 
-
-this.DistributionType="normal";
-
-//0: normal
-//1: lognormal
-//2: uniform
-//3: optimisedsample //used in a case where the parameters is unknown and an algorithm decides the sample chosen based on the outcome of an optimisation routine
-
-// The following are used for inside the simulations
-//4: exponential
-//5: logitnormal   // used for probability distributions (on [0,1]). Note sigma<1 to avoid strange edge effects
-//6: poisson
-//7: sqrnormal
-
-
-this.Median=NaN;
-this.StandardError=NaN;
-this.LowerBound=NaN;//used for uniform distributions
-this.UpperBound=NaN;//used for uniform distributions
-
-
-
-this.Upper95Range=NaN;// These values are calculated on the fly by the program, and are displayed in the interface
-this.Lower95Range=NaN;
-this.CalculatedMedian=NaN;
-
-this.NumberOfSamples=NumberOfSamples;
-this.Val=[];//This is the array of the samples
-
-this.MinValue="";// These values are used to put a bound on the values, e.g. many values must not be less than zero.
-this.MaxValue="";
-
-//The Description is used to describe what the variables are and where they are from including URLs and any other calculation
-this.Description=[];//
+	this.ParameterID=ParameterID;// e.g. HCV_LFHCCProbability
+	this.ArrayName=ArrayName;
+	this.ArrayNumber=ArrayNumber;
+	this.InterfaceID=[];
+	
+	this.SetInterfaceID(InterfaceHolder);// e.g. HCV_LFHCCProbability
+	
+	// Note that GroupName is primarily used for interface design. It is updated at load to represent the true structure of the objects in which it resides, so it cannot be relied upon to be consistent between builds.
+	this.GroupName="";//e.g. HCV, or in the case of it being a struct of a struct, Param.HCV
+	//GroupName+'.'+ParameterID gives the full name that the function can call. 
+	
+	this.DistributionType="normal";
+	
+	//0: normal
+	//1: lognormal
+	//2: uniform
+	//3: optimisedsample //used in a case where the parameters is unknown and an algorithm decides the sample chosen based on the outcome of an optimisation routine
+	
+	// The following are used for inside the simulations
+	//4: exponential
+	//5: logitnormal   // used for probability distributions (on [0,1]). Note sigma<1 to avoid strange edge effects
+	//6: poisson
+	//7: sqrnormal
+	
+	
+	this.Median=NaN;
+	this.StandardError=NaN;
+	this.LowerBound=NaN;//used for uniform distributions
+	this.UpperBound=NaN;//used for uniform distributions
+	
+	this.Upper95Range=NaN;// These values are calculated on the fly by the program, and are displayed in the interface
+	this.Lower95Range=NaN;
+	this.CalculatedMedian=NaN;
+	
+	this.NumberOfSamples=NumberOfSamples;
+	this.Val=[];//This is the array of the samples
+	
+	this.MinValue="";// These values are used to put a bound on the values, e.g. many values must not be less than zero.
+	this.MaxValue="";
+	
+	//The Description is used to describe what the variables are and where they are from including URLs and any other calculation
+	this.Description=[];//
 }
 
 ParameterClass.prototype.SetInterfaceID= function (InterfaceHolder){
 	this.InterfaceID=InterfaceHolder+"_"+this.ArrayNumber;
-}
+};
 
 
 
@@ -65,14 +59,14 @@ ParameterClass.prototype.Load= function (InputStructure){
 			this[Key]=InputStructure[Key];
 		}
 	}
-}	
+};
 
 
 	
 ParameterClass.prototype.Name= function (){
 	return (this.ArrayName+'['+this.ArrayNumber+']');
 	//return (this.GroupName+'.'+this.ParameterID);
-}	
+};
 	
 ParameterClass.prototype.UpdateTypeDisplay= function (){
 	// Set up the name and parameter type
@@ -143,7 +137,7 @@ ParameterClass.prototype.UpdateTypeDisplay= function (){
 	// Set the parameter
 	document.getElementById(this.InterfaceID).innerHTML=ParameterHTML;
 	document.getElementById(this.InterfaceID).DistributionType.value=this.DistributionType;
-}
+};
 	
 ParameterClass.prototype.Save=function(){
 	// Go through each of the possible elements
@@ -207,7 +201,7 @@ ParameterClass.prototype.Save=function(){
 	
 	
 	this.UpdateTypeDisplay();
-}	
+};
 	
 	
 	
@@ -243,7 +237,7 @@ ParameterClass.prototype.CalculateUncertaintyBounds= function (){
 			this.Upper95Range=Percentile(this.Val, 95);
 		}
 	}
-}
+};
 
 ParameterClass.prototype.CreateDistribution= function (){
 	var EmptyString="";
@@ -314,7 +308,7 @@ ParameterClass.prototype.CreateDistribution= function (){
 		console.error(err);
 		throw "In parameter "+ this.ParameterID;
 	}	
-}
+};
 
 // *********************************************************************************
 
@@ -338,19 +332,42 @@ function ParameterSplit(ParameterArray, NumberOfSamples, RecalculateDistribution
 			var ParamName=ParameterArray[ParamCount].ParameterID;
 			var ValueToStore=ParameterArray[ParamCount].Val[SimCount];
 			
-			ParameterSplitByUnderscore(ParamObject[SimCount], ParamName, ValueToStore);
+			// This takes the current ParamName, and adds it to the structure ParamObject[SimCount]
+			ParameterSplitByPeriod(ParamObject[SimCount], ParamName, ValueToStore);
 			// If there is an underscore in the name
 		}
 	}
 	return ParamObject;
 }
 
+function ParameterSplitByPeriod(ParamObject, ParamName, Value){
+	// If there is no underscore in the name
+	if(ParamName.indexOf('.') == -1){
+		ParamObject[ParamName]=Value;// return the value of the param to store
+	}
+	else{
+		//Split off the first part
+		var FirstPart=ParamName.substr(0,ParamName.indexOf('.'));
+		var SecondPart=ParamName.substr(ParamName.indexOf('.')+1);
+		
+		if (typeof(ParamObject[FirstPart])==="number"){
+			throw "There is a problem with defining the object, which could mean that a parameter group is called the same thing as a parameter";
+		}
+		if (typeof(ParamObject[FirstPart])==="undefined"){
+			// Create the subelement
+			ParamObject[FirstPart]={};
+		}
+		
+		ParameterSplitByPeriod(ParamObject[FirstPart], SecondPart, Value);
+	}
+	// There is no return, because under javascript, the modifications made to ParamObject should be maintained as it is passed back through the recursions
+}
+
+
 function ParameterSplitByUnderscore(ParamObject, ParamName, Value){
-	
-	
 	// If there is no underscore in the name
 	if(ParamName.indexOf('_') == -1){
-		ParamObject[ParamName]=Value;
+		ParamObject[ParamName]=Value;// return the value of the param to store
 	}
 	else{
 		//Split off the first part
@@ -480,7 +497,12 @@ ParameterPage.prototype.AddNewParameter= function(){
 
 
 ParameterPage.prototype.SaveParameters= function(){
-		// Sort the Parameters by ID
+	// Press save on all the buttons
+	for (Key in this.ParamArray){
+		this.ParamArray[Key].Save();//Update all parameters because changing the HTML forces it to a normal distr. option.
+	}
+	
+	// Sort the Parameters by ID
 	function compare(a,b) {
 	  if (a.ParameterID < b.ParameterID)
 		 return -1;
@@ -514,11 +536,54 @@ ParameterPage.prototype.UpdateArrayPositions= function(){
 };
 
 
+function LoadParameters(ParameterFileName){
+	// e.g. ParameterFileName="./model/parameters.json";
+	
+	
+	// Open the file	
+	var ParamStruct=fs.readFileSync(ParameterFileName, 'utf8');
+	
+	console.error("Note that file error handling has not yet been implemented. Maybe use a try/catch system. Determine how to use readFileSync properly to ensure that the lack of the file is handled properly.");
+	// var ParamStruct=fs.readFileSync("./model/parameters.json", 'utf8', function (err, data) {
+		// console.log("1");
+		// if (err){
+			// console.error("The file " + ParameterFileName+" could not be loaded. Error: ");
+			// console.error(err);
+			// var ParsedStruct={};
+			// ParsedStruct.ParamLoadingError=err;
+			// return ParsedStruct;
+		// }
+		// else{
+			// //Parse the JSON
+			// var ParsedStruct= JSON.parse(data);
+			// return ParsedStruct;
+		// }
+	// });
+	
+	//Parse the JSON
+	 var ParsedStruct= JSON.parse(ParamStruct);
+	
+	// Check for error
+	if (typeof(ParsedStruct.ParamLoadingError)!='undefined'){
+		return ParsedStruct;
+	}
+	
+	// Check for problems
 
+	
+	var Param=[];
+	// Parse into each subgroup
+	for (var Key in ParsedStruct){
+		// Create a new parameter for each value in the group
+		Param[Key]=new ParameterClass("", "", Key, "", 1);// ParameterID, ArrayName, ArrayNumber, InterfaceHolder, NumberOfSamples
+		Param[Key].Load(ParsedStruct[Key]);
+	}
+	return Param;
+}
 
 
 // Load parameters from a file
-function LoadParameters(ParameterFileName){
+function OLDLoadParameters(ParameterFileName){
 	// Open the file	
 	var ParamStruct=fs.readFileSync("./data/parameters.json", 'utf8');
 	

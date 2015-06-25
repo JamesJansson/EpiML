@@ -1,6 +1,6 @@
 [
     {
-        "ParameterID": "HCV.F0F1",
+        "ParameterID": "HCV_F0F1",
         "ArrayName": "Param",
         "ArrayNumber": "0",
         "InterfaceID": "ParamHolder_0",
@@ -41,7 +41,7 @@
         "Description": "Table 4, Retrospective-prospective, Random Effects Model Meta-Regression\nHla-Hla Thein, 2008, Estimation of Stage-Specific Fibrosis Progression Rates in Chronic Hepatitis C Virus Infection: A Meta-Analysis and Meta-Regression"
     },
     {
-        "ParameterID": "HCV.F1F2",
+        "ParameterID": "HCV_F1F2",
         "ArrayName": "Param",
         "ArrayNumber": "1",
         "InterfaceID": "ParamHolder_1",
@@ -82,7 +82,7 @@
         "Description": "Table 4, Retrospective-prospective, Random Effects Model Meta-Regression\nHla-Hla Thein, 2008, Estimation of Stage-Specific Fibrosis Progression Rates in Chronic Hepatitis C Virus Infection: A Meta-Analysis and Meta-Regression"
     },
     {
-        "ParameterID": "HCV.F2F3",
+        "ParameterID": "HCV_F2F3",
         "ArrayName": "Param",
         "ArrayNumber": "2",
         "InterfaceID": "ParamHolder_2",
@@ -123,7 +123,7 @@
         "Description": "Table 4, Retrospective-prospective, Random Effects Model Meta-Regression\nHla-Hla Thein, 2008, Estimation of Stage-Specific Fibrosis Progression Rates in Chronic Hepatitis C Virus Infection: A Meta-Analysis and Meta-Regression"
     },
     {
-        "ParameterID": "HCV.F3F4",
+        "ParameterID": "HCV_F3F4",
         "ArrayName": "Param",
         "ArrayNumber": "3",
         "InterfaceID": "ParamHolder_3",
@@ -164,7 +164,7 @@
         "Description": "Table 4, Retrospective-prospective, Random Effects Model Meta-Regression\nHla-Hla Thein, 2008, Estimation of Stage-Specific Fibrosis Progression Rates in Chronic Hepatitis C Virus Infection: A Meta-Analysis and Meta-Regression"
     },
     {
-        "ParameterID": "HCV.F4DeathP",
+        "ParameterID": "HCV_F4DeathP",
         "ArrayName": "Param",
         "ArrayNumber": "4",
         "InterfaceID": "ParamHolder_4",
@@ -205,7 +205,7 @@
         "Description": "Degos et al 2000 Hepatitis C virus related cirrhosis: time to occurrence of hepatocellular carcinoma and death.\n\nOf the 416 patients, 60 developed HCC with a five year rate of 13.4% (95% confidence interval (CI) 9.0-17.8%) and 83 died (including 34 with HCC), with a five year death rate of 15.3% (95% CI 12.6-18.0%)\n\n5-year -> Annual probability\n15.3% -> 0.032665489\n12.6%  ->0.026575469\n18% -> 0.03891285\n\n"
     },
     {
-        "ParameterID": "HCV.F4HCCP",
+        "ParameterID": "HCV_F4HCCP",
         "ArrayName": "Param",
         "ArrayNumber": "5",
         "InterfaceID": "ParamHolder_5",
@@ -246,7 +246,7 @@
         "Description": "Degos et al 2000 Hepatitis C virus related cirrhosis: time to occurrence of hepatocellular carcinoma and death.\n\nOf the 416 patients, 60 developed HCC with a five year rate of 13.4% (95% confidence interval (CI) 9.0-17.8%) and 83 died (including 34 with HCC), with a five year death rate of 15.3% (95% CI 12.6-18.0%)\n\n5-year -> Annual probability\n13.4% -> 0.028364043\n9.0%  ->0.018685359\n17.8% -> 0.038444484\n"
     },
     {
-        "ParameterID": "HCV.F4LF",
+        "ParameterID": "HCV_F4LF",
         "ArrayName": "Param",
         "ArrayNumber": "6",
         "InterfaceID": "ParamHolder_6",
@@ -287,7 +287,7 @@
         "Description": "IMPORTANT: THIS IS NOT REAL"
     },
     {
-        "ParameterID": "HCV.F4.PAt20Years.AlcoholGT50g",
+        "ParameterID": "HCV_F4_PAt20Years_AlcoholGT50g",
         "ArrayName": "Param",
         "ArrayNumber": "7",
         "InterfaceID": "ParamHolder_7",
@@ -328,7 +328,7 @@
         "Description": "It appears that the greatest risk for HCV infected individuals is the excess consumption of alcohol. \nThe probability of no Cirrohsis (F4) at 20 years following infection\n<50g/day 93% (SD 1)\n>50g/day 70% (SD 7)\nRef:\nPoynard et al. 2001 Rates and risk factors of liver fibrosis progression in patients with chronic hepatitis C "
     },
     {
-        "ParameterID": "HCV.F4.PAt20Years.AlcoholLT50g",
+        "ParameterID": "HCV_F4_PAt20Years_AlcoholLT50g",
         "ArrayName": "Param",
         "ArrayNumber": "8",
         "InterfaceID": "ParamHolder_8",
@@ -369,7 +369,7 @@
         "Description": "It appears that the greatest risk for HCV infected individuals is the excess consumption of alcohol. \nThe probability of no Cirrohsis (F4) at 20 years following infection\n<50g/day 93% (SD 1)\n>50g/day 70% (SD 7)\nRef:\nPoynard et al. 2001 Rates and risk factors of liver fibrosis progression in patients with chronic hepatitis C \n\n\nThe estimated prevalence of cirrhosis at 20 years after the infection was16%(14%-19%) for all studies,18%(15%-21%) for cross-sectional/retrospective studies, 7% (4%-14%) for retrospective-prospective studies, 18% (16%-21%) for studies conducted in clinical settings, and 7% (4%-12%) for studies conducted in nonclinical settings.\n\nThein, Estimation of Stage-Specific Fibrosis Progression..."
     },
     {
-        "ParameterID": "HCV.FibrosisReversalRate",
+        "ParameterID": "HCV_FibrosisReversalRate",
         "ArrayName": "Param",
         "ArrayNumber": "9",
         "InterfaceID": "ParamHolder_9",
@@ -410,7 +410,7 @@
         "Description": "Table 4\nIn people who are treated at F2-F4 and are sustained responders, fibrosis stage reverses at −0.591 (−0.627;−0.550) steps per year.\nSustained response only occurred in 31% of people in the F2-F4 categories. However this study included numerous observations of people who had treatments that weren't effective. \nSustained virologic response appears to be worse in treating people with cirrohsis\nPoynard 2002 Impact of pegylated interferon alfa-2b and ribavirin on liver fibrosis in patients with chronic hepatitis C\n\nMarcellin and Poynard agree: in 5-6 years, at -0.591 stages per year, an improvement of 3.25 stages\n\n\"In 62% of patients, the last biopsy done showed normal or nearly normal histologic findings.\" Last biopsy was 5-6 years\nMarcellin P (1997) Long-term histologic improvement and loss of detectable intrahepatic HCV RNA in patients with chronic hepatitis C and sustained response to interferon-alpha therapy.\n\nCirrohsis leading to HCC: \"Patients with cirrhosis pretreatment are at a low but real risk of HCC after SVR.\"\nStart at Stage 2\n82% had improved fibrosis scores\n20% had nearly normal livers\nGeorge SL (2009), Clinical, virologic, histologic, and biochemical outcomes after successful HCV therapy: a 5-year follow-up of 150 patients."
     },
     {
-        "ParameterID": "HCV.GenotypePrevalence.1",
+        "ParameterID": "HCV_GenotypePrevalence_1",
         "ArrayName": "Param",
         "ArrayNumber": "10",
         "InterfaceID": "ParamHolder_10",
@@ -451,7 +451,7 @@
         "Description": "Table 1, Dore et al. 2003, Epidemiology of hepatitis C virus infection in Australia\n\nGenotype prevalence\n1\t0.54973822\n2\t0.081151832\n3\t0.331588133\n4\t0.02617801\nMixed\t0.008726003\n\nNote: uncertainty in these percentages are formed by looking at the range of estimates for each genotype in the table.\n"
     },
     {
-        "ParameterID": "HCV.GenotypePrevalence.2",
+        "ParameterID": "HCV_GenotypePrevalence_2",
         "ArrayName": "Param",
         "ArrayNumber": "11",
         "InterfaceID": "ParamHolder_11",
@@ -492,7 +492,7 @@
         "Description": ""
     },
     {
-        "ParameterID": "HCV.GenotypePrevalence.3",
+        "ParameterID": "HCV_GenotypePrevalence_3",
         "ArrayName": "Param",
         "ArrayNumber": "12",
         "InterfaceID": "ParamHolder_12",
@@ -533,7 +533,7 @@
         "Description": ""
     },
     {
-        "ParameterID": "HCV.GenotypePrevalence.4",
+        "ParameterID": "HCV_GenotypePrevalence_4",
         "ArrayName": "Param",
         "ArrayNumber": "13",
         "InterfaceID": "ParamHolder_13",
@@ -574,7 +574,7 @@
         "Description": ""
     },
     {
-        "ParameterID": "HCV.GenotypePrevalence.5",
+        "ParameterID": "HCV_GenotypePrevalence_5",
         "ArrayName": "Param",
         "ArrayNumber": "14",
         "InterfaceID": "ParamHolder_14",
@@ -615,7 +615,7 @@
         "Description": ""
     },
     {
-        "ParameterID": "HCV.GenotypePrevalence.6",
+        "ParameterID": "HCV_GenotypePrevalence_6",
         "ArrayName": "Param",
         "ArrayNumber": "15",
         "InterfaceID": "ParamHolder_15",
@@ -656,7 +656,7 @@
         "Description": ""
     },
     {
-        "ParameterID": "HCV.InitialPrevalence",
+        "ParameterID": "HCV_InitialPrevalence",
         "ArrayName": "Param",
         "ArrayNumber": "16",
         "InterfaceID": "ParamHolder_16",
@@ -676,7 +676,7 @@
         "Description": ""
     },
     {
-        "ParameterID": "HCV.PReinfectionProtected",
+        "ParameterID": "HCV_PReinfectionProtected",
         "ArrayName": "Param",
         "ArrayNumber": "17",
         "InterfaceID": "ParamHolder_17",
@@ -717,7 +717,7 @@
         "Description": "Mehta, 2002 Lancet 359:1478  Reinfection 8.6/100 py -> 5.4/100 py\nGrebely, 2006 Hepat 44:1139 Reinfection 8.1/100 py -> 1.8/100 py\nMicallef, 2007 J Viral Hepat 14:413 \nAitken, 2008 Hepat 48:1746 \nOsburn, 2010 Gastro 138:315 \nCurrie, 2008 Drug Alc Dep 93:148\nBackmund, 2004 Clin Inf Dis 39:1540 \nGrebely, 2010 J Gastr Hepat 25:1281"
     },
     {
-        "ParameterID": "HCV.SpontaneousClearance.CCGenotypeHR",
+        "ParameterID": "HCV_SpontaneousClearance_CCGenotypeHR",
         "ArrayName": "Param",
         "ArrayNumber": "18",
         "InterfaceID": "ParamHolder_18",
@@ -758,7 +758,7 @@
         "Description": "According to Figure 3 of \nGrebely, J, The effects of female sex, viral genotype, and IL28B genotype on spontaneous clearance of acute hepatitis C virus infection. \nhttp://www.ncbi.nlm.nih.gov/pubmed/23908124"
     },
     {
-        "ParameterID": "HCV.SpontaneousClearance.FemaleHR",
+        "ParameterID": "HCV_SpontaneousClearance_FemaleHR",
         "ArrayName": "Param",
         "ArrayNumber": "19",
         "InterfaceID": "ParamHolder_19",
@@ -799,7 +799,7 @@
         "Description": "According to Figure 3 of \nGrebely, J, The effects of female sex, viral genotype, and IL28B genotype on spontaneous clearance of acute hepatitis C virus infection. \nhttp://www.ncbi.nlm.nih.gov/pubmed/23908124"
     },
     {
-        "ParameterID": "HCV.SpontaneousClearance.Genotype1",
+        "ParameterID": "HCV_SpontaneousClearance_Genotype1",
         "ArrayName": "Param",
         "ArrayNumber": "20",
         "InterfaceID": "ParamHolder_20",
@@ -840,7 +840,7 @@
         "Description": "According to Figure 3 of \nGrebely, J, The effects of female sex, viral genotype, and IL28B genotype on spontaneous clearance of acute hepatitis C virus infection. \nhttp://www.ncbi.nlm.nih.gov/pubmed/23908124"
     },
     {
-        "ParameterID": "HCV.SpontaneousClearance.MedianTime",
+        "ParameterID": "HCV_SpontaneousClearance_MedianTime",
         "ArrayName": "Param",
         "ArrayNumber": "21",
         "InterfaceID": "ParamHolder_21",
@@ -881,7 +881,7 @@
         "Description": "According to Figure 1A of \nGrebely, J, The effects of female sex, viral genotype, and IL28B genotype on spontaneous clearance of acute hepatitis C virus infection. \nhttp://www.ncbi.nlm.nih.gov/pubmed/23908124\n\nThe time by which 50% of people who would clear have cleared is 0.425 years.\n\nThe uncertainty in this parameter is not well known as yet."
     },
     {
-        "ParameterID": "HCV.SpontaneousClearance.p",
+        "ParameterID": "HCV_SpontaneousClearance_p",
         "ArrayName": "Param",
         "ArrayNumber": "22",
         "InterfaceID": "ParamHolder_22",
@@ -922,7 +922,7 @@
         "Description": "According to Figure 1A of \nGrebely, J, The effects of female sex, viral genotype, and IL28B genotype on spontaneous clearance of acute hepatitis C virus infection. \nhttp://www.ncbi.nlm.nih.gov/pubmed/23908124\n\nThe Kaplan-Meier estimator gives the probaility of persistent infection as 0.641581633 (95%CI 0.588010204-0.69005102). \n\nP of clearance is therefore 0.358418367 (95%CI 0.30994898-0.411989796)\n\n\nStandard error is hence set to 0.03.\n"
     },
     {
-        "ParameterID": "Haemophilia.HCV.Prevalence1973",
+        "ParameterID": "Haemophilia_HCV_Prevalence1973",
         "ArrayName": "Param",
         "ArrayNumber": "23",
         "InterfaceID": "ParamHolder_23",
@@ -963,7 +963,7 @@
         "Description": "Dore et al. 2003, Epidemiology of hepatitis C virus infection in Australia\n\nRetrospective testing of stored serum from two haemophilia centres in Melbourne demonstrated a HCV prevalence of 45% among people with haemophilia in 1973, rising to 74% by 1980 (Leslie et al., 1992). Similar retrospective testing of stored serum from IDUs presenting with acute hepatitis to Fairfield Hospital, Melbourne (Moaven et al., 1993) and IDUs attending a methadone maintenance clinic in Sydney (Freeman et al., 2000), demonstrated HCV prevalence of 70–84% in the early 1970s.\n....\nThis risk was highest for those people, such as male haemophiliacs, who received blood product transfusions from multiple donors: in 1990, an HCV prevalence of approximately 75% was reported among people with haemophilia in Melbourne (Williamson et al., 1990)."
     },
     {
-        "ParameterID": "Haemophilia.HCV.Prevalence1980",
+        "ParameterID": "Haemophilia_HCV_Prevalence1980",
         "ArrayName": "Param",
         "ArrayNumber": "24",
         "InterfaceID": "ParamHolder_24",
@@ -1004,7 +1004,7 @@
         "Description": "Dore et al. 2003, Epidemiology of hepatitis C virus infection in Australia\n\nRetrospective testing of stored serum from two haemophilia centres in Melbourne demonstrated a HCV prevalence of 45% among people with haemophilia in 1973, rising to 74% by 1980 (Leslie et al., 1992). Similar retrospective testing of stored serum from IDUs presenting with acute hepatitis to Fairfield Hospital, Melbourne (Moaven et al., 1993) and IDUs attending a methadone maintenance clinic in Sydney (Freeman et al., 2000), demonstrated HCV prevalence of 70–84% in the early 1970s.\n....\nThis risk was highest for those people, such as male haemophiliacs, who received blood product transfusions from multiple donors: in 1990, an HCV prevalence of approximately 75% was reported among people with haemophilia in Melbourne (Williamson et al., 1990)."
     },
     {
-        "ParameterID": "Haemophilia.HCV.Prevalence1990",
+        "ParameterID": "Haemophilia_HCV_Prevalence1990",
         "ArrayName": "Param",
         "ArrayNumber": "25",
         "InterfaceID": "ParamHolder_25",
@@ -1045,7 +1045,7 @@
         "Description": "Dore et al. 2003, Epidemiology of hepatitis C virus infection in Australia\n\nRetrospective testing of stored serum from two haemophilia centres in Melbourne demonstrated a HCV prevalence of 45% among people with haemophilia in 1973, rising to 74% by 1980 (Leslie et al., 1992). Similar retrospective testing of stored serum from IDUs presenting with acute hepatitis to Fairfield Hospital, Melbourne (Moaven et al., 1993) and IDUs attending a methadone maintenance clinic in Sydney (Freeman et al., 2000), demonstrated HCV prevalence of 70–84% in the early 1970s.\n....\nThis risk was highest for those people, such as male haemophiliacs, who received blood product transfusions from multiple donors: in 1990, an HCV prevalence of approximately 75% was reported among people with haemophilia in Melbourne (Williamson et al., 1990)."
     },
     {
-        "ParameterID": "Haemophilia.MortalityFactor",
+        "ParameterID": "Haemophilia_MortalityFactor",
         "ArrayName": "Param",
         "ArrayNumber": "26",
         "InterfaceID": "ParamHolder_26",
@@ -1086,7 +1086,7 @@
         "Description": "Darby et al. 2007, Mortality rates, life expectancy, and causes of death in people with hemophilia A or B in the United Kingdom who were not infected with HIV\n\nDuring this period, it exceeded mortality in the general population by a factor of 2.69 (95% confidence interval [CI]: 2.37-3.05), and median life expectancy in severe hemophilia was 63 years."
     },
     {
-        "ParameterID": "Haemophilia.Total2013",
+        "ParameterID": "Haemophilia_Total2013",
         "ArrayName": "Param",
         "ArrayNumber": "27",
         "InterfaceID": "ParamHolder_27",
@@ -1127,7 +1127,7 @@
         "Description": "Not a great ref, but\nhttp://www.haemophilia.org.au/bleedingdisorders/fast-facts "
     },
     {
-        "ParameterID": "IDU.AIHWDataFactor",
+        "ParameterID": "IDU_AIHWDataFactor",
         "ArrayName": "Param",
         "ArrayNumber": "28",
         "InterfaceID": "ParamHolder_28",
@@ -1168,7 +1168,7 @@
         "Description": "The purpose of this factor is to accomodate for concerns that the AIHW Household Drug Surveys fail to capture people who inject drugs accurately. This factor inflates the results slightly."
     },
     {
-        "ParameterID": "IDU.AIHWDataUncertaintySD",
+        "ParameterID": "IDU_AIHWDataUncertaintySD",
         "ArrayName": "Param",
         "ArrayNumber": "29",
         "InterfaceID": "ParamHolder_29",
@@ -1209,7 +1209,7 @@
         "Description": "The purpose of this variable is to adjust the data of AIHW results by a set amount to acknowledge the uncertainty in the data results. The results are given in percentages of increaments 0.1%. Being off by 0.1% across the size of the estimated population would result being off by an average of 1700. On rounding error alone, the error will be 1/4 of 1700. However, some results are out by over 50% (standard error 50%) on estimtes of 0.4%. As such, we have chosen uncertainty SD of 1700."
     },
     {
-        "ParameterID": "IDU.BecomeRegularInjector.P",
+        "ParameterID": "IDU_BecomeRegularInjector_P",
         "ArrayName": "Param",
         "ArrayNumber": "30",
         "InterfaceID": "ParamHolder_30",
@@ -1250,7 +1250,7 @@
         "Description": "Gender Differences in Circumstances Surrounding First Injection Experience of Rural Injection Drug Users in the United States\nhttp://www.ncbi.nlm.nih.gov/pmc/articles/PMC3874445/\nTable 1"
     },
     {
-        "ParameterID": "IDU.BecomeRegularInjector.PTime.LT10Years",
+        "ParameterID": "IDU_BecomeRegularInjector_PTime_LT10Years",
         "ArrayName": "Param",
         "ArrayNumber": "31",
         "InterfaceID": "ParamHolder_31",
@@ -1291,7 +1291,7 @@
         "Description": "Gender Differences in Circumstances Surrounding First Injection Experience of Rural Injection Drug Users in the United States\nhttp://www.ncbi.nlm.nih.gov/pmc/articles/PMC3874445/\nTable 1"
     },
     {
-        "ParameterID": "IDU.BecomeRegularInjector.PTime.LT1Week",
+        "ParameterID": "IDU_BecomeRegularInjector_PTime_LT1Week",
         "ArrayName": "Param",
         "ArrayNumber": "32",
         "InterfaceID": "ParamHolder_32",
@@ -1332,7 +1332,7 @@
         "Description": "Gender Differences in Circumstances Surrounding First Injection Experience of Rural Injection Drug Users in the United States\nhttp://www.ncbi.nlm.nih.gov/pmc/articles/PMC3874445/\nTable 1"
     },
     {
-        "ParameterID": "IDU.BecomeRegularInjector.PTime.LT1Year",
+        "ParameterID": "IDU_BecomeRegularInjector_PTime_LT1Year",
         "ArrayName": "Param",
         "ArrayNumber": "33",
         "InterfaceID": "ParamHolder_33",
@@ -1373,7 +1373,7 @@
         "Description": "Gender Differences in Circumstances Surrounding First Injection Experience of Rural Injection Drug Users in the United States\nhttp://www.ncbi.nlm.nih.gov/pmc/articles/PMC3874445/\nTable 1"
     },
     {
-        "ParameterID": "IDU.BecomeRegularInjector.PTime.LT5Years",
+        "ParameterID": "IDU_BecomeRegularInjector_PTime_LT5Years",
         "ArrayName": "Param",
         "ArrayNumber": "34",
         "InterfaceID": "ParamHolder_34",
@@ -1414,7 +1414,7 @@
         "Description": "Gender Differences in Circumstances Surrounding First Injection Experience of Rural Injection Drug Users in the United States\nhttp://www.ncbi.nlm.nih.gov/pmc/articles/PMC3874445/\nTable 1"
     },
     {
-        "ParameterID": "IDU.BecomeRegularInjector.PTime.LT6Months",
+        "ParameterID": "IDU_BecomeRegularInjector_PTime_LT6Months",
         "ArrayName": "Param",
         "ArrayNumber": "35",
         "InterfaceID": "ParamHolder_35",
@@ -1455,7 +1455,7 @@
         "Description": "Gender Differences in Circumstances Surrounding First Injection Experience of Rural Injection Drug Users in the United States\nhttp://www.ncbi.nlm.nih.gov/pmc/articles/PMC3874445/\nTable 1"
     },
     {
-        "ParameterID": "IDU.Entry.PeakEntryPerYear",
+        "ParameterID": "IDU_Entry_PeakEntryPerYear",
         "ArrayName": "Param",
         "ArrayNumber": "36",
         "InterfaceID": "ParamHolder_36",
@@ -1475,7 +1475,7 @@
         "Description": ""
     },
     {
-        "ParameterID": "IDU.Entry.YearPeakIDU",
+        "ParameterID": "IDU_Entry_YearPeakIDU",
         "ArrayName": "Param",
         "ArrayNumber": "37",
         "InterfaceID": "ParamHolder_37",
@@ -1516,7 +1516,7 @@
         "Description": ""
     },
     {
-        "ParameterID": "IDU.InjectionStartAge.Median",
+        "ParameterID": "IDU_InjectionStartAge_Median",
         "ArrayName": "Param",
         "ArrayNumber": "38",
         "InterfaceID": "ParamHolder_38",
@@ -1557,7 +1557,7 @@
         "Description": "Year\tAverage age at first injection\n1995\t    20.7\n2001\t    20.2\n2004\t    21.7\n2007\t    21.3\n2010\t    21.1\n\nSD: 0.027450232\n\nTable 2.4 AIHW 2010\nhttp://www.aihw.gov.au/publication-detail/?id=32212254712\n\nKey findings from the 2012 IDRS: a survey of people who inject drugs \nhttp://ndarc.med.unsw.edu.au/resource/illicit-drug-reporting-system-idrs-national-report-2012; \n"
     },
     {
-        "ParameterID": "IDU.InjectionStartAge.SD",
+        "ParameterID": "IDU_InjectionStartAge_SD",
         "ArrayName": "Param",
         "ArrayNumber": "39",
         "InterfaceID": "ParamHolder_39",
@@ -1598,7 +1598,7 @@
         "Description": "Standard error of the log standard deviation with median start age gives\nlog(21)=3.044522437723423"
     },
     {
-        "ParameterID": "IDU.InjectionStartAge.SexDifference",
+        "ParameterID": "IDU_InjectionStartAge_SexDifference",
         "ArrayName": "Param",
         "ArrayNumber": "40",
         "InterfaceID": "ParamHolder_40",
@@ -1639,7 +1639,7 @@
         "Description": "This parameter allows the starting age to be slightly different based on the sex. It is generally assumed that females initiate injecting slightly earlier than males."
     },
     {
-        "ParameterID": "IDU.MSMUse.HIVNeg",
+        "ParameterID": "IDU_MSMUse_HIVNeg",
         "ArrayName": "Param",
         "ArrayNumber": "41",
         "InterfaceID": "ParamHolder_41",
@@ -1677,10 +1677,10 @@
         ],
         "MinValue": 0,
         "MaxValue": 1,
-        "Description": "Injecting behaviour in MSM (HIV positive and negative) Table 27\t\t\t\t\t\t\t\nRecent\t2009\t2010\t2011\t2012\t2013\tMean\tSD\nHIV-positive\t20.40%\t16.40%\t14.20%\t18.20%\t17.60%\t17.36%\t0.02286482\nHIV-negative\t4.00%\t3.40%\t2.70%\t2.90%\t3.10%\t3.22%\t0.005069517\nhttps://csrh.arts.unsw.edu.au/media/CSRHFile/GCPS.Sydney.2013.Report.pdf"
+        "Description": "Injecting behaviour in MSM (HIV positive and negative) Table 27\t\t\t\t\t\t\t\nRecent\t2009\t2010\t2011\t2012\t2013\tMean\tSD\nHIV-positive\t20.40%\t16.40%\t14.20%\t18.20%\t17.60%\t17.36%\t0.02286482\nHIV-negative\t4.00%\t3.40%\t2.70%\t2.90%\t3.10%\t3.22%\t0.005069517\nhttps://csrh.arts.unsw.edu.au/media/CSRHFile/GCPS_Sydney_2013_Report.pdf"
     },
     {
-        "ParameterID": "IDU.MSMUse.HIVPos",
+        "ParameterID": "IDU_MSMUse_HIVPos",
         "ArrayName": "Param",
         "ArrayNumber": "42",
         "InterfaceID": "ParamHolder_42",
@@ -1718,10 +1718,10 @@
         ],
         "MinValue": 0,
         "MaxValue": 1,
-        "Description": "Injecting behaviour in MSM (HIV positive and negative) Table 27\t\t\t\t\t\t\t\nRecent\t2009\t2010\t2011\t2012\t2013\tMean\tSD\nHIV-positive\t20.40%\t16.40%\t14.20%\t18.20%\t17.60%\t17.36%\t0.02286482\nHIV-negative\t4.00%\t3.40%\t2.70%\t2.90%\t3.10%\t3.22%\t0.005069517\nhttps://csrh.arts.unsw.edu.au/media/CSRHFile/GCPS.Sydney.2013.Report.pdf"
+        "Description": "Injecting behaviour in MSM (HIV positive and negative) Table 27\t\t\t\t\t\t\t\nRecent\t2009\t2010\t2011\t2012\t2013\tMean\tSD\nHIV-positive\t20.40%\t16.40%\t14.20%\t18.20%\t17.60%\t17.36%\t0.02286482\nHIV-negative\t4.00%\t3.40%\t2.70%\t2.90%\t3.10%\t3.22%\t0.005069517\nhttps://csrh.arts.unsw.edu.au/media/CSRHFile/GCPS_Sydney_2013_Report.pdf"
     },
     {
-        "ParameterID": "IDU.NSP.P",
+        "ParameterID": "IDU_NSP_P",
         "ArrayName": "Param",
         "ArrayNumber": "43",
         "InterfaceID": "ParamHolder_43",
@@ -1741,7 +1741,7 @@
         "Description": ""
     },
     {
-        "ParameterID": "IDU.ProportionMale",
+        "ParameterID": "IDU_ProportionMale",
         "ArrayName": "Param",
         "ArrayNumber": "44",
         "InterfaceID": "ParamHolder_44",
@@ -1782,7 +1782,7 @@
         "Description": ""
     },
     {
-        "ParameterID": "IDU.RateOfCesssation",
+        "ParameterID": "IDU_RateOfCesssation",
         "ArrayName": "Param",
         "ArrayNumber": "45",
         "InterfaceID": "ParamHolder_45",
@@ -1802,7 +1802,7 @@
         "Description": "An annual rate that is optimised in the simulation."
     },
     {
-        "ParameterID": "IDU.ReceptiveSharing18",
+        "ParameterID": "IDU_ReceptiveSharing18",
         "ArrayName": "Param",
         "ArrayNumber": "46",
         "InterfaceID": "ParamHolder_46",
@@ -1843,7 +1843,7 @@
         "Description": ""
     },
     {
-        "ParameterID": "IDU.ReceptiveSharing.RiskReduction",
+        "ParameterID": "IDU_ReceptiveSharing_RiskReduction",
         "ArrayName": "Param",
         "ArrayNumber": "47",
         "InterfaceID": "ParamHolder_47",
@@ -1884,7 +1884,7 @@
         "Description": "This parameter indicates the risk reduction of receptively sharing needles going from the age of 18 to the age of 40. It is based off:\nThe relationship between age and risky injecting behaviours among a sample of Australian people who inject drugs.\nhttp://www.ncbi.nlm.nih.gov/pubmed/23664499\n\nCalculations related to this figure can be found in the file \"Receptive sharing risk.xlsx\""
     },
     {
-        "ParameterID": "IDU.RelationshipDuration.Val0",
+        "ParameterID": "IDU_RelationshipDuration_Val0",
         "ArrayName": "Param",
         "ArrayNumber": "48",
         "InterfaceID": "ParamHolder_48",
@@ -1925,7 +1925,7 @@
         "Description": "Duration of relationship <1 year\nUsing Dyadic Data for a Network Analysis of HIV Infection and Risk Behaviors Among Injecting Drug Users\nAlan Neaigus, Samuel R. Friedman, Marjorie Goldstein, Gilbert Ildefonso, Richard Curtis, and Benny Jose\nTable 4, <1 year 36% 1-5 years 29% >5 Years 35%"
     },
     {
-        "ParameterID": "IDU.RelationshipDuration.Val1",
+        "ParameterID": "IDU_RelationshipDuration_Val1",
         "ArrayName": "Param",
         "ArrayNumber": "49",
         "InterfaceID": "ParamHolder_49",
@@ -1966,7 +1966,7 @@
         "Description": "Duration of relationship 1-5 years\nUsing Dyadic Data for a Network Analysis of HIV Infection and Risk Behaviors Among Injecting Drug Users\nAlan Neaigus, Samuel R. Friedman, Marjorie Goldstein, Gilbert Ildefonso, Richard Curtis, and Benny Jose\nTable 4, <1 year 36% 1-5 years 29% >5 Years 35%"
     },
     {
-        "ParameterID": "IDU.RelationshipDuration.Val2",
+        "ParameterID": "IDU_RelationshipDuration_Val2",
         "ArrayName": "Param",
         "ArrayNumber": "50",
         "InterfaceID": "ParamHolder_50",
@@ -2007,7 +2007,7 @@
         "Description": "Duration of relationship >5 years\nUsing Dyadic Data for a Network Analysis of HIV Infection and Risk Behaviors Among Injecting Drug Users\nAlan Neaigus, Samuel R. Friedman, Marjorie Goldstein, Gilbert Ildefonso, Richard Curtis, and Benny Jose\nTable 4, <1 year 36% 1-5 years 29% >5 Years 35%"
     },
     {
-        "ParameterID": "IDU.Sex.AnyLastMonth",
+        "ParameterID": "IDU_Sex_AnyLastMonth",
         "ArrayName": "Param",
         "ArrayNumber": "51",
         "InterfaceID": "ParamHolder_51",
@@ -2048,7 +2048,7 @@
         "Description": "From the NSP report 1995-2010. There does not seem to be any trend in relationship seeking. \n\nCalculations can be found in nspintimatepartner.xlsx\n\nSex last month (%)\n68.2%\nStandard deviation 0.046756668\n\nOf people who had sex\tSD\nOnly sex with a regular partner\t\n74.9%\t0.012921987\nOnly sex with non-regular partner\t\n22.4%\t0.022388323\nSex with both regular and non-regular partner\t\n6.8%\t0.031168392"
     },
     {
-        "ParameterID": "IDU.Sex.FirstInjectionHadSexualPartner",
+        "ParameterID": "IDU_Sex_FirstInjectionHadSexualPartner",
         "ArrayName": "Param",
         "ArrayNumber": "52",
         "InterfaceID": "ParamHolder_52",
@@ -2089,7 +2089,7 @@
         "Description": "Gender Differences in Circumstances Surrounding First Injection Experience of Rural Injection Drug Users in the United States\nhttp://www.ncbi.nlm.nih.gov/pmc/articles/PMC3874445/\nTable 1\n7% of men had partner present, 36% of women had partner present"
     },
     {
-        "ParameterID": "IDU.Sex.OtherLastMonth",
+        "ParameterID": "IDU_Sex_OtherLastMonth",
         "ArrayName": "Param",
         "ArrayNumber": "53",
         "InterfaceID": "ParamHolder_53",
@@ -2130,7 +2130,7 @@
         "Description": "From the NSP report 1995-2010. There does not seem to be any trend in relationship seeking. \n\nCalculations can be found in nspintimatepartner.xlsx\n\nSex last month (%)\n68.2%\nStandard deviation 0.046756668\n\nOf people who had sex\tSD\nOnly sex with a regular partner\t\n74.9%\t0.012921987\nOnly sex with non-regular partner\t\n22.4%\t0.022388323\nSex with both regular and non-regular partner\t\n6.8%\t0.031168392"
     },
     {
-        "ParameterID": "IDU.Sex.RegularAndOtherLastMonth",
+        "ParameterID": "IDU_Sex_RegularAndOtherLastMonth",
         "ArrayName": "Param",
         "ArrayNumber": "54",
         "InterfaceID": "ParamHolder_54",
@@ -2171,7 +2171,7 @@
         "Description": "From the NSP report 1995-2010. There does not seem to be any trend in relationship seeking. \n\nCalculations can be found in nspintimatepartner.xlsx\n\nSex last month (%)\n68.2%\nStandard deviation 0.046756668\n\nOf people who had sex\tSD\nOnly sex with a regular partner\t\n74.9%\t0.012921987\nOnly sex with non-regular partner\t\n22.4%\t0.022388323\nSex with both regular and non-regular partner\t\n6.8%\t0.031168392"
     },
     {
-        "ParameterID": "IDU.Sex.RegularLastMonth",
+        "ParameterID": "IDU_Sex_RegularLastMonth",
         "ArrayName": "Param",
         "ArrayNumber": "55",
         "InterfaceID": "ParamHolder_55",
@@ -2212,7 +2212,7 @@
         "Description": "From the NSP report 1995-2010. There does not seem to be any trend in relationship seeking. \n\nCalculations can be found in nspintimatepartner.xlsx\n\nSex last month (%)\n68.2%\nStandard deviation 0.046756668\n\nOf people who had sex\tSD\nOnly sex with a regular partner\t\n74.9%\t0.012921987\nOnly sex with non-regular partner\t\n22.4%\t0.022388323\nSex with both regular and non-regular partner\t\n6.8%\t0.031168392"
     },
     {
-        "ParameterID": "IDU.Sex.RegularPartnerInjects",
+        "ParameterID": "IDU_Sex_RegularPartnerInjects",
         "ArrayName": "Param",
         "ArrayNumber": "56",
         "InterfaceID": "ParamHolder_56",
@@ -2253,7 +2253,7 @@
         "Description": "http://www.tandfonline.com/doi/pdf/10.1080/09540128908260235\nTable 6 and 7\n\nAbout 50% of sexual partners a non-injectors. The proportion of people who have any sexual partners and regular partners line up quite well with the ANSP Survey\n\nTable 7\nTime 1: 32/(32+36)= 47%\nTime 2: 21/(21+31)= 40%\n"
     },
     {
-        "ParameterID": "IDU.Sexuality.Bisexual",
+        "ParameterID": "IDU_Sexuality_Bisexual",
         "ArrayName": "Param",
         "ArrayNumber": "57",
         "InterfaceID": "ParamHolder_57",
@@ -2294,7 +2294,7 @@
         "Description": ""
     },
     {
-        "ParameterID": "IDU.Sexuality.Heterosexual",
+        "ParameterID": "IDU_Sexuality_Heterosexual",
         "ArrayName": "Param",
         "ArrayNumber": "58",
         "InterfaceID": "ParamHolder_58",
@@ -2335,7 +2335,7 @@
         "Description": ""
     },
     {
-        "ParameterID": "IDU.Sexuality.Homosexual",
+        "ParameterID": "IDU_Sexuality_Homosexual",
         "ArrayName": "Param",
         "ArrayNumber": "59",
         "InterfaceID": "ParamHolder_59",
@@ -2376,7 +2376,7 @@
         "Description": ""
     },
     {
-        "ParameterID": "IDU.TransmissionP",
+        "ParameterID": "IDU_TransmissionP",
         "ArrayName": "Param",
         "ArrayNumber": "60",
         "InterfaceID": "ParamHolder_60",
@@ -2396,7 +2396,7 @@
         "Description": "This is an optimised parameter based on the outcome of the simualtion. "
     },
     {
-        "ParameterID": "IDU.Use.Daily",
+        "ParameterID": "IDU_Use_Daily",
         "ArrayName": "Param",
         "ArrayNumber": "61",
         "InterfaceID": "ParamHolder_61",
@@ -2437,7 +2437,7 @@
         "Description": "Table 11.4\nhttp://www.aihw.gov.au/WorkArea/DownloadAsset.aspx?id=10737421314\n"
     },
     {
-        "ParameterID": "IDU.Use.Daily2or3Times",
+        "ParameterID": "IDU_Use_Daily2or3Times",
         "ArrayName": "Param",
         "ArrayNumber": "62",
         "InterfaceID": "ParamHolder_62",
@@ -2478,7 +2478,7 @@
         "Description": "Table 11.4\nhttp://www.aihw.gov.au/WorkArea/DownloadAsset.aspx?id=10737421314\n"
     },
     {
-        "ParameterID": "IDU.Use.DailyMore3",
+        "ParameterID": "IDU_Use_DailyMore3",
         "ArrayName": "Param",
         "ArrayNumber": "63",
         "InterfaceID": "ParamHolder_63",
@@ -2519,7 +2519,7 @@
         "Description": "Table 11.4\nhttp://www.aihw.gov.au/WorkArea/DownloadAsset.aspx?id=10737421314\n"
     },
     {
-        "ParameterID": "IDU.Use.MoreThanWeekly",
+        "ParameterID": "IDU_Use_MoreThanWeekly",
         "ArrayName": "Param",
         "ArrayNumber": "64",
         "InterfaceID": "ParamHolder_64",
@@ -2560,7 +2560,7 @@
         "Description": "Table 11.4\nhttp://www.aihw.gov.au/WorkArea/DownloadAsset.aspx?id=10737421314\n"
     },
     {
-        "ParameterID": "IDU.Use.WeeklyToMonthly",
+        "ParameterID": "IDU_Use_WeeklyToMonthly",
         "ArrayName": "Param",
         "ArrayNumber": "65",
         "InterfaceID": "ParamHolder_65",
@@ -2601,7 +2601,7 @@
         "Description": "Table 11.4\nhttp://www.aihw.gov.au/WorkArea/DownloadAsset.aspx?id=10737421314\n"
     },
     {
-        "ParameterID": "Prison.Females",
+        "ParameterID": "Prison_Females",
         "ArrayName": "Param",
         "ArrayNumber": "66",
         "InterfaceID": "ParamHolder_66",
@@ -2642,7 +2642,7 @@
         "Description": "Ref 1: Key findings from the 2012 IDRS: a survey of people who inject drugs \n"
     },
     {
-        "ParameterID": "Prison.Males",
+        "ParameterID": "Prison_Males",
         "ArrayName": "Param",
         "ArrayNumber": "67",
         "InterfaceID": "ParamHolder_67",
@@ -2724,7 +2724,7 @@
         "Description": "The time step is variable to allow the model to be checked for sensitivity to time step selection."
     },
     {
-        "ParameterID": "Time.DurationToAverageOver",
+        "ParameterID": "Time_DurationToAverageOver",
         "ArrayName": "Param",
         "ArrayNumber": "69",
         "InterfaceID": "ParamHolder_69",
@@ -2765,7 +2765,7 @@
         "Description": ""
     },
     {
-        "ParameterID": "Time.EndSimulation",
+        "ParameterID": "Time_EndSimulation",
         "ArrayName": "Param",
         "ArrayNumber": "70",
         "InterfaceID": "ParamHolder_70",
@@ -2806,7 +2806,7 @@
         "Description": ""
     },
     {
-        "ParameterID": "Time.EndTreatmentData",
+        "ParameterID": "Time_EndTreatmentData",
         "ArrayName": "Param",
         "ArrayNumber": "71",
         "InterfaceID": "ParamHolder_71",
@@ -2847,7 +2847,7 @@
         "Description": ""
     },
     {
-        "ParameterID": "Time.StartDynamicModel",
+        "ParameterID": "Time_StartDynamicModel",
         "ArrayName": "Param",
         "ArrayNumber": "72",
         "InterfaceID": "ParamHolder_72",
@@ -2888,7 +2888,7 @@
         "Description": ""
     },
     {
-        "ParameterID": "Time.StartNonDynamicModel",
+        "ParameterID": "Time_StartNonDynamicModel",
         "ArrayName": "Param",
         "ArrayNumber": "73",
         "InterfaceID": "ParamHolder_73",

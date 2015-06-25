@@ -27,7 +27,7 @@ function InitialisePage(){
 	TestingPageRequirements();
 	LoadDataFiles();
 	LoadSettingsFiles();
-	Param=LoadParameters();
+	Param=LoadParameters("./data/parameters.json");
 	
 	//Initialise interface
 	PPage=new ParameterPage(Param, "Param", "PPage", "ParamHolder", 100);
