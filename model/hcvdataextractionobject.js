@@ -83,7 +83,7 @@ function SetupDataExtractionObjects(){
 			// Set optimisation
 			NewDEO.Optimise=true;
 			NewDEO.Optimisation.ProportionalError=true;
-			this.Optimisation.Weight=10;
+			NewDEO.Optimisation.Weight=10;
 			
 			// CReate a referenece that can be used to download the data in the future
 			eval(ObjectName+"=NewDEO;");
@@ -163,7 +163,7 @@ function SetupDataExtractionObjects(){
 			// Set optimisation
 			NewDEO.Optimise=true;
 			NewDEO.Optimisation.ProportionalError=true;
-			this.Optimisation.Weight=10;
+			NewDEO.Optimisation.Weight=10;
 			
 			// CReate a referenece that can be used to download the data in the future
 			eval(ObjectName+"=NewDEO;");
