@@ -79,8 +79,11 @@ function SetupDataExtractionObjects(){
 			NewDEO.SetData(DataStruct);
 			NewDEO.SetGraphTime(GraphTime);
 			NewDEO.ResultFunction=EverInjectorByAgeFunction;
-			NewDEO.Optimise=true;
 			
+			// Set optimisation
+			NewDEO.Optimise=true;
+			NewDEO.Optimisation.ProportionalError=true;
+			this.Optimisation.Weight=10;
 			
 			// CReate a referenece that can be used to download the data in the future
 			eval(ObjectName+"=NewDEO;");
@@ -157,6 +160,11 @@ function SetupDataExtractionObjects(){
 			NewDEO.SetGraphTime(GraphTime);
 			NewDEO.ResultFunction=RecentInjectorByAgeFunction;
 			
+			// Set optimisation
+			NewDEO.Optimise=true;
+			NewDEO.Optimisation.ProportionalError=true;
+			this.Optimisation.Weight=10;
+			
 			// CReate a referenece that can be used to download the data in the future
 			eval(ObjectName+"=NewDEO;");
 			// Add the object to the array of all ODEOS
@@ -206,6 +214,10 @@ function SetupDataExtractionObjects(){
 		return Heterosexual/NSPTotal;
 	};
 	
+	// Set optimisation
+	NewDEO.Optimise=true;
+	NewDEO.Optimisation.ProportionalError=true;
+	
 	// Add the object to the array of all ODEOS
 	DEO.push(NewDEO);
 	
@@ -244,12 +256,16 @@ function SetupDataExtractionObjects(){
 		return Homosexual/NSPTotal;
 	};
 	
+	// Set optimisation
+	NewDEO.Optimise=true;
+	NewDEO.Optimisation.ProportionalError=true;
+	
 	// Add the object to the array of all ODEOS
 	DEO.push(NewDEO);
 	
+	
 	// Create a new object to extract bisexual identity from NSP
 	NewDEO=new DataExtractionObject();
-	
 	// Load the data into the function 
 	var DataStruct={};
 	DataStruct.Time=Data.NSP.Year;
@@ -279,6 +295,10 @@ function SetupDataExtractionObjects(){
 		}
 		return Bisexual/NSPTotal;
 	};
+	
+	// Set optimisation
+	NewDEO.Optimise=true;
+	NewDEO.Optimisation.ProportionalError=true;
 	
 	// Add the object to the array of all ODEOS
 	DEO.push(NewDEO);
@@ -351,6 +371,7 @@ function SetupDataExtractionObjects(){
 		}
 		
 		console.log("Total penalty for notifications: "+TotalPenalty);
+		console.log("Need to determine how much of a shortfall this is");
 		
 		return TotalPenalty;
 	};
@@ -447,6 +468,10 @@ function SetupDataExtractionObjects(){
 		return AntibodyPresent/NSPTotal;
 	};
 	
+	// Set optimisation
+	NewDEO.Optimise=true;
+	NewDEO.Optimisation.ProportionalError=true;
+	
 	// Add the object to the array of all ODEOS
 	DEO.push(NewDEO);
 	
@@ -516,7 +541,7 @@ function SetupDataExtractionObjects(){
 	// Load the data into the function 
 	var DataStruct={};
 	DataStruct.Time=Data.NSP.Year;
-	DataStruct.Value=Data.NSP.Methadone.CurrentProp;// NSP HCV antibody prevalence !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	DataStruct.Value=Data.NSP.Methadone.CurrentProp;
 	NewDEO.SetData(DataStruct);
 	
 	NewDEO.SetGraphTime(GraphTime);
@@ -546,6 +571,10 @@ function SetupDataExtractionObjects(){
 		return 0;
 	};
 	
+	// Set optimisation
+	NewDEO.Optimise=true;
+	NewDEO.Optimisation.ProportionalError=true;
+	
 	// Add the object to the array of all ODEOS
 	DEO.push(NewDEO);
 	
@@ -558,7 +587,7 @@ function SetupDataExtractionObjects(){
 	// Load the data into the function 
 	var DataStruct={};
 	DataStruct.Time=Data.NSP.Year;
-	DataStruct.Value=Data.NSP.Methadone.PreviousProp;// NSP HCV antibody prevalence !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	DataStruct.Value=Data.NSP.Methadone.PreviousProp;
 	NewDEO.SetData(DataStruct);
 	
 	NewDEO.SetGraphTime(GraphTime);
@@ -588,6 +617,10 @@ function SetupDataExtractionObjects(){
 		return 0;
 	};
 	
+	// Set optimisation
+	NewDEO.Optimise=true;
+	NewDEO.Optimisation.ProportionalError=true;
+	
 	// Add the object to the array of all ODEOS
 	DEO.push(NewDEO);
 	
@@ -599,7 +632,7 @@ function SetupDataExtractionObjects(){
 	// Load the data into the function 
 	var DataStruct={};
 	DataStruct.Time=Data.NSP.Year;
-	DataStruct.Value=Data.NSP.Methadone.NeverProp;// NSP HCV antibody prevalence !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	DataStruct.Value=Data.NSP.Methadone.NeverProp;
 	NewDEO.SetData(DataStruct);
 	
 	NewDEO.SetGraphTime(GraphTime);
@@ -628,6 +661,10 @@ function SetupDataExtractionObjects(){
 		
 		return 0;
 	};
+	
+	// Set optimisation
+	NewDEO.Optimise=true;
+	NewDEO.Optimisation.ProportionalError=true;
 	
 	// Add the object to the array of all ODEOS
 	DEO.push(NewDEO);
