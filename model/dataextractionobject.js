@@ -259,15 +259,15 @@ function SummariseAllDEO(ResultsBySim){
 	//var DEOArrayByStat=Transpose(OptimisationArrayBySim);// Stat count is an array
 	//OptimisationStatArray[SpecificStatCount][Sim]
 	
-	var SumarisedDEOArray=[];
+	var SummarisedDEOArray=[];
 	for (var SpecificStatCount in DEOArrayByStat){
-		SumarisedDEOArray[SpecificStatCount]= new DataExtractionObject();
-		SumarisedDEOArray[SpecificStatCount].SummariseMultipleSimulations(DEOArrayByStat[SpecificStatCount]);
+		SummarisedDEOArray[SpecificStatCount]= new DataExtractionObject();
+		SummarisedDEOArray[SpecificStatCount].SummariseMultipleSimulations(DEOArrayByStat[SpecificStatCount]);
 		// Draw the graph, but wait until the above has processed
-		SumarisedDEOArray[SpecificStatCount].DrawGraph();
+		SummarisedDEOArray[SpecificStatCount].DrawGraph();
 	}
 	
-	return SumarisedDEOArray;
+	return SummarisedDEOArray;
 }
 // Set up the plots page
 // for (var i=0; i<100; i++){document.getElementById("OptimisatoinPlotsHolder").innerHTML+='<div class="plot" id="OptimisationPlot'+i+'" ></div>';}
