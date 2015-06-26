@@ -52,7 +52,11 @@ function RunFullOptimisationAndDataExtration(){
 	
 	//Creating the data to be used in the simulations
 	// var Settings.RecalculateParam=true;
-	var SimInputData=ParameterSplit(PGroup.ParamArray, Settings.NumberOfSimulations, Settings.RecalculateParam);
+	if (Settings.RecalculateParam){
+		PGroup.Recalculate(Settings.NumberOfSimulations);
+	}
+	var SimInputData=PGroup.ParameterSplit();
+	//var SimInputData=ParameterSplit(PGroup.ParamArray, Settings.NumberOfSimulations, Settings.RecalculateParam);
 	
 	//Creating the simulation holder
 	var TerminateOnFinish=false;
@@ -112,7 +116,12 @@ function RunPersistentSim(){
 	//Creating the data to be used in the simulations
 	Settings.RecalculateParam=true;
 	console.error("Settings.RecalculateParam hard set here. ");
-	var ParamArrayBySim=ParameterSplit(PGroup.ParamArray, Settings.NumberOfSimulations, Settings.RecalculateParam);
+	
+	if (Settings.RecalculateParam){
+		PGroup.Recalculate(Settings.NumberOfSimulations);
+	}
+	var ParamArrayBySim=PGroup.ParameterSplit();
+	//var ParamArrayBySim=ParameterSplit(PGroup.ParamArray, Settings.NumberOfSimulations, Settings.RecalculateParam);
 	
 	//Creating the simulation holder
 	var TerminateOnFinish=false;
@@ -160,7 +169,11 @@ function RunSimSetup(){
 	Common.Settings=Settings;
 	
 	//Creating the data to be used in the simulations
-	var ParamArrayBySim=ParameterSplit(PGroup.ParamArray, Settings.NumberOfSimulations, Settings.RecalculateParam);
+	if (Settings.RecalculateParam){
+		PGroup.Recalculate(Settings.NumberOfSimulations);
+	}
+	var ParamArrayBySim=PGroup.ParameterSplit();
+	//var ParamArrayBySim=ParameterSplit(PGroup.ParamArray, Settings.NumberOfSimulations, Settings.RecalculateParam);
 	
 	//Creating the simulation holder
 	var TerminateOnFinish=false;

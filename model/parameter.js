@@ -318,7 +318,7 @@ ParameterClass.prototype.CreateDistribution= function (){
 };
 
 // *********************************************************************************
-
+console.log("ParameterSplit function should be deleted when possible.");
 // The following code takes an array of parameters with samples in each, and splits it into an array of parameter set objects that can be passed to individual simulations
 function ParameterSplit(ParameterArray, NumberOfSamples, RecalculateDistribution){
 	// Firstly, recalculate the distribution
@@ -565,12 +565,12 @@ function LoadParameters(ParameterFileName){
 
 
 
-function ParameterGroup(GroupName){
+function ParameterGroup(GroupName, NumberOfSamples){
 	this.Name=GroupName;
 	this.ParamArray=[];
 	this.Page;
 	this.FileName;
-	this.NumberOfSamples=1;
+	this.NumberOfSamples=NumberOfSamples;
 }
 
 
@@ -619,6 +619,62 @@ ParameterGroup.prototype.CreateParameterPage=function(DivNameForParameterInfo){
 	this.Page=new ParameterPage(this.ParamArray, this.Name+".ParamArray", this.Name+".Page", DivNameForParameterInfo, this.FileName, 100);
 	this.Page.Build();
 };
+
+
+ParameterGroup.prototype.Recalculate=function(NumberOfSamples){
+	this.NumberOfSamples=NumberOfSamples;
+	this.Page.NumberOfSamples=NumberOfSamples;
+	for (var ParamCount in this.ParamArray){
+		this.ParamArray[ParamCount].NumberOfSamples=NumberOfSamples;
+		this.ParamArray[ParamCount].CreateDistribution();
+	}
+};
+
+
+// The following code takes an array of parameters with samples in each, and splits it into an array of parameter set objects that can be passed to individual simulations
+ParameterGroup.prototype.ParameterSplit=function(){
+	var ParamObject=[];
+	for (var SimCount=0; SimCount<this.NumberOfSamples; SimCount++){
+		ParamObject[SimCount]={};
+		for (var ParamCount in this.ParamArray){
+			var ParamName=this.ParamArray[ParamCount].ParameterID;
+			var ValueToStore=this.ParamArray[ParamCount].Val[SimCount];
+			
+			// This takes the current ParamName, and adds it to the structure ParamObject[SimCount]
+			this.__ParameterSplitByPeriod(ParamObject[SimCount], ParamName, ValueToStore);
+			// If there is an underscore in the name
+		}
+	}
+	return ParamObject;
+};
+
+ParameterGroup.prototype.__ParameterSplitByPeriod=function(ParamObject, ParamName, Value){
+	// If there is no underscore in the name
+	if(ParamName.indexOf('.') == -1){
+		ParamObject[ParamName]=Value;// return the value of the param to store
+	}
+	else{
+		//Split off the first part
+		var FirstPart=ParamName.substr(0,ParamName.indexOf('.'));
+		var SecondPart=ParamName.substr(ParamName.indexOf('.')+1);
+		
+		if (typeof(ParamObject[FirstPart])==="number"){
+			throw "There is a problem with defining the object, which could mean that a parameter group is called the same thing as a parameter";
+		}
+		if (typeof(ParamObject[FirstPart])==="undefined"){
+			// Create the subelement
+			ParamObject[FirstPart]={};
+		}
+		
+		ParameterSplitByPeriod(ParamObject[FirstPart], SecondPart, Value);
+	}
+	// There is no return, because under javascript, the modifications made to ParamObject should be maintained as it is passed back through the recursions
+};
+
+
+
+
+
 
 
 
