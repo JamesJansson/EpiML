@@ -300,8 +300,9 @@ function StackedBarPlot(PlotHolderName, X, ArrayToPlot,  xAxisLabel, yAxisLabel)
 
 function ScatterPlot(PlotHolderName, Data,  xAxisLabel, yAxisLabel){
 	//Example usage
-		//var data = [[0, 3], [4, 8], [8, 5], [9, 13]];
-		//ScatterPlot("#PlotHolder", data,  "AAA", "BBB");
+		//Data.X=[0, 1, 2, 3, 4, 5];
+		//Data.Y=[10, 7, 6, 3, 2, 1.5];
+		//ScatterPlot('#PlotHolder', Data,  'Step', 'Error Value');
 	if (Data.X.length!=Data.Y.length){
 		throw "Data vectors should be the same length.";
 	}
@@ -339,7 +340,7 @@ function FixedAxisScatterPlot(PlotHolderName, Points,  xAxisLabel, yAxisLabel, x
 	//Example usage
 		//var data = [[0, 3], [4, 8], [8, 5], [9, 13]];
 		//ScatterPlot("#PlotHolder", data,  "AAA", "BBB");
-		PlotSettings={xaxis: {
+		var PlotSettings={xaxis: {
 					min: xmin,
 					max: xmax,
 					axisLabel: xAxisLabel,
@@ -359,7 +360,7 @@ function FixedAxisScatterPlot(PlotHolderName, Points,  xAxisLabel, yAxisLabel, x
 					axisLabelPadding: 5
 				}
 			};
-	PlotData=[];
+	var PlotData=[];
 	PlotData[0]={};
 	PlotData[0].data=Points;
 	PlotData[0].points={show:true, radius: 1, filled:true};
