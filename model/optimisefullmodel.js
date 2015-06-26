@@ -1,7 +1,76 @@
-function OptimiseFullModel(){
+function OptimiseFullModel(Notifications){
 	
 	// Set up settings
+	var FunctionInput={};
+	var OptimisationSettings={};
 	
+	FunctionInput.NumberOfSamples=1000;
+	
+	OptimisationSettings.Target=DEOArray;
+	
+	// Set end simulation time to the last time in the notification data, plus 1 year
+	FunctionInput.EndSimulationTime=Notifications.Year(Notifications.Year.length-1);
+	
+	
+	
+	var FullModelResults=FullModel(Notifications, EndSimulationTime, Intervention);
+
+	
+	
+	
+	
+	OptimisationSettings.Function=function(FunctionInput, ParameterSet){
+		// change Param according to the values listed in ParameterSet
+		Param.Whatever=ParameterSet.Whatever;
+		Param.Whatever=ParameterSet.Whatever;
+		Param.Whatever=ParameterSet.Whatever;
+		Param.Whatever=ParameterSet.Whatever;
+		
+		
+		
+		var FullModelResults=Fullmodel();
+		
+		
+		return FullModelResults;
+	};
+
+	OptimisationSettings.ErrorFunction=function(Results, Target){
+		var DEOArray=Target;
+		var TotalOptimisationError=FindTotalDEOErrorForOptimisation(DEOArray, Results);
+		
+		return TotalOptimisationError;
+	};
+	
+	OptimisationSettings.ProgressFunction=function(SimulationNumber, Parameter, SimOutput, ErrorValues){
+		console.log("Params: X "+Mean(Parameter.X.CurrentVec)+" Y "+Mean(Parameter.Y.CurrentVec));
+		PSetCount=0;
+		Data=[];
+		for (var key in Parameter.X.CurrentVec){
+			Data[PSetCount]=[Parameter.X.CurrentVec[key], Parameter.Y.CurrentVec[key]];
+			PSetCount++;
+		}
+		
+		
+		
+		
+		PlotSomething={};
+		PlotSomething.Data=Data;
+		PlotSomething.Code="FixedAxisScatterPlot('#PlotHolder', Data,  'AAA', 'BBB', 0, 10, 0, 10);";
+		self.postMessage({Execute: PlotSomething});
+		
+		
+		//ScatterPlot('#PlotHolder', Data,  'AAA', 'BBB');
+	};
+	
+	OptimisationSettings.MaxTime=10;//stop after 10 seconds
+	
+	
+	OptimisationObject=new StochasticOptimisation(OptimisationSettings);
+	OptimisationObject.AddParameter("X", 0, 10);
+	OptimisationObject.AddParameter("Y", 0, 10);
+	OptimisationObject.Run(FunctionInput);
+
+	return OptimisationObject;
 	
 	// Function for model
 	

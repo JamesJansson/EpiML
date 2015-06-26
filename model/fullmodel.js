@@ -132,7 +132,7 @@ function FullModelTest(Stuff1){
 	
 	
 	// Run the full model
-	var FullModelResults=FullModel(Param, Notifications, Param.Time.EndSimulation, Intervention);
+	var FullModelResults=FullModel(Notifications, Param.Time.EndSimulation, Intervention);
 
 	// Store a run for data as it would appear in the optimisation 
 	var TotalOptimisationError=FindTotalDEOErrorForOptimisation(DEOArray, FullModelResults);
@@ -205,7 +205,7 @@ function FullModelTest(Stuff1){
 }
 
 
-function FullModel(Param, Notifications, EndSimulation, Intervention){ 
+function FullModel(Notifications, EndSimulation, Intervention){ 
 
 	// Intervention[No]=function(Time){
 	// 	   if (Time<2016){
