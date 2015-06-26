@@ -1,7 +1,8 @@
 //Global variables for use in the program
 var Settings={};
 var Data={};
-var Param=[];//An array of parameters
+var Param=[];//An array of parameters, legacy
+var PGroup;
 var DataFile={};
 var SimulationHolder;
 var SimOutput;
@@ -27,15 +28,20 @@ function InitialisePage(){
 	TestingPageRequirements();
 	LoadDataFiles();
 	LoadSettingsFiles();
-	Param=LoadParameters("./data/parameters.json");
+	
+	
+	
+	//Param=LoadParameters("./data/parameters.json");
 	
 	//Initialise interface
-	PPage=new ParameterPage(Param, "Param", "PPage", "ParamHolder","./data/parameters.json", 100);
-	PPage.Build();
+	//PPage=new ParameterPage(Param, "Param", "PPage", "ParamHolder","./data/parameters.json", 100);
+	//PPage.Build();
 	
 	
-	
-	
+	PGroup= new ParameterGroup("PGroup", Settings.NumberOfSimulations);
+	PGroup.Load("./data/parameters.json");
+	PGroup.CreateParameterPage("ParamHolder");
+	Param=PGroup.ParamArray;
 	
 	
 	

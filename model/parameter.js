@@ -532,7 +532,7 @@ ParameterPage.prototype.UpdateArrayPositions= function(){
 
 // Load parameters from a file
 function LoadParameters(ParameterFileName){
-	// e.g. ParameterFileName="./model/parameters.json";
+	// e.g. ParameterFileName="./data/parameters.json";
 	
 	try {
 		var ParamStruct=fs.readFileSync(ParameterFileName, 'utf8');
@@ -575,7 +575,7 @@ function ParameterGroup(GroupName){
 
 
 ParameterGroup.prototype.Load=function(ParameterFileName){
-	// e.g. ParameterFileName="./model/parameters.json";
+	// e.g. ParameterFileName="./data/parameters.json";
 	this.FileName=ParameterFileName;
 	try {
 		var ParamStruct=fs.readFileSync(ParameterFileName, 'utf8');
@@ -600,10 +600,12 @@ ParameterGroup.prototype.Load=function(ParameterFileName){
 		//(ParameterID, ArrayName, ArrayNumber, InterfaceHolder, NumberOfSamples)
 		Param[Key]=new ParameterClass("", "", Key, "", 1);// ParameterID, ArrayName, ArrayNumber, InterfaceHolder, NumberOfSamples
 		Param[Key].Load(ParsedStruct[Key]);
+		// Generate interfaceholder
 	}
 	
 	this.ParamArray=Param;
-	//return Param;
+	
+	
 };
 
 
@@ -611,20 +613,12 @@ ParameterGroup.prototype.Load=function(ParameterFileName){
 
 ParameterGroup.prototype.CreateParameterPage=function(DivNameForParameterInfo){
 	if (typeof(this.FileName)=="undefined"){
-		console.error "The file is not yet specified. "
+		throw "The file is not yet specified. Please either load a file using .Load(ParameterFileName), or set a file name manually by setting .FileName=ParameterFileName. e.g. ParameterFileName='./data/parameters.json'";
 	}
-	
+	// ParameterPage(ParamArray, ParamArrayName, PageName, InterfaceHolder, FileSaveLocation, NumberOfSamples)
 	this.Page=new ParameterPage(this.ParamArray, this.Name+".ParamArray", this.Name+".Page", DivNameForParameterInfo, this.FileName, 100);
 	this.Page.Build();
 };
-
-
-
-
-
-
-
-
 
 
 
@@ -665,3 +659,7 @@ ParameterGroup.prototype.AddOptimisationResults= function(ArrayOfOptimisedParam)
 	// update the interface to show the mean and 95% ranges, be lazy and update the whole thing
 	
 };
+
+// var PGroup= new ParameterGroup("PGroup");
+// PGroup.Load("./data/parameters.json")
+// PGroup.CreateParameterPage("OtherContent");

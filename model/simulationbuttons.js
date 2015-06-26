@@ -52,7 +52,7 @@ function RunFullOptimisationAndDataExtration(){
 	
 	//Creating the data to be used in the simulations
 	// var Settings.RecalculateParam=true;
-	var SimInputData=ParameterSplit(Param, Settings.NumberOfSimulations, Settings.RecalculateParam);
+	var SimInputData=ParameterSplit(PGroup.ParamArray, Settings.NumberOfSimulations, Settings.RecalculateParam);
 	
 	//Creating the simulation holder
 	var TerminateOnFinish=false;
@@ -112,7 +112,7 @@ function RunPersistentSim(){
 	//Creating the data to be used in the simulations
 	Settings.RecalculateParam=true;
 	console.error("Settings.RecalculateParam hard set here. ");
-	var ParamArray=ParameterSplit(Param, Settings.NumberOfSimulations, Settings.RecalculateParam);
+	var ParamArrayBySim=ParameterSplit(PGroup.ParamArray, Settings.NumberOfSimulations, Settings.RecalculateParam);
 	
 	//Creating the simulation holder
 	var TerminateOnFinish=false;
@@ -123,7 +123,7 @@ function RunPersistentSim(){
 	var RunSettings={};
 	RunSettings.FunctionName="NotificationBackProjection";
 	RunSettings.Common=Common;
-	RunSettings.SimDataArray=ParamArray;
+	RunSettings.SimDataArray=ParamArrayBySim;
 	RunSettings.TerminateOnFinish=false;
 	RunSettings.FunctionToRunOnCompletion=function(){
 		console.error("Not sure if we want the below in global scope");
@@ -160,7 +160,7 @@ function RunSimSetup(){
 	Common.Settings=Settings;
 	
 	//Creating the data to be used in the simulations
-	var ParamArray=ParameterSplit(Param, Settings.NumberOfSimulations, Settings.RecalculateParam);
+	var ParamArrayBySim=ParameterSplit(PGroup.ParamArray, Settings.NumberOfSimulations, Settings.RecalculateParam);
 	
 	//Creating the simulation holder
 	var TerminateOnFinish=false;
@@ -171,7 +171,7 @@ function RunSimSetup(){
 	var RunSettings={};
 	RunSettings.FunctionName="SimSetup";
 	RunSettings.Common=Common;
-	RunSettings.SimDataArray=ParamArray;
+	RunSettings.SimDataArray=ParamArrayBySim;
 	RunSettings.TerminateOnFinish=false;
 	RunSettings.FunctionToRunOnCompletion=function(){
 		// SimOutput=RearrangeSimResults(this.Result);//here 'this' refers to the .Result  stored in simulation holder
