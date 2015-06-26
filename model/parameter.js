@@ -491,11 +491,6 @@ ParameterPage.prototype.AddNewParameter= function(){
 
 
 
-
-
-
-
-
 ParameterPage.prototype.SaveParameters= function(){
 	// Press save on all the buttons
 	for (Key in this.ParamArray){
@@ -566,3 +561,107 @@ function LoadParameters(ParameterFileName){
 	return Param;
 }
 
+
+
+
+
+function ParameterGroup(GroupName){
+	this.Name=GroupName;
+	this.ParamArray=[];
+	this.Page;
+	this.FileName;
+	this.NumberOfSamples=1;
+}
+
+
+ParameterGroup.prototype.Load=function(ParameterFileName){
+	// e.g. ParameterFileName="./model/parameters.json";
+	this.FileName=ParameterFileName;
+	try {
+		var ParamStruct=fs.readFileSync(ParameterFileName, 'utf8');
+	}
+	catch(err){
+		console.error("The file " + ParameterFileName+" could not be loaded. Error: ");
+		console.error(err);
+		throw "Stopping LoadParameters";
+	}
+	
+	
+	//Parse the JSON
+	 var ParsedStruct= JSON.parse(ParamStruct);
+	
+	// Check for problems
+
+	
+	var Param=[];
+	// Parse into each subgroup
+	for (var Key in ParsedStruct){
+		// Create a new parameter for each value in the group
+		//(ParameterID, ArrayName, ArrayNumber, InterfaceHolder, NumberOfSamples)
+		Param[Key]=new ParameterClass("", "", Key, "", 1);// ParameterID, ArrayName, ArrayNumber, InterfaceHolder, NumberOfSamples
+		Param[Key].Load(ParsedStruct[Key]);
+	}
+	
+	this.ParamArray=Param;
+	//return Param;
+};
+
+
+
+
+ParameterGroup.prototype.CreateParameterPage=function(DivNameForParameterInfo){
+	if (typeof(this.FileName)=="undefined"){
+		console.error "The file is not yet specified. "
+	}
+	
+	this.Page=new ParameterPage(this.ParamArray, this.Name+".ParamArray", this.Name+".Page", DivNameForParameterInfo, this.FileName, 100);
+	this.Page.Build();
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+ParameterGroup.prototype.CreateOptimisationStructure=function(ArrayOfParamNameToOptimise){
+	var OptimisationObject=[];
+	
+	for (var OptKey in ArrayOfParamNameToOptimise){
+		// find the relevant parameter name in the array
+		var Found=false;
+		for (var ThisParamKey in this.ParamArray){//inefficient, but not worth optimising
+			if (this.ParamArray[ThisParamKey]==ArrayOfParamNameToOptimise[OptKey]){
+				Found=true;
+				if (this.ParamArray[ThisParamKey].DistributionType!="optimisedsample"){
+					console.error(this.ParamArray[ThisParamKey]);
+					throw "The parameter "+this.ParamArray[ThisParamKey]+" is not an optimisedsample parameter";
+				}
+				
+				OptimisationObject[OptKey]={};
+				OptimisationObject[OptKey].Name=ArrayOfParamNameToOptimise[OptKey];
+				OptimisationObject[OptKey].MinValue=this.ParamArray[ThisParamKey].MinValue;
+				OptimisationObject[OptKey].MaxValue=this.ParamArray[ThisParamKey].MaxValue;
+				// OptimisationObject[OptKey].StartValue=this.ParamArray[ThisParamKey].StartValue;
+			}
+		}
+		if (Found==false){
+			throw "The parameter "+ArrayOfParamNameToOptimise[OptKey]+" was not found.";
+		}
+	}
+	
+	return OptimisationObject;
+};
+
+ParameterGroup.prototype.AddOptimisationResults= function(ArrayOfOptimisedParam){
+	
+	
+	// update the interface to show the mean and 95% ranges, be lazy and update the whole thing
+	
+};

@@ -42,8 +42,6 @@ function OptimiseFullModel(Notifications){
 	};
 	
 	OptimisationSettings.ProgressFunction=function(SimulationNumber, Parameter, SimOutput, ErrorValues){
-		disp(this);
-		
 		
 		console.log("Params: X "+Mean(Parameter.X.CurrentVec)+" Y "+Mean(Parameter.Y.CurrentVec));
 		PSetCount=0;
@@ -53,8 +51,9 @@ function OptimiseFullModel(Notifications){
 			PSetCount++;
 		}
 		
-		Data.X=[1, 2, 3, 4, 5];
-		Data.Y=;
+		
+		Data.Y=this.MeanError;
+		Data.X=AscendingArray(0, this.MeanError.length-1);
 		
 		
 		PlotSomething={};
@@ -64,7 +63,9 @@ function OptimiseFullModel(Notifications){
 		
 		// for each data found
 		
-		
+		// for (key in this.Parameter){
+		// 	CurrentParam=this.Parameter[key];
+		// }
 		
 		
 		//ScatterPlot('#PlotHolder', Data,  'AAA', 'BBB');

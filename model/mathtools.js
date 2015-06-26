@@ -276,6 +276,10 @@ function Select(InputVector, IndexToSelect){
 
 //Create an array of values
 function AscendingArray(StartValue, EndValue, IncrementBy){
+	if (typeof(IncrementBy)==="undefined"){
+		var IncrementBy=1;
+	}
+	
     var ReturnArray=[];
 
     for (var i=StartValue; i<=EndValue; i=i+IncrementBy){
