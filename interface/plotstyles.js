@@ -268,9 +268,9 @@ function StackedLinePlot(PlotHolderName, X, ArrayToPlot,  xAxisLabel, yAxisLabel
 
 function StackedBarPlot(PlotHolderName, X, ArrayToPlot,  xAxisLabel, yAxisLabel){
 	// convert to a form that plot will accept
-	PlotData=PlotStyles_ConvertDataToLinePlot(X, ArrayToPlot);
+	var PlotData=PlotStyles_ConvertDataToLinePlot(X, ArrayToPlot);
 	//Set up plot appearance // http://www.pikemere.co.uk/blog/flot-tutorial-how-to-create-area-charts/ 
-	PlotSettings={xaxis: {
+	var PlotSettings={xaxis: {
 					axisLabel: xAxisLabel,
 					axisLabelUseCanvas: true,
 					axisLabelFontSizePixels: 12,
@@ -298,27 +298,36 @@ function StackedBarPlot(PlotHolderName, X, ArrayToPlot,  xAxisLabel, yAxisLabel)
 	$.plot(PlotHolderName, PlotData, PlotSettings);
 }
 
-function ScatterPlot(PlotHolderName, Points,  xAxisLabel, yAxisLabel){
+function ScatterPlot(PlotHolderName, Data,  xAxisLabel, yAxisLabel){
 	//Example usage
 		//var data = [[0, 3], [4, 8], [8, 5], [9, 13]];
 		//ScatterPlot("#PlotHolder", data,  "AAA", "BBB");
-		PlotSettings={xaxis: {
-					axisLabel: xAxisLabel,
-					axisLabelUseCanvas: true,
-					axisLabelFontSizePixels: 12,
-					axisLabelFontFamily: 'Verdana, Arial, Helvetica, Tahoma, sans-serif',
-					axisLabelPadding: 5,
-					tickLength: 0
-				},
-				yaxis: {
-					axisLabel: yAxisLabel,
-					axisLabelUseCanvas: true,
-					axisLabelFontSizePixels: 12,
-					axisLabelFontFamily: 'Verdana, Arial, Helvetica, Tahoma, sans-serif',
-					axisLabelPadding: 5
-				}
-			};
-	PlotData=[];
+	if (Data.X.length!=Data.Y.length){
+		throw "Data vectors should be the same length.";
+	}
+	
+	var Points=[];
+	for (var key in Data.X){
+		Points[key]=[Data.X[key], Data.Y[key]];
+	}
+		
+	var PlotSettings={xaxis: {
+			axisLabel: xAxisLabel,
+			axisLabelUseCanvas: true,
+			axisLabelFontSizePixels: 12,
+			axisLabelFontFamily: 'Verdana, Arial, Helvetica, Tahoma, sans-serif',
+			axisLabelPadding: 5,
+			tickLength: 0
+		},
+		yaxis: {
+			axisLabel: yAxisLabel,
+			axisLabelUseCanvas: true,
+			axisLabelFontSizePixels: 12,
+			axisLabelFontFamily: 'Verdana, Arial, Helvetica, Tahoma, sans-serif',
+			axisLabelPadding: 5
+		}
+	};
+	var PlotData=[];
 	PlotData[0]={};
 	PlotData[0].data=Points;
 	PlotData[0].points={show:true, radius: 1, filled:true};

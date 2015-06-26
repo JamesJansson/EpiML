@@ -9,9 +9,9 @@ function OptimiseFullModel(Notifications){
 	OptimisationSettings.Target=DEOArray;
 	
 	// Set end simulation time to the last time in the notification data, plus 1 year
+	FunctionInput.Notifications=Notifications;
 	FunctionInput.EndSimulationTime=Notifications.Year(Notifications.Year.length-1);
-	
-	
+	FunctionInput.Intervention={};
 	
 	var FullModelResults=FullModel(Notifications, EndSimulationTime, Intervention);
 
@@ -28,13 +28,13 @@ function OptimiseFullModel(Notifications){
 		
 		
 		
-		var FullModelResults=Fullmodel();
+		var FullModelResults=Fullmodel(FunctionInput.Notifications, FunctionInput.EndSimulationTime, FunctionInput.Intervention);
 		
 		
 		return FullModelResults;
 	};
 
-	OptimisationSettings.ErrorFunction=function(Results, Target){
+	OptimisationSettings.ErrorFunction=function(Results, Target){// Done, unchecked
 		var DEOArray=Target;
 		var TotalOptimisationError=FindTotalDEOErrorForOptimisation(DEOArray, Results);
 		
@@ -42,21 +42,29 @@ function OptimiseFullModel(Notifications){
 	};
 	
 	OptimisationSettings.ProgressFunction=function(SimulationNumber, Parameter, SimOutput, ErrorValues){
+		disp(this);
+		
+		
 		console.log("Params: X "+Mean(Parameter.X.CurrentVec)+" Y "+Mean(Parameter.Y.CurrentVec));
 		PSetCount=0;
-		Data=[];
+		var Data=[];
 		for (var key in Parameter.X.CurrentVec){
 			Data[PSetCount]=[Parameter.X.CurrentVec[key], Parameter.Y.CurrentVec[key]];
 			PSetCount++;
 		}
 		
-		
+		Data.X=[1, 2, 3, 4, 5];
+		Data.Y=;
 		
 		
 		PlotSomething={};
 		PlotSomething.Data=Data;
-		PlotSomething.Code="FixedAxisScatterPlot('#PlotHolder', Data,  'AAA', 'BBB', 0, 10, 0, 10);";
+		PlotSomething.Code="ScatterPlot('#OptimisationPlotHolder0', Data,  'Step', 'Error Value');";
 		self.postMessage({Execute: PlotSomething});
+		
+		// for each data found
+		
+		
 		
 		
 		//ScatterPlot('#PlotHolder', Data,  'AAA', 'BBB');
