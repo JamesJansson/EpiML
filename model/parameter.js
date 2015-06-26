@@ -317,104 +317,10 @@ ParameterClass.prototype.CreateDistribution= function (){
 	}	
 };
 
-// *********************************************************************************
-console.log("ParameterSplit function should be deleted when possible.");
-// The following code takes an array of parameters with samples in each, and splits it into an array of parameter set objects that can be passed to individual simulations
-function ParameterSplit(ParameterArray, NumberOfSamples, RecalculateDistribution){
-	// Firstly, recalculate the distribution
-	if (typeof(RecalculateDistribution)!='undefined'){
-		if (RecalculateDistribution==true){
-			for (ParamCount in ParameterArray){
-				ParameterArray[ParamCount].NumberOfSamples=NumberOfSamples;
-				ParameterArray[ParamCount].CreateDistribution();
-			}
-		}
-	}
 
 
-	var ParamObject=[];
-	for (var SimCount=0; SimCount<NumberOfSamples; SimCount++){
-		ParamObject[SimCount]={};
-		for (ParamCount in ParameterArray){
-			var ParamName=ParameterArray[ParamCount].ParameterID;
-			var ValueToStore=ParameterArray[ParamCount].Val[SimCount];
-			
-			// This takes the current ParamName, and adds it to the structure ParamObject[SimCount]
-			ParameterSplitByPeriod(ParamObject[SimCount], ParamName, ValueToStore);
-			// If there is an underscore in the name
-		}
-	}
-	return ParamObject;
-}
-
-function ParameterSplitByPeriod(ParamObject, ParamName, Value){
-	// If there is no underscore in the name
-	if(ParamName.indexOf('.') == -1){
-		ParamObject[ParamName]=Value;// return the value of the param to store
-	}
-	else{
-		//Split off the first part
-		var FirstPart=ParamName.substr(0,ParamName.indexOf('.'));
-		var SecondPart=ParamName.substr(ParamName.indexOf('.')+1);
-		
-		if (typeof(ParamObject[FirstPart])==="number"){
-			throw "There is a problem with defining the object, which could mean that a parameter group is called the same thing as a parameter";
-		}
-		if (typeof(ParamObject[FirstPart])==="undefined"){
-			// Create the subelement
-			ParamObject[FirstPart]={};
-		}
-		
-		ParameterSplitByPeriod(ParamObject[FirstPart], SecondPart, Value);
-	}
-	// There is no return, because under javascript, the modifications made to ParamObject should be maintained as it is passed back through the recursions
-}
 
 
-// testing
-function ParameterSplitTest(){
-	console.error("This function is to be used for testing purposes only");
-	// Create the parameters
-	TestParam=[];//global 
-	TestParam[0]=new ParameterClass("JJJ", "empty");
-	TestParam[0].DistributionType="normal";
-	TestParam[0].Median=5;
-	TestParam[0].StandardError=2;
-	TestParam[0].NumberOfSamples=100;
-	TestParam[0].CreateDistribution();
-	
-	TestParam[1]=new ParameterClass("KKK.Subjjj", "empty");
-	TestParam[1].DistributionType="uniform";
-	TestParam[1].LowerBound=10;
-	TestParam[1].UpperBound=20;
-	TestParam[1].NumberOfSamples=100;
-	TestParam[1].CreateDistribution();
-	
-	TestParam[2]=new ParameterClass("KKK.Subkkk", "empty");
-	TestParam[2].DistributionType="lognormal";
-	TestParam[2].Median=21;
-	TestParam[2].StandardError=0.17;
-	TestParam[2].NumberOfSamples=100;
-	TestParam[2].CreateDistribution();
-	
-	TestParam[3]=new ParameterClass("AAA.1", "empty");
-	TestParam[3].DistributionType="lognormal";
-	TestParam[3].Median=21;
-	TestParam[3].StandardError=0.17;
-	TestParam[3].NumberOfSamples=100;
-	TestParam[3].CreateDistribution();
-	
-	TestParam[4]=new ParameterClass("AAA.2", "empty");
-	TestParam[4].DistributionType="lognormal";
-	TestParam[4].Median=100;
-	TestParam[4].StandardError=0.17;
-	TestParam[4].NumberOfSamples=100;
-	TestParam[4].CreateDistribution();
-	
-	TestSplitParam=ParameterSplit(TestParam, 100);
-	
-	console.log(TestSplitParam);
-}
 
 
 //**************************************************************************************************************************
@@ -530,36 +436,7 @@ ParameterPage.prototype.UpdateArrayPositions= function(){
 	}
 };
 
-// Load parameters from a file
-function LoadParameters(ParameterFileName){
-	// e.g. ParameterFileName="./data/parameters.json";
-	
-	try {
-		var ParamStruct=fs.readFileSync(ParameterFileName, 'utf8');
-	}
-	catch(err){
-		console.error("The file " + ParameterFileName+" could not be loaded. Error: ");
-		console.error(err);
-		throw "Stopping LoadParameters";
-	}
-	
-	
-	//Parse the JSON
-	 var ParsedStruct= JSON.parse(ParamStruct);
-	
-	// Check for problems
 
-	
-	var Param=[];
-	// Parse into each subgroup
-	for (var Key in ParsedStruct){
-		// Create a new parameter for each value in the group
-		//(ParameterID, ArrayName, ArrayNumber, InterfaceHolder, NumberOfSamples)
-		Param[Key]=new ParameterClass("", "", Key, "", 1);// ParameterID, ArrayName, ArrayNumber, InterfaceHolder, NumberOfSamples
-		Param[Key].Load(ParsedStruct[Key]);
-	}
-	return Param;
-}
 
 
 
@@ -666,7 +543,7 @@ ParameterGroup.prototype.__ParameterSplitByPeriod=function(ParamObject, ParamNam
 			ParamObject[FirstPart]={};
 		}
 		
-		ParameterSplitByPeriod(ParamObject[FirstPart], SecondPart, Value);
+		this.__ParameterSplitByPeriod(ParamObject[FirstPart], SecondPart, Value);
 	}
 	// There is no return, because under javascript, the modifications made to ParamObject should be maintained as it is passed back through the recursions
 };
@@ -719,3 +596,52 @@ ParameterGroup.prototype.AddOptimisationResults= function(ArrayOfOptimisedParam)
 // var PGroup= new ParameterGroup("PGroup");
 // PGroup.Load("./data/parameters.json")
 // PGroup.CreateParameterPage("OtherContent");
+
+
+
+
+
+// testing
+function ParameterSplitTest(){
+	console.error("This function is to be used for testing purposes only");
+	// Create the parameters
+	TestParam=[];//global 
+	TestParam[0]=new ParameterClass("JJJ", "empty");
+	TestParam[0].DistributionType="normal";
+	TestParam[0].Median=5;
+	TestParam[0].StandardError=2;
+	TestParam[0].NumberOfSamples=100;
+	TestParam[0].CreateDistribution();
+	
+	TestParam[1]=new ParameterClass("KKK.Subjjj", "empty");
+	TestParam[1].DistributionType="uniform";
+	TestParam[1].LowerBound=10;
+	TestParam[1].UpperBound=20;
+	TestParam[1].NumberOfSamples=100;
+	TestParam[1].CreateDistribution();
+	
+	TestParam[2]=new ParameterClass("KKK.Subkkk", "empty");
+	TestParam[2].DistributionType="lognormal";
+	TestParam[2].Median=21;
+	TestParam[2].StandardError=0.17;
+	TestParam[2].NumberOfSamples=100;
+	TestParam[2].CreateDistribution();
+	
+	TestParam[3]=new ParameterClass("AAA.1", "empty");
+	TestParam[3].DistributionType="lognormal";
+	TestParam[3].Median=21;
+	TestParam[3].StandardError=0.17;
+	TestParam[3].NumberOfSamples=100;
+	TestParam[3].CreateDistribution();
+	
+	TestParam[4]=new ParameterClass("AAA.2", "empty");
+	TestParam[4].DistributionType="lognormal";
+	TestParam[4].Median=100;
+	TestParam[4].StandardError=0.17;
+	TestParam[4].NumberOfSamples=100;
+	TestParam[4].CreateDistribution();
+	
+	TestSplitParam=ParameterSplit(TestParam, 100);
+	
+	console.log(TestSplitParam);
+}
