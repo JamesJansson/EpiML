@@ -453,7 +453,7 @@ function ExtractDataFromFiles(){
 	var NoTransplantDataPoints = 11;
 	Data.Transplants.Time=DataFile.Assorted.GetRow(116, 2, NoTransplantDataPoints);
 	Data.Transplants.HCV=DataFile.Assorted.GetRow(120, 2, NoTransplantDataPoints);
-	Data.Transplants.HCCHCC=DataFile.Assorted.GetRow(127, 2, NoTransplantDataPoints);
+	Data.Transplants.HCVHCC=DataFile.Assorted.GetRow(127, 2, NoTransplantDataPoints);
 	Data.Transplants.Total=DataFile.Assorted.GetRow(132, 2, NoTransplantDataPoints);
 	
 	

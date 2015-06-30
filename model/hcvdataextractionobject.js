@@ -930,6 +930,9 @@ function SetupDataExtractionObjects(){
 	DEO.push(NewDEO);
 	
 	
+	
+	
+	
 	// NSW Decompensted Cirrhosis admitted to hospital
 	NewDEO=new DataExtractionObject();
 	
@@ -968,8 +971,166 @@ function SetupDataExtractionObjects(){
 	
 	
 	
+	// Transplants
+	NewDEO=new DataExtractionObject();
+	
+	var DataStruct={};
+	DataStruct.Time=Data.Transplants.Time;
+	DataStruct.Value=Data.Transplants.HCV;
+	NewDEO.SetData(DataStruct);
+	
+	// Load the data into the function 
+	NewDEO.SetGraphTime(GraphTime);
+	NewDEO.Name="HCVTransplants";
+	NewDEO.Title="Transplants in people with an HCV infection";
+	NewDEO.XLabel="Year";
+	NewDEO.YLabel="Number of people";
+	
+	NewDEO.ResultFunction= function (SimulationResult, Time){
+		var Total=0;
+		for (var PersonCount in SimulationResult.Population){
+			var Person=SimulationResult.Population[PersonCount];
+			
+			// determine if the person had a transplant during the period
+		}
+		return Total*Settings.SampleFactor;
+	};
+	
+	// Add the object to the array of all ODEOS
+	DEO.push(NewDEO);
 	
 	
+	
+	
+	// Treatment
+	NewDEO=new DataExtractionObject();
+	
+	var DataStruct={};
+	DataStruct.Time=Data.HCVTreatment.Time;
+	DataStruct.Value=Data.HCVTreatment.Count;
+	NewDEO.SetData(DataStruct);
+	
+	// Load the data into the function 
+	NewDEO.SetGraphTime(GraphTime);
+	NewDEO.Name="HCVTreatment";
+	NewDEO.Title="Treatment for HCV";
+	NewDEO.XLabel="Year";
+	NewDEO.YLabel="Number of people";
+	
+	NewDEO.ResultFunction= function (SimulationResult, Time){
+		var Total=0;
+		for (var PersonCount in SimulationResult.Population){
+			var Person=SimulationResult.Population[PersonCount];
+			
+			// determine if the person initiated treatment during the period
+		}
+		return Total*Settings.SampleFactor;
+	};
+	
+	// Add the object to the array of all ODEOS
+	DEO.push(NewDEO);
+	
+	
+	
+	
+	
+	// NSW HCC diagnoses
+	NewDEO=new DataExtractionObject();
+	
+	var DataStruct={};
+	DataStruct.Time=Data.NSW.HCVHCCDiagnoses.Time;
+	DataStruct.Value=Data.NSW.HCVHCCDiagnoses.Count;
+	NewDEO.SetData(DataStruct);
+	
+	// Load the data into the function 
+	NewDEO.SetGraphTime(GraphTime);
+	NewDEO.Name="NSWHCCDiagnoses";
+	NewDEO.Title="HCC diagnoses of people with HCV in NSW";
+	NewDEO.XLabel="Year";
+	NewDEO.YLabel="Number of people";
+	
+	NewDEO.ResultFunction= function (SimulationResult, Time){
+		var Total=0;
+		for (var PersonCount in SimulationResult.Population){
+			var Person=SimulationResult.Population[PersonCount];
+			
+			// determine if the person is diagnosed with HCC during the period
+			
+			// determine if the person is in NSW
+		}
+		return Total*Settings.SampleFactor;
+	};
+	
+	// Add the object to the array of all ODEOS
+	DEO.push(NewDEO);
+	
+	
+	
+	// NSW HCV mortality
+	NewDEO=new DataExtractionObject();
+	
+	var DataStruct={};
+	DataStruct.Time=Data.NSW.HCVMortality.AllCause.Time;
+	DataStruct.Value=Data.NSW.HCVMortality.AllCause.Count;
+	NewDEO.SetData(DataStruct);
+	
+	// Load the data into the function 
+	NewDEO.SetGraphTime(GraphTime);
+	NewDEO.Name="NSWHCVMortalityAllCause";
+	NewDEO.Title="All cause mortality of people with HCV diagnosis in NSW";
+	NewDEO.XLabel="Year";
+	NewDEO.YLabel="Number of people";
+	
+	NewDEO.ResultFunction= function (SimulationResult, Time){
+		var Total=0;
+		for (var PersonCount in SimulationResult.Population){
+			var Person=SimulationResult.Population[PersonCount];
+			
+			// determine if the person is has ever had a HCV diagnosis by that point in time
+			// determine if the person dies during this period
+			
+			// determine if the person is in NSW
+		}
+		return Total*Settings.SampleFactor;
+	};
+	
+	// Add the object to the array of all ODEOS
+	DEO.push(NewDEO);
+	
+	
+	
+	
+	
+	// NSW HCV liver mortality
+	NewDEO=new DataExtractionObject();
+	
+	var DataStruct={};
+	DataStruct.Time=Data.NSW.HCVMortality.Liver.Time;
+	DataStruct.Value=Data.NSW.HCVMortality.Liver.Count;
+	NewDEO.SetData(DataStruct);
+	
+	// Load the data into the function 
+	NewDEO.SetGraphTime(GraphTime);
+	NewDEO.Name="NSWHCVMortalityLiver";
+	NewDEO.Title="Liver mortality of people with HCV diagnosis in NSW";
+	NewDEO.XLabel="Year";
+	NewDEO.YLabel="Number of people";
+	
+	NewDEO.ResultFunction= function (SimulationResult, Time){
+		var Total=0;
+		for (var PersonCount in SimulationResult.Population){
+			var Person=SimulationResult.Population[PersonCount];
+			
+			// determine if the person is has ever had a HCV diagnosis by that point in time
+			// determine if the person dies during this period due to liver issues
+			
+			// determine if the person is in NSW
+		}
+		return Total*Settings.SampleFactor;
+	};
+	
+	// Add the object to the array of all ODEOS
+	DEO.push(NewDEO);
 	
 	
 	
