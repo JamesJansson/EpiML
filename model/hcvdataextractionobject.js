@@ -893,8 +893,78 @@ function SetupDataExtractionObjects(){
 	
 	
 	
+	// NSW Decompensted Cirrhosis
+	NewDEO=new DataExtractionObject();
+	
+	var DataStruct={};
+	DataStruct.Time=Data.NSW.DecompenstedCirrhosis.Diagnosed.Time;
+	DataStruct.Value=Data.NSW.DecompenstedCirrhosis.Diagnosed.Count;
+	NewDEO.SetData(DataStruct);
+	
+	// Load the data into the function 
+	NewDEO.SetGraphTime(GraphTime);
+	NewDEO.Name="NumNSWHCVWithDecomp";
+	NewDEO.Title="Number of people in NSW with HCV - Decompensted Cirrhosis";
+	NewDEO.XLabel="Year";
+	NewDEO.YLabel="Number of people";
+	
+	NewDEO.ResultFunction= function (SimulationResult, Time){
+		var Total=0;
+		for (var PersonCount in SimulationResult.Population){
+			var Person=SimulationResult.Population[PersonCount];
+			// Check if CurrentlyInjecting
+			if (Person.HCV.CurrentlyInfected(Time)){
+				/////// CHECK THE STATE OF THIS SECTION
+				
+				
+				
+				if (Person.HCV.Fibrosis.Value(Time)==5){
+					//Total++;
+				}
+			}
+		}
+		return Total*Settings.SampleFactor;
+	};
+	
+	// Add the object to the array of all ODEOS
+	DEO.push(NewDEO);
 	
 	
+	// NSW Decompensted Cirrhosis admitted to hospital
+	NewDEO=new DataExtractionObject();
+	
+	var DataStruct={};
+	DataStruct.Time=Data.NSW.DecompenstedCirrhosis.AdmittedToHospital.Time;
+	DataStruct.Value=Data.NSW.DecompenstedCirrhosis.AdmittedToHospital.Count;
+	NewDEO.SetData(DataStruct);
+	
+	// Load the data into the function 
+	NewDEO.SetGraphTime(GraphTime);
+	NewDEO.Name="NumNSWHCVWithDecompAdmitted";
+	NewDEO.Title="Number of people admitted in NSW with HCV - Decompensted Cirrhosis";
+	NewDEO.XLabel="Year";
+	NewDEO.YLabel="Number of people";
+	
+	NewDEO.ResultFunction= function (SimulationResult, Time){
+		var Total=0;
+		for (var PersonCount in SimulationResult.Population){
+			var Person=SimulationResult.Population[PersonCount];
+			// Check if CurrentlyInjecting
+			if (Person.HCV.CurrentlyInfected(Time)){
+				/////// CHECK THE STATE OF THIS SECTION
+				
+				/////// CHECK IF THE PERSON ATTENDS HOSPITAL IN THIS TIME
+				
+				if (Person.HCV.Fibrosis.Value(Time)==5){
+					//Total++;
+				}
+			}
+		}
+		return Total*Settings.SampleFactor;
+	};
+	
+	// Add the object to the array of all ODEOS
+	DEO.push(NewDEO);
 	
 	
 	

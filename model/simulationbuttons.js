@@ -445,6 +445,48 @@ function ExtractDataFromFiles(){
 	Data.NSP.Methadone.NeverProp=Divide(Data.NSP.Methadone.Never, Data.NSP.Methadone.Total);
 		
 	
+	
+	
+	// Other assorted data
+	console.log("Note that there is an additional data point for between 1985-2003 that we are yet to deal with, represented in the equations below as '2'");
+	Data.Transplants={};
+	var NoTransplantDataPoints = 11;
+	Data.Transplants.Time=DataFile.Assorted.GetRow(116, 2, NoTransplantDataPoints);
+	Data.Transplants.HCV=DataFile.Assorted.GetRow(120, 2, NoTransplantDataPoints);
+	Data.Transplants.HCCHCC=DataFile.Assorted.GetRow(127, 2, NoTransplantDataPoints);
+	Data.Transplants.Total=DataFile.Assorted.GetRow(132, 2, NoTransplantDataPoints);
+	
+	
+	
+	Data.HCVTreatment={};
+	Data.HCVTreatment.Time=DataFile.Assorted.GetRow(149, 1, 13);
+	Data.HCVTreatment.Count=DataFile.Assorted.GetRow(150, 1, 13);
+	
+	Data.NSW={};
+	
+	Data.NSW.HCVHCCDiagnoses={};
+	Data.NSW.HCVHCCDiagnoses.Time=DataFile.Assorted.GetRow(156, 2, 17);
+	Data.NSW.HCVHCCDiagnoses.Count=DataFile.Assorted.GetRow(158, 2, 17);
+	
+	Data.NSW.HCVMortality={};
+	Data.NSW.HCVMortality.AllCause={};
+	Data.NSW.HCVMortality.AllCause.Time=DataFile.Assorted.GetRow(164, 1, 21);
+	Data.NSW.HCVMortality.AllCause.Count=DataFile.Assorted.GetRow(165, 1, 21);
+	Data.NSW.HCVMortality.Liver={};
+	Data.NSW.HCVMortality.Liver.Time=DataFile.Assorted.GetRow(164, 1, 15);
+	Data.NSW.HCVMortality.Liver.Count=DataFile.Assorted.GetRow(166, 1, 15);
+	
+	
+	Data.NSW.DecompenstedCirrhosis={};
+	console.log("not sure if the DecompenstedCirrhosis is total living with or diagnoses");
+	Data.NSW.DecompenstedCirrhosis.Diagnosed={};
+	Data.NSW.DecompenstedCirrhosis.Diagnosed.Time=DataFile.Assorted.GetRow(172, 1, 20);
+	Data.NSW.DecompenstedCirrhosis.Diagnosed.Count=DataFile.Assorted.GetRow(173, 1, 20);
+	
+	Data.NSW.DecompenstedCirrhosis.AdmittedToHospital={};
+	Data.NSW.DecompenstedCirrhosis.AdmittedToHospital.Time=DataFile.Assorted.GetRow(172, 8, 22);
+	Data.NSW.DecompenstedCirrhosis.AdmittedToHospital.Count=DataFile.Assorted.GetRow(174, 8, 22);
+	
 }
 
 
