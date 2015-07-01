@@ -1,6 +1,8 @@
 EpiML
 =====
 
-An agent based mathematical model written in HTML5.
+An agent based mathematical model written in node.js with an HTML5 interface.
 
-This model is currently under development, however you can see where it is up to at http://jamesjansson.github.io/EpiML/model.htm
+This model is currently under development.
+
+To run this model, download nw.js http://nwjs.io/ and open this package using it.
