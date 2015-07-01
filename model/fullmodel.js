@@ -136,7 +136,7 @@ function FullModelTest(Stuff1){
 
 	// Store a run for data as it would appear in the optimisation 
 	var TotalOptimisationError=FindTotalDEOErrorForOptimisation(DEOArray, FullModelResults);
-	
+	console.error("The TotalOptimisationError is "+TotalOptimisationError);
 	
 	
 	
@@ -146,8 +146,8 @@ function FullModelTest(Stuff1){
 	// Find the data for the full set in which there are data points
 	var TotalError=FindAllDEOError(DEOArray, FullModelResults);
 	
-	console.error("The total error is "+TotalError)
-	
+	console.error("The total error is "+TotalError);
+	console.log(DEOArray);
 	
 	
 	// Generate graph data (external to the optimisation)

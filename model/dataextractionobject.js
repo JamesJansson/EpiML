@@ -23,9 +23,8 @@ function DataExtractionObject(){
 	
 	this.Data={};// specified follwing setup (must be a statistic type (count, summary, ratio))
 	
-	
-	this.Data.Value=[];// uses the time specified in the data 
 	this.Data.Time=[];// uses the time specified in the data 
+	this.Data.Value=[];// uses the time specified in the data 
 	
 	this.Graph={};
 	this.Graph.Data={};
@@ -77,22 +76,37 @@ DataExtractionObject.prototype.FindError=function(SimulationResult){// Simulatio
 	this.Simulation.Time=this.Data.Time;
 	
 	for (var TimeCount in this.Data.Time){
-		this.Simulation.Value[TimeCount]=this.ResultFunction(SimulationResult, this.Data.Time[TimeCount]);
+		this.Simulation.Value[TimeCount]=this.ResultFunction(SimulationResult,  this.Data.Time[TimeCount]);
 	}
-
-	this.Error=this.Weight*this.ErrorFunction(SimulationResult);
+	
+	console.error("find this event");
+	console.log(this.Simulation.Value);
+	console.log(this.Data.Value);
+	console.log(this.Name);
+	
+	this.Error=this.Optimisation.Weight*this.ErrorFunction(this.Data.Time, this.Data.Value, this.Simulation.Value, SimulationResult);
+	
+	console.log("this is what the simulation, data, ErrorFunction look like")
+	console.log(this.Simulation.Value);
+	console.log(this.Data.Value);
+	console.log(this.Error);
+	
 	// Error function is calculated once for the entire run of the simualtion 
 	// note that the error function receives the simulation result, although it does not have to use it. 
 	
 	return this.Error;
 };
 
-DataExtractionObject.prototype.ErrorFunction=function(){// SimulationResult
-	// Note that this can be alterred by setting obj.Errorfunction=SomeFunction;
+DataExtractionObject.prototype.ErrorFunction=function(TimeArray, DataArray, SimulationValueArray, SimulationResult){// SimulationResult
+	// Note that this can be alterred by setting obj.Errorfunction=SomeFunction(TimeArray, DataArray, SimulationValueArray, SimulationResult);
+	// Ordinarily you would operate on DataArray and  SimulationValueArray
+	// However there may be a specific (and complicated) error function you want to perform given the full model results 
+	// in this case you would operate on SimulationResult
+	
 	var Error;
-	var DiffVec=Abs(Minus(this.Data.Value, this.Simulation.Value));
+	var DiffVec=Abs(Minus(DataArray, SimulationValueArray));
 	if (this.Optimisation.ProportionalError){
-		var PropDiffVec=Divide(DiffVec, Max(this.Data.Value));
+		var PropDiffVec=Divide(DiffVec, Max(DataArray));
 		Error=Sum(PropDiffVec);
 	}
 	else {
@@ -230,6 +244,7 @@ function FindAllDEOError(DEOArray, SimulationResult){
 	var ErrorSum=0;
 	for (var DEOCount in DEOArray){
 	    ErrorSum+=DEOArray[DEOCount].FindError(SimulationResult);
+		console.log(ErrorSum);
 	}
 	return ErrorSum;
 }

@@ -359,14 +359,16 @@ function SetupDataExtractionObjects(){
 		return Notifications;
 	};
 	
-	NewDEO.ErrorFunction=function(SimulationResults){
+	NewDEO.ErrorFunction=function(TimeArray, DataArray, SimulationValueArray, SimulationResult){
 		// There is a value in the simulation results that indicates the shortfall in the number of notifications
 		// This value is calculated by age group
 		
 		// 
+		console.log(SimulationResult);
+		
 		var TotalPenalty=0;
-		for (var Count in SimulationResults.HCVDataDiagnosisResults){
-			var Pen=SimulationResults.HCVDataDiagnosisResults[Count].Penalty;
+		for (var Count in SimulationResult.HCVDataDiagnosisResults){
+			var Pen=SimulationResult.HCVDataDiagnosisResults[Count].Penalty;
 			TotalPenalty+=Pen.InsufficientInfectedToDiagnoseTotal+Pen.InsufficientSymptomaticDiagnosesTotal;
 		}
 		
@@ -424,7 +426,7 @@ function SetupDataExtractionObjects(){
 		return TotalInfected;
 	};
 	
-	NewDEO.ErrorFunction=function(SimulationResults){
+	NewDEO.ErrorFunction=function(TimeArray, DataArray, SimulationValueArray, SimulationResult){
 		// There is a value in the simulation results that indicates the shortfall in the number of notifications
 		// This value is calculated by age group
 		return 0;
@@ -515,7 +517,7 @@ function SetupDataExtractionObjects(){
 		return TotalInfected/TotalInjecting;
 	};
 	
-	NewDEO.ErrorFunction=function(SimulationResults){
+	NewDEO.ErrorFunction=function(TimeArray, DataArray, SimulationValueArray, SimulationResult){
 		// There is a value in the simulation results that indicates the shortfall in the number of notifications
 		// This value is calculated by age group
 		return 0;
@@ -566,10 +568,12 @@ function SetupDataExtractionObjects(){
 				}
 			}
 		}
-		console.log("Not currently extracting");
+		
 		
 		return 0;
 	};
+	console.log("Not currently extracting");
+	
 	
 	// Set optimisation
 	NewDEO.Optimise=true;
@@ -612,10 +616,12 @@ function SetupDataExtractionObjects(){
 				}
 			}
 		}
-		console.log("Not currently extracting");
+		
 		
 		return 0;
 	};
+	console.log("Not currently extracting");
+	
 	
 	// Set optimisation
 	NewDEO.Optimise=true;
@@ -657,10 +663,11 @@ function SetupDataExtractionObjects(){
 				}
 			}
 		}
-		console.log("Not currently extracting");
+		
 		
 		return 0;
 	};
+	console.log("Not currently extracting");
 	
 	// Set optimisation
 	NewDEO.Optimise=true;
@@ -706,7 +713,7 @@ function SetupDataExtractionObjects(){
 		return Total*Settings.SampleFactor;
 	};
 	
-	NewDEO.ErrorFunction=function(SimulationResults){
+	NewDEO.ErrorFunction=function(TimeArray, DataArray, SimulationValueArray, SimulationResult){
 		return 0;
 	};
 	// Add the object to the array of all ODEOS
@@ -742,7 +749,7 @@ function SetupDataExtractionObjects(){
 		return Total*Settings.SampleFactor;
 	};
 	
-	NewDEO.ErrorFunction=function(SimulationResults){
+	NewDEO.ErrorFunction=function(TimeArray, DataArray, SimulationValueArray, SimulationResult){
 		return 0;
 	};
 	// Add the object to the array of all ODEOS
@@ -777,7 +784,7 @@ function SetupDataExtractionObjects(){
 		return Total*Settings.SampleFactor;
 	};
 	
-	NewDEO.ErrorFunction=function(SimulationResults){
+	NewDEO.ErrorFunction=function(TimeArray, DataArray, SimulationValueArray, SimulationResult){
 		return 0;
 	};
 	// Add the object to the array of all ODEOS
@@ -812,7 +819,7 @@ function SetupDataExtractionObjects(){
 		return Total*Settings.SampleFactor;
 	};
 	
-	NewDEO.ErrorFunction=function(SimulationResults){
+	NewDEO.ErrorFunction=function(TimeArray, DataArray, SimulationValueArray, SimulationResult){
 		return 0;
 	};
 	// Add the object to the array of all ODEOS
@@ -848,7 +855,7 @@ function SetupDataExtractionObjects(){
 		return Total*Settings.SampleFactor;
 	};
 	
-	NewDEO.ErrorFunction=function(SimulationResults){
+	NewDEO.ErrorFunction=function(TimeArray, DataArray, SimulationValueArray, SimulationResult){
 		return 0;
 	};
 	// Add the object to the array of all ODEOS
@@ -885,7 +892,7 @@ function SetupDataExtractionObjects(){
 		return Total*Settings.SampleFactor;
 	};
 	
-	NewDEO.ErrorFunction=function(SimulationResults){
+	NewDEO.ErrorFunction=function(TimeArray, DataArray, SimulationValueArray, SimulationResult){
 		return 0;
 	};
 	// Add the object to the array of all ODEOS
