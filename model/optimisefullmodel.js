@@ -1,4 +1,4 @@
-function OptimiseFullModel(Notifications){
+function OptimiseFullModel(Notifications, OptimisationParameters){
 	
 	// Set up settings
 	var FunctionInput={};
@@ -12,11 +12,6 @@ function OptimiseFullModel(Notifications){
 	FunctionInput.Notifications=Notifications;
 	FunctionInput.EndSimulationTime=Notifications.Year(Notifications.Year.length-1);
 	FunctionInput.Intervention={};
-	
-	var FullModelResults=FullModel(Notifications, EndSimulationTime, Intervention);
-
-	
-	
 	
 	
 	OptimisationSettings.Function=function(FunctionInput, ParameterSet){
@@ -44,7 +39,7 @@ function OptimiseFullModel(Notifications){
 	OptimisationSettings.ProgressFunction=function(SimulationNumber, Parameter, SimOutput, ErrorValues){
 		
 		console.log("Params: X "+Mean(Parameter.X.CurrentVec)+" Y "+Mean(Parameter.Y.CurrentVec));
-		PSetCount=0;
+		var PSetCount=0;
 		var Data=[];
 		for (var key in Parameter.X.CurrentVec){
 			Data[PSetCount]=[Parameter.X.CurrentVec[key], Parameter.Y.CurrentVec[key]];
@@ -75,8 +70,16 @@ function OptimiseFullModel(Notifications){
 	
 	
 	OptimisationObject=new StochasticOptimisation(OptimisationSettings);
-	OptimisationObject.AddParameter("X", 0, 10);
-	OptimisationObject.AddParameter("Y", 0, 10);
+	
+	
+	OptimisationObject.AddParameter("Param.HCV.ProbabilityOfTransmission", 0, 10);
+	OptimisationObject.AddParameter("Param.IDU.NSP.P", 0, 10);//Param.IDU.NSP.P
+	for (var iOP in OptimisationParameters){
+		OptimisationObject.AddParameter(OptimisationParameters[iOP].Name, OptimisationParameters[iOP].Lower, OptimisationParameters[iOP].Upper);//Param.IDU.NSP.P	
+	}
+	
+	
+	
 	OptimisationObject.Run(FunctionInput);
 
 	return OptimisationObject;
@@ -117,22 +120,3 @@ OptimisationArrayObject.prototype.ClearFunctions= function (Person){
 
 };
 
-
-// the purpose of this array is to specify how the data is extracted from the model
-var OptimisationArray=[];
-
-// Number of people who have ever injected drugs in the last 12 months
-OptimisationArray[0]=new OptimisationArrayObject();
-OptimisationArray[0].Data=Data.PWID.EverFemale;//should be the same inside the simulation as outside, but may not be
-OptimisationArray[0].Time=Data.PWID.EverFemale;//should be the same inside the simulation as outside, but may not be
-
-OptimisationArray[0].DataExtractionFunction=function (Person){
-};
-
-OptimisationArray[0].ChartFunction=function (ResultsFromSim){
-	
-	
-};
-
-
-// Number of people who have ever injected drugs in the last 12 months

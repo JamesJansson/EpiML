@@ -10,13 +10,14 @@ var PostDataTreatmentFunction;// (Person[Array], Time, TimeStep)
 // RunSettings2.SimDataArray=[1];
 // SimulationHolder.Run(RunSettings2);
 
-
+function CreateGlobalVariables(){
+	// Globals that need to be run before code will work
+	RegularInjectionTime=new RegularInjectionTimeObject();
+}
 
 function FullModelTest(Stuff1){
 	
-
-	// Globals that need to be run before code will work
-	RegularInjectionTime=new RegularInjectionTimeObject();
+	CreateGlobalVariables();
 	
 	// This should go into the outer loop
 
