@@ -7,6 +7,8 @@ importScripts("mathtools.js");
 importScripts("stochasticoptimisation.js");
 importScripts("deepcopy.js");
 importScripts("dataextractionobject.js");
+importScripts("timer.js");
+
 // Model specific functions
 importScripts("person.js");
 importScripts("hcv.js");
