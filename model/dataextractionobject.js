@@ -79,20 +79,7 @@ DataExtractionObject.prototype.FindError=function(SimulationResult){// Simulatio
 		this.Simulation.Value[TimeCount]=this.ResultFunction(SimulationResult,  this.Data.Time[TimeCount]);
 	}
 	
-	console.error("find this event");
-	console.log(this.Simulation.Value);
-	console.log(this.Data.Value);
-	console.log(this.Name);
-	
 	this.Error=this.Optimisation.Weight*this.ErrorFunction(this.Data.Time, this.Data.Value, this.Simulation.Value, SimulationResult);
-	
-	console.log("this is what the simulation, data, ErrorFunction look like")
-	console.log(this.Simulation.Value);
-	console.log(this.Data.Value);
-	console.log(this.Error);
-	
-	// Error function is calculated once for the entire run of the simualtion 
-	// note that the error function receives the simulation result, although it does not have to use it. 
 	
 	return this.Error;
 };

@@ -15,13 +15,11 @@ var PostDataTreatmentFunction;// (Person[Array], Time, TimeStep)
 function FullModelTest(Stuff1){
 	
 
-	
-	
 	// Globals that need to be run before code will work
 	RegularInjectionTime=new RegularInjectionTimeObject();
 	
 	// This should go into the outer loop
-	console.log(Data);
+
 	// Notification data
 	var Notifications={}; 
 	Notifications.Year=Data.MaleNotifications.Year;
@@ -267,12 +265,12 @@ function FullModel(Notifications, EndSimulation, Intervention){
 	
 	
 	
-	// Set up timers
-	var TimerStart, TimerFinish;
-	var Timers={};
-	Timers.CreatePWID=new RecordingTimer("CreatePWID");
-	Timers.AssignSexualPartner=new RecordingTimer("AssignSexualPartner");
-	Timers.DetermineHCVTransmissions=new RecordingTimer("DetermineHCVTransmissions");
+	// // Set up timers
+	// var TimerStart, TimerFinish;
+	// var Timers={};
+	// Timers.CreatePWID=new RecordingTimer("CreatePWID");
+	// Timers.AssignSexualPartner=new RecordingTimer("AssignSexualPartner");
+	// Timers.DetermineHCVTransmissions=new RecordingTimer("DetermineHCVTransmissions");
 	
 	for (var Time=Param.Time.StartDynamicModel; Time<EndSimulation; Time+=Param.TimeStep){// each time step
 		StepCount++;
@@ -291,12 +289,12 @@ function FullModel(Notifications, EndSimulation, Intervention){
 
 
 
-    	Timers.CreatePWID.Start();
+    	// Timers.CreatePWID.Start();
 
 		var PWIDToAdd=CreatePWID(Param.IDU.Entry, Time, Param.TimeStep);
 
-		Timers.CreatePWID.Stop();
-		Timers.CreatePWID.Display();
+		// Timers.CreatePWID.Stop();
+		// Timers.CreatePWID.Display();
 		
 		
 		if (Settings.ModelNetwork){
@@ -329,11 +327,11 @@ function FullModel(Notifications, EndSimulation, Intervention){
 		
 		
 		if (Settings.ModelNetwork){
-			// Balance sexual partnerships
-			Timers.AssignSexualPartner.Start();
+			// // Balance sexual partnerships
+			// Timers.AssignSexualPartner.Start();
 			AssignSexualPartner(Person, Time);
-			Timers.AssignSexualPartner.Stop();
-			Timers.AssignSexualPartner.Display();
+			// Timers.AssignSexualPartner.Stop();
+			// Timers.AssignSexualPartner.Display();
 		}
 		else {
 			// 
@@ -344,11 +342,11 @@ function FullModel(Notifications, EndSimulation, Intervention){
 		
 		
 		// Determine transmissions that occur
-		//if (Settings.ModelNetwork){
-			Timers.DetermineHCVTransmissions.Start();
+		// //if (Settings.ModelNetwork){
+		// 	Timers.DetermineHCVTransmissions.Start();
 			DetermineHCVTransmissions(Person, Time, Param.TimeStep);
-			Timers.DetermineHCVTransmissions.Stop();
-			Timers.DetermineHCVTransmissions.Display();
+			// Timers.DetermineHCVTransmissions.Stop();
+			// Timers.DetermineHCVTransmissions.Display();
 		//}
 		//else {
 			
@@ -383,8 +381,7 @@ function FullModel(Notifications, EndSimulation, Intervention){
 		
 		
 		
-		console.log("Time: "+Time);
-		console.log("People "+Person.length);
+		// console.log("Time: "+Time+ "People: "+Person.length);
 		
 		
 		
