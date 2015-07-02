@@ -258,31 +258,44 @@ function FullModel(Notifications, EndSimulation, Intervention){
 	
 	
 	// Timers functions
-	function RecordingTimer(){
+	function RecordingTimer(Name){
 		this.TimerStart;
 		this.TimerFinish;
-		this.Time=0;
+		this.CurrentTime=0;
 		this.Increase=0;
+		this.TotalTime=0;
+		
+		if (typeof(Name)!="undefined"){
+			this.Name=Name;
+		}
+		else {
+			this.Name="Unnamed RecordingTimer";
+		}
 	};
 	
 	RecordingTimer.prototype.Start= function (){
 		this.TimerStart = new Date().getTime() / 1000;
-	}
+	};
 	
 	RecordingTimer.prototype.Stop= function (){
 		this.TimerStop = new Date().getTime() / 1000;
 		var Current=this.TimerStop-this.TimerStart;
-		this.Increase=Current/this.Time;
-		this.Time=Current;
-	}
+		this.Increase=(Current-this.CurrentTime)/this.CurrentTime;
+		this.CurrentTime=Current;
+		this.TotalTime+=Current;
+	};
+	
+	RecordingTimer.prototype.Display= function (){
+		console.log("" + this.Name + " Total time: " + this.TotalTime + " Most recent time: " + this.CurrentTime + " Increase in time: " + Math.round(this.Increase*100) +"%" );
+	};
 	
 	
 	// Set up timers
 	var TimerStart, TimerFinish;
 	var Timers={};
-	Timers.CreatePWID=new RecordingTimer();
-	Timers.AssignSexualPartner=new RecordingTimer();
-	Timers.DetermineHCVTransmissions=new RecordingTimer();
+	Timers.CreatePWID=new RecordingTimer("CreatePWID");
+	Timers.AssignSexualPartner=new RecordingTimer("AssignSexualPartner");
+	Timers.DetermineHCVTransmissions=new RecordingTimer("DetermineHCVTransmissions");
 	
 	for (var Time=Param.Time.StartDynamicModel; Time<EndSimulation; Time+=Param.TimeStep){// each time step
 		StepCount++;
@@ -306,7 +319,7 @@ function FullModel(Notifications, EndSimulation, Intervention){
 		var PWIDToAdd=CreatePWID(Param.IDU.Entry, Time, Param.TimeStep);
 
 		Timers.CreatePWID.Stop();
-		console.log("CreatePWID time " + Timers.CreatePWID.Time + " Increase " +Timers.CreatePWID.Increase);
+		Timers.CreatePWID.Display();
 		
 		
 		if (Settings.ModelNetwork){
@@ -343,7 +356,7 @@ function FullModel(Notifications, EndSimulation, Intervention){
 			Timers.AssignSexualPartner.Start();
 			AssignSexualPartner(Person, Time);
 			Timers.AssignSexualPartner.Stop();
-			console.log("AssignSexualPartner time " + Timers.AssignSexualPartner.Time + " Increase " +Timers.AssignSexualPartner.Increase);
+			Timers.AssignSexualPartner.Display();
 		}
 		else {
 			// 
@@ -358,7 +371,7 @@ function FullModel(Notifications, EndSimulation, Intervention){
 			Timers.DetermineHCVTransmissions.Start();
 			DetermineHCVTransmissions(Person, Time, Param.TimeStep);
 			Timers.DetermineHCVTransmissions.Stop();
-			console.log("DetermineHCVTransmissions time " + Timers.DetermineHCVTransmissions.Time + " Increase " +Timers.DetermineHCVTransmissions.Increase);
+			Timers.DetermineHCVTransmissions.Display();
 		//}
 		//else {
 			
