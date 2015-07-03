@@ -1,6 +1,7 @@
 //Global variables for use in the program
 var Settings={};
 var Data={};
+var ModelDirectory='model';
 var Param=[];//An array of parameters, legacy
 var PGroup;
 var DataFile={};
@@ -68,13 +69,13 @@ function LoadSettingsFiles(){
 		// Set up settings options
 		var CheckboxValue;
 
-		if (typeof(Settings.ModelNetwork)!="undefined"){
-			CheckboxValue=Settings.ModelNetwork;
+		if (typeof(Settings.TerminateThreadOnSimCompletion)!="undefined"){
+			CheckboxValue=Settings.TerminateThreadOnSimCompletion;
 		}
 		else {
 			CheckboxValue=false;
 		}
-		document.getElementById('ModelNetworkCheckbox').checked=CheckboxValue;
+		document.getElementById('TerminateThreadOnSimCompletionCheckbox').checked=CheckboxValue;
 		
 		if (typeof(Settings.RecalculateParam)!="undefined"){
 			CheckboxValue=Settings.RecalculateParam;

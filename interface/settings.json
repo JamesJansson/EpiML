@@ -4,5 +4,6 @@
     "NumberOfSimulations": 1,
     "HCVTreatmentScenario": "0",
     "ModelNetwork": false,
-    "RecalculateParam": true
+    "RecalculateParam": true,
+    "TerminateThreadOnSimCompletion": false
 }

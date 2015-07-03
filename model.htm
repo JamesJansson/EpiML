@@ -110,7 +110,6 @@
 		
 		<p> <b> Settings </b> </p>
 		<input id="ModelNetworkCheckbox" type="checkbox" onClick="Settings.ModelNetwork=this.checked;SaveSettings();">Model network interactions<br>
-		<input id="RecalculateParamCheckbox" type="checkbox" onClick="Settings.RecalculateParam=this.checked;SaveSettings();">Recalculate Param<br>
 		
 		<p> <b>Use existing optimisation (if it exists) </b> </p>
 		<input type="checkbox" onClick="FutureCheckBox=this.checked;">PWID Entry Optimisation<br>
@@ -279,6 +278,11 @@
 				<option value=8>8</option>
 			</select>
 			
+			<br>
+			<input id="RecalculateParamCheckbox" type="checkbox" onClick="Settings.RecalculateParam=this.checked;SaveSettings();">Recalculate parameters in the next simulation<br>
+		
+			<input id="TerminateThreadOnSimCompletionCheckbox" type="checkbox" onClick="Settings.TerminateThreadOnSimCompletion=this.checked;SaveSettings();">Terminate Thread On Sim Completion<br>
+		
 			
 			<p>Sample factor</p>
 			<p>Set to larger values to decrease run time. </p>
