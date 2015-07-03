@@ -26,8 +26,6 @@ function ParameterClass(ParameterID, ArrayName, ArrayNumber, InterfaceHolder, Nu
 	
 	this.Median=NaN;
 	this.StandardError=NaN;
-	this.LowerBound=NaN;//used for uniform distributions
-	this.UpperBound=NaN;//used for uniform distributions
 	
 	this.Upper95Range=NaN;// These values are calculated on the fly by the program, and are displayed in the interface
 	this.Lower95Range=NaN;
@@ -100,12 +98,12 @@ ParameterClass.prototype.UpdateTypeDisplay= function (){
 		" Standard error of log <input type='text' name='StandardError' value='" + this.StandardError + " '>\n";
 	}
 	else if (this.DistributionType=="uniform"){
-		ParameterHTML+="Lower Bound <input type='text' name='LowerBound' value='" + this.LowerBound + " '>\n"+
-		" Upper Bound <input type='text' name='UpperBound' value='" + this.UpperBound + " '>\n";
+		ParameterHTML+="Lower Bound <input type='text' name='MinValue' value='" + this.MinValue + " '>\n"+
+		" Upper Bound <input type='text' name='MaxValue' value='" + this.MaxValue + " '>\n";
 	}
 	else if (this.DistributionType=="optimisedsample"){
-		ParameterHTML+="Lower Bound <input type='text' name='LowerBound' value='" + this.LowerBound + " '>\n"+
-		" Upper Bound <input type='text' name='UpperBound' value='" + this.UpperBound + " '>\n";
+		ParameterHTML+="Lower Bound <input type='text' name='MinValue' value='" + this.MinValue + " '>\n"+
+		" Upper Bound <input type='text' name='MaxValue' value='" + this.MaxValue + " '>\n";
 	}
 	
 	
@@ -120,13 +118,15 @@ ParameterClass.prototype.UpdateTypeDisplay= function (){
 		// Save Param
 	
 	// This information exists for all parameters
-	ParameterHTML=ParameterHTML+
-		"<div class='ParamInfoBox' style='display: none;'>\n"+
-		"<p>\n"+
-		"    Hard bounds: Min <input type='text' name='MinValue' value='" + this.MinValue + " '>\n"+
+	ParameterHTML+="<div class='ParamInfoBox' style='display: none;'>\n";
+	if (this.DistributionType=="normal" || this.DistributionType=="lognormal"){
+		ParameterHTML+="<p>\n"+
+		"    Hard distribution bounds: Min <input type='text' name='MinValue' value='" + this.MinValue + " '>\n"+
 		"    Max <input type='text' name='MaxValue' value='" + this.MaxValue + " '>\n"+
-		"</p>\n"+
-		"<p>\n"+
+		"</p>\n";
+	}
+		
+	ParameterHTML+="<p>\n"+
 		"    Median <input type='text' name='' value='" + this.CalculatedMedian + " '>\n"+
 		"    Lower 95%CI <input type='text' name='' value='" + this.Lower95Range + " '>\n"+
 		"    Upper 95%CI <input type='text' name='' value='" + this.Upper95Range + " '>\n"+
@@ -154,8 +154,6 @@ ParameterClass.prototype.Save=function(){
 					'DistributionType',
 					'Median',
 					'StandardError',
-					'LowerBound',
-					'UpperBound',
 					'Upper95Range',
 					'Lower95Range',
 					'MinValue',
@@ -165,8 +163,6 @@ ParameterClass.prototype.Save=function(){
 					
 	var FieldTypes=['text',
 					'text',
-					'number',
-					'number',
 					'number',
 					'number',
 					'number',
@@ -233,9 +229,9 @@ ParameterClass.prototype.CalculateUncertaintyBounds= function (){
 		this.Lower95Range=Exp(LogMedian-1.96*this.StandardError);
 	}
 	else if(this.DistributionType=="uniform"){
-		this.CalculatedMedian=(this.LowerBound+this.UpperBound)/2;
-		this.Lower95Range=this.LowerBound+0.05*(this.UpperBound-this.LowerBound);
-		this.Upper95Range=this.LowerBound+0.95*(this.UpperBound-this.LowerBound);
+		this.CalculatedMedian=(this.MinValue+this.MaxValue)/2;
+		this.Lower95Range=this.MinValue+0.05*(this.MaxValue-this.MinValue);
+		this.Upper95Range=this.MinValue+0.95*(this.MaxValue-this.MinValue);
 	}
 	else if(this.DistributionType=="optimisedsample"){
 		if (this.Val.length>0){
@@ -273,6 +269,7 @@ ParameterClass.prototype.CreateDistribution= function (){
 			}
 			else{
 				if (Max<Min){
+					console.error("An error occurred here"+this.ParameterID);
 					throw "Min should be smaller than Max";
 				}
 				this.Val=NormalRandArrayBounded(this.Median, this.StandardError, this.NumberOfSamples, Min, Max);
@@ -286,9 +283,11 @@ ParameterClass.prototype.CreateDistribution= function (){
 			}
 			else{
 				if (Min<0 ||Max<0){
-					throw "Min and Max should be larger than zero";
+					console.error("An error occurred here"+this.ParameterID);
+					throw "Min and Max cannot be negative";
 				}
 				if (Max<Min){
+					console.error("An error occurred in "+this.ParameterID);
 					throw "Min should be smaller than Max";
 				}
 				//We need to treat the Min specially, in case it is zero
@@ -308,7 +307,7 @@ ParameterClass.prototype.CreateDistribution= function (){
 			this.Val=Exp(this.Val);// transform back
 		}
 		if (this.DistributionType=="uniform"){
-			this.Val=RandArray(this.LowerBound, this.UpperBound, this.NumberOfSamples);
+			this.Val=RandArray(this.MinValue, this.MaxValue, this.NumberOfSamples);
 		}
 	}
 	catch(err) {
@@ -615,8 +614,8 @@ function ParameterSplitTest(){
 	
 	TestParam[1]=new ParameterClass("KKK.Subjjj", "empty");
 	TestParam[1].DistributionType="uniform";
-	TestParam[1].LowerBound=10;
-	TestParam[1].UpperBound=20;
+	TestParam[1].MinValue=10;
+	TestParam[1].MaxValue=20;
 	TestParam[1].NumberOfSamples=100;
 	TestParam[1].CreateDistribution();
 	
