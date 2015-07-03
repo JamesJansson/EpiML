@@ -14,6 +14,7 @@
 <!-- Loading interface javascript -->
 <script type="text/javascript" src="interface/paramdisplay.js"></script>
 <script type="text/javascript" src="interface/initialise.js"></script>
+<script type="text/javascript" src="model/loaddata.js"></script>
 
 <script type="text/javascript" src="interface/jquery/jquery.js"></script>
 <script type="text/javascript" src="interface/jquery/jquery.flot.js"></script>
@@ -37,7 +38,7 @@
 <!-- Loading methods that are used in the model and interface -->
 <script type="text/javascript" src="model/eventvector.js"></script>
 <script type="text/javascript" src="model/mathtools.js"></script>
-	<script type="text/javascript" src="model/deepcopy.js"></script>
+<script type="text/javascript" src="model/deepcopy.js"></script>
 <script type="text/javascript" src="model/populationstatistics.js"></script>
 <script type="text/javascript" src="model/lcgrand.js"></script> <!-- no longer used - in mathtools now as Rand() random number generator to ensure platform independence -->
 <script type="text/javascript" src="model/parameter.js"></script>
@@ -74,22 +75,11 @@
 <script type="text/javascript" src="test/testinggeneral.js"></script>
 
 
-<script>
-//This is testing for various code that will be used very soon
-var TestObject={"name":"binchen"};
-TestString=JSON.stringify(TestObject);
-NewTestObject=JSON.parse(TestString);
-
-//Testing the Papa.parse
-var ResultsHolder;
-Papa.parse("data/summarynotifications.csv", {download: true, complete: function(results) {ResultsHolder=results;}});
-
-</script>
 </head>
 
 
 
-<body onload="InitialisePage()">
+<body onload="InitialiseEpiML()">
 
 <img src="img/logo.png">
 

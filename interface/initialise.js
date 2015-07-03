@@ -14,40 +14,25 @@ RunningNodeJS=true;
 // Load some of the required packages
 var fs = require('fs');
 
-
-
-
 // Setting up flags
 var SimulationRunning=0;//set to 1 if running
 
-
-
 	
-function InitialisePage(){
+function InitialiseEpiML(){
 	// Load data
-	TestingPageRequirements();
-	LoadDataFiles();
-	ExtractDataFromFiles();
+	TestingPageRequirements();	
 	LoadSettingsFiles();
-	
-	
-	
-	//Param=LoadParameters("./data/parameters.json");
-	
-	//Initialise interface
-	//PPage=new ParameterPage(Param, "Param", "PPage", "ParamHolder","./data/parameters.json", 100);
-	//PPage.Build();
-	
+
 	
 	PGroup= new ParameterGroup("PGroup", Settings.NumberOfSimulations);
 	PGroup.Load("./data/parameters.json");
 	PGroup.CreateParameterPage("ParamHolder");
 	Param=PGroup.ParamArray;
 	
+	LoadDataFiles();
+	ExtractDataFromFiles();
 	
-	
-	
-	console.log("It might be a good idea to compress simulation output to save on time using LZAA in lz-string http://pieroxy.net/blog/pages/lz-string/demo.html");
+	console.log("EpiML initialised")
 }
 
 function TestingPageRequirements(){
@@ -56,8 +41,6 @@ function TestingPageRequirements(){
 	if(typeof(Worker) == "undefined") {
 		alert("Webworkers are not supported in this browser. EpiML requires webworkers to run. Try upgrading your browser");
 	}
-	//Local storage
-
 }
 
 
@@ -109,13 +92,11 @@ function LoadSettingsFiles(){
 		document.getElementById("NoThreadsDropdown").value=Settings.NoThreads;
 		document.getElementById("SampleFactorTextbox").value=Settings.SampleFactor;
 	});
-	
-	
 }
 
 function SaveSettings(){
 	var SettingsJSONString=JSON.stringify(Settings, null, 4);//gives 4 spaces between elements
-	var blob = new Blob([SettingsJSONString], {type: "text/plain;charset=utf-8"});
+	//var blob = new Blob([SettingsJSONString], {type: "text/plain;charset=utf-8"});
 	
 	fs.writeFile("./interface/settings.json", SettingsJSONString , function(err) {
 		if(err) {
@@ -124,49 +105,6 @@ function SaveSettings(){
 		}
 	});
 }
-
-
-
-
-
-
-
-
-function LoadDataFiles(){
-	DataFile.AgeSexNotifications=new CSVFile('./data/hcv_notifications_agesex.csv');
-	DataFile.StateNotifications=new CSVFile('./data/hcv_notifications_state.csv');
-	
-	DataFile.MaleMortality=new CSVFile('./data/mortality_males_alltables_qx.csv');
-	DataFile.FemaleMortality=new CSVFile('./data/mortality_females_alltables_qx.csv');
-	DataFile.PWID=new CSVFile('./data/pwid_size.csv');
-	DataFile.GeneralPopulation=new CSVFile('./data/generalpopulation.csv');
-	
-	DataFile.NSP=new CSVFile('./data/nspsurveydata.csv');
-
-	DataFile.Assorted=new CSVFile('./data/assorteddata.csv');
-
-	// Originally it was thought this would run both in a web browser and in nw.js. Now it will only run in nw.js 
-	// var RunOther=true;if (typeof (RunningNodeJS)!=='undefined'){console.log("got in1");if (RunningNodeJS==true){RunOther=false;
-		// console.log("got in2");
-		// DataFile.AgeSexNotifications=new CSVFile('./data/hcv_notifications_agesex.csv');
-		// DataFile.StateNotifications=new CSVFile('./data/hcv_notifications_state.csv');
-		
-		// DataFile.MaleMortality=new CSVFile('./data/mortality_males_alltables_qx.csv');
-		// DataFile.FemaleMortality=new CSVFile('./data/mortality_females_alltables_qx.csv');
-		// DataFile.PWID=new CSVFile('./data/pwid_size.csv');
-	// }}
-	// if (RunOther){
-		// console.log("got in3");
-		// DataFile.AgeSexNotifications=new CSVFile('data/hcv_notifications_agesex.csv');
-		// DataFile.StateNotifications=new CSVFile('data/hcv_notifications_state.csv');
-		
-		// DataFile.MaleMortality=new CSVFile('data/mortality_males_alltables_qx.csv');
-		// DataFile.FemaleMortality=new CSVFile('data/mortality_females_alltables_qx.csv');
-		// DataFile.PWID=new CSVFile('data/pwid_size.csv');
-	// }
-
-}
-
 
 
 
