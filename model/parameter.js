@@ -320,7 +320,7 @@ ParameterClass.prototype.CreateDistribution= function (){
 //**************************************************************************************************************************
 // From this point, the code is no longer dealing with individual parameters, but with displaying groups of parameters in a page
 
-function ParameterPage(ParamArray, ParamArrayName, PageName, InterfaceHolder, FileSaveLocation, NumberOfSamples){
+function ParameterPage(ParamArray, ParamArrayName, PageName, InterfaceHolder, FileName, NumberOfSamples){
 	// Note that Param is passed as a pointer, and hence any changes internal to here affect the entire page
 	this.ParamArray=ParamArray;
 	this.ParamArrayName=ParamArrayName;
@@ -330,7 +330,7 @@ function ParameterPage(ParamArray, ParamArrayName, PageName, InterfaceHolder, Fi
 	
 	this.NumberOfSamples=NumberOfSamples;
 	
-	this.FileSaveLocation=FileSaveLocation;
+	this.FileName=FileName;
 	
 	
 	// for each element in the ParamArray, set the InterfaceID
@@ -415,9 +415,9 @@ ParameterPage.prototype.SaveParameters= function(){
 	var ParamJSONString=JSON.stringify(this.ParamArray, null, 4);//gives 4 spaces between elements
 	var blob = new Blob([ParamJSONString], {type: "text/plain;charset=utf-8"});
 	
-	fs.writeFile(this.FileSaveLocation, ParamJSONString , function(err) {
+	fs.writeFile(this.FileName, ParamJSONString , function(err) {
 		if(err) {
-			alert("There was an error writing to the "+this.FileSaveLocation+ " file. See console for details.");
+			alert("There was an error writing to the "+this.FileName+ " file. See console for details.");
 			console.log(err);
 		}
 	});
@@ -442,6 +442,7 @@ function ParameterGroup(GroupName, NumberOfSamples){
 	this.Page;
 	this.FileName;
 	this.NumberOfSamples=NumberOfSamples;
+	this.RecalculateTimestamp=0;
 }
 
 
@@ -486,13 +487,16 @@ ParameterGroup.prototype.CreateParameterPage=function(DivNameForParameterInfo){
 	if (typeof(this.FileName)=="undefined"){
 		throw "The file is not yet specified. Please either load a file using .Load(ParameterFileName), or set a file name manually by setting .FileName=ParameterFileName. e.g. ParameterFileName='./data/parameters.json'";
 	}
-	// ParameterPage(ParamArray, ParamArrayName, PageName, InterfaceHolder, FileSaveLocation, NumberOfSamples)
+	// ParameterPage(ParamArray, ParamArrayName, PageName, InterfaceHolder, FileName, NumberOfSamples)
 	this.Page=new ParameterPage(this.ParamArray, this.Name+".ParamArray", this.Name+".Page", DivNameForParameterInfo, this.FileName, 100);
 	this.Page.Build();
 };
 
 
 ParameterGroup.prototype.Recalculate=function(NumberOfSamples){
+	this.RecalculateTimestamp=new Date().getTime();
+	
+	
 	this.NumberOfSamples=NumberOfSamples;
 	this.Page.NumberOfSamples=NumberOfSamples;
 	for (var ParamCount in this.ParamArray){

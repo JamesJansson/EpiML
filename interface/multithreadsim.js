@@ -71,6 +71,7 @@ function MultiThreadSim(FolderName, NoSims, NoThreads, TerminateOnFinish){
 	this.SimsStarted=0;
 	this.SimsComplete=0;
 	this.Result=[];
+	
 	this.AllWorkersStarted=false;
 	
 	
