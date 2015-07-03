@@ -2,25 +2,19 @@ function OptimiseFullModel(Notifications, OptimisationParameters){
 	
 	// Set up settings
 	var FunctionInput={};
-	var OptimisationSettings={};
-	
-	FunctionInput.NumberOfSamples=1000;
-	
-	OptimisationSettings.Target=DEOArray;
-	
 	// Set end simulation time to the last time in the notification data, plus 1 year
 	FunctionInput.Notifications=Notifications;
 	FunctionInput.EndSimulationTime=Notifications.Year(Notifications.Year.length-1);
 	FunctionInput.Intervention={};
 	
+	var OptimisationSettings={};
+	
+	OptimisationSettings.Target=DEOArray;
 	
 	OptimisationSettings.Function=function(FunctionInput, ParameterSet){
 		// change Param according to the values listed in ParameterSet
-		Param.Whatever=ParameterSet.Whatever;
-		Param.Whatever=ParameterSet.Whatever;
-		Param.Whatever=ParameterSet.Whatever;
-		Param.Whatever=ParameterSet.Whatever;
-		
+		Param.Whatever=ParameterSet["Whatever"];
+		Param.Whatever=ParameterSet["Whatever"];
 		
 		
 		var FullModelResults=Fullmodel(FunctionInput.Notifications, FunctionInput.EndSimulationTime, FunctionInput.Intervention);
@@ -66,14 +60,13 @@ function OptimiseFullModel(Notifications, OptimisationParameters){
 		//ScatterPlot('#PlotHolder', Data,  'AAA', 'BBB');
 	};
 	
-	OptimisationSettings.MaxTime=10;//stop after 10 seconds
+	OptimisationSettings.MaxTime=100;//stop after 10 seconds
 	
 	
 	OptimisationObject=new StochasticOptimisation(OptimisationSettings);
 	
-	
-	OptimisationObject.AddParameter("Param.HCV.ProbabilityOfTransmission", 0, 10);
-	OptimisationObject.AddParameter("Param.IDU.NSP.P", 0, 10);//Param.IDU.NSP.P
+	// Add the optimisation parameters
+	// OptimisationObject.AddParameter("Param.HCV.ProbabilityOfTransmission", 0, 1);
 	for (var iOP in OptimisationParameters){
 		OptimisationObject.AddParameter(OptimisationParameters[iOP].Name, OptimisationParameters[iOP].Lower, OptimisationParameters[iOP].Upper);//Param.IDU.NSP.P	
 	}
