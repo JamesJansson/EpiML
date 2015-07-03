@@ -98,12 +98,12 @@ ParameterClass.prototype.UpdateTypeDisplay= function (){
 		" Standard error of log <input type='text' name='StandardError' value='" + this.StandardError + " '>\n";
 	}
 	else if (this.DistributionType=="uniform"){
-		ParameterHTML+="Lower Bound <input type='text' name='MinValue' value='" + this.MinValue + " '>\n"+
-		" Upper Bound <input type='text' name='MaxValue' value='" + this.MaxValue + " '>\n";
+		ParameterHTML+="Min <input type='text' name='MinValue' value='" + this.MinValue + " '>\n"+
+		" Max <input type='text' name='MaxValue' value='" + this.MaxValue + " '>\n";
 	}
 	else if (this.DistributionType=="optimisedsample"){
-		ParameterHTML+="Lower Bound <input type='text' name='MinValue' value='" + this.MinValue + " '>\n"+
-		" Upper Bound <input type='text' name='MaxValue' value='" + this.MaxValue + " '>\n";
+		ParameterHTML+="Min <input type='text' name='MinValue' value='" + this.MinValue + " '>\n"+
+		" Max <input type='text' name='MaxValue' value='" + this.MaxValue + " '>\n";
 	}
 	
 	
