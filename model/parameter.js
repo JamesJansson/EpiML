@@ -391,7 +391,7 @@ ParameterPage.prototype.AddNewParameter= function(){
 
 
 
-ParameterPage.prototype.SaveParameters= function(){
+ParameterPage.prototype.SaveParameters= function(OptionalFileName){
 	// Press save on all the buttons
 	for (Key in this.ParamArray){
 		this.ParamArray[Key].Save();//Update all parameters because changing the HTML forces it to a normal distr. option.
@@ -415,9 +415,17 @@ ParameterPage.prototype.SaveParameters= function(){
 	var ParamJSONString=JSON.stringify(this.ParamArray, null, 4);//gives 4 spaces between elements
 	var blob = new Blob([ParamJSONString], {type: "text/plain;charset=utf-8"});
 	
-	fs.writeFile(this.FileName, ParamJSONString , function(err) {
+	var FileName;
+	if (typeof(OptionalFileName)=="undefined"){
+		FileName=this.FileName;
+	}
+	else{
+		FileName=OptionalFileName;
+	}
+	
+	fs.writeFile(FileName, ParamJSONString , function(err) {
 		if(err) {
-			alert("There was an error writing to the "+this.FileName+ " file. See console for details.");
+			alert("There was an error writing to the "+FileName+ " file. See console for details.");
 			console.log(err);
 		}
 	});
@@ -436,19 +444,30 @@ ParameterPage.prototype.UpdateArrayPositions= function(){
 
 
 
-function ParameterGroup(GroupName, NumberOfSamples){
+function ParameterGroup(GroupName, NumberOfSamples, ParameterFileName){
 	this.Name=GroupName;
 	this.ParamArray=[];
 	this.Page;
-	this.FileName;
+	// e.g. ParameterFileName="./data/parameters.json";
+	this.FileName=ParameterFileName;
 	this.NumberOfSamples=NumberOfSamples;
 	this.RecalculateTimestamp=0;
 }
 
 
 ParameterGroup.prototype.Load=function(ParameterFileName){
-	// e.g. ParameterFileName="./data/parameters.json";
-	this.FileName=ParameterFileName;
+	if (typeof(ParameterFileName)=="undefined"){
+		if (typeof(this.FileName)=="undefined"){
+			console.error("Error trace");
+			throw "The file is not yet specified. Please either load a file using .Load(ParameterFileName), or set a file name manually by setting .FileName=ParameterFileName. e.g. ParameterFileName='./data/parameters.json'";
+		}
+		else {
+			ParameterFileName=this.FileName;
+		}
+	}
+	//else// ParameterFileName=ParameterFileName
+	
+	
 	try {
 		var ParamStruct=fs.readFileSync(ParameterFileName, 'utf8');
 	}
@@ -481,14 +500,19 @@ ParameterGroup.prototype.Load=function(ParameterFileName){
 };
 
 
+ParameterGroup.prototype.Save=function(ParameterFileName){
+	this.Page.SaveParameters(ParameterFileName);
+};
+
 
 
 ParameterGroup.prototype.CreateParameterPage=function(DivNameForParameterInfo){
 	if (typeof(this.FileName)=="undefined"){
+		console.error("Error trace");
 		throw "The file is not yet specified. Please either load a file using .Load(ParameterFileName), or set a file name manually by setting .FileName=ParameterFileName. e.g. ParameterFileName='./data/parameters.json'";
 	}
 	// ParameterPage(ParamArray, ParamArrayName, PageName, InterfaceHolder, FileName, NumberOfSamples)
-	this.Page=new ParameterPage(this.ParamArray, this.Name+".ParamArray", this.Name+".Page", DivNameForParameterInfo, this.FileName, 100);
+	this.Page=new ParameterPage(this.ParamArray, this.Name+".ParamArray", this.Name+".Page", DivNameForParameterInfo, this.FileName, this.NumberOfSamples);
 	this.Page.Build();
 };
 
@@ -534,6 +558,7 @@ ParameterGroup.prototype.__ParameterSplitByPeriod=function(ParamObject, ParamNam
 		var SecondPart=ParamName.substr(ParamName.indexOf('.')+1);
 		
 		if (typeof(ParamObject[FirstPart])==="number"){
+			console.error("Error trace");
 			throw "There is a problem with defining the object, which could mean that a parameter group is called the same thing as a parameter";
 		}
 		if (typeof(ParamObject[FirstPart])==="undefined"){
@@ -578,6 +603,7 @@ ParameterGroup.prototype.CreateOptimisationStructure=function(ArrayOfParamNameTo
 			}
 		}
 		if (Found==false){
+			console.error("Error trace");
 			throw "The parameter "+ArrayOfParamNameToOptimise[OptKey]+" was not found.";
 		}
 	}

@@ -25,8 +25,8 @@ function InitialiseEpiML(){
 	LoadSettingsFiles();
 
 	
-	PGroup= new ParameterGroup("PGroup", Settings.NumberOfSimulations);
-	PGroup.Load("./data/parameters.json");
+	PGroup= new ParameterGroup("PGroup", Settings.NumberOfSimulations, "./data/parameters.json");
+	PGroup.Load();
 	PGroup.CreateParameterPage("ParamHolder");
 	Param=PGroup.ParamArray;
 	
