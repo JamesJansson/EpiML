@@ -69,6 +69,9 @@ ParameterClass.prototype.Name= function (){
 };
 	
 ParameterClass.prototype.UpdateTypeDisplay= function (){
+	// Determine estimated value of the mean, IQR and 95% range of the parameters
+	this.CalculateUncertaintyBounds();
+	
 	var ParameterHTML="";
 	// Draw the expand and save buttons
 	ParameterHTML+="<a onClick=\"ToggleDisplay(this, 'ParamInfoBox');\" style='background-color: #acf;'>[+]</a>\n"+"&nbsp;"+
@@ -107,15 +110,7 @@ ParameterClass.prototype.UpdateTypeDisplay= function (){
 	}
 	
 	
-	// Determine estimated value of the mean, IQR and 95% range of the parameters
-	this.CalculateUncertaintyBounds();
-	// Display this information to the user
-	
-	// Save button
-		// When pressed, 
-		// Get the values from all the fields
-		// save the value to Param
-		// Save Param
+
 	
 	// This information exists for all parameters
 	ParameterHTML+="<div class='ParamInfoBox' style='display: none;'>\n";

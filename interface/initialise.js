@@ -27,6 +27,7 @@ function InitialisePage(){
 	// Load data
 	TestingPageRequirements();
 	LoadDataFiles();
+	ExtractDataFromFiles();
 	LoadSettingsFiles();
 	
 	
@@ -72,7 +73,6 @@ function LoadSettingsFiles(){
 			console.log(err);
 			// Use default values
 			Settings.NoThreads=1;// number of cores to use at a time
-			Settings.ConcurrentSims=8;// number of sims to keep active at once (for interface playing)
 			Settings.SampleFactor=10;// This value is the number of people each person in the simulation represents. Probably a good idea to set this to 1, 10 or 100
 		}
 		else{
@@ -107,7 +107,6 @@ function LoadSettingsFiles(){
 		console.error("Note: all the below should have checking and defaults implemented as above.");		
 		document.getElementById("NumberOfSimulationsTextbox").value=Settings.NumberOfSimulations;
 		document.getElementById("NoThreadsDropdown").value=Settings.NoThreads;
-		document.getElementById("ConcurrentSimsDropdown").value=Settings.ConcurrentSims;
 		document.getElementById("SampleFactorTextbox").value=Settings.SampleFactor;
 	});
 	

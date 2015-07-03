@@ -131,7 +131,7 @@ Papa.parse("data/summarynotifications.csv", {download: true, complete: function(
 		<div id="RunPersistentSimButton" class="SolidButton" onClick="RunPersistentSim();"> Run Notification Sim </div>
 		<div id="RunSimSetupButton" class="SolidButton" onClick="RunSimSetup();"> Run SimSetup </div>
 		<div id="RunFullModelTestButton" class="SolidButton" onClick="RunFullModelTest();"> Run FullModel test </div>
-		<div id="RunOptimisationButton" class="SolidButton" onClick="RunOptimisationOfParam();"> Run Optimisation </div>
+		<div id="RunOptimisationButton" class="SolidButton" onClick="RunOptimiseFullModel();"> Run Optimisation </div>
 		
 		
 		<div id="RunSimButton" class="SolidButton" onClick="SimulationHolder.Terminate();"> Terminate simulation </div>
@@ -289,23 +289,14 @@ Papa.parse("data/summarynotifications.csv", {download: true, complete: function(
 				<option value=8>8</option>
 			</select>
 			
-			<p>Number of simulations to maintain concurrently.</p>
-			<select id="ConcurrentSimsDropdown" onchange="Settings.ConcurrentSims=this.value;SaveSettings();">
-				<option value=1>1</option>
-				<option value=2>2</option>
-				<option value=3>3</option>
-				<option value=4>4</option>
-				<option value=5>5</option>
-				<option value=6>6</option>
-				<option value=7>7</option>
-				<option value=8>8</option>
-			</select>
 			
 			<p>Sample factor</p>
 			<p>Set to larger values to decrease run time. </p>
 			<p>Note: use of a value not equal to one makes the model incapable of modelling stochastic epidemic extinction accurately. </p>
 			<input type='text' id='SampleFactorTextbox' value='10' onchange="Settings.SampleFactor=Number(this.value);SaveSettings();">
 			
+			<p> Simulation seed </p>
+			<p> Setting the simulation seed allows a deterministic calculation to occur, to ensure replicability of results.</p>
 		</form>
 
 	</div>

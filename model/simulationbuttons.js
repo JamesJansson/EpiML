@@ -1,5 +1,5 @@
 // This file contains the scripts that are called when the buttons on the interface are pressed.
-
+var ModelDirectory='model';
 
 function MultiFunctionRun(){
 	// the purpose of this function is to run one function, and when it is done, run the next. This object determines which one should happen next
@@ -151,10 +151,7 @@ function RunPersistentSim(){
 
 
 function RunSimSetup(){
-	var ModelDirectory='model';
-
 	// Load the values from the files
-	ExtractDataFromFiles();
 	
 	//var SimSettings={};
 	//SimSettings.RunOptimisation=true;
