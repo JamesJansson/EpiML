@@ -1,5 +1,5 @@
 
-var RegularInjectionTime;
+
 var PostDataTreatmentFunction;// (Person[Array], Time, TimeStep)
 
 // Put the following into the console
@@ -12,28 +12,15 @@ var PostDataTreatmentFunction;// (Person[Array], Time, TimeStep)
 
 function CreateGlobalVariables(){
 	// Globals that need to be run before code will work
-	RegularInjectionTime=new RegularInjectionTimeObject();
+	
 }
 
-function FullModelTest(Stuff1){
-	
-	CreateGlobalVariables();
+function FullModelTest(WorkerData){
+
 	
 	// This should go into the outer loop
 
-	// Notification data
-	var Notifications={}; 
-	Notifications.Year=Data.MaleNotifications.Year;
-	Notifications.Age=Data.MaleNotifications.Age;
-	Notifications.Count=[];
-	Notifications.Count[0]=[];
-	Notifications.Count[0]=Data.MaleNotifications.Table;
-	Notifications.Count[1]=[];
-	Notifications.Count[1]=Data.FemaleNotifications.Table;
-	Notifications.FirstYearOfData=Notifications.Year[0];
-	Notifications.LastYearOfData=Notifications.Year[Notifications.Year.length-1];
-	console.log(Notifications);
-	//throw("stopping");
+	
 	
 	// Set up the treatment function
 	PostDataTreatmentFunction=HCVTreatmentScenario[Settings.HCVTreatmentScenario].Function;
@@ -211,6 +198,29 @@ function FullModelTest(Stuff1){
 	
 	return ReturnResults;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 function FullModel(Notifications, EndSimulation, Intervention){ 

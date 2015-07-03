@@ -108,8 +108,6 @@
 		<h1>Home</h1>
 		<p> This model is a work in progress. The results have not yet been confirmed. Please contact jjansson@kirby.unsw.edu.au for enquiries. </p>
 		
-		<p> <b> Settings </b> </p>
-		<input id="ModelNetworkCheckbox" type="checkbox" onClick="Settings.ModelNetwork=this.checked;SaveSettings();">Model network interactions<br>
 		
 		<p> <b>Use existing optimisation (if it exists) </b> </p>
 		<input type="checkbox" onClick="FutureCheckBox=this.checked;">PWID Entry Optimisation<br>
@@ -262,11 +260,11 @@
 	<div id="SettingsContent" class="Content">
 		<h1>Settings</h1>
 		<form>
-			<p>Number of simulations to run</p>
+			<p><b>Number of simulations to run</b></p>
 			<input type='text' id='NumberOfSimulationsTextbox' value='10' onchange="Settings.NumberOfSimulations=Number(this.value);SaveSettings();">
 			
 			
-			<p>Number of threads to use for simulations</p>
+			<p><b>Number of threads to use for simulations</b></p>
 			<select id="NoThreadsDropdown" onchange="Settings.NoThreads=this.value;SaveSettings();">
 				<option value=1>1</option>
 				<option value=2>2</option>

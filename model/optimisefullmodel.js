@@ -1,4 +1,11 @@
-function OptimiseFullModel(Notifications, OptimisationParameters){
+function OptimiseFullModel( WorkerData){
+	
+	// Set up the optimisation data
+	var DEOArray = SetupDataExtractionObjects();
+	
+	
+	OptimisationParam=WorkerData.Common.OptimisationParam;
+	// name, min max
 	
 	// Set up settings
 	var FunctionInput={};
@@ -75,21 +82,44 @@ function OptimiseFullModel(Notifications, OptimisationParameters){
 	
 	OptimisationObject.Run(FunctionInput);
 
-	return OptimisationObject;
-	
-	// Function for model
 	
 	
+	// After the optimisatin is complete, pull the "best" parameterisaton
 	
-	// Function got extracting results
+	// save it into Param
+	
+	// save result into OptimisationParam
+	// OptimisationParam.Result
 	
 	
-	// 
 	
 	
 	var ReturnResult={};
-	ReturnResult=OptimisationArray;
+	ReturnResult.OptimisationParam=OptimisationParam;
 	
+	
+	
+	var ErrorTimer=new RecordingTimer("ErrorTimer");
+	ErrorTimer.Start();
+	// Store a run for data as it would appear in the optimisation 
+	var TotalOptimisationError=FindTotalDEOErrorForOptimisation(DEOArray, FullModelResults);
+	console.error("The TotalOptimisationError is "+TotalOptimisationError);
+	ErrorTimer.Stop();
+	console.error("====================================");
+	ErrorTimer.Display();
+	
+	// Generate graph data (external to the optimisation)
+	RunAllDEOGenerateGraphData(DEOArray, FullModelResults);
+	
+	
+	
+	
+	var ReturnResults={};
+	// Store a run for data as it would appear in the optimisation 
+	ReturnResults.DEOArray=DEOArray;
+	ReturnResults.HCVDataDiagnosisResults=FullModelResults.HCVDataDiagnosisResults;
+	
+	return ReturnResults;
 }
 
 // This function is operated on both in the 

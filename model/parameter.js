@@ -558,7 +558,8 @@ ParameterGroup.prototype.CreateOptimisationStructure=function(ArrayOfParamNameTo
 		// find the relevant parameter name in the array
 		var Found=false;
 		for (var ThisParamKey in this.ParamArray){//inefficient, but not worth optimising
-			if (this.ParamArray[ThisParamKey]==ArrayOfParamNameToOptimise[OptKey]){
+			console.log(this.ParamArray[ThisParamKey]);
+			if (this.ParamArray[ThisParamKey].ParameterID==ArrayOfParamNameToOptimise[OptKey]){
 				Found=true;
 				if (this.ParamArray[ThisParamKey].DistributionType!="optimisedsample"){
 					console.error(this.ParamArray[ThisParamKey]);

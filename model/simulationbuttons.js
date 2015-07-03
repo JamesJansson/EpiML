@@ -213,9 +213,46 @@ function RunFullModelTest(){
 		SummarisedOptimisationResults=SummariseAllDEO(SimulationHolder.Result);
 	};
 	
+	SimulationHolder.Run(RunSettings2);
+}
+
+function RunFullModelOptimisationTest(){
+	// Set up the plots page
+	document.getElementById("OptimisationPlotsHolder").innerHTML="";
+	for (var i=0; i<100; i++){document.getElementById("OptimisationPlotsHolder").innerHTML+='<div class="plot" id="OptimisationPlot'+i+'" ></div>';}
+
+	
+	var RunSettings2={};
+	
+	RunSettings2.FunctionName="OptimiseFullModel";
+	RunSettings2.Common={};
+	RunSettings2.Common.HCVTretmentFunctionID=Settings.HCVTreatmentScenario;
+	
+	OptParameterList=["IDU.Entry.PeakEntryPerYear", 
+		"IDU.NSP.P", 
+		"IDU.RateOfCesssation", 
+		"IDU.Sexuality.Bisexual", 
+		"IDU.Sexuality.Heterosexual",
+		"IDU.Sexuality.Homosexual", 
+		"IDU.TransmissionP"];
+	
+	
+	RunSettings2.Common.OptimisationParam=PGroup.CreateOptimisationStructure(OptParameterList);
+	
+	
+	
+	RunSettings2.FunctionToRunOnCompletion=function(){
+		// Display all results
+		SummarisedOptimisationResults=SummariseAllDEO(SimulationHolder.Result);
+	};
 	
 	SimulationHolder.Run(RunSettings2);
 }
+
+
+
+
+
 
 
 function RearrangeSimResults(ResultsArray){

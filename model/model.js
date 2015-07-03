@@ -10,10 +10,13 @@ var OriginalParam={}; // This is a space to store param
 var OptimisedParam={};// This is the Param object which includes values for the optimised param 
 var InterventionParam={};// This is the 
 
+var Notifications;
+var RegularInjectionTime;
+
 var Settings={};
 
 
-
+console.error("A lot of these can/should go");
 var PP=[];//This is the global array that holds the population
 var SimID;//This value is a global, used to reference the correct simulation in the Param structure
 var PPNotification=[];
@@ -58,11 +61,15 @@ function SimSetup(WorkerData){
 	FemaleMortality=new MortalityCalculator(Data.Mortality.Female[1].Rates, Data.Mortality.Female[1].Year, Data.Mortality.Female[2].Rates, Data.Mortality.Female[2].Year);
 	
 	// Play around with the notifications structure
-	
+	RestructureNotificationData();
 	
 	
 	// Adjust data according to beliefs about inaccuracies 
 	AdjustDataForKnownBiases();
+	
+	
+	RegularInjectionTime=new RegularInjectionTimeObject();
+	
 	
 	return 0;
 }
@@ -91,6 +98,22 @@ function AdjustPWIDUnderReporting(){//Data, AdjustmentFactor){// This should occ
 }
 
 
-
+function RestructureNotificationData(){
+	
+	console.log(Data);
+	
+	// Notification data
+	Notifications={};
+	Notifications.Year=Data.MaleNotifications.Year;
+	Notifications.Age=Data.MaleNotifications.Age;
+	Notifications.Count=[];
+	Notifications.Count[0]=[];
+	Notifications.Count[0]=Data.MaleNotifications.Table;
+	Notifications.Count[1]=[];
+	Notifications.Count[1]=Data.FemaleNotifications.Table;
+	Notifications.FirstYearOfData=Notifications.Year[0];
+	Notifications.LastYearOfData=Notifications.Year[Notifications.Year.length-1];
+	console.log(Notifications);
+}
 
 

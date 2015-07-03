@@ -227,6 +227,17 @@ DataExtractionObject.prototype.DrawGraph=function(){
 	this.GraphObject.Draw();
 };
 
+function DataExtractionObjectGroup(){
+	// There is a problem in how the parameters are specifed (externally) vs how the DEOs are specfied (internally)
+	
+	
+}
+
+
+
+
+
+
 function FindAllDEOError(DEOArray, SimulationResult){
 	var ErrorSum=0;
 	for (var DEOCount in DEOArray){
