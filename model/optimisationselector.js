@@ -13,3 +13,4 @@
 
 // Saves the parameter group (with the optimisation inside)
 
+this.SimulationHolder=new MultiThreadSim()
