@@ -13,4 +13,100 @@
 
 // Saves the parameter group (with the optimisation inside)
 
-this.SimulationHolder=new MultiThreadSim()
+
+
+function OptimisationSelector(PointerToParamGroup, Settings){
+	this.ParamGroup=PointerToParamGroup;
+	
+	this.SimulationHolder=new MultiThreadSim();
+	this.FunctionToRun=FunctionName
+	this.Data
+	
+	this.InitialSetUpFunction="NameOfFunctionThatPerformsPreoptimisationSetup";// is a string that is stored to represent the 
+	
+	//DataExtractionObjectArray
+	this.DEOArrayFunction="NameOfFunctionThatGeneratesDEOArrays";//
+
+	this.ShutDownOnCompletion=true;
+
+
+	OptimisationSelector.prototype.Import=function ()
+	
+	OptimisationSelector
+	
+	// the informations is sent to the worker, the worker finds the 
+
+
+}
+
+OptimisationSelector.prototype.ClickRun(){
+	// select display progress page?
+	this.RunOptimisation();
+		
+}
+
+
+
+OptimisationSelector.prototype.RunOptimisation=function (){
+	// Send the optimisation settings to the simulation  
+	
+	// wait for the result
+	
+	// collect up the data when finished
+};
+
+
+
+
+
+
+OptimisationSelectorHandler(WorkerData){
+	// 
+	// Set up the optimisation data
+	var DEOArrayFunction=eval(WorkerData.Common.DEOArrayFunction);
+	var DEOArray = DEOArrayFunction();
+	// Set up the parameters
+	var OptimisationParam=WorkerData.Common.OptimisationParam;
+	
+	// 
+	Param
+	
+	
+	// Run the pre-code
+	var InitialSetUpFunction=WorkerData.Common.InitialSetUpFunction;
+	InitialSetUpFunction();
+	
+	
+	var Optimisation=new 
+	
+	var OptimisationSettings={};
+	
+	OptimisationSettings.Target=DEOArray;
+	
+	
+	OptimisationSettings.Function=function(FunctionInput, ParameterSet){
+		// change Param according to the values listed in ParameterSet
+		for (var Identifier in ParameterSet){
+			eval("Param." + Identifier +"=ParameterSet["+Identifier+"];" );	
+		}
+		
+		Param.Whatever=ParameterSet["Whatever"];
+		Param.Whatever=ParameterSet["Whatever"];
+		
+		
+		var FullModelResults=Fullmodel(FunctionInput.Notifications, FunctionInput.EndSimulationTime, FunctionInput.Intervention);
+		
+		
+		return FullModelResults;
+	};
+	
+	
+	
+	
+	
+	
+	return SimulationResults();
+		
+}
+
+
