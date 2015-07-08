@@ -75,7 +75,7 @@ ParameterClass.prototype.UpdateTypeDisplay= function (){
 	var ParameterHTML="";
 	// Draw the expand and save buttons
 	ParameterHTML+="<a onClick=\"ToggleDisplay(this, 'ParamInfoBox');\" style='background-color: #acf;'>[+]</a>\n"+"&nbsp;"+
-		"<a  onClick='"+this.Name()+".Save();' style='background-color: #acf;'>Save</a>  \n";
+		"<a  onClick='"+this.Name()+".SaveButtonPressed();' style='background-color: #acf;'>Save</a>  \n";
 	
 	
 	
@@ -140,7 +140,12 @@ ParameterClass.prototype.UpdateTypeDisplay= function (){
 	document.getElementById(this.InterfaceID).innerHTML=ParameterHTML;
 	document.getElementById(this.InterfaceID).DistributionType.value=this.DistributionType;
 };
-	
+
+ParameterClass.prototype.SaveButtonPressed=function(){
+	this.Save();
+	this.RunUpdateFunction();
+};
+
 ParameterClass.prototype.Save=function(){
 	// Go through each of the possible elements
 	var FieldsList=[];
@@ -452,6 +457,12 @@ function ParameterGroup(GroupName, NumberOfSamples, ParameterFileName){
 	this.FileName=ParameterFileName;
 	this.NumberOfSamples=NumberOfSamples;
 	this.RecalculateTimestamp=0;
+	
+	this.UpdateFunction=[];// an array of functions that are called when the Parameter group is updated. 
+	// called by this.RunUpdateFunction();
+	// add functions by using this.AddUpdateFunction(FunctionPointer)
+	// called in the function this.UpdateFunction[i](this);
+	// this gives the function called all the data in the Parameter group
 }
 
 
@@ -569,6 +580,16 @@ ParameterGroup.prototype.__ParameterSplitByPeriod=function(ParamObject, ParamNam
 		this.__ParameterSplitByPeriod(ParamObject[FirstPart], SecondPart, Value);
 	}
 	// There is no return, because under javascript, the modifications made to ParamObject should be maintained as it is passed back through the recursions
+};
+
+ParameterGroup.prototype.AddUpdateFunction=function(FunctionPointer){
+	this.UpdateFunction.push(FunctionPointer);
+};
+
+ParameterGroup.prototype.RunUpdateFunction=function(){
+	for (var i in this.UpdateFunction){
+		this.UpdateFunction[i](this);
+	}
 };
 
 
