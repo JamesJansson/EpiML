@@ -64,7 +64,17 @@ OptSelector.prototype.Import=function (){
 
 OptSelector.prototype.DrawParamDiv=function(){
 	// draw the outer section
+		// Draw a button to run the optimisation
+		// Draw a tick box that determines if the optimisation displays results after each round or not
+		// Draw a drop down that allows the user to select the simulation that is displayed in the progress??
+		// Draw a box that is used to display the progress of error with time
+		// This plot takes each of the sims's historical data and makes a multi line plot that displays all of the plots on a single plot
+		// http://www.flotcharts.org/flot/examples/series-toggle/index.html
+		
 	// for each optimisation parameter
+		// Display the values as described in the ParamGroup
+		// Draw a box that shows the progress of the error in this variable
+		// Draw a box that displays that 
 	// for each optimisation data point 
 };
 
@@ -178,6 +188,11 @@ function OptSelectorHandler(WorkerData){
 			PlotSomething.Data=Data;
 			PlotSomething.Code="ScatterPlot('#"+ Common.OptimisationPlotID+ "OptimisationPlotHolder0', Data,  'Step', 'Error Value');";
 			self.postMessage({Execute: PlotSomething});
+			
+			// Parse back the historical error for the total and each data pulled
+			
+			
+			
 			
 			// for each data found
 			
