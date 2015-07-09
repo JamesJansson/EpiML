@@ -15,13 +15,14 @@
 
 
 
-function OptimisationSelector(PointerToParamGroup, Settings){
+function OptSelector(PointerToParamGroup, Settings){
 	this.ParamGroup=PointerToParamGroup;
 	// This means that when paramgroup is updated, this.ParamGroupUpdated is called
 	this.ParamGroup.AddUpdateFunction(this.ParamGroupUpdated);
 	
 	this.OptParamArrayPointers=[];
 	
+	this.DisplayProgress=true;
 	
 	this.SimulationHolder=new MultiThreadSim();
 	
@@ -47,7 +48,7 @@ function OptimisationSelector(PointerToParamGroup, Settings){
 
 }
 
-OptimisationSelector.prototype.Import=function (){
+OptSelector.prototype.Import=function (){
 	//Clear the pointers to the optimsation array
 	this.OptParamArrayPointers=[];
 	// go through param group, find optimisedsamples
@@ -61,13 +62,14 @@ OptimisationSelector.prototype.Import=function (){
 
 
 
-OptimisationSelector.prototype.DrawParamDiv=function(){
+OptSelector.prototype.DrawParamDiv=function(){
 	// draw the outer section
-	// for each optimisation 
+	// for each optimisation parameter
+	// for each optimisation data point 
 };
 
 
-OptimisationSelector.prototype.ParamGroupUpdated=function(){
+OptSelector.prototype.ParamGroupUpdated=function(){
 	this.Import();
 	this.DrawParamDiv();
 };
@@ -75,7 +77,7 @@ OptimisationSelector.prototype.ParamGroupUpdated=function(){
 
 
 
-OptimisationSelector.prototype.ClickRun=function(){
+OptSelector.prototype.ClickRun=function(){
 	// select display progress page?
 	this.RunOptimisation();
 		
@@ -83,7 +85,7 @@ OptimisationSelector.prototype.ClickRun=function(){
 
 
 
-OptimisationSelector.prototype.RunOptimisation=function (){
+OptSelector.prototype.RunOptimisation=function (){
 	// Send the optimisation settings to the simulation  
 	this.SimulationHolder.Run();
 	// wait for the result
@@ -92,7 +94,7 @@ OptimisationSelector.prototype.RunOptimisation=function (){
 };
 
 
-OptimisationSelector.prototype.PushToParamGroup=function (){
+OptSelector.prototype.PushToParamGroup=function (){
 	// Takes array of optimised results
 	// pushes to the paramgroup
 	// Saves the results to file Param.Save 
@@ -100,27 +102,29 @@ OptimisationSelector.prototype.PushToParamGroup=function (){
 
 
 
-OptimisationSelector.prototype.ParamGroupUpdated=function (){
+OptSelector.prototype.ParamGroupUpdated=function (){
 	this.DrawTable();
 }
 
 
-
-function OptimisationSelectorHandler(WorkerData){
+// This function is inside the model and is called 
+// Note that 
+function OptSelectorHandler(WorkerData){
+	var OptSelectorSettings=WorkerData.Common.OptSelectorSettings;
 	// Set up the optimisation data
-	var DEOArrayFunction=eval(WorkerData.Common.DEOArrayFunction);
+	var DEOArrayFunction=eval(OptSelectorSettings.DEOArrayFunction);
 	var DEOArray = DEOArrayFunction();
 	// Set up the parameters
 	var OptimisationParam=WorkerData.Common.OptimisationParam;
-	var Param=WorkerData.SimData.Param;
+	Param=WorkerData.SimData.Param;
 	
-	
+	// There are typically three main functions that the optimisation is handed 
 	var InitialSetUpFunction=eval(WorkerData.Common.InitialSetUpFunction);
 	var ModelFunction=eval(WorkerData.Common.ModelFunction);
 	var PostOptimisationFunction=eval(WorkerData.Common.PostOptimisationFunction);
 	
 	// Run the pre-code
-	InitialSetUpFunction();
+	InitialSetUpFunction(Param, DEOArray, WorkerData);
 	
 	
 	
@@ -156,33 +160,34 @@ function OptimisationSelectorHandler(WorkerData){
 	
 	
 	OptimisationSettings.ProgressFunction=function(SimulationNumber, Parameter, SimOutput, ErrorValues){
-		
-		console.log("Params: X "+Mean(Parameter.X.CurrentVec)+" Y "+Mean(Parameter.Y.CurrentVec));
-		var PSetCount=0;
-		var Data=[];
-		for (var key in Parameter.X.CurrentVec){
-			Data[PSetCount]=[Parameter.X.CurrentVec[key], Parameter.Y.CurrentVec[key]];
-			PSetCount++;
+		if (Common.DisplayProgress==true){
+			console.log("Params: X "+Mean(Parameter.X.CurrentVec)+" Y "+Mean(Parameter.Y.CurrentVec));
+			var PSetCount=0;
+			var Data=[];
+			for (var key in Parameter.X.CurrentVec){
+				Data[PSetCount]=[Parameter.X.CurrentVec[key], Parameter.Y.CurrentVec[key]];
+				PSetCount++;
+			}
+			
+			
+			Data.Y=this.MeanError;
+			Data.X=AscendingArray(0, this.MeanError.length-1);
+			
+			
+			PlotSomething={};
+			PlotSomething.Data=Data;
+			PlotSomething.Code="ScatterPlot('#"+ Common.OptimisationPlotID+ "OptimisationPlotHolder0', Data,  'Step', 'Error Value');";
+			self.postMessage({Execute: PlotSomething});
+			
+			// for each data found
+			
+			// for (key in this.Parameter){
+			// 	CurrentParam=this.Parameter[key];
+			// }
+			
+			
+			//ScatterPlot('#PlotHolder', Data,  'AAA', 'BBB');
 		}
-		
-		
-		Data.Y=this.MeanError;
-		Data.X=AscendingArray(0, this.MeanError.length-1);
-		
-		
-		PlotSomething={};
-		PlotSomething.Data=Data;
-		PlotSomething.Code="ScatterPlot('#OptimisationPlotHolder0', Data,  'Step', 'Error Value');";
-		self.postMessage({Execute: PlotSomething});
-		
-		// for each data found
-		
-		// for (key in this.Parameter){
-		// 	CurrentParam=this.Parameter[key];
-		// }
-		
-		
-		//ScatterPlot('#PlotHolder', Data,  'AAA', 'BBB');
 	};
 	
 	
