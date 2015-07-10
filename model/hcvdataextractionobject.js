@@ -1144,7 +1144,7 @@ function SetupDataExtractionObjects(){
 	
 	// Give all plots an id in the intereface
 	for (var Count in DEO){
-		DEO[Count].GraphInterfaceID="OptimisationPlot"+Count;
+		//DEO[Count].GraphInterfaceID="OptimisationPlot"+Count;
 	}
 	
 	return DEO;//Array of DataExtractionObject

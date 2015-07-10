@@ -134,6 +134,14 @@ function PopulationStandardDeviation(arr){//Sample Standard Deviation
 };
 
 
+function Variance(){
+	console.error("Please either use SampleVariance or PopulationVariance")	
+};
+
+function StandardDeviation(){
+	console.error("Please either use SampleStandardDeviation or PopulationStandardDeviation")	
+};
+
 
 
 /*

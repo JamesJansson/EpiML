@@ -189,7 +189,7 @@ DataExtractionObject.prototype.SummariseMultipleSimulations=function(ArrayOfResu
 		
 };
 
-DataExtractionObject.prototype.DrawGraph=function(){
+DataExtractionObject.prototype.DrawGraph=function(GraphInterfaceID){
 
 	
 	// function to extract	data into the correct form
@@ -208,7 +208,7 @@ DataExtractionObject.prototype.DrawGraph=function(){
 	PlotSettings.Title=this.Title;
 	PlotSettings.XLabel=this.XLabel;
 	PlotSettings.YLabel=this.YLabel;
-	PlotSettings.ID=this.GraphInterfaceID;
+	PlotSettings.ID=GraphInterfaceID;
 	
 	
 	PlotSettings.PlotFunction=function(PlotPlaceholder, PlotData){
@@ -227,11 +227,91 @@ DataExtractionObject.prototype.DrawGraph=function(){
 	this.GraphObject.Draw();
 };
 
-function DataExtractionObjectGroup(){
-	// There is a problem in how the parameters are specifed (externally) vs how the DEOs are specfied (internally)
+
+
+
+function DataExtractionObjectGroup(Name){
+	this.DEOArray=[];
+	this.Name=Name;
+	
+}
+
+DataExtractionObjectGroup.prototype.AddDEO=function(DEOToAdd){
+	// this function can either add a single DEO or an array of DEO
+	// It takes a DEO or an array of DEOs as an argument
+	
+	
+	
+	if (DEOToAdd instanceof Array){
+		// give it a graph ID
+		for (var Count in DEOToAdd)
+			DEOToAdd[]=
+		this.DEOArray.GraphID="GraphID_"+this.Name+"_"+this.DEOArray
+		
+		
+		this.DEOArray=this.DEOArray.concat(DEOToAdd);
+	}
+	else if (DEOToAdd instanceof DataExtractionObject){
+		this.DEOArray.push(DEOToAdd);
+	}
+	
+	
 	
 	
 }
+
+DataExtractionObjectGroup.prototype.FindAllError=function(SimulationResult){
+	var ErrorSum=0;
+	for (var DEOCount in this.DEOArray){
+	    ErrorSum+=this.DEOArray[DEOCount].FindError(SimulationResult);
+		console.log(ErrorSum);
+	}
+	return ErrorSum;
+}
+
+DataExtractionObjectGroup.prototype.GenerateGraphData=function(SimulationResult){
+	for (var ODEOCount in ODEOArray){
+	    ODEOArray[ODEOCount].GenerateGraphData(SimulationResult);
+	}
+}
+
+DataExtractionObjectGroup.prototype.Summarise=function(ResultsBySim){
+	// ResultsBySim[Sim].DEOArray[SpecificStatCount]
+	var DEOResultsBySim=[];
+	for (var SimCount in ResultsBySim){
+		DEOResultsBySim[SimCount]=ResultsBySim[SimCount].DEOArray;
+	}
+	// DEOResultsBySim[SimCount][SpecificStatCount]
+	var DEOArrayByStat=Transpose(DEOResultsBySim);
+	
+	console.log(DEOArrayByStat);
+	// Transpose to get at all the .DEOArray results
+	//var ResultsByStat=TransposeArrObj(ResultsBySim);
+	// ResultsByStat.DEOArray[Sim][SpecificStatCount]
+	//var OptimisationArrayBySim=ResultsByStat.DEOArray;// Choose to operate only on the Optimisation results
+	// OptimisationStatArray[Sim][SpecificStatCount]
+	//var DEOArrayByStat=Transpose(OptimisationArrayBySim);// Stat count is an array
+	//OptimisationStatArray[SpecificStatCount][Sim]
+	
+	this.DEOArray=[];
+	for (var SpecificStatCount in DEOArrayByStat){
+		this.DEOArray[SpecificStatCount]= new DataExtractionObject();
+		this.DEOArray[SpecificStatCount].SummariseMultipleSimulations(DEOArrayByStat[SpecificStatCount]);
+		
+	}
+	
+}
+
+DataExtractionObjectGroup.prototype.GraphAll=function(GraphInterfaceID){
+		// Draw the graph, but wait until the above has processed
+	this.DEOArray=[];
+	var SpecificStatCount=0;
+	for (var SpecificStatRef in DEOArrayByStat){
+		this.DEOArray[SpecificStatRef].DrawGraph(GraphInterfaceID+SpecificStatCount);
+	}
+}
+
+
 
 
 
@@ -291,7 +371,8 @@ function SummariseAllDEO(ResultsBySim){
 		SummarisedDEOArray[SpecificStatCount]= new DataExtractionObject();
 		SummarisedDEOArray[SpecificStatCount].SummariseMultipleSimulations(DEOArrayByStat[SpecificStatCount]);
 		// Draw the graph, but wait until the above has processed
-		SummarisedDEOArray[SpecificStatCount].DrawGraph();
+		var GraphInterfaceID="OptimisationPlot"+Count;
+		SummarisedDEOArray[SpecificStatCount].DrawGraph(GraphInterfaceID);
 	}
 	
 	return SummarisedDEOArray;
