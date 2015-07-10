@@ -20,9 +20,13 @@ function OptSelector(PointerToParamGroup, Settings){
 	// This means that when paramgroup is updated, this.ParamGroupUpdated is called
 	this.ParamGroup.AddUpdateFunction(this.ParamGroupUpdated);
 	
-	this.OptParamArrayPointers=[];
+	this.OptParamArray=[];
+	
+	this.OptOption=[];// is used for selecting whether the optimisation occurs or not
 	
 	this.DisplayProgress=true;
+	
+	// function to run on completion = this.CollateDEO
 	
 	this.SimulationHolder=new MultiThreadSim();
 	
@@ -42,22 +46,34 @@ function OptSelector(PointerToParamGroup, Settings){
 	this.ArrayOfOptimisedResults=[];
 
 	
-	// the informations is sent to the worker, the worker finds the 
+	// the information is sent to the worker, the worker finds the 
 
+	this.Import();
+	this.DEOArray=exec(this.DEOArrayFunction+"()");// run it locally. 
 	this.DrawParamDiv();
 
 }
 
 OptSelector.prototype.Import=function (){
 	//Clear the pointers to the optimsation array
-	this.OptParamArrayPointers=[];
+	this.OptParamArray=[];
+	this.OptOption=[];
 	// go through param group, find optimisedsamples
-	// if optimisedsamples
-	// this.OptParamArrayPointers.push(ParamGroup)
-	
-	// find the high and the low ranges of the parameters
-	
-	// 
+	for (var PCount in this.ParamGroup.ParamArray){
+		if (this.ParamGroup.ParamArray[PCount]=='optimisedsample'){
+			var CurrentOptParam=this.ParamGroup.ParamArray[PCount];//Pointer
+			this.OptParamArray.push(CurrentOptParam);//Pointer
+			this.OptOption.push(false);
+			// find the high and the low ranges of the parameters
+			// Display current results
+				// Mean
+				// SD
+				// 95% LCI 
+				// 95% UCI
+				
+			// 
+		}
+	}
 };
 
 
