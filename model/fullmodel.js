@@ -35,7 +35,7 @@ function FullModelTest(WorkerData){
 	
 	
 	// Set up the optimisation
-	var DEOArray = SetupDataExtractionObjects();
+	var DEOArray = SetupDataExtractionObjects(Data);
 	
 	
 	
