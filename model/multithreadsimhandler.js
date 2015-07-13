@@ -10,11 +10,40 @@ self.onmessage = function (WorkerMessage) {
 	
 	console.log(WorkerMessage.data.FunctionToRun);
 	
+	if (typeof(WorkerMessage.data.AddMessageFunction)!='undefined'){
+		for (var MCount in WorkerMessage.data.AddMessageFunction){
+			// Generate a function that the program can use to send back information
+			var evalText=WorkerMessage.data.AddMessageFunction[MCount];
+			evalText+="=function(DataToSendBack){"
+			evalText+="var StructSendBack={};"
+			evalText+="console.log(StructSendBack);"
+			evalText+="StructSendBack.MessageFunctionName='"+WorkerMessage.data.AddMessageFunction[MCount]+"';";
+			evalText+="console.log(StructSendBack);"
+			evalText+="StructSendBack.Data=DataToSendBack;";
+			evalText+="console.log(StructSendBack);"
+			evalText+="self.postMessage(StructSendBack);}";
+			console.log("Got to before the eval");
+			eval(evalText);
+			console.log("Did the eval");
+		}
+	}
+	else{
+		console.error("did not find any functions");	
+	}
+	
+	
+	
 	eval("FunctionHolder="+WorkerMessage.data.FunctionToRun+";");
 	var SimResult=FunctionHolder(WorkerMessage.data);
 	var ResultWithFunctionsRemoved=DeepCopyData(SimResult);//functions crash the thread if passed back to the main thread
 	self.postMessage({WorkerMessage: WorkerMessage.data, Result: ResultWithFunctionsRemoved});//All simulation will end with this line
 };
+
+
+
+
+
+
 
 // ---------------------------------------------------------------------------------
 // Running a function

@@ -17,6 +17,7 @@ function CreateGlobalVariables(){
 
 function FullModelTest(WorkerData){
 
+	InSimFunction("This is the message");throw "stopping";
 	
 	// This should go into the outer loop
 

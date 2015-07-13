@@ -81,10 +81,25 @@ function MultiThreadSim(FolderName, NoSims, NoThreads, TerminateOnFinish){
 	this.WithinSimProgressBarID="WithinSimProgressBar";// to give a progress bar to each of the simulations as they are running
 
 	this.StatusTextElementName="StatusTextElement";
+	
+	this.SimMessageFunctionArray=[];
+	this.InterfaceMessageFunctionArray=[];
 }
 
+MultiThreadSim.prototype.AddMessageFunction=function(SimFunctionName, InterfaceFunctionPointer){
+	if (typeof(SimFunctionName)!="string"){
+		throw "AddMessageFunction(SimFunctionName, InterfaceFunctionPointer), SimFunctionName is a string of the name of the function to run in the sim";
+	}
+	if (typeof(InterfaceFunctionPointer)!="function"){
+		throw "AddMessageFunction(SimFunctionName, InterfaceFunctionPointer), InterfaceFunctionPointer is a pointer to the function in the interface to run";
+	}
+	
+	this.SimMessageFunctionArray.push(SimFunctionName);
+	this.InterfaceMessageFunctionArray.push(InterfaceFunctionPointer);	
+}
 
-
+// SimulationHolder.AddMessageFunction("InSimFunction", RepetitiveError)
+// function RepetitiveError(Data){for (var i=0; i<100; i++){console.error(Data+i)}}
 
 MultiThreadSim.prototype.Run=function(RunSettings){//FunctionName, Common, SimDataArray, TerminateOnFinish) {
 	//RunSettings has the following elements
@@ -191,7 +206,7 @@ MultiThreadSim.prototype.StartNextSim=function() {
 			this.Worker[SimID].ThreadID=ThreadID;
 			
 			//Post message will soon become a handler for many commands, including starting the simulation, optimising the simulation, and requesting data
-			this.Worker[SimID].postMessage({ FunctionToRun: this.FunctionToRun, SimID: SimID, ThreadID: ThreadID, Common: this.Common, SimData: this.SimDataArray[SimID]});
+			this.Worker[SimID].postMessage({ FunctionToRun: this.FunctionToRun, SimID: SimID, ThreadID: ThreadID, Common: this.Common, SimData: this.SimDataArray[SimID], AddMessageFunction: this.SimMessageFunctionArray});
 		}
 		else{ //there are no more sims to run
 			MoreSimsToRun=false;
@@ -261,6 +276,15 @@ MultiThreadSimMessageHandler=function(e) {
 		//SaySomething.Data="This is data";//NOte that Data can be an object, So there may be Data.Colour Data.Temperature
 		//SaySomething.Code="console.log(Data);";
 		//self.postMessage({Execute: SaySomething});
+	}
+	
+	
+	// Handle message functions that get added to the system 
+	if (typeof e.data.MessageFunctionName != 'undefined'){
+		// Find the name in the array
+		var IndexToRun=this.SimMessageFunctionArray.indexOf(e.data.MessageFunctionName);
+		// Execute the function
+		this.InterfaceMessageFunctionArray[IndexToRun](e.data.Data);
 	}
 	
 	

@@ -63,16 +63,17 @@ function OptSelector(Functions, DivID, PointerToParamGroup, DEOArrayFunctionName
 	
 	// set the progress bar to the optimisation progress bar
 	
-	
-	this.SimulationHolder=new MultiThreadSim();
-
-	this.PreOptimisationFunction="NameOfFunctionThatPerformsPreoptimisationSetup";// is a string that is stored to represent the 
-	
-	//DataExtractionObjectArray
-
 	this.ShutDownOnCompletion=false;
 	
-	this.NumberOfCores=Settings.NoCores;
+	this.Settings=Settings;// Note that setting is a pointer, and hence if Settings changes, then this.Settings changes too.
+	
+	this.SimulationHolder; //=new MultiThreadSim();
+
+	//DataExtractionObjectArray
+
+	
+	
+	
 
 	
 	
@@ -89,6 +90,13 @@ function OptSelector(Functions, DivID, PointerToParamGroup, DEOArrayFunctionName
 	this.DrawParamDiv();
 
 }
+
+OptSelector.prototype.SetUpSimulationHolder=function (){
+	
+};
+
+
+
 
 OptSelector.prototype.ImportParam=function (){
 	//Clear the pointers to the optimsation array

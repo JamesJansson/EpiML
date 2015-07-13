@@ -350,13 +350,13 @@ function ParameterPage(ParamArray, ParamArrayName, PageName, InterfaceHolder, Fi
 
 ParameterPage.prototype.Build= function (){
 
-	var BuildText="";
+	var BuildText="<div>";
 	
 	//This next section is very naughty, because it breaks the div by setting the inner HTML. It will probably break.
-	BuildText=BuildText+"<div class='SolidButton' onClick='"+this.PageName+".AddNewParameter(); '>Add parameter</div>";
-	BuildText=BuildText+"<div class='SolidButton' onClick='"+this.PageName+".SaveParameters(); '>Save to file</div>"
+	BuildText=BuildText+"<div class='SolidButton' style='float:left;' onClick='"+this.PageName+".AddNewParameter(); '>Add parameter</div>";
+	BuildText=BuildText+"<div class='SolidButton' style='float:right;' onClick='"+this.PageName+".SaveParameters(); '>Save to file</div></div>"
 	
-	BuildText=BuildText+"<div id='"+this.PageName+"NewParamBox' style='border-style:solid; border-color: #ffaaaa;'> </div>";
+	BuildText=BuildText+"<div id='"+this.PageName+"NewParamBox' style='border-style:solid; border-color: #ffaaaa; position:relative; clear:both;'> </div>";
 	
 	
 	for (var key in this.ParamArray) {// Code inspired by http://stackoverflow.com/questions/208016/how-to-list-the-properties-of-a-javascript-object
