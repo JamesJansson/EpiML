@@ -56,7 +56,6 @@ function HCVDataExtractionObjects(Data){
 			else {
 				SexText="Female"; 
 			}
-			console.error("We need to work out a way of refrencing this.");
 			
 			var ObjectName="NumberOfPeopleEverInjectingDrugs"+SexText+LowerAge+"_"+UpperAge;
 			NewDEO.Name=ObjectName;

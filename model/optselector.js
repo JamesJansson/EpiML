@@ -15,7 +15,22 @@
 
 
 
-function OptSelector(PointerToParamGroup, DEOGroup, Settings){
+function OptSelector(Functions, DivID, PointerToParamGroup, DEOArrayFunctionName, Settings){
+	// Store the functions to be used in the simulation
+	if (typeof(ModelFunction)=="undefined"){
+		throw "Functions.ModelFunction must be set, otherwise there is nothing to optimise!";
+	}
+	this.ModelFunction=Functions.ModelFunction;
+	if (typeof(PreOptimisationFunction)!="undefined"){
+		this.PreOptimisationFunction;
+	}
+	if (typeof(PostOptimisationFunction)!="undefined"){
+		this.PostOptimisationFunction;
+	}
+	
+	this.DivPointer=document.getElementById(DivID);
+	
+	
 	// Working on the external PointerToParamGroup
 	this.ParamGroup=PointerToParamGroup;
 	// This means that when paramgroup is updated, this.ParamGroupUpdated is called
@@ -26,22 +41,18 @@ function OptSelector(PointerToParamGroup, DEOGroup, Settings){
 	this.OptOption=[];// is used for selecting whether the optimisation occurs or not
 	this.ArrayOfOptimisedResults=[];
 	
-	
-	this.DEOGroup=DEOGroup;
-	
+	this.DEOArrayFunctionName=DEOArrayFunctionName;//
+	this.DEOArrayFunction=eval(this.DEOArrayFunctionName);//
+	this.DEOGroup=new DataExtractionObjectGroup(this.DEOArrayFunction);
+	this.DEOGroup.AddDEO(this.DEOArrayFunction());
+		
 	// Use the DEO group to create a list of parameters to optimise to
 	this.DEONameList=[];
 	for (var DEOIndex in this.DEOGroup.DEOArray){
 		this.DEONameList.push(this.DEOGroup.DEOArray[DEOIndex].Name);
+		this.DEOToOpt.push(true);// this is ticked 
+		this.DEOToGraph.push(true);// this is ticked 
 	}
-	
-	
-	//this.DEOFunctionList=[];// a text list of DEO functions that are used to build a DEO
-	
-	this.DEOToOpt=[];// this is ticked 
-	this.DEOToGraph=[];// this is ticked 
-	
-	
 	
 	this.DisplayProgress=true;
 	
@@ -54,35 +65,32 @@ function OptSelector(PointerToParamGroup, DEOGroup, Settings){
 	
 	
 	this.SimulationHolder=new MultiThreadSim();
-	
-	
-	this.FunctionToRun=FunctionName
-	this.Data
-	
-	this.InitialSetUpFunction="NameOfFunctionThatPerformsPreoptimisationSetup";// is a string that is stored to represent the 
+
+	this.PreOptimisationFunction="NameOfFunctionThatPerformsPreoptimisationSetup";// is a string that is stored to represent the 
 	
 	//DataExtractionObjectArray
-	this.DEOArrayFunction="NameOfFunctionThatGeneratesDEOArrays";//
 
-	this.ShutDownOnCompletion=Settings.ShutDownOnCompletion;
+	this.ShutDownOnCompletion=false;
+	
 	this.NumberOfCores=Settings.NoCores;
 
-	var InitialSetUpFunction=eval(WorkerData.Common.InitialSetUpFunction);
-	var ModelFunction=eval(WorkerData.Common.ModelFunction);
-	var PostOptimisationFunction=eval(WorkerData.Common.PostOptimisationFunction);
+	
+	
+
 	
 	
 
 	
 	// the information is sent to the worker, the worker finds the 
 
-	this.Import();
-	this.DEOArray=exec(this.DEOArrayFunction+"()");// run it in the interface
+	this.ImportParam();
+	
+	
 	this.DrawParamDiv();
 
 }
 
-OptSelector.prototype.Import=function (){
+OptSelector.prototype.ImportParam=function (){
 	//Clear the pointers to the optimsation array
 	this.OptParamArray=[];
 	this.OptOption=[];
@@ -99,8 +107,8 @@ OptSelector.prototype.Import=function (){
 
 
 OptSelector.prototype.DrawParamDiv=function(){
-	document.getElementById(this.DivID);
 	
+	var HTMLString="";
 	// draw the outer section
 		// Draw a button to run the optimisation
 		// Draw a tick box that determines if the optimisation displays results after each round or not
@@ -125,11 +133,14 @@ OptSelector.prototype.DrawParamDiv=function(){
 			Percentile(Val, 97.5)
 	}
 	// for each optimisation data point 
+	
+	
+	this.DivPointer.innerHTML=HTMLString;
 };
 
 
 OptSelector.prototype.ParamGroupUpdated=function(){
-	this.Import();
+	this.ImportParam();
 	this.DrawParamDiv();
 };
 
@@ -174,7 +185,7 @@ OptSelector.prototype.ParamGroupUpdated=function (){
 // Note that 
 function OptSelectorHandler(WorkerData){
 	// There are typically three main functions that the optimisation is handed 
-	// WorkerData.Common.InitialSetUpFunction
+	// WorkerData.Common.PreOptimisationFunction
 	// WorkerData.Common.ModelFunction
 	// WorkerData.Common.PostOptimisationFunction
 	
@@ -216,9 +227,9 @@ function OptSelectorHandler(WorkerData){
 	}
 	
 	
-	// Extract and run the InitialSetUpFunction if it exists
-	if (typeof(WorkerData.Common.InitialSetUpFunction)!="undefined"){
-		var InitialSetUpFunction=eval(WorkerData.Common.InitialSetUpFunction);
+	// Extract and run the PreOptimisationFunction if it exists
+	if (typeof(WorkerData.Common.PreOptimisationFunction)!="undefined"){
+		var PreOptimisationFunction=eval(WorkerData.Common.PreOptimisationFunction);
 		// Run the pre-code
 		var InitialSetUpInput={};
 		InitialSetUpInput.Param=Param;
@@ -226,7 +237,7 @@ function OptSelectorHandler(WorkerData){
 		InitialSetUpInput.ModelFunction=ModelFunction;
 		InitialSetUpInput.WorkerData=WorkerData;
 		
-		InitialSetUpFunction(InitialSetUpInput);
+		PreOptimisationFunction(InitialSetUpInput);
 	}
 	
 	
