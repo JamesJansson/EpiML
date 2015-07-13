@@ -67,6 +67,7 @@ function OptSelector(Name, DivID, Functions, PointerToParamGroup, DEOArrayFuncti
 		
 	// Use the DEO group to create a list of parameters to optimise to
 	this.DEONameList=[];
+	this.DEOToOpt=[];
 	for (var DEOIndex in this.DEOGroup.DEOArray){
 		this.DEONameList.push(this.DEOGroup.DEOArray[DEOIndex].Name);
 		this.DEOToOpt.push(true);// this is ticked 
