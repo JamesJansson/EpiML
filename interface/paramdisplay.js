@@ -11,6 +11,17 @@ function ToggleDisplay(SectionRef, ClassToToggle){
 }
 
 
+function ToggleDisplayByID(DivID){
+	if (document.getElementById(DivID).style.display=='none'){
+		document.getElementById(DivID).style.display='';
+	}
+	else{
+		document.getElementById(DivID).style.display='none';
+	}
+
+}
+
+
 //Update parameter display (used when loading the parameters from file or after optimisation)
 
 

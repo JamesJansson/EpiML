@@ -37,7 +37,8 @@ function OptSelector(Name, DivID, Functions, PointerToParamGroup, DEOArrayFuncti
 	
 	this.DivPointer=document.getElementById(DivID);
 	this.DEOID=DivID+"_DEO_";// 
-	this.DEOChartID=DivID+"_DEOChart_";// 
+	this.DEOErrorChartID=DivID+"_DEOErrorChart_";// 
+	this.DEOResultsChartID=DivID+"_DEOResultsChart_";// 
 	
 	// Working on the external PointerToParamGroup
 	this.ParamGroup=PointerToParamGroup;
@@ -167,16 +168,44 @@ OptSelector.prototype.DrawParamDiv=function(){
 		HTMLString+="<div>\n";
 		HTMLString+="    <div style='width:150;'>"+this.DEONameList[DEOCount]+"</div>\n";
 		var DEOOptString=this.Name+".DEOToOpt["+this.DEOCount+"];";
+		// when the button is clicked, the falue flips
 		HTMLString+="    <input type='checkbox' onClick='"+DEOOptString+"]=!'"+DEOOptString+"];' value="+DEOOptString+"> Optimise \n";
-		var ChartIDString=this.Name+".DEOToOpt["+this.DEOCount+"];";
-		// show hide chart button
-		this.DEOChartID
-		HTMLString+="    <input type='checkbox' onClick='"+DEOOptString+"]=!'"+DEOOptString+"];' value="+DEOOptString+"> Optimise \n";
+		
+		//this.DEOErrorChartID
+		//this.DEOResultsChartID
+		// show hide charts
+		HTMLString+="<div class='SolidButton' style='float:left;' onClick='ToggleDisplayByID("+this.DEOResultsChartID+DEOCount+")'>Result Chart</div>";
+		HTMLString+="<div class='SolidButton' style='float:left;' onClick='ToggleDisplayByID("+this.DEOErrorChartID+DEOCount+")'>Error Chart</div>";
+		
+		
+		HTMLString+="<div class='plot' id='"+this.DEOResultsChartID+DEOCount+"' style='display:none;'>";
+		HTMLString+="<div class='plot' id='"+this.DEOErrorChartID+DEOCount+"' style='display:none;'>";
+
 		HTMLString+="</div>\n";
 	}
 	
 	this.DivPointer.innerHTML=HTMLString;
 };
+
+OptSelector.prototype.ShowAllResultsPlots=function(){
+	for 
+		document.getElementById().style.display=true;
+		(ClassToToggle)[0].style.display
+	}
+};
+
+// hide all results
+
+
+
+
+
+OptSelector.prototype.ShowAllErrorPlots=function(){
+	if (){
+		
+	}
+};
+
 
 
 OptSelector.prototype.ParamGroupUpdated=function(){
