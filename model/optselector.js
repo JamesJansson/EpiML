@@ -15,7 +15,7 @@
 
 
 
-function OptSelector(PointerToParamGroup, Settings){
+function OptSelector(PointerToParamGroup, DEOGroup, Settings){
 	// Working on the external PointerToParamGroup
 	this.ParamGroup=PointerToParamGroup;
 	// This means that when paramgroup is updated, this.ParamGroupUpdated is called
@@ -26,10 +26,20 @@ function OptSelector(PointerToParamGroup, Settings){
 	this.OptOption=[];// is used for selecting whether the optimisation occurs or not
 	this.ArrayOfOptimisedResults=[];
 	
-	this.DEOFunctionList=[];// a text list of DEO functions that are used to build a DEO
 	
-	this.DEOFunctionToOpt=[];// this is ticked 
-	this.DEOFunctionToGraph=[];// this is ticked 
+	this.DEOGroup=DEOGroup;
+	
+	// Use the DEO group to create a list of parameters to optimise to
+	this.DEONameList=[];
+	for (var DEOIndex in this.DEOGroup.DEOArray){
+		this.DEONameList.push(this.DEOGroup.DEOArray[DEOIndex].Name);
+	}
+	
+	
+	//this.DEOFunctionList=[];// a text list of DEO functions that are used to build a DEO
+	
+	this.DEOToOpt=[];// this is ticked 
+	this.DEOToGraph=[];// this is ticked 
 	
 	
 	

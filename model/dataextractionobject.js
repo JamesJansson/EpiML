@@ -122,9 +122,6 @@ DataExtractionObject.prototype.SummariseMultipleSimulations=function(ArrayOfResu
 	if (typeof(FirstResult.Name)!="undefined"){
 		this.Name=FirstResult.Name;
 	}
-	if (typeof(FirstResult.GraphInterfaceID)!="undefined"){
-		this.GraphInterfaceID=FirstResult.GraphInterfaceID;
-	}
 	if (typeof(FirstResult.StatisticType)!="undefined"){
 		this.StatisticType=FirstResult.StatisticType;
 	}
@@ -240,19 +237,14 @@ DataExtractionObjectGroup.prototype.AddDEO=function(DEOToAdd){
 	// this function can either add a single DEO or an array of DEO
 	// It takes a DEO or an array of DEOs as an argument
 	
-	
-	
 	if (DEOToAdd instanceof Array){
-		// give it a graph ID
-		for (var Count in DEOToAdd)
-			DEOToAdd[]=
-		this.DEOArray.GraphID="GraphID_"+this.Name+"_"+this.DEOArray
-		
-		
 		this.DEOArray=this.DEOArray.concat(DEOToAdd);
 	}
 	else if (DEOToAdd instanceof DataExtractionObject){
 		this.DEOArray.push(DEOToAdd);
+	}
+	else{
+		throw "Input to .AddDEO should either be a DataExtractionObject or an Array of DataExtractionObject";	
 	}
 	
 	
@@ -297,7 +289,6 @@ DataExtractionObjectGroup.prototype.Summarise=function(ResultsBySim){
 	for (var SpecificStatCount in DEOArrayByStat){
 		this.DEOArray[SpecificStatCount]= new DataExtractionObject();
 		this.DEOArray[SpecificStatCount].SummariseMultipleSimulations(DEOArrayByStat[SpecificStatCount]);
-		
 	}
 	
 }
@@ -306,7 +297,7 @@ DataExtractionObjectGroup.prototype.GraphAll=function(GraphInterfaceID){
 		// Draw the graph, but wait until the above has processed
 	this.DEOArray=[];
 	var SpecificStatCount=0;
-	for (var SpecificStatRef in DEOArrayByStat){
+	for (var SpecificStatRef in this.DEOArray){
 		this.DEOArray[SpecificStatRef].DrawGraph(GraphInterfaceID+SpecificStatCount);
 	}
 }

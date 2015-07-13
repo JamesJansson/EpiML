@@ -20,18 +20,25 @@ var SimulationRunning=0;//set to 1 if running
 
 	
 function InitialiseEpiML(){
-	// Load data
+	
 	TestingPageRequirements();	
+	
+	// Load settings
 	LoadSettingsFiles();
 
-	
+	// Creating the parameter group
 	PGroup= new ParameterGroup("PGroup", Settings.NumberOfSimulations, "./data/parameters.json");
 	PGroup.Load();
 	PGroup.CreateParameterPage("ParamHolder");
 	Param=PGroup.ParamArray;
 	
+	// Load data
 	LoadDataFiles();
 	ExtractDataFromFiles();
+	
+	// Load the optimisation interface
+	
+	
 	
 	console.log("EpiML initialised")
 }
