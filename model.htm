@@ -91,10 +91,11 @@
 <ul>
 <li><level1 id="HomeMenuItem"  		onclick="ShowMenu(HomeContent);"		>Home</level1></li>
 <li><level1 id="ParameterMenuItem" 	onclick="ShowMenu(ParameterContent);"	>Parameters</level1></li>
+<li><level1 id="OptimisationMenuItem" 	onclick="ShowMenu(OptimisationContent);">Optimisation</level1></li>
 <li><level1 id="HCVMenuItem" 		onclick="ShowMenu(HCVContent);"			>HCV</level1></li>
 <li><level1 id="DataMenuItem" 		onclick="ShowMenu(DataContent);"		>Data</level1></li>
 <li><level1 id="PlotsMenuItem" 		onclick="ShowMenu(PlotsContent);"		>Plots</level1></li>
-<li><level1 id="PlotsMenuItem" 		onclick="ShowMenu(PWIDOptimisationPlotsContent);"		>PWID Optimisation</level1></li>
+<li><level1 id="PWIDOptimisationPlotsMenuItem" 	onclick="ShowMenu(PWIDOptimisationPlotsContent);"		>PWID Optimisation</level1></li>
 <li><level1 id="MapsMenuItem" 		onclick="ShowMenu(MapsContent);"		>Maps</level1></li>
 <li><level1 id="SensitivityMenuItem"onclick="ShowMenu(SensitivityContent);"	>Sensitivity Analysis</level1></li>
 <li><level1 id="SettingsMenuItem" 	onclick="ShowMenu(SettingsContent);"	>Settings</level1></li>
@@ -178,6 +179,13 @@
 		<h1>Parameters</h1>
 		<div id="ParamHolder"> </div>
 	</div>
+	
+	<div id="OptimisationContent" class="Content">
+		<h1>Optimisation</h1>
+		<div id="OptSelectorHolder"> </div>
+	</div>
+	
+	
 	
 	<div id="HCVContent" class="Content">
 		<h1>HCV</h1>

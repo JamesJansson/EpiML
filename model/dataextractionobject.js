@@ -230,7 +230,7 @@ DataExtractionObject.prototype.DrawGraph=function(GraphInterfaceID){
 function DataExtractionObjectGroup(Name){
 	this.DEOArray=[];
 	this.Name=Name;
-	
+	this.GraphInterfaceID="";
 }
 
 DataExtractionObjectGroup.prototype.AddDEO=function(DEOToAdd){
@@ -246,10 +246,6 @@ DataExtractionObjectGroup.prototype.AddDEO=function(DEOToAdd){
 	else{
 		throw "Input to .AddDEO should either be a DataExtractionObject or an Array of DataExtractionObject";	
 	}
-	
-	
-	
-	
 }
 
 DataExtractionObjectGroup.prototype.FindAllError=function(SimulationResult){
@@ -277,32 +273,46 @@ DataExtractionObjectGroup.prototype.Summarise=function(ResultsBySim){
 	var DEOArrayByStat=Transpose(DEOResultsBySim);
 	
 	console.log(DEOArrayByStat);
-	// Transpose to get at all the .DEOArray results
-	//var ResultsByStat=TransposeArrObj(ResultsBySim);
-	// ResultsByStat.DEOArray[Sim][SpecificStatCount]
-	//var OptimisationArrayBySim=ResultsByStat.DEOArray;// Choose to operate only on the Optimisation results
-	// OptimisationStatArray[Sim][SpecificStatCount]
-	//var DEOArrayByStat=Transpose(OptimisationArrayBySim);// Stat count is an array
-	//OptimisationStatArray[SpecificStatCount][Sim]
 	
-	this.DEOArray=[];
-	for (var SpecificStatCount in DEOArrayByStat){
-		this.DEOArray[SpecificStatCount]= new DataExtractionObject();
-		this.DEOArray[SpecificStatCount].SummariseMultipleSimulations(DEOArrayByStat[SpecificStatCount]);
+	if (this.DEOArray.length==0){
+		for (var SpecificStatCount in DEOArrayByStat){
+			this.DEOArray[SpecificStatCount]= new DataExtractionObject();
+			this.DEOArray[SpecificStatCount].SummariseMultipleSimulations(DEOArrayByStat[SpecificStatCount]);
+		}
+	}
+	else{
+		// Try to package the results back into the currently existing DEOArry
+		for (var SpecificStatCount in DEOArrayByStat){
+			// determine if the names align
+			if (DEOArrayByStat[SpecificStatCount][0].Name != this.DEOArray[0].Name){
+				console.log("DEOArrayByStat");			
+				console.log(DEOArrayByStat);
+				console.log("this.DEOArray");		
+				console.log(this.DEOArray);
+				throw "The arrays appear to not be aligned in terms of their names. Please make sure that the same DEOArray is being used in the interface summary algorithms as in the model.";
+			}
+
+			
+			
+			this.DEOArray[SpecificStatCount].SummariseMultipleSimulations(DEOArrayByStat[SpecificStatCount]);
+		}
 	}
 	
-}
+};
+
 
 DataExtractionObjectGroup.prototype.GraphAll=function(GraphInterfaceID){
-		// Draw the graph, but wait until the above has processed
-	this.DEOArray=[];
+	// Draw the graph, but wait until the above has processed
+
 	var SpecificStatCount=0;
 	for (var SpecificStatRef in this.DEOArray){
 		this.DEOArray[SpecificStatRef].DrawGraph(GraphInterfaceID+SpecificStatCount);
 	}
 }
 
-
+DataExtractionObjectGroup.prototype.CreatePlotHolders=function(GraphInterfaceID){
+	
+}
 
 
 
