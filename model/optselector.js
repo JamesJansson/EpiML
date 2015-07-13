@@ -136,23 +136,34 @@ OptSelector.prototype.DrawParamDiv=function(){
 	var HTMLString="";
 	// draw the outer section
 		// Draw a button to run the optimisation
-		HTMLString+='';
+		HTMLString+="<div class='SolidButton' style='float:left;' onClick='"+this.Name+".RunOptimisation()'>Run optmisation</div>";
 		// Toggle for the optimisation error and paramter value progress charts 
 		
 		// Draw a tick box that determines if the optimisation displays results after each round or not
+		var LiveUpdateString=this.Name+".LiveUpdateCharts";
+		HTMLString+="    <input type='checkbox' onClick='"+LiveUpdateString+"=!'"+LiveUpdateString+";' value="+LiveUpdateString+"> Live update charts \n";
 		
-		// DrawErrorCharts
 		
 		// Draw a drop down that allows the user to select the simulation that is displayed in the progress??
 		// Draw a box that is used to display the progress of error with time
 		// This plot takes each of the sims's historical data and makes a multi line plot that displays all of the plots on a single plot
 		// http://www.flotcharts.org/flot/examples/series-toggle/index.html
 		
+		HTMLString+="<div class='SolidButton' style='float:left;' onClick='"+this.Name+".ShowAllParamProgress()'>Show all param progress</div>";
+		HTMLString+="<div class='SolidButton' style='float:left;' onClick='"+this.Name+".HideAllParamProgress()'>Hide all param progress</div>";
+		
+		HTMLString+="<div class='SolidButton' style='float:left;' onClick='"+this.Name+".ShowAllResultsPlots()'>Show all results plots</div>";
+		HTMLString+="<div class='SolidButton' style='float:left;' onClick='"+this.Name+".HideAllResultsPlots()'>Hide all results plots</div>";
+		HTMLString+="<div class='SolidButton' style='float:left;' onClick='"+this.Name+".ShowAllErrorPlots()'>Show all error plots</div>";
+		HTMLString+="<div class='SolidButton' style='float:left;' onClick='"+this.Name+".HideAllErrorPlots()'>Hide all error plots</div>";
+		
 	// for each optimisation parameter
 	for (var PCount in this.OptParamArray){
 		// Display the values as described in the ParamGroup
 		// Draw a box that shows the progress of the error in this variable
 		// Draw a box that displays that 
+		HTMLString+="    <input type='checkbox' onClick='"+DEOOptString+"]=!'"+DEOOptString+"];' value="+DEOOptString+"> Optimise \n";
+		
 		
 		// Display current results
 			var Val=this.OptParamArray[PCount].Val;
@@ -164,7 +175,7 @@ OptSelector.prototype.DrawParamDiv=function(){
 			Percentile(Val, 97.5)
 	}
 	// for each optimisation data point 
-	for(var DEOCount in this.DEONameList){
+	for (var DEOCount in this.DEONameList){
 		HTMLString+="<div>\n";
 		HTMLString+="    <div style='width:150;'>"+this.DEONameList[DEOCount]+"</div>\n";
 		var DEOOptString=this.Name+".DEOToOpt["+this.DEOCount+"];";
@@ -174,12 +185,12 @@ OptSelector.prototype.DrawParamDiv=function(){
 		//this.DEOErrorChartID
 		//this.DEOResultsChartID
 		// show hide charts
-		HTMLString+="<div class='SolidButton' style='float:left;' onClick='ToggleDisplayByID("+this.DEOResultsChartID+DEOCount+")'>Result Chart</div>";
-		HTMLString+="<div class='SolidButton' style='float:left;' onClick='ToggleDisplayByID("+this.DEOErrorChartID+DEOCount+")'>Error Chart</div>";
+		HTMLString+="    <div class='SolidButton' style='float:left;' onClick='ToggleDisplayByID("+this.DEOResultsChartID+DEOCount+")'>Result Chart</div>\n";
+		HTMLString+="    <div class='SolidButton' style='float:left;' onClick='ToggleDisplayByID("+this.DEOErrorChartID+DEOCount+")'>Error Chart</div>\n";
 		
 		
-		HTMLString+="<div class='plot' id='"+this.DEOResultsChartID+DEOCount+"' style='display:none;'>";
-		HTMLString+="<div class='plot' id='"+this.DEOErrorChartID+DEOCount+"' style='display:none;'>";
+		HTMLString+="    <div class='plot' id='"+this.DEOResultsChartID+DEOCount+"' style='display:none;'>\n";
+		HTMLString+="    <div class='plot' id='"+this.DEOErrorChartID+DEOCount+"' style='display:none;'>\n";
 
 		HTMLString+="</div>\n";
 	}
@@ -188,11 +199,34 @@ OptSelector.prototype.DrawParamDiv=function(){
 };
 
 OptSelector.prototype.ShowAllResultsPlots=function(){
-	for 
-		document.getElementById().style.display=true;
-		(ClassToToggle)[0].style.display
+	for (var DEOCount in this.DEONameList){
+		document.getElementById(this.DEOResultsChartID+DEOCount).style.display='';
 	}
 };
+
+OptSelector.prototype.HideAllResultsPlots=function(){
+	for (var DEOCount in this.DEONameList){
+		document.getElementById(this.DEOResultsChartID+DEOCount).style.display='none';
+	}
+};
+
+OptSelector.prototype.ShowAllErrorPlots=function(){
+	for (var DEOCount in this.DEONameList){
+		if(this.DEOToOpt[DEOCount]){// if it is being optimised
+			document.getElementById(this.DEOErrorChartID+DEOCount).style.display='';
+		}
+	}
+};
+
+OptSelector.prototype.HideAllResultsPlots=function(){
+	for (var DEOCount in this.DEONameList){
+		document.getElementById(this.DEOErrorChartID+DEOCount).style.display='none';
+	}
+};
+
+
+
+
 
 // hide all results
 
