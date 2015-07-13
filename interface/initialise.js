@@ -41,8 +41,19 @@ function InitialiseEpiML(){
 	HCVDEOGroup.AddDEO(HCVDataExtractionObjects());
 	
 	// Load the optimisation interface
+	var Functions={};
+	Functions.ModelFunction="FullModel";
+	Functions.PreOptimisationFunction="SimSetup";
+	Functions.PostOptimisationFunction="Postfunction";
+	Functions.FunctionToRunOnCompletion="Math.random";
 	
+	var Common={};
+	Common.Data=Data;
 	
+	// OptSelector(Name, DivID, Functions, PointerToParamGroup, DEOArrayFunctionName, Settings, ModelDirectory, Common)
+	
+	HCVOptSelector=new OptSelector('HCVOptSelector', 'HCVOptSelectorHolder', Functions, PGroup, 'HCVDataExtractionObjects',  Settings, ModelDirectory, Common);
+
 	
 	console.log("EpiML initialised")
 }

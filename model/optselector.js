@@ -13,14 +13,16 @@
 
 // Saves the parameter group (with the optimisation inside)
 
+
+// Functions={};
 // Functions.ModelFunction="FullModel";
-// Functions.PreOptimisationFunction="Prefunction";
-// Functions.PostOptimisationFunction="Postfunction";
-// OptSelector(Functions, "HCVOptSelectorHolder", PointerToParamGroup, DEOArrayFunctionName, Settings);
+// Functions.PreOptimisationFunction="Prefunction"; optional
+// Functions.PostOptimisationFunction="Postfunction"; optional
+// Functions.FunctionToRunOnCompletion="FunctionToRunInterface"; optional
 // DEOArrayFunctionName=HCVDataExtractionObjects;
 // Common.Settings
-
-function OptSelector(Name, DivID, Functions, PointerToParamGroup, DEOArrayFunctionName, Common, Settings){
+// HCVOptSelector=new OptSelector('HCVOptSelector', 'HCVOptSelectorHolder', Functions, 'HCVDataExtractionObjects', Settings, Common);
+function OptSelector(Name, DivID, Functions, PointerToParamGroup, DEOArrayFunctionName, Settings, ModelDirectory, Common){
 	this.Name=Name;
 	
 	// Store the functions to be used in the simulation
@@ -33,6 +35,9 @@ function OptSelector(Name, DivID, Functions, PointerToParamGroup, DEOArrayFuncti
 	}
 	if (typeof(Functions.PostOptimisationFunction)=="string"){
 		this.PostOptimisationFunction=Functions.PostOptimisationFunction;
+	}
+	if (typeof(Functions.FunctionToRunOnCompletion)=="string"){
+		this.FunctionToRunOnCompletion=eval(Functions.FunctionToRunOnCompletion);
 	}
 	
 	this.DivPointer=document.getElementById(DivID);
@@ -77,9 +82,10 @@ function OptSelector(Name, DivID, Functions, PointerToParamGroup, DEOArrayFuncti
 	
 	// set the progress bar to the optimisation progress bar
 	
-	this.ShutDownOnCompletion=false;
+	this.TerminateThreadOnSimCompletion=false;
 	
 	this.Settings=Settings;// Note that setting is a pointer, and hence if Settings changes, then this.Settings changes too.
+	this.Common=Common;
 	
 	this.SimulationHolder; //=new MultiThreadSim();
 
@@ -152,8 +158,8 @@ OptSelector.prototype.DrawParamDiv=function(){
 		// This plot takes each of the sims's historical data and makes a multi line plot that displays all of the plots on a single plot
 		// http://www.flotcharts.org/flot/examples/series-toggle/index.html
 		
-		HTMLString+="<div class='SolidButton' style='float:left;' onClick='"+this.Name+".ShowAllParamProgress()'>Show all param progress</div>";
-		HTMLString+="<div class='SolidButton' style='float:left;' onClick='"+this.Name+".HideAllParamProgress()'>Hide all param progress</div>";
+		HTMLString+="<div class='SolidButton' style='float:left;' onClick='"+this.Name+".ShowAllParamProgressPlots()'>Show all param progress</div>";
+		HTMLString+="<div class='SolidButton' style='float:left;' onClick='"+this.Name+".HideAllParamProgressPlots()'>Hide all param progress</div>";
 		
 		HTMLString+="<div class='SolidButton' style='float:left;' onClick='"+this.Name+".ShowAllResultsPlots()'>Show all results plots</div>";
 		HTMLString+="<div class='SolidButton' style='float:left;' onClick='"+this.Name+".HideAllResultsPlots()'>Hide all results plots</div>";
@@ -165,7 +171,7 @@ OptSelector.prototype.DrawParamDiv=function(){
 		// Display the values as described in the ParamGroup
 		HTMLString+="<div>\n";
 		// Show the name of the variable
-		HTMLString+="   <input type='text' 'value="+this.OptParamArray[PCount]+";' readonly>\n";
+		HTMLString+="   <input type='text' 'value="+this.OptParamArray[PCount].ParameterID+";' readonly>\n";
 		// Draw a box that displays that 
 		var ParamOptString=this.Name+".ParamToOpt["+PCount+"];";
 		HTMLString+="    <input type='checkbox' onClick='"+ParamOptString+"=!'"+ParamOptString+";' value="+ParamOptString+"> Optimise \n";
@@ -206,6 +212,22 @@ OptSelector.prototype.DrawParamDiv=function(){
 	this.DivPointer.innerHTML=HTMLString;
 };
 
+OptSelector.prototype.ShowAllParamProgessPlots=function(){
+	for (var ParamToOptCount in this.ParamToOpt){
+		if (this.ParamToOpt[ParamToOptCount]){
+			document.getElementById(this.ParamProgressPlotID+DEOCount).style.display='';
+		}
+	}
+};
+
+OptSelector.prototype.HideAllParamProgessPlots=function(){
+	for (var ParamToOptCount in this.ParamToOpt){
+		document.getElementById(this.ParamProgressPlotID+DEOCount).style.display='none';
+	}
+};
+
+
+
 OptSelector.prototype.ShowAllResultsPlots=function(){
 	for (var DEOCount in this.DEONameList){
 		document.getElementById(this.DEOResultsPlotID+DEOCount).style.display='';
@@ -242,11 +264,7 @@ OptSelector.prototype.HideAllResultsPlots=function(){
 
 
 
-OptSelector.prototype.ShowAllParamProgessPlots=function(){
-	if (the param is currently being optimised){
-		
-	}
-};
+
 
 
 
@@ -268,15 +286,41 @@ OptSelector.prototype.ClickRun=function(){
 
 OptSelector.prototype.RunOptimisation=function (){
 	// Send the optimisation settings to the simulation  
+	this.Common.Settings=Settings;
 	
+	this.SimulationHolder=new MultiThreadSim(ModelDirectory, Settings.NumberOfSimulations , Settings.NoThreads, TerminateThreadOnSimCompletion); //Common is the same between all sims
+	this.SimulationHolder.UseSimProgressBar=true;
+	this.SimulationHolder.SimProgressBarID="MainProgress";
+	
+	var RunSettings={};
+	//Creating the data to be used in the simulations
+	if (this.Settings.RecalculateParam){
+		ParamGroup.Recalculate(this.Settings.NumberOfSimulations);
+	}
+		
+	RunSettings.SimDataArray=ParamGroup.ParameterSplit();
+	
+	RunSettings.FunctionName="OptSelectorHandler";
+	RunSettings.Common=this.Common;
+	RunSettings.TerminateThreadOnSimCompletion=this.TerminateThreadOnSimCompletion;
+	RunSettings.FunctionToRunOnCompletion=this.PostOptimisationFunction;
 	
 	
 	// Run the simulation
-	this.SimulationHolder.Run();
+	this.SimulationHolder.Run(RunSettings);
 	// wait for the result
 	
 	// collect up the data when finished
 };
+
+OptSelector.prototype.PostOptimisationFunction=function (){
+	SummarisedOptimisationResults=this.ParamGroup.Summarise(this.SimulationHolder.Result);
+	
+	
+	console.log("Infinite loop?")
+	this.FunctionToFunctionToRunOnCompletion();
+};
+
 
 
 OptSelector.prototype.PushToParamGroup=function (){
