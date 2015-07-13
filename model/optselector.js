@@ -37,18 +37,21 @@ function OptSelector(Name, DivID, Functions, PointerToParamGroup, DEOArrayFuncti
 	
 	this.DivPointer=document.getElementById(DivID);
 	this.DEOID=DivID+"_DEO_";// 
-	this.DEOErrorChartID=DivID+"_DEOErrorChart_";// 
-	this.DEOResultsChartID=DivID+"_DEOResultsChart_";// 
+	this.DEOErrorPlotID=DivID+"_DEOErrorPlot_";// 
+	this.DEOResultsPlotID=DivID+"_DEOResultsPlot_";// 
 	
 	// Working on the external PointerToParamGroup
 	this.ParamGroup=PointerToParamGroup;
 	// This means that when paramgroup is updated, this.ParamGroupUpdated is called
 	this.ParamGroup.AddUpdateFunction(this.ParamGroupUpdated);
 	
-	// Setting up the optimisation variables	
+	// Setting up the optimisation variables
 	this.OptParamArray=[];
-	this.OptOption=[];// is used for selecting whether the optimisation occurs or not
+	this.ParamToOpt=[];// is used for selecting whether the optimisation occurs or not
 	this.ArrayOfOptimisedResults=[];
+	
+	this.ImportParam();
+	
 	
 	this.DEOArrayFunctionName=DEOArrayFunctionName;//
 	this.DEOArrayFunction=eval(this.DEOArrayFunctionName);//
@@ -65,7 +68,7 @@ function OptSelector(Name, DivID, Functions, PointerToParamGroup, DEOArrayFuncti
 		//this.DEOToGraph.push(true);// this is ticked 
 	}
 	
-	this.LiveUpdateCharts=true; // determines if the error charts are updated at the end of each error round or not
+	this.LiveUpdatePlots=true; // determines if the error Plots are updated at the end of each error round or not
 	
 	// Set up the threaded simulation that will run the optimisation
 	
@@ -85,23 +88,23 @@ function OptSelector(Name, DivID, Functions, PointerToParamGroup, DEOArrayFuncti
 	
 	
 	
-	this.GraphColour=[];
+	
 	
 	this.ErrorHistory;
 	this.ParameterHistory;	
 	
-	this.ErrorChartData;// this.ErrorChartData[DataArrayNumber][SimNumber].XArrayValues/YArrayValues
-	this.ParameterChartData;
+	this.ErrorPlotData;// this.ErrorPlotData[DataArrayNumber][SimNumber].XArrayValues/YArrayValues
+	this.ParameterPlotData;
 	
 	
-
+	this.GraphColour=[];
 	this.GenerateGraphColours(Settings.NoSims);
 	
 
 	
 	// the information is sent to the worker, the worker finds the 
 
-	this.ImportParam();
+
 	
 	
 	this.DrawParamDiv();
@@ -109,7 +112,7 @@ function OptSelector(Name, DivID, Functions, PointerToParamGroup, DEOArrayFuncti
 }
 
 OptSelector.prototype.SetUpSimulationHolder=function (){
-	
+	this.Settings.NoThreads
 };
 
 
@@ -118,13 +121,13 @@ OptSelector.prototype.SetUpSimulationHolder=function (){
 OptSelector.prototype.ImportParam=function (){
 	//Clear the pointers to the optimsation array
 	this.OptParamArray=[];
-	this.OptOption=[];
+	this.ParamToOpt=[];
 	// go through param group, find optimisedsamples
 	for (var PCount in this.ParamGroup.ParamArray){
 		if (this.ParamGroup.ParamArray[PCount].DistributionType=='optimisedsample'){
 			var CurrentOptParam=this.ParamGroup.ParamArray[PCount];//Pointer
 			this.OptParamArray.push(CurrentOptParam);//Pointer to the actual value
-			this.OptOption.push(false);
+			this.ParamToOpt.push(false);
 		}
 	}
 };
@@ -137,11 +140,11 @@ OptSelector.prototype.DrawParamDiv=function(){
 	// draw the outer section
 		// Draw a button to run the optimisation
 		HTMLString+="<div class='SolidButton' style='float:left;' onClick='"+this.Name+".RunOptimisation()'>Run optmisation</div>";
-		// Toggle for the optimisation error and paramter value progress charts 
+		// Toggle for the optimisation error and paramter value progress Plots 
 		
 		// Draw a tick box that determines if the optimisation displays results after each round or not
-		var LiveUpdateString=this.Name+".LiveUpdateCharts";
-		HTMLString+="    <input type='checkbox' onClick='"+LiveUpdateString+"=!'"+LiveUpdateString+";' value="+LiveUpdateString+"> Live update charts \n";
+		var LiveUpdateString=this.Name+".LiveUpdatePlots";
+		HTMLString+="    <input type='checkbox' onClick='"+LiveUpdateString+"=!'"+LiveUpdateString+";' value="+LiveUpdateString+"> Live update plots \n";
 		
 		
 		// Draw a drop down that allows the user to select the simulation that is displayed in the progress??
@@ -160,10 +163,15 @@ OptSelector.prototype.DrawParamDiv=function(){
 	// for each optimisation parameter
 	for (var PCount in this.OptParamArray){
 		// Display the values as described in the ParamGroup
-		// Draw a box that shows the progress of the error in this variable
+		HTMLString+="<div>\n";
+		// Show the name of the variable
+		HTMLString+="   <input type='text' 'value="+this.OptParamArray[PCount]+";' readonly>\n";
 		// Draw a box that displays that 
-		HTMLString+="    <input type='checkbox' onClick='"+DEOOptString+"]=!'"+DEOOptString+"];' value="+DEOOptString+"> Optimise \n";
+		var ParamOptString=this.Name+".ParamToOpt["+PCount+"];";
+		HTMLString+="    <input type='checkbox' onClick='"+ParamOptString+"=!'"+ParamOptString+";' value="+ParamOptString+"> Optimise \n";
 		
+		// Draw a box that shows the progress of the error in this variable
+		HTMLString+="    <div class='plot' id='"+this.ParamProgressPlotID+DEOCount+"' style='display:none;'>\n";
 		
 		// Display current results
 			var Val=this.OptParamArray[PCount].Val;
@@ -177,20 +185,20 @@ OptSelector.prototype.DrawParamDiv=function(){
 	// for each optimisation data point 
 	for (var DEOCount in this.DEONameList){
 		HTMLString+="<div>\n";
-		HTMLString+="    <div style='width:150;'>"+this.DEONameList[DEOCount]+"</div>\n";
-		var DEOOptString=this.Name+".DEOToOpt["+this.DEOCount+"];";
+		HTMLString+="   <input type='text' 'value="+this.DEONameList[DEOCount]+";' readonly>\n";
+		var DEOOptString=this.Name+".DEOToOpt["+DEOCount+"];";
 		// when the button is clicked, the falue flips
-		HTMLString+="    <input type='checkbox' onClick='"+DEOOptString+"]=!'"+DEOOptString+"];' value="+DEOOptString+"> Optimise \n";
+		HTMLString+="    <input type='checkbox' onClick='"+DEOOptString+"=!'"+DEOOptString+";' value="+DEOOptString+"> Optimise \n";
 		
-		//this.DEOErrorChartID
-		//this.DEOResultsChartID
-		// show hide charts
-		HTMLString+="    <div class='SolidButton' style='float:left;' onClick='ToggleDisplayByID("+this.DEOResultsChartID+DEOCount+")'>Result Chart</div>\n";
-		HTMLString+="    <div class='SolidButton' style='float:left;' onClick='ToggleDisplayByID("+this.DEOErrorChartID+DEOCount+")'>Error Chart</div>\n";
+		//this.DEOErrorPlotID
+		//this.DEOResultsPlotID
+		// show hide Plots
+		HTMLString+="    <div class='SolidButton' style='float:left;' onClick='ToggleDisplayByID("+this.DEOResultsPlotID+DEOCount+")'>Result Plot</div>\n";
+		HTMLString+="    <div class='SolidButton' style='float:left;' onClick='ToggleDisplayByID("+this.DEOErrorPlotID+DEOCount+")'>Error Plot</div>\n";
 		
 		
-		HTMLString+="    <div class='plot' id='"+this.DEOResultsChartID+DEOCount+"' style='display:none;'>\n";
-		HTMLString+="    <div class='plot' id='"+this.DEOErrorChartID+DEOCount+"' style='display:none;'>\n";
+		HTMLString+="    <div class='plot' id='"+this.DEOResultsPlotID+DEOCount+"' style='display:none;'>\n";
+		HTMLString+="    <div class='plot' id='"+this.DEOErrorPlotID+DEOCount+"' style='display:none;'>\n";
 
 		HTMLString+="</div>\n";
 	}
@@ -200,27 +208,27 @@ OptSelector.prototype.DrawParamDiv=function(){
 
 OptSelector.prototype.ShowAllResultsPlots=function(){
 	for (var DEOCount in this.DEONameList){
-		document.getElementById(this.DEOResultsChartID+DEOCount).style.display='';
+		document.getElementById(this.DEOResultsPlotID+DEOCount).style.display='';
 	}
 };
 
 OptSelector.prototype.HideAllResultsPlots=function(){
 	for (var DEOCount in this.DEONameList){
-		document.getElementById(this.DEOResultsChartID+DEOCount).style.display='none';
+		document.getElementById(this.DEOResultsPlotID+DEOCount).style.display='none';
 	}
 };
 
 OptSelector.prototype.ShowAllErrorPlots=function(){
 	for (var DEOCount in this.DEONameList){
 		if(this.DEOToOpt[DEOCount]){// if it is being optimised
-			document.getElementById(this.DEOErrorChartID+DEOCount).style.display='';
+			document.getElementById(this.DEOErrorPlotID+DEOCount).style.display='';
 		}
 	}
 };
 
 OptSelector.prototype.HideAllResultsPlots=function(){
 	for (var DEOCount in this.DEONameList){
-		document.getElementById(this.DEOErrorChartID+DEOCount).style.display='none';
+		document.getElementById(this.DEOErrorPlotID+DEOCount).style.display='none';
 	}
 };
 
@@ -234,8 +242,8 @@ OptSelector.prototype.HideAllResultsPlots=function(){
 
 
 
-OptSelector.prototype.ShowAllErrorPlots=function(){
-	if (){
+OptSelector.prototype.ShowAllParamProgessPlots=function(){
+	if (the param is currently being optimised){
 		
 	}
 };
@@ -283,15 +291,15 @@ OptSelector.prototype.UpdateError=function (DataFromSim){
 	this.ErrorHistory[DataFromSim.SimNum]=DataFromSim.ErrorHistory;
 	this.ParameterHistory[DataFromSim.SimNum]=DataFromSim.ParameterHistory;
 	
-	if (this.LiveUpdateCharts){
-		this.DrawErrorCharts();
+	if (this.LiveUpdatePlots){
+		this.DrawErrorPlots();
 	}
 
 }
 
-OptSelector.prototype.DrawErrorCharts=function (){
-	this.ErrorChartData=[];// this.ErrorChartData[DataArrayNumber][SimNumber].XArrayValues/YArrayValues
-	this.ParameterChartData=[];
+OptSelector.prototype.DrawErrorPlots=function (){
+	this.ErrorPlotData=[];// this.ErrorPlotData[DataArrayNumber][SimNumber].XArrayValues/YArrayValues
+	this.ParameterPlotData=[];
 	
 	// Do a recombination of all data
 	//  for each of the data objects that are optimised to  in the 
@@ -301,7 +309,7 @@ OptSelector.prototype.DrawErrorCharts=function (){
 	
 	// for all sims  
 		//
-	// Update charts
+	// Update Plots
 	
 	
 	
@@ -309,10 +317,10 @@ OptSelector.prototype.DrawErrorCharts=function (){
 }
 
 
-OptSelector.prototype.DrawDEOCharts=function (){
+OptSelector.prototype.DrawDEOPlots=function (){
 	this.DEOGroup.Summarise(this.SimulationHolder.Results);
 	
-	this.DEOGroup.GraphAll(this.DEOChartID);
+	this.DEOGroup.GraphAll(this.DEOPlotID);
 }
 
 
