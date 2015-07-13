@@ -87,6 +87,10 @@ function MultiThreadSim(FolderName, NoSims, NoThreads, TerminateOnFinish){
 }
 
 MultiThreadSim.prototype.AddMessageFunction=function(SimFunctionName, InterfaceFunctionPointer){
+	//  When the function SimFunctionName is called in the sim, InterfaceFunctionPointer is run in the interface
+	// function RepetitiveError(Data){for (var i=0; i<100; i++){console.error(Data+i)}}
+	// SimulationHolder.AddMessageFunction("InSimFunction", RepetitiveError)
+
 	if (typeof(SimFunctionName)!="string"){
 		throw "AddMessageFunction(SimFunctionName, InterfaceFunctionPointer), SimFunctionName is a string of the name of the function to run in the sim";
 	}
@@ -97,9 +101,6 @@ MultiThreadSim.prototype.AddMessageFunction=function(SimFunctionName, InterfaceF
 	this.SimMessageFunctionArray.push(SimFunctionName);
 	this.InterfaceMessageFunctionArray.push(InterfaceFunctionPointer);	
 }
-
-// SimulationHolder.AddMessageFunction("InSimFunction", RepetitiveError)
-// function RepetitiveError(Data){for (var i=0; i<100; i++){console.error(Data+i)}}
 
 MultiThreadSim.prototype.Run=function(RunSettings){//FunctionName, Common, SimDataArray, TerminateOnFinish) {
 	//RunSettings has the following elements
