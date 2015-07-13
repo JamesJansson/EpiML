@@ -283,7 +283,7 @@ DataExtractionObjectGroup.prototype.Summarise=function(ResultsBySim){
 	else{
 		// Try to package the results back into the currently existing DEOArry
 		for (var SpecificStatCount in DEOArrayByStat){
-			// determine if the names align
+			// determine if the names align - note that this is not a thorough test, merely an indicator. There may be other ways in which errors may arise due to misordering. 
 			if (DEOArrayByStat[SpecificStatCount][0].Name != this.DEOArray[0].Name){
 				console.log("DEOArrayByStat");			
 				console.log(DEOArrayByStat);
@@ -372,7 +372,7 @@ function SummariseAllDEO(ResultsBySim){
 		SummarisedDEOArray[SpecificStatCount]= new DataExtractionObject();
 		SummarisedDEOArray[SpecificStatCount].SummariseMultipleSimulations(DEOArrayByStat[SpecificStatCount]);
 		// Draw the graph, but wait until the above has processed
-		var GraphInterfaceID="OptimisationPlot"+Count;
+		var GraphInterfaceID="OptimisationPlot"+SpecificStatCount;
 		SummarisedDEOArray[SpecificStatCount].DrawGraph(GraphInterfaceID);
 	}
 	

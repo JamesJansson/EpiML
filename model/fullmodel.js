@@ -51,6 +51,13 @@ function FullModelTest(WorkerData){
 	Param.IDU.Entry.Logk2=0.3;
 	Param.IDU.Entry.Logk1=0.9;
 	
+	
+	Param.IDU.Sexuality.Heterosexual=0.85;
+	Param.IDU.Sexuality.Homosexual=0.077;
+	Param.IDU.Sexuality.Bisexual=0.06;
+	Param.IDU.TransmissionP=0.15;
+	
+	
 	console.error("The above is hard set and poorly defined");
 	
 	// 

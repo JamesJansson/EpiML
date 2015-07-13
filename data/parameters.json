@@ -12,7 +12,7 @@
         "CalculatedMedian": 0.065,
         "NumberOfSamples": 1,
         "Val": [
-            0.05746026775275837
+            0.08989218895404984
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -31,7 +31,7 @@
         "CalculatedMedian": 0.075,
         "NumberOfSamples": 1,
         "Val": [
-            0.08615561302602458
+            0.050279394640620916
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -50,7 +50,7 @@
         "CalculatedMedian": 0.105,
         "NumberOfSamples": 1,
         "Val": [
-            0.10677196820691312
+            0.11677715648719889
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -69,7 +69,7 @@
         "CalculatedMedian": 0.08,
         "NumberOfSamples": 1,
         "Val": [
-            0.06150359566108026
+            0.07090455940662131
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -88,7 +88,7 @@
         "CalculatedMedian": 0.07,
         "NumberOfSamples": 1,
         "Val": [
-            0.08114540531133674
+            0.06817296892177853
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -107,7 +107,7 @@
         "CalculatedMedian": 0.3,
         "NumberOfSamples": 1,
         "Val": [
-            0.2804111579231968
+            0.3290666860701683
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -126,7 +126,7 @@
         "CalculatedMedian": 0.032665489,
         "NumberOfSamples": 1,
         "Val": [
-            0.032944039924623705
+            0.03234820200030154
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -145,7 +145,7 @@
         "CalculatedMedian": 0.028364043,
         "NumberOfSamples": 1,
         "Val": [
-            0.02508179386421217
+            0.02576386750610285
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -164,7 +164,7 @@
         "CalculatedMedian": 0.1,
         "NumberOfSamples": 1,
         "Val": [
-            0.09199790781281939
+            0.09723070936772071
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -183,7 +183,7 @@
         "CalculatedMedian": 0.591,
         "NumberOfSamples": 1,
         "Val": [
-            0.5507263391456179
+            0.5645769632620988
         ],
         "MinValue": "",
         "MaxValue": "",
@@ -202,7 +202,7 @@
         "CalculatedMedian": 0.54973822,
         "NumberOfSamples": 1,
         "Val": [
-            0.5788999382149225
+            0.5872241875418758
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -221,7 +221,7 @@
         "CalculatedMedian": 0.081151832,
         "NumberOfSamples": 1,
         "Val": [
-            0.0878696921923251
+            0.06275526869881032
         ],
         "MinValue": "",
         "MaxValue": "",
@@ -240,7 +240,7 @@
         "CalculatedMedian": 0.331588133,
         "NumberOfSamples": 1,
         "Val": [
-            0.31448338400857684
+            0.3330676509048229
         ],
         "MinValue": "",
         "MaxValue": "",
@@ -259,7 +259,7 @@
         "CalculatedMedian": 0.02617801,
         "NumberOfSamples": 1,
         "Val": [
-            0.023983873375728194
+            0.02268246720875629
         ],
         "MinValue": "",
         "MaxValue": "",
@@ -316,7 +316,7 @@
         "CalculatedMedian": 0.6,
         "NumberOfSamples": 1,
         "Val": [
-            0.5815694275825724
+            0.6611045212928196
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -335,7 +335,7 @@
         "CalculatedMedian": 0.5,
         "NumberOfSamples": 1,
         "Val": [
-            0.8782434674761075
+            0.4363728278250363
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -354,7 +354,7 @@
         "CalculatedMedian": 1.9,
         "NumberOfSamples": 1,
         "Val": [
-            1.3737638870810152
+            1.9639365948757916
         ],
         "MinValue": "",
         "MaxValue": "",
@@ -373,7 +373,7 @@
         "CalculatedMedian": 2.03,
         "NumberOfSamples": 1,
         "Val": [
-            1.948447223001682
+            2.172509016290179
         ],
         "MinValue": "",
         "MaxValue": "",
@@ -392,7 +392,7 @@
         "CalculatedMedian": 1.47,
         "NumberOfSamples": 1,
         "Val": [
-            1.388922418383157
+            1.2366933991747102
         ],
         "MinValue": "",
         "MaxValue": "",
@@ -411,7 +411,7 @@
         "CalculatedMedian": 0.425,
         "NumberOfSamples": 1,
         "Val": [
-            0.43378560679790823
+            0.4210595693093127
         ],
         "MinValue": 0,
         "MaxValue": "",
@@ -430,7 +430,7 @@
         "CalculatedMedian": 0.358418367,
         "NumberOfSamples": 1,
         "Val": [
-            0.35428905631445834
+            0.402622573279464
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -449,7 +449,7 @@
         "CalculatedMedian": 0.45,
         "NumberOfSamples": 1,
         "Val": [
-            0.45241900209335645
+            0.46157791042431784
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -468,7 +468,7 @@
         "CalculatedMedian": 0.74,
         "NumberOfSamples": 1,
         "Val": [
-            0.733615522530098
+            0.7583077085326552
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -487,7 +487,7 @@
         "CalculatedMedian": 0.75,
         "NumberOfSamples": 1,
         "Val": [
-            0.7668746852139032
+            0.7325928248867477
         ],
         "MinValue": "",
         "MaxValue": "",
@@ -506,7 +506,7 @@
         "CalculatedMedian": 2.69,
         "NumberOfSamples": 1,
         "Val": [
-            2.7463506190791356
+            2.7589194419409937
         ],
         "MinValue": 0,
         "MaxValue": "",
@@ -525,7 +525,7 @@
         "CalculatedMedian": 2800,
         "NumberOfSamples": 1,
         "Val": [
-            2742.2113788223837
+            2756.522669871337
         ],
         "MinValue": 0,
         "MaxValue": "",
@@ -544,7 +544,7 @@
         "CalculatedMedian": 1.25,
         "NumberOfSamples": 1,
         "Val": [
-            1.0072958823293447
+            1.2454087891383097
         ],
         "MinValue": 1,
         "MaxValue": 1.5,
@@ -581,28 +581,7 @@
         "Lower95Range": 0.3455805665858183,
         "CalculatedMedian": 0.3609927230871025,
         "NumberOfSamples": 1,
-        "Val": [
-            0.36931399114999164,
-            0.36097801721951267,
-            0.36540544793392465,
-            0.36019707263055617,
-            0.37499117357670686,
-            0.36916031200776295,
-            0.3610074289546924,
-            0.35002680212071285,
-            0.3723340803328653,
-            0.3450700071995725,
-            0.3564705932229572,
-            0.35516255051386914,
-            0.36549057565083287,
-            0.36299599648790903,
-            0.3512485181217388,
-            0.3621459142101242,
-            0.36329560497353913,
-            0.3603810741722021,
-            0.35060766205025523,
-            0.34560743813246286
-        ],
+        "Val": [],
         "MinValue": 0,
         "MaxValue": 1,
         "Description": "Overseas examples indicate a probability of 36% of becoming a regular user:\nGender Differences in Circumstances Surrounding First Injection Experience of Rural Injection Drug Users in the United States\nhttp://www.ncbi.nlm.nih.gov/pmc/articles/PMC3874445/\nTable 1"
@@ -620,7 +599,7 @@
         "CalculatedMedian": 0.0277,
         "NumberOfSamples": 1,
         "Val": [
-            0.07894470756350011
+            0.02493265659120842
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -639,7 +618,7 @@
         "CalculatedMedian": 0.452,
         "NumberOfSamples": 1,
         "Val": [
-            0.4743408614415505
+            0.4416492325044957
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -658,7 +637,7 @@
         "CalculatedMedian": 0.067,
         "NumberOfSamples": 1,
         "Val": [
-            0.0755543354259674
+            0.05106318171489777
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -677,7 +656,7 @@
         "CalculatedMedian": 0.115,
         "NumberOfSamples": 1,
         "Val": [
-            0.11850579412798058
+            0.1320304803806009
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -696,17 +675,68 @@
         "CalculatedMedian": 0.337,
         "NumberOfSamples": 1,
         "Val": [
-            0.33253135502169084
+            0.3372746978969337
         ],
         "MinValue": "",
         "MaxValue": "",
         "Description": "Gender Differences in Circumstances Surrounding First Injection Experience of Rural Injection Drug Users in the United States\nhttp://www.ncbi.nlm.nih.gov/pmc/articles/PMC3874445/\nTable 1"
     },
     {
-        "ParameterID": "IDU.Entry.PeakEntryPerYear",
-        "ArrayName": "Param",
+        "ParameterID": "IDU.Entry.B",
+        "ArrayName": "PGroup.ParamArray",
         "ArrayNumber": "36",
         "InterfaceID": "ParamHolder_36",
+        "DistributionType": "optimisedsample",
+        "Median": null,
+        "StandardError": null,
+        "Upper95Range": null,
+        "Lower95Range": null,
+        "CalculatedMedian": null,
+        "NumberOfSamples": 1,
+        "Val": [],
+        "MinValue": 0,
+        "MaxValue": 1,
+        "Description": "This parameter indiactes the level of entry into the IDU population as a proprtion of the peak. e.g. as time goes to infinity, IDU.Entry.B=0.25 indicates that entry would be 25% of that at the peak. "
+    },
+    {
+        "ParameterID": "IDU.Entry.Logk1",
+        "ArrayName": "PGroup.ParamArray",
+        "ArrayNumber": "37",
+        "InterfaceID": "ParamHolder_37",
+        "DistributionType": "optimisedsample",
+        "Median": null,
+        "StandardError": null,
+        "Upper95Range": null,
+        "Lower95Range": null,
+        "CalculatedMedian": null,
+        "NumberOfSamples": 1,
+        "Val": [],
+        "MinValue": 0,
+        "MaxValue": 1,
+        "Description": "This parameter indicates how quickly the rate of entry into the injecting population declines towards zero going back in time. e.g., a setting of IDU.Entry.Logk1=0.9 indicates that one year before reaching the peak, entry into the injecting population was 90% of what it was at the peak. 2 years before that it was 0.9*0.9=0.81"
+    },
+    {
+        "ParameterID": "IDU.Entry.Logk2",
+        "ArrayName": "PGroup.ParamArray",
+        "ArrayNumber": "38",
+        "InterfaceID": "ParamHolder_38",
+        "DistributionType": "optimisedsample",
+        "Median": null,
+        "StandardError": null,
+        "Upper95Range": null,
+        "Lower95Range": null,
+        "CalculatedMedian": null,
+        "NumberOfSamples": 1,
+        "Val": [],
+        "MinValue": 0,
+        "MaxValue": 1,
+        "Description": "This parameter indicates how quickly the rate of entry into the injecting population declines towards the rate set by Entry.B. e.g., a setting of IDU.Entry.Logk2=0.3 indicates that after reaching the peak of entry into the IDU population, the entry rate declines 30% of the distance from the peak ot what the final level will be at IDU.Entry.B"
+    },
+    {
+        "ParameterID": "IDU.Entry.PeakEntryPerYear",
+        "ArrayName": "Param",
+        "ArrayNumber": "39",
+        "InterfaceID": "ParamHolder_39",
         "DistributionType": "optimisedsample",
         "Median": null,
         "StandardError": null,
@@ -722,8 +752,8 @@
     {
         "ParameterID": "IDU.Entry.YearPeakIDU",
         "ArrayName": "Param",
-        "ArrayNumber": "37",
-        "InterfaceID": "ParamHolder_37",
+        "ArrayNumber": "40",
+        "InterfaceID": "ParamHolder_40",
         "DistributionType": "normal",
         "Median": 1999,
         "StandardError": 0,
@@ -741,8 +771,8 @@
     {
         "ParameterID": "IDU.InjectionStartAge.Median",
         "ArrayName": "Param",
-        "ArrayNumber": "38",
-        "InterfaceID": "ParamHolder_38",
+        "ArrayNumber": "41",
+        "InterfaceID": "ParamHolder_41",
         "DistributionType": "lognormal",
         "Median": 21,
         "StandardError": 0.027450232,
@@ -751,7 +781,7 @@
         "CalculatedMedian": 21,
         "NumberOfSamples": 1,
         "Val": [
-            21.795312044528398
+            22.114339829005004
         ],
         "MinValue": "",
         "MaxValue": "",
@@ -760,8 +790,8 @@
     {
         "ParameterID": "IDU.InjectionStartAge.SD",
         "ArrayName": "Param",
-        "ArrayNumber": "39",
-        "InterfaceID": "ParamHolder_39",
+        "ArrayNumber": "42",
+        "InterfaceID": "ParamHolder_42",
         "DistributionType": "lognormal",
         "Median": 0.17,
         "StandardError": 0.05,
@@ -770,7 +800,7 @@
         "CalculatedMedian": 0.17,
         "NumberOfSamples": 1,
         "Val": [
-            0.16533513691035584
+            0.17596533836908548
         ],
         "MinValue": "",
         "MaxValue": "",
@@ -779,8 +809,8 @@
     {
         "ParameterID": "IDU.InjectionStartAge.SexDifference",
         "ArrayName": "Param",
-        "ArrayNumber": "40",
-        "InterfaceID": "ParamHolder_40",
+        "ArrayNumber": "43",
+        "InterfaceID": "ParamHolder_43",
         "DistributionType": "normal",
         "Median": 1.5,
         "StandardError": 0.75,
@@ -789,7 +819,7 @@
         "CalculatedMedian": 1.5,
         "NumberOfSamples": 1,
         "Val": [
-            1.3257197635958764
+            0.8865008037315228
         ],
         "MinValue": "",
         "MaxValue": "",
@@ -798,8 +828,8 @@
     {
         "ParameterID": "IDU.MSMUse.HIVNeg",
         "ArrayName": "Param",
-        "ArrayNumber": "41",
-        "InterfaceID": "ParamHolder_41",
+        "ArrayNumber": "44",
+        "InterfaceID": "ParamHolder_44",
         "DistributionType": "normal",
         "Median": 0.0322,
         "StandardError": 0.0051,
@@ -808,7 +838,7 @@
         "CalculatedMedian": 0.0322,
         "NumberOfSamples": 1,
         "Val": [
-            0.0329032898991846
+            0.03276647804777184
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -817,8 +847,8 @@
     {
         "ParameterID": "IDU.MSMUse.HIVPos",
         "ArrayName": "Param",
-        "ArrayNumber": "42",
-        "InterfaceID": "ParamHolder_42",
+        "ArrayNumber": "45",
+        "InterfaceID": "ParamHolder_45",
         "DistributionType": "normal",
         "Median": 0.1736,
         "StandardError": 0.0228,
@@ -827,7 +857,7 @@
         "CalculatedMedian": 0.1736,
         "NumberOfSamples": 1,
         "Val": [
-            0.2077659659868678
+            0.15312880733832346
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -836,8 +866,8 @@
     {
         "ParameterID": "IDU.NSP.P",
         "ArrayName": "Param",
-        "ArrayNumber": "43",
-        "InterfaceID": "ParamHolder_43",
+        "ArrayNumber": "46",
+        "InterfaceID": "ParamHolder_46",
         "DistributionType": "optimisedsample",
         "Median": null,
         "StandardError": null,
@@ -853,8 +883,8 @@
     {
         "ParameterID": "IDU.ProportionMale",
         "ArrayName": "Param",
-        "ArrayNumber": "44",
-        "InterfaceID": "ParamHolder_44",
+        "ArrayNumber": "47",
+        "InterfaceID": "ParamHolder_47",
         "DistributionType": "normal",
         "Median": 0.66,
         "StandardError": 0.05,
@@ -863,7 +893,7 @@
         "CalculatedMedian": 0.66,
         "NumberOfSamples": 1,
         "Val": [
-            0.7216450149279844
+            0.638515434769551
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -872,8 +902,8 @@
     {
         "ParameterID": "IDU.RateOfCesssation",
         "ArrayName": "Param",
-        "ArrayNumber": "45",
-        "InterfaceID": "ParamHolder_45",
+        "ArrayNumber": "48",
+        "InterfaceID": "ParamHolder_48",
         "DistributionType": "optimisedsample",
         "Median": null,
         "StandardError": null,
@@ -889,8 +919,8 @@
     {
         "ParameterID": "IDU.ReceptiveSharing.RiskReduction",
         "ArrayName": "Param",
-        "ArrayNumber": "46",
-        "InterfaceID": "ParamHolder_46",
+        "ArrayNumber": "49",
+        "InterfaceID": "ParamHolder_49",
         "DistributionType": "normal",
         "Median": 0.59,
         "StandardError": 0.05,
@@ -899,7 +929,7 @@
         "CalculatedMedian": 0.59,
         "NumberOfSamples": 1,
         "Val": [
-            0.5417515784106464
+            0.6002960194823185
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -908,8 +938,8 @@
     {
         "ParameterID": "IDU.ReceptiveSharing18",
         "ArrayName": "Param",
-        "ArrayNumber": "47",
-        "InterfaceID": "ParamHolder_47",
+        "ArrayNumber": "50",
+        "InterfaceID": "ParamHolder_50",
         "DistributionType": "normal",
         "Median": null,
         "StandardError": null,
@@ -927,8 +957,8 @@
     {
         "ParameterID": "IDU.RelationshipDuration.Val0",
         "ArrayName": "Param",
-        "ArrayNumber": "48",
-        "InterfaceID": "ParamHolder_48",
+        "ArrayNumber": "51",
+        "InterfaceID": "ParamHolder_51",
         "DistributionType": "normal",
         "Median": 0.36,
         "StandardError": 0.05,
@@ -937,7 +967,7 @@
         "CalculatedMedian": 0.36,
         "NumberOfSamples": 1,
         "Val": [
-            0.4394208007875712
+            0.3329070211598427
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -946,8 +976,8 @@
     {
         "ParameterID": "IDU.RelationshipDuration.Val1",
         "ArrayName": "Param",
-        "ArrayNumber": "49",
-        "InterfaceID": "ParamHolder_49",
+        "ArrayNumber": "52",
+        "InterfaceID": "ParamHolder_52",
         "DistributionType": "normal",
         "Median": 0.29,
         "StandardError": 0.05,
@@ -956,7 +986,7 @@
         "CalculatedMedian": 0.29,
         "NumberOfSamples": 1,
         "Val": [
-            0.34744256361850256
+            0.15304652355128115
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -965,8 +995,8 @@
     {
         "ParameterID": "IDU.RelationshipDuration.Val2",
         "ArrayName": "Param",
-        "ArrayNumber": "50",
-        "InterfaceID": "ParamHolder_50",
+        "ArrayNumber": "53",
+        "InterfaceID": "ParamHolder_53",
         "DistributionType": "normal",
         "Median": 0.35,
         "StandardError": 0.05,
@@ -975,7 +1005,7 @@
         "CalculatedMedian": 0.35,
         "NumberOfSamples": 1,
         "Val": [
-            0.2617282760880639
+            0.35245565985614585
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -984,8 +1014,8 @@
     {
         "ParameterID": "IDU.Sex.AnyLastMonth",
         "ArrayName": "Param",
-        "ArrayNumber": "51",
-        "InterfaceID": "ParamHolder_51",
+        "ArrayNumber": "54",
+        "InterfaceID": "ParamHolder_54",
         "DistributionType": "normal",
         "Median": 0.682,
         "StandardError": 0.047,
@@ -994,7 +1024,7 @@
         "CalculatedMedian": 0.682,
         "NumberOfSamples": 1,
         "Val": [
-            0.6188838188762817
+            0.6900571151765441
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -1003,8 +1033,8 @@
     {
         "ParameterID": "IDU.Sex.FirstInjectionHadSexualPartner",
         "ArrayName": "Param",
-        "ArrayNumber": "52",
-        "InterfaceID": "ParamHolder_52",
+        "ArrayNumber": "55",
+        "InterfaceID": "ParamHolder_55",
         "DistributionType": "normal",
         "Median": null,
         "StandardError": null,
@@ -1022,8 +1052,8 @@
     {
         "ParameterID": "IDU.Sex.OtherLastMonth",
         "ArrayName": "Param",
-        "ArrayNumber": "53",
-        "InterfaceID": "ParamHolder_53",
+        "ArrayNumber": "56",
+        "InterfaceID": "ParamHolder_56",
         "DistributionType": "normal",
         "Median": 0.224,
         "StandardError": 0.0223,
@@ -1032,7 +1062,7 @@
         "CalculatedMedian": 0.224,
         "NumberOfSamples": 1,
         "Val": [
-            0.24341010479178057
+            0.1937565436005776
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -1041,8 +1071,8 @@
     {
         "ParameterID": "IDU.Sex.RegularAndOtherLastMonth",
         "ArrayName": "Param",
-        "ArrayNumber": "54",
-        "InterfaceID": "ParamHolder_54",
+        "ArrayNumber": "57",
+        "InterfaceID": "ParamHolder_57",
         "DistributionType": "normal",
         "Median": 0.068,
         "StandardError": 0.031,
@@ -1051,7 +1081,7 @@
         "CalculatedMedian": 0.068,
         "NumberOfSamples": 1,
         "Val": [
-            0.06657907540377905
+            0.12532600570134092
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -1060,8 +1090,8 @@
     {
         "ParameterID": "IDU.Sex.RegularLastMonth",
         "ArrayName": "Param",
-        "ArrayNumber": "55",
-        "InterfaceID": "ParamHolder_55",
+        "ArrayNumber": "58",
+        "InterfaceID": "ParamHolder_58",
         "DistributionType": "normal",
         "Median": 0.749,
         "StandardError": 0.0129,
@@ -1070,7 +1100,7 @@
         "CalculatedMedian": 0.749,
         "NumberOfSamples": 1,
         "Val": [
-            0.761896087567296
+            0.7501746457266338
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -1079,8 +1109,8 @@
     {
         "ParameterID": "IDU.Sex.RegularPartnerInjects",
         "ArrayName": "Param",
-        "ArrayNumber": "56",
-        "InterfaceID": "ParamHolder_56",
+        "ArrayNumber": "59",
+        "InterfaceID": "ParamHolder_59",
         "DistributionType": "normal",
         "Median": 0.45,
         "StandardError": 0.05,
@@ -1089,7 +1119,7 @@
         "CalculatedMedian": 0.45,
         "NumberOfSamples": 1,
         "Val": [
-            0.408447836452699
+            0.4568075426564323
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -1098,8 +1128,8 @@
     {
         "ParameterID": "IDU.Sexuality.Bisexual",
         "ArrayName": "Param",
-        "ArrayNumber": "57",
-        "InterfaceID": "ParamHolder_57",
+        "ArrayNumber": "60",
+        "InterfaceID": "ParamHolder_60",
         "DistributionType": "optimisedsample",
         "Median": null,
         "StandardError": null,
@@ -1107,9 +1137,7 @@
         "Lower95Range": 0.05322594224708155,
         "CalculatedMedian": 0.05322594224708155,
         "NumberOfSamples": 1,
-        "Val": [
-            0.05322594224708155
-        ],
+        "Val": [],
         "MinValue": 0,
         "MaxValue": 1,
         "Description": "A note about this result: the ratios in the interface may add up to more or less than 1, however in the simulation, the total is always normalised. \n\nEyeballed callibration 0.04-0.07"
@@ -1117,8 +1145,8 @@
     {
         "ParameterID": "IDU.Sexuality.Heterosexual",
         "ArrayName": "Param",
-        "ArrayNumber": "58",
-        "InterfaceID": "ParamHolder_58",
+        "ArrayNumber": "61",
+        "InterfaceID": "ParamHolder_61",
         "DistributionType": "optimisedsample",
         "Median": null,
         "StandardError": null,
@@ -1126,9 +1154,7 @@
         "Lower95Range": 0.8620028753299267,
         "CalculatedMedian": 0.8620028753299267,
         "NumberOfSamples": 1,
-        "Val": [
-            0.8620028753299267
-        ],
+        "Val": [],
         "MinValue": 0,
         "MaxValue": 1,
         "Description": "A note about this result: the ratios in the interface may add up to more or less than 1, however in the simulation, the total is always normalised. \n\nEyeballed callibration 0.8-0.9"
@@ -1136,8 +1162,8 @@
     {
         "ParameterID": "IDU.Sexuality.Homosexual",
         "ArrayName": "Param",
-        "ArrayNumber": "59",
-        "InterfaceID": "ParamHolder_59",
+        "ArrayNumber": "62",
+        "InterfaceID": "ParamHolder_62",
         "DistributionType": "optimisedsample",
         "Median": null,
         "StandardError": null,
@@ -1145,9 +1171,7 @@
         "Lower95Range": 0.07789960301248357,
         "CalculatedMedian": 0.07789960301248357,
         "NumberOfSamples": 1,
-        "Val": [
-            0.07789960301248357
-        ],
+        "Val": [],
         "MinValue": 0,
         "MaxValue": 1,
         "Description": "A note about this result: the ratios in the interface may add up to more or less than 1, however in the simulation, the total is always normalised. \n\nEyeballed callibration 0.06-0.09"
@@ -1155,8 +1179,8 @@
     {
         "ParameterID": "IDU.TransmissionP",
         "ArrayName": "Param",
-        "ArrayNumber": "60",
-        "InterfaceID": "ParamHolder_60",
+        "ArrayNumber": "63",
+        "InterfaceID": "ParamHolder_63",
         "DistributionType": "optimisedsample",
         "Median": null,
         "StandardError": null,
@@ -1172,8 +1196,8 @@
     {
         "ParameterID": "IDU.Use.Daily",
         "ArrayName": "Param",
-        "ArrayNumber": "61",
-        "InterfaceID": "ParamHolder_61",
+        "ArrayNumber": "64",
+        "InterfaceID": "ParamHolder_64",
         "DistributionType": "normal",
         "Median": 0.19,
         "StandardError": 0.05,
@@ -1182,7 +1206,7 @@
         "CalculatedMedian": 0.19,
         "NumberOfSamples": 1,
         "Val": [
-            0.15749956187445802
+            0.21369187780843416
         ],
         "MinValue": "",
         "MaxValue": "",
@@ -1191,8 +1215,8 @@
     {
         "ParameterID": "IDU.Use.Daily2or3Times",
         "ArrayName": "Param",
-        "ArrayNumber": "62",
-        "InterfaceID": "ParamHolder_62",
+        "ArrayNumber": "65",
+        "InterfaceID": "ParamHolder_65",
         "DistributionType": "normal",
         "Median": 0.21,
         "StandardError": 0.05,
@@ -1201,7 +1225,7 @@
         "CalculatedMedian": 0.21,
         "NumberOfSamples": 1,
         "Val": [
-            0.12106017115817459
+            0.26890732408698825
         ],
         "MinValue": "",
         "MaxValue": "",
@@ -1210,8 +1234,8 @@
     {
         "ParameterID": "IDU.Use.DailyMore3",
         "ArrayName": "Param",
-        "ArrayNumber": "63",
-        "InterfaceID": "ParamHolder_63",
+        "ArrayNumber": "66",
+        "InterfaceID": "ParamHolder_66",
         "DistributionType": "normal",
         "Median": 0.06,
         "StandardError": 0.05,
@@ -1220,7 +1244,7 @@
         "CalculatedMedian": 0.06,
         "NumberOfSamples": 1,
         "Val": [
-            0.03639824864707931
+            0.06819669375085634
         ],
         "MinValue": "",
         "MaxValue": "",
@@ -1229,8 +1253,8 @@
     {
         "ParameterID": "IDU.Use.MoreThanWeekly",
         "ArrayName": "Param",
-        "ArrayNumber": "64",
-        "InterfaceID": "ParamHolder_64",
+        "ArrayNumber": "67",
+        "InterfaceID": "ParamHolder_67",
         "DistributionType": "normal",
         "Median": 0.35,
         "StandardError": 0.05,
@@ -1239,7 +1263,7 @@
         "CalculatedMedian": 0.35,
         "NumberOfSamples": 1,
         "Val": [
-            0.41393213389975736
+            0.3656146143424928
         ],
         "MinValue": "",
         "MaxValue": "",
@@ -1248,8 +1272,8 @@
     {
         "ParameterID": "IDU.Use.WeeklyToMonthly",
         "ArrayName": "Param",
-        "ArrayNumber": "65",
-        "InterfaceID": "ParamHolder_65",
+        "ArrayNumber": "68",
+        "InterfaceID": "ParamHolder_68",
         "DistributionType": "normal",
         "Median": 0.18,
         "StandardError": 0.05,
@@ -1258,7 +1282,7 @@
         "CalculatedMedian": 0.18,
         "NumberOfSamples": 1,
         "Val": [
-            0.1476124165591334
+            0.2143871954023613
         ],
         "MinValue": "",
         "MaxValue": "",
@@ -1267,8 +1291,8 @@
     {
         "ParameterID": "Prison.Females",
         "ArrayName": "Param",
-        "ArrayNumber": "66",
-        "InterfaceID": "ParamHolder_66",
+        "ArrayNumber": "69",
+        "InterfaceID": "ParamHolder_69",
         "DistributionType": "normal",
         "Median": 0.4,
         "StandardError": 0,
@@ -1286,8 +1310,8 @@
     {
         "ParameterID": "Prison.Males",
         "ArrayName": "Param",
-        "ArrayNumber": "67",
-        "InterfaceID": "ParamHolder_67",
+        "ArrayNumber": "70",
+        "InterfaceID": "ParamHolder_70",
         "DistributionType": "normal",
         "Median": 0.63,
         "StandardError": 0,
@@ -1305,8 +1329,8 @@
     {
         "ParameterID": "Time.DurationToAverageOver",
         "ArrayName": "Param",
-        "ArrayNumber": "68",
-        "InterfaceID": "ParamHolder_68",
+        "ArrayNumber": "71",
+        "InterfaceID": "ParamHolder_71",
         "DistributionType": "normal",
         "Median": 5,
         "StandardError": 0,
@@ -1324,8 +1348,8 @@
     {
         "ParameterID": "Time.EndSimulation",
         "ArrayName": "Param",
-        "ArrayNumber": "69",
-        "InterfaceID": "ParamHolder_69",
+        "ArrayNumber": "72",
+        "InterfaceID": "ParamHolder_72",
         "DistributionType": "normal",
         "Median": 2020,
         "StandardError": 0,
@@ -1343,8 +1367,8 @@
     {
         "ParameterID": "Time.EndTreatmentData",
         "ArrayName": "Param",
-        "ArrayNumber": "70",
-        "InterfaceID": "ParamHolder_70",
+        "ArrayNumber": "73",
+        "InterfaceID": "ParamHolder_73",
         "DistributionType": "normal",
         "Median": 2013,
         "StandardError": 0,
@@ -1362,8 +1386,8 @@
     {
         "ParameterID": "Time.StartDynamicModel",
         "ArrayName": "Param",
-        "ArrayNumber": "71",
-        "InterfaceID": "ParamHolder_71",
+        "ArrayNumber": "74",
+        "InterfaceID": "ParamHolder_74",
         "DistributionType": "normal",
         "Median": 1980,
         "StandardError": 0,
@@ -1381,8 +1405,8 @@
     {
         "ParameterID": "Time.StartNonDynamicModel",
         "ArrayName": "Param",
-        "ArrayNumber": "72",
-        "InterfaceID": "ParamHolder_72",
+        "ArrayNumber": "75",
+        "InterfaceID": "ParamHolder_75",
         "DistributionType": "normal",
         "Median": 1960,
         "StandardError": 0,
@@ -1400,8 +1424,8 @@
     {
         "ParameterID": "TimeStep",
         "ArrayName": "Param",
-        "ArrayNumber": "73",
-        "InterfaceID": "ParamHolder_73",
+        "ArrayNumber": "76",
+        "InterfaceID": "ParamHolder_76",
         "DistributionType": "normal",
         "Median": 0.1,
         "StandardError": 0,

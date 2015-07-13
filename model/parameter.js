@@ -309,6 +309,9 @@ ParameterClass.prototype.CreateDistribution= function (){
 		if (this.DistributionType=="uniform"){
 			this.Val=RandArray(this.MinValue, this.MaxValue, this.NumberOfSamples);
 		}
+		if (this.DistributionType=="optimisedsample"){
+			this.Val=[];
+		}
 	}
 	catch(err) {
 		console.error(err);
