@@ -1,7 +1,7 @@
 function OptimiseFullModel( WorkerData){
 	
 	// Set up the optimisation data
-	var DEOArray = HCVDataExtractionObjects(Data);
+	var DEOArray = HCVDataExtractionObjects();
 	
 	
 	OptimisationParam=WorkerData.Common.OptimisationParam;

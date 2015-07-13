@@ -13,23 +13,31 @@
 
 // Saves the parameter group (with the optimisation inside)
 
+// Functions.ModelFunction="FullModel";
+// Functions.PreOptimisationFunction="Prefunction";
+// Functions.PostOptimisationFunction="Postfunction";
+// OptSelector(Functions, "HCVOptSelectorHolder", PointerToParamGroup, DEOArrayFunctionName, Settings);
+// DEOArrayFunctionName=HCVDataExtractionObjects;
+// Common.Settings
 
-
-function OptSelector(Functions, DivID, PointerToParamGroup, DEOArrayFunctionName, Settings){
+function OptSelector(Name, DivID, Functions, PointerToParamGroup, DEOArrayFunctionName, Common, Settings){
+	this.Name=Name;
+	
 	// Store the functions to be used in the simulation
-	if (typeof(ModelFunction)=="undefined"){
+	if (typeof(Functions.ModelFunction)!="string"){
 		throw "Functions.ModelFunction must be set, otherwise there is nothing to optimise!";
 	}
 	this.ModelFunction=Functions.ModelFunction;
-	if (typeof(PreOptimisationFunction)!="undefined"){
-		this.PreOptimisationFunction;
+	if (typeof(Functions.PreOptimisationFunction)=="string"){
+		this.PreOptimisationFunction=Functions.PreOptimisationFunction;
 	}
-	if (typeof(PostOptimisationFunction)!="undefined"){
-		this.PostOptimisationFunction;
+	if (typeof(Functions.PostOptimisationFunction)=="string"){
+		this.PostOptimisationFunction=Functions.PostOptimisationFunction;
 	}
 	
 	this.DivPointer=document.getElementById(DivID);
-	
+	this.DEOID=DivID+"_DEO_";// 
+	this.DEOChartID=DivID+"_DEOChart_";// 
 	
 	// Working on the external PointerToParamGroup
 	this.ParamGroup=PointerToParamGroup;
@@ -45,16 +53,18 @@ function OptSelector(Functions, DivID, PointerToParamGroup, DEOArrayFunctionName
 	this.DEOArrayFunction=eval(this.DEOArrayFunctionName);//
 	this.DEOGroup=new DataExtractionObjectGroup(this.DEOArrayFunction);
 	this.DEOGroup.AddDEO(this.DEOArrayFunction());
+
+		
 		
 	// Use the DEO group to create a list of parameters to optimise to
 	this.DEONameList=[];
 	for (var DEOIndex in this.DEOGroup.DEOArray){
 		this.DEONameList.push(this.DEOGroup.DEOArray[DEOIndex].Name);
 		this.DEOToOpt.push(true);// this is ticked 
-		this.DEOToGraph.push(true);// this is ticked 
+		//this.DEOToGraph.push(true);// this is ticked 
 	}
 	
-	this.DisplayProgress=true;
+	this.LiveUpdateCharts=true; // determines if the error charts are updated at the end of each error round or not
 	
 	// Set up the threaded simulation that will run the optimisation
 	
@@ -74,11 +84,17 @@ function OptSelector(Functions, DivID, PointerToParamGroup, DEOArrayFunctionName
 	
 	
 	
-
+	this.GraphColour=[];
+	
+	this.ErrorHistory;
+	this.ParameterHistory;	
+	
+	this.ErrorChartData;// this.ErrorChartData[DataArrayNumber][SimNumber].XArrayValues/YArrayValues
+	this.ParameterChartData;
 	
 	
 
-	
+	this.GenerateGraphColours(Settings.NoSims);
 	
 
 	
@@ -119,7 +135,13 @@ OptSelector.prototype.DrawParamDiv=function(){
 	var HTMLString="";
 	// draw the outer section
 		// Draw a button to run the optimisation
+		HTMLString+='';
+		// Toggle for the optimisation error and paramter value progress charts 
+		
 		// Draw a tick box that determines if the optimisation displays results after each round or not
+		
+		// DrawErrorCharts
+		
 		// Draw a drop down that allows the user to select the simulation that is displayed in the progress??
 		// Draw a box that is used to display the progress of error with time
 		// This plot takes each of the sims's historical data and makes a multi line plot that displays all of the plots on a single plot
@@ -141,7 +163,17 @@ OptSelector.prototype.DrawParamDiv=function(){
 			Percentile(Val, 97.5)
 	}
 	// for each optimisation data point 
-	
+	for(var DEOCount in this.DEONameList){
+		HTMLString+="<div>\n";
+		HTMLString+="    <div style='width:150;'>"+this.DEONameList[DEOCount]+"</div>\n";
+		var DEOOptString=this.Name+".DEOToOpt["+this.DEOCount+"];";
+		HTMLString+="    <input type='checkbox' onClick='"+DEOOptString+"]=!'"+DEOOptString+"];' value="+DEOOptString+"> Optimise \n";
+		var ChartIDString=this.Name+".DEOToOpt["+this.DEOCount+"];";
+		// show hide chart button
+		this.DEOChartID
+		HTMLString+="    <input type='checkbox' onClick='"+DEOOptString+"]=!'"+DEOOptString+"];' value="+DEOOptString+"> Optimise \n";
+		HTMLString+="</div>\n";
+	}
 	
 	this.DivPointer.innerHTML=HTMLString;
 };
@@ -184,10 +216,60 @@ OptSelector.prototype.PushToParamGroup=function (){
 
 
 
-OptSelector.prototype.ParamGroupUpdated=function (){
-	this.DrawTable();
+OptSelector.prototype.UpdateError=function (DataFromSim){
+	this.ErrorHistory[DataFromSim.SimNum]=DataFromSim.ErrorHistory;
+	this.ParameterHistory[DataFromSim.SimNum]=DataFromSim.ParameterHistory;
+	
+	if (this.LiveUpdateCharts){
+		this.DrawErrorCharts();
+	}
+
 }
 
+OptSelector.prototype.DrawErrorCharts=function (){
+	this.ErrorChartData=[];// this.ErrorChartData[DataArrayNumber][SimNumber].XArrayValues/YArrayValues
+	this.ParameterChartData=[];
+	
+	// Do a recombination of all data
+	//  for each of the data objects that are optimised to  in the 
+	
+	
+	// 
+	
+	// for all sims  
+		//
+	// Update charts
+	
+	
+	
+	
+}
+
+
+OptSelector.prototype.DrawDEOCharts=function (){
+	this.DEOGroup.Summarise(this.SimulationHolder.Results);
+	
+	this.DEOGroup.GraphAll(this.DEOChartID);
+}
+
+
+
+OptSelector.prototype.GenerateGraphColours=function (NumberOfSimulations){
+	function get_random_color() // http://stackoverflow.com/questions/1152024/best-way-to-generate-a-random-color-in-javascript
+	{
+	    var color = "";
+	    for(var i = 0; i < 3; i++) {
+	    	var sub = Math.floor(Math.random() * 256).toString(16);
+	    	color += (sub.length == 1 ? "0" + sub : sub);
+	    }
+	    return "#" + color;
+	}
+	
+	this.GraphColour=[];
+	for (var SimCount=0; SimCount<NumberOfSimulations; SimCount++){
+		this.GraphColour.push(get_random_color());
+	}
+}
 
 // This function is inside the model and is called 
 // Note that 

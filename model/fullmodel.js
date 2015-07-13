@@ -36,7 +36,7 @@ function FullModelTest(WorkerData){
 	
 	
 	// Set up the optimisation
-	var DEOArray = HCVDataExtractionObjects(Data);
+	var DEOArray = HCVDataExtractionObjects();
 	
 	
 	

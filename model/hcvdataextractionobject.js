@@ -5,7 +5,7 @@
 
 
 // This function is run internally in each instance of the model
-function HCVDataExtractionObjects(Data){
+function HCVDataExtractionObjects(){
 	
 	var GraphTime=AscendingArray(1970, 2020, 1);
 	

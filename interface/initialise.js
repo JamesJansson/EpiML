@@ -38,7 +38,7 @@ function InitialiseEpiML(){
 	
 	// Create the DataExtractionObject
 	HCVDEOGroup=new DataExtractionObjectGroup("RandomGroup");
-	HCVDEOGroup.AddDEO(HCVDataExtractionObjects(Data));
+	HCVDEOGroup.AddDEO(HCVDataExtractionObjects());
 	
 	// Load the optimisation interface
 	

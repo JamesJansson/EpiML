@@ -90,7 +90,10 @@ MultiThreadSim.prototype.AddMessageFunction=function(SimFunctionName, InterfaceF
 	//  When the function SimFunctionName is called in the sim, InterfaceFunctionPointer is run in the interface
 	// function RepetitiveError(Data){for (var i=0; i<100; i++){console.error(Data+i)}}
 	// SimulationHolder.AddMessageFunction("InSimFunction", RepetitiveError)
-
+	// in the sim call
+	// InSimFunction("This is the message");
+	
+	
 	if (typeof(SimFunctionName)!="string"){
 		throw "AddMessageFunction(SimFunctionName, InterfaceFunctionPointer), SimFunctionName is a string of the name of the function to run in the sim";
 	}
