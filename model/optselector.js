@@ -440,23 +440,23 @@ function OptSelectorHandler(WorkerData){
 		var PostOptimisationFunction=eval(OptSelectorSettings.PostOptimisationFunction);
 	}
 	
+	var FunctionInput={};
+	FunctionInput.Param=Param;
+	FunctionInput.DEOGroup=DEOGroup;
+	FunctionInput.DEOOptimisationGroup=DEOOptimisationGroup;
+	FunctionInput.ModelFunction=ModelFunction;
+	FunctionInput.PreOptimisationFunction=PreOptimisationFunction;
+	FunctionInput.PostOptimisationFunction=PostOptimisationFunction;
+	FunctionInput.Common=WorkerData.Common;
+	FunctionInput.SimData=WorkerData.SimData;
+	FunctionInput.WorkerData=WorkerData;
+	
 	
 	// Extract and run the PreOptimisationFunction if it exists
 	if (typeof(PreOptimisationFunction)=="function"){
 		// Run the pre-code
-		var InitialSetUpInput={};
-		InitialSetUpInput.Param=Param;
-		InitialSetUpInput.DEOGroup=DEOGroup;
-		InitialSetUpInput.DEOOptimisationGroup=DEOOptimisationGroup;
-		InitialSetUpInput.ModelFunction=ModelFunction;
-		InitialSetUpInput.PreOptimisationFunction=PreOptimisationFunction;
-		InitialSetUpInput.PostOptimisationFunction=PostOptimisationFunction;
-		InitialSetUpInput.WorkerData=WorkerData;
-		
-		PreOptimisationFunction(InitialSetUpInput);
+		PreOptimisationFunction(FunctionInput);
 	}
-	
-	
 	
 	// Set up the optimisatoin
 	var OptimisationSettings={};
@@ -469,6 +469,7 @@ function OptSelectorHandler(WorkerData){
 		}
 		// Param.Whatever.What=ParameterSet["Whatever.What"];
 		
+		// Add .Notifcations to FunctionInput
 		var FullModelResults=ModelFunction(FunctionInput.Notifications, FunctionInput.EndSimulationTime, FunctionInput.Intervention);
 		return FullModelResults;
 	};
@@ -483,7 +484,15 @@ function OptSelectorHandler(WorkerData){
 	
 	
 	OptimisationSettings.ProgressFunction=function(SimulationNumber, Parameter, SimOutput, ErrorValues){
-		if (Common.DisplayProgress==true){
+		if (OptSelectorSettings.LiveUpdatePlots==true){
+			// Send Parameter back to the main simulation
+			// Send Error values backs to the main simulation 
+			// Send ThreadNumber back 
+			// SimulationNumber 
+			// if it is from a particular sim, replace all existing 
+			
+			
+			
 			console.log("Params: X "+Mean(Parameter.X.CurrentVec)+" Y "+Mean(Parameter.Y.CurrentVec));
 			var PSetCount=0;
 			var Data=[];
