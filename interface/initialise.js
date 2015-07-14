@@ -26,6 +26,8 @@ function InitialiseEpiML(){
 	// Load settings
 	LoadSettingsFiles();
 
+	console.error(Settings);
+
 	// Creating the parameter group
 	PGroup= new ParameterGroup("PGroup", Settings.NumberOfSimulations, "./data/parameters.json");
 	PGroup.Load();
@@ -73,48 +75,85 @@ function LoadSettingsFiles(){
 	// load the settings file
 	
 	
-	fs.readFile("./interface/settings.json", 'utf8', function (err, data) {
-		if (err){
-			console.error("The ./interface/settings.json file could not be loaded. Using default values. Error: ");
-			console.log(err);
-			// Use default values
-			Settings.NoThreads=1;// number of cores to use at a time
-			Settings.SampleFactor=10;// This value is the number of people each person in the simulation represents. Probably a good idea to set this to 1, 10 or 100
-		}
-		else{
-			Settings = JSON.parse(data);
-		}
-		
-		// Set up the HCV Treatment Scenarios
-		SetupHCVTreatmentScenarioSelector();
-		
-		// Set up settings options
-		var CheckboxValue;
+	try {
+		var SettingsFile=fs.readFileSync("./interface/settings.json", 'utf8');
+	}
+	catch(err){
+		console.error("The file ./interface/settings.json could not be loaded. Error: ");
+		console.error(err);
+		throw "Stopping LoadSettingsFiles";
+	}
+	
+	Settings = JSON.parse(SettingsFile);
+	
+	// Set up the HCV Treatment Scenarios
+	SetupHCVTreatmentScenarioSelector();
+	
+	// Set up settings options
+	var CheckboxValue;
 
-		if (typeof(Settings.TerminateThreadOnSimCompletion)!="undefined"){
-			CheckboxValue=Settings.TerminateThreadOnSimCompletion;
-		}
-		else {
-			CheckboxValue=false;
-		}
-		document.getElementById('TerminateThreadOnSimCompletionCheckbox').checked=CheckboxValue;
+	if (typeof(Settings.TerminateThreadOnSimCompletion)!="undefined"){
+		CheckboxValue=Settings.TerminateThreadOnSimCompletion;
+	}
+	else {
+		CheckboxValue=false;
+	}
+	document.getElementById('TerminateThreadOnSimCompletionCheckbox').checked=CheckboxValue;
+	
+	if (typeof(Settings.RecalculateParam)!="undefined"){
+		CheckboxValue=Settings.RecalculateParam;
+	}
+	else {
+		CheckboxValue=false;
+	}
+	document.getElementById('RecalculateParamCheckbox').checked=CheckboxValue;
+	
+	console.error("Note: all the below should have checking and defaults implemented as above.");		
+	document.getElementById("NumberOfSimulationsTextbox").value=Settings.NumberOfSimulations;
+	document.getElementById("NoThreadsDropdown").value=Settings.NoThreads;
+	document.getElementById("SampleFactorTextbox").value=Settings.SampleFactor;
+
+	
+	
+	// fs.readFile("./interface/settings.json", 'utf8', function (err, data) {
+	// 	if (err){
+	// 		console.error("The ./interface/settings.json file could not be loaded. Using default values. Error: ");
+	// 		console.log(err);
+	// 		// Use default values
+	// 		Settings.NoThreads=1;// number of cores to use at a time
+	// 		Settings.SampleFactor=10;// This value is the number of people each person in the simulation represents. Probably a good idea to set this to 1, 10 or 100
+	// 	}
+	// 	else{
+	// 		Settings = JSON.parse(data);
+	// 	}
 		
-		if (typeof(Settings.RecalculateParam)!="undefined"){
-			CheckboxValue=Settings.RecalculateParam;
-		}
-		else {
-			CheckboxValue=false;
-		}
-		document.getElementById('RecalculateParamCheckbox').checked=CheckboxValue;
+	// 	// Set up the HCV Treatment Scenarios
+	// 	SetupHCVTreatmentScenarioSelector();
 		
+	// 	// Set up settings options
+	// 	var CheckboxValue;
+
+	// 	if (typeof(Settings.TerminateThreadOnSimCompletion)!="undefined"){
+	// 		CheckboxValue=Settings.TerminateThreadOnSimCompletion;
+	// 	}
+	// 	else {
+	// 		CheckboxValue=false;
+	// 	}
+	// 	document.getElementById('TerminateThreadOnSimCompletionCheckbox').checked=CheckboxValue;
 		
+	// 	if (typeof(Settings.RecalculateParam)!="undefined"){
+	// 		CheckboxValue=Settings.RecalculateParam;
+	// 	}
+	// 	else {
+	// 		CheckboxValue=false;
+	// 	}
+	// 	document.getElementById('RecalculateParamCheckbox').checked=CheckboxValue;
 		
-		
-		console.error("Note: all the below should have checking and defaults implemented as above.");		
-		document.getElementById("NumberOfSimulationsTextbox").value=Settings.NumberOfSimulations;
-		document.getElementById("NoThreadsDropdown").value=Settings.NoThreads;
-		document.getElementById("SampleFactorTextbox").value=Settings.SampleFactor;
-	});
+	// 	console.error("Note: all the below should have checking and defaults implemented as above.");		
+	// 	document.getElementById("NumberOfSimulationsTextbox").value=Settings.NumberOfSimulations;
+	// 	document.getElementById("NoThreadsDropdown").value=Settings.NoThreads;
+	// 	document.getElementById("SampleFactorTextbox").value=Settings.SampleFactor;
+	// });
 }
 
 function SaveSettings(){

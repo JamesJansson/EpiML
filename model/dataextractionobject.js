@@ -248,7 +248,7 @@ DataExtractionObjectGroup.prototype.AddDEO=function(DEOToAdd){
 	}
 }
 
-DataExtractionObjectGroup.prototype.FindAllError=function(SimulationResult){
+DataExtractionObjectGroup.prototype.TotalError=function(SimulationResult){
 	var ErrorSum=0;
 	for (var DEOCount in this.DEOArray){
 	    ErrorSum+=this.DEOArray[DEOCount].FindError(SimulationResult);

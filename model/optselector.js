@@ -85,6 +85,10 @@ function OptSelector(Name, DivID, Functions, PointerToParamGroup, DEOArrayFuncti
 	
 	this.TerminateThreadOnSimCompletion=false;
 	
+	
+	this.ModelDirectory=ModelDirectory;
+	
+	
 	this.Settings=Settings;// Note that setting is a pointer, and hence if Settings changes, then this.Settings changes too.
 	this.Common=Common;
 	
@@ -119,7 +123,7 @@ function OptSelector(Name, DivID, Functions, PointerToParamGroup, DEOArrayFuncti
 }
 
 OptSelector.prototype.SetUpSimulationHolder=function (){
-	this.Settings.NoThreads
+	this.Settings.NoThreads;
 };
 
 
@@ -151,7 +155,7 @@ OptSelector.prototype.DrawParamDiv=function(){
 		
 		// Draw a tick box that determines if the optimisation displays results after each round or not
 		var LiveUpdateString=this.Name+".LiveUpdatePlots";
-		HTMLString+="    <input type='checkbox' onClick='"+LiveUpdateString+"=!'"+LiveUpdateString+";' value="+LiveUpdateString+"> Live update plots \n";
+		HTMLString+="    <input type='checkbox' onClick='"+LiveUpdateString+"=!"+LiveUpdateString+"';' value="+LiveUpdateString+"> Live update plots \n";
 		
 		
 		// Draw a drop down that allows the user to select the simulation that is displayed in the progress??
@@ -174,20 +178,20 @@ OptSelector.prototype.DrawParamDiv=function(){
 		// Show the name of the variable
 		HTMLString+="   <input type='text' 'value="+this.OptParamArray[PCount].ParameterID+";' readonly>\n";
 		// Draw a box that displays that 
-		var ParamOptString=this.Name+".ParamToOpt["+PCount+"];";
-		HTMLString+="    <input type='checkbox' onClick='"+ParamOptString+"=!'"+ParamOptString+";' value="+ParamOptString+"> Optimise \n";
+		var ParamOptString=this.Name+".ParamToOpt["+PCount+"]";
+		HTMLString+="    <input type='checkbox' onClick='"+ParamOptString+"=!"+ParamOptString+"';' value="+ParamOptString+"> Optimise \n";
 		
 		// Draw a box that shows the progress of the error in this variable
 		HTMLString+="    <div class='plot' id='"+this.ParamProgressPlotID+DEOCount+"' style='display:none;'>\n";
 		
 		// Display current results
-			var Val=this.OptParamArray[PCount].Val;
-			Mean(Val);// Mean
-			SD(Val);// SD
-			// 95% LCI 
-			Percentile(Val, 2.5);
-			// 95% UCI
-			Percentile(Val, 97.5)
+			// var Val=this.OptParamArray[PCount].Val;
+			// Mean(Val);// Mean
+			// SD(Val);// SD
+			// // 95% LCI 
+			// Percentile(Val, 2.5);
+			// // 95% UCI
+			// Percentile(Val, 97.5)
 	}
 	// for each optimisation data point 
 	for (var DEOCount in this.DEONameList){
@@ -289,24 +293,24 @@ OptSelector.prototype.RunOptimisation=function (){
 	// Send the optimisation settings to the simulation  
 	this.Common.Settings=Settings;
 	
-	this.SimulationHolder=new MultiThreadSim(ModelDirectory, Settings.NumberOfSimulations , Settings.NoThreads, TerminateThreadOnSimCompletion); //Common is the same between all sims
+	this.SimulationHolder=new MultiThreadSim(this.ModelDirectory, this.Settings.NumberOfSimulations , this.Settings.NoThreads); //Common is the same between all sims
 	this.SimulationHolder.UseSimProgressBar=true;
 	this.SimulationHolder.SimProgressBarID="MainProgress";
 	
 	var RunSettings={};
 	//Creating the data to be used in the simulations
 	if (this.Settings.RecalculateParam){
-		ParamGroup.Recalculate(this.Settings.NumberOfSimulations);
+		this.ParamGroup.Recalculate(this.Settings.NumberOfSimulations);
 	}
 		
-	RunSettings.SimDataArray=ParamGroup.ParameterSplit();
+	RunSettings.SimDataArray=this.ParamGroup.ParameterSplit();
 	
 	RunSettings.FunctionName="OptSelectorHandler";
 	RunSettings.Common=this.Common;
 	RunSettings.TerminateThreadOnSimCompletion=this.TerminateThreadOnSimCompletion;
 	RunSettings.FunctionToRunOnCompletion=this.PostOptimisationFunction;
 	
-	
+	console.log(RunSettings);
 	// Run the simulation
 	this.SimulationHolder.Run(RunSettings);
 	// wait for the result
@@ -397,50 +401,56 @@ function OptSelectorHandler(WorkerData){
 	
 	var OptSelectorSettings=WorkerData.Common.OptSelectorSettings;
 	
-	
-	// Set up the optimisation data extraction objects
-	var DEOFunctionList=OptSelectorSettings.DEOFunctionList;
-	
-	for (var DEOFunctionCount in DEOFunctionList){
-		var DEOOptGroup = new DataExtractionObjectGroup();	
-		
-	}
-	
-	
-	
-	
-	
-	// Create the general 
-	
-	
-	
-	
+	// Set up the data extraction objects
 	var DEOArrayFunction=eval(OptSelectorSettings.DEOArrayFunction);
 	var DEOArray = DEOArrayFunction();
+	var ListOfDEOToOptimise=OptSelectorSettings.ListOfDEOToOptimise;
+	
+	var DEOOptimisationArray=[];
+	
+	for (var DEOCount in DEOArray){
+		if (ListOfDEOToOptimise.indexOf(DEOArray[DEOCount].Name)>-1){
+			// if it is not on the list of DEO to optimise
+			DEOOptimisationArray.push(DEOArray[DEOCount]);
+		}
+	}
+	
+	var DEOOptimisationGroup=new DataExtractionObjectGroup("DEOOptimisationGroup");
+	DEOOptimisationGroup.AddDEO(DEOOptimisationArray);
+	
+	var DEOGroup=new DataExtractionObjectGroup("DEOGroup");
+	DEOGroup.AddDEO(DEOArray);
+	
+	
 	// Set up the parameters
-	var OptimisationParam=WorkerData.Common.OptimisationParam;
+	var ParamOptimisationList=OptSelectorSettings.ParamOptimisationList;
 	Param=WorkerData.SimData.Param;
 	
-	
-	
-	
-	// Extract the ModelFunction to optimise
-	if (typeof(WorkerData.Common.ModelFunction)=="undefined"){
+	// Extract the functions
+	if (typeof(OptSelectorSettings.ModelFunction)=="undefined"){
 		throw "ModelFunction was not set.";
 	}
 	else{
-		var ModelFunction=eval(WorkerData.Common.ModelFunction);
+		var ModelFunction=eval(OptSelectorSettings.ModelFunction);
+	}
+	if (typeof(OptSelectorSettings.PreOptimisationFunction)!="undefined"){
+		var PreOptimisationFunction=eval(OptSelectorSettings.PreOptimisationFunction);
+	}
+	if (typeof(OptSelectorSettings.PostOptimisationFunction)!="undefined"){
+		var PostOptimisationFunction=eval(OptSelectorSettings.PostOptimisationFunction);
 	}
 	
 	
 	// Extract and run the PreOptimisationFunction if it exists
-	if (typeof(WorkerData.Common.PreOptimisationFunction)!="undefined"){
-		var PreOptimisationFunction=eval(WorkerData.Common.PreOptimisationFunction);
+	if (typeof(PreOptimisationFunction)=="function"){
 		// Run the pre-code
 		var InitialSetUpInput={};
 		InitialSetUpInput.Param=Param;
-		InitialSetUpInput.DEOArray=DEOArray;
+		InitialSetUpInput.DEOGroup=DEOGroup;
+		InitialSetUpInput.DEOOptimisationGroup=DEOOptimisationGroup;
 		InitialSetUpInput.ModelFunction=ModelFunction;
+		InitialSetUpInput.PreOptimisationFunction=PreOptimisationFunction;
+		InitialSetUpInput.PostOptimisationFunction=PostOptimisationFunction;
 		InitialSetUpInput.WorkerData=WorkerData;
 		
 		PreOptimisationFunction(InitialSetUpInput);
@@ -448,32 +458,25 @@ function OptSelectorHandler(WorkerData){
 	
 	
 	
-	
+	// Set up the optimisatoin
 	var OptimisationSettings={};
-	OptimisationSettings.Target=DEOArray;
-	
+	OptimisationSettings.Target=DEOOptimisationGroup;
 	
 	OptimisationSettings.Function=function(FunctionInput, ParameterSet){
 		// change Param according to the values listed in ParameterSet
 		for (var Identifier in ParameterSet){
 			eval("Param." + Identifier +"=ParameterSet["+Identifier+"];" );	
 		}
-		
-		Param.Whatever=ParameterSet["Whatever"];
-		Param.Whatever=ParameterSet["Whatever"];
-		
-		
+		// Param.Whatever.What=ParameterSet["Whatever.What"];
 		
 		var FullModelResults=ModelFunction(FunctionInput.Notifications, FunctionInput.EndSimulationTime, FunctionInput.Intervention);
-		
-		
 		return FullModelResults;
 	};
 	
-	
 	OptimisationSettings.ErrorFunction=function(Results, Target){// Done, unchecked
-		var DEOArray=Target;
-		var TotalOptimisationError=FindTotalDEOErrorForOptimisation(DEOArray, Results);
+		var DEOOptimisationGroup=Target;
+		
+		var TotalOptimisationError=DEOOptimisationGroup.TotalError();
 		
 		return TotalOptimisationError;
 	};
@@ -529,9 +532,8 @@ function OptSelectorHandler(WorkerData){
 	OptimisationObject.Run(FunctionInput);
 	
 	
-	if (typeof(WorkerData.Common.PostOptimisationFunction)!="undefined"){
-		var PostOptimisationFunction=eval(WorkerData.Common.PostOptimisationFunction);
-		// Run the pre-code
+		
+	if (typeof(PostOptimisationFunction=="function")){
 		ReturnedResults.PostOptimisation=PostOptimisationFunction(Param, DEOArray, WorkerData);
 	}
 	

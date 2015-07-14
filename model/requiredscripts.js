@@ -8,6 +8,8 @@ importScripts("stochasticoptimisation.js");
 importScripts("deepcopy.js");
 importScripts("dataextractionobject.js");
 importScripts("timer.js");
+importScripts("optselector.js");
+
 
 // Model specific functions
 importScripts("person.js");

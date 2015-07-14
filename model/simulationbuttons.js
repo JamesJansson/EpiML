@@ -58,8 +58,7 @@ function RunFullOptimisationAndDataExtration(){
 	//var SimInputData=ParameterSplit(PGroup.ParamArray, Settings.NumberOfSimulations, Settings.RecalculateParam);
 	
 	//Creating the simulation holder
-	var TerminateOnFinish=false;
-	SimulationHolder=new MultiThreadSim(ModelDirectory, Settings.NumberOfSimulations , Settings.NoThreads, TerminateOnFinish); //Common is the same between all sims
+	SimulationHolder=new MultiThreadSim(ModelDirectory, Settings.NumberOfSimulations , Settings.NoThreads); //Common is the same between all sims
 	SimulationHolder.UseSimProgressBar=true;
 	SimulationHolder.SimProgressBarID="MainProgress";
 	
@@ -123,8 +122,8 @@ function RunPersistentSim(){
 	//var ParamArrayBySim=ParameterSplit(PGroup.ParamArray, Settings.NumberOfSimulations, Settings.RecalculateParam);
 	
 	//Creating the simulation holder
-	var TerminateOnFinish=false;
-	SimulationHolder=new MultiThreadSim(ModelDirectory, Settings.NumberOfSimulations , Settings.NoThreads, TerminateOnFinish); //Common is the same between all sims
+
+	SimulationHolder=new MultiThreadSim(ModelDirectory, Settings.NumberOfSimulations , Settings.NoThreads); //Common is the same between all sims
 	SimulationHolder.UseSimProgressBar=true;
 	SimulationHolder.SimProgressBarID="MainProgress";
 	
@@ -172,8 +171,7 @@ function RunSimSetup(){
 	//var ParamArrayBySim=ParameterSplit(PGroup.ParamArray, Settings.NumberOfSimulations, Settings.RecalculateParam);
 	
 	//Creating the simulation holder
-	var TerminateOnFinish=false;
-	SimulationHolder=new MultiThreadSim(ModelDirectory, Settings.NumberOfSimulations , Settings.NoThreads, TerminateOnFinish); //Common is the same between all sims
+	SimulationHolder=new MultiThreadSim(ModelDirectory, Settings.NumberOfSimulations , Settings.NoThreads); //Common is the same between all sims
 	SimulationHolder.UseSimProgressBar=true;
 	SimulationHolder.SimProgressBarID="MainProgress";
 	
