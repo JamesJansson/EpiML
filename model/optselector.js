@@ -451,11 +451,12 @@ function OptSelectorHandler(WorkerData){
 	FunctionInput.SimData=WorkerData.SimData;
 	FunctionInput.WorkerData=WorkerData;
 	
+	var ReturnedResults={};
 	
 	// Extract and run the PreOptimisationFunction if it exists
 	if (typeof(PreOptimisationFunction)=="function"){
 		// Run the pre-code
-		PreOptimisationFunction(FunctionInput);
+		ReturnedResults.PreOptimisationResults=PreOptimisationFunction(FunctionInput);
 	}
 	
 	// Set up the optimisatoin
@@ -465,25 +466,25 @@ function OptSelectorHandler(WorkerData){
 	OptimisationSettings.Function=function(FunctionInput, ParameterSet){
 		// change Param according to the values listed in ParameterSet
 		for (var Identifier in ParameterSet){
+			// Param.Whatever.What=ParameterSet["Whatever.What"];
 			eval("Param." + Identifier +"=ParameterSet["+Identifier+"];" );	
 		}
-		// Param.Whatever.What=ParameterSet["Whatever.What"];
 		
-		// Add .Notifcations to FunctionInput
-		var FullModelResults=ModelFunction(FunctionInput.Notifications, FunctionInput.EndSimulationTime, FunctionInput.Intervention);
-		return FullModelResults;
+		// Add .Notifcations, .EndSimulationTime, .Intervention  to FunctionInput
+		var ModelResults=ModelFunction(FunctionInput.Notifications, FunctionInput.EndSimulationTime, FunctionInput.Intervention);
+		return ModelResults;
 	};
 	
 	OptimisationSettings.ErrorFunction=function(Results, Target){// Done, unchecked
 		var DEOOptimisationGroup=Target;
-		
-		var TotalOptimisationError=DEOOptimisationGroup.TotalError();
-		
+		var TotalOptimisationError=DEOOptimisationGroup.TotalError(Results);
 		return TotalOptimisationError;
 	};
 	
 	
 	OptimisationSettings.ProgressFunction=function(SimulationNumber, Parameter, SimOutput, ErrorValues){
+		console.log("Optimisation step "+SimulationNumber+" complete.");
+		
 		if (OptSelectorSettings.LiveUpdatePlots==true){
 			// Send Parameter back to the main simulation
 			// Send Error values backs to the main simulation 
@@ -540,16 +541,14 @@ function OptSelectorHandler(WorkerData){
 	
 	OptimisationObject.Run(FunctionInput);
 	
+	ReturnedResults.OptimisedParameter=OptimisationObject.ParameterFinal;
+	ReturnedResults.OptimisedResults=OptimisationObject.ResultsFinal;
 	
 		
 	if (typeof(PostOptimisationFunction=="function")){
-		ReturnedResults.PostOptimisation=PostOptimisationFunction(Param, DEOArray, WorkerData);
+		ReturnedResults.PostOptimisationResults=PostOptimisationFunction(Param, DEOArray, WorkerData);
 	}
-	
-	
 	
 	
 	return ReturnedResults;
 }
-
-
