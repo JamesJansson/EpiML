@@ -182,7 +182,7 @@ OptSelector.prototype.DrawParamDiv=function(){
 		HTMLString+="    <input type='checkbox' onClick='"+ParamOptString+"=!"+ParamOptString+"';' value="+ParamOptString+"> Optimise \n";
 		
 		// Draw a box that shows the progress of the error in this variable
-		HTMLString+="    <div class='plot' id='"+this.ParamProgressPlotID+DEOCount+"' style='display:none;'>\n";
+		HTMLString+="    <div class='plot' id='"+this.ParamProgressPlotID+DEOCount+"' style='display:none;'></div>\n";
 		
 		// Display current results
 			// var Val=this.OptParamArray[PCount].Val;
