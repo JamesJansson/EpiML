@@ -44,7 +44,7 @@ function OptSelector(Name, DivID, Functions, PointerToParamGroup, DEOArrayFuncti
 	this.DEOID=DivID+"_DEO_";// 
 	this.DEOErrorPlotID=DivID+"_DEOErrorPlot_";// 
 	this.DEOResultsPlotID=DivID+"_DEOResultsPlot_";// 
-	
+	this.ParamProgressPlotID=DivID+"_ParamProgressPlot_";// 
 	// Working on the external PointerToParamGroup
 	this.ParamGroup=PointerToParamGroup;
 	// This means that when paramgroup is updated, this.ParamGroupUpdated is called
@@ -150,12 +150,12 @@ OptSelector.prototype.DrawParamDiv=function(){
 	var HTMLString="";
 	// draw the outer section
 		// Draw a button to run the optimisation
-		HTMLString+="<div class='SolidButton' style='float:left;' onClick='"+this.Name+".RunOptimisation()'>Run optmisation</div>";
+		HTMLString+="<div class='SolidButton'  onClick='"+this.Name+".RunOptimisation()'>Run optmisation</div>";
 		// Toggle for the optimisation error and paramter value progress Plots 
 		
 		// Draw a tick box that determines if the optimisation displays results after each round or not
 		var LiveUpdateString=this.Name+".LiveUpdatePlots";
-		HTMLString+="    <input type='checkbox' onClick='"+LiveUpdateString+"=!"+LiveUpdateString+"';' value="+LiveUpdateString+"> Live update plots \n";
+		HTMLString+="    <input type='checkbox' onClick='"+LiveUpdateString+"=!"+LiveUpdateString+"';' value="+LiveUpdateString+"> Live update plots <br><br>\n";
 		
 		
 		// Draw a drop down that allows the user to select the simulation that is displayed in the progress??
@@ -163,18 +163,26 @@ OptSelector.prototype.DrawParamDiv=function(){
 		// This plot takes each of the sims's historical data and makes a multi line plot that displays all of the plots on a single plot
 		// http://www.flotcharts.org/flot/examples/series-toggle/index.html
 		
-		HTMLString+="<div class='SolidButton' style='float:left;' onClick='"+this.Name+".ShowAllParamProgressPlots()'>Show all param progress</div>";
-		HTMLString+="<div class='SolidButton' style='float:left;' onClick='"+this.Name+".HideAllParamProgressPlots()'>Hide all param progress</div>";
+		HTMLString+="<div style='width:100%;clear:both;height:100px;'>";
+		HTMLString+="<div style='float:left;'> Param progress";
+		HTMLString+="    <div class='SolidButton' onClick='"+this.Name+".ShowAllParamProgressPlots()'>Show</div>";
+		HTMLString+="    <div class='SolidButton' onClick='"+this.Name+".HideAllParamProgressPlots()'>Hide</div>";
+		HTMLString+="</div>";
 		
-		HTMLString+="<div class='SolidButton' style='float:left;' onClick='"+this.Name+".ShowAllResultsPlots()'>Show all results plots</div>";
-		HTMLString+="<div class='SolidButton' style='float:left;' onClick='"+this.Name+".HideAllResultsPlots()'>Hide all results plots</div>";
-		HTMLString+="<div class='SolidButton' style='float:left;' onClick='"+this.Name+".ShowAllErrorPlots()'>Show all error plots</div>";
-		HTMLString+="<div class='SolidButton' style='float:left;' onClick='"+this.Name+".HideAllErrorPlots()'>Hide all error plots</div>";
+		HTMLString+="<div style='float:left;'> Results plots";
+		HTMLString+="    <div class='SolidButton' onClick='"+this.Name+".ShowAllResultsPlots()'>Show</div>";
+		HTMLString+="    <div class='SolidButton' onClick='"+this.Name+".HideAllResultsPlots()'>Hide</div>";
+		HTMLString+="</div>";
 		
+		HTMLString+="<div style='float:left;'> Error plots";
+		HTMLString+="    <div class='SolidButton' onClick='"+this.Name+".ShowAllErrorPlots()'>Show</div>";
+		HTMLString+="    <div class='SolidButton' onClick='"+this.Name+".HideAllErrorPlots()'>Hide</div>";
+		HTMLString+="</div>";
+		HTMLString+="</div>";
 	// for each optimisation parameter
 	for (var PCount in this.OptParamArray){
 		// Display the values as described in the ParamGroup
-		HTMLString+="<div>\n";
+		HTMLString+="<div style='width:100%;clear:both;'>\n";
 		// Show the name of the variable
 		HTMLString+="   <input type='text' 'value="+this.OptParamArray[PCount].ParameterID+";' readonly>\n";
 		// Draw a box that displays that 
@@ -182,8 +190,8 @@ OptSelector.prototype.DrawParamDiv=function(){
 		HTMLString+="    <input type='checkbox' onClick='"+ParamOptString+"=!"+ParamOptString+"';' value="+ParamOptString+"> Optimise \n";
 		
 		// Draw a box that shows the progress of the error in this variable
-		HTMLString+="    <div class='plot' id='"+this.ParamProgressPlotID+DEOCount+"' style='display:none;'></div>\n";
-		
+		HTMLString+="<div style='width:100%;clear:both;'><div class='plot' id='"+this.ParamProgressPlotID+PCount+"' style='display:none;'></div></div>\n";
+		HTMLString+="</div>\n";
 		// Display current results
 			// var Val=this.OptParamArray[PCount].Val;
 			// Mean(Val);// Mean
@@ -196,38 +204,39 @@ OptSelector.prototype.DrawParamDiv=function(){
 	// for each optimisation data point 
 	for (var DEOCount in this.DEONameList){
 		HTMLString+="<div>\n";
-		HTMLString+="   <input type='text' 'value="+this.DEONameList[DEOCount]+";' readonly>\n";
+		HTMLString+="    <div style='width:100%;clear:both;'>";
+		HTMLString+="        <input type='text' 'value="+this.DEONameList[DEOCount]+";' readonly>\n";
 		var DEOOptString=this.Name+".DEOToOpt["+DEOCount+"];";
 		// when the button is clicked, the falue flips
-		HTMLString+="    <input type='checkbox' onClick='"+DEOOptString+"=!'"+DEOOptString+";' value="+DEOOptString+"> Optimise \n";
+		HTMLString+="        <input type='checkbox' onClick='"+DEOOptString+"=!'"+DEOOptString+";' value="+DEOOptString+"> Optimise \n";
 		
 		//this.DEOErrorPlotID
 		//this.DEOResultsPlotID
 		// show hide Plots
-		HTMLString+="    <div class='SolidButton' style='float:left;' onClick='ToggleDisplayByID("+this.DEOResultsPlotID+DEOCount+")'>Result Plot</div>\n";
-		HTMLString+="    <div class='SolidButton' style='float:left;' onClick='ToggleDisplayByID("+this.DEOErrorPlotID+DEOCount+")'>Error Plot</div>\n";
-		
-		
-		HTMLString+="    <div class='plot' id='"+this.DEOResultsPlotID+DEOCount+"' style='display:none;'>\n";
-		HTMLString+="    <div class='plot' id='"+this.DEOErrorPlotID+DEOCount+"' style='display:none;'>\n";
-
+		HTMLString+="        <div class='SolidButton' style='float:left;' onClick='ToggleDisplayByID("+this.DEOResultsPlotID+DEOCount+")'>Result Plot</div>\n";
+		HTMLString+="        <div class='SolidButton' style='float:left;' onClick='ToggleDisplayByID("+this.DEOErrorPlotID+DEOCount+")'>Error Plot</div>\n";
+		HTMLString+="    </div>\n";
+		HTMLString+="    <div style='width:100%;clear:both;'>\n";
+		HTMLString+="        <div class='plot' id='"+this.DEOResultsPlotID+DEOCount+"' style='display:none;'></div>\n";
+		HTMLString+="        <div class='plot' id='"+this.DEOErrorPlotID+DEOCount+"' style='display:none;'></div>\n";
+		HTMLString+="    </div>\n";
 		HTMLString+="</div>\n";
 	}
 	
 	this.DivPointer.innerHTML=HTMLString;
 };
 
-OptSelector.prototype.ShowAllParamProgessPlots=function(){
+OptSelector.prototype.ShowAllParamProgressPlots=function(){
 	for (var ParamToOptCount in this.ParamToOpt){
 		if (this.ParamToOpt[ParamToOptCount]){
-			document.getElementById(this.ParamProgressPlotID+DEOCount).style.display='';
+			document.getElementById(this.ParamProgressPlotID+ParamToOptCount).style.display='';
 		}
 	}
 };
 
-OptSelector.prototype.HideAllParamProgessPlots=function(){
+OptSelector.prototype.HideAllParamProgressPlots=function(){
 	for (var ParamToOptCount in this.ParamToOpt){
-		document.getElementById(this.ParamProgressPlotID+DEOCount).style.display='none';
+		document.getElementById(this.ParamProgressPlotID+ParamToOptCount).style.display='none';
 	}
 };
 
