@@ -122,9 +122,7 @@ function OptSelector(Name, DivID, Functions, PointerToParamGroup, DEOArrayFuncti
 
 }
 
-OptSelector.prototype.SetUpSimulationHolder=function (){
-	this.Settings.NoThreads;
-};
+
 
 
 
@@ -179,15 +177,16 @@ OptSelector.prototype.DrawParamDiv=function(){
 		HTMLString+="    <div class='SolidButton' onClick='"+this.Name+".HideAllErrorPlots()'>Hide</div>";
 		HTMLString+="</div>";
 		HTMLString+="</div>";
+		HTMLString+="<h1>Parameters</h1>\n";
 	// for each optimisation parameter
 	for (var PCount in this.OptParamArray){
 		// Display the values as described in the ParamGroup
 		HTMLString+="<div style='width:100%;clear:both;'>\n";
 		// Show the name of the variable
-		HTMLString+="   <input type='text' 'value="+this.OptParamArray[PCount].ParameterID+";' readonly>\n";
+		HTMLString+="   <input type='text' value='"+this.OptParamArray[PCount].ParameterID+"' readonly>\n";
 		// Draw a box that displays that 
 		var ParamOptString=this.Name+".ParamToOpt["+PCount+"]";
-		HTMLString+="    <input type='checkbox' onClick='"+ParamOptString+"=!"+ParamOptString+"';' value="+ParamOptString+"> Optimise \n";
+		HTMLString+="    <input type='checkbox' onClick='"+ParamOptString+"=!"+ParamOptString+";' > Optimise \n";
 		
 		// Draw a box that shows the progress of the error in this variable
 		HTMLString+="<div style='width:100%;clear:both;'><div class='plot' id='"+this.ParamProgressPlotID+PCount+"' style='display:none;'></div></div>\n";
@@ -201,20 +200,15 @@ OptSelector.prototype.DrawParamDiv=function(){
 			// // 95% UCI
 			// Percentile(Val, 97.5)
 	}
+	HTMLString+="<h1>Data objects</h1>\n";
 	// for each optimisation data point 
 	for (var DEOCount in this.DEONameList){
 		HTMLString+="<div>\n";
 		HTMLString+="    <div style='width:100%;clear:both;'>";
-		HTMLString+="        <input type='text' 'value="+this.DEONameList[DEOCount]+";' readonly>\n";
-		var DEOOptString=this.Name+".DEOToOpt["+DEOCount+"];";
-		// when the button is clicked, the falue flips
-		HTMLString+="        <input type='checkbox' onClick='"+DEOOptString+"=!'"+DEOOptString+";' value="+DEOOptString+"> Optimise \n";
-		
-		//this.DEOErrorPlotID
-		//this.DEOResultsPlotID
-		// show hide Plots
-		HTMLString+="        <div class='SolidButton' style='float:left;' onClick='ToggleDisplayByID("+this.DEOResultsPlotID+DEOCount+")'>Result Plot</div>\n";
-		HTMLString+="        <div class='SolidButton' style='float:left;' onClick='ToggleDisplayByID("+this.DEOErrorPlotID+DEOCount+")'>Error Plot</div>\n";
+		HTMLString+="        <input type='text' value='"+this.DEONameList[DEOCount]+"' readonly>\n";
+		var DEOOptString=this.Name+".DEOToOpt["+DEOCount+"]";
+		// when the button is clicked, the value flips
+		HTMLString+="        <input type='checkbox' onClick='"+DEOOptString+"=!'"+DEOOptString+";' > Optimise \n";
 		HTMLString+="    </div>\n";
 		HTMLString+="    <div style='width:100%;clear:both;'>\n";
 		HTMLString+="        <div class='plot' id='"+this.DEOResultsPlotID+DEOCount+"' style='display:none;'></div>\n";
@@ -262,7 +256,7 @@ OptSelector.prototype.ShowAllErrorPlots=function(){
 	}
 };
 
-OptSelector.prototype.HideAllResultsPlots=function(){
+OptSelector.prototype.HideAllErrorPlots=function(){
 	for (var DEOCount in this.DEONameList){
 		document.getElementById(this.DEOErrorPlotID+DEOCount).style.display='none';
 	}
@@ -331,7 +325,7 @@ OptSelector.prototype.PostOptimisationFunction=function (){
 	SummarisedOptimisationResults=this.ParamGroup.Summarise(this.SimulationHolder.Result);
 	
 	
-	console.log("Infinite loop?")
+	console.log("Infinite loop?");
 	this.FunctionToFunctionToRunOnCompletion();
 };
 
