@@ -34,6 +34,7 @@ function DebugStatement(ConsoleMessage){
 }
 
 
+//function SimSetup(WorkerData){
 function SimSetup(WorkerData){
 	// The purpose of this function is to create globals that will persis over multiple simulations
 	
@@ -70,7 +71,8 @@ function SimSetup(WorkerData){
 	
 	RegularInjectionTime=new RegularInjectionTimeObject();
 	
-	
+	console.error("Here is the data structure");
+	console.log(Data);
 	return 0;
 }
 

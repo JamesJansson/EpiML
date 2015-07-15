@@ -46,7 +46,7 @@ function InitialiseEpiML(){
 	var Functions={};
 	Functions.ModelFunction="FullModel";
 	Functions.PreOptimisationFunction="SimSetup";
-	Functions.PostOptimisationFunction="Postfunction";
+	Functions.PostOptimisationFunction="Math.random";
 	Functions.FunctionToRunOnCompletion="Math.random";
 	
 	var Common={};
