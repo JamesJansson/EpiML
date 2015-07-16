@@ -26,12 +26,7 @@ var FemaleMortality;
 var IndigenousMaleMortality;
 var IndigenousFemaleMortality;
 
-var ShowDebugStatements=true;
-function DebugStatement(ConsoleMessage){
-	if (ShowDebugStatements){
-		console.log(ConsoleMessage);
-	}
-}
+
 
 
 //function SimSetup(WorkerData){
@@ -42,8 +37,8 @@ function SimSetup(WorkerData){
 	// Initialise (set data and parameters)
 	
 	
-	DebugStatement("Data passed to the simulation");
-	DebugStatement(WorkerData);//This passes the data back to the console so we can look at it
+	console.log("Data passed to the simulation");
+	console.log(WorkerData);//This passes the data back to the console so we can look at it
 	Rand.SetSeed();//note that this is an extremely important step to allow random numbers to be generated
 
 	

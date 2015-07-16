@@ -211,7 +211,7 @@ OptSelector.prototype.DrawParamDiv=function(){
 		HTMLString+="        <input type='text' value='"+this.DEONameList[DEOCount]+"' readonly>\n";
 		var DEOOptString=this.Name+".DEOToOptimise["+DEOCount+"]";
 		// when the button is clicked, the value flips
-		HTMLString+="        <input type='checkbox' onClick='"+DEOOptString+"=!'"+DEOOptString+";' > Optimise \n";
+		HTMLString+="        <input type='checkbox' onClick='"+DEOOptString+"=!"+DEOOptString+";' > Optimise \n";
 		HTMLString+="    </div>\n";
 		HTMLString+="    <div style='width:100%;clear:both;'>\n";
 		HTMLString+="        <div class='plot' id='"+this.DEOResultsPlotID+DEOCount+"' style='display:none;'></div>\n";
@@ -344,7 +344,7 @@ OptSelector.prototype.RunOptimisation=function (){
 };
 
 OptSelector.prototype.PostOptimisationFunction=function (){
-	SummarisedOptimisationResults=this.ParamGroup.Summarise(this.SimulationHolder.Result);
+	SummarisedOptimisationResults=this.DEOGroup.Summarise(this.SimulationHolder.Result);
 	
 	
 	console.log("Infinite loop?");
@@ -427,17 +427,50 @@ OptSelector.prototype.GenerateGraphColours=function (NumberOfSimulations){
 // Note that 
 function OptSelectorHandler(WorkerData){
 	// There are typically three main functions that the optimisation is handed 
-	// WorkerData.Common.PreOptimisationFunction
-	// WorkerData.Common.ModelFunction
-	// WorkerData.Common.PostOptimisationFunction
-	
-	console.error("Note the below is very bad form for a simulation. This should be PRIVATE.");
-	Data=WorkerData.Common.Data;
-	Param=WorkerData.SimData.Param;
-	
-	
+	// WorkerData.Common.Functions.PreOptimisationFunction
+	// WorkerData.Common.Functions.ModelFunction
+	// WorkerData.Common.Functions.PostOptimisationFunction
 	
 	var OptSelectorSettings=WorkerData.Common.OptSelectorSettings;
+	
+	
+	
+	// Extract the functions
+	var Functions=OptSelectorSettings.Functions;
+	if (typeof(Functions.ModelFunction)=="undefined"){
+		throw "ModelFunction was not set.";
+	}
+	else{
+		var ModelFunction=eval(Functions.ModelFunction);
+	}
+	if (typeof(Functions.PreOptimisationFunction)!="undefined"){
+		var PreOptimisationFunction=eval(Functions.PreOptimisationFunction);
+	}
+	if (typeof(Functions.PostOptimisationFunction)!="undefined"){
+		var PostOptimisationFunction=eval(Functions.PostOptimisationFunction);
+	}
+	
+	var FunctionInput={};
+	FunctionInput.Param=Param;
+	FunctionInput.ModelFunction=ModelFunction;
+	FunctionInput.PreOptimisationFunction=PreOptimisationFunction;
+	FunctionInput.PostOptimisationFunction=PostOptimisationFunction;
+	FunctionInput.Common=WorkerData.Common;
+	FunctionInput.SimData=WorkerData.SimData;
+	FunctionInput.WorkerData=WorkerData;
+	
+	console.error("Note the below is very bad form for a simulation. This should be PRIVATE.");
+	Param=WorkerData.SimData.Param;
+	
+	var ReturnedResults={};
+	
+	// Extract and run the PreOptimisationFunction if it exists
+	if (typeof(PreOptimisationFunction)=="function"){
+		// Run the pre-code
+		ReturnedResults.PreOptimisationResults=PreOptimisationFunction(FunctionInput);
+	}
+	
+	
 	
 	
 	
@@ -468,6 +501,7 @@ function OptSelectorHandler(WorkerData){
 	var DEOGroup=new DataExtractionObjectGroup("DEOGroup");
 	DEOGroup.AddDEO(DEOArray);
 	
+	// Add the DEO to the function input for following cases
 	
 	// Set up the parameters
 	var ParamOptimisationArray=OptSelectorSettings.ParamOptimisationArray;
@@ -475,45 +509,19 @@ function OptSelectorHandler(WorkerData){
 	
 	
 	
-	// Extract the functions
-	var Functions=OptSelectorSettings.Functions;
-	if (typeof(Functions.ModelFunction)=="undefined"){
-		throw "ModelFunction was not set.";
-	}
-	else{
-		var ModelFunction=eval(Functions.ModelFunction);
-	}
-	if (typeof(Functions.PreOptimisationFunction)!="undefined"){
-		var PreOptimisationFunction=eval(Functions.PreOptimisationFunction);
-	}
-	if (typeof(Functions.PostOptimisationFunction)!="undefined"){
-		var PostOptimisationFunction=eval(Functions.PostOptimisationFunction);
-	}
 	
-	var FunctionInput={};
-	FunctionInput.Param=Param;
-	FunctionInput.DEOGroup=DEOGroup;
-	FunctionInput.DEOOptimisationGroup=DEOOptimisationGroup;
-	FunctionInput.ModelFunction=ModelFunction;
-	FunctionInput.PreOptimisationFunction=PreOptimisationFunction;
-	FunctionInput.PostOptimisationFunction=PostOptimisationFunction;
-	FunctionInput.Common=WorkerData.Common;
-	FunctionInput.SimData=WorkerData.SimData;
-	FunctionInput.WorkerData=WorkerData;
 	
-	var ReturnedResults={};
 	
-	// Extract and run the PreOptimisationFunction if it exists
-	if (typeof(PreOptimisationFunction)=="function"){
-		// Run the pre-code
-		ReturnedResults.PreOptimisationResults=PreOptimisationFunction(FunctionInput);
-	}
+	
+	
 	
 	// Set up the optimisatoin
 	var OptimisationSettings={};
 	OptimisationSettings.Target=DEOOptimisationGroup;
 	
 	OptimisationSettings.Function=function(FunctionInput, ParameterSet){
+		
+		
 		// change Param according to the values listed in ParameterSet
 		for (var Identifier in ParameterSet){
 			// Param.Whatever.What=ParameterSet["Whatever.What"];
@@ -578,6 +586,10 @@ function OptSelectorHandler(WorkerData){
 		}
 	};
 	
+	// Set number of simulations
+	OptimisationSettings.NumberOfSamplesPerRound=10;// note we'll randomly select one of these results
+	OptimisationSettings.MaxIterations=10;// In this case, it will allow 10 000 different parameter selections, which gives a granularity of 1% of the range. Should be sufficient
+	OptimisationSettings.MaxTime=20;//stop after 10 seconds
 	
 	
 	
@@ -589,8 +601,16 @@ function OptSelectorHandler(WorkerData){
 		OptimisationObject.AddParameter(OptSelectorSettings.ParamToOptimise[iOP].Name, OptSelectorSettings.ParamToOptimise[iOP].Lower, OptSelectorSettings.ParamToOptimise[iOP].Upper);//Param.IDU.NSP.P	
 	}
 	
+	// Run the function
 	OptimisationObject.Run(FunctionInput);
 	
+	
+	// This is where we run the model with the 
+	var SimulationResults=OptimisationObject.RunOptimisedModel(FunctionInput);
+	
+	ReturnedResults.DEOGroupResultsArray=DEOGroup.GenerateGraphData(SimulationResults); 
+	
+	// Save the progress of the function
 	ReturnedResults.OptimisedParameter=OptimisationObject.ParameterFinal;
 	ReturnedResults.OptimisedResults=OptimisationObject.ResultsFinal;
 	
