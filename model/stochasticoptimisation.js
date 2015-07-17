@@ -4,7 +4,7 @@ function  StochasticOptimisation(Settings){
 	this.BestError=[];
 	
 	this.ParameterFinal;
-	this.ResultsFinal;
+	this.OptimisedSimOutput;
 	
 	// Function: function to be optimised
 	if (typeof Settings.Function==="function"){
@@ -185,7 +185,7 @@ StochasticOptimisation.prototype.Run= function (FunctionInput){
 	}
 
 	this.ParameterFinal=this.GetBestParameterSet();
-	this.ResultsFinal=this.GetBestResults();
+	this.OptimisedSimOutput=this.GetBestResults();
 }
 
 // Get a single value 

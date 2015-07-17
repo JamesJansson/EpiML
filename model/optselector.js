@@ -56,7 +56,7 @@ function OptSelector(Name, DivID, Functions, PointerToParamGroup, DEOArrayFuncti
 	// Setting up the optimisation variables
 	this.OptParamArray=[];
 	this.ParamToOptimise=[];// is used for selecting whether the optimisation occurs or not
-	this.ArrayOfOptimisedResults=[];
+	this.ArrayOfOptimisedSimOutput=[];
 	
 	this.ImportParam();
 	
@@ -612,7 +612,7 @@ function OptSelectorHandler(WorkerData){
 	
 	// Save the progress of the function
 	ReturnedResults.OptimisedParameter=OptimisationObject.ParameterFinal;
-	ReturnedResults.OptimisedResults=OptimisationObject.ResultsFinal;
+	ReturnedResults.OptimisedSimOutput=OptimisationObject.OptimisedSimOutput;
 	
 		
 	if (typeof(PostOptimisationFunction=="function")){
