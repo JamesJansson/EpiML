@@ -467,13 +467,9 @@ function OptSelectorHandler(WorkerData){
 	// Extract and run the PreOptimisationFunction if it exists
 	if (typeof(PreOptimisationFunction)=="function"){
 		// Run the pre-code
+		// This function may be used to do things like set up globals and format data in a way that should only be done once per instance 
 		ReturnedResults.PreOptimisationResults=PreOptimisationFunction(FunctionInput);
 	}
-	
-	
-	
-	
-	
 	
 	
 	
@@ -604,18 +600,24 @@ function OptSelectorHandler(WorkerData){
 	// Run the function
 	OptimisationObject.Run(FunctionInput);
 	
+	// Save the best optimised version of the parameter
+	ReturnedResults.OptimisedParameter=OptimisationObject.ParameterFinal;
 	
-	// This is where we run the model with the 
-	var SimulationResults=OptimisationObject.RunOptimisedModel(FunctionInput);
 	
+	// This is where we run the model with the best parameterisation
+	var SimulationResults=OptimisationObject.RunOptimisedSim(FunctionInput);
+	// Get the error for this parameterisation
+	ReturnedResults.OptimisedSimError=OptimisationObject.OptimisedSimError;
+	// Create the data that is returned to the interface for graphing. 
 	ReturnedResults.DEOGroupResultsArray=DEOGroup.GenerateGraphData(SimulationResults); 
 	
-	// Save the progress of the function
-	ReturnedResults.OptimisedParameter=OptimisationObject.ParameterFinal;
-	ReturnedResults.OptimisedSimOutput=OptimisationObject.OptimisedSimOutput;
+	if (typeof(OptSelectorSettings.ExportOutput)!="undefined"){
+		if (OptSelectorSettings.ExportOutput==true){
+			ReturnedResults.OptimisedSimOutput=SimulationResults;
+		}
+	}
 	
-		
-	if (typeof(PostOptimisationFunction=="function")){
+	if (typeof(PostOptimisationFunction)=="function"){
 		ReturnedResults.PostOptimisationResults=PostOptimisationFunction(Param, DEOArray, WorkerData);
 	}
 	

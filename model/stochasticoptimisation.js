@@ -3,8 +3,12 @@ function  StochasticOptimisation(Settings){
 	this.MeanError=[];
 	this.BestError=[];
 	
-	this.ParameterFinal;
-	this.OptimisedSimOutput;
+	this.ParameterFinal;// the best parameter of the last round of optmisation
+	this.ResultsFinal;// the best Results of the last round of optmisation
+
+	this.OptimisedSimOutput;// the results of running the best parameter in the simulation with fresh random numbers
+	this.OptimisedSimError;// the error of running the best parameter in the simulation with fresh random numbers
+	
 	
 	// Function: function to be optimised
 	if (typeof Settings.Function==="function"){
@@ -109,7 +113,7 @@ StochasticOptimisation.prototype.AddParameter=function(Name, Min, Max){
 	A.Max=Max; // maximum value allowed in the optimisation
 	// Add this parameter to the list of parameters to optimise
 	this.Parameter[Name]=A;
-}
+};
 
 StochasticOptimisation.prototype.Run= function (FunctionInput){
 	//Set up the simulation for the first time
@@ -185,8 +189,8 @@ StochasticOptimisation.prototype.Run= function (FunctionInput){
 	}
 
 	this.ParameterFinal=this.GetBestParameterSet();
-	this.OptimisedSimOutput=this.GetBestResults();
-}
+	this.OptimisedSimOutput=this.GetBestResultsThisRound();
+};
 
 // Get a single value 
 StochasticOptimisation.prototype.GetParameterSet= function (ParameterNumber){
@@ -195,7 +199,7 @@ StochasticOptimisation.prototype.GetParameterSet= function (ParameterNumber){
 		ParameterSet[key]=this.Parameter[key].CurrentVec[ParameterNumber];
 	}	
 	return ParameterSet;
-}
+};
 
 StochasticOptimisation.prototype.GetBestParameterSet= function (ParameterNumber){
 	if (typeof(ParameterNumber)=="undefined"){
@@ -210,20 +214,26 @@ StochasticOptimisation.prototype.GetBestParameterSet= function (ParameterNumber)
 		ParameterSet[key]=this.Parameter[key].BestVec[ParameterNumber];
 	}	
 	return ParameterSet;
-}
+};
 
-StochasticOptimisation.prototype.GetBestResults= function (ParameterNumber){
+StochasticOptimisation.prototype.GetBestResultsThisRound= function (ParameterNumber){
 	// Returns the results of the best run of .Function
 	if (typeof(ParameterNumber)=="undefined"){
 		ParameterNumber=0;// if the number is not set, assume the caller wants the very best parameter set.
 	}
 	if (ParameterNumber>this.BestIndex.length){
-		throw ("GetBestResults(BestPosition) requires BestPosition to be smaller than the number of 'best' results selected in each round");
+		throw ("GetBestResultsThisRound(BestPosition) requires BestPosition to be smaller than the number of 'best' results selected in each round");
 	}
 	var Results=this.SimOutput[this.BestIndex[ParameterNumber]];
 	return Results;
-}
+};
 
+StochasticOptimisation.prototype.RunOptimisedSim= function (FunctionInput){
+	// Returns the results of running the simulation with the best parameter
+	this.OptimisedSimOutput=this.Function(FunctionInput, this.ParameterFinal);
+	this.OptimisedSimError=this.ErrorFunction(this.OptimisedSimOutput, this.Target, FunctionInput);
+	return this.OptimisedSimOutput;
+};
 
 //************************************************************
 function StochasticOptimisationParameter(){
@@ -246,7 +256,7 @@ StochasticOptimisationParameter.prototype.InitiateParameter= function (NumberOfS
 	for (var i=0; i<this.NumberOfSamplesPerRound; i++){
 		this.CurrentVec[i]=this.Min+(this.Max-this.Min)*Rand.Value();
 	}
-}
+};
 
 StochasticOptimisationParameter.prototype.SelectBestPoints=function(BestIndexVec){
 	var Count=0;
@@ -254,7 +264,7 @@ StochasticOptimisationParameter.prototype.SelectBestPoints=function(BestIndexVec
 		this.BestVec[Count]=this.CurrentVec[BestIndexVec[key]];
 		Count++;
 	}
-}
+};
 
 StochasticOptimisationParameter.prototype.SelectCurrentPoints=function(SelectIndexVec){//takes a vector the length of the 
 	var Count=0;
@@ -263,7 +273,7 @@ StochasticOptimisationParameter.prototype.SelectCurrentPoints=function(SelectInd
 		Count++;
 	}
 	
-}
+};
 
 
 
@@ -292,7 +302,7 @@ StochasticOptimisationParameter.prototype.Vary= function (){
 			}
 		}
 	}
-}
+};
 
 //******************************************************************
 function TestStochasticOptimisation(){
