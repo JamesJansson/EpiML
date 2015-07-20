@@ -341,10 +341,6 @@ OptSelector.prototype.RunOptimisation=function (){
 			OptSelectorSettings.ParamOptimisationArray.push(CopyParamProperties);
 		}
 	}
-
-	console.log(OptSelectorSettings);
-	// ParamOptimisationArray[3].ID, Upper, Lower
-	throw "In here we should make ParamOptimisationArray the para is optmised";
 	// all other Param should simply use the sample 
 
 	
@@ -485,6 +481,9 @@ function OptSelectorHandler(WorkerData){
 		var PostOptimisationFunction=eval(Functions.PostOptimisationFunction);
 	}
 	
+	console.error("Note the below is very bad form for a simulation. This should be PRIVATE.");
+	Param=WorkerData.SimData.Param;
+	
 	var FunctionInput={};
 	FunctionInput.Param=Param;
 	FunctionInput.ModelFunction=ModelFunction;
@@ -494,8 +493,7 @@ function OptSelectorHandler(WorkerData){
 	FunctionInput.SimData=WorkerData.SimData;
 	FunctionInput.WorkerData=WorkerData;
 	
-	console.error("Note the below is very bad form for a simulation. This should be PRIVATE.");
-	Param=WorkerData.SimData.Param;
+	
 	
 	var ReturnedResults={};
 	
