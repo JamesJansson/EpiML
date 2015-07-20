@@ -542,10 +542,12 @@ function OptSelectorHandler(WorkerData){
 		// change Param according to the values listed in ParameterSet
 		for (var Identifier in ParameterSet){
 			// Param.Whatever.What=ParameterSet["Whatever.What"];
-			eval("Param." + Identifier +"=ParameterSet["+Identifier+"];" );	
+			var EvalString="Param." + Identifier +"=ParameterSet['"+Identifier+"'];";
+			console.log(EvalString);
+			eval(EvalString);	
 		}
 		
-		// Add .Notifcations, .EndSimulationTime, .Intervention  to FunctionInput
+		// Add .Notifcations, .EndSimulationTime, .Intervention, .Param  to FunctionInput
 		var ModelResults=ModelFunction(FunctionInput.Notifications, FunctionInput.EndSimulationTime, FunctionInput.Intervention);
 		return ModelResults;
 	};
@@ -621,6 +623,9 @@ function OptSelectorHandler(WorkerData){
 		var POA=OptSelectorSettings.ParamOptimisationArray[iOP];
 		OptimisationObject.AddParameter(POA.ParameterID, POA.MinValue, POA.MaxValue);//Param.IDU.NSP.P	
 	}
+	
+	console.error("Created the OptimisationObject parameters for optimsation");
+	console.log(OptimisationObject);
 	
 	// Run the function
 	OptimisationObject.Run(FunctionInput);
