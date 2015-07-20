@@ -258,8 +258,8 @@ DataExtractionObjectGroup.prototype.TotalError=function(SimulationResult){
 }
 
 DataExtractionObjectGroup.prototype.GenerateGraphData=function(SimulationResult){
-	for (var ODEOCount in ODEOArray){
-	    ODEOArray[ODEOCount].GenerateGraphData(SimulationResult);
+	for (var DEOCount in this.DEOArray){
+	    this.DEOArray[DEOCount].GenerateGraphData(SimulationResult);
 	}
 }
 
