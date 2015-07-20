@@ -41,6 +41,7 @@ function FullModelTest(WorkerData){
 	
 	
 	// This needs to be established by the optimisation 
+	if (false){
 	Param.HCV.ProbabilityOfTransmission=0.15;
 	Param.IDU.NSP.P=0.3;
 	Param.IDU.RateOfCesssation=0.10;
@@ -57,6 +58,8 @@ function FullModelTest(WorkerData){
 	Param.IDU.Sexuality.Homosexual=0.077;
 	Param.IDU.Sexuality.Bisexual=0.06;
 	Param.IDU.TransmissionP=0.15;
+	
+	}
 	
 	
 	console.error("The above is hard set and poorly defined");
