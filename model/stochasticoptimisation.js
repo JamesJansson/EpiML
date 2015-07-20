@@ -89,6 +89,8 @@ function  StochasticOptimisation(Settings){
 	
 	this.SimOutput=[];//An array of the output of the current round of simulations
 	this.ErrorValues=[];//An array of the output of the current round of simulations
+	this.ErrorValuesAllRounds=[];
+	
 	
 	// Determine if MathTools is running
 	if (typeof MathToolsRunning==="undefined"){
@@ -124,6 +126,8 @@ StochasticOptimisation.prototype.Run= function (FunctionInput){
 	
 	var ParameterSet;
 	var OrderedIndex;
+	
+	
 
 	// Keep running until time, number of sims runs out, or absolute error is reached, or precision is reached in all variables
 	var RoundCount=0;
@@ -133,10 +137,12 @@ StochasticOptimisation.prototype.Run= function (FunctionInput){
 	while (OptimisationComplete==false){
 		RoundCount++;
 		// Run the simulation
+		this.ErrorValuesAllRounds[RoundCount]=[];
 		for (var SampleCount=0; SampleCount<this.NumberOfSamplesPerRound; SampleCount++){
 			ParameterSet=this.GetParameterSet(SampleCount);
 			this.SimOutput[SampleCount]=this.Function(FunctionInput, ParameterSet);
 			this.ErrorValues[SampleCount]=this.ErrorFunction(this.SimOutput[SampleCount], this.Target, FunctionInput);
+			this.ErrorValuesAllRounds[RoundCount][SampleCount]=this.ErrorValues[SampleCount];
 		}
 		
 		

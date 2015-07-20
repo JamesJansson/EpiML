@@ -246,22 +246,31 @@ DataExtractionObjectGroup.prototype.AddDEO=function(DEOToAdd){
 	else{
 		throw "Input to .AddDEO should either be a DataExtractionObject or an Array of DataExtractionObject";	
 	}
-}
+};
 
 DataExtractionObjectGroup.prototype.TotalError=function(SimulationResult){
 	var ErrorSum=0;
+	console.log("Finding error");
+	console.log(this.DEOArray);
 	for (var DEOCount in this.DEOArray){
-	    ErrorSum+=this.DEOArray[DEOCount].FindError(SimulationResult);
+	    
+		var ThisError=this.DEOArray[DEOCount].FindError(SimulationResult);
+		if (isNaN(ThisError)){
+			console.error(this.DEOArray[DEOCount].Name + " DEO produces NaNs");
+		}
+		else{
+			ErrorSum+=ThisError;
+		}
 		console.log(ErrorSum);
 	}
 	return ErrorSum;
-}
+};
 
 DataExtractionObjectGroup.prototype.GenerateGraphData=function(SimulationResult){
 	for (var DEOCount in this.DEOArray){
 	    this.DEOArray[DEOCount].GenerateGraphData(SimulationResult);
 	}
-}
+};
 
 DataExtractionObjectGroup.prototype.Summarise=function(ResultsBySim){
 	// ResultsBySim[Sim].DEOArray[SpecificStatCount]
@@ -308,11 +317,11 @@ DataExtractionObjectGroup.prototype.GraphAll=function(GraphInterfaceID){
 	for (var SpecificStatRef in this.DEOArray){
 		this.DEOArray[SpecificStatRef].DrawGraph(GraphInterfaceID+SpecificStatCount);
 	}
-}
+};
 
 DataExtractionObjectGroup.prototype.CreatePlotHolders=function(GraphInterfaceID){
 	
-}
+};
 
 
 

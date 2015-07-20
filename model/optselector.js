@@ -485,7 +485,7 @@ function OptSelectorHandler(WorkerData){
 	Param=WorkerData.SimData.Param;
 	
 	var FunctionInput={};
-	FunctionInput.Param=Param;
+	FunctionInput.Param=WorkerData.SimData.Param;
 	FunctionInput.ModelFunction=ModelFunction;
 	FunctionInput.PreOptimisationFunction=PreOptimisationFunction;
 	FunctionInput.PostOptimisationFunction=PostOptimisationFunction;
@@ -514,7 +514,7 @@ function OptSelectorHandler(WorkerData){
 	var DEOOptimisationArray=[];
 	
 	for (var DEOCount in DEOArray){
-		if (DEOToOptimise.indexOf(DEOArray[DEOCount].Name)>-1){
+		if (DEOToOptimise[DEOCount]){// DEOToOptimise.indexOf(DEOArray[DEOCount].Name)>-1
 			// if it is not on the list of DEO to optimise
 			DEOOptimisationArray.push(DEOArray[DEOCount]);
 		}
@@ -543,7 +543,6 @@ function OptSelectorHandler(WorkerData){
 		for (var Identifier in ParameterSet){
 			// Param.Whatever.What=ParameterSet["Whatever.What"];
 			var EvalString="Param." + Identifier +"=ParameterSet['"+Identifier+"'];";
-			console.log(EvalString);
 			eval(EvalString);	
 		}
 		
@@ -554,13 +553,14 @@ function OptSelectorHandler(WorkerData){
 	
 	OptimisationSettings.ErrorFunction=function(Results, Target){// Done, unchecked
 		var DEOOptimisationGroup=Target;
+		console.error("Fixing total error");
 		var TotalOptimisationError=DEOOptimisationGroup.TotalError(Results);
 		return TotalOptimisationError;
 	};
 	
 	
 	OptimisationSettings.ProgressFunction=function(SimulationNumber, Parameter, SimOutput, ErrorValues){
-		console.log("Optimisation step "+SimulationNumber+" complete.");
+		console.error("Optimisation step "+SimulationNumber+" complete.");
 		
 		if (OptSelectorSettings.LiveUpdatePlots==true){
 			// Send Parameter back to the main simulation
@@ -633,6 +633,7 @@ function OptSelectorHandler(WorkerData){
 	// Save the best optimised version of the parameter
 	ReturnedResults.OptimisedParameter=OptimisationObject.ParameterFinal;
 	
+	ReturnedResults.ErrorProgress=OptimisationObject.ErrorValuesAllRounds;
 	
 	// This is where we run the model with the best parameterisation
 	var SimulationResults=OptimisationObject.RunOptimisedSim(FunctionInput);

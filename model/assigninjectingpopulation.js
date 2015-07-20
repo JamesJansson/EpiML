@@ -461,8 +461,7 @@ function SetInitialHCVLevels(Person){
 	//var Time=//1993;//Param.Model.DynamicHCV.Time;
 	var PWID=SelectCurrentPWID(Person, Param.Time.StartDynamicModel);
 	
-	console.error("The size of the extracted group is below");
-	console.log(PWID);
+
 	
 	
 	// Do a very rough optimisation to get the right proportion at the time
@@ -477,8 +476,7 @@ function SetInitialHCVLevels(Person){
 		InjectionHistory.Duration.push(Param.Time.StartDynamicModel-ThisTimeStartInjection);
 	}
 	
-	console.log("InjectionHistory.Duration");
-	console.log(InjectionHistory.Duration);
+
 	
 	// Set up the optimisation
 	var FunctionInput=InjectionHistory;
@@ -513,9 +511,7 @@ function SetInitialHCVLevels(Person){
 	HCVPOptimisation.AddParameter("AnnualPHCV", 0, 1);
 	HCVPOptimisation.Run(FunctionInput);
 	
-	console.log(HCVPOptimisation);
-	
-	console.log(Mean(InjectionHistory.Duration));
+
 	
 	var AnnualPHCV=HCVPOptimisation.ParameterFinal.AnnualPHCV;
 	// Now apply this to all people in the simulation thus far
@@ -525,8 +521,6 @@ function SetInitialHCVLevels(Person){
 			PWID[Pn].HCV.Infection(InjectionHistory.TimeStart[Pn]+TimeOfHCV, ChooseInitialGenotype());
 		}
 	}
-	console.error("PWID below");
-	console.log(PWID);
 	
 	// At this point, a plot should be created of 
 		// PWID by year
