@@ -330,13 +330,23 @@ OptSelector.prototype.RunOptimisation=function (){
 			///*****************
 				///*****************
 	var OptSelectorSettings={};
-	
-	
+	OptSelectorSettings.ParamOptimisationArray=[];
+	for (var OptCount in this.OptParamArray){
+		if (this.ParamToOptimise[OptCount]){
+			var CopyParamProperties={};
+			CopyParamProperties.ParameterID=this.OptParamArray[OptCount].ParameterID;
+			CopyParamProperties.MinValue=this.OptParamArray[OptCount].MinValue;
+			CopyParamProperties.MaxValue=this.OptParamArray[OptCount].MaxValue;
+			
+			OptSelectorSettings.ParamOptimisationArray.push(CopyParamProperties);
+		}
+	}
+
+	console.log(OptSelectorSettings);
 	// ParamOptimisationArray[3].ID, Upper, Lower
 	throw "In here we should make ParamOptimisationArray the para is optmised";
 	// all other Param should simply use the sample 
-	
-	OptSelectorSettings.ParamOptimisationArray=this.ParamOptimisationArray;
+
 	
 	OptSelectorSettings.DEOArrayFunctionName=this.DEOArrayFunctionName;
 	OptSelectorSettings.DEOToOptimise=this.DEOToOptimise;
@@ -611,7 +621,7 @@ function OptSelectorHandler(WorkerData){
 	console.log(OptSelectorSettings);
 	for (var iOP in OptSelectorSettings.ParamOptimisationArray){
 		var POA=OptSelectorSettings.ParamOptimisationArray[iOP];
-		OptimisationObject.AddParameter(POA.Name, POA.Lower, POA.Upper);//Param.IDU.NSP.P	
+		OptimisationObject.AddParameter(POA.ParameterID, POA.MinValue, POA.MaxValue);//Param.IDU.NSP.P	
 	}
 	
 	// Run the function
