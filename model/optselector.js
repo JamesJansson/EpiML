@@ -63,7 +63,7 @@ function OptSelector(Name, DivID, Functions, PointerToParamGroup, DEOArrayFuncti
 	
 	this.DEOArrayFunctionName=DEOArrayFunctionName;//
 	this.DEOArrayFunction=eval(this.DEOArrayFunctionName);//
-	this.DEOGroup=new DataExtractionObjectGroup(this.DEOArrayFunction);
+	this.DEOGroup=new DataExtractionObjectGroup(this.DEOArrayFunctionName);
 	this.DEOGroup.AddDEO(this.DEOArrayFunction());
 
 		
@@ -139,7 +139,7 @@ OptSelector.prototype.ImportParam=function (){
 		if (this.ParamGroup.ParamArray[PCount].DistributionType=='optimisedsample'){
 			var CurrentOptParam=this.ParamGroup.ParamArray[PCount];//Pointer
 			this.OptParamArray.push(CurrentOptParam);//Pointer to the actual value
-			this.ParamToOptimise.push(false);
+			this.ParamToOptimise.push(true);
 		}
 	}
 };
@@ -186,10 +186,15 @@ OptSelector.prototype.DrawParamDiv=function(){
 		// Display the values as described in the ParamGroup
 		HTMLString+="<div style='width:100%;clear:both;'>\n";
 		// Show the name of the variable
-		HTMLString+="   <input type='text' value='"+this.OptParamArray[PCount].ParameterID+"' readonly>\n";
+		HTMLString+="   <input type='text' value='"+this.OptParamArray[PCount].ParameterID+"' readonly ' style='width:300px;'>\n";
 		// Draw a box that displays that 
 		var ParamOptString=this.Name+".ParamToOptimise["+PCount+"]";
-		HTMLString+="    <input type='checkbox' onClick='"+ParamOptString+"=!"+ParamOptString+";' > Optimise \n";
+		if (this.ParamToOptimise[PCount]==true){
+			HTMLString+="    <input type='checkbox' onClick='"+ParamOptString+"=!"+ParamOptString+";' checked> Optimise this \n";
+		}
+		else {
+			HTMLString+="    <input type='checkbox' onClick='"+ParamOptString+"=!"+ParamOptString+";'> Optimise this \n";
+		}
 		
 		// Draw a box that shows the progress of the error in this variable
 		HTMLString+="<div style='width:100%;clear:both;'><div class='plot' id='"+this.ParamProgressPlotID+PCount+"' style='display:none;'></div></div>\n";
@@ -208,10 +213,16 @@ OptSelector.prototype.DrawParamDiv=function(){
 	for (var DEOCount in this.DEONameList){
 		HTMLString+="<div>\n";
 		HTMLString+="    <div style='width:100%;clear:both;'>";
-		HTMLString+="        <input type='text' value='"+this.DEONameList[DEOCount]+"' readonly>\n";
+		HTMLString+="        <input type='text' value='"+this.DEONameList[DEOCount]+"' readonly ' style='width:300px;'>\n";
 		var DEOOptString=this.Name+".DEOToOptimise["+DEOCount+"]";
 		// when the button is clicked, the value flips
-		HTMLString+="        <input type='checkbox' onClick='"+DEOOptString+"=!"+DEOOptString+";' > Optimise \n";
+		if (this.DEOToOptimise[DEOCount]==true){
+			HTMLString+="        <input type='checkbox' onClick='"+DEOOptString+"=!"+DEOOptString+";' checked> Optimise to this data\n";
+		}
+		else{
+			HTMLString+="        <input type='checkbox' onClick='"+DEOOptString+"=!"+DEOOptString+";' > Optimise to this data\n";
+		}
+		
 		HTMLString+="    </div>\n";
 		HTMLString+="    <div style='width:100%;clear:both;'>\n";
 		HTMLString+="        <div class='plot' id='"+this.DEOResultsPlotID+DEOCount+"' style='display:none;'></div>\n";
@@ -322,6 +333,9 @@ OptSelector.prototype.RunOptimisation=function (){
 	
 	
 	// ParamOptimisationArray[3].ID, Upper, Lower
+	throw "In here we should make ParamOptimisationArray the para is optmised";
+	// all other Param should simply use the sample 
+	
 	OptSelectorSettings.ParamOptimisationArray=this.ParamOptimisationArray;
 	
 	OptSelectorSettings.DEOArrayFunctionName=this.DEOArrayFunctionName;
@@ -333,7 +347,7 @@ OptSelector.prototype.RunOptimisation=function (){
 	RunSettings.Common.OptSelectorSettings=OptSelectorSettings;
 	
 	RunSettings.TerminateThreadOnSimCompletion=this.TerminateThreadOnSimCompletion;
-	RunSettings.FunctionToRunOnCompletion=this.PostOptimisationFunction;
+	RunSettings.FunctionToRunOnCompletion=this.PostSimulationRunFunction();
 	
 	console.log(RunSettings);
 	// Run the simulation
@@ -343,12 +357,23 @@ OptSelector.prototype.RunOptimisation=function (){
 	// collect up the data when finished
 };
 
-OptSelector.prototype.PostOptimisationFunction=function (){
-	SummarisedOptimisationResults=this.DEOGroup.Summarise(this.SimulationHolder.Result);
+OptSelector.prototype.PostSimulationRunFunction=function (){
+	var self=this; // this is designed to allow access to the OptSelector 'this' data through the variable 'self'
 	
+	var ReturnFunction=function(){
+		
+		console.log(self);
+		
+		
+		console.log(self.DEOGroup);
+		SummarisedOptimisationResults=self.DEOGroup.Summarise(self.SimulationHolder.Result);
+		
+		
+		// console.log("Infinite loop?");
+		// this.FunctionToFunctionToRunOnCompletion();
+	}
 	
-	console.log("Infinite loop?");
-	this.FunctionToFunctionToRunOnCompletion();
+	return  ReturnFunction;
 };
 
 
@@ -486,11 +511,6 @@ function OptSelectorHandler(WorkerData){
 			DEOOptimisationArray.push(DEOArray[DEOCount]);
 		}
 	}
-	
-	
-	
-	
-	
 	var DEOOptimisationGroup=new DataExtractionObjectGroup("DEOOptimisationGroup");
 	DEOOptimisationGroup.AddDEO(DEOOptimisationArray);
 	
@@ -501,13 +521,6 @@ function OptSelectorHandler(WorkerData){
 	
 	// Set up the parameters
 	var ParamOptimisationArray=OptSelectorSettings.ParamOptimisationArray;
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	
@@ -593,8 +606,12 @@ function OptSelectorHandler(WorkerData){
 	
 	// Add the optimisation parameters
 	// OptimisationObject.AddParameter("Param.HCV.ProbabilityOfTransmission", 0, 1);
-	for (var iOP in OptSelectorSettings.ParamToOptimise){
-		OptimisationObject.AddParameter(OptSelectorSettings.ParamToOptimise[iOP].Name, OptSelectorSettings.ParamToOptimise[iOP].Lower, OptSelectorSettings.ParamToOptimise[iOP].Upper);//Param.IDU.NSP.P	
+	
+	console.error("This is where optimisation parameters are split");
+	console.log(OptSelectorSettings);
+	for (var iOP in OptSelectorSettings.ParamOptimisationArray){
+		var POA=OptSelectorSettings.ParamOptimisationArray[iOP];
+		OptimisationObject.AddParameter(POA.Name, POA.Lower, POA.Upper);//Param.IDU.NSP.P	
 	}
 	
 	// Run the function

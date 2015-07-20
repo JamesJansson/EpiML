@@ -58,7 +58,7 @@ function HCVDataExtractionObjects(){
 				SexText="Female"; 
 			}
 			
-			var ObjectName="NumberOfPeopleEverInjectingDrugs"+SexText+LowerAge+"_"+UpperAge;
+			var ObjectName="NumberEverInjectingDrugs"+SexText+LowerAge+"_"+UpperAge;
 			NewDEO.Name=ObjectName;
 			
 			NewDEO.Title="Number of people ever injecting drugs ("+SexText+", "+LowerAge+"-"+UpperAge+")";
@@ -138,7 +138,7 @@ function HCVDataExtractionObjects(){
 				SexText="Female"; 
 			}
 			
-			var ObjectName="NumberOfPeopleRecentlyInjectingDrugs"+SexText+LowerAge+"_"+UpperAge;
+			var ObjectName="NumberRecentlyInjectingDrugs"+SexText+LowerAge+"_"+UpperAge;
 			NewDEO.Name=ObjectName;
 			
 			NewDEO.Title="Number of people recently injecting drugs ("+SexText+", "+LowerAge+"-"+UpperAge+")";

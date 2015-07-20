@@ -81,7 +81,7 @@ ParameterClass.prototype.UpdateTypeDisplay= function (){
 	
 	
 	// Set up the name and parameter type
-	ParameterHTML+="<input type='text' name='ParameterID' value='" + this.ParameterID + "' style='width:250px;'>\n"+ 
+	ParameterHTML+="<input type='text' name='ParameterID' value='" + this.ParameterID + "' style='width:300px;'>\n"+ 
 		"<select name='DistributionType'  onchange='"+this.Name()+".DistributionType=this.value;"+this.Name()+".UpdateTypeDisplay();'>\n"+//change the type, then redisplay
 		
 		"	<option value='normal'>Normal</option>\n"+

@@ -464,6 +464,9 @@ function FullModel(Notifications, EndSimulation, Intervention){
 function InitialDistribution() {
 	console.log("Starting InitialDistribution");
 	
+	console.log(Param);
+	
+	
 	
 	// Run CreatePWID multiple times
 	var Person = [];
@@ -472,7 +475,7 @@ function InitialDistribution() {
 		var PWIDToAdd = CreatePWID(Param.IDU.Entry, Time, Param.TimeStep);
 		Person = Person.concat(PWIDToAdd);
 		
-		console.log("Year " + Time + " N " + PWIDToAdd.length);
+		//console.log("Year " + Time + " N " + PWIDToAdd.length);
 	}
 	
 
