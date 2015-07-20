@@ -261,7 +261,7 @@ DataExtractionObjectGroup.prototype.TotalError=function(SimulationResult){
 		else{
 			ErrorSum+=ThisError;
 		}
-		console.log(ErrorSum);
+		console.log(this.DEOArray[DEOCount].Name+" error: "+ThisError);
 	}
 	return ErrorSum;
 };
