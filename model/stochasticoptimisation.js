@@ -88,8 +88,9 @@ function  StochasticOptimisation(Settings){
 	this.BestIndex=[];//Index of the best values from the CurrentVec array in each parameter
 	
 	this.SimOutput=[];//An array of the output of the current round of simulations
-	this.ErrorValues=[];//An array of the output of the current round of simulations
-	this.ErrorValuesAllRounds=[];
+	this.ErrorValues=[];//An array of the error of the current round of simulations
+	
+	this.ErrorValuesAllRounds=[];//An array of the error of the all rounds of simulations
 	
 	
 	// Determine if MathTools is running
