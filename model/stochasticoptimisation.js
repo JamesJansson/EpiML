@@ -35,12 +35,12 @@ function  StochasticOptimisation(Settings){
 	}else{
 		this.Target=Settings.Target;// The value that the error function uses to determine fitness
 	}
-	// ProgressFunction: Runs every round, can be used to output progress
-	if (typeof Settings.ProgressFunction==="function"){
-		this.RunProgressFunction=true;
-		this.ProgressFunction=Settings.ProgressFunction;
+	// RoundProgressFunction: Runs every round, can be used to output progress
+	if (typeof Settings.RoundProgressFunction==="function"){
+		this.RunRoundProgressFunction=true;
+		this.RoundProgressFunction=Settings.RoundProgressFunction;
 	}else{
-		this.RunProgressFunction=false;
+		this.RunRoundProgressFunction=false;
 	}
 	
 	// SeedValue: used to set a seed for Rand (if determinism is important and not set elsewhere)
@@ -166,8 +166,8 @@ StochasticOptimisation.prototype.Run= function (FunctionInput){
 		}
 
 		// If the OptimisationProgress function is set
-		if (this.RunProgressFunction==true){
-			this.ProgressFunction(this.RoundCount, this.Parameter, this.SimOutput, this.ErrorValues, FunctionInput);
+		if (this.RunRoundProgressFunction==true){
+			this.RoundProgressFunction(this.RoundCount, this.Parameter, this.SimOutput, this.ErrorValues, FunctionInput);
 		}
 		
 		// Storing optimisation results for later inspection/graphing
@@ -365,7 +365,7 @@ function TestStochasticOptimisation(){
 		return TotalError;
 	};
 	
-	OptimisationSettings.ProgressFunction=function(SimulationNumber, Parameter, SimOutput, ErrorValues){
+	OptimisationSettings.RoundProgressFunction=function(SimulationNumber, Parameter, SimOutput, ErrorValues){
 		console.log("Params: X "+Mean(Parameter.X.CurrentVec)+" Y "+Mean(Parameter.Y.CurrentVec));
 		PSetCount=0;
 		Data=[];

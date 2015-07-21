@@ -37,7 +37,7 @@ function OptimiseFullModel( WorkerData){
 		return TotalOptimisationError;
 	};
 	
-	OptimisationSettings.ProgressFunction=function(SimulationNumber, Parameter, SimOutput, ErrorValues){
+	OptimisationSettings.RoundProgressFunction=function(SimulationNumber, Parameter, SimOutput, ErrorValues){
 		
 		console.log("Params: X "+Mean(Parameter.X.CurrentVec)+" Y "+Mean(Parameter.Y.CurrentVec));
 		var PSetCount=0;

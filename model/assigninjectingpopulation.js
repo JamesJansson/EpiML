@@ -278,7 +278,7 @@ function EntryRateOptimisationExponential(TargetForThisOptimisation, EntryParams
 		}
 	};
 	
-	// EntryRateOptimisationSettings.ProgressFunction=function(RoundCount, Parameter, SimOutput, ErrorValues, FunctionInput){
+	// EntryRateOptimisationSettings.RoundProgressFunction=function(RoundCount, Parameter, SimOutput, ErrorValues, FunctionInput){
 		// // Display the results to the console for every 100 simulations
 		// var ProgressString=RoundCount+": ";
 		

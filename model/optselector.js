@@ -564,7 +564,7 @@ function OptSelectorHandler(WorkerData){
 	};
 	
 	
-	OptimisationSettings.ProgressFunction=function(SimulationNumber, Parameter, SimOutput, ErrorValues){
+	OptimisationSettings.RoundProgressFunction=function(SimulationNumber, Parameter, SimOutput, ErrorValues){
 		console.error("Optimisation step "+SimulationNumber+" complete.");
 		console.log(this.Storage.DetailedError);
 		if (OptSelectorSettings.LiveUpdatePlots==true){

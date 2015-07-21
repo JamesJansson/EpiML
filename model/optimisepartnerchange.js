@@ -41,7 +41,7 @@ function OptimisePartnerChangeRate(){
 		return TotalError;
 	};
 	
-	// OptimisationSettings.ProgressFunction=function(SimulationNumber, Parameter, SimOutput, ErrorValues){
+	// OptimisationSettings.RoundProgressFunction=function(SimulationNumber, Parameter, SimOutput, ErrorValues){
 		// console.log("Params: "+SimulationNumber+ " P1 "+Mean(Parameter.PPartnerChangeYear1.CurrentVec)+ " P2 "+Mean(Parameter.PPartnerChangeFollowing.CurrentVec));
 	// };
 	
