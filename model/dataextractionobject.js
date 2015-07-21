@@ -266,6 +266,19 @@ DataExtractionObjectGroup.prototype.TotalError=function(SimulationResult){
 	return ErrorSum;
 };
 
+DataExtractionObjectGroup.prototype.ErrorArray=function(){
+	// Calling this gives and array of all the errors present in the group
+	// This function should be called after the TotalError function is called
+	var ErrorArray=[];
+	for (var DEOCount in this.DEOArray){
+		ErrorArray.push(this.DEOArray[DEOCount].Error);
+	}
+	return ErrorArray;
+};
+
+
+
+
 DataExtractionObjectGroup.prototype.GenerateGraphData=function(SimulationResult){
 	for (var DEOCount in this.DEOArray){
 	    this.DEOArray[DEOCount].GenerateGraphData(SimulationResult);

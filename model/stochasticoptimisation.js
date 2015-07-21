@@ -9,6 +9,8 @@ function  StochasticOptimisation(Settings){
 	this.OptimisedSimOutput;// the results of running the best parameter in the simulation with fresh random numbers
 	this.OptimisedSimError;// the error of running the best parameter in the simulation with fresh random numbers
 	
+	this.Storage;// Arbitrary storage that stochastic optimisation functions can use, as described by the user
+	
 	
 	// Function: function to be optimised
 	if (typeof Settings.Function==="function"){
@@ -136,13 +138,16 @@ StochasticOptimisation.prototype.Run= function (FunctionInput){
 	var TimerStart = new Date().getTime() / 1000;
 	var CurrentTime;
 	while (OptimisationComplete==false){
-		RoundCount++;
 		// Run the simulation
 		this.ErrorValuesAllRounds[RoundCount]=[];
 		for (var SampleCount=0; SampleCount<this.NumberOfSamplesPerRound; SampleCount++){
 			ParameterSet=this.GetParameterSet(SampleCount);
-			this.SimOutput[SampleCount]=this.Function(FunctionInput, ParameterSet);
-			this.ErrorValues[SampleCount]=this.ErrorFunction(this.SimOutput[SampleCount], this.Target, FunctionInput);
+			
+			var OptimistationProgress={};
+			OptimistationProgress.RoundCount=RoundCount;
+			OptimistationProgress.SampleCount=SampleCount;
+			this.SimOutput[SampleCount]=this.Function(FunctionInput, ParameterSet, OptimistationProgress);
+			this.ErrorValues[SampleCount]=this.ErrorFunction(this.SimOutput[SampleCount], this.Target, FunctionInput, OptimistationProgress);
 			this.ErrorValuesAllRounds[RoundCount][SampleCount]=this.ErrorValues[SampleCount];
 		}
 		
@@ -161,11 +166,11 @@ StochasticOptimisation.prototype.Run= function (FunctionInput){
 		}
 		
 		// Storing optimisation results for later inspection/graphing
-		this.MeanError[RoundCount-1]=Mean(this.ErrorValues);
-		this.BestError[RoundCount-1]=this.ErrorValues[this.BestIndex[0]];
+		this.MeanError[RoundCount]=Mean(this.ErrorValues);
+		this.BestError[RoundCount]=this.ErrorValues[this.BestIndex[0]];
 		
 		// Determine whether the optimisation should finish or not
-		if (RoundCount>=this.MaxIterations){
+		if (RoundCount>this.MaxIterations){
 			OptimisationComplete=true;
 			this.ReasonForTermination="ReachedMaxIterations";
 		}
@@ -192,6 +197,7 @@ StochasticOptimisation.prototype.Run= function (FunctionInput){
 				this.Parameter[key].SelectCurrentPoints(NextPointIndex);
 				this.Parameter[key].Vary();
 			}
+			RoundCount++;
 		}
 	}
 
@@ -241,6 +247,11 @@ StochasticOptimisation.prototype.RunOptimisedSim= function (FunctionInput){
 	this.OptimisedSimError=this.ErrorFunction(this.OptimisedSimOutput, this.Target, FunctionInput);
 	return this.OptimisedSimOutput;
 };
+
+
+
+
+
 
 //************************************************************
 function StochasticOptimisationParameter(){

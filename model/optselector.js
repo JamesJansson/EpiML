@@ -551,10 +551,15 @@ function OptSelectorHandler(WorkerData){
 		return ModelResults;
 	};
 	
-	OptimisationSettings.ErrorFunction=function(Results, Target){// Done, unchecked
+	OptimisationSettings.ErrorFunction=function(Results, Target, FunctionInput, OptimistationProgress){// Done, unchecked
 		var DEOOptimisationGroup=Target;
 		console.error("Fixing total error");
+		console.log(DEOOptimisationGroup);
 		var TotalOptimisationError=DEOOptimisationGroup.TotalError(Results);
+		
+		this.Store("DetailedError", DEOOptimisationGroup.ErrorArray());
+		
+		
 		return TotalOptimisationError;
 	};
 	
