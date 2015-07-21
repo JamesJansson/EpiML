@@ -35,6 +35,16 @@ function  StochasticOptimisation(Settings){
 	}else{
 		this.Target=Settings.Target;// The value that the error function uses to determine fitness
 	}
+	
+	// SampleProgressFunction: Runs every Sample, can be used to output progress
+	if (typeof Settings.SampleProgressFunction==="function"){
+		this.RunSampleProgressFunction=true;
+		this.SampleProgressFunction=Settings.SampleProgressFunction;
+	}else{
+		this.RunSampleProgressFunction=false;
+	}
+	
+	
 	// RoundProgressFunction: Runs every round, can be used to output progress
 	if (typeof Settings.RoundProgressFunction==="function"){
 		this.RunRoundProgressFunction=true;
@@ -153,7 +163,10 @@ StochasticOptimisation.prototype.Run= function (FunctionInput){
 			this.ErrorValues[this.SampleCount]=this.ErrorFunction(this.SimOutput[this.SampleCount], this.Target, FunctionInput, OptimistationProgress);
 			this.ErrorValuesAllRounds[this.RoundCount][this.SampleCount]=this.ErrorValues[this.SampleCount];
 			
-			this.SampleProgressFunction(this.RoundCount, this.Parameter, this.SimOutput, this.ErrorValues, FunctionInput);
+			// If the OptimisationProgress function is set
+			if (this.SampleProgressFunctionFunction==true){
+				this.SampleProgressFunction(this.RoundCount, this.Parameter, this.SimOutput, this.ErrorValues, FunctionInput);
+			}
 		}
 		
 		
