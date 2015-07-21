@@ -284,11 +284,11 @@ MultiThreadSimMessageHandler=function(e) {
 	
 	
 	// Handle message functions that get added to the system 
-	if (typeof e.data.MessageFunctionName != 'undefined'){
+	if (typeof(e.data.MessageFunctionName) == 'string'){
 		// Find the name in the array
 		var IndexToRun=this.SimMessageFunctionArray.indexOf(e.data.MessageFunctionName);
 		// Execute the function
-		this.InterfaceMessageFunctionArray[IndexToRun](e.data.Data, e);
+		this.InterfaceMessageFunctionArray[IndexToRun](e.data.Data, e.srcElement.ThreadID);
 	}
 	
 	
