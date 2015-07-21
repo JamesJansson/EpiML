@@ -112,11 +112,11 @@ function OptSelector(Name, DivID, Functions, PointerToParamGroup, DEOArrayFuncti
 
 	
 	
+	this.DetailedParameterHistory=[];
+	this.DetailedErrorHistory=[];
+	this.DetailedErrorHistoryByDEO=[];	
 	
 	
-	
-	this.ErrorHistory;
-	this.ParameterHistory;	
 	
 	this.ErrorPlotData;// this.ErrorPlotData[DataArrayNumber][SimNumber].XArrayValues/YArrayValues
 	this.ParameterPlotData;
@@ -326,8 +326,10 @@ OptSelector.prototype.RunOptimisation=function (){
 	
 	
 	
-	
-	
+	this.DetailedParameterHistory=[];
+	this.DetailedErrorHistory=[];
+	this.DetailedErrorHistoryByDEO=[];
+		
 	
 	
 	this.SimulationHolder.AddMessageFunction("PushDetailedParameterHistory", this.ProcessPushDetailedParameterHistory);
@@ -416,21 +418,23 @@ OptSelector.prototype.RunOptimisation=function (){
 
 
 
-OptSelector.prototype.ProcessPushDetailedParameterHistory=function (Input, OtherMessageData){
+OptSelector.prototype.ProcessPushDetailedParameterHistory=function (Input, SimID,e){
 	console.error("Processing DetailedParameterHistory");
-	console.log(Input);
-	console.log("OtherMessageData");
-	console.log(OtherMessageData);
+	console.error("SimID");
+	console.log(SimID);
+	console.error("Other");
+	console.log(e);
+	
 	// Join optimised parameter to the relevant interface
 	
 }
 	
-OptSelector.prototype.ProcessPushDetailedErrorHistory=function (Input){
+OptSelector.prototype.ProcessPushDetailedErrorHistory=function (Input, SimID){
 	console.error("Processing DetailedErrorHistory");
 	console.log(Input);
 }
 
-OptSelector.prototype.ProcessPushDetailedErrorHistoryByDEO=function (Input){
+OptSelector.prototype.ProcessPushDetailedErrorHistoryByDEO=function (Input, SimID){
 	console.error("Processing DetailedErrorHistoryByDEO");
 	console.log(Input);
 	
@@ -480,6 +484,7 @@ OptSelector.prototype.PushToParamGroup=function (){
 
 
 OptSelector.prototype.UpdateError=function (DataFromSim){
+	throw "this function should not be used";
 	this.ErrorHistory[DataFromSim.SimNum]=DataFromSim.ErrorHistory;
 	this.ParameterHistory[DataFromSim.SimNum]=DataFromSim.ParameterHistory;
 	

@@ -14,17 +14,13 @@ self.onmessage = function (WorkerMessage) {
 		for (var MCount in WorkerMessage.data.AddMessageFunction){
 			// Generate a function that the program can use to send back information
 			var evalText=WorkerMessage.data.AddMessageFunction[MCount];
-			evalText+="=function(DataToSendBack){"
-			evalText+="var StructSendBack={};"
-			evalText+="console.log(StructSendBack);"
+			evalText+="=function(DataToSendBack){";
+			evalText+="var StructSendBack={};";
 			evalText+="StructSendBack.MessageFunctionName='"+WorkerMessage.data.AddMessageFunction[MCount]+"';";
-			evalText+="console.log(StructSendBack);"
 			evalText+="StructSendBack.Data=DataToSendBack;";
-			evalText+="console.log(StructSendBack);"
 			evalText+="self.postMessage(StructSendBack);}";
-			console.log("Got to before the eval");
+
 			eval(evalText);
-			console.log("Did the eval");
 		}
 	}
 	else{

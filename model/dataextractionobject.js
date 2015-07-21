@@ -250,18 +250,14 @@ DataExtractionObjectGroup.prototype.AddDEO=function(DEOToAdd){
 
 DataExtractionObjectGroup.prototype.TotalError=function(SimulationResult){
 	var ErrorSum=0;
-	console.log("Finding error");
-	console.log(this.DEOArray);
 	for (var DEOCount in this.DEOArray){
-	    
 		var ThisError=this.DEOArray[DEOCount].FindError(SimulationResult);
 		if (isNaN(ThisError)){
-			console.error(this.DEOArray[DEOCount].Name + " DEO produces NaNs");
+			//console.error(this.DEOArray[DEOCount].Name + " DEO produces NaNs");
 		}
 		else{
 			ErrorSum+=ThisError;
 		}
-		console.log(this.DEOArray[DEOCount].Name+" error: "+ThisError);
 	}
 	return ErrorSum;
 };

@@ -208,7 +208,7 @@ MultiThreadSim.prototype.StartNextSim=function() {
 				this.Worker[SimID].onmessage = BoundMessage;
 			}
 			this.Worker[SimID].ThreadID=ThreadID;
-			
+			this.Worker[SimID].SimID=SimID;
 			//Post message will soon become a handler for many commands, including starting the simulation, optimising the simulation, and requesting data
 			this.Worker[SimID].postMessage({ FunctionToRun: this.FunctionToRun, SimID: SimID, ThreadID: ThreadID, Common: this.Common, SimData: this.SimDataArray[SimID], AddMessageFunction: this.SimMessageFunctionArray});
 		}
@@ -288,7 +288,7 @@ MultiThreadSimMessageHandler=function(e) {
 		// Find the name in the array
 		var IndexToRun=this.SimMessageFunctionArray.indexOf(e.data.MessageFunctionName);
 		// Execute the function
-		this.InterfaceMessageFunctionArray[IndexToRun](e.data.Data, e.srcElement.ThreadID);
+		this.InterfaceMessageFunctionArray[IndexToRun](e.data.Data, e.srcElement.SimID, e);
 	}
 	
 	
