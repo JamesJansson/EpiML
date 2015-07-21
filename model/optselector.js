@@ -553,21 +553,18 @@ function OptSelectorHandler(WorkerData){
 	
 	OptimisationSettings.ErrorFunction=function(Results, Target){// Done, unchecked
 		var DEOOptimisationGroup=Target;
-		console.error("Fixing total error");
-		console.log(DEOOptimisationGroup);
 		var TotalOptimisationError=DEOOptimisationGroup.TotalError(Results);
-		
-		
-		
 		
 		return TotalOptimisationError;
 	};
 	
 	OptimisationSettings.SampleProgressFunction=function(OptimistationProgress, CurrentSimulationVals, AllSimulationVals, FunctionInput){
 		var DEOOptimisationGroup=AllSimulationVals.Target;
-		this.Store("DetailedError", DEOOptimisationGroup.ErrorArray());
+		// Store detailed error in the optimisation holder
+		this.Store("DetailedError", DEOOptimisationGroup.ErrorArray());// note this is not a pointer, it is the values
+		// Store detailed error in the optimisation holder
+		this.Store("DetailedParameterHistory", CurrentSimulationVals.ParameterSet);
 		// Call a function that delivers Detailed error storage back to the interface
-		
 	}
 	
 	OptimisationSettings.RoundProgressFunction=function(SimulationNumber, Parameter, SimOutput, ErrorValues){
@@ -644,7 +641,7 @@ function OptSelectorHandler(WorkerData){
 	// Save the best optimised version of the parameter
 	ReturnedResults.OptimisedParameter=OptimisationObject.ParameterFinal;
 	
-	ReturnedResults.ErrorProgress=OptimisationObject.ErrorValuesAllRounds;
+	ReturnedResults.ErrorProgress=OptimisationObject.DetailedErrorHistory;
 	
 	// This is where we run the model with the best parameterisation
 	var SimulationResults=OptimisationObject.RunOptimisedSim(FunctionInput);

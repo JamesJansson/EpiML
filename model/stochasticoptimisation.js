@@ -14,6 +14,8 @@ function  StochasticOptimisation(Settings){
 	this.RoundCount;
 	this.SampleCount;
 	
+	this.DetailedParameterHistory;
+	
 	// Function: function to be optimised
 	if (typeof Settings.Function==="function"){
 		this.Function=Settings.Function;
@@ -106,7 +108,7 @@ function  StochasticOptimisation(Settings){
 	this.SimOutput=[];//An array of the output of the current round of simulations
 	this.ErrorValues=[];//An array of the error of the current round of simulations
 	
-	this.ErrorValuesAllRounds=[];//An array of the error of the all rounds of simulations
+	this.DetailedErrorHistory=[];//An array of the error of the all rounds of simulations
 	
 	
 	// Determine if MathTools is running
@@ -145,7 +147,7 @@ StochasticOptimisation.prototype.Run= function (FunctionInput){
 	var ParameterSet;
 	var OrderedIndex;
 	
-	
+	this.DetailedParameterHistory=[]
 
 	// Keep running until time, number of sims runs out, or absolute error is reached, or precision is reached in all variables
 	this.RoundCount=0;
@@ -154,9 +156,12 @@ StochasticOptimisation.prototype.Run= function (FunctionInput){
 	var CurrentTime;
 	while (OptimisationComplete==false){
 		// Run the simulation
-		this.ErrorValuesAllRounds[this.RoundCount]=[];
+		this.DetailedErrorHistory[this.RoundCount]=[];
+		this.DetailedParameterHistory[this.RoundCount]=[];
 		for (this.SampleCount=0; this.SampleCount<this.NumberOfSamplesPerRound; this.SampleCount++){
 			ParameterSet=this.GetParameterSet(this.SampleCount);
+			// Store this Parameter in the object
+			this.DetailedParameterHistory[this.RoundCount][this.SampleCount]=ParameterSet;
 			
 			var OptimistationProgress={};
 			OptimistationProgress.RoundCount=this.RoundCount;
@@ -164,7 +169,7 @@ StochasticOptimisation.prototype.Run= function (FunctionInput){
 			
 			this.SimOutput[this.SampleCount]=this.Function(FunctionInput, ParameterSet, OptimistationProgress);
 			this.ErrorValues[this.SampleCount]=this.ErrorFunction(this.SimOutput[this.SampleCount], this.Target, FunctionInput, OptimistationProgress);
-			this.ErrorValuesAllRounds[this.RoundCount][this.SampleCount]=this.ErrorValues[this.SampleCount];
+			this.DetailedErrorHistory[this.RoundCount][this.SampleCount]=this.ErrorValues[this.SampleCount];
 			
 			// If the OptimisationProgress function is set
 			if (this.RunSampleProgressFunction==true){
