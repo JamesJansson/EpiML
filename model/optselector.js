@@ -1,3 +1,14 @@
+// WIKI
+if (typeof(Wiki)==="undefined"){
+	Wiki={};
+}
+Wiki.OptSelector={};
+Wiki.OptSelector.Description="This function is designed to allow easy creation and management of optimisation functions. See Wiki.OptSelector.Functions for a full list of prototypes in the object.";
+Wiki.OptSelector.BasicUse="";
+Wiki.OptSelector.Functions={};
+
+
+
 // The purpose of this 
 
 // Is given a pointer to a parameter group
@@ -124,8 +135,6 @@ function OptSelector(Name, DivID, Functions, PointerToParamGroup, DEOArrayFuncti
 	this.DrawParamDiv();
 
 }
-
-
 
 
 
@@ -301,7 +310,6 @@ OptSelector.prototype.ParamGroupUpdated=function(){
 OptSelector.prototype.ClickRun=function(){
 	// select display progress page?
 	this.RunOptimisation();
-		
 };
 
 
@@ -313,6 +321,34 @@ OptSelector.prototype.RunOptimisation=function (){
 	this.SimulationHolder=new MultiThreadSim(this.ModelDirectory, this.Settings.NumberOfSimulations , this.Settings.NoThreads); //Common is the same between all sims
 	this.SimulationHolder.UseSimProgressBar=true;
 	this.SimulationHolder.SimProgressBarID="MainProgress";
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	this.SimulationHolder.AddMessageFunction("PushDetailedParameterHistory", this.ProcessPushDetailedParameterHistory);
+	this.SimulationHolder.AddMessageFunction("PushDetailedErrorHistory", this.ProcessPushDetailedErrorHistory);
+	this.SimulationHolder.AddMessageFunction("PushDetailedErrorHistoryByDEO", this.ProcessPushDetailedErrorHistoryByDEO);
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	var RunSettings={};
 	//Creating the data to be used in the simulations
@@ -362,6 +398,53 @@ OptSelector.prototype.RunOptimisation=function (){
 	
 	// collect up the data when finished
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+OptSelector.prototype.ProcessPushDetailedParameterHistory=function (Input){
+	console.error("Processing returned input");
+	console.log(Input);
+}
+	
+OptSelector.prototype.ProcessPushDetailedErrorHistory=function (Input){
+	console.error("Processing returned input");
+	console.log(Input);
+}
+
+OptSelector.prototype.ProcessPushDetailedErrorHistoryByDEO=function (Input){
+	console.error("Processing returned input");
+	console.log(Input);
+	
+	//  Process each of the errors to the errors that are optimised for
+	
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 OptSelector.prototype.PostSimulationRunFunction=function (){
 	var self=this; // this is designed to allow access to the OptSelector 'this' data through the variable 'self'
@@ -561,10 +644,13 @@ function OptSelectorHandler(WorkerData){
 	OptimisationSettings.SampleProgressFunction=function(OptimistationProgress, CurrentSimulationVals, AllSimulationVals, FunctionInput){
 		var DEOOptimisationGroup=AllSimulationVals.Target;
 		// Store detailed error in the optimisation holder
-		this.Store("DetailedError", DEOOptimisationGroup.ErrorArray());// note this is not a pointer, it is the values
+		this.Store("DetailedErrorHistoryByDEO", DEOOptimisationGroup.ErrorArray());// note this is not a pointer, it is the values
 		// Store detailed error in the optimisation holder
 		this.Store("DetailedParameterHistory", CurrentSimulationVals.ParameterSet);
-		// Call a function that delivers Detailed error storage back to the interface
+		// Call function that deliver detailed histories back to the interface
+		PushDetailedParameterHistory(this.DetailedParameterHistory)
+		PushDetailedErrorHistory(this.DetailedErrorHistory)
+		PushDetailedErrorHistoryByDEO(this.DetailedErrorHistoryByDEO)
 	}
 	
 	OptimisationSettings.RoundProgressFunction=function(SimulationNumber, Parameter, SimOutput, ErrorValues){
@@ -663,3 +749,25 @@ function OptSelectorHandler(WorkerData){
 	
 	return ReturnedResults;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
