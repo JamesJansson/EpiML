@@ -416,18 +416,22 @@ OptSelector.prototype.RunOptimisation=function (){
 
 
 
-OptSelector.prototype.ProcessPushDetailedParameterHistory=function (Input){
-	console.error("Processing returned input");
+OptSelector.prototype.ProcessPushDetailedParameterHistory=function (Input, OtherMessageData){
+	console.error("Processing DetailedParameterHistory");
 	console.log(Input);
+	console.log("OtherMessageData");
+	console.log(OtherMessageData);
+	// Join optimised parameter to the relevant interface
+	
 }
 	
 OptSelector.prototype.ProcessPushDetailedErrorHistory=function (Input){
-	console.error("Processing returned input");
+	console.error("Processing DetailedErrorHistory");
 	console.log(Input);
 }
 
 OptSelector.prototype.ProcessPushDetailedErrorHistoryByDEO=function (Input){
-	console.error("Processing returned input");
+	console.error("Processing DetailedErrorHistoryByDEO");
 	console.log(Input);
 	
 	//  Process each of the errors to the errors that are optimised for
@@ -643,6 +647,7 @@ function OptSelectorHandler(WorkerData){
 	
 	OptimisationSettings.SampleProgressFunction=function(OptimistationProgress, CurrentSimulationVals, AllSimulationVals, FunctionInput){
 		var DEOOptimisationGroup=AllSimulationVals.Target;
+		
 		// Store detailed error in the optimisation holder
 		this.Store("DetailedErrorHistoryByDEO", DEOOptimisationGroup.ErrorArray());// note this is not a pointer, it is the values
 		// Store detailed error in the optimisation holder
@@ -650,7 +655,7 @@ function OptSelectorHandler(WorkerData){
 		// Call function that deliver detailed histories back to the interface
 		PushDetailedParameterHistory(this.DetailedParameterHistory)
 		PushDetailedErrorHistory(this.DetailedErrorHistory)
-		PushDetailedErrorHistoryByDEO(this.DetailedErrorHistoryByDEO)
+		PushDetailedErrorHistoryByDEO(this.Storage.DetailedErrorHistoryByDEO)
 	}
 	
 	OptimisationSettings.RoundProgressFunction=function(SimulationNumber, Parameter, SimOutput, ErrorValues){

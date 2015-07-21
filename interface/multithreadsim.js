@@ -288,7 +288,7 @@ MultiThreadSimMessageHandler=function(e) {
 		// Find the name in the array
 		var IndexToRun=this.SimMessageFunctionArray.indexOf(e.data.MessageFunctionName);
 		// Execute the function
-		this.InterfaceMessageFunctionArray[IndexToRun](e.data.Data);
+		this.InterfaceMessageFunctionArray[IndexToRun](e.data.Data, e);
 	}
 	
 	
