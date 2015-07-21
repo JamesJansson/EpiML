@@ -304,7 +304,22 @@ OptSelector.prototype.ParamGroupUpdated=function(){
 	this.DrawParamDiv();
 };
 
+OptSelector.prototype.Start=function(){
+	// this is a special function that allows you to start the threads such that the profiler can be started
+	
+	this.SimulationHolder=new MultiThreadSim(this.ModelDirectory, this.Settings.NumberOfSimulations , this.Settings.NoThreads); //Common is the same between all sims
+	this.SimulationHolder.UseSimProgressBar=true;
+	this.SimulationHolder.SimProgressBarID="MainProgress";
+	
+	var RunSettings={};
+	RunSettings.TerminateThreadOnSimCompletion=false;
+	RunSettings.FunctionName="OptSelectorStarter";
+	this.SimulationHolder.Run(RunSettings);
+};
 
+function OptSelectorStarter(){
+	return 0;
+}
 
 
 OptSelector.prototype.ClickRun=function(){
@@ -318,10 +333,12 @@ OptSelector.prototype.RunOptimisation=function (){
 	// Send the optimisation settings to the simulation  
 	this.Common.Settings=Settings;
 	
-	this.SimulationHolder=new MultiThreadSim(this.ModelDirectory, this.Settings.NumberOfSimulations , this.Settings.NoThreads); //Common is the same between all sims
-	this.SimulationHolder.UseSimProgressBar=true;
-	this.SimulationHolder.SimProgressBarID="MainProgress";
-	
+	// Don't restart if the simulation has already been started above 
+	if (typeof(SimulationHolder)=="undefined"){
+		this.SimulationHolder=new MultiThreadSim(this.ModelDirectory, this.Settings.NumberOfSimulations , this.Settings.NoThreads); //Common is the same between all sims
+		this.SimulationHolder.UseSimProgressBar=true;
+		this.SimulationHolder.SimProgressBarID="MainProgress";
+	}
 	
 	
 	
