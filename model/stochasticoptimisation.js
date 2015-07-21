@@ -9,8 +9,10 @@ function  StochasticOptimisation(Settings){
 	this.OptimisedSimOutput;// the results of running the best parameter in the simulation with fresh random numbers
 	this.OptimisedSimError;// the error of running the best parameter in the simulation with fresh random numbers
 	
-	this.Storage;// Arbitrary storage that stochastic optimisation functions can use, as described by the user
+	this.Storage={};// Arbitrary storage that stochastic optimisation functions can use, as described by the user
 	
+	this.RoundCount;
+	this.SampleCount;
 	
 	// Function: function to be optimised
 	if (typeof Settings.Function==="function"){
@@ -133,22 +135,25 @@ StochasticOptimisation.prototype.Run= function (FunctionInput){
 	
 
 	// Keep running until time, number of sims runs out, or absolute error is reached, or precision is reached in all variables
-	var RoundCount=0;
+	this.RoundCount=0;
 	var OptimisationComplete=false;
 	var TimerStart = new Date().getTime() / 1000;
 	var CurrentTime;
 	while (OptimisationComplete==false){
 		// Run the simulation
-		this.ErrorValuesAllRounds[RoundCount]=[];
-		for (var SampleCount=0; SampleCount<this.NumberOfSamplesPerRound; SampleCount++){
-			ParameterSet=this.GetParameterSet(SampleCount);
+		this.ErrorValuesAllRounds[this.RoundCount]=[];
+		for (this.SampleCount=0; this.SampleCount<this.NumberOfSamplesPerRound; this.SampleCount++){
+			ParameterSet=this.GetParameterSet(this.SampleCount);
 			
 			var OptimistationProgress={};
-			OptimistationProgress.RoundCount=RoundCount;
-			OptimistationProgress.SampleCount=SampleCount;
-			this.SimOutput[SampleCount]=this.Function(FunctionInput, ParameterSet, OptimistationProgress);
-			this.ErrorValues[SampleCount]=this.ErrorFunction(this.SimOutput[SampleCount], this.Target, FunctionInput, OptimistationProgress);
-			this.ErrorValuesAllRounds[RoundCount][SampleCount]=this.ErrorValues[SampleCount];
+			OptimistationProgress.RoundCount=this.RoundCount;
+			OptimistationProgress.SampleCount=this.SampleCount;
+			
+			this.SimOutput[this.SampleCount]=this.Function(FunctionInput, ParameterSet, OptimistationProgress);
+			this.ErrorValues[this.SampleCount]=this.ErrorFunction(this.SimOutput[this.SampleCount], this.Target, FunctionInput, OptimistationProgress);
+			this.ErrorValuesAllRounds[this.RoundCount][this.SampleCount]=this.ErrorValues[this.SampleCount];
+			
+			this.SampleProgressFunction(this.RoundCount, this.Parameter, this.SimOutput, this.ErrorValues, FunctionInput);
 		}
 		
 		
@@ -162,15 +167,15 @@ StochasticOptimisation.prototype.Run= function (FunctionInput){
 
 		// If the OptimisationProgress function is set
 		if (this.RunProgressFunction==true){
-			this.ProgressFunction(RoundCount, this.Parameter, this.SimOutput, this.ErrorValues, FunctionInput);
+			this.ProgressFunction(this.RoundCount, this.Parameter, this.SimOutput, this.ErrorValues, FunctionInput);
 		}
 		
 		// Storing optimisation results for later inspection/graphing
-		this.MeanError[RoundCount]=Mean(this.ErrorValues);
-		this.BestError[RoundCount]=this.ErrorValues[this.BestIndex[0]];
+		this.MeanError[this.RoundCount]=Mean(this.ErrorValues);
+		this.BestError[this.RoundCount]=this.ErrorValues[this.BestIndex[0]];
 		
 		// Determine whether the optimisation should finish or not
-		if (RoundCount>this.MaxIterations){
+		if (this.RoundCount>=this.MaxIterations){
 			OptimisationComplete=true;
 			this.ReasonForTermination="ReachedMaxIterations";
 		}
@@ -197,7 +202,7 @@ StochasticOptimisation.prototype.Run= function (FunctionInput){
 				this.Parameter[key].SelectCurrentPoints(NextPointIndex);
 				this.Parameter[key].Vary();
 			}
-			RoundCount++;
+			this.RoundCount++;
 		}
 	}
 
@@ -248,7 +253,16 @@ StochasticOptimisation.prototype.RunOptimisedSim= function (FunctionInput){
 	return this.OptimisedSimOutput;
 };
 
-
+StochasticOptimisation.prototype.Store= function (NameToStoreUnderInStorage, Data){
+	// Stores detailed information based on the current this.RoundCount and this.SampleCount
+	if (typeof(this.Storage[NameToStoreUnderInStorage])=="undefined"){
+		this.Storage[NameToStoreUnderInStorage]=[];
+	}
+	if (typeof(this.Storage[NameToStoreUnderInStorage][this.RoundCount])=="undefined"){
+		this.Storage[NameToStoreUnderInStorage][this.RoundCount]=[];
+	}
+	this.Storage[NameToStoreUnderInStorage][this.RoundCount][this.SampleCount]=Data;
+};
 
 
 

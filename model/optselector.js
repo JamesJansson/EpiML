@@ -551,7 +551,7 @@ function OptSelectorHandler(WorkerData){
 		return ModelResults;
 	};
 	
-	OptimisationSettings.ErrorFunction=function(Results, Target, FunctionInput, OptimistationProgress){// Done, unchecked
+	OptimisationSettings.ErrorFunction=function(Results, Target){// Done, unchecked
 		var DEOOptimisationGroup=Target;
 		console.error("Fixing total error");
 		console.log(DEOOptimisationGroup);
@@ -566,7 +566,7 @@ function OptSelectorHandler(WorkerData){
 	
 	OptimisationSettings.ProgressFunction=function(SimulationNumber, Parameter, SimOutput, ErrorValues){
 		console.error("Optimisation step "+SimulationNumber+" complete.");
-		
+		console.log(this.Storage.DetailedError);
 		if (OptSelectorSettings.LiveUpdatePlots==true){
 			// Send Parameter back to the main simulation
 			// Send Error values backs to the main simulation 
