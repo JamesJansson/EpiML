@@ -467,7 +467,7 @@ function FullModel(Notifications, EndSimulation, Intervention){
 function InitialDistribution() {
 	console.log("Starting InitialDistribution");
 	
-	console.log(Param);
+	
 	
 	
 	
