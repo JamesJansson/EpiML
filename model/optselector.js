@@ -557,12 +557,18 @@ function OptSelectorHandler(WorkerData){
 		console.log(DEOOptimisationGroup);
 		var TotalOptimisationError=DEOOptimisationGroup.TotalError(Results);
 		
-		this.Store("DetailedError", DEOOptimisationGroup.ErrorArray());
+		
 		
 		
 		return TotalOptimisationError;
 	};
 	
+	OptimisationSettings.SampleProgressFunction=function(OptimistationProgress, CurrentSimulationVals, AllSimulationVals, FunctionInput){
+		var DEOOptimisationGroup=AllSimulationVals.Target;
+		this.Store("DetailedError", DEOOptimisationGroup.ErrorArray());
+		// Call a function that delivers Detailed error storage back to the interface
+		
+	}
 	
 	OptimisationSettings.RoundProgressFunction=function(SimulationNumber, Parameter, SimOutput, ErrorValues){
 		console.error("Optimisation step "+SimulationNumber+" complete.");

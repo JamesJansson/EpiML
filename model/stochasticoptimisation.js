@@ -40,10 +40,10 @@ function  StochasticOptimisation(Settings){
 	if (typeof Settings.SampleProgressFunction==="function"){
 		this.RunSampleProgressFunction=true;
 		this.SampleProgressFunction=Settings.SampleProgressFunction;
+		
 	}else{
 		this.RunSampleProgressFunction=false;
 	}
-	
 	
 	// RoundProgressFunction: Runs every round, can be used to output progress
 	if (typeof Settings.RoundProgressFunction==="function"){
@@ -52,6 +52,8 @@ function  StochasticOptimisation(Settings){
 	}else{
 		this.RunRoundProgressFunction=false;
 	}
+	
+	
 	
 	// SeedValue: used to set a seed for Rand (if determinism is important and not set elsewhere)
 	if (typeof Settings.SeedValue==="undefined"){// do nothing
@@ -120,6 +122,7 @@ function  StochasticOptimisation(Settings){
 	
 	
 	this.Help='Formats for structure\n Function(ParamForOptimisation) \n ';
+	
 }
 
 StochasticOptimisation.prototype.AddParameter=function(Name, Min, Max){
@@ -164,8 +167,22 @@ StochasticOptimisation.prototype.Run= function (FunctionInput){
 			this.ErrorValuesAllRounds[this.RoundCount][this.SampleCount]=this.ErrorValues[this.SampleCount];
 			
 			// If the OptimisationProgress function is set
-			if (this.SampleProgressFunctionFunction==true){
-				this.SampleProgressFunction(this.RoundCount, this.Parameter, this.SimOutput, this.ErrorValues, FunctionInput);
+			if (this.RunSampleProgressFunction==true){
+		
+				
+				var CurrentSimulationVals={};
+				CurrentSimulationVals.FunctionInput=FunctionInput;
+				CurrentSimulationVals.ParameterSet=ParameterSet;
+				CurrentSimulationVals.SimOutput=this.SimOutput[this.SampleCount];
+				CurrentSimulationVals.ErrorValues=this.ErrorValues[this.SampleCount];
+				
+				var AllSimulationVals={};
+				AllSimulationVals.Parameter=this.Parameter;
+				AllSimulationVals.SimOutputThisRound=this.SimOutput;
+				AllSimulationVals.ErrorValuesThisRound=this.ErrorValues;
+				AllSimulationVals.Target=this.Target;
+				AllSimulationVals.Storage=this.FunctionInput;
+				this.SampleProgressFunction(OptimistationProgress, CurrentSimulationVals, AllSimulationVals, FunctionInput);
 			}
 		}
 		
@@ -180,6 +197,12 @@ StochasticOptimisation.prototype.Run= function (FunctionInput){
 
 		// If the OptimisationProgress function is set
 		if (this.RunRoundProgressFunction==true){
+			var AllSimulationVals2={};
+			AllSimulationVals2.Parameter=this.Parameter;
+			AllSimulationVals2.SimOutputThisRound=this.SimOutput;
+			AllSimulationVals2.ErrorValuesThisRound=this.ErrorValues;
+			AllSimulationVals2.FunctionInput=this.FunctionInput;
+			
 			this.RoundProgressFunction(this.RoundCount, this.Parameter, this.SimOutput, this.ErrorValues, FunctionInput);
 		}
 		
