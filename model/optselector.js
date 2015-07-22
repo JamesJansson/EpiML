@@ -472,6 +472,8 @@ OptSelector.prototype.GraphDetailedParameterHistory=function (){
 	// for each sim
 		// couple round x=RoundNumber+0.1*SampleNumber;
 		// this.DetailedParameterGraphData
+		// determine if colour determination has occurred
+		// if not do it
 		// plot into a Scatter plot
 };
 
