@@ -436,6 +436,8 @@ OptSelector.prototype.RunOptimisation=function (){
 
 
 OptSelector.prototype.ProcessPushDetailedParameterHistory=function (Input, SimID,e){
+	
+	
 	console.error("Processing DetailedParameterHistory");
 	console.error("SimID");
 	console.log(SimID);
@@ -443,31 +445,35 @@ OptSelector.prototype.ProcessPushDetailedParameterHistory=function (Input, SimID
 	console.log(e);
 	
 	// Join optimised parameter to the relevant interface data
-	this.DetailedParameterHistory[SimID]=Input[SimID];
+	this.DetailedParameterHistory[SimID]=Input;//[SimID][RoundNumber][SampleNumber]
 	// Draw a graph in the relevant sections
-	
-	this.DetailedErrorHistory=[];
-	this.DetailedErrorHistoryByDEO=[];	
-}
-	
+	this.GraphDetailedParameterHistory();
+};
+
 OptSelector.prototype.ProcessPushDetailedErrorHistory=function (Input, SimID){
 	console.error("Processing DetailedErrorHistory");
 	console.log(Input);
 	
-	this.DetailedErrorHistory[SimID]=Input[SimID];
+	this.DetailedErrorHistory[SimID]=Input;
 	// Draw a graph in the relevant sections
 	
-}
+};
 
 OptSelector.prototype.ProcessPushDetailedErrorHistoryByDEO=function (Input, SimID){
 	console.error("Processing DetailedErrorHistoryByDEO");
 	console.log(Input);
-	
+	this.DetailedErrorHistoryByDEO=[];	
 	//  Process each of the errors to the errors that are optimised for
 	
-}
+};
 
-
+OptSelector.prototype.GraphDetailedParameterHistory=function (){
+	this.DetailedParameterHistory;//[SimID][RoundNumber][SampleNumber]
+	// for each sim
+		// couple round x=RoundNumber+0.1*SampleNumber;
+		// this.DetailedParameterGraphData
+		// plot into a Scatter plot
+};
 
 
 
