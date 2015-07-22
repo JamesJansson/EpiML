@@ -466,24 +466,13 @@ function FullModel(Notifications, EndSimulation, Intervention){
 
 function InitialDistribution() {
 	console.log("Starting InitialDistribution");
-	
-	
-	
-	
-	
 	// Run CreatePWID multiple times
 	var Person = [];
 	
 	for (var Time = Param.Time.StartNonDynamicModel; Time < Param.Time.StartDynamicModel; Time += Param.TimeStep) {
 		var PWIDToAdd = CreatePWID(Param.IDU.Entry, Time, Param.TimeStep);
 		Person = Person.concat(PWIDToAdd);
-		
-		//console.log("Year " + Time + " N " + PWIDToAdd.length);
 	}
-	
-
-	
-	
 	
 	SetInitialHCVLevels(Person);
 	//InitialiseNetwork(Person, Param.Time.StartDynamicModel);// we only need it to be a correct network at the end of this period because this is the start of the dynamic period

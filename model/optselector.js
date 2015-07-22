@@ -442,13 +442,21 @@ OptSelector.prototype.ProcessPushDetailedParameterHistory=function (Input, SimID
 	console.error("Other");
 	console.log(e);
 	
-	// Join optimised parameter to the relevant interface
+	// Join optimised parameter to the relevant interface data
+	this.DetailedParameterHistory[SimID]=Input[SimID];
+	// Draw a graph in the relevant sections
 	
+	this.DetailedErrorHistory=[];
+	this.DetailedErrorHistoryByDEO=[];	
 }
 	
 OptSelector.prototype.ProcessPushDetailedErrorHistory=function (Input, SimID){
 	console.error("Processing DetailedErrorHistory");
 	console.log(Input);
+	
+	this.DetailedErrorHistory[SimID]=Input[SimID];
+	// Draw a graph in the relevant sections
+	
 }
 
 OptSelector.prototype.ProcessPushDetailedErrorHistoryByDEO=function (Input, SimID){
