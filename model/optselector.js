@@ -498,6 +498,35 @@ OptSelector.prototype.GraphDetailedParameterHistory=function (){
 		// determine if colour determination has occurred
 		// if not do it
 		// plot into a Scatter plot
+		for (var PCount in this.DetailedParameterHistoryGraphData[PCount]){
+			var ChartData=this.DetailedParameterHistoryGraphData[PCount];
+			
+			var PlotSettings={xaxis: {
+				axisLabel: xAxisLabel,
+				axisLabelUseCanvas: true,
+				axisLabelFontSizePixels: 12,
+				axisLabelFontFamily: 'Verdana, Arial, Helvetica, Tahoma, sans-serif',
+				axisLabelPadding: 5,
+				tickLength: 0
+			},
+			yaxis: {
+				axisLabel: yAxisLabel,
+				axisLabelUseCanvas: true,
+				axisLabelFontSizePixels: 12,
+				axisLabelFontFamily: 'Verdana, Arial, Helvetica, Tahoma, sans-serif',
+				axisLabelPadding: 5
+			}
+			};
+			for (var SCount in )
+			var PlotData=[];
+			PlotData[0]={};
+			PlotData[0].data=Points;
+			PlotData[0].points={show:true, radius: 1, filled:true};
+			PlotData[0].color="rgb(255, 0, 0)";
+			$.plot(PlotHolderName, PlotData, PlotSettings);
+			
+			
+		}
 };
 
 
