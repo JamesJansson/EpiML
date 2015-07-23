@@ -439,13 +439,29 @@ OptSelector.prototype.ProcessPushDetailedParameterHistory=function (Input, SimID
 	
 	
 	console.error("Processing DetailedParameterHistory");
+	console.error("Input");
+	console.log(Input);
 	console.error("SimID");
 	console.log(SimID);
 	console.error("Other");
 	console.log(e);
 	
 	// Join optimised parameter to the relevant interface data
-	this.DetailedParameterHistory[SimID]=Input;//[SimID][RoundNumber][SampleNumber]
+	this.DetailedParameterHistory[SimID]=Input;//[SimID][RoundNumber][SampleNumber][ParameterName]
+	
+	
+	this.ParameterHistoryGraphData=[];
+	for (var PCount in HCVOptSelector.ParamToOptimise){
+		if (HCVOptSelector.ParamToOptimise[PCount]==true){
+			HCVOptSelector.OptParamArray[PCount].ParameterID;
+			
+			// this.ParamProgressPlotID+PCount
+			this.ParameterHistoryGraphData[PCount][SimID]=this.DetailedParameterHistory[SimID]
+			HCVOptSelectorHolder_ParamProgressPlot_0
+		}
+	}
+	
+	
 	// Draw a graph in the relevant sections
 	this.GraphDetailedParameterHistory();
 };
@@ -468,7 +484,7 @@ OptSelector.prototype.ProcessPushDetailedErrorHistoryByDEO=function (Input, SimI
 };
 
 OptSelector.prototype.GraphDetailedParameterHistory=function (){
-	this.DetailedParameterHistory;//[SimID][RoundNumber][SampleNumber]
+	this.DetailedParameterHistory;//[SimID][ParameterName][RoundNumber][SampleNumber]
 	// for each sim
 		// couple round x=RoundNumber+0.1*SampleNumber;
 		// this.DetailedParameterGraphData
