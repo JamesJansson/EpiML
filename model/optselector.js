@@ -451,14 +451,21 @@ OptSelector.prototype.ProcessPushDetailedParameterHistory=function (Input, SimID
 	
 	
 	this.ParameterHistoryGraphData=[];
-	for (var PCount in HCVOptSelector.ParamToOptimise){
-		if (HCVOptSelector.ParamToOptimise[PCount]==true){
-			HCVOptSelector.OptParamArray[PCount].ParameterID;
-			
-			// this.ParamProgressPlotID+PCount
-			this.ParameterHistoryGraphData[PCount][SimID]=this.DetailedParameterHistory[SimID]
-			HCVOptSelectorHolder_ParamProgressPlot_0
+	for (var PCount in this.ParamToOptimise){
+		if (typeof(this.DetailedParameterHistoryGraphData[PCount])=="undefined"){
+			this.DetailedParameterHistoryGraphData[PCount]=[];
 		}
+		this.DetailedParameterHistoryGraphData[PCount][SimID]=[];// empty if no progress
+		if (this.ParamToOptimise[PCount]==true){
+			for (var RCount in this.DetailedParameterHistory[SimID]){//Round 
+				for (var SCount in this.DetailedParameterHistory[SimID][RCount]){//Sample
+					var y=this.DetailedParameterHistory[SimID][RCount][SCount];
+					var x=RCount+0.1*SCount;
+					this.DetailedParameterHistoryGraphData[PCount][SimID].push([x, y]);
+				}
+			}
+		}
+		//else create the structures but fill it with no 
 	}
 	
 	
