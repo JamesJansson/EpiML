@@ -825,7 +825,7 @@ function OptSelectorHandler(WorkerData){
 	var OptimisationObject=new StochasticOptimisation(OptimisationSettings);
 	
 	// Add the optimisation parameters
-	// OptimisationObject.AddParameter("Param.HCV.ProbabilityOfTransmission", 0, 1);
+	// OptimisationObject.AddParameter("Param.HCV.PTransmission.IDU", 0, 1);
 	
 	console.error("This is where optimisation parameters are split");
 	console.log(OptSelectorSettings);

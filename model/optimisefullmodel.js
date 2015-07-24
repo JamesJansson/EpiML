@@ -73,7 +73,7 @@ function OptimiseFullModel( WorkerData){
 	OptimisationObject=new StochasticOptimisation(OptimisationSettings);
 	
 	// Add the optimisation parameters
-	// OptimisationObject.AddParameter("Param.HCV.ProbabilityOfTransmission", 0, 1);
+	// OptimisationObject.AddParameter("Param.HCV.PTransmission.IDU", 0, 1);
 	for (var iOP in OptimisationParameters){
 		OptimisationObject.AddParameter(OptimisationParameters[iOP].Name, OptimisationParameters[iOP].Lower, OptimisationParameters[iOP].Upper);//Param.IDU.NSP.P	
 	}

@@ -9,17 +9,16 @@ function DetermineHCVTransmissions(Person, Time, TimeStep){
 		// choose a person at random in all PWID (to get the right ratio of non-)
 		var IndexOfPartner=Floor(TotalPWID*Rand.Value());
 		if (PWID[IndexOfPartner].HCV.Infected.Value(Time)==1){
-			if (Rand.Value()<Param.HCV.ProbabilityOfTransmission){
+			if (Rand.Value()<Param.HCV.PTransmission.IDU){
 				// Determine genotype of the person, then create a new infection 
 				var GenotypeArray=PWID[IndexOfPartner].HCV.Genotype.Value(Time);
 				PWID[Pn].HCV.Infection(Time+TimeStep*Rand.Value(), GenotypeArray);
 				NumberOfTransmissions++;
-				
 			}
 		}
 	}
 	
-	// console.log("NumberOfTransmissions "+ NumberOfTransmissions);
+	console.log("NumberOfTransmissions "+ NumberOfTransmissions);
 	
 	return NumberOfTransmissions;
 	

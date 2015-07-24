@@ -232,7 +232,7 @@ function RunFullModelOptimisationTest(){
 		"IDU.Sexuality.Bisexual", 
 		"IDU.Sexuality.Heterosexual",
 		"IDU.Sexuality.Homosexual", 
-		"IDU.TransmissionP"];
+		"Param.HCV.PTransmission.IDU"];
 	
 	
 	RunSettings2.Common.OptimisationParam=PGroup.CreateOptimisationStructure(OptParameterList);
