@@ -116,7 +116,7 @@ function OptimiseFullModel( WorkerData){
 	
 	var ReturnResults={};
 	// Store a run for data as it would appear in the optimisation 
-	ReturnResults.DEOArray=DEOArray;
+	ReturnResults.DEOResultsArray=DEOArray;
 	ReturnResults.HCVDataDiagnosisResults=FullModelResults.HCVDataDiagnosisResults;
 	
 	return ReturnResults;

@@ -286,7 +286,7 @@ DataExtractionObjectGroup.prototype.Summarise=function(ResultsBySim){
 	// ResultsBySim[Sim].DEOArray[SpecificStatCount]
 	var DEOResultsBySim=[];
 	for (var SimCount in ResultsBySim){
-		DEOResultsBySim[SimCount]=ResultsBySim[SimCount].DEOArray;
+		DEOResultsBySim[SimCount]=ResultsBySim[SimCount].DEOResultsArray;
 	}
 	// DEOResultsBySim[SimCount][SpecificStatCount]
 	var DEOArrayByStat=Transpose(DEOResultsBySim);
@@ -303,11 +303,14 @@ DataExtractionObjectGroup.prototype.Summarise=function(ResultsBySim){
 		// Try to package the results back into the currently existing DEOArry
 		for (var SpecificStatCount in DEOArrayByStat){
 			// determine if the names align - note that this is not a thorough test, merely an indicator. There may be other ways in which errors may arise due to misordering. 
-			if (DEOArrayByStat[SpecificStatCount][0].Name != this.DEOArray[0].Name){
+			if (DEOArrayByStat[SpecificStatCount][0].Name != this.DEOArray[SpecificStatCount].Name){
 				console.log("DEOArrayByStat");			
 				console.log(DEOArrayByStat);
 				console.log("this.DEOArray");		
 				console.log(this.DEOArray);
+				console.error("DEOArrayByStat[SpecificStatCount][0].Name: "+DEOArrayByStat[SpecificStatCount][0].Name);
+				console.error("this.DEOArray[0].Name: "+this.DEOArray[0].Name);
+				
 				throw "The arrays appear to not be aligned in terms of their names. Please make sure that the same DEOArray is being used in the interface summary algorithms as in the model.";
 			}
 
@@ -372,7 +375,7 @@ function SummariseAllDEO(ResultsBySim){
 	// ResultsBySim[Sim].DEOArray[SpecificStatCount]
 	var DEOResultsBySim=[];
 	for (var SimCount in ResultsBySim){
-		DEOResultsBySim[SimCount]=ResultsBySim[SimCount].DEOArray;
+		DEOResultsBySim[SimCount]=ResultsBySim[SimCount].DEOResultsArray;
 	}
 	// DEOResultsBySim[SimCount][SpecificStatCount]
 	var DEOArrayByStat=Transpose(DEOResultsBySim);

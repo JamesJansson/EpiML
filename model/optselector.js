@@ -423,7 +423,12 @@ OptSelector.prototype.RunOptimisation=function (){
 	RunSettings.Common.OptSelectorSettings=OptSelectorSettings;
 	
 	RunSettings.TerminateThreadOnSimCompletion=this.TerminateThreadOnSimCompletion;
-	RunSettings.FunctionToRunOnCompletion=this.PostSimulationRunFunction();
+	
+	// Set up the FunctionToRunOnCompletion
+	var FunctionToRunOnCompletion=function(){
+		PointerToThis.PostSimulationRunFunction();
+	}
+	RunSettings.FunctionToRunOnCompletion=FunctionToRunOnCompletion;
 	
 	console.log(RunSettings);
 	// Run the simulation
@@ -557,26 +562,25 @@ OptSelector.prototype.GraphDetailedParameterHistory=function (){
 
 
 OptSelector.prototype.PostSimulationRunFunction=function (){
-	var self=this; // this is designed to allow access to the OptSelector 'this' data through the variable 'self'
-	var ReturnFunction=function(){
-		console.log(self);
-		console.log(self.DEOGroup);
-		
-		// Reorganise the results into a format the DEOGroup can take (array by Sim, then Stat)
-		var DEOBySim=[];
-		for (var SimCount in self.SimulationHolder.Result){
-			DEOBySim[Simcount]=self.SimulationHolder.Result[SimCount].DEOGroupResultsArray;
-		}
-		
-		self.DEOGroup.Summarise(DEOBySim);
-		
-		// plot the results
-		self.DEOGroup.GraphAll();
-		// console.log("Infinite loop?");
-		// this.FunctionToFunctionToRunOnCompletion();
-	}
+
+	console.log(this);
+	console.log(this.DEOGroup);
+	console.log(this.SimulationHolder.Result[0]);
+	// Reorganise the results into a format the DEOGroup can take (array by Sim, then Stat)
+	// var DEOResultsBySim=[];
+	// for (var SimCount in this.SimulationHolder.Result){
+	// 	DEOResultsBySim[SimCount]=this.SimulationHolder.Result[SimCount].DEOResultsArray;
+	// }
+	// console.log(DEOResultsBySim);
 	
-	return  ReturnFunction;
+	console.log("Attmepting summarise");
+	this.DEOGroup.Summarise(this.SimulationHolder.Result);
+	
+	// plot the results
+	this.DEOGroup.GraphAll();
+	// console.log("Infinite loop?");
+	// this.FunctionToFunctionToRunOnCompletion();
+
 };
 
 
@@ -814,7 +818,7 @@ function OptSelectorHandler(WorkerData){
 	// Get the error for this parameterisation
 	ReturnedResults.OptimisedSimError=OptimisationObject.OptimisedSimError;
 	// Create the data that is returned to the interface for graphing. 
-	ReturnedResults.DEOGroupResultsArray=DEOGroup.GenerateGraphData(SimulationResults); 
+	ReturnedResults.DEOResultsArray=DEOGroup.GenerateGraphData(SimulationResults); 
 	
 	if (typeof(OptSelectorSettings.ExportOutput)!="undefined"){
 		if (OptSelectorSettings.ExportOutput==true){
