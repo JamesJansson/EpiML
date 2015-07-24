@@ -287,7 +287,7 @@ function HCVDataExtractionObjects(){
 				if (Person.IDU.NSP.Value(Time)){
 					NSPTotal++;
 					// Check if bisexual
-					if (Person.Sexuality==2){
+					if (Person.Sexuality==3){
 						Bisexual++;
 					}
 				}
