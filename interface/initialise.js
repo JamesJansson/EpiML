@@ -18,7 +18,10 @@ var fs = require('fs');
 // Setting up flags
 var SimulationRunning=0;//set to 1 if running
 
-	
+// Setting up crash dump
+// var gui = require('nw.gui');
+// gui.App.setCrashDumpDir(dir);
+
 function InitialiseEpiML(){
 	
 	TestingPageRequirements();	

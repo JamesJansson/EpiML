@@ -346,12 +346,27 @@ OptSelector.prototype.RunOptimisation=function (){
 	this.DetailedParameterHistory=[];
 	this.DetailedErrorHistory=[];
 	this.DetailedErrorHistoryByDEO=[];
-		
+	
+	this.DetailedParameterHistoryGraphData=[];
+	this.DetailedErrorHistoryGraphData=[];
+	this.DetailedErrorHistoryByDEOGraphData=[];
 	
 	
-	this.SimulationHolder.AddMessageFunction("PushDetailedParameterHistory", this.ProcessPushDetailedParameterHistory);
-	this.SimulationHolder.AddMessageFunction("PushDetailedErrorHistory", this.ProcessPushDetailedErrorHistory);
-	this.SimulationHolder.AddMessageFunction("PushDetailedErrorHistoryByDEO", this.ProcessPushDetailedErrorHistoryByDEO);
+	// Add functions that are call on execution of functions inside the simulation
+	var PointerToThis=this;
+	var RunProcessPushDetailedParameterHistory=function(ReturnedData, SimNumber, OtherMessageData){
+		PointerToThis.ProcessPushDetailedParameterHistory(ReturnedData, SimNumber, OtherMessageData);
+	}
+	var RunProcessPushDetailedErrorHistory=function(ReturnedData, SimNumber, OtherMessageData){
+		PointerToThis.ProcessPushDetailedErrorHistory(ReturnedData, SimNumber, OtherMessageData);
+	}
+	var RunProcessPushDetailedErrorHistoryByDEO=function(ReturnedData, SimNumber, OtherMessageData){
+		PointerToThis.ProcessPushDetailedErrorHistoryByDEO(ReturnedData, SimNumber, OtherMessageData);
+	}
+	
+	this.SimulationHolder.AddMessageFunction("PushDetailedParameterHistory", RunProcessPushDetailedParameterHistory);
+	this.SimulationHolder.AddMessageFunction("PushDetailedErrorHistory", RunProcessPushDetailedErrorHistory);
+	this.SimulationHolder.AddMessageFunction("PushDetailedErrorHistoryByDEO", RunProcessPushDetailedErrorHistoryByDEO);
 	
 	
 	
@@ -449,9 +464,15 @@ OptSelector.prototype.ProcessPushDetailedParameterHistory=function (Input, SimID
 	// Join optimised parameter to the relevant interface data
 	this.DetailedParameterHistory[SimID]=Input;//[SimID][RoundNumber][SampleNumber][ParameterName]
 	
+	console.error("DetailedParameterHistory DetailedParameterHistory DetailedParameterHistory DetailedParameterHistory DetailedParameterHistory DetailedParameterHistory");
+	console.log(this.DetailedParameterHistory);
+	
 	
 	this.ParameterHistoryGraphData=[];
-	for (var PCount in this.ParamToOptimise){
+	for (var PCount in this.OptParamArray){
+		
+		
+		var ParamID=this.OptParamArray[PCount].ParameterID;
 		if (typeof(this.DetailedParameterHistoryGraphData[PCount])=="undefined"){
 			this.DetailedParameterHistoryGraphData[PCount]=[];
 		}
@@ -459,8 +480,8 @@ OptSelector.prototype.ProcessPushDetailedParameterHistory=function (Input, SimID
 		if (this.ParamToOptimise[PCount]==true){
 			for (var RCount in this.DetailedParameterHistory[SimID]){//Round 
 				for (var SCount in this.DetailedParameterHistory[SimID][RCount]){//Sample
-					var y=this.DetailedParameterHistory[SimID][RCount][SCount];
-					var x=RCount+0.1*SCount;
+					var y=this.DetailedParameterHistory[SimID][RCount][SCount][ParamID];
+					var x=Number(RCount)+0.1*Number(SCount);
 					this.DetailedParameterHistoryGraphData[PCount][SimID].push([x, y]);
 				}
 			}
@@ -491,42 +512,44 @@ OptSelector.prototype.ProcessPushDetailedErrorHistoryByDEO=function (Input, SimI
 };
 
 OptSelector.prototype.GraphDetailedParameterHistory=function (){
-	this.DetailedParameterHistory;//[SimID][ParameterName][RoundNumber][SampleNumber]
-	// for each sim
-		// couple round x=RoundNumber+0.1*SampleNumber;
-		// this.DetailedParameterGraphData
-		// determine if colour determination has occurred
-		// if not do it
-		// plot into a Scatter plot
-		for (var PCount in this.DetailedParameterHistoryGraphData[PCount]){
-			var ChartData=this.DetailedParameterHistoryGraphData[PCount];
-			
-			var PlotSettings={xaxis: {
-				axisLabel: xAxisLabel,
-				axisLabelUseCanvas: true,
-				axisLabelFontSizePixels: 12,
-				axisLabelFontFamily: 'Verdana, Arial, Helvetica, Tahoma, sans-serif',
-				axisLabelPadding: 5,
-				tickLength: 0
-			},
-			yaxis: {
-				axisLabel: yAxisLabel,
-				axisLabelUseCanvas: true,
-				axisLabelFontSizePixels: 12,
-				axisLabelFontFamily: 'Verdana, Arial, Helvetica, Tahoma, sans-serif',
-				axisLabelPadding: 5
-			}
+	
+	console.log("THE GRAPHING FUNCTION IS RUN");
+	
+	// determine if colour determination has occurred
+	if (this.GraphColour.length!=this.Settings.NumberOfSimulations){
+		this.GenerateGraphColours(this.Settings.NumberOfSimulations);
+	}
+	
+	for (var PCount in this.DetailedParameterHistoryGraphData){//DetailedParameterHistoryGraphData[PCount][SCount]
+		console.log("PCount"+PCount);
+		var PlotSettings={xaxis: {
+					axisLabelUseCanvas: true,
+					axisLabelFontSizePixels: 12,
+					axisLabelFontFamily: 'Verdana, Arial, Helvetica, Tahoma, sans-serif',
+					axisLabelPadding: 5,
+					tickLength: 0
+				},
+				yaxis: {
+					axisLabelUseCanvas: true,
+					axisLabelFontSizePixels: 12,
+					axisLabelFontFamily: 'Verdana, Arial, Helvetica, Tahoma, sans-serif',
+					axisLabelPadding: 5
+				}
 			};
-			for (var SCount in )
-			var PlotData=[];
-			PlotData[0]={};
-			PlotData[0].data=Points;
-			PlotData[0].points={show:true, radius: 1, filled:true};
-			PlotData[0].color="rgb(255, 0, 0)";
-			$.plot(PlotHolderName, PlotData, PlotSettings);
 			
+		for (var SCount in this.DetailedParameterHistoryGraphData[PCount]){
+			var PlotData=[];
+			PlotData[SCount]={};
+			PlotData[SCount].data=this.DetailedParameterHistoryGraphData[PCount][SCount];
+			PlotData[SCount].points={show:true, radius: 1, filled:true};
+			PlotData[SCount].color=this.GraphColour[SCount];
 			
 		}
+		
+		var PlotHolderName="#"+this.ParamProgressPlotID+PCount;
+		
+		$.plot(PlotHolderName, PlotData, PlotSettings);
+	}
 };
 
 
@@ -608,8 +631,7 @@ OptSelector.prototype.DrawDEOPlots=function (){
 
 
 OptSelector.prototype.GenerateGraphColours=function (NumberOfSimulations){
-	function get_random_color() // http://stackoverflow.com/questions/1152024/best-way-to-generate-a-random-color-in-javascript
-	{
+	function get_random_color(){ // http://stackoverflow.com/questions/1152024/best-way-to-generate-a-random-color-in-javascript
 	    var color = "";
 	    for(var i = 0; i < 3; i++) {
 	    	var sub = Math.floor(Math.random() * 256).toString(16);
@@ -617,10 +639,13 @@ OptSelector.prototype.GenerateGraphColours=function (NumberOfSimulations){
 	    }
 	    return "#" + color;
 	}
+	console.log("Running");
 	
 	this.GraphColour=[];
 	for (var SimCount=0; SimCount<NumberOfSimulations; SimCount++){
+		console.log("In loop"+SimCount);
 		this.GraphColour.push(get_random_color());
+		console.log(this.GraphColour);
 	}
 };
 
