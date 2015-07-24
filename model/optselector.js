@@ -558,16 +558,20 @@ OptSelector.prototype.GraphDetailedParameterHistory=function (){
 
 OptSelector.prototype.PostSimulationRunFunction=function (){
 	var self=this; // this is designed to allow access to the OptSelector 'this' data through the variable 'self'
-	
 	var ReturnFunction=function(){
-		
 		console.log(self);
-		
-		
 		console.log(self.DEOGroup);
-		SummarisedOptimisationResults=self.DEOGroup.Summarise(self.SimulationHolder.Result);
 		
+		// Reorganise the results into a format the DEOGroup can take (array by Sim, then Stat)
+		var DEOBySim=[];
+		for (var SimCount in self.SimulationHolder.Result){
+			DEOBySim[Simcount]=self.SimulationHolder.Result[SimCount].DEOGroupResultsArray;
+		}
 		
+		self.DEOGroup.Summarise(DEOBySim);
+		
+		// plot the results
+		self.DEOGroup.GraphAll();
 		// console.log("Infinite loop?");
 		// this.FunctionToFunctionToRunOnCompletion();
 	}
