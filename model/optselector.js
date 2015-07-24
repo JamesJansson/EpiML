@@ -456,22 +456,9 @@ OptSelector.prototype.RunOptimisation=function (){
 
 
 OptSelector.prototype.ProcessPushDetailedParameterHistory=function (Input, SimID,e){
-	
-	
-	console.error("Processing DetailedParameterHistory");
-	console.error("Input");
-	console.log(Input);
-	console.error("SimID");
-	console.log(SimID);
-
-	
+	console.log("SimID: " +SimID + " Round: " + Input.length);
 	// Join optimised parameter to the relevant interface data
 	this.DetailedParameterHistory[SimID]=Input;//[SimID][RoundNumber][SampleNumber][ParameterName]
-	
-	console.error("DetailedParameterHistory DetailedParameterHistory DetailedParameterHistory DetailedParameterHistory DetailedParameterHistory DetailedParameterHistory");
-	console.log(this.DetailedParameterHistory);
-	console.log("Before");
-	console.log(this.DetailedParameterHistoryGraphData);
 
 	for (var PCount in this.OptParamArray){
 		var ParamID=this.OptParamArray[PCount].ParameterID;
@@ -490,16 +477,14 @@ OptSelector.prototype.ProcessPushDetailedParameterHistory=function (Input, SimID
 		}
 		//else create the structures but fill it with no 
 	}
-	console.log("After");
-	console.log(this.DetailedParameterHistoryGraphData);
+
 	
 	// Draw a graph in the relevant sections
 	this.GraphDetailedParameterHistory();
 };
 
 OptSelector.prototype.ProcessPushDetailedErrorHistory=function (Input, SimID){
-	console.error("Processing DetailedErrorHistory");
-	console.log(Input);
+
 	
 	this.DetailedErrorHistory[SimID]=Input;
 	// Draw a graph in the relevant sections
@@ -507,9 +492,35 @@ OptSelector.prototype.ProcessPushDetailedErrorHistory=function (Input, SimID){
 };
 
 OptSelector.prototype.ProcessPushDetailedErrorHistoryByDEO=function (Input, SimID){
-	console.error("Processing DetailedErrorHistoryByDEO");
+	console.error("ErrorHistoryByDEO");
 	console.log(Input);
-	this.DetailedErrorHistoryByDEO=[];	
+	
+	this.DetailedErrorHistoryByDEO[SimID]=Input;
+	
+	var OptimisedDEOCount=-1;
+	for (var DCount in this.DEOGroup.DEOArray){
+		//var DEOID=this.OptParamArray[DCount].Name;
+		if (typeof(this.DetailedErrorHistoryByDEOGraphData[DCount])=="undefined"){
+			this.DetailedErrorHistoryByDEOGraphData[DCount]=[];
+		}
+		this.DetailedErrorHistoryByDEOGraphData[DCount][SimID]=[];
+		if (this.DEOToOptimise[DCount]==true){
+			OptimisedDEOCount++;
+			for (var RCount in this.DetailedErrorHistoryByDEO[SimID]){//Round 
+				for (var SCount in this.DetailedErrorHistoryByDEO[SimID][RCount]){//Sample
+					var y=this.DetailedErrorHistoryByDEO[SimID][RCount][SCount][OptimisedDEOCount];
+					var x=Number(RCount)+0.1*Number(SCount);
+					this.DetailedErrorHistoryByDEOGraphData[DCount][SimID].push([x, y]);
+				}
+			}
+		}
+	}
+	
+	this.GraphDetailedErrorHistoryByDEO();
+	
+	// Input=[]
+	// this.Storage[NameToStoreUnderInStorage][this.RoundCount][this.SampleCount][DEo]
+	// this.DetailedErrorHistoryByDEO=[];
 	//  Process each of the errors to the errors that are optimised for
 	
 };
@@ -552,7 +563,40 @@ OptSelector.prototype.GraphDetailedParameterHistory=function (){
 };
 
 
-
+OptSelector.prototype.GraphDetailedErrorHistoryByDEO=function (){
+	// determine if colour determination has occurred
+	if (this.GraphColour.length!=this.Settings.NumberOfSimulations){
+		this.GenerateGraphColours(this.Settings.NumberOfSimulations);
+	}
+	
+	var PlotSettings={xaxis: {
+			axisLabelUseCanvas: true,
+			axisLabelFontSizePixels: 12,
+			axisLabelFontFamily: 'Verdana, Arial, Helvetica, Tahoma, sans-serif',
+			axisLabelPadding: 5,
+			tickLength: 0
+		},
+		yaxis: {
+			axisLabelUseCanvas: true,
+			axisLabelFontSizePixels: 12,
+			axisLabelFontFamily: 'Verdana, Arial, Helvetica, Tahoma, sans-serif',
+			axisLabelPadding: 5
+		}
+	};
+	
+	for (var DCount in this.DetailedErrorHistoryByDEOGraphData){//DetailedParameterHistoryGraphData[PCount][SCount]
+		var PlotData=[];
+		for (var SCount in this.DetailedErrorHistoryByDEOGraphData[DCount]){
+			PlotData[SCount]={};
+			PlotData[SCount].data=this.DetailedErrorHistoryByDEOGraphData[DCount][SCount];
+			PlotData[SCount].points={show:true, radius: 1, filled:true};
+			PlotData[SCount].color=this.GraphColour[SCount];
+		}
+		var PlotHolderName="#"+this.DEOErrorPlotID+DCount;
+		
+		$.plot(PlotHolderName, PlotData, PlotSettings);
+	}
+};
 
 
 
@@ -563,23 +607,11 @@ OptSelector.prototype.GraphDetailedParameterHistory=function (){
 
 OptSelector.prototype.PostSimulationRunFunction=function (){
 
-	console.log(this);
-	console.log(this.DEOGroup);
-	console.log(this.SimulationHolder.Result[0]);
-	// Reorganise the results into a format the DEOGroup can take (array by Sim, then Stat)
-	// var DEOResultsBySim=[];
-	// for (var SimCount in this.SimulationHolder.Result){
-	// 	DEOResultsBySim[SimCount]=this.SimulationHolder.Result[SimCount].DEOResultsArray;
-	// }
-	// console.log(DEOResultsBySim);
-	
-	console.log("Attmepting summarise");
+	// Summarise DEO Results
 	this.DEOGroup.Summarise(this.SimulationHolder.Result);
 	
 	// plot the results
 	this.DEOGroup.GraphAll(this.DEOResultsPlotID);
-	// console.log("Infinite loop?");
-	// this.FunctionToFunctionToRunOnCompletion();
 
 };
 
@@ -770,9 +802,9 @@ function OptSelectorHandler(WorkerData){
 		// Store detailed error in the optimisation holder
 		this.Store("DetailedParameterHistory", CurrentSimulationVals.ParameterSet);
 		// Call function that deliver detailed histories back to the interface
-		PushDetailedParameterHistory(this.DetailedParameterHistory)
-		PushDetailedErrorHistory(this.DetailedErrorHistory)
-		PushDetailedErrorHistoryByDEO(this.Storage.DetailedErrorHistoryByDEO)
+		PushDetailedParameterHistory(this.DetailedParameterHistory);
+		PushDetailedErrorHistory(this.DetailedErrorHistory);
+		PushDetailedErrorHistoryByDEO(this.Storage.DetailedErrorHistoryByDEO);
 	}
 	
 	OptimisationSettings.RoundProgressFunction=function(SimulationNumber, Parameter, SimOutput, ErrorValues){
@@ -786,7 +818,7 @@ function OptSelectorHandler(WorkerData){
 	// Set number of simulations
 	OptimisationSettings.NumberOfSamplesPerRound=10;// note we'll randomly select one of these results
 	OptimisationSettings.MaxIterations=10;// In this case, it will allow 10 000 different parameter selections, which gives a granularity of 1% of the range. Should be sufficient
-	OptimisationSettings.MaxTime=20;//stop after 10 seconds
+	OptimisationSettings.MaxTime=600;//stop after 10 seconds
 	
 	
 	

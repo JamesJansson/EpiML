@@ -450,8 +450,8 @@ function CreatePWID(EntryParams, Time, TimeStep){
 		var TimeOfStartingInjection=Time+TimeStep*Rand.Value();
 		var YearOfBirth=TimeOfStartingInjection-AgeAtFirstInjection;
 		var Sexuality=RandSampleWeighted([Param.IDU.Sexuality.Heterosexual, Param.IDU.Sexuality.Homosexual, Param.IDU.Sexuality.Bisexual], [1, 2,3]);
-		PWIDPopulation[TotalPWID-1]=new PersonObject(YearOfBirth, SexIndex, Sexuality);
-		PWIDPopulation[TotalPWID-1].IDU.StartInjecting(TimeOfStartingInjection);
+		PWIDPopulation[TotalPWID]=new PersonObject(YearOfBirth, SexIndex, Sexuality);
+		PWIDPopulation[TotalPWID].IDU.StartInjecting(TimeOfStartingInjection);
 	}
 
 	return PWIDPopulation;

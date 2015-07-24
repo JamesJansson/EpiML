@@ -311,6 +311,9 @@ function FullModel(FunctionInput){
 		StepCount++;
 		// RunInterventions(Time); 
 	
+	
+		console.log(Time);
+	
 		// this is a function that will be called "AdvanceModel(YearLast, YearCurrent, Param, Population)
 		// determine number of individuals added the population of PWID
 		// Param.IDU.Add 
@@ -327,6 +330,13 @@ function FullModel(FunctionInput){
     	// Timers.CreatePWID.Start();
 
 		var PWIDToAdd=CreatePWID(Param.IDU.Entry, Time, Param.TimeStep);
+		
+		// console.log("Outputting PWIDToAdd");
+		// console.log(PWIDToAdd);
+		// console.log("Outputting Param.IDU.Entry");
+		// console.log(Param.IDU.Entry);
+		// throw "Stopping to inspect Param.IDU.Entry";
+
 
 		// Timers.CreatePWID.Stop();
 		// Timers.CreatePWID.Display();
