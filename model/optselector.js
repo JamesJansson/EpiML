@@ -577,7 +577,7 @@ OptSelector.prototype.PostSimulationRunFunction=function (){
 	this.DEOGroup.Summarise(this.SimulationHolder.Result);
 	
 	// plot the results
-	this.DEOGroup.GraphAll();
+	this.DEOGroup.GraphAll(this.DEOResultsPlotID);
 	// console.log("Infinite loop?");
 	// this.FunctionToFunctionToRunOnCompletion();
 

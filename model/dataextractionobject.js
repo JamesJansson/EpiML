@@ -328,7 +328,10 @@ DataExtractionObjectGroup.prototype.GraphAll=function(GraphInterfaceID){
 
 	var SpecificStatCount=0;
 	for (var SpecificStatRef in this.DEOArray){
+		console.log(GraphInterfaceID+SpecificStatCount);
+		
 		this.DEOArray[SpecificStatRef].DrawGraph(GraphInterfaceID+SpecificStatCount);
+		SpecificStatCount++;
 	}
 };
 
