@@ -10,7 +10,7 @@ var SimOutput;
 var AggregatedResults;
 
 // Setting up whether it is working under NodeJS or not
-RunningNodeJS=true;
+var RunningNodeJS=true;
 
 // Load some of the required packages
 var fs = require('fs');
@@ -19,8 +19,8 @@ var fs = require('fs');
 var SimulationRunning=0;//set to 1 if running
 
 // Setting up crash dump
-// var gui = require('nw.gui');
-// gui.App.setCrashDumpDir(dir);
+var gui = require('nw.gui');
+gui.App.setCrashDumpDir("./crashdump");
 
 function InitialiseEpiML(){
 	

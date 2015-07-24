@@ -458,16 +458,15 @@ OptSelector.prototype.ProcessPushDetailedParameterHistory=function (Input, SimID
 	console.log(Input);
 	console.error("SimID");
 	console.log(SimID);
-	console.error("Other");
-	console.log(e);
+
 	
 	// Join optimised parameter to the relevant interface data
 	this.DetailedParameterHistory[SimID]=Input;//[SimID][RoundNumber][SampleNumber][ParameterName]
 	
 	console.error("DetailedParameterHistory DetailedParameterHistory DetailedParameterHistory DetailedParameterHistory DetailedParameterHistory DetailedParameterHistory");
 	console.log(this.DetailedParameterHistory);
-	
-	
+	console.log("Before");
+	console.log(this.DetailedParameterHistoryGraphData);
 	this.ParameterHistoryGraphData=[];
 	for (var PCount in this.OptParamArray){
 		
@@ -488,7 +487,8 @@ OptSelector.prototype.ProcessPushDetailedParameterHistory=function (Input, SimID
 		}
 		//else create the structures but fill it with no 
 	}
-	
+	console.log("After");
+	console.log(this.DetailedParameterHistoryGraphData);
 	
 	// Draw a graph in the relevant sections
 	this.GraphDetailedParameterHistory();
@@ -520,25 +520,26 @@ OptSelector.prototype.GraphDetailedParameterHistory=function (){
 		this.GenerateGraphColours(this.Settings.NumberOfSimulations);
 	}
 	
+	var PlotSettings={xaxis: {
+			axisLabelUseCanvas: true,
+			axisLabelFontSizePixels: 12,
+			axisLabelFontFamily: 'Verdana, Arial, Helvetica, Tahoma, sans-serif',
+			axisLabelPadding: 5,
+			tickLength: 0
+		},
+		yaxis: {
+			axisLabelUseCanvas: true,
+			axisLabelFontSizePixels: 12,
+			axisLabelFontFamily: 'Verdana, Arial, Helvetica, Tahoma, sans-serif',
+			axisLabelPadding: 5
+		}
+	};
+	
 	for (var PCount in this.DetailedParameterHistoryGraphData){//DetailedParameterHistoryGraphData[PCount][SCount]
 		console.log("PCount"+PCount);
-		var PlotSettings={xaxis: {
-					axisLabelUseCanvas: true,
-					axisLabelFontSizePixels: 12,
-					axisLabelFontFamily: 'Verdana, Arial, Helvetica, Tahoma, sans-serif',
-					axisLabelPadding: 5,
-					tickLength: 0
-				},
-				yaxis: {
-					axisLabelUseCanvas: true,
-					axisLabelFontSizePixels: 12,
-					axisLabelFontFamily: 'Verdana, Arial, Helvetica, Tahoma, sans-serif',
-					axisLabelPadding: 5
-				}
-			};
-			
+		var PlotData=[];
 		for (var SCount in this.DetailedParameterHistoryGraphData[PCount]){
-			var PlotData=[];
+			
 			PlotData[SCount]={};
 			PlotData[SCount].data=this.DetailedParameterHistoryGraphData[PCount][SCount];
 			PlotData[SCount].points={show:true, radius: 1, filled:true};
@@ -547,6 +548,8 @@ OptSelector.prototype.GraphDetailedParameterHistory=function (){
 		}
 		
 		var PlotHolderName="#"+this.ParamProgressPlotID+PCount;
+		
+		console.log(PlotData);
 		
 		$.plot(PlotHolderName, PlotData, PlotSettings);
 	}
