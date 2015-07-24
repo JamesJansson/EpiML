@@ -279,6 +279,7 @@ DataExtractionObjectGroup.prototype.GenerateGraphData=function(SimulationResult)
 	for (var DEOCount in this.DEOArray){
 	    this.DEOArray[DEOCount].GenerateGraphData(SimulationResult);
 	}
+	return this.DEOArray;
 };
 
 DataExtractionObjectGroup.prototype.Summarise=function(ResultsBySim){

@@ -467,10 +467,8 @@ OptSelector.prototype.ProcessPushDetailedParameterHistory=function (Input, SimID
 	console.log(this.DetailedParameterHistory);
 	console.log("Before");
 	console.log(this.DetailedParameterHistoryGraphData);
-	this.ParameterHistoryGraphData=[];
+
 	for (var PCount in this.OptParamArray){
-		
-		
 		var ParamID=this.OptParamArray[PCount].ParameterID;
 		if (typeof(this.DetailedParameterHistoryGraphData[PCount])=="undefined"){
 			this.DetailedParameterHistoryGraphData[PCount]=[];
@@ -511,10 +509,9 @@ OptSelector.prototype.ProcessPushDetailedErrorHistoryByDEO=function (Input, SimI
 	
 };
 
+
+
 OptSelector.prototype.GraphDetailedParameterHistory=function (){
-	
-	console.log("THE GRAPHING FUNCTION IS RUN");
-	
 	// determine if colour determination has occurred
 	if (this.GraphColour.length!=this.Settings.NumberOfSimulations){
 		this.GenerateGraphColours(this.Settings.NumberOfSimulations);
@@ -536,20 +533,14 @@ OptSelector.prototype.GraphDetailedParameterHistory=function (){
 	};
 	
 	for (var PCount in this.DetailedParameterHistoryGraphData){//DetailedParameterHistoryGraphData[PCount][SCount]
-		console.log("PCount"+PCount);
 		var PlotData=[];
 		for (var SCount in this.DetailedParameterHistoryGraphData[PCount]){
-			
 			PlotData[SCount]={};
 			PlotData[SCount].data=this.DetailedParameterHistoryGraphData[PCount][SCount];
 			PlotData[SCount].points={show:true, radius: 1, filled:true};
 			PlotData[SCount].color=this.GraphColour[SCount];
-			
 		}
-		
 		var PlotHolderName="#"+this.ParamProgressPlotID+PCount;
-		
-		console.log(PlotData);
 		
 		$.plot(PlotHolderName, PlotData, PlotSettings);
 	}
@@ -707,6 +698,7 @@ function OptSelectorHandler(WorkerData){
 		// Run the pre-code
 		// This function may be used to do things like set up globals and format data in a way that should only be done once per instance 
 		ReturnedResults.PreOptimisationResults=PreOptimisationFunction(FunctionInput);
+		FunctionInput.PreOptimisationResults=ReturnedResults.PreOptimisationResults;// this is so that the  function can access data locally
 	}
 	
 	
@@ -733,7 +725,6 @@ function OptSelectorHandler(WorkerData){
 	// Add the DEO to the function input for following cases
 	
 	// Set up the parameters
-	var ParamOptimisationArray=OptSelectorSettings.ParamOptimisationArray;
 	
 	
 	
@@ -780,45 +771,7 @@ function OptSelectorHandler(WorkerData){
 		console.error("Optimisation step "+SimulationNumber+" complete.");
 		console.log(this.Storage.DetailedError);
 		if (OptSelectorSettings.LiveUpdatePlots==true){
-			// Send Parameter back to the main simulation
-			// Send Error values backs to the main simulation 
-			// Send ThreadNumber back 
-			// SimulationNumber 
-			// if it is from a particular sim, replace all existing 
-			
-			
-			
-			console.log("Params: X "+Mean(Parameter.X.CurrentVec)+" Y "+Mean(Parameter.Y.CurrentVec));
-			var PSetCount=0;
-			var Data=[];
-			for (var key in Parameter.X.CurrentVec){
-				Data[PSetCount]=[Parameter.X.CurrentVec[key], Parameter.Y.CurrentVec[key]];
-				PSetCount++;
-			}
-			
-			
-			Data.Y=this.MeanError;
-			Data.X=AscendingArray(0, this.MeanError.length-1);
-			
-			
-			PlotSomething={};
-			PlotSomething.Data=Data;
-			PlotSomething.Code="ScatterPlot('#"+ Common.OptimisationPlotID+ "OptimisationPlotHolder0', Data,  'Step', 'Error Value');";
-			self.postMessage({Execute: PlotSomething});
-			
-			// Parse back the historical error for the total and each data pulled
-			
-			
-			
-			
-			// for each data found
-			
-			// for (key in this.Parameter){
-			// 	CurrentParam=this.Parameter[key];
-			// }
-			
-			
-			//ScatterPlot('#PlotHolder', Data,  'AAA', 'BBB');
+
 		}
 	};
 	

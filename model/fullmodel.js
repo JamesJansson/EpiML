@@ -23,12 +23,7 @@ function FullModelTest(WorkerData){
 
 	
 	
-	// Set up the treatment function
-	PostDataTreatmentFunction=HCVTreatmentScenario[Settings.HCVTreatmentScenario].Function;
 	
-	
-	
-	var Intervention=function(){};
 	
 	
 	
@@ -128,7 +123,15 @@ function FullModelTest(WorkerData){
 	var FullModelTimer=new RecordingTimer("FullModelTimer");
 	FullModelTimer.Start();
 	// Run the full model
-	var FullModelResults=FullModel(Notifications, Param.Time.EndSimulation, Intervention);
+	
+	
+	var FunctionInput={};
+	FunctionInput.Notifications=Notifications;
+	FunctionInput.EndSimulationTime=Param.Time.EndSimulation;
+	FunctionInput.Intervention=Intervention;
+	
+	
+	var FullModelResults=FullModel(FunctionInput);
 	FullModelTimer.Stop();
 	console.error("====================================");
 	FullModelTimer.Display();
@@ -232,7 +235,19 @@ function FullModelTest(WorkerData){
 
 
 
-function FullModel(Notifications, EndSimulation, Intervention){ 
+function FullModel(FunctionInput){ 
+	
+	// var Notifications=FunctionInput.Notifications;
+	// var EndSimulation=FunctionInput.EndSimulationTime;
+	// var Intervention=FunctionInput.Intervention;
+	
+	
+	// type(FunctionInput.Intervention)==function
+
+
+	// Set up the treatment function
+	PostDataTreatmentFunction=HCVTreatmentScenario[Settings.HCVTreatmentScenario].Function;
+	var Intervention=function(){};
 
 	// Intervention[No]=function(Time){
 	// 	   if (Time<2016){
@@ -292,7 +307,7 @@ function FullModel(Notifications, EndSimulation, Intervention){
 	// Timers.AssignSexualPartner=new RecordingTimer("AssignSexualPartner");
 	// Timers.DetermineHCVTransmissions=new RecordingTimer("DetermineHCVTransmissions");
 	
-	for (var Time=Param.Time.StartDynamicModel; Time<EndSimulation; Time+=Param.TimeStep){// each time step
+	for (var Time=Param.Time.StartDynamicModel; Time<Param.Time.EndSimulation; Time+=Param.TimeStep){// each time step
 		StepCount++;
 		// RunInterventions(Time); 
 	
