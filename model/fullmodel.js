@@ -310,8 +310,8 @@ function FullModel(FunctionInput){
 		StepCount++;
 		// RunInterventions(Time); 
 	
-	
-		console.log(Time);
+		
+		//console.log(Time);
 	
 		// this is a function that will be called "AdvanceModel(YearLast, YearCurrent, Param, Population)
 		// determine number of individuals added the population of PWID
