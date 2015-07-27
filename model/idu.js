@@ -71,7 +71,7 @@ IDUObject.prototype.StartInjecting= function (Time){
 		
 		
 		// Add the transition to former user
-		var TimeUntilStoppingInjecting=TimeUntilEvent(Param.IDU.RateOfCesssation);
+		var TimeUntilStoppingInjecting=TimeUntilEvent(Param.IDU.RateOfCessation);
 		var TimeOfStoppingInjecting=TimeOfRegularUse+TimeUntilStoppingInjecting;
 		this.Use.Set(4, TimeOfStoppingInjecting);
 		// Stop NSP attendance- note, adding this should delete future events
