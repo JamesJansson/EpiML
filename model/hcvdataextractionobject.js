@@ -364,7 +364,7 @@ function HCVDataExtractionObjects(){
 		// This value is calculated by age group
 		
 		// 
-		console.log(SimulationResult);
+		//console.log(SimulationResult);
 		
 		var TotalPenalty=0;
 		for (var Count in SimulationResult.HCVDataDiagnosisResults){
