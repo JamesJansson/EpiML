@@ -966,8 +966,8 @@
             0.6002960194823185
         ],
         "MinValue": 0,
-        "MaxValue": 1,
-        "Description": "This parameter indicates the risk reduction of receptively sharing needles going from the age of 18 to the age of 40. It is based off:\nThe relationship between age and risky injecting behaviours among a sample of Australian people who inject drugs.\nhttp://www.ncbi.nlm.nih.gov/pubmed/23664499\n\nCalculations related to this figure can be found in the file \"Receptive sharing risk.xlsx\""
+        "MaxValue": 2,
+        "Description": "This parameter indicates the risk reduction of receptively sharing needles going from the age of 18 to the age of 40. It is based off:\nThe relationship between age and risky injecting behaviours among a sample of Australian people who inject drugs.\nhttp://www.ncbi.nlm.nih.gov/pubmed/23664499\n\nCalculations related to this figure can be found in the file \"Receptive sharing risk.xlsx\"\n\nNote that the upper limit of 2 is because theoretically the rate of sharing could go up with age, although it is unlikely. "
     },
     {
         "ParameterID": "IDU.ReceptiveSharing18",

@@ -172,7 +172,45 @@ function HCVDataExtractionObjects(){
 		}
 	}
 
+// ******************************************************************************************************
+// ******************************************************************************************************
+// ******************************************************************************************************
+// This section deals with the entry of new injectors into the population
 	
+	
+	// Create a new object to extract heterosexual identity from NSP
+	NewDEO=new DataExtractionObject();
+	
+	// Load the data into the function 
+	var DataStruct={};
+	DataStruct.Time=[];
+	DataStruct.Value=[];
+	NewDEO.SetData(DataStruct);
+	NewDEO.SetGraphTime(GraphTime);
+	NewDEO.Name="RecentlyBecameInjector";
+	NewDEO.Title="Number of people who recently became injectors";
+	NewDEO.XLabel="Year";
+	NewDEO.YLabel="Number of people";
+	
+	NewDEO.ResultFunction= function (SimulationResult, Time){
+		var Count=0;
+		for (var PersonCount in SimulationResult.Population){
+			var Person=SimulationResult.Population[PersonCount];
+			if (Person.Alive(Time)){
+				if (Person.IDU.EverInjectedAtTime(Time)==false && Person.IDU.EverInjectedAtTime(Time+Param.TimeStep)){
+					Count++;
+				}
+			}
+		}
+		return Count;
+	};
+	
+	// Set optimisation
+	NewDEO.Optimise=false;
+	NewDEO.Optimisation.ProportionalError=true;
+	
+	// Add the object to the array of all ODEOS
+	DEO.push(NewDEO);
 
 	
 // ******************************************************************************************************
