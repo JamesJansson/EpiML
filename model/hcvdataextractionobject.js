@@ -177,8 +177,6 @@ function HCVDataExtractionObjects(){
 // ******************************************************************************************************
 // This section deals with the entry of new injectors into the population
 	
-	
-	// Create a new object to extract heterosexual identity from NSP
 	NewDEO=new DataExtractionObject();
 	
 	// Load the data into the function 
@@ -207,16 +205,65 @@ function HCVDataExtractionObjects(){
 	
 	// Set optimisation
 	NewDEO.Optimise=false;
-	NewDEO.Optimisation.ProportionalError=true;
+	NewDEO.Optimisation.ProportionalError=false;
 	
 	// Add the object to the array of all ODEOS
 	DEO.push(NewDEO);
+
+
+
+
 
 	
 // ******************************************************************************************************
 // ******************************************************************************************************
 // ******************************************************************************************************
 // This section deals with the creation of summary statistics for NSP survey data
+
+
+
+
+	// Create a new object to extract heterosexual identity from NSP
+	NewDEO=new DataExtractionObject();
+	
+
+	NewDEO.SetGraphTime(GraphTime);
+	NewDEO.Name="NSPParticipants";
+	NewDEO.Title="Total in NSP";
+	NewDEO.XLabel="Year";
+	NewDEO.YLabel="Number";
+	
+	NewDEO.ResultFunction= function (SimulationResult, Time){
+		var NSPTotal=0;
+		for (var PersonCount in SimulationResult.Population){
+			var Person=SimulationResult.Population[PersonCount];
+			if (Person.Alive(Time)){
+				// Check if NSP
+				if (Person.IDU.NSP.Value(Time)){
+					NSPTotal++;
+				}
+			}
+		}
+		return NSPTotal;
+	};
+
+	
+	// Set optimisation
+	NewDEO.Optimise=false;
+	NewDEO.Optimisation.ProportionalError=false;
+	
+	// Add the object to the array of all ODEOS
+	DEO.push(NewDEO);
+
+
+
+
+
+
+
+
+
+
 	
 	
 	// Create a new object to extract heterosexual identity from NSP
@@ -229,7 +276,7 @@ function HCVDataExtractionObjects(){
 	NewDEO.SetData(DataStruct);
 	NewDEO.SetGraphTime(GraphTime);
 	NewDEO.Name="HeterosexualNSPProp";
-	NewDEO.Title="Proportion of NSP Heterosexualsexual";
+	NewDEO.Title="Proportion of NSP Heterosexual";
 	NewDEO.XLabel="Year";
 	NewDEO.YLabel="Proportion";
 	
@@ -240,7 +287,8 @@ function HCVDataExtractionObjects(){
 			var Person=SimulationResult.Population[PersonCount];
 			if (Person.Alive(Time)){
 				// Check if NSP
-				if (Person.IDU.NSP.Value(Time)){
+				//if (Person.IDU.NSP.Value(Time)){
+				if (Person.IDU.CurrentlyInjecting(Time)){
 					NSPTotal++;
 					// Check if Heterosexual
 					if (Person.Sexuality==1){
@@ -282,7 +330,8 @@ function HCVDataExtractionObjects(){
 			var Person=SimulationResult.Population[PersonCount];
 			if (Person.Alive(Time)){
 				// Check if NSP
-				if (Person.IDU.NSP.Value(Time)){
+				//if (Person.IDU.NSP.Value(Time)){
+				if (Person.IDU.CurrentlyInjecting(Time)){
 					NSPTotal++;
 					// Check if homosexual
 					if (Person.Sexuality==2){
@@ -322,7 +371,8 @@ function HCVDataExtractionObjects(){
 			var Person=SimulationResult.Population[PersonCount];
 			if (Person.Alive(Time)){
 				// Check if NSP
-				if (Person.IDU.NSP.Value(Time)){
+				// if (Person.IDU.NSP.Value(Time)){
+				if (Person.IDU.CurrentlyInjecting(Time)){
 					NSPTotal++;
 					// Check if bisexual
 					if (Person.Sexuality==3){
