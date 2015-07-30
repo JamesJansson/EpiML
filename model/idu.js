@@ -46,6 +46,12 @@ IDUObject.prototype.StartInjecting= function (Time){
 	// Add the first date of injecting
 	this.Use.Set(1, Time);
 	
+	// Determine whether the person is a sharing user or not
+	// IDU.SharingPriorToNSP
+	if (Rand.Value()<Param.IDU.SharingPriorToNSP){
+		this.Sharing.Set(1, Time);
+	}
+	
 	// Add the transition to occasional user
 	
 	// Following entry, there is a probability associated with becoming a regular user, and following that exiting at a certain probability
