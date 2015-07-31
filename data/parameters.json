@@ -771,12 +771,12 @@
         "ArrayName": "Param",
         "ArrayNumber": "41",
         "InterfaceID": "ParamHolder_41",
-        "DistributionType": "uniform",
+        "DistributionType": "optimisedsample",
         "Median": 1999,
         "StandardError": 0,
-        "Upper95Range": 2000.85,
-        "Lower95Range": 1998.15,
-        "CalculatedMedian": 1999.5,
+        "Upper95Range": 1999,
+        "Lower95Range": 1999,
+        "CalculatedMedian": 1999,
         "NumberOfSamples": 1,
         "Val": [
             1999
