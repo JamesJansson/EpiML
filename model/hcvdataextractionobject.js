@@ -455,12 +455,18 @@ function HCVDataExtractionObjects(){
 		//console.log(SimulationResult);
 		
 		var TotalPenalty=0;
+		var TotalInsufficientInfected=0;
+		var TotalInsufficientSymptomatic=0;
 		for (var Count in SimulationResult.HCVDataDiagnosisResults){
 			var Pen=SimulationResult.HCVDataDiagnosisResults[Count].Penalty;
+			TotalInsufficientInfected+=Pen.InsufficientInfectedToDiagnoseTotal;
+			TotalInsufficientSymptomatic+=Pen.InsufficientSymptomaticDiagnosesTotal;
 			TotalPenalty+=Pen.InsufficientInfectedToDiagnoseTotal+Pen.InsufficientSymptomaticDiagnosesTotal;
 		}
 		
 		console.log("Total penalty for notifications: "+TotalPenalty);
+		console.log("Penalty for InsufficientInfectedToDiagnose: "+TotalInsufficientInfected);
+		console.log("Penalty for InsufficientSymptomaticDiagnoses: "+TotalInsufficientSymptomatic);
 		console.log("Need to determine how much of a shortfall this is");
 		
 		return TotalPenalty;
