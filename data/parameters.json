@@ -934,7 +934,7 @@
         "Description": ""
     },
     {
-        "ParameterID": "IDU.RateOfCesssation",
+        "ParameterID": "IDU.RateOfCessation",
         "ArrayName": "Param",
         "ArrayNumber": "50",
         "InterfaceID": "ParamHolder_50",

@@ -480,7 +480,7 @@ function FullModel(FunctionInput){
 	
 	
 	
-	
+	DetermineAverageInjectingDuration(Person);
 	
 	
 	return Results;
@@ -504,7 +504,29 @@ function InitialDistribution() {
 
 
 
-
+function DetermineAverageInjectingDuration(Person){
+	var InjectionDuration=[];
+	var EverInjected=0;
+	var RecentInjected=0;
+	for (var Pn in Person){
+		// Determine if the person is ever an injector
+		if (Person[Pn].IDU.EverInjectedAtTime(2013)){
+			EverInjected++;
+			if (Person[Pn].IDU.InjectedBetween(2012, 2013)){
+				RecentInjected++;
+			}
+			InjectionDuration.push(Person[Pn].IDU.InjectingDuration());
+		}
+	}
+	console.log("EverInjected: "+EverInjected);
+	console.log("RecentInjected: "+RecentInjected);
+	console.log("Mean: "+Mean(InjectionDuration));
+	console.log("Median: "+Median(InjectionDuration));
+	console.log("25%: "+Percentile(InjectionDuration, 25));
+	console.log("75%: "+Percentile(InjectionDuration, 75));
+	console.log(InjectionDuration);
+	
+}
 
 
 

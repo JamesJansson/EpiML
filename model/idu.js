@@ -97,8 +97,8 @@ IDUObject.prototype.StartInjecting= function (Time){
 		var TimeOfStoppingInjecting=TimeUntilEvent(Param.IDU.RateOfCeasingIrregularUse);
 		this.Use.Set(4, Time+TimeOfStoppingInjecting);
 	}
-	
-	
+	console.log(this.Use.Time);
+	console.log(this.Use.ValueVec);
 	// Determine if the person is a sharer
 	
 	
@@ -129,13 +129,10 @@ IDUObject.prototype.CurrentlyInjecting= function (Time){
 	return false;
 };
 
-IDUObject.prototype.InjectingDuration= function (Time){
-	var UseValue=this.Use.Value(Time);
-	if (UseValue>0 && UseValue<4){
-		// Find when the person first starts injecting
-		
-	}
-	return -1;// not currently injecting
+IDUObject.prototype.InjectingDuration= function (){
+	var InjectStartTime=this.Use.FirstTimeOf(1);
+	var InjectStopTime=this.Use.FirstTimeOf(4);
+	return InjectStopTime-InjectStartTime;
 };
 
 IDUObject.prototype.EverInjectedAtTime= function (Time){
