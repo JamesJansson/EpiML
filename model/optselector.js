@@ -130,7 +130,7 @@ function OptSelector(Name, DivID, Functions, PointerToParamGroup, DEOArrayFuncti
 	this.GraphColour=[];
 	this.GenerateGraphColours(Settings.NoSims);
 	
-
+	this.ExportSimulationOutput=false;
 	
 	// the information is sent to the worker, the worker finds the 
 
@@ -439,7 +439,7 @@ OptSelector.prototype.RunOptimisation=function (){
 	OptSelectorSettings.DEOToOptimise=this.DEOToOptimise;
 	
 	OptSelectorSettings.Functions=this.Functions;
-
+	OptSelectorSettings.ExportSimulationOutput=this.ExportSimulationOutput;
 	
 	RunSettings.Common.OptSelectorSettings=OptSelectorSettings;
 	
@@ -923,8 +923,8 @@ function OptSelectorHandler(WorkerData){
 	// Create the data that is returned to the interface for graphing. 
 	ReturnedResults.DEOResultsArray=DEOGroup.GenerateGraphData(SimulationResults); 
 	
-	if (typeof(OptSelectorSettings.ExportOutput)!="undefined"){
-		if (OptSelectorSettings.ExportOutput==true){
+	if (typeof(OptSelectorSettings.ExportSimulationOutput)!="undefined"){
+		if (OptSelectorSettings.ExportSimulationOutput==true){
 			ReturnedResults.OptimisedSimOutput=SimulationResults;
 		}
 	}
