@@ -97,8 +97,7 @@ IDUObject.prototype.StartInjecting= function (Time){
 		var TimeOfStoppingInjecting=TimeUntilEvent(Param.IDU.RateOfCeasingIrregularUse);
 		this.Use.Set(4, Time+TimeOfStoppingInjecting);
 	}
-	console.log(this.Use.Time);
-	console.log(this.Use.ValueVec);
+	
 	// Determine if the person is a sharer
 	
 	

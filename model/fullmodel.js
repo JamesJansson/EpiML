@@ -524,7 +524,7 @@ function DetermineAverageInjectingDuration(Person){
 	console.log("Median: "+Median(InjectionDuration));
 	console.log("25%: "+Percentile(InjectionDuration, 25));
 	console.log("75%: "+Percentile(InjectionDuration, 75));
-	console.log(InjectionDuration);
+	
 	
 }
 
