@@ -59,6 +59,9 @@ function OptSelector(Name, DivID, Functions, PointerToParamGroup, DEOArrayFuncti
 	this.DEOErrorPlotID=DivID+"_DEOErrorPlot_";// 
 	this.DEOResultsPlotID=DivID+"_DEOResultsPlot_";// 
 	this.ParamProgressPlotID=DivID+"_ParamProgressPlot_";// 
+	this.TotalErrorPlotID=DivID+"_TotalErrorPlot";
+	
+	
 	// Working on the external PointerToParamGroup
 	this.ParamGroup=PointerToParamGroup;
 	// This means that when paramgroup is updated, this.ParamGroupUpdated is called
@@ -115,6 +118,8 @@ function OptSelector(Name, DivID, Functions, PointerToParamGroup, DEOArrayFuncti
 	this.DetailedParameterHistory=[];
 	this.DetailedErrorHistory=[];
 	this.DetailedErrorHistoryByDEO=[];	
+	
+	this.DetailedErrorHistoryByDEOGraphData=[];
 	
 	
 	
@@ -188,8 +193,18 @@ OptSelector.prototype.DrawParamDiv=function(){
 		HTMLString+="    <div class='SolidButton' onClick='"+this.Name+".ShowAllErrorPlots()'>Show</div>";
 		HTMLString+="    <div class='SolidButton' onClick='"+this.Name+".HideAllErrorPlots()'>Hide</div>";
 		HTMLString+="</div>";
+		
+		HTMLString+="<div style='float:left;'> Total error plot";
+		HTMLString+="    <div class='SolidButton' onClick='"+this.Name+".ShowTotalErrorPlot()'>Show</div>";
+		HTMLString+="    <div class='SolidButton' onClick='"+this.Name+".HideTotalErrorPlot()'>Hide</div>";
 		HTMLString+="</div>";
-		HTMLString+="<h1>Parameters</h1>\n";
+				
+		HTMLString+="</div>";
+		
+		
+	HTMLString+="<div style='width:100%;'><div class='plot' id='"+this.TotalErrorPlotID+"' style='display:none;'></div></div>\n";	
+	
+	HTMLString+="<h1>Parameters</h1>\n";
 	// for each optimisation parameter
 	for (var PCount in this.OptParamArray){
 		// Display the values as described in the ParamGroup
@@ -285,7 +300,13 @@ OptSelector.prototype.HideAllErrorPlots=function(){
 	}
 };
 
+OptSelector.prototype.ShowTotalErrorPlot=function(){
+	document.getElementById(this.TotalErrorPlotID).style.display='';
+};
 
+OptSelector.prototype.HideTotalErrorPlot=function(){
+		document.getElementById(this.TotalErrorPlotID).style.display='none';
+};
 
 
 
@@ -344,11 +365,11 @@ OptSelector.prototype.RunOptimisation=function (){
 	
 	
 	this.DetailedParameterHistory=[];
-	this.DetailedErrorHistory=[];
+	this.DetailedErrorHistoryTotal=[];
 	this.DetailedErrorHistoryByDEO=[];
 	
 	this.DetailedParameterHistoryGraphData=[];
-	this.DetailedErrorHistoryGraphData=[];
+	this.DetailedErrorHistoryTotalGraphData=[];
 	this.DetailedErrorHistoryByDEOGraphData=[];
 	
 	
@@ -357,15 +378,15 @@ OptSelector.prototype.RunOptimisation=function (){
 	var RunProcessPushDetailedParameterHistory=function(ReturnedData, SimNumber, OtherMessageData){
 		PointerToThis.ProcessPushDetailedParameterHistory(ReturnedData, SimNumber, OtherMessageData);
 	}
-	var RunProcessPushDetailedErrorHistory=function(ReturnedData, SimNumber, OtherMessageData){
-		PointerToThis.ProcessPushDetailedErrorHistory(ReturnedData, SimNumber, OtherMessageData);
+	var RunProcessPushDetailedErrorHistoryTotal=function(ReturnedData, SimNumber, OtherMessageData){
+		PointerToThis.ProcessPushDetailedErrorHistoryTotal(ReturnedData, SimNumber, OtherMessageData);
 	}
 	var RunProcessPushDetailedErrorHistoryByDEO=function(ReturnedData, SimNumber, OtherMessageData){
 		PointerToThis.ProcessPushDetailedErrorHistoryByDEO(ReturnedData, SimNumber, OtherMessageData);
 	}
 	
 	this.SimulationHolder.AddMessageFunction("PushDetailedParameterHistory", RunProcessPushDetailedParameterHistory);
-	this.SimulationHolder.AddMessageFunction("PushDetailedErrorHistory", RunProcessPushDetailedErrorHistory);
+	this.SimulationHolder.AddMessageFunction("PushDetailedErrorHistoryTotal", RunProcessPushDetailedErrorHistoryTotal);
 	this.SimulationHolder.AddMessageFunction("PushDetailedErrorHistoryByDEO", RunProcessPushDetailedErrorHistoryByDEO);
 	
 	
@@ -483,12 +504,28 @@ OptSelector.prototype.ProcessPushDetailedParameterHistory=function (Input, SimID
 	this.GraphDetailedParameterHistory();
 };
 
-OptSelector.prototype.ProcessPushDetailedErrorHistory=function (Input, SimID){
+OptSelector.prototype.ProcessPushDetailedErrorHistoryTotal=function (Input, SimID){
 
 	
-	this.DetailedErrorHistory[SimID]=Input;
+	this.DetailedErrorHistoryTotal[SimID]=Input;
 	// Draw a graph in the relevant sections
 	
+	console.log("Here is where the DetailedErrorHistoryTotal is displayed");
+	console.log(Input);
+	
+	if (typeof(this.DetailedErrorHistoryTotalGraphData)=="undefined"){
+		this.DetailedErrorHistoryTotalGraphData=[];
+	}
+	this.DetailedErrorHistoryTotalGraphData[SimID]=[];
+	for (var RCount in this.DetailedErrorHistoryTotal[SimID]){//Round 
+		for (var SCount in this.DetailedErrorHistoryTotal[SimID][RCount]){//Sample
+			var y=this.DetailedErrorHistoryTotal[SimID][RCount][SCount];
+			var x=Number(RCount)+0.1*Number(SCount);
+			this.DetailedErrorHistoryTotalGraphData[SimID].push([x, y]);
+		}
+	}
+	console.log(this.DetailedErrorHistoryTotalGraphData);
+	this.GraphDetailedErrorHistoryTotal();
 };
 
 OptSelector.prototype.ProcessPushDetailedErrorHistoryByDEO=function (Input, SimID){
@@ -499,7 +536,6 @@ OptSelector.prototype.ProcessPushDetailedErrorHistoryByDEO=function (Input, SimI
 	
 	var OptimisedDEOCount=-1;
 	for (var DCount in this.DEOGroup.DEOArray){
-		//var DEOID=this.OptParamArray[DCount].Name;
 		if (typeof(this.DetailedErrorHistoryByDEOGraphData[DCount])=="undefined"){
 			this.DetailedErrorHistoryByDEOGraphData[DCount]=[];
 		}
@@ -560,6 +596,41 @@ OptSelector.prototype.GraphDetailedParameterHistory=function (){
 		
 		$.plot(PlotHolderName, PlotData, PlotSettings);
 	}
+};
+
+
+OptSelector.prototype.GraphDetailedErrorHistoryTotal=function (){
+	// determine if colour determination has occurred
+	if (this.GraphColour.length!=this.Settings.NumberOfSimulations){
+		this.GenerateGraphColours(this.Settings.NumberOfSimulations);
+	}
+	
+	var PlotSettings={xaxis: {
+			axisLabelUseCanvas: true,
+			axisLabelFontSizePixels: 12,
+			axisLabelFontFamily: 'Verdana, Arial, Helvetica, Tahoma, sans-serif',
+			axisLabelPadding: 5,
+			tickLength: 0
+		},
+		yaxis: {
+			axisLabelUseCanvas: true,
+			axisLabelFontSizePixels: 12,
+			axisLabelFontFamily: 'Verdana, Arial, Helvetica, Tahoma, sans-serif',
+			axisLabelPadding: 5
+		}
+	};
+	
+		var PlotData=[];
+		for (var SCount in this.DetailedErrorHistoryTotalGraphData){
+			PlotData[SCount]={};
+			PlotData[SCount].data=this.DetailedErrorHistoryTotalGraphData[SCount];
+			PlotData[SCount].points={show:true, radius: 1, filled:true};
+			PlotData[SCount].color=this.GraphColour[SCount];
+		}
+		var PlotHolderName="#"+this.TotalErrorPlotID;
+		
+		$.plot(PlotHolderName, PlotData, PlotSettings);
+
 };
 
 
@@ -803,7 +874,7 @@ function OptSelectorHandler(WorkerData){
 		this.Store("DetailedParameterHistory", CurrentSimulationVals.ParameterSet);
 		// Call function that deliver detailed histories back to the interface
 		PushDetailedParameterHistory(this.DetailedParameterHistory);
-		PushDetailedErrorHistory(this.DetailedErrorHistory);
+		PushDetailedErrorHistoryTotal(this.DetailedErrorHistory);
 		PushDetailedErrorHistoryByDEO(this.Storage.DetailedErrorHistoryByDEO);
 	}
 	
