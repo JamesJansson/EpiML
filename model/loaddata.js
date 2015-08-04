@@ -191,8 +191,25 @@ function ExtractDataFromFiles(){
 	Data.NSW.DecompenstedCirrhosis.AdmittedToHospital.Time=DataFile.Assorted.GetRow(172, 8, 22);
 	Data.NSW.DecompenstedCirrhosis.AdmittedToHospital.Count=DataFile.Assorted.GetRow(174, 8, 22);
 	
+	Data.Incidence={};
+	Data.Incidence.HITSC={};
+	Data.Incidence.HITSC.Time=DataFile.Assorted.GetRow(178, 1, 4);
+	Data.Incidence.HITSC.Rate=DataFile.Assorted.GetRow(179, 1, 4);
+	Data.Incidence.HITSC.Rate=Divide(Data.Incidence.HITSC.Rate, 100);
+	Data.Incidence.HITSC.RateLCI=DataFile.Assorted.GetRow(180, 1, 4);
+	Data.Incidence.HITSC.RateLCI=Divide(Data.Incidence.HITSC.RateLCI, 100);
+	Data.Incidence.HITSC.RateUCI=DataFile.Assorted.GetRow(181, 1, 4);
+	Data.Incidence.HITSC.RateUCI=Divide(Data.Incidence.HITSC.RateLCI, 100);
 	
-	
+	Data.Incidence.NSP={};
+	Data.Incidence.NSP.Time=DataFile.Assorted.GetRow(187, 1, 3);
+	Data.Incidence.NSP.TimeEnd=DataFile.Assorted.GetRow(188, 1, 3);
+	Data.Incidence.NSP.Rate=DataFile.Assorted.GetRow(191, 1, 3);
+	Data.Incidence.NSP.Rate=Divide(Data.Incidence.NSP.Rate, 100);
+	Data.Incidence.NSP.RateLCI=DataFile.Assorted.GetRow(192, 1, 3);
+	Data.Incidence.NSP.RateLCI=Divide(Data.Incidence.NSP.RateLCI, 100);
+	Data.Incidence.NSP.RateUCI=DataFile.Assorted.GetRow(193, 1, 3);
+	Data.Incidence.NSP.RateUCI=Divide(Data.Incidence.NSP.RateLCI, 100);
 	
 	
 }
