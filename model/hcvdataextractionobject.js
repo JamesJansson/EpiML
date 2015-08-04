@@ -202,7 +202,7 @@ function HCVDataExtractionObjects(){
 				}
 			}
 		}
-		return Count;
+		return Count*Settings.SampleFactor;
 	};
 	
 	// Set optimisation
@@ -246,7 +246,7 @@ function HCVDataExtractionObjects(){
 				}
 			}
 		}
-		return NSPTotal;
+		return NSPTotal*Settings.SampleFactor;
 	};
 
 	
@@ -1254,7 +1254,7 @@ function HCVDataExtractionObjects(){
 	NewDEO.Name="IncidenceHITSC";
 	NewDEO.Title="Incidence (as predicted by HITS-C)";
 	NewDEO.XLabel="Year";
-	NewDEO.YLabel="Number of people";
+	NewDEO.YLabel="Proportion of people";
 	
 	NewDEO.ResultFunction= function (SimulationResult, Time){
 		var SamplePopulationSize=0;// weight for the current time
@@ -1296,6 +1296,9 @@ function HCVDataExtractionObjects(){
 	// Add the object to the array of all ODEOS
 	DEO.push(NewDEO);
 	
+	
+	
+	
 	// Incidence NSP
 	NewDEO=new DataExtractionObject();
 	
@@ -1309,7 +1312,7 @@ function HCVDataExtractionObjects(){
 	NewDEO.Name="IncidenceNSP";
 	NewDEO.Title="Incidence (as predicted by NSP)";
 	NewDEO.XLabel="Year";
-	NewDEO.YLabel="Number of people";
+	NewDEO.YLabel="Proportion of people";
 	
 	NewDEO.ResultFunction= function (SimulationResult, Time){
 		var SamplePopulationSize=0;// weight for the current time

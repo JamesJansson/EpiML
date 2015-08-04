@@ -504,9 +504,12 @@ function InitialDistribution() {
 	// Run CreatePWID multiple times
 	var Person = [];
 	
-	for (var Time = Param.Time.StartNonDynamicModel; Time < Param.Time.StartDynamicModel; Time += Param.TimeStep) {
+	
+	var Time = Param.Time.StartNonDynamicModel;
+	while(Time < Param.Time.StartDynamicModel){
 		var PWIDToAdd = CreatePWID(Param.IDU.Entry, Time, Param.TimeStep);
 		Person = Person.concat(PWIDToAdd);
+		Time += Param.TimeStep
 	}
 	
 	SetInitialHCVLevels(Person);
