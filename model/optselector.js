@@ -917,7 +917,8 @@ function OptSelectorHandler(WorkerData){
 	ReturnedResults.ErrorProgress=OptimisationObject.DetailedErrorHistory;
 	
 	// This is where we run the model with the best parameterisation
-	var SimulationResults=OptimisationObject.RunOptimisedSim(FunctionInput);
+	// Note that SimulationResults is deliberately global to allow subsequent functions to run on it before the thread is closed.
+	SimulationResults=OptimisationObject.RunOptimisedSim(FunctionInput);
 	// Get the error for this parameterisation
 	ReturnedResults.OptimisedSimError=OptimisationObject.OptimisedSimError;
 	// Create the data that is returned to the interface for graphing. 

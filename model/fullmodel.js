@@ -14,11 +14,11 @@ var PostDataTreatmentFunction;// (Person[Array], Time, TimeStep)
 
 
 // Put the following into the console
-// RunSettings2={};
-// RunSettings2.FunctionName="EvalText";
-// RunSettings2.Common="console.log()";
-// RunSettings2.SimDataArray=[999];
-// SimulationHolder.Run(RunSettings2);
+// RunSettingsEval={};
+// RunSettingsEval.FunctionName="EvalText";
+// RunSettingsEval.Common="console.log(SimulationResults)";
+// RunSettingsEval.SimDataArray=[999];
+// HCVOptSelector.SimulationHolder.Run(RunSettingsEval);
 
 
 
