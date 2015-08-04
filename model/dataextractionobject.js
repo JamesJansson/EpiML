@@ -43,6 +43,8 @@ function DataExtractionObject(){
 	this.Simulation.Value;
 	this.Simulation.Time;
 	
+	this.ErrorWeight=[];// A weight that can be set in the ResultFunction to be used in ErrorFunction
+	
 	this.Error;// A place to store error, is a number (not an array)
 	
 	//this.ErrorFunction;// specifies how the error is determined. 
@@ -77,6 +79,7 @@ DataExtractionObject.prototype.SetGraphTime=function(TimeArray){// SimulationRes
 DataExtractionObject.prototype.FindError=function(SimulationResult){// SimulationResult.Population
 	this.Simulation.Value=[];
 	this.Simulation.Time=this.Data.Time;
+	this.ErrorWeight=[];
 	
 	for (var TimeCount in this.Data.Time){
 		this.Simulation.Value[TimeCount]=this.ResultFunction(SimulationResult,  this.Data.Time[TimeCount]);
@@ -85,6 +88,10 @@ DataExtractionObject.prototype.FindError=function(SimulationResult){// Simulatio
 	this.Error=this.Optimisation.Weight*this.ErrorFunction(this.Data.Time, this.Data.Value, this.Simulation.Value, SimulationResult);
 	
 	return this.Error;
+};
+
+DataExtractionObject.prototype.AddErrorWeight=function(ErrorWeight){
+	this.ErrorWeight.push(ErrorWeight);
 };
 
 DataExtractionObject.prototype.ErrorFunction=function(TimeArray, DataArray, SimulationValueArray, SimulationResult){// SimulationResult
@@ -256,7 +263,7 @@ DataExtractionObjectGroup.prototype.TotalError=function(SimulationResult){
 	for (var DEOCount in this.DEOArray){
 		var ThisError=this.DEOArray[DEOCount].FindError(SimulationResult);
 		if (isNaN(ThisError)){
-			//console.error(this.DEOArray[DEOCount].Name + " DEO produces NaNs");
+			console.log(this.DEOArray[DEOCount].Name + " DEO produces NaNs");
 		}
 		else{
 			ErrorSum+=ThisError;

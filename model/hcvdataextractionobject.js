@@ -1253,43 +1253,48 @@ function HCVDataExtractionObjects(){
 	NewDEO.YLabel="Number of people";
 	
 	NewDEO.ResultFunction= function (SimulationResult, Time){
-		// This is a sneaky bit that will allow the count to be maintained
-		if (typeof(SimulationResult.TempDEO)=='undefined'){
-			SimulationResult.TempDEO={};
-			
-		}
-		if (typeof(SimulationResult.TempDEO.IncidenceHITSC)){
-			SimulationResult.TempDEO.IncidenceHITSCCount=0;
-		}
+		var SamplePopulationSize=0;// weight for the current time
+		var NumberOfSeroconversions=0;
 		
-		
-		var Total=0;
 		for (var PersonCount in SimulationResult.Population){
 			var Person=SimulationResult.Population[PersonCount];
 			// Check if CurrentlyInjecting
-			
-			if (Person.HCV.CurrentlyInfected(Time)){
-				// Determine if the person is a user of injecting drugs
-					// SimulationResult.TempDEO.IncidenceHITSCCount++
+			if (Person.IDU.CurrentlyInjecting(Time)){
+				if (Person.HCV.CurrentlyInfected(Time)==false){
+					SamplePopulationSize++;
 					// Determine if the person had a serconversion in the period
-		
-		
-		
-			
-				if (Person.HCV.Fibrosis.Value(Time)==5){
-					Total++;
+					if(Person.HCV.CurrentlyInfected(Time+1)==true){
+						NumberOfSeroconversions++
+					}
 				}
 			}
 		}
-		return Total*Settings.SampleFactor;
+		
+		var SimulatedIncidenceRate=NumberOfSeroconversions/SamplePopulationSize;
+		
+		// This is a sneaky bit that will allow the count to be maintained
+		this.AddErrorWeight(SamplePopulationSize);
+		
+		return SimulatedIncidenceRate;
 	};
 	
 	NewDEO.ErrorFunction=function(TimeArray, DataArray, SimulationValueArray, SimulationResult){
 		
-		SimulationResult.NumberOfInfections;
+		console.log("DataArray, SimulationValueArray, ErrorWeight");
+		console.log(DataArray);
+		console.log(SimulationValueArray);
+		console.log(this.ErrorWeight);
 		
 		
-		return 0;
+		var ExpectedNumberOfNewCases=Multiply(DataArray, this.ErrorWeight);
+		var SimulatedNumberOfNewCases=Multiply(SimulationValueArray, this.ErrorWeight);
+
+		console.log("ExpectedNumberOfNewCases, SimulatedNumberOfNewCases");
+		console.log(ExpectedNumberOfNewCases);
+		console.log(SimulatedNumberOfNewCases);
+		var TotalError=Sum(Abs(Minus(SimulatedNumberOfNewCases, ExpectedNumberOfNewCases)));
+		
+		return TotalError;
 	};
 	// Add the object to the array of all ODEOS
 	DEO.push(NewDEO);
