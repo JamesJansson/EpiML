@@ -62,6 +62,9 @@ function DataExtractionObject(){
 }
 
 DataExtractionObject.prototype.SetData=function(Data){// SimulationResult.Population
+	// The strange way this is structured is to allow the structure to throw an error if there is a problem
+	// This should probably do a proper deep copy, but we aren't going to do this at this stage
+	this.Data=Data;	
 	this.Data.Value=Data.Value;
 	this.Data.Time=Data.Time;
 };

@@ -1236,6 +1236,87 @@ function HCVDataExtractionObjects(){
 	
 	
 	
+	
+	// Incidence
+	NewDEO=new DataExtractionObject();
+	
+	var DataStruct={};
+	DataStruct.Time=Data.Incidence.HITSC.Time;
+	DataStruct.Value=Data.Incidence.HITSC.Rate;
+	
+	// Load the data into the function 
+	NewDEO.SetData(DataStruct);
+	NewDEO.SetGraphTime(GraphTime);
+	NewDEO.Name="IncidenceHITSC";
+	NewDEO.Title="Incidence (as predicted by HITS-C)";
+	NewDEO.XLabel="Year";
+	NewDEO.YLabel="Number of people";
+	
+	NewDEO.ResultFunction= function (SimulationResult, Time){
+		// This is a sneaky bit that will allow the count to be maintained
+		if (typeof(SimulationResult.TempDEO)=='undefined'){
+			SimulationResult.TempDEO={};
+			
+		}
+		if (typeof(SimulationResult.TempDEO.IncidenceHITSC)){
+			SimulationResult.TempDEO.IncidenceHITSCCount=0;
+		}
+		
+		
+		var Total=0;
+		for (var PersonCount in SimulationResult.Population){
+			var Person=SimulationResult.Population[PersonCount];
+			// Check if CurrentlyInjecting
+			
+			if (Person.HCV.CurrentlyInfected(Time)){
+				// Determine if the person is a user of injecting drugs
+					// SimulationResult.TempDEO.IncidenceHITSCCount++
+					// Determine if the person had a serconversion in the period
+		
+		
+		
+			
+				if (Person.HCV.Fibrosis.Value(Time)==5){
+					Total++;
+				}
+			}
+		}
+		return Total*Settings.SampleFactor;
+	};
+	
+	NewDEO.ErrorFunction=function(TimeArray, DataArray, SimulationValueArray, SimulationResult){
+		
+		SimulationResult.NumberOfInfections;
+		
+		
+		return 0;
+	};
+	// Add the object to the array of all ODEOS
+	DEO.push(NewDEO);
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	// Give all plots an id in the intereface
 	for (var Count in DEO){
 		//DEO[Count].GraphInterfaceID="OptimisationPlot"+Count;

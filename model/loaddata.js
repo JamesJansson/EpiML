@@ -203,12 +203,13 @@ function ExtractDataFromFiles(){
 	
 	Data.Incidence.NSP={};
 	Data.Incidence.NSP.Time=DataFile.Assorted.GetRow(187, 1, 3);
-	Data.Incidence.NSP.TimeEnd=DataFile.Assorted.GetRow(188, 1, 3);
-	Data.Incidence.NSP.Rate=DataFile.Assorted.GetRow(191, 1, 3);
+	Data.Incidence.NSP.TimeStart=DataFile.Assorted.GetRow(188, 1, 3);
+	Data.Incidence.NSP.TimeEnd=DataFile.Assorted.GetRow(189, 1, 3);
+	Data.Incidence.NSP.Rate=DataFile.Assorted.GetRow(192, 1, 3);
 	Data.Incidence.NSP.Rate=Divide(Data.Incidence.NSP.Rate, 100);
-	Data.Incidence.NSP.RateLCI=DataFile.Assorted.GetRow(192, 1, 3);
+	Data.Incidence.NSP.RateLCI=DataFile.Assorted.GetRow(193, 1, 3);
 	Data.Incidence.NSP.RateLCI=Divide(Data.Incidence.NSP.RateLCI, 100);
-	Data.Incidence.NSP.RateUCI=DataFile.Assorted.GetRow(193, 1, 3);
+	Data.Incidence.NSP.RateUCI=DataFile.Assorted.GetRow(194, 1, 3);
 	Data.Incidence.NSP.RateUCI=Divide(Data.Incidence.NSP.RateLCI, 100);
 	
 	
