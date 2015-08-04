@@ -1,6 +1,8 @@
+// Elements to optimise to
+// TotalNotificationsPlot
+// NSPHCVAntibodyProp
+// IncidenceHITSC
 //
-
-
 
 
 
@@ -540,7 +542,7 @@ function HCVDataExtractionObjects(){
 	DataStruct.Value=Data.NSP.HCVAntiBody.Total.Proportion;// NSP HCV antibody prevalence !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	NewDEO.SetData(DataStruct);
 	NewDEO.SetGraphTime(GraphTime);
-	NewDEO.Name="NSPHCVPntibodyProp";
+	NewDEO.Name="NSPHCVAntibodyProp";
 	NewDEO.Title="Proportion of NSP with HCV Antibodies";
 	NewDEO.XLabel="Year";
 	NewDEO.YLabel="Proportion";
@@ -1236,8 +1238,10 @@ function HCVDataExtractionObjects(){
 	
 	
 	
-	
-	// Incidence
+	// ******************************************************************************************************
+	// ******************************************************************************************************
+	// ******************************************************************************************************
+	// Incidence HITS-C
 	NewDEO=new DataExtractionObject();
 	
 	var DataStruct={};
@@ -1272,6 +1276,65 @@ function HCVDataExtractionObjects(){
 		
 		var SimulatedIncidenceRate=NumberOfSeroconversions/SamplePopulationSize;
 		
+		if (isNaN(SimulatedIncidenceRate)){
+			SimulatedIncidenceRate=0;
+		}
+		
+		// This is a sneaky bit that will allow the count to be maintained
+		this.AddErrorWeight(SamplePopulationSize);
+		
+		return SimulatedIncidenceRate;
+	};
+	
+	NewDEO.ErrorFunction=function(TimeArray, DataArray, SimulationValueArray, SimulationResult){
+		var ExpectedNumberOfNewCases=Multiply(DataArray, this.ErrorWeight);
+		var SimulatedNumberOfNewCases=Multiply(SimulationValueArray, this.ErrorWeight);
+		var TotalError=Sum(Abs(Minus(SimulatedNumberOfNewCases, ExpectedNumberOfNewCases)));
+		
+		return TotalError;
+	};
+	// Add the object to the array of all ODEOS
+	DEO.push(NewDEO);
+	
+	// Incidence NSP
+	NewDEO=new DataExtractionObject();
+	
+	var DataStruct={};
+	DataStruct.Time=Data.Incidence.NSP.Time;
+	DataStruct.Value=Data.Incidence.NSP.Rate;
+	
+	// Load the data into the function 
+	NewDEO.SetData(DataStruct);
+	NewDEO.SetGraphTime(GraphTime);
+	NewDEO.Name="IncidenceNSP";
+	NewDEO.Title="Incidence (as predicted by NSP)";
+	NewDEO.XLabel="Year";
+	NewDEO.YLabel="Number of people";
+	
+	NewDEO.ResultFunction= function (SimulationResult, Time){
+		var SamplePopulationSize=0;// weight for the current time
+		var NumberOfSeroconversions=0;
+		
+		for (var PersonCount in SimulationResult.Population){
+			var Person=SimulationResult.Population[PersonCount];
+			// Check if CurrentlyInjecting
+			if (Person.IDU.CurrentlyInjecting(Time)){
+				if (Person.HCV.CurrentlyInfected(Time)==false){
+					SamplePopulationSize++;
+					// Determine if the person had a serconversion in the period
+					if(Person.HCV.CurrentlyInfected(Time+1)==true){
+						NumberOfSeroconversions++
+					}
+				}
+			}
+		}
+		
+		var SimulatedIncidenceRate=NumberOfSeroconversions/SamplePopulationSize;
+		
+		if (isNaN(SimulatedIncidenceRate)){
+			SimulatedIncidenceRate=0;
+		}
+		
 		// This is a sneaky bit that will allow the count to be maintained
 		this.AddErrorWeight(SamplePopulationSize);
 		
@@ -1298,9 +1361,6 @@ function HCVDataExtractionObjects(){
 	};
 	// Add the object to the array of all ODEOS
 	DEO.push(NewDEO);
-	
-	
-	
 	
 	
 	

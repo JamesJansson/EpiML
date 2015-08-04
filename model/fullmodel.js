@@ -10,6 +10,19 @@ var PostDataTreatmentFunction;// (Person[Array], Time, TimeStep)
 // RunSettings2.SimDataArray=[1];
 // SimulationHolder.Run(RunSettings2);
 
+
+
+
+// Put the following into the console
+// RunSettings2={};
+// RunSettings2.FunctionName="EvalText";
+// RunSettings2.Common="console.log()";
+// RunSettings2.SimDataArray=[999];
+// SimulationHolder.Run(RunSettings2);
+
+
+
+
 function CreateGlobalVariables(){
 	// Globals that need to be run before code will work
 	
