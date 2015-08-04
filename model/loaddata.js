@@ -191,4 +191,8 @@ function ExtractDataFromFiles(){
 	Data.NSW.DecompenstedCirrhosis.AdmittedToHospital.Time=DataFile.Assorted.GetRow(172, 8, 22);
 	Data.NSW.DecompenstedCirrhosis.AdmittedToHospital.Count=DataFile.Assorted.GetRow(174, 8, 22);
 	
+	
+	
+	
+	
 }
