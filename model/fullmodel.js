@@ -319,7 +319,8 @@ function FullModel(FunctionInput){
 	// Timers.AssignSexualPartner=new RecordingTimer("AssignSexualPartner");
 	// Timers.DetermineHCVTransmissions=new RecordingTimer("DetermineHCVTransmissions");
 	
-	for (var Time=Param.Time.StartDynamicModel; Time<Param.Time.EndSimulation; Time+=Param.TimeStep){// each time step
+	var Time = Param.Time.StartDynamicModel;
+	while(Time < Param.Time.EndSimulation){
 		StepCount++;
 		// RunInterventions(Time); 
 	
@@ -464,7 +465,7 @@ function FullModel(FunctionInput){
 		
 		// HCV mortality
 		
-		
+		Time += Param.TimeStep
 	}
 	
 	// 
