@@ -563,12 +563,23 @@ function HCVDataExtractionObjects(){
 				}
 			}
 		}
+		
+		this.AddErrorWeight(NSPTotal);
+		
 		return AntibodyPresent/NSPTotal;
 	};
 	
+	NewDEO.ErrorFunction=function(TimeArray, DataArray, SimulationValueArray, SimulationResult){
+		var ExpectedNumberOfCases=Multiply(DataArray, this.ErrorWeight);
+		var SimulatedNumberOfCases=Multiply(SimulationValueArray, this.ErrorWeight);
+		var TotalError=Sum(Abs(Minus(SimulatedNumberOfCases, ExpectedNumberOfCases)));
+		return TotalError;
+	};
+	
+	
 	// Set optimisation
 	NewDEO.Optimise=true;
-	NewDEO.Optimisation.ProportionalError=true;
+	//NewDEO.Optimisation.ProportionalError=true;
 	
 	// Add the object to the array of all ODEOS
 	DEO.push(NewDEO);

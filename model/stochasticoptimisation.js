@@ -216,7 +216,7 @@ StochasticOptimisation.prototype.Run= function (FunctionInput){
 		this.BestError[this.RoundCount]=this.ErrorValues[this.BestIndex[0]];
 		
 		// Determine whether the optimisation should finish or not
-		if (this.RoundCount>this.NumberOfRounds){
+		if (this.RoundCount>=this.NumberOfRounds-1){
 			OptimisationComplete=true;
 			this.ReasonForTermination="ReachedNumberOfRounds";
 		}

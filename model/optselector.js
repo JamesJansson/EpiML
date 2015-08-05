@@ -134,7 +134,8 @@ function OptSelector(Name, DivID, Functions, PointerToParamGroup, DEOArrayFuncti
 	
 	// the information is sent to the worker, the worker finds the 
 
-
+	this.NumberOfSamplesPerRound=10;
+	this.NumberOfRounds=10;
 	
 	
 	this.DrawParamDiv();
@@ -390,21 +391,6 @@ OptSelector.prototype.RunOptimisation=function (){
 	this.SimulationHolder.AddMessageFunction("PushDetailedErrorHistoryByDEO", RunProcessPushDetailedErrorHistoryByDEO);
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	var RunSettings={};
 	//Creating the data to be used in the simulations
 	if (this.Settings.RecalculateParam){
@@ -440,6 +426,9 @@ OptSelector.prototype.RunOptimisation=function (){
 	
 	OptSelectorSettings.Functions=this.Functions;
 	OptSelectorSettings.ExportSimulationOutput=this.ExportSimulationOutput;
+	
+	OptSelectorSettings.NumberOfSamplesPerRound=this.NumberOfSamplesPerRound;
+	OptSelectorSettings.NumberOfRounds=this.NumberOfRounds;
 	
 	RunSettings.Common.OptSelectorSettings=OptSelectorSettings;
 	
@@ -887,11 +876,11 @@ function OptSelectorHandler(WorkerData){
 	};
 	
 	// Set number of simulations
-	OptimisationSettings.NumberOfSamplesPerRound=OptSelectorSettings.NumberOfSamplesPerRound;// note we'll randomly select one of these results
-	OptimisationSettings.NumberOfRounds=OptSelectorSettings.NumberOfRounds;// In this case, it will allow 10 000 different parameter selections, which gives a granularity of 1% of the range. Should be sufficient
-	OptimisationSettings.MaxTime=600;//stop after 10 minutes
+	OptimisationSettings.NumberOfSamplesPerRound=OptSelectorSettings.NumberOfSamplesPerRound;
+	OptimisationSettings.NumberOfRounds=OptSelectorSettings.NumberOfRounds;
+	OptimisationSettings.MaxTime=6000;//stop after 10 minutes
 	
-	
+	console.log(OptimisationSettings.NumberOfRounds);
 	
 	var OptimisationObject=new StochasticOptimisation(OptimisationSettings);
 	
