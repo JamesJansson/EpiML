@@ -16,11 +16,11 @@ function IDUObject(PersonPointer){
 	this.UseRate = new EventVector;
 	this.UseRate.Set(0, this.Person.YearOfBirth);
 	// IDU codes
-	// 0: Never used = 0
+	// 0: Never used = 0 per year
 	// 1: Tried once = once on the date of trying
-	// 2: Occasional user = once a month = <12
-	// 3: Regular user = 12-365*3 
-	// 4: Former user
+	// 2: Occasional user = once a month = <12 per year
+	// 3: Regular user = 12-365*3 per year
+	// 4: Former user = 0 per year
 	
 	this.Sharing= new EventVector;
 	this.Sharing.Set(0, this.Person.YearOfBirth);
@@ -72,9 +72,6 @@ IDUObject.prototype.StartInjecting= function (Time){
 		
 		
 		
-		
-		
-		
 		// Add the transition to former user
 		var TimeUntilStoppingInjecting=TimeUntilEvent(Param.IDU.RateOfCessation);
 		
@@ -85,8 +82,14 @@ IDUObject.prototype.StartInjecting= function (Time){
 		this.NSP.Set(0, TimeOfStoppingInjecting);
 		
 		
-		if (Rand.Value()<0.05){
-			console.log("TimeUntilStoppingInjecting: "+TimeUntilStoppingInjecting+" Param.IDU.RateOfCessation: "+Param.IDU.RateOfCessation);
+		if (false){//Rand.Value()<0.05){
+			console.log("   ");
+			console.log("TimeUntilStartingRegularUse: "+TimeUntilStartingRegularUse);
+			console.log("TimeOfRegularUse: "+TimeOfRegularUse);
+			console.log("TimeUntilStoppingInjecting: "+TimeUntilStoppingInjecting);
+			console.log("Param.IDU.RateOfCessation: "+Param.IDU.RateOfCessation);
+			console.log(this.Use.Time);
+			console.log(this.Use.ValueVec);
 		}
 		
 		
@@ -154,11 +157,15 @@ IDUObject.prototype.EverInjectedAtTime= function (Time){
 // This is the function that determines if a person is a recent injector or not
 IDUObject.prototype.InjectedBetween= function (Time1, Time2){
 	// First step is to determine if the person is a current injector at time 1
-	if (this.CurrentlyInjecting(Time1)==true ){
+	if (this.CurrentlyInjecting(Time1)==true || this.CurrentlyInjecting(Time2)==true ){
+		// console.log(this.Use.Value(Time1));
+		// console.log(this.Use.Value(Time2));
 		return true;
 	}
 	var InjectingChanges=this.Use.EventsBetween(Time1, Time2);
+	
 	for (var ICCount in InjectingChanges){
+		// console.log(InjectingChanges[ICCount].Value);
 		if (InjectingChanges[ICCount].Value>0 && InjectingChanges[ICCount].Value<4){
 			return true;
 		}

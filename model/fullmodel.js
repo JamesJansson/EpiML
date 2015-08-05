@@ -30,6 +30,9 @@ function CreateGlobalVariables(){
 
 function FullModelTest(WorkerData){
 
+	throw "This throw is to prevent this function from executing.";
+	
+	
 	//InSimFunction("This is the message");throw "stopping";
 	
 	// This should go into the outer loop

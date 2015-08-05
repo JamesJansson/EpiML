@@ -462,7 +462,7 @@ function HCVDataExtractionObjects(){
 		for (var Count in SimulationResult.HCVDataDiagnosisResults){
 			var Pen=SimulationResult.HCVDataDiagnosisResults[Count].Penalty;
 			TotalInsufficientInfected+=Pen.InsufficientInfectedToDiagnoseTotal;
-			TotalInsufficientSymptomatic+=Pen.InsufficientSymptomaticDiagnosesTotal;
+			// TotalInsufficientSymptomatic+=Pen.InsufficientSymptomaticDiagnosesTotal;
 			TotalPenalty+=Pen.InsufficientInfectedToDiagnoseTotal+Pen.InsufficientSymptomaticDiagnosesTotal;
 		}
 		

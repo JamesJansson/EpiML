@@ -887,8 +887,8 @@ function OptSelectorHandler(WorkerData){
 	};
 	
 	// Set number of simulations
-	OptimisationSettings.NumberOfSamplesPerRound=10;// note we'll randomly select one of these results
-	OptimisationSettings.MaxIterations=10;// In this case, it will allow 10 000 different parameter selections, which gives a granularity of 1% of the range. Should be sufficient
+	OptimisationSettings.NumberOfSamplesPerRound=5;// note we'll randomly select one of these results
+	OptimisationSettings.MaxIterations=2;// In this case, it will allow 10 000 different parameter selections, which gives a granularity of 1% of the range. Should be sufficient
 	OptimisationSettings.MaxTime=600;//stop after 10 minutes
 	
 	
