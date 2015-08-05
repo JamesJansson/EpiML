@@ -77,10 +77,18 @@ IDUObject.prototype.StartInjecting= function (Time){
 		
 		// Add the transition to former user
 		var TimeUntilStoppingInjecting=TimeUntilEvent(Param.IDU.RateOfCessation);
+		
+		
 		var TimeOfStoppingInjecting=TimeOfRegularUse+TimeUntilStoppingInjecting;
 		this.Use.Set(4, TimeOfStoppingInjecting);
 		// Stop NSP attendance- note, adding this should delete future events
 		this.NSP.Set(0, TimeOfStoppingInjecting);
+		
+		
+		if (Rand.Value()<0.05){
+			console.log("TimeUntilStoppingInjecting: "+TimeUntilStoppingInjecting+" Param.IDU.RateOfCessation: "+Param.IDU.RateOfCessation);
+		}
+		
 		
 		
 		// Determine excess death due to drug use
@@ -146,7 +154,7 @@ IDUObject.prototype.EverInjectedAtTime= function (Time){
 // This is the function that determines if a person is a recent injector or not
 IDUObject.prototype.InjectedBetween= function (Time1, Time2){
 	// First step is to determine if the person is a current injector at time 1
-	if (this.CurrentlyInjecting(Time1)==true){
+	if (this.CurrentlyInjecting(Time1)==true ){
 		return true;
 	}
 	var InjectingChanges=this.Use.EventsBetween(Time1, Time2);

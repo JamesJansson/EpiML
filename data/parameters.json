@@ -947,7 +947,7 @@
         "NumberOfSamples": 1,
         "Val": [],
         "MinValue": 0,
-        "MaxValue": 1,
+        "MaxValue": 0.1,
         "Description": "An annual rate that is optimised in the simulation."
     },
     {
