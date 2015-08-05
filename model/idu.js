@@ -42,7 +42,6 @@ IDUObject.prototype.StartInjecting= function (Time){
 		// when the will stop if they do.
 		// who they are sharing with
 	
-	
 	// Add the first date of injecting
 	this.Use.Set(1, Time);
 	
@@ -57,7 +56,7 @@ IDUObject.prototype.StartInjecting= function (Time){
 	// Following entry, there is a probability associated with becoming a regular user, and following that exiting at a certain probability
 	if (Rand.Value()<Param.IDU.BecomeRegularInjector.P){
 		// Add time until occasional user
-		this.Use.Set(2, Time+0.1);
+		//this.Use.Set(2, Time+0.1);
 	
 		// Add the transition to regular user
 		var TimeUntilStartingRegularUse=RegularInjectionTime.Time();
@@ -99,15 +98,7 @@ IDUObject.prototype.StartInjecting= function (Time){
 	}
 	
 	// Determine if the person is a sharer
-	
-	
-	
 	// Determine when the person ceases sharing
-	
-	
-	
-	
-	
 	// PWID additional mortality
 	
 	
