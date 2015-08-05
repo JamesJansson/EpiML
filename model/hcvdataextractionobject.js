@@ -1381,7 +1381,33 @@ function HCVDataExtractionObjects(){
 	
 	
 	
+	// Incidence NSP (not fit)
+	NewDEO=new DataExtractionObject();
+	NewDEO.SetGraphTime(GraphTime);
+	NewDEO.Name="IncidenceGeneral";
+	NewDEO.Title="Incidence";
+	NewDEO.XLabel="Year";
+	NewDEO.YLabel="Number of people";
 	
+	NewDEO.ResultFunction= function (SimulationResult, Time){
+		var NumberOfSeroconversions=0;
+		for (var PersonCount in SimulationResult.Population){
+			var Person=SimulationResult.Population[PersonCount];
+			// Check if CurrentlyInjecting
+			if (Person.IDU.CurrentlyInjecting(Time)){
+				if (Person.HCV.CurrentlyInfected(Time)==false){
+					// Determine if the person had a serconversion in the period
+					if(Person.HCV.CurrentlyInfected(Time+1)==true){
+						NumberOfSeroconversions++
+					}
+				}
+			}
+		}
+		return NumberOfSeroconversions;
+	};
+	
+	// Add the object to the array of all ODEOS
+	DEO.push(NewDEO);
 	
 	
 	

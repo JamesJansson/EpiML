@@ -46,7 +46,7 @@ function OptimisePartnerChangeRate(){
 	// };
 	
 	OptimisationSettings.NumberOfSamplesPerRound=10;
-	OptimisationSettings.MaxIterations=20;// in prior testing 20 appeared to be sufficient
+	OptimisationSettings.NumberOfRounds=20;// in prior testing 20 appeared to be sufficient
 	OptimisationSettings.MaxTime=10;//stop after 10 seconds
 	
 	var OptimisationObject=new StochasticOptimisation(OptimisationSettings);

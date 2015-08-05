@@ -77,12 +77,12 @@ function  StochasticOptimisation(Settings){
 		this.NumberOfSamplesPerRound=Settings.NumberOfSamplesPerRound;
 	}
 	
-	// MaxIterations: the number of iterations that can occur before the optimisation stops
+	// NumberOfRounds: the number of iterations that can occur before the optimisation stops
 	this.UserSpecifiedTermination=false;
-	if (typeof Settings.MaxIterations==="undefined"){
-		this.MaxIterations=1e9;// stop after x iterations
+	if (typeof Settings.NumberOfRounds==="undefined"){
+		this.NumberOfRounds=1e9;// stop after x iterations
 	}else{
-		this.MaxIterations=Settings.MaxIterations;
+		this.NumberOfRounds=Settings.NumberOfRounds;
 		this.UserSpecifiedTermination=true;
 	}
 
@@ -216,9 +216,9 @@ StochasticOptimisation.prototype.Run= function (FunctionInput){
 		this.BestError[this.RoundCount]=this.ErrorValues[this.BestIndex[0]];
 		
 		// Determine whether the optimisation should finish or not
-		if (this.RoundCount>=this.MaxIterations){
+		if (this.RoundCount>this.NumberOfRounds){
 			OptimisationComplete=true;
-			this.ReasonForTermination="ReachedMaxIterations";
+			this.ReasonForTermination="ReachedNumberOfRounds";
 		}
 		CurrentTime=new Date().getTime()/1000;
 		if (CurrentTime-TimerStart>this.MaxTime){

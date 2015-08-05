@@ -159,7 +159,7 @@ function EntryRateOptimisationExponential(TargetForThisOptimisation, EntryParams
 	console.log("Last year of data set manually");	
 	
 	EntryRateOptimisationSettings.NumberOfSamplesPerRound=10;// note we'll randomly select one of these results
-	EntryRateOptimisationSettings.MaxIterations=100;// In this case, it will allow 10 000 different parameter selections, which gives a granularity of 1% of the range. Should be sufficient
+	EntryRateOptimisationSettings.NumberOfRounds=100;// In this case, it will allow 10 000 different parameter selections, which gives a granularity of 1% of the range. Should be sufficient
 	EntryRateOptimisationSettings.MaxTime=20;//stop after 10 seconds
 	console.error("Warning: the optimisation currently stops after just 10 seconds for debugging");
 	
