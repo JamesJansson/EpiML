@@ -480,7 +480,7 @@ OptSelector.prototype.ProcessPushDetailedParameterHistory=function (Input, SimID
 			for (var RCount in this.DetailedParameterHistory[SimID]){//Round 
 				for (var SCount in this.DetailedParameterHistory[SimID][RCount]){//Sample
 					var y=this.DetailedParameterHistory[SimID][RCount][SCount][ParamID];
-					var x=Number(RCount)+0.1*Number(SCount);
+					var x=Number(RCount)+Number(SCount)/this.NumberOfSamplesPerRound;
 					this.DetailedParameterHistoryGraphData[PCount][SimID].push([x, y]);
 				}
 			}
@@ -509,7 +509,7 @@ OptSelector.prototype.ProcessPushDetailedErrorHistoryTotal=function (Input, SimI
 	for (var RCount in this.DetailedErrorHistoryTotal[SimID]){//Round 
 		for (var SCount in this.DetailedErrorHistoryTotal[SimID][RCount]){//Sample
 			var y=this.DetailedErrorHistoryTotal[SimID][RCount][SCount];
-			var x=Number(RCount)+0.1*Number(SCount);
+			var x=Number(RCount)+Number(SCount)/this.NumberOfSamplesPerRound;
 			this.DetailedErrorHistoryTotalGraphData[SimID].push([x, y]);
 		}
 	}
@@ -534,7 +534,7 @@ OptSelector.prototype.ProcessPushDetailedErrorHistoryByDEO=function (Input, SimI
 			for (var RCount in this.DetailedErrorHistoryByDEO[SimID]){//Round 
 				for (var SCount in this.DetailedErrorHistoryByDEO[SimID][RCount]){//Sample
 					var y=this.DetailedErrorHistoryByDEO[SimID][RCount][SCount][OptimisedDEOCount];
-					var x=Number(RCount)+0.1*Number(SCount);
+					var x=Number(RCount)+Number(SCount)/this.NumberOfSamplesPerRound;
 					this.DetailedErrorHistoryByDEOGraphData[DCount][SimID].push([x, y]);
 				}
 			}
