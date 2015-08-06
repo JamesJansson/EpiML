@@ -1383,21 +1383,6 @@ function HCVDataExtractionObjects(){
 	DEO.push(NewDEO);
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	// Incidence NSP (not fit)
 	NewDEO=new DataExtractionObject();
 	NewDEO.SetGraphTime(GraphTime);
@@ -1425,6 +1410,17 @@ function HCVDataExtractionObjects(){
 	
 	// Add the object to the array of all ODEOS
 	DEO.push(NewDEO);
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	

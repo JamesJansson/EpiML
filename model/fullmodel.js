@@ -346,9 +346,7 @@ function FullModel(FunctionInput){
     	// Timers.CreatePWID.Start();
 
 		var PWIDToAdd=CreatePWID(Param.IDU.Entry, Time, Param.TimeStep);
-		
-		console.log("Number of people added: "+PWIDToAdd.length);
-		console.log("Max "+ Param.IDU.Entry.PeakEntryPerYear);
+
 		
 		// console.log("Outputting PWIDToAdd");
 		// console.log(PWIDToAdd);
