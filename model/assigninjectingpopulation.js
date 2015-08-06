@@ -176,6 +176,8 @@ function DistributePWIDPopulationExponential(EntryParams){
 
 
 function EntryRateOptimisationExponential(TargetForThisOptimisation, EntryParams){
+	throw "this function is no longer in use";
+	
 	// First step is to assume increasing rates leading up to the end of the 1999 
 	// due to the increased availability of heroin, followed by a slump due to 
 	// reduced supply/increased prices 
@@ -376,6 +378,7 @@ function EntryRateOptimisationExponential(TargetForThisOptimisation, EntryParams
 
 
 function DeterminePWIDEntryRateExponential(EntryParams){//MaxYear is not inclusive of this year
+	throw "this function is no longer in use";
 	var InitiatingIVDrugUse={};
 	InitiatingIVDrugUse.Year=[];
 	InitiatingIVDrugUse.Number=[];
@@ -412,10 +415,10 @@ function DeterminePWIDEntryRateExponential2(EntryParams, Time, TimeStep){//MaxYe
 	// Determine if in the initial exponential period
 
 	if (Time+TimeStep/100<EntryParams.YearPeakIDU){
-		NumberInYear=EntryParams.PeakEntryPerYear*Exp(Log(EntryParams.Logk1)*(EntryParams.YearPeakIDU-Time));
+		NumberInYear=EntryParams.PeakEntryPerYear/Settings.SampleFactor*Exp(Log(EntryParams.Logk1)*(EntryParams.YearPeakIDU-Time));
 	}
 	else{
-		NumberInYear=EntryParams.PeakEntryPerYear*(EntryParams.B+(1-EntryParams.B)*Exp(Log(EntryParams.Logk2)*(Time-EntryParams.YearPeakIDU)));
+		NumberInYear=EntryParams.PeakEntryPerYear/Settings.SampleFactor*(EntryParams.B+(1-EntryParams.B)*Exp(Log(EntryParams.Logk2)*(Time-EntryParams.YearPeakIDU)));
 	}
 	NumberInStep=Round(NumberInYear*TimeStep);
 	

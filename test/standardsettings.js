@@ -2,13 +2,25 @@
 
 function StandardSettingsHCVOptimisation(){
 	// create a list of parameters to optimise to
-	var OptimisationDataNames=[];
-	OptimisationDataNames.push("NumberEverInjectingDrugsMale14_20");
+	HCVOptSelector.SelectDEOToOptimise("NumberEverInjectingDrugsMale14_20");
+	HCVOptSelector.SelectDEOToOptimise("NumberEverInjectingDrugsMale20_30");
+	HCVOptSelector.SelectDEOToOptimise("NumberEverInjectingDrugsMale30_40");
+	HCVOptSelector.SelectDEOToOptimise("NumberEverInjectingDrugsMale40_200");
+	HCVOptSelector.SelectDEOToOptimise("NumberEverInjectingDrugsFemale14_20");
+	HCVOptSelector.SelectDEOToOptimise("NumberEverInjectingDrugsFemale20_30");
+	HCVOptSelector.SelectDEOToOptimise("NumberEverInjectingDrugsFemale30_40");
+	HCVOptSelector.SelectDEOToOptimise("NumberEverInjectingDrugsFemale40_200");
+	HCVOptSelector.SelectDEOToOptimise("NumberRecentlyInjectingDrugsMale14_20");
+	HCVOptSelector.SelectDEOToOptimise("NumberRecentlyInjectingDrugsMale20_30");
+	HCVOptSelector.SelectDEOToOptimise("NumberRecentlyInjectingDrugsMale30_40");
+	HCVOptSelector.SelectDEOToOptimise("NumberRecentlyInjectingDrugsMale40_200");
+	HCVOptSelector.SelectDEOToOptimise("NumberRecentlyInjectingDrugsFemale14_20");
+	HCVOptSelector.SelectDEOToOptimise("NumberRecentlyInjectingDrugsFemale20_30");
+	HCVOptSelector.SelectDEOToOptimise("NumberRecentlyInjectingDrugsFemale30_40");
+	HCVOptSelector.SelectDEOToOptimise("NumberRecentlyInjectingDrugsFemale40_200");
 	
-	var DEOArray=HCVOptSelector.DEOGroup.DEOArray;
-	for (var DEOCount in HCVOptSelector.DEOGroup.DEOArray){
-		
-	}
-	
-	
+	HCVOptSelector.SelectDEOToOptimise("TotalNotificationsPlot");
+	HCVOptSelector.SelectDEOToOptimise("NSPHCVAntibodyProp");
+	HCVOptSelector.SelectDEOToOptimise("IncidenceHITSC");
+	HCVOptSelector.SelectDEOToOptimise("IncidenceNSP");
 }

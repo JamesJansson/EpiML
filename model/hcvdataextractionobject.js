@@ -202,6 +202,7 @@ function HCVDataExtractionObjects(){
 				}
 			}
 		}
+		
 		return Count*Settings.SampleFactor;
 	};
 	
@@ -566,7 +567,12 @@ function HCVDataExtractionObjects(){
 		
 		this.AddErrorWeight(NSPTotal);
 		
-		return AntibodyPresent/NSPTotal;
+		var Prop= AntibodyPresent/NSPTotal;
+		if (isNaN(Prop)){
+			Prop=0;
+		}
+		
+		return Prop;
 	};
 	
 	NewDEO.ErrorFunction=function(TimeArray, DataArray, SimulationValueArray, SimulationResult){
