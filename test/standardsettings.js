@@ -21,6 +21,15 @@ function StandardSettingsHCVOptimisation(){
 	
 	HCVOptSelector.SelectDEOToOptimise("TotalNotificationsPlot");
 	HCVOptSelector.SelectDEOToOptimise("NSPHCVAntibodyProp");
+	
+	HCVOptSelector.SelectDEOToOptimise("NSPHCVAntibodyPropMaleAUnder25");
+	HCVOptSelector.SelectDEOToOptimise("NSPHCVAntibodyPropMaleA25to35");
+	HCVOptSelector.SelectDEOToOptimise("NSPHCVAntibodyPropMaleA35plus");
+	
+	HCVOptSelector.SelectDEOToOptimise("NSPHCVAntibodyPropFemaleAUnder25");
+	HCVOptSelector.SelectDEOToOptimise("NSPHCVAntibodyPropFemaleA25to35");
+	HCVOptSelector.SelectDEOToOptimise("NSPHCVAntibodyPropFemaleA35plus");
+	
 	HCVOptSelector.SelectDEOToOptimise("IncidenceHITSC");
 	HCVOptSelector.SelectDEOToOptimise("IncidenceNSP");
 }

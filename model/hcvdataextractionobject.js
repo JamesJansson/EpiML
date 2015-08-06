@@ -83,9 +83,9 @@ function HCVDataExtractionObjects(){
 			NewDEO.ResultFunction=EverInjectorByAgeFunction;
 			
 			// Set optimisation
-			NewDEO.Optimise=true;
-			NewDEO.Optimisation.ProportionalError=true;
-			NewDEO.Optimisation.Weight=10;
+			// NewDEO.Optimise=true;
+			// NewDEO.Optimisation.ProportionalError=true;
+			// NewDEO.Optimisation.Weight=10;
 			
 			// CReate a referenece that can be used to download the data in the future
 			eval(ObjectName+"=NewDEO;");
@@ -163,9 +163,9 @@ function HCVDataExtractionObjects(){
 			NewDEO.ResultFunction=RecentInjectorByAgeFunction;
 			
 			// Set optimisation
-			NewDEO.Optimise=true;
-			NewDEO.Optimisation.ProportionalError=true;
-			NewDEO.Optimisation.Weight=10;
+			// NewDEO.Optimise=true;
+			// NewDEO.Optimisation.ProportionalError=true;
+			// NewDEO.Optimisation.Weight=10;
 			
 			// CReate a referenece that can be used to download the data in the future
 			eval(ObjectName+"=NewDEO;");
@@ -468,6 +468,8 @@ function HCVDataExtractionObjects(){
 	};
 	
 	
+	NewDEO.Optimisation.Weight=100;
+	
 	// Add the object to the array of all ODEOS
 	DEO.push(NewDEO);
 	
@@ -635,7 +637,251 @@ function HCVDataExtractionObjects(){
 	DEO.push(NewDEO);
 	
 	
+	// Males 25-35
+	NewDEO=new DataExtractionObject();
+	// Load the data into the function 
+	var DataStruct={};
+	DataStruct.Time=Data.NSP.Year;
+	DataStruct.Value=Data.NSP.HCVAntiBody.Male.A25to35.Proportion;
+	NewDEO.SetData(DataStruct);
+	NewDEO.SetGraphTime(GraphTime);
+	NewDEO.Name="NSPHCVAntibodyPropMaleA25to35";
+	NewDEO.Title="Proportion of NSP with HCV Antibodies (Male, 25-35)";
+	NewDEO.XLabel="Year";
+	NewDEO.YLabel="Proportion";
 	
+	NewDEO.ResultFunction= function (SimulationResult, Time){
+		var AntibodyPresent=0;
+		var NSPTotal=0;
+		for (var PersonCount in SimulationResult.Population){
+			var Person=SimulationResult.Population[PersonCount];
+			if (Person.Alive(Time)){
+				// Check if currently injecting
+				if (Person.IDU.CurrentlyInjecting(Time)){
+					NSPTotal++;
+					// Check if Heterosexual
+					if (Person.HCV.AntibodyPresent(Time)){
+						AntibodyPresent++;
+					}
+				}
+			}
+		}
+		
+		this.AddErrorWeight(NSPTotal);
+		
+		var Prop= AntibodyPresent/NSPTotal;
+		if (isNaN(Prop)){
+			Prop=0;
+		}
+		return Prop;
+	};
+	
+	NewDEO.ErrorFunction=function(TimeArray, DataArray, SimulationValueArray, SimulationResult){
+		var ExpectedNumberOfCases=Multiply(DataArray, this.ErrorWeight);
+		var SimulatedNumberOfCases=Multiply(SimulationValueArray, this.ErrorWeight);
+		var TotalError=Sum(Abs(Minus(SimulatedNumberOfCases, ExpectedNumberOfCases)));
+		return TotalError;
+	};
+	// Add the object to the array of all ODEOS
+	DEO.push(NewDEO);
+	
+		
+	// Males over 35
+	NewDEO=new DataExtractionObject();
+	// Load the data into the function 
+	var DataStruct={};
+	DataStruct.Time=Data.NSP.Year;
+	DataStruct.Value=Data.NSP.HCVAntiBody.Male.A35plus.Proportion;
+	NewDEO.SetData(DataStruct);
+	NewDEO.SetGraphTime(GraphTime);
+	NewDEO.Name="NSPHCVAntibodyPropMaleA35plus";
+	NewDEO.Title="Proportion of NSP with HCV Antibodies (Male, >35)";
+	NewDEO.XLabel="Year";
+	NewDEO.YLabel="Proportion";
+	
+	NewDEO.ResultFunction= function (SimulationResult, Time){
+		var AntibodyPresent=0;
+		var NSPTotal=0;
+		for (var PersonCount in SimulationResult.Population){
+			var Person=SimulationResult.Population[PersonCount];
+			if (Person.Alive(Time)){
+				// Check if currently injecting
+				if (Person.IDU.CurrentlyInjecting(Time)){
+					NSPTotal++;
+					// Check if Heterosexual
+					if (Person.HCV.AntibodyPresent(Time)){
+						AntibodyPresent++;
+					}
+				}
+			}
+		}
+		
+		this.AddErrorWeight(NSPTotal);
+		
+		var Prop= AntibodyPresent/NSPTotal;
+		if (isNaN(Prop)){
+			Prop=0;
+		}
+		return Prop;
+	};
+	
+	NewDEO.ErrorFunction=function(TimeArray, DataArray, SimulationValueArray, SimulationResult){
+		var ExpectedNumberOfCases=Multiply(DataArray, this.ErrorWeight);
+		var SimulatedNumberOfCases=Multiply(SimulationValueArray, this.ErrorWeight);
+		var TotalError=Sum(Abs(Minus(SimulatedNumberOfCases, ExpectedNumberOfCases)));
+		return TotalError;
+	};
+	// Add the object to the array of all ODEOS
+	DEO.push(NewDEO);
+	
+	
+	
+	
+	// Males under 25
+	NewDEO=new DataExtractionObject();
+	// Load the data into the function 
+	var DataStruct={};
+	DataStruct.Time=Data.NSP.Year;
+	DataStruct.Value=Data.NSP.HCVAntiBody.Female.AUnder25.Proportion;
+	NewDEO.SetData(DataStruct);
+	NewDEO.SetGraphTime(GraphTime);
+	NewDEO.Name="NSPHCVAntibodyPropFemaleAUnder25";
+	NewDEO.Title="Proportion of NSP with HCV Antibodies (Female, <25)";
+	NewDEO.XLabel="Year";
+	NewDEO.YLabel="Proportion";
+	
+	NewDEO.ResultFunction= function (SimulationResult, Time){
+		var AntibodyPresent=0;
+		var NSPTotal=0;
+		for (var PersonCount in SimulationResult.Population){
+			var Person=SimulationResult.Population[PersonCount];
+			if (Person.Alive(Time)){
+				// Check if currently injecting
+				if (Person.IDU.CurrentlyInjecting(Time)){
+					NSPTotal++;
+					// Check if Heterosexual
+					if (Person.HCV.AntibodyPresent(Time)){
+						AntibodyPresent++;
+					}
+				}
+			}
+		}
+		
+		this.AddErrorWeight(NSPTotal);
+		
+		var Prop= AntibodyPresent/NSPTotal;
+		if (isNaN(Prop)){
+			Prop=0;
+		}
+		return Prop;
+	};
+	
+	NewDEO.ErrorFunction=function(TimeArray, DataArray, SimulationValueArray, SimulationResult){
+		var ExpectedNumberOfCases=Multiply(DataArray, this.ErrorWeight);
+		var SimulatedNumberOfCases=Multiply(SimulationValueArray, this.ErrorWeight);
+		var TotalError=Sum(Abs(Minus(SimulatedNumberOfCases, ExpectedNumberOfCases)));
+		return TotalError;
+	};
+	// Add the object to the array of all ODEOS
+	DEO.push(NewDEO);
+	
+	
+	// Females 25-35
+	NewDEO=new DataExtractionObject();
+	// Load the data into the function 
+	var DataStruct={};
+	DataStruct.Time=Data.NSP.Year;
+	DataStruct.Value=Data.NSP.HCVAntiBody.Female.A25to35.Proportion;
+	NewDEO.SetData(DataStruct);
+	NewDEO.SetGraphTime(GraphTime);
+	NewDEO.Name="NSPHCVAntibodyPropFemaleA25to35";
+	NewDEO.Title="Proportion of NSP with HCV Antibodies (Female, 25-35)";
+	NewDEO.XLabel="Year";
+	NewDEO.YLabel="Proportion";
+	
+	NewDEO.ResultFunction= function (SimulationResult, Time){
+		var AntibodyPresent=0;
+		var NSPTotal=0;
+		for (var PersonCount in SimulationResult.Population){
+			var Person=SimulationResult.Population[PersonCount];
+			if (Person.Alive(Time)){
+				// Check if currently injecting
+				if (Person.IDU.CurrentlyInjecting(Time)){
+					NSPTotal++;
+					// Check if Heterosexual
+					if (Person.HCV.AntibodyPresent(Time)){
+						AntibodyPresent++;
+					}
+				}
+			}
+		}
+		
+		this.AddErrorWeight(NSPTotal);
+		
+		var Prop= AntibodyPresent/NSPTotal;
+		if (isNaN(Prop)){
+			Prop=0;
+		}
+		return Prop;
+	};
+	
+	NewDEO.ErrorFunction=function(TimeArray, DataArray, SimulationValueArray, SimulationResult){
+		var ExpectedNumberOfCases=Multiply(DataArray, this.ErrorWeight);
+		var SimulatedNumberOfCases=Multiply(SimulationValueArray, this.ErrorWeight);
+		var TotalError=Sum(Abs(Minus(SimulatedNumberOfCases, ExpectedNumberOfCases)));
+		return TotalError;
+	};
+	// Add the object to the array of all ODEOS
+	DEO.push(NewDEO);
+	
+		
+	// Females over 35
+	NewDEO=new DataExtractionObject();
+	// Load the data into the function 
+	var DataStruct={};
+	DataStruct.Time=Data.NSP.Year;
+	DataStruct.Value=Data.NSP.HCVAntiBody.Female.A35plus.Proportion;
+	NewDEO.SetData(DataStruct);
+	NewDEO.SetGraphTime(GraphTime);
+	NewDEO.Name="NSPHCVAntibodyPropFemaleA35plus";
+	NewDEO.Title="Proportion of NSP with HCV Antibodies (Female, >35)";
+	NewDEO.XLabel="Year";
+	NewDEO.YLabel="Proportion";
+	
+	NewDEO.ResultFunction= function (SimulationResult, Time){
+		var AntibodyPresent=0;
+		var NSPTotal=0;
+		for (var PersonCount in SimulationResult.Population){
+			var Person=SimulationResult.Population[PersonCount];
+			if (Person.Alive(Time)){
+				// Check if currently injecting
+				if (Person.IDU.CurrentlyInjecting(Time)){
+					NSPTotal++;
+					// Check if Heterosexual
+					if (Person.HCV.AntibodyPresent(Time)){
+						AntibodyPresent++;
+					}
+				}
+			}
+		}
+		
+		this.AddErrorWeight(NSPTotal);
+		
+		var Prop= AntibodyPresent/NSPTotal;
+		if (isNaN(Prop)){
+			Prop=0;
+		}
+		return Prop;
+	};
+	
+	NewDEO.ErrorFunction=function(TimeArray, DataArray, SimulationValueArray, SimulationResult){
+		var ExpectedNumberOfCases=Multiply(DataArray, this.ErrorWeight);
+		var SimulatedNumberOfCases=Multiply(SimulationValueArray, this.ErrorWeight);
+		var TotalError=Sum(Abs(Minus(SimulatedNumberOfCases, ExpectedNumberOfCases)));
+		return TotalError;
+	};
+	// Add the object to the array of all ODEOS
+	DEO.push(NewDEO);
 	
 	// ******************************************************************************************************
 	// ******************************************************************************************************
