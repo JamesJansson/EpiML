@@ -228,8 +228,6 @@ function HCVDataExtractionObjects(){
 
 	// Create a new object to extract heterosexual identity from NSP
 	NewDEO=new DataExtractionObject();
-	
-
 	NewDEO.SetGraphTime(GraphTime);
 	NewDEO.Name="NSPParticipants";
 	NewDEO.Title="Total in NSP";
@@ -249,12 +247,6 @@ function HCVDataExtractionObjects(){
 		}
 		return NSPTotal*Settings.SampleFactor;
 	};
-
-	
-	// Set optimisation
-	NewDEO.Optimise=false;
-	NewDEO.Optimisation.ProportionalError=false;
-	
 	// Add the object to the array of all ODEOS
 	DEO.push(NewDEO);
 
@@ -571,7 +563,6 @@ function HCVDataExtractionObjects(){
 		if (isNaN(Prop)){
 			Prop=0;
 		}
-		
 		return Prop;
 	};
 	
@@ -587,6 +578,59 @@ function HCVDataExtractionObjects(){
 	NewDEO.Optimise=true;
 	//NewDEO.Optimisation.ProportionalError=true;
 	
+	// Add the object to the array of all ODEOS
+	DEO.push(NewDEO);
+	
+	
+	
+	// ******************************************************************************************************
+	// HCV prevalence in NSP by age and sex
+	
+	// Males under 25
+	NewDEO=new DataExtractionObject();
+	// Load the data into the function 
+	var DataStruct={};
+	DataStruct.Time=Data.NSP.Year;
+	DataStruct.Value=Data.NSP.HCVAntiBody.Male.AUnder25.Proportion;
+	NewDEO.SetData(DataStruct);
+	NewDEO.SetGraphTime(GraphTime);
+	NewDEO.Name="NSPHCVAntibodyPropMaleAUnder25";
+	NewDEO.Title="Proportion of NSP with HCV Antibodies (Male, <25)";
+	NewDEO.XLabel="Year";
+	NewDEO.YLabel="Proportion";
+	
+	NewDEO.ResultFunction= function (SimulationResult, Time){
+		var AntibodyPresent=0;
+		var NSPTotal=0;
+		for (var PersonCount in SimulationResult.Population){
+			var Person=SimulationResult.Population[PersonCount];
+			if (Person.Alive(Time)){
+				// Check if currently injecting
+				if (Person.IDU.CurrentlyInjecting(Time)){
+					NSPTotal++;
+					// Check if Heterosexual
+					if (Person.HCV.AntibodyPresent(Time)){
+						AntibodyPresent++;
+					}
+				}
+			}
+		}
+		
+		this.AddErrorWeight(NSPTotal);
+		
+		var Prop= AntibodyPresent/NSPTotal;
+		if (isNaN(Prop)){
+			Prop=0;
+		}
+		return Prop;
+	};
+	
+	NewDEO.ErrorFunction=function(TimeArray, DataArray, SimulationValueArray, SimulationResult){
+		var ExpectedNumberOfCases=Multiply(DataArray, this.ErrorWeight);
+		var SimulatedNumberOfCases=Multiply(SimulationValueArray, this.ErrorWeight);
+		var TotalError=Sum(Abs(Minus(SimulatedNumberOfCases, ExpectedNumberOfCases)));
+		return TotalError;
+	};
 	// Add the object to the array of all ODEOS
 	DEO.push(NewDEO);
 	
@@ -637,6 +681,20 @@ function HCVDataExtractionObjects(){
 	};
 	// Add the object to the array of all ODEOS
 	DEO.push(NewDEO);
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	
@@ -1405,7 +1463,7 @@ function HCVDataExtractionObjects(){
 				}
 			}
 		}
-		return NumberOfSeroconversions;
+		return NumberOfSeroconversions*Settings.SampleFactor;
 	};
 	
 	// Add the object to the array of all ODEOS
