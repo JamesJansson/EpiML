@@ -58,6 +58,7 @@ function OptSelector(Name, DivID, Functions, PointerToParamGroup, DEOArrayFuncti
 	this.DEOID=DivID+"_DEO_";// 
 	this.DEOErrorPlotID=DivID+"_DEOErrorPlot_";// 
 	this.DEOResultsPlotID=DivID+"_DEOResultsPlot_";// 
+	this.DEOCheckBoxID=DivID+"_DEOCheckBox_";// 
 	this.ParamProgressPlotID=DivID+"_ParamProgressPlot_";// 
 	this.TotalErrorPlotID=DivID+"_TotalErrorPlot";
 	
@@ -211,14 +212,14 @@ OptSelector.prototype.DrawParamDiv=function(){
 		// Display the values as described in the ParamGroup
 		HTMLString+="<div style='width:100%;clear:both;'>\n";
 		// Show the name of the variable
-		HTMLString+="   <input type='text' value='"+this.OptParamArray[PCount].ParameterID+"' readonly ' style='width:300px;'>\n";
+		HTMLString+="   <input type='text' value='"+this.OptParamArray[PCount].ParameterID+"' readonly style='width:300px;'>\n";
 		// Draw a box that displays that 
 		var ParamOptString=this.Name+".ParamToOptimise["+PCount+"]";
 		if (this.ParamToOptimise[PCount]==true){
-			HTMLString+="    <input type='checkbox' onClick='"+ParamOptString+"=!"+ParamOptString+";' checked> Optimise this \n";
+			HTMLString+="    <input type='checkbox'  onClick='"+ParamOptString+"=!"+ParamOptString+";' checked> Optimise this \n";
 		}
 		else {
-			HTMLString+="    <input type='checkbox' onClick='"+ParamOptString+"=!"+ParamOptString+";'> Optimise this \n";
+			HTMLString+="    <input type='checkbox'  onClick='"+ParamOptString+"=!"+ParamOptString+";'> Optimise this \n";
 		}
 		
 		// Draw a box that shows the progress of the error in this variable
@@ -238,14 +239,14 @@ OptSelector.prototype.DrawParamDiv=function(){
 	for (var DEOCount in this.DEONameList){
 		HTMLString+="<div>\n";
 		HTMLString+="    <div style='width:100%;clear:both;'>";
-		HTMLString+="        <input type='text' value='"+this.DEONameList[DEOCount]+"' readonly ' style='width:300px;'>\n";
+		HTMLString+="        <input type='text' value='"+this.DEONameList[DEOCount]+"' readonly style='width:300px;'>\n";
 		var DEOOptString=this.Name+".DEOToOptimise["+DEOCount+"]";
 		// when the button is clicked, the value flips
 		if (this.DEOToOptimise[DEOCount]==true){
-			HTMLString+="        <input type='checkbox' onClick='"+DEOOptString+"=!"+DEOOptString+";' > Optimise to this data\n";
+			HTMLString+="        <input type='checkbox' id='"+this.DEOCheckBoxID+DEOCount+"' onClick='"+DEOOptString+"=!"+DEOOptString+";' > Optimise to this data\n";
 		}
 		else{
-			HTMLString+="        <input type='checkbox' onClick='"+DEOOptString+"=!"+DEOOptString+";' > Optimise to this data\n";
+			HTMLString+="        <input type='checkbox' id='"+this.DEOCheckBoxID+DEOCount+"' onClick='"+DEOOptString+"=!"+DEOOptString+";' > Optimise to this data\n";
 		}
 		
 		HTMLString+="    </div>\n";
@@ -311,9 +312,21 @@ OptSelector.prototype.HideTotalErrorPlot=function(){
 
 
 
-// hide all results
-
-
+OptSelector.prototype.SelectDEOToOptimise=function(Name){
+	// Go through the DEOGroup
+	var DEOArray=this.DEOGroup.DEOArray;
+	for (var DEOCount in DEOArray){
+		// If the name matches
+		if (DEOArray[DEOCount].Name==Name){
+			// Set as being optimised
+			this.DEOToOptimise[DEOCount]=true;
+			// Set interface as being checked
+			document.getElementById(this.DEOCheckBoxID+DEOCount).checked=true;
+			return 0;
+		}
+	}
+	console.error("Could not find '"+Name+"' in the DEOGroup");
+};
 
 
 
@@ -685,35 +698,7 @@ OptSelector.prototype.PushToParamGroup=function (){
 
 
 
-OptSelector.prototype.UpdateError=function (DataFromSim){
-	throw "this function should not be used";
-	this.ErrorHistory[DataFromSim.SimNum]=DataFromSim.ErrorHistory;
-	this.ParameterHistory[DataFromSim.SimNum]=DataFromSim.ParameterHistory;
-	
-	if (this.LiveUpdatePlots){
-		this.DrawErrorPlots();
-	}
 
-};
-
-OptSelector.prototype.DrawErrorPlots=function (){
-	this.ErrorPlotData=[];// this.ErrorPlotData[DataArrayNumber][SimNumber].XArrayValues/YArrayValues
-	this.ParameterPlotData=[];
-	
-	// Do a recombination of all data
-	//  for each of the data objects that are optimised to  in the 
-	
-	
-	// 
-	
-	// for all sims  
-		//
-	// Update Plots
-	
-	
-	
-	
-};
 
 
 OptSelector.prototype.DrawDEOPlots=function (){
