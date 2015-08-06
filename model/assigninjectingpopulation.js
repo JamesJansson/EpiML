@@ -411,7 +411,7 @@ function DeterminePWIDEntryRateExponential2(EntryParams, Time, TimeStep){//MaxYe
 	var NumberInYear, NumberInStep;
 	// Determine if in the initial exponential period
 
-	if (Time<EntryParams.YearPeakIDU){
+	if (Time+TimeStep/100<EntryParams.YearPeakIDU){
 		NumberInYear=EntryParams.PeakEntryPerYear*Exp(Log(EntryParams.Logk1)*(EntryParams.YearPeakIDU-Time));
 	}
 	else{
@@ -422,7 +422,9 @@ function DeterminePWIDEntryRateExponential2(EntryParams, Time, TimeStep){//MaxYe
 	return NumberInStep;
 }	
 
-function CreatePWID(EntryParams, Time, TimeStep){	
+function CreatePWID(EntryParams, Time, TimeStep){
+	
+		
 	var PWIDPopulation=[];
 	var SexIndex, LogMedianEntryAge;
 	
@@ -432,6 +434,8 @@ function CreatePWID(EntryParams, Time, TimeStep){
 	var LogSDEntryAge=Param.IDU.InjectionStartAge.SD;
 	
 	var NumberToAdd=DeterminePWIDEntryRateExponential2(EntryParams, Time, TimeStep);
+	
+	//console.error("CreatePWID Time: "+Time+" Number to add: "+NumberToAdd);
 	
 	for (var TotalPWID=0; TotalPWID<NumberToAdd; TotalPWID++){//the total number in the group
 		// Determine the sex at random

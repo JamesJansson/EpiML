@@ -419,7 +419,7 @@ function FullModel(FunctionInput){
 		
 		
 		// Testing 
-		if (Notifications.FirstYearOfData<=Time && Time<Notifications.LastYearOfData){ // only if there is data
+		if (Notifications.FirstYearOfData<=Time && Time+Param.TimeStep/100<Notifications.LastYearOfData){ // only if there is data
 			var HCVDataDiagnosisResultsThisStep=HCVDataDiagnosis(Person, Notifications, Time, Param.TimeStep);
 			HCVDataDiagnosisResults.push(HCVDataDiagnosisResultsThisStep);
 		}
@@ -433,7 +433,7 @@ function FullModel(FunctionInput){
 		
 		// Determine treatment
 			// X number per year are treated out of those who are diagnosed
-		if (Time<Param.Time.EndTreatmentData){
+		if (Time+Param.TimeStep/100<Param.Time.EndTreatmentData){
 			DetermineHistoricalTreatment(Person, Time, Param.TimeStep, Data.TreatmentNumbers);//Treatment rates is an array of each of the treatment types
 		}
 		else{
@@ -510,7 +510,7 @@ function InitialDistribution() {
 	
 	
 	var Time = Param.Time.StartNonDynamicModel;
-	while(Time < Param.Time.StartDynamicModel){
+	while(Time+Param.TimeStep/100 < Param.Time.StartDynamicModel){// used to prevent errors in the timestep
 		var PWIDToAdd = CreatePWID(Param.IDU.Entry, Time, Param.TimeStep);
 		Person = Person.concat(PWIDToAdd);
 		Time += Param.TimeStep
