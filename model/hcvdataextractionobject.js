@@ -464,11 +464,11 @@ function HCVDataExtractionObjects(){
 		console.log("Penalty for InsufficientSymptomaticDiagnoses: "+TotalInsufficientSymptomatic);
 		console.log("Need to determine how much of a shortfall this is");
 		
-		return TotalPenalty;
+		return TotalPenalty*Settings.SampleFactor;
 	};
 	
 	
-	NewDEO.Optimisation.Weight=100;
+	NewDEO.Optimisation.Weight=10;
 	
 	// Add the object to the array of all ODEOS
 	DEO.push(NewDEO);
@@ -607,12 +607,14 @@ function HCVDataExtractionObjects(){
 		for (var PersonCount in SimulationResult.Population){
 			var Person=SimulationResult.Population[PersonCount];
 			if (Person.Alive(Time)){
-				// Check if currently injecting
-				if (Person.IDU.CurrentlyInjecting(Time)){
-					NSPTotal++;
-					// Check if Heterosexual
-					if (Person.HCV.AntibodyPresent(Time)){
-						AntibodyPresent++;
+				if (Person.Age(Time)<25){
+					// Check if currently injecting
+					if (Person.IDU.CurrentlyInjecting(Time)){
+						NSPTotal++;
+						// Check if Heterosexual
+						if (Person.HCV.AntibodyPresent(Time)){
+							AntibodyPresent++;
+						}
 					}
 				}
 			}
@@ -656,12 +658,14 @@ function HCVDataExtractionObjects(){
 		for (var PersonCount in SimulationResult.Population){
 			var Person=SimulationResult.Population[PersonCount];
 			if (Person.Alive(Time)){
-				// Check if currently injecting
-				if (Person.IDU.CurrentlyInjecting(Time)){
-					NSPTotal++;
-					// Check if Heterosexual
-					if (Person.HCV.AntibodyPresent(Time)){
-						AntibodyPresent++;
+				if (Person.Age(Time)>=25 && Person.Age(Time)<35 ){
+					// Check if currently injecting
+					if (Person.IDU.CurrentlyInjecting(Time)){
+						NSPTotal++;
+						// Check if Heterosexual
+						if (Person.HCV.AntibodyPresent(Time)){
+							AntibodyPresent++;
+						}
 					}
 				}
 			}
@@ -705,12 +709,14 @@ function HCVDataExtractionObjects(){
 		for (var PersonCount in SimulationResult.Population){
 			var Person=SimulationResult.Population[PersonCount];
 			if (Person.Alive(Time)){
-				// Check if currently injecting
-				if (Person.IDU.CurrentlyInjecting(Time)){
-					NSPTotal++;
-					// Check if Heterosexual
-					if (Person.HCV.AntibodyPresent(Time)){
-						AntibodyPresent++;
+				if (Person.Age(Time)>=35){
+					// Check if currently injecting
+					if (Person.IDU.CurrentlyInjecting(Time)){
+						NSPTotal++;
+						// Check if Heterosexual
+						if (Person.HCV.AntibodyPresent(Time)){
+							AntibodyPresent++;
+						}
 					}
 				}
 			}
@@ -756,12 +762,14 @@ function HCVDataExtractionObjects(){
 		for (var PersonCount in SimulationResult.Population){
 			var Person=SimulationResult.Population[PersonCount];
 			if (Person.Alive(Time)){
-				// Check if currently injecting
-				if (Person.IDU.CurrentlyInjecting(Time)){
-					NSPTotal++;
-					// Check if Heterosexual
-					if (Person.HCV.AntibodyPresent(Time)){
-						AntibodyPresent++;
+				if (Person.Age(Time)<25){
+					// Check if currently injecting
+					if (Person.IDU.CurrentlyInjecting(Time)){
+						NSPTotal++;
+						// Check if Heterosexual
+						if (Person.HCV.AntibodyPresent(Time)){
+							AntibodyPresent++;
+						}
 					}
 				}
 			}
@@ -805,12 +813,14 @@ function HCVDataExtractionObjects(){
 		for (var PersonCount in SimulationResult.Population){
 			var Person=SimulationResult.Population[PersonCount];
 			if (Person.Alive(Time)){
-				// Check if currently injecting
-				if (Person.IDU.CurrentlyInjecting(Time)){
-					NSPTotal++;
-					// Check if Heterosexual
-					if (Person.HCV.AntibodyPresent(Time)){
-						AntibodyPresent++;
+				if (Person.Age(Time)>=25 && Person.Age(Time)<35 ){
+					// Check if currently injecting
+					if (Person.IDU.CurrentlyInjecting(Time)){
+						NSPTotal++;
+						// Check if Heterosexual
+						if (Person.HCV.AntibodyPresent(Time)){
+							AntibodyPresent++;
+						}
 					}
 				}
 			}
@@ -854,12 +864,14 @@ function HCVDataExtractionObjects(){
 		for (var PersonCount in SimulationResult.Population){
 			var Person=SimulationResult.Population[PersonCount];
 			if (Person.Alive(Time)){
-				// Check if currently injecting
-				if (Person.IDU.CurrentlyInjecting(Time)){
-					NSPTotal++;
-					// Check if Heterosexual
-					if (Person.HCV.AntibodyPresent(Time)){
-						AntibodyPresent++;
+				if (Person.Age(Time)>=35){
+					// Check if currently injecting
+					if (Person.IDU.CurrentlyInjecting(Time)){
+						NSPTotal++;
+						// Check if Heterosexual
+						if (Person.HCV.AntibodyPresent(Time)){
+							AntibodyPresent++;
+						}
 					}
 				}
 			}
