@@ -702,9 +702,9 @@ OptSelector.prototype.PushToParamGroup=function (){
 
 
 OptSelector.prototype.DrawDEOPlots=function (){
-	this.DEOGroup.Summarise(this.SimulationHolder.Results);
+	this.DEOGroup.Summarise(this.SimulationHolder.Result);
 	
-	this.DEOGroup.GraphAll(this.DEOPlotID);
+	this.DEOGroup.GraphAll(this.DEOResultsPlotID);
 };
 
 
