@@ -95,10 +95,16 @@ IDUObject.prototype.StartInjecting= function (Time){
 		
 		// Determine excess death due to drug use
 		// From the date of regular usage to cease
-		
-		var TimeOfIDUDeath=TimeUntilEvent(Param.IDU.ExcessMortality);
-		if (TimeOfIDUDeath<TimeOfStoppingInjecting){
-			this.Person.Death.IDU=Time+TimeChosen+TimeUntilCease;
+		var ExcessMortality;
+		if (this.Person.Sex==0){
+			ExcessMortality=Param.IDU.ExcessMortality.Male;		
+		}
+		if (this.Person.Sex==1){
+			ExcessMortality=Param.IDU.ExcessMortality.Female;		
+		}
+		var TimeOfIDUDeath=Time+TimeUntilEvent(ExcessMortality);
+		if (TimeOfIDUDeath<TimeOfStoppingInjecting){//if time of drug related death occurs prior to 
+			this.Person.Death.IDU=TimeOfIDUDeath;
 		}
 	}
 	else {
