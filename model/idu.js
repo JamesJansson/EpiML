@@ -104,7 +104,9 @@ IDUObject.prototype.StartInjecting= function (Time){
 	}
 	else {
 		// determine time until ceasing irregular use
-		var TimeOfStoppingInjecting=TimeUntilEvent(Param.IDU.RateOfCeasingIrregularUse);
+		//var TimeOfStoppingInjecting=TimeUntilEvent(Param.IDU.RateOfCeasingIrregularUse);
+		
+		
 		this.Use.Set(4, Time+TimeOfStoppingInjecting);
 	}
 	

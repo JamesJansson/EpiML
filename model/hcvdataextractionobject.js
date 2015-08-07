@@ -8,9 +8,7 @@
 
 // This function is run internally in each instance of the model
 function HCVDataExtractionObjects(){
-	
 	var GraphTime=AscendingArray(1970, 2020, 1);
-	
 	var DEO=[];//Array of DataExtractionObject
 
 	
@@ -468,7 +466,7 @@ function HCVDataExtractionObjects(){
 	};
 	
 	
-	NewDEO.Optimisation.Weight=10;
+	NewDEO.Optimisation.Weight=100;
 	
 	// Add the object to the array of all ODEOS
 	DEO.push(NewDEO);
@@ -530,6 +528,8 @@ function HCVDataExtractionObjects(){
 	// ******************************************************************************************************
 	// HCV prevalence in IDU - HCV prevalence in NSP users
 	
+	var NSPErrorWeight=50;
+	
 	NewDEO=new DataExtractionObject();
 	// Load the data into the function 
 	var DataStruct={};
@@ -574,11 +574,8 @@ function HCVDataExtractionObjects(){
 		var TotalError=Sum(Abs(Minus(SimulatedNumberOfCases, ExpectedNumberOfCases)));
 		return TotalError;
 	};
+	NewDEO.Optimisation.Weight=NSPErrorWeight;
 	
-	
-	// Set optimisation
-	NewDEO.Optimise=true;
-	//NewDEO.Optimisation.ProportionalError=true;
 	
 	// Add the object to the array of all ODEOS
 	DEO.push(NewDEO);
@@ -635,6 +632,8 @@ function HCVDataExtractionObjects(){
 		var TotalError=Sum(Abs(Minus(SimulatedNumberOfCases, ExpectedNumberOfCases)));
 		return TotalError;
 	};
+	NewDEO.Optimisation.Weight=NSPErrorWeight;
+	
 	// Add the object to the array of all ODEOS
 	DEO.push(NewDEO);
 	
@@ -686,6 +685,7 @@ function HCVDataExtractionObjects(){
 		var TotalError=Sum(Abs(Minus(SimulatedNumberOfCases, ExpectedNumberOfCases)));
 		return TotalError;
 	};
+	NewDEO.Optimisation.Weight=NSPErrorWeight;
 	// Add the object to the array of all ODEOS
 	DEO.push(NewDEO);
 	
@@ -737,13 +737,14 @@ function HCVDataExtractionObjects(){
 		var TotalError=Sum(Abs(Minus(SimulatedNumberOfCases, ExpectedNumberOfCases)));
 		return TotalError;
 	};
+	NewDEO.Optimisation.Weight=NSPErrorWeight;
 	// Add the object to the array of all ODEOS
 	DEO.push(NewDEO);
 	
 	
 	
 	
-	// Males under 25
+	// Females under 25
 	NewDEO=new DataExtractionObject();
 	// Load the data into the function 
 	var DataStruct={};
@@ -790,6 +791,7 @@ function HCVDataExtractionObjects(){
 		var TotalError=Sum(Abs(Minus(SimulatedNumberOfCases, ExpectedNumberOfCases)));
 		return TotalError;
 	};
+	NewDEO.Optimisation.Weight=NSPErrorWeight;
 	// Add the object to the array of all ODEOS
 	DEO.push(NewDEO);
 	
@@ -841,6 +843,7 @@ function HCVDataExtractionObjects(){
 		var TotalError=Sum(Abs(Minus(SimulatedNumberOfCases, ExpectedNumberOfCases)));
 		return TotalError;
 	};
+	NewDEO.Optimisation.Weight=NSPErrorWeight;
 	// Add the object to the array of all ODEOS
 	DEO.push(NewDEO);
 	
@@ -892,6 +895,7 @@ function HCVDataExtractionObjects(){
 		var TotalError=Sum(Abs(Minus(SimulatedNumberOfCases, ExpectedNumberOfCases)));
 		return TotalError;
 	};
+	NewDEO.Optimisation.Weight=NSPErrorWeight;
 	// Add the object to the array of all ODEOS
 	DEO.push(NewDEO);
 	
@@ -1614,7 +1618,7 @@ function HCVDataExtractionObjects(){
 		}
 		
 		// This is a sneaky bit that will allow the count to be maintained
-		this.AddErrorWeight(SamplePopulationSize);
+		this.AddErrorWeight(SamplePopulationSize*Settings.SampleFactor);
 		
 		return SimulatedIncidenceRate;
 	};
@@ -1626,6 +1630,9 @@ function HCVDataExtractionObjects(){
 		
 		return TotalError;
 	};
+	
+	NewDEO.Optimisation.Weight=5;
+	
 	// Add the object to the array of all ODEOS
 	DEO.push(NewDEO);
 	
@@ -1672,7 +1679,7 @@ function HCVDataExtractionObjects(){
 		}
 		
 		// This is a sneaky bit that will allow the count to be maintained
-		this.AddErrorWeight(SamplePopulationSize);
+		this.AddErrorWeight(SamplePopulationSize*Settings.SampleFactor);
 		
 		return SimulatedIncidenceRate;
 	};
@@ -1695,6 +1702,7 @@ function HCVDataExtractionObjects(){
 		
 		return TotalError;
 	};
+	NewDEO.Optimisation.Weight=5;
 	// Add the object to the array of all ODEOS
 	DEO.push(NewDEO);
 	
