@@ -55,8 +55,7 @@ IDUObject.prototype.StartInjecting= function (Time){
 	
 	// Following entry, there is a probability associated with becoming a regular user, and following that exiting at a certain probability
 	if (Rand.Value()<Param.IDU.BecomeRegularInjector.P){
-		// Add time until occasional user
-		//this.Use.Set(2, Time+0.1);
+		
 	
 		// Add the transition to regular user
 		var TimeUntilStartingRegularUse=RegularInjectionTime.Time();
@@ -105,8 +104,9 @@ IDUObject.prototype.StartInjecting= function (Time){
 	else {
 		// determine time until ceasing irregular use
 		//var TimeOfStoppingInjecting=TimeUntilEvent(Param.IDU.RateOfCeasingIrregularUse);
-		
-		
+		// Add time until occasional user
+		this.Use.Set(2, Time+Param.StepSize);
+		var TimeOfStoppingInjecting=Time+1;
 		this.Use.Set(4, Time+TimeOfStoppingInjecting);
 	}
 	

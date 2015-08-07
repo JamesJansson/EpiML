@@ -186,7 +186,7 @@ function HCVDataExtractionObjects(){
 	NewDEO.SetData(DataStruct);
 	NewDEO.SetGraphTime(GraphTime);
 	NewDEO.Name="RecentlyBecameInjector";
-	NewDEO.Title="Number of people who recently became injectors";
+	NewDEO.Title="Number of people who initiate injecting by year";
 	NewDEO.XLabel="Year";
 	NewDEO.YLabel="Number of people";
 	
@@ -195,7 +195,7 @@ function HCVDataExtractionObjects(){
 		for (var PersonCount in SimulationResult.Population){
 			var Person=SimulationResult.Population[PersonCount];
 			if (Person.Alive(Time)){
-				if (Person.IDU.EverInjectedAtTime(Time)==false && Person.IDU.EverInjectedAtTime(Time+Param.TimeStep)){
+				if (Person.IDU.EverInjectedAtTime(Time)==false && Person.IDU.EverInjectedAtTime(Time+1)){
 					Count++;
 				}
 			}
