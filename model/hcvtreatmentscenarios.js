@@ -1,42 +1,60 @@
 // Treatment scenarios
 
-HCVTreatmentScenario=[];
+var HCVTreatmentScenario=[];
 
+var HCVTS;
 
-HCVTreatmentScenario[0]={};
-HCVTreatmentScenario[0].Name="Continued PEG-IFN 1000";
-HCVTreatmentScenario[0].Description="This scenario continues what has been happening for some time in Australia: around 1000 treatments per year.";
-HCVTreatmentScenario[0].Function=function (Person, Time, TimeStep){
+HCVTS={};
+HCVTS.Name="Continued PEG-IFN 1000";
+HCVTS.Description="This scenario continues what has been happening for some time in Australia: around 1000 treatments per year.";
+HCVTS.Function=function (Person, Time, TimeStep){
+	// Treat 1000 people
+	var NumberOfPeopleToTreat=1000;
+	
 	// find all infected, diagnosed individuals (that aren't previously treated)
-	
-	// treat 1000 people
-	
-};
+	var CurrentlyInfected=[];
+	for (var PCount in Person){
+		if (Person[PCount].CurrentlyInfected(Time)==true){
+			CurrentlyInfected.push(Person[PCount]);
+		}
+	}
 
-HCVTreatmentScenario[1]={};
-HCVTreatmentScenario[1].Name="Sofosbuvir 1000";
-HCVTreatmentScenario[1].Description="This scenario continues with the same rate of treatments, at around 1000 treatments per year, but changes the drug to Sofosbuvir.";
-HCVTreatmentScenario[1].Function=function (Person, Time, TimeStep){
+	var NumberCurrentlyInfected=CurrentlyInfected.length;
+	var ArrayToTreat=RandomSelection(NumberOfPeopleToTreat, NumberCurrentlyInfected);
+	
+	for (var Count in ArrayToTreat){
+		var TimeToTreat=Time+Rand.Value()*TimeStep;
+		Treatment.PegIfn.Treat(CurrentlyInfected, TimeToTreat);
+	}
+};
+HCVTreatmentScenario[0]=HCVTS;
+
+HCVTS={};
+HCVTS.Name="Sofosbuvir 1000";
+HCVTS.Description="This scenario continues with the same rate of treatments, at around 1000 treatments per year, but changes the drug to Sofosbuvir.";
+HCVTS.Function=function (Person, Time, TimeStep){
 	// find all infected, diagnosed individuals (that aren't previously treated)
 	
 	// treat 1000 people at random
 	var NumTreatedThisStep=TimeStep*1000/Settings.SampleFactor;
 };
+HCVTreatmentScenario[1]=HCVTS;
 
-HCVTreatmentScenario[2]={};
-HCVTreatmentScenario[2].Name="Sofosbuvir 10%";
-HCVTreatmentScenario[2].Description="This scenario changes the drug to Sofosbuvir and treats 10% of people per year.";
-HCVTreatmentScenario[2].Function=function (Person, Time, TimeStep){
+HCVTS={};
+HCVTS.Name="Sofosbuvir 10%";
+HCVTS.Description="This scenario changes the drug to Sofosbuvir and treats 10% of people per year.";
+HCVTS.Function=function (Person, Time, TimeStep){
 	// find all infected, diagnosed individuals (that aren't previously treated)
 	
 	// treat 10% of people at random
 	
 };
+HCVTreatmentScenario[2]=HCVTS;
 
-HCVTreatmentScenario[3]={};
-HCVTreatmentScenario[3].Name="Sofosbuvir Range";
-HCVTreatmentScenario[3].Description="This scenario tests for a range of treatments levels. Param.HCV.Treatment.SofosbuvirNumberRange can be adjusted to allow different levels of treatment.";
-HCVTreatmentScenario[3].Function=function (Person, Time, TimeStep){
+HCVTS={};
+HCVTS.Name="Sofosbuvir Range";
+HCVTS.Description="This scenario tests for a range of treatments levels. Param.HCV.Treatment.SofosbuvirNumberRange can be adjusted to allow different levels of treatment.";
+HCVTS.Function=function (Person, Time, TimeStep){
 	// find all infected, diagnosed individuals (that aren't previously treated)
 	
 	// treat range of people at random
@@ -45,6 +63,7 @@ HCVTreatmentScenario[3].Function=function (Person, Time, TimeStep){
 	var NumTreatedThisStep=TimeStep*Param.HCV.Treatment.SofosbuvirNumberRange/Settings.SampleFactor;
 	
 };
+HCVTreatmentScenario[3]=HCVTS;
 
 
 

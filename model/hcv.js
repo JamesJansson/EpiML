@@ -66,7 +66,7 @@ HCVObject.prototype.AntibodyPresent= function (Time){
 };
 
 
-HCVObject.prototype.Infection= function (Year, GenotypeValue){//, Age, Sex, Alcohol, HCVParam ){
+HCVObject.prototype.Infection= function (TimeOfInfection, GenotypeValue){//, Age, Sex, Alcohol, HCVParam ){
 	//Special note about recalculating Fibrosis: if fibrosis needs to be recalculated, care should be taken to avoid extending time until Fibrosis, as a person who is late F3 would  
 	//This will become especially important in cases where alcoholism begins. In such cases, the remaining time (e.g. 3.5 years to F4) should be shortened accordingly, not recalculated from scratch)
 	
@@ -79,7 +79,7 @@ HCVObject.prototype.Infection= function (Year, GenotypeValue){//, Age, Sex, Alco
 	// Currie, 2008 Drug Alc Dep 93:148
 	// Backmund, 2004 Clin Inf Dis 39:1540 
 	// Grebely, 2010 J Gastr Hepat 25:1281
-	if (this.AntibodyPresent(Year)){// if it has been set
+	if (this.AntibodyPresent(TimeOfInfection)){// if it has been set
 		if (this.ReinfectionProtected==true){
 			return 0;
 		}
@@ -96,8 +96,8 @@ HCVObject.prototype.Infection= function (Year, GenotypeValue){//, Age, Sex, Alco
 	// Super infection does not change the course of Fibrosis in the model
 	
 		
-	// var OriginalGenotypeArray=DeepCopy(this.Genotype.Value(Year));// note that since this is an array, we need to copy it before we operate on it.
-	var OriginalGenotypeArray=this.Genotype.Value(Year);// we are not operating on this, so no need to copy
+	// var OriginalGenotypeArray=DeepCopy(this.Genotype.Value(TimeOfInfection));// note that since this is an array, we need to copy it before we operate on it.
+	var OriginalGenotypeArray=this.Genotype.Value(TimeOfInfection);// we are not operating on this, so no need to copy
 
 	// determine the potential new genotype	
 	var NewGenotypeArray=OriginalGenotypeArray.concat(GenotypeValue);;
@@ -107,11 +107,9 @@ HCVObject.prototype.Infection= function (Year, GenotypeValue){//, Age, Sex, Alco
 		return self.indexOf(item) == pos;// if the item under inspection is equal to the first occurrence of the item, then keep
 	});
 
-	
-	
 	// If the new array not is identical to the old, add to the history of genotypes
 	if (!(ArraysEqual(UniqueGenotypeArray, OriginalGenotypeArray))){
-		this.Genotype.Set(UniqueGenotypeArray, Year);
+		this.Genotype.Set(UniqueGenotypeArray, TimeOfInfection);
 	}
 	
 	
@@ -134,16 +132,16 @@ HCVObject.prototype.Infection= function (Year, GenotypeValue){//, Age, Sex, Alco
 		this.AntibodyState=1;
 		
 		//History variables
-		this.Infected.Set(1, Year);
+		this.Infected.Set(1, TimeOfInfection);
 		if (isNaN(this.AntibodyYear)){// if it has not been set
-			this.AntibodyYear=Year;
+			this.AntibodyYear=TimeOfInfection;
 		}
 		
 		//Determine if spontaneous clearance occurs
 		if (Rand.Value()<Param.HCV.SpontaneousClearance.p){
 			var TimeUntilClearance=ExpDistributionRand(Param.HCV.SpontaneousClearance.MedianTime);
-			this.Infected.Set(0, Year+TimeUntilClearance);
-			this.Genotype.Set([], Year+TimeUntilClearance);
+			this.Infected.Set(0, TimeOfInfection+TimeUntilClearance);
+			this.Genotype.Set([], TimeOfInfection+TimeUntilClearance);
 		}
 		else {//progress to fibrosis
 			var Time;
@@ -154,7 +152,7 @@ HCVObject.prototype.Infection= function (Year, GenotypeValue){//, Age, Sex, Alco
 			// determine the level of Fibrosis, and start from that level. 
 			
 			Time=TimeUntilEvent(Param.HCV.F0F1);
-			var DateF1=Year+Time;
+			var DateF1=TimeOfInfection+Time;
 			this.Fibrosis.Set(1, DateF1);
 			//F1F2
 			Time=TimeUntilEvent(Param.HCV.F1F2);
@@ -201,8 +199,8 @@ HCVObject.prototype.Infection= function (Year, GenotypeValue){//, Age, Sex, Alco
 
 
 
-HCVObject.prototype.CurrentlyInfected= function (Year){
-	if (this.Infected.Value(Year)==1){
+HCVObject.prototype.CurrentlyInfected= function (Time){
+	if (this.Infected.Value(Time)==1){
 		return true;
 	}
 	return false;
@@ -232,16 +230,18 @@ HCVObject.prototype.Diagnose= function (Time){
 	// a probability that an assessment occurs
 };
 
-HCVObject.prototype.Treatment= function (Year, TreatmentType){//returns a 
+HCVObject.prototype.Treatment= function (TimeOfTreatment, TreatmentType){
+	throw "This function is no longer in use. Treatment now runs as its own independent system.";
+	 
 	// Show on the person that treatment is occurring
-	this.Treatment.Set(TreatmentType.ID, Year);
-	var TreatmentStopDate=Year+TreatmentType.Duration;
-	this.Treatment.Set(0, Year+TreatmentType.Duration);
+	this.Treatment.Set(TreatmentType.ID, TimeOfTreatment);
+	var TreatmentStopDate=TimeOfTreatment+TreatmentType.Duration;
+	this.Treatment.Set(0, TimeOfTreatment+TreatmentType.Duration);
 	
 	// Get the genotype combination at this point time
 	var GenotypeArray=this.Genotype.Value(Year);
 	var PClearanceArray=[];
-	for (GenotypeCount in GenotypeArray){
+	for (var GenotypeCount in GenotypeArray){
 		var GenotypeName="Genotype"+GenotypeArray[GenotypeCount];
 		if (typeof(TreatmentType.PClearance[GenotypeName])!="undefined"){
 			PClearanceArray.push(TreatmentType.PClearance[GenotypeName]);
@@ -262,12 +262,12 @@ HCVObject.prototype.Treatment= function (Year, TreatmentType){//returns a
 		// HCV.TreatmentClearance(TreatmentStopDate)
 		
 		// Determine retraction of liver disease
-		var CurrentFibrosis=this.Fibrosis.Get(Year);
+		var CurrentFibrosis=this.Fibrosis.Get(TimeOfTreatment);
 		if (CurrentFibrosis.Value>=4){ // what happens if it is level 5 (fibrosis)
 			// Choose a random time until exiting stage 4 fibrosis
 			// We'll choose a random time between the equivalent taking a whole stage change and a partial stage change to exit
 			// In doing this it will give between 0 and about 2 years until movement out of the F4 to F3 fibrosis levels based on a 0.5 per year stage transition rate
-			var YearBelowF4=Year+Rand.Value()/Param.HCV.FibrosisReversalRate;
+			var YearBelowF4=TimeOfTreatment+Rand.Value()/Param.HCV.FibrosisReversalRate;
 			// Once we determine when the retraction to fibrosis level 3 occurs, we'll look at if there are HCC, HCV death, and LF that occurs later
 			this.Fibrosis.Set(3, YearBelowF4);
 			
@@ -275,17 +275,17 @@ HCVObject.prototype.Treatment= function (Year, TreatmentType){//returns a
 			var ThisFibrosisYear=YearBelowF4;
 		}
 		else{
-			var YearBelowF4=Year;
+			var YearBelowF4=TimeOfTreatment;
 			
 			// Check for partially advanced stages
 			if (CurrentFibrosis.Value>=1){
-				var NextFibrosis=this.Fibrosis.Next(Year);
+				var NextFibrosis=this.Fibrosis.Next(TimeOfTreatment);
 				// Find the percentage of the amount of time through this stage
-				var PercentThroughFibrosisStage=(Year-CurrentFibrosis.Time)/(NextFibrosis.Time-CurrentFibrosis.Time);
+				var PercentThroughFibrosisStage=(TimeOfTreatment-CurrentFibrosis.Time)/(NextFibrosis.Time-CurrentFibrosis.Time);
 				var TimeUntilReachingPreviousFibrosisLevel=PercentThroughFibrosisStage/Param.HCV.FibrosisReversalRate;
 				
 				var ThisFibrosisLevel=CurrentFibrosis.Value-1;
-				var ThisFibrosisYear=Year+TimeUntilReachingPreviousFibrosisLevel;
+				var ThisFibrosisYear=TimeOfTreatment+TimeUntilReachingPreviousFibrosisLevel;
 				
 				this.Fibrosis.Set(ThisFibrosisLevel, ThisFibrosisYear);
 			}
@@ -321,6 +321,77 @@ HCVObject.prototype.Treatment= function (Year, TreatmentType){//returns a
 		//this.LF.DeleteFutureEvents(Year);
 	}
 }
+
+HCVObject.prototype.Clearance= function (TimeOfClearance){
+	// Set HCV genotype to empty
+	this.Genotype.Set([], TimeOfClearance);
+	
+	// Determine retraction of liver disease
+	var CurrentFibrosis=this.Fibrosis.Get(TimeOfClearance);
+	if (CurrentFibrosis.Value>=4){ // what happens if it is level 5 (fibrosis)
+		// Choose a random time until exiting stage 4 fibrosis
+		// We'll choose a random time between the equivalent taking a whole stage change and a partial stage change to exit
+		// In doing this it will give between 0 and about 2 years until movement out of the F4 to F3 fibrosis levels based on a 0.5 per year stage transition rate
+		var TimeOfBeingBelowF4=TimeOfClearance+Rand.Value()/Param.HCV.FibrosisReversalRate;
+		// Once we determine when the retraction to fibrosis level 3 occurs, we'll look at if there are HCC, HCV death, and LF that occurs later
+		this.Fibrosis.Set(3, TimeOfBeingBelowF4);
+		
+		var ThisFibrosisLevel=3;
+		var ThisFibrosisYear=TimeOfBeingBelowF4;
+	}
+	else{
+		var TimeOfBeingBelowF4=TimeOfClearance;
+		
+		// Check for partially advanced stages
+		if (CurrentFibrosis.Value>=1){
+			var NextFibrosis=this.Fibrosis.Next(TimeOfClearance);
+			// Find the percentage of the amount of time through this stage
+			var PercentThroughFibrosisStage=(TimeOfClearance-CurrentFibrosis.Time)/(NextFibrosis.Time-CurrentFibrosis.Time);
+			var TimeUntilReachingPreviousFibrosisLevel=PercentThroughFibrosisStage/Param.HCV.FibrosisReversalRate;
+			
+			var ThisFibrosisLevel=CurrentFibrosis.Value-1;
+			var ThisFibrosisYear=TimeOfClearance+TimeUntilReachingPreviousFibrosisLevel;
+			
+			this.Fibrosis.Set(ThisFibrosisLevel, ThisFibrosisYear);
+		}
+		else{// if it is F0
+			var ThisFibrosisLevel=0;
+			var ThisFibrosisYear=CurrentFibrosis.Time;
+		}
+	}
+	
+	// for each of the remain steps, calculate when the reversal will occur 
+	while (ThisFibrosisLevel>0){
+		ThisFibrosisYear=ThisFibrosisYear+1/Param.HCV.FibrosisReversalRate;
+		ThisFibrosisLevel=ThisFibrosisLevel-1;
+		this.Fibrosis.Set(ThisFibrosisLevel, ThisFibrosisYear);
+	}
+	
+	// Remove HCV related future death
+	if (TimeOfBeingBelowF4<this.Person.Death.HCV){
+		this.Person.Death.HCV=1E9;
+	}
+	if (TimeOfBeingBelowF4<this.Person.Death.LF){
+		this.Person.Death.LF=1E9;
+	}
+	
+	// Remove HCV related future HCC
+	if (this.HCC.Next(TimeOfBeingBelowF4)==1){
+		this.HCC.DeleteFutureEvents(TimeOfBeingBelowF4);// this should remove future cases of HCC
+		if (TimeOfBeingBelowF4<this.Person.Death.HCC){
+			this.Person.Death.HCC=1E9;
+		}
+	}
+	
+	// Remove HCV related future liver disease advancement
+	
+	// this.LF.DeleteFutureEvents(Year);
+	
+	// find all future deaths due to HCV and adjust/cancel them
+		
+	
+};
+
 
 HCVObject.prototype.UndiagnosedHCVInfection= function (Time){
 	if (this.Infected.Value(Time)==1 && this.Diagnosed.Value(Time)==0){

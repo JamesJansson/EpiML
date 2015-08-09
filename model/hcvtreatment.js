@@ -1,6 +1,30 @@
 function  HCVTreatment(Name, Duration, GeneralEfficacy,  GenotypeEfficacy, PatentExpires, OnPatentCost, OffPatentCost, AdverseEvents, Restrictions){
+	TSettings.Name="sofosbuvir";
+	TSettings.Duration=12*7/365;
+	TSettings.GeneralEfficacy=0.60;
+	TSettings.GenotypeEfficacy=[];
+	TSettings.PatentExpires;// Filing date 20/05/2010 + 20
+	TSettings.OnPatentCost=80000; 
+	TSettings.OffPatentCost=300;
+	// for future release
+	TSettings.Restriction=[];// array of functions
+	TSettings.Restriction[0]=function(Person, HCVTreatment){};
+	//Restrictions are conditions that prevent the use of the drug. They are used to determine if a drug 
+	// is unsuitable. e.g. some drugs cannot be used if the individual is depressed or has renal failure
+	TSettings.AdverseEvents=[];
+	TSettings.AdverseEvents[0]={};
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	this.Name=Name;
-	this.ShortName=ShortName;
+
 	
 	this.Duration=Duration;
 	
@@ -26,8 +50,10 @@ function  HCVTreatment(Name, Duration, GeneralEfficacy,  GenotypeEfficacy, Paten
 HCVTreatment.prototype.StartTreatment= function (ThisPerson, Time){
 	var CurrentGenotypeInfection=ThisPerson.HCV.Genotype.Value(Time);
 	
-	var ClearanceProb;// used as a holder
-	var ClearanceDeterminant=Rand.Value();// choose a single value, to essentially determine 
+	var ClearanceProb;
+	var ClearanceDeterminant=Rand.Value();
+	// Choose a single value, to essentially determine the probability of clearance
+	// This is important because it is likely that the reason a genotype will clear is because a patient is adherent
 	
 	var GenotypeArrayFollowingTreatment=[];
 	
@@ -44,6 +70,7 @@ HCVTreatment.prototype.StartTreatment= function (ThisPerson, Time){
 		
 		if (ClearanceDeterminant<ClearanceProb){
 			// clearance occurs
+			// do nothing
 		}
 		else {
 			// add this to the genotype that will exist following treatment
@@ -56,11 +83,16 @@ HCVTreatment.prototype.StartTreatment= function (ThisPerson, Time){
 	}
 	// Set the time at which treatment starts and ends
 	
-	ThisPerson.HCV.Genotype.Set(this.Duration+Time, GenotypeArrayFollowingTreatment);
-	
-	
+	if (GenotypeArrayFollowingTreatment.length==0){
+		ThisPerson.HCV.Clearance(Time+this.Duration);
+	}
+	else{
+		ThisPerson.HCV.Genotype.Set(GenotypeArrayFollowingTreatment, Time+this.Duration);
+	}
 	
 	ThisPerson.HCV.TreatmentCosts.Set(this.Cost(Time), Time);
+	
+	
 	
 	// Determine adverse events
 	// for each 

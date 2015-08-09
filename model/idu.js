@@ -124,7 +124,7 @@ IDUObject.prototype.StartInjecting= function (Time){
 };
 
 IDUObject.prototype.StopInjecting= function (Time){
-	console.error("In order to hard stop someone injecting (through interventions etc)");
+	console.error("This function is used to hard stop someone injecting (through interventions etc)");
 	console.error("Excess mortality needs to be adjusted if it occurs between old injection date and new injection date.");
 };
 
