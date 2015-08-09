@@ -1,44 +1,34 @@
-function  HCVTreatment(Name, Duration, GeneralEfficacy,  GenotypeEfficacy, PatentExpires, OnPatentCost, OffPatentCost, AdverseEvents, Restrictions){
-	TSettings.Name="sofosbuvir";
-	TSettings.Duration=12*7/365;
-	TSettings.GeneralEfficacy=0.60;
-	TSettings.GenotypeEfficacy=[];
-	TSettings.PatentExpires;// Filing date 20/05/2010 + 20
-	TSettings.OnPatentCost=80000; 
-	TSettings.OffPatentCost=300;
-	// for future release
-	TSettings.Restriction=[];// array of functions
-	TSettings.Restriction[0]=function(Person, HCVTreatment){};
-	//Restrictions are conditions that prevent the use of the drug. They are used to determine if a drug 
-	// is unsuitable. e.g. some drugs cannot be used if the individual is depressed or has renal failure
-	TSettings.AdverseEvents=[];
-	TSettings.AdverseEvents[0]={};
+function  HCVTreatment(TSettings){
+	// TSettings.Name="sofosbuvir";
+	// TSettings.Duration=12*7/365;
+	// TSettings.GeneralEfficacy=0.60;
+	// TSettings.GenotypeEfficacy=[];
+	// TSettings.GenotypeEfficacy["1a"]=0.96;
+	// TSettings.PatentExpires;// Filing date 20/05/2010 + 20
+	// TSettings.OnPatentCost=80000; 
+	// TSettings.OffPatentCost=300;
+	// // for future release
+	// TSettings.Restriction=[];// array of functions
+	// TSettings.Restriction[0]=function(Person, HCVTreatment){};
+	// //Restrictions are conditions that prevent the use of the drug. They are used to determine if a drug 
+	// // is unsuitable. e.g. some drugs cannot be used if the individual is depressed or has renal failure
+	// TSettings.AdverseEvents=[];
+	// TSettings.AdverseEvents[0]={};
 	
 	
+	this.Name=TSettings.Name;
 	
+	this.Duration=TSettings.Duration;
 	
+	this.GeneralEfficacy=TSettings.GeneralEfficacy;
+	this.GenotypeEfficacy=TSettings.GenotypeEfficacy;// an array (with references that going by genotype name) that give genotype specific efficacy
 	
+	if (typeof(TSettings.PatentExpires)!="undefined"){this.PatentExpires=TSettings.PatentExpires;}
+	if (typeof(TSettings.OnPatentCost)!="undefined"){this.OnPatentCost=TSettings.OnPatentCost;}
+	if (typeof(TSettings.OffPatentCost)!="undefined"){this.OffPatentCost=TSettings.OffPatentCost;}
 	
-	
-	
-	
-	
-	this.Name=Name;
-
-	
-	this.Duration=Duration;
-	
-	this.GeneralEfficacy=GeneralEfficacy;
-	this.GenotypeEfficacy=GenotypeEfficacy;// an array (with references that going by genotype name) that give genotype specific efficacy
-	
-	this.PatentExpires=PatentExpires;
-	
-	this.OnPatentCost=OnPatentCost;
-	this.OffPatentCost=OffPatentCost;
-		
-	this.AdverseEvents=AdverseEvents;// a function that determines what adverse events occur
-	this.Restrictions=Restrictions;// a function that determines whether the medication has restrictions
-	
+	if (typeof(TSettings.AdverseEvents)!="undefined"){this.AdverseEvents=TSettings.AdverseEvents;}
+	if (typeof(TSettings.Restrictions)!="undefined"){this.Restrictions=TSettings.Restrictions;}
 	
 	
 	//Restrictions are conditions that prevent the use of the drug. They are used to determine if a drug 
@@ -108,9 +98,14 @@ HCVTreatment.prototype.Cost=function(Time){
 		return this.OnPatentCost;
 	}
 	return this.OffPatentCost;
-}
+};
 
-
+HCVTreatment.prototype.Eligible=function(Person, Time){
+	for (var RCount in this.Restrictions){
+		
+	}
+	return this.OffPatentCost;
+};
 
 
 function DetermineHistoricalTreatment(Person, Time, TimeStep, TreatmentNumbers){//TreatmentNumbers is an array of each of the treatment types

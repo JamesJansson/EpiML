@@ -9,7 +9,8 @@ HCVTS.Name="Continued PEG-IFN 1000";
 HCVTS.Description="This scenario continues what has been happening for some time in Australia: around 1000 treatments per year.";
 HCVTS.Function=function (Person, Time, TimeStep){
 	// Treat 1000 people
-	var NumberOfPeopleToTreat=1000;
+	var NumberOfPeopleToTreatPerYear=1000;
+	var NumberOfPeopleToTreat=NumberOfPeopleToTreatPerYear*TimeStep;
 	
 	// find all infected, diagnosed individuals (that aren't previously treated)
 	var CurrentlyInfected=[];
@@ -24,7 +25,8 @@ HCVTS.Function=function (Person, Time, TimeStep){
 	
 	for (var Count in ArrayToTreat){
 		var TimeToTreat=Time+Rand.Value()*TimeStep;
-		Treatment.PegIfn.Treat(CurrentlyInfected, TimeToTreat);
+		var IndividualToTreat=ArrayToTreat[Count];
+		Treatment.PegIfn.StartTreatment(CurrentlyInfected[IndividualToTreat], TimeToTreat);
 	}
 };
 HCVTreatmentScenario[0]=HCVTS;
