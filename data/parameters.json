@@ -556,15 +556,15 @@
         "DistributionType": "uniform",
         "Median": null,
         "StandardError": null,
-        "Upper95Range": 1.475,
-        "Lower95Range": 1.025,
-        "CalculatedMedian": 1.25,
+        "Upper95Range": 1.95,
+        "Lower95Range": 1.05,
+        "CalculatedMedian": 1.5,
         "NumberOfSamples": 1,
         "Val": [
             1.150874801678583
         ],
         "MinValue": 1,
-        "MaxValue": 1.5,
+        "MaxValue": 2,
         "Description": "The purpose of this factor is to accomodate for concerns that the AIHW Household Drug Surveys fail to capture people who inject drugs accurately. This factor inflates the results slightly."
     },
     {
