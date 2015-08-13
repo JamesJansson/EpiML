@@ -3,11 +3,16 @@ function DetermineHCVTransmissions(Person, Time, TimeStep){
 	var NumberOfTransmissions=0;
 	
 	// start by determining who is alive and who is not (to save time in sub functions)
-	var PWID=SelectCurrentPWID(Person, Time);
+	var PWID=SelectCurrentSharingPWID(Person, Time);
+	
+	
 	var TotalPWID=PWID.length;
 	for (var Pn in PWID){
-		// choose a person at random in all PWID (to get the right ratio of non-)
+		// Choose a person at random in all PWID who are also current injectors
 		var IndexOfPartner=Floor(TotalPWID*Rand.Value());
+		
+		
+		// Determine if the person is a sharer or not. 
 		if (PWID[IndexOfPartner].HCV.Infected.Value(Time)==1){
 			var PBeingASharer;
 			if (Time+Param.TimeStep/100<1997){

@@ -164,7 +164,7 @@ function SelectCurrentPWID(Person, Time){
 	var PersonArray=[];
 	for (var Pn in Person){
 		if (Person[Pn].Alive(Time)){
-			if (Person[Pn].IDU.EverInjectedAtTime(Time)){
+			if (Person[Pn].IDU.CurrentlyInjecting(Time)){
 				PersonArray.push(Person[Pn]);
 			}
 		}
@@ -172,7 +172,17 @@ function SelectCurrentPWID(Person, Time){
 	return PersonArray;
 }
 
-
+function SelectCurrentSharingPWID(Person, Time){
+	var PersonArray=[];
+	for (var Pn in Person){
+		if (Person[Pn].Alive(Time)){
+			if (Person[Pn].IDU.CurrentlySharing(Time) ){
+				PersonArray.push(Person[Pn]);
+			}
+		}
+	}
+	return PersonArray;
+}
 
 
 function SelectPeopleHCVInfection(Person, Time){

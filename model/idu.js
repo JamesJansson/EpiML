@@ -22,6 +22,7 @@ function IDUObject(PersonPointer){
 	// 3: Regular user = 12-365*3 per year
 	// 4: Former user = 0 per year
 	
+	// this.Shares=false;
 	this.Sharing= new EventVector;
 	this.Sharing.Set(0, this.Person.YearOfBirth);
 	
@@ -129,7 +130,9 @@ IDUObject.prototype.StopInjecting= function (Time){
 };
 
 IDUObject.prototype.CurrentlyInjecting= function (Time){
+	// Check they are alive
 	if (this.Person.Alive(Time)){
+		// Check they are using
 		var UseValue=this.Use.Value(Time);
 		if (UseValue>0 && UseValue<4){
 			return true;
@@ -137,6 +140,24 @@ IDUObject.prototype.CurrentlyInjecting= function (Time){
 	}
 	return false;
 };
+
+
+IDUObject.prototype.CurrentlySharing= function (Time){
+	// Check they are alive
+	if (this.Person.Alive(Time)){
+		// Check they are using
+		var UseValue=this.Use.Value(Time);
+		if (UseValue>0 && UseValue<4){
+			// Check they are sharing
+			if (this.Sharing.Value(Time)==1){
+				return true;
+			}
+		}
+	}
+	return false;
+};
+
+
 
 IDUObject.prototype.InjectingDuration= function (){
 	var InjectStartTime=this.Use.FirstTimeOf(1);
