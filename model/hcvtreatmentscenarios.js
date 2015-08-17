@@ -15,7 +15,7 @@ HCVTS.Function=function (Person, Time, TimeStep){
 	// find all infected, diagnosed individuals (that aren't previously treated)
 	var CurrentlyInfected=[];
 	for (var PCount in Person){
-		if (Person[PCount].CurrentlyInfected(Time)==true){
+		if (Person[PCount].HCV.CurrentlyInfected(Time)==true){
 			CurrentlyInfected.push(Person[PCount]);
 		}
 	}

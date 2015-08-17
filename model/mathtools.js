@@ -957,6 +957,41 @@ function Logit(x){//inverse of logistic. Must take value on(0,1)
 }
 
 // 
+function RandSelection(ArrayToSelectFrom, NumberToSelect){
+	// This function is given an array and the number to select. Sample occurs WITHOUT replacement.
+	// 
+	// this function should work in two modes
+	// mode 1, where the proportion of selections that need to occur are high
+		// This uses the shuffle algorithm
+	// mode 2, where the proportion of selections that need to occur are low
+		// This uses an algortihm that is based on selecting, at random, a numerical index and making sure it isn't in the list. 
+	if (NumberToSelect>0.05*ArrayToSelectFrom){
+		var ShuffledArray=Shuffle(ArrayToSelectFrom);
+		var ReturnArray=ShuffledArray.slice(NumberToSelect);
+		return ReturnArray;
+	}
+	p per step	
+	
+	
+	var RandomIntegers=RandIntegerNoReplacement(NumberToSelect, 0, ArrayToSelectFrom.Length);
+	
+	
+	Select(ArrayToSelectFrom, RandomIntegers)
+	return ;
+}
+
+function RandIntegerNoReplacement(NumberOfValuesToReturn, MinRangInclusive, MaxRangeInclusive){
+	
+	
+	
+	MinRangInclusive=Math.round(MinRangInclusive);
+	MaxRangeInclusive=Math.round(MaxRangeInclusive);
+	
+	Rand.Value
+}
+
+
+// 
 function RandSampleWeighted(Weights, Values){
 	// Normalised weights
 	var Total=Sum(Weights);
