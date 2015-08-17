@@ -1,10 +1,10 @@
 function  HCVTreatment(TSettings){
-	// TSettings.Name="sofosbuvir";
-	// TSettings.Duration=12*7/365;
-	// TSettings.GeneralEfficacy=0.60;
-	// TSettings.GenotypeEfficacy=[];
-	// TSettings.GenotypeEfficacy["1a"]=0.96;
-	// TSettings.PatentExpires;// Filing date 20/05/2010 + 20
+	// TSettings.Name="Sofosbuvir";
+	// TSettings.Duration=12*7/365;//12 weeks
+	// TSettings.Efficacy=0.60;
+	// TSettings.EfficacyGenotype=[];
+	// TSettings.EfficacyGenotype["1a"]=0.96;
+	// TSettings.PatentExpires=2030.4;// Filing date 20/05/2010 + 20
 	// TSettings.OnPatentCost=80000; 
 	// TSettings.OffPatentCost=300;
 	// // for future release
@@ -20,8 +20,8 @@ function  HCVTreatment(TSettings){
 	
 	this.Duration=TSettings.Duration;
 	
-	this.GeneralEfficacy=TSettings.GeneralEfficacy;
-	this.GenotypeEfficacy=TSettings.GenotypeEfficacy;// an array (with references that going by genotype name) that give genotype specific efficacy
+	this.Efficacy=TSettings.Efficacy;
+	this.EfficacyGenotype=TSettings.EfficacyGenotype;// an array (with references that going by genotype name) that give genotype specific efficacy
 	
 	if (typeof(TSettings.PatentExpires)!="undefined"){this.PatentExpires=TSettings.PatentExpires;}
 	if (typeof(TSettings.OnPatentCost)!="undefined"){this.OnPatentCost=TSettings.OnPatentCost;}
@@ -51,11 +51,11 @@ HCVTreatment.prototype.StartTreatment= function (ThisPerson, Time){
 	for (var GenotypeCount in CurrentGenotypeInfection){// note the gneotype in this case is an array of strings
 		// if the Genotype is present in the function
 		var GenotypeName=CurrentGenotypeInfection[GenotypeCount];
-		if (typeof(this.GenotypeEfficacy[GenotypeName])!="undefined"){
-			ClearanceProb=this.GenotypeEfficacy[GenotypeName];
+		if (typeof(this.EfficacyGenotype[GenotypeName])!="undefined"){
+			ClearanceProb=this.EfficacyGenotype[GenotypeName];
 		}
 		else{
-			ClearanceProb=this.GeneralEfficacy;
+			ClearanceProb=this.Efficacy;
 		}
 		
 		if (ClearanceDeterminant<ClearanceProb){
@@ -106,6 +106,57 @@ HCVTreatment.prototype.Eligible=function(Person, Time){
 	}
 	return this.OffPatentCost;
 };
+
+
+
+var HCVTreatments={};
+var TSettings;
+	
+	TSettings={};
+	TSettings.Name="Sofosbuvir";
+	TSettings.Duration=12*7/365;//12 weeks
+	TSettings.Efficacy=0.60;
+	TSettings.EfficacyGenotype=[];
+	TSettings.EfficacyGenotype["1a"]=0.96;
+	TSettings.PatentExpires=2030.4;// Filing date 20/05/2010 + 20
+	TSettings.OnPatentCost=80000; 
+	TSettings.OffPatentCost=300;
+	HCVTreatments.Sofosbuvir=new HCVTreatment(TSettings);
+
+	TSettings={};
+	TSettings.Name="PegIfn2a";
+	// http://www.guildlink.com.au/gc/ws/ro/pi.cfm?product=roppgsps10714
+	TSettings.Duration=48*7/365;//48 weeks
+	TSettings.DurationGenotype=[];
+	TSettings.DurationGenotype["1"]=48*7/365;//48 weeks
+	TSettings.DurationGenotype["1a"]=48*7/365;//48 weeks
+	TSettings.DurationGenotype["1b"]=48*7/365;//48 weeks
+	TSettings.DurationGenotype["4"]=48*7/365;//48 weeks
+	TSettings.DurationGenotype["2"]=24*7/365;//48 weeks
+	TSettings.DurationGenotype["3"]=24*7/365;//48 weeks
+	
+	TSettings.Efficacy=0.60;
+	TSettings.EfficacyGenotype=[];
+	TSettings.EfficacyGenotype["1a"]=0.96;
+	TSettings.PatentExpires=2030.4;// Filing date 20/05/2010 + 20
+	TSettings.OnPatentCost=80000; 
+	TSettings.OffPatentCost=300;
+	HCVTreatments.PegIfn2a=new HCVTreatment(TSettings);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 function DetermineHistoricalTreatment(Person, Time, TimeStep, TreatmentNumbers){//TreatmentNumbers is an array of each of the treatment types
