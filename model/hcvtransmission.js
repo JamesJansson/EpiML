@@ -16,10 +16,10 @@ function DetermineHCVTransmissions(Person, Time, TimeStep){
 		if (PWID[IndexOfPartner].HCV.Infected.Value(Time)==1){
 			var PBeingASharer;
 			if (Time+Param.TimeStep/100<1997){
-				PBeingASharer=Param.IDU.Sharing.RatePre1997
+				PBeingASharer=Param.IDU.Sharing.RatePre1997;
 			}
 			if (Time>=1997){
-				PBeingASharer=Param.IDU.Sharing.RatePost1997
+				PBeingASharer=Param.IDU.Sharing.RatePost1997;
 			}
 			
 			if (Rand.Value()<PBeingASharer){

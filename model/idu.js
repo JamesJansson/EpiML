@@ -47,9 +47,11 @@ IDUObject.prototype.StartInjecting= function (Time){
 	this.Use.Set(1, Time);
 	
 	// Determine whether the person is a sharing user or not
-	// IDU.SharingPriorToNSP
-	if (Rand.Value()<Param.IDU.SharingPriorToNSP){
+	// IDU.Sharing.PriorToNSP
+	if (Rand.Value()<Param.IDU.Sharing.PriorToNSP){
 		this.Sharing.Set(1, Time);
+		
+		// with time determine if the user decreases sharing risk with age
 	}
 	
 	// Add the transition to occasional user
