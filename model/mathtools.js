@@ -961,34 +961,49 @@ function RandSelection(ArrayToSelectFrom, NumberToSelect){
 	// This function is given an array and the number to select. Sample occurs WITHOUT replacement.
 	// 
 	// this function should work in two modes
-	// mode 1, where the proportion of selections that need to occur are high
-		// This uses the shuffle algorithm
+
 	// mode 2, where the proportion of selections that need to occur are low
 		// This uses an algortihm that is based on selecting, at random, a numerical index and making sure it isn't in the list. 
-	if (NumberToSelect>0.05*ArrayToSelectFrom){
-		var ShuffledArray=Shuffle(ArrayToSelectFrom);
-		var ReturnArray=ShuffledArray.slice(NumberToSelect);
+	// mode 1, where the proportion of selections that need to occur are high
+		// This uses the shuffle algorithm
+	
+	if(NumberToSelect>ArrayToSelectFrom.length){
+		console.error("Trace");
+		throw "There are too few elements in the array to select from";
+	}
+	
+	var ReturnArray;
+	// if there are very few items to select
+	if (NumberToSelect==1 || NumberToSelect<0.05*ArrayToSelectFrom.length){
+		var ChosenIndicies=[];
+		while (ChosenIndicies.length<NumberToSelect){
+			var TempInt=Math.floor(ArrayToSelectFrom.length*Rand.Value());
+			if (ChosenIndicies.indexOf(TempInt)<0){
+				ChosenIndicies.push(TempInt);
+			}
+		}
+		ReturnArray=Select(ArrayToSelectFrom, ChosenIndicies);
 		return ReturnArray;
 	}
-	p per step	
-	
-	
-	var RandomIntegers=RandIntegerNoReplacement(NumberToSelect, 0, ArrayToSelectFrom.Length);
-	
-	
-	Select(ArrayToSelectFrom, RandomIntegers)
-	return ;
+	// if there are a large proportion of items to select
+	else {
+		var ShuffledArray=Shuffle(ArrayToSelectFrom);
+		ReturnArray=ShuffledArray.slice(0,NumberToSelect);
+		return ReturnArray;
+	}
+	// testing
+	// var selectionvec=[];
+	// for (var i=0; i<100; i++){
+	// 	selectionvec.push(i);
+	// }
+	// RandSelection(selectionvec, 1)
+	// RandSelection(selectionvec, 2)
+	// RandSelection(selectionvec, 5)
+	// RandSelection(selectionvec, 50)
+	// RandSelection(selectionvec, 100)
 }
 
-function RandIntegerNoReplacement(NumberOfValuesToReturn, MinRangInclusive, MaxRangeInclusive){
-	
-	
-	
-	MinRangInclusive=Math.round(MinRangInclusive);
-	MaxRangeInclusive=Math.round(MaxRangeInclusive);
-	
-	Rand.Value
-}
+
 
 
 // 
