@@ -52,6 +52,12 @@ IDUObject.prototype.StartInjecting= function (Time){
 		this.Sharing.Set(1, Time);
 		
 		// with time determine if the user decreases sharing risk with age
+		var PerYearRiskRatio=Pow(Param.IDU.Sharing.RelativeRiskAge18to40, (1/22));
+		var PerYearProbabilityOfStoppingSharing=PerYearRiskRatio;
+		var TimeUntilStoppingSharing=TimeUntilEvent(PerYearProbabilityOfStoppingSharing);
+		var TimeOfStoppingSharing=Time+TimeUntilStoppingSharing;
+		
+		this.Sharing.Set(0, TimeOfStoppingSharing);
 	}
 	
 	// Add the transition to occasional user
