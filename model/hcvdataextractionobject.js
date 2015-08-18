@@ -496,7 +496,7 @@ function HCVDataExtractionObjects(){
 	NewDEO.SetData(EmptyData);
 	NewDEO.SetGraphTime(GraphTime);
 	NewDEO.Name="TotalInfectedPlot";
-	NewDEO.Title="Total People Living with HCV";
+	NewDEO.Title="Total People Living with Active HCV Infection";
 	NewDEO.XLabel="Year";
 	NewDEO.YLabel="Number of people";
 	
