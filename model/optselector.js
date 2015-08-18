@@ -66,7 +66,12 @@ function OptSelector(Name, DivID, Functions, PointerToParamGroup, DEOArrayFuncti
 	// Working on the external PointerToParamGroup
 	this.ParamGroup=PointerToParamGroup;
 	// This means that when paramgroup is updated, this.ParamGroupUpdated is called
-	this.ParamGroup.AddUpdateFunction(this.ParamGroupUpdated);
+	
+	var ThisPointer=this;
+	function FunctionPointerToThis(){ // used to giuve proper scope
+		ThisPointer.ParamGroupUpdated();
+	}
+	this.ParamGroup.AddUpdateFunction(FunctionPointerToThis);
 	
 	// Setting up the optimisation variables
 	this.OptParamArray=[];

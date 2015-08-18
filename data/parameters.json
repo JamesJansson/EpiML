@@ -12,7 +12,7 @@
         "CalculatedMedian": 0.065,
         "NumberOfSamples": 1,
         "Val": [
-            0.05731486259995464
+            0.08524501816346736
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -31,7 +31,7 @@
         "CalculatedMedian": 0.075,
         "NumberOfSamples": 1,
         "Val": [
-            0.07270045331565753
+            0.057566925593204865
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -50,7 +50,7 @@
         "CalculatedMedian": 0.105,
         "NumberOfSamples": 1,
         "Val": [
-            0.0696068295419011
+            0.1053500349950357
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -69,7 +69,7 @@
         "CalculatedMedian": 0.08,
         "NumberOfSamples": 1,
         "Val": [
-            0.11085367225708848
+            0.10828370783710935
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -88,7 +88,7 @@
         "CalculatedMedian": 0.07,
         "NumberOfSamples": 1,
         "Val": [
-            0.0650922579640043
+            0.09634769694888451
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -107,7 +107,7 @@
         "CalculatedMedian": 0.3,
         "NumberOfSamples": 1,
         "Val": [
-            0.3058833174235953
+            0.2885637114658635
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -126,7 +126,7 @@
         "CalculatedMedian": 0.032665489,
         "NumberOfSamples": 1,
         "Val": [
-            0.029994020805832612
+            0.028037652380262748
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -145,7 +145,7 @@
         "CalculatedMedian": 0.028364043,
         "NumberOfSamples": 1,
         "Val": [
-            0.024800552544094086
+            0.035644007273212736
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -157,14 +157,14 @@
         "ArrayNumber": "8",
         "InterfaceID": "ParamHolder_8",
         "DistributionType": "lognormal",
-        "Median": 0.1,
+        "Median": 0.02,
         "StandardError": 0.1,
-        "Upper95Range": 0.12165269053343165,
-        "Lower95Range": 0.08220122346781868,
-        "CalculatedMedian": 0.1,
+        "Upper95Range": 0.024330538106686322,
+        "Lower95Range": 0.01644024469356372,
+        "CalculatedMedian": 0.02,
         "NumberOfSamples": 1,
         "Val": [
-            0.09212242569260326
+            0.09400911878820101
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -183,7 +183,7 @@
         "CalculatedMedian": 0.591,
         "NumberOfSamples": 1,
         "Val": [
-            0.590047622031453
+            0.5933746586382059
         ],
         "MinValue": "",
         "MaxValue": "",
@@ -202,7 +202,7 @@
         "CalculatedMedian": 0.54973822,
         "NumberOfSamples": 1,
         "Val": [
-            0.6140730806446622
+            0.5054681875877998
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -221,7 +221,7 @@
         "CalculatedMedian": 0.081151832,
         "NumberOfSamples": 1,
         "Val": [
-            0.08807345468287316
+            0.08455163103119077
         ],
         "MinValue": "",
         "MaxValue": "",
@@ -240,7 +240,7 @@
         "CalculatedMedian": 0.331588133,
         "NumberOfSamples": 1,
         "Val": [
-            0.3640792001124893
+            0.2928650735812764
         ],
         "MinValue": "",
         "MaxValue": "",
@@ -259,7 +259,7 @@
         "CalculatedMedian": 0.02617801,
         "NumberOfSamples": 1,
         "Val": [
-            0.030317395382381474
+            0.02673210384869209
         ],
         "MinValue": "",
         "MaxValue": "",
@@ -316,7 +316,7 @@
         "CalculatedMedian": 0.6,
         "NumberOfSamples": 1,
         "Val": [
-            0.6653955636923454
+            0.6324730794043848
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -335,7 +335,7 @@
         "CalculatedMedian": 0.5,
         "NumberOfSamples": 1,
         "Val": [
-            0.7650204157770102
+            0.6389878387072663
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -371,7 +371,7 @@
         "CalculatedMedian": 1.9,
         "NumberOfSamples": 1,
         "Val": [
-            1.7484660331431514
+            2.5154107067299623
         ],
         "MinValue": "",
         "MaxValue": "",
@@ -390,7 +390,7 @@
         "CalculatedMedian": 2.03,
         "NumberOfSamples": 1,
         "Val": [
-            2.1123217938530923
+            2.1734401249217954
         ],
         "MinValue": "",
         "MaxValue": "",
@@ -409,7 +409,7 @@
         "CalculatedMedian": 1.47,
         "NumberOfSamples": 1,
         "Val": [
-            1.4281713894942116
+            2.032614686571172
         ],
         "MinValue": "",
         "MaxValue": "",
@@ -428,7 +428,7 @@
         "CalculatedMedian": 0.425,
         "NumberOfSamples": 1,
         "Val": [
-            0.37253593679189384
+            0.49747071258283937
         ],
         "MinValue": 0,
         "MaxValue": "",
@@ -447,7 +447,7 @@
         "CalculatedMedian": 0.358418367,
         "NumberOfSamples": 1,
         "Val": [
-            0.3830563535007362
+            0.3301960175718127
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -466,7 +466,7 @@
         "CalculatedMedian": 0.45,
         "NumberOfSamples": 1,
         "Val": [
-            0.45391859380820554
+            0.43721881594968715
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -485,7 +485,7 @@
         "CalculatedMedian": 0.74,
         "NumberOfSamples": 1,
         "Val": [
-            0.7296122159660456
+            0.7205166952451955
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -504,7 +504,7 @@
         "CalculatedMedian": 0.75,
         "NumberOfSamples": 1,
         "Val": [
-            0.7593985619606617
+            0.7535311736997593
         ],
         "MinValue": "",
         "MaxValue": "",
@@ -523,7 +523,7 @@
         "CalculatedMedian": 2.69,
         "NumberOfSamples": 1,
         "Val": [
-            2.5589786027873243
+            2.871615422142772
         ],
         "MinValue": 0,
         "MaxValue": "",
@@ -542,7 +542,7 @@
         "CalculatedMedian": 2800,
         "NumberOfSamples": 1,
         "Val": [
-            2890.386842706101
+            2834.3075717036
         ],
         "MinValue": 0,
         "MaxValue": "",
@@ -561,7 +561,7 @@
         "CalculatedMedian": 1.5,
         "NumberOfSamples": 1,
         "Val": [
-            1.6453317755367607
+            1.788512596162036
         ],
         "MinValue": 1,
         "MaxValue": 2,
@@ -616,7 +616,7 @@
         "CalculatedMedian": 0.0277,
         "NumberOfSamples": 1,
         "Val": [
-            0.0716560609282919
+            0.04722345759481498
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -635,7 +635,7 @@
         "CalculatedMedian": 0.452,
         "NumberOfSamples": 1,
         "Val": [
-            0.4209233880939807
+            0.48080491377268475
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -654,7 +654,7 @@
         "CalculatedMedian": 0.067,
         "NumberOfSamples": 1,
         "Val": [
-            0.04051608217455255
+            0.07250837588939735
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -673,7 +673,7 @@
         "CalculatedMedian": 0.115,
         "NumberOfSamples": 1,
         "Val": [
-            0.09763952310453286
+            0.11542010457775163
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -692,7 +692,7 @@
         "CalculatedMedian": 0.337,
         "NumberOfSamples": 1,
         "Val": [
-            0.33688599149709375
+            0.35180040984565114
         ],
         "MinValue": "",
         "MaxValue": "",
@@ -796,7 +796,7 @@
         "CalculatedMedian": 0.0035,
         "NumberOfSamples": 1,
         "Val": [
-            0.001969263181060048
+            0.004046243923901143
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -815,7 +815,7 @@
         "CalculatedMedian": 0.0122,
         "NumberOfSamples": 1,
         "Val": [
-            0.007707806993375361
+            0.012240524844960807
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -834,7 +834,7 @@
         "CalculatedMedian": 21,
         "NumberOfSamples": 1,
         "Val": [
-            20.870738901438152
+            21.037202321924745
         ],
         "MinValue": "",
         "MaxValue": "",
@@ -853,7 +853,7 @@
         "CalculatedMedian": 0.17,
         "NumberOfSamples": 1,
         "Val": [
-            0.16153606649542776
+            0.17896521167638246
         ],
         "MinValue": "",
         "MaxValue": "",
@@ -872,7 +872,7 @@
         "CalculatedMedian": 1.5,
         "NumberOfSamples": 1,
         "Val": [
-            0.640246775865558
+            2.354206786747165
         ],
         "MinValue": "",
         "MaxValue": "",
@@ -891,7 +891,7 @@
         "CalculatedMedian": 0.0322,
         "NumberOfSamples": 1,
         "Val": [
-            0.030283911389990086
+            0.03796626557416609
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -910,7 +910,7 @@
         "CalculatedMedian": 0.1736,
         "NumberOfSamples": 1,
         "Val": [
-            0.14962991525488215
+            0.1612632193882689
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -946,7 +946,7 @@
         "CalculatedMedian": 0.66,
         "NumberOfSamples": 1,
         "Val": [
-            0.56001980754523
+            0.7230340268876051
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -999,7 +999,7 @@
         "CalculatedMedian": 0.36,
         "NumberOfSamples": 1,
         "Val": [
-            0.3810445937904893
+            0.3925283957904941
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -1018,7 +1018,7 @@
         "CalculatedMedian": 0.29,
         "NumberOfSamples": 1,
         "Val": [
-            0.21161349458618456
+            0.41051525180669035
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -1037,7 +1037,7 @@
         "CalculatedMedian": 0.35,
         "NumberOfSamples": 1,
         "Val": [
-            0.3674120846040342
+            0.22855463771291992
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -1056,7 +1056,7 @@
         "CalculatedMedian": 0.682,
         "NumberOfSamples": 1,
         "Val": [
-            0.789738405903472
+            0.7154199455505392
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -1094,7 +1094,7 @@
         "CalculatedMedian": 0.224,
         "NumberOfSamples": 1,
         "Val": [
-            0.21292187174233757
+            0.2248075508552287
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -1113,7 +1113,7 @@
         "CalculatedMedian": 0.068,
         "NumberOfSamples": 1,
         "Val": [
-            0.07245474014948446
+            0.012656023668637328
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -1132,7 +1132,7 @@
         "CalculatedMedian": 0.749,
         "NumberOfSamples": 1,
         "Val": [
-            0.7394476808785665
+            0.7519763671372415
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -1151,7 +1151,7 @@
         "CalculatedMedian": 0.45,
         "NumberOfSamples": 1,
         "Val": [
-            0.5044201296623617
+            0.3927918581205591
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -1170,7 +1170,7 @@
         "CalculatedMedian": 0.10119032639605406,
         "NumberOfSamples": 1,
         "Val": [
-            0.10162563401425168
+            0.10123607860261939
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -1189,7 +1189,7 @@
         "CalculatedMedian": 0.8455847195309157,
         "NumberOfSamples": 1,
         "Val": [
-            0.8502113411910625
+            0.8500376535341442
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -1208,7 +1208,7 @@
         "CalculatedMedian": 0.05322495407303017,
         "NumberOfSamples": 1,
         "Val": [
-            0.06223573213887264
+            0.04379438427975628
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -1227,7 +1227,7 @@
         "CalculatedMedian": 0.6,
         "NumberOfSamples": 1,
         "Val": [
-            0.7421526567540488
+            0.6270695135479265
         ],
         "MinValue": "",
         "MaxValue": "",
@@ -1265,7 +1265,7 @@
         "CalculatedMedian": 0.15,
         "NumberOfSamples": 1,
         "Val": [
-            0.20297521233702887
+            0.16486546121784432
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -1284,7 +1284,7 @@
         "CalculatedMedian": 0.3,
         "NumberOfSamples": 1,
         "Val": [
-            0.30941117181616906
+            0.3055234835917041
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -1303,7 +1303,7 @@
         "CalculatedMedian": 0.59,
         "NumberOfSamples": 1,
         "Val": [
-            0.6027964420896416
+            0.5680870879135509
         ],
         "MinValue": 0,
         "MaxValue": 2,
@@ -1322,7 +1322,7 @@
         "CalculatedMedian": 0.19,
         "NumberOfSamples": 1,
         "Val": [
-            0.23538420194920953
+            0.15683517166042915
         ],
         "MinValue": "",
         "MaxValue": "",
@@ -1341,7 +1341,7 @@
         "CalculatedMedian": 0.21,
         "NumberOfSamples": 1,
         "Val": [
-            0.24387518573431033
+            0.19682538201365177
         ],
         "MinValue": "",
         "MaxValue": "",
@@ -1360,7 +1360,7 @@
         "CalculatedMedian": 0.06,
         "NumberOfSamples": 1,
         "Val": [
-            -0.019794212774065886
+            0.14004101859155027
         ],
         "MinValue": "",
         "MaxValue": "",
@@ -1379,7 +1379,7 @@
         "CalculatedMedian": 0.35,
         "NumberOfSamples": 1,
         "Val": [
-            0.2905441069765497
+            0.2917281039995533
         ],
         "MinValue": "",
         "MaxValue": "",
@@ -1398,7 +1398,7 @@
         "CalculatedMedian": 0.18,
         "NumberOfSamples": 1,
         "Val": [
-            0.15424810864485622
+            0.2601452155508196
         ],
         "MinValue": "",
         "MaxValue": "",
