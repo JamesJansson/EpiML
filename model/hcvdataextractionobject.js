@@ -1363,7 +1363,9 @@ function HCVDataExtractionObjects(){
 				}
 			}
 		}
-		return Total*Settings.SampleFactor;
+		var PropNSW=Sum(Data.StateNotifications.Table[1])/Sum(Data.StateNotifications.Table);
+		
+		return Total*Settings.SampleFactor*PropNSW;
 	};
 	
 	// Add the object to the array of all ODEOS
