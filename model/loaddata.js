@@ -39,7 +39,8 @@ function ExtractDataFromFiles(){
 	
 	Data.StateNotifications={};
 	Data.StateNotifications.Table=DataFile.StateNotifications.GetValues(29, 36, 1, 19);//get table indicates the range [rows][columns]
-	Data.StateNotifications.State=DataFile.StateNotifications.GetColumn(0, 29, 36);//GetColumn
+	Data.StateNotifications.StateNumber=DataFile.StateNotifications.GetColumn(0, 29, 36);//GetColumn
+	Data.StateNotifications.State=DataFile.StateNotifications.GetColumnText(0, 17, 24);//GetColumn
 	Data.StateNotifications.Year=DataFile.StateNotifications.GetRow(3, 1, 19);//GetRow
 	
 	

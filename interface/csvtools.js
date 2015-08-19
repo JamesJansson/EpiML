@@ -83,7 +83,7 @@ CSVFile.prototype.GetRow= function (RowNum, StartColumn, EndColumn){//
 };
 
 
-CSVFile.prototype.GetEntries= function (y1, y2, x1, x2){
+CSVFile.prototype.GetText= function (y1, y2, x1, x2){
 	//checking input is good
 	if (x1>x2 || y1>y2 || x1<0 || y1<0 || this.IsNaturalNumber(x1)==false || this.IsNaturalNumber(x2)==false || this.IsNaturalNumber(y1)==false || this.IsNaturalNumber(y2)==false ){
 		console.error("The range of values requested is invalid");
@@ -114,13 +114,13 @@ CSVFile.prototype.GetEntries= function (y1, y2, x1, x2){
 };
 
 
-CSVFile.prototype.GetEntriesColumn= function (ColumnNum, StartRow, EndRow){//
+CSVFile.prototype.GetColumnText= function (ColumnNum, StartRow, EndRow){//
 	if (StartRow>EndRow || ColumnNum<0 || StartRow<0 || this.IsNaturalNumber(ColumnNum)==false || this.IsNaturalNumber(StartRow)==false || this.IsNaturalNumber(EndRow)==false){
 		console.error("The range of values requested is invalid");
 		throw "See above for error trace";
 	}
 	
-	var TempVec=this.GetEntries(StartRow, EndRow, ColumnNum, ColumnNum);
+	var TempVec=this.GetText(StartRow, EndRow, ColumnNum, ColumnNum);
 	
 	//Refactor the vector into a proper vector
 	var ReturnVec=[];
@@ -131,13 +131,13 @@ CSVFile.prototype.GetEntriesColumn= function (ColumnNum, StartRow, EndRow){//
 };
 
 
-CSVFile.prototype.GetEntriesRow= function (RowNum, StartColumn, EndColumn){//
+CSVFile.prototype.GetRowText= function (RowNum, StartColumn, EndColumn){//
 	if (StartColumn>EndColumn || RowNum<0 || StartColumn<0 || this.IsNaturalNumber(RowNum)==false || this.IsNaturalNumber(StartColumn)==false || this.IsNaturalNumber(EndColumn)==false){
 		console.error("The range of values requested is invalid");
 		throw "See above for error trace";
 	}
 	
-	var ReturnVec=this.GetEntries(RowNum, RowNum, StartColumn, EndColumn);
+	var ReturnVec=this.GetText(RowNum, RowNum, StartColumn, EndColumn);
 	return ReturnVec[0];
 };
 

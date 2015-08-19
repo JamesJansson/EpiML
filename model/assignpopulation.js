@@ -31,14 +31,14 @@ function AssignPopulation(Data, SampleFactor){
 		
 		StateVector=[];//reset
 		TotalInStateThisYear=0;
-		for (var StateIndex=0; StateIndex<Data.StateNotifications.State.length; StateIndex++){
+		for (var StateIndex=0; StateIndex<Data.StateNotifications.StateNumber.length; StateIndex++){
 			
 			// Scale down state notifications (by both the SampleFactor and the DuplicateFactor
 			// OR maybe don't bother, just create the vector, shuffle then let the scale down of age/sex notifications take care of it
 	
 			// Create a vector of notifications by state, e.g. [0, 1, 7, 3, ...] that can be sampled sequentially 
 			for (var CountInThisState=0; CountInThisState<Data.StateNotifications.Table[StateIndex][YearIndex]; CountInThisState++){
-				StateVector[TotalInStateThisYear]=Data.StateNotifications.State[StateIndex];
+				StateVector[TotalInStateThisYear]=Data.StateNotifications.StateNumber[StateIndex];
 				TotalInStateThisYear=TotalInStateThisYear+1;
 			}
 		}
