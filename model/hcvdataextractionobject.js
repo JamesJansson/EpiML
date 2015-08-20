@@ -1138,7 +1138,7 @@ function HCVDataExtractionObjects(){
 		var Total=0;
 		for (var PersonCount in SimulationResult.Population){
 			var Person=SimulationResult.Population[PersonCount];
-			if (Person.Alive(Time) ){
+			if (Person.Alive(Time)){
 				if (Person.HCV.CurrentlyInfected(Time)){
 					if (Person.HCV.Fibrosis.Value(Time)==0){
 						Total++;
@@ -1211,7 +1211,7 @@ function HCVDataExtractionObjects(){
 		var Total=0;
 		for (var PersonCount in SimulationResult.Population){
 			var Person=SimulationResult.Population[PersonCount];
-			if (Person.Alive(Time) ){
+			if (Person.Alive(Time)){
 				if (Person.HCV.CurrentlyInfected(Time)){
 					if (Person.HCV.Fibrosis.Value(Time)==2){
 						Total++;
@@ -1247,7 +1247,7 @@ function HCVDataExtractionObjects(){
 		var Total=0;
 		for (var PersonCount in SimulationResult.Population){
 			var Person=SimulationResult.Population[PersonCount];
-			if (Person.Alive(Time) ){
+			if (Person.Alive(Time)){
 				if (Person.HCV.CurrentlyInfected(Time)){
 					if (Person.HCV.Fibrosis.Value(Time)==3){
 						Total++;
@@ -1284,7 +1284,7 @@ function HCVDataExtractionObjects(){
 		var Total=0;
 		for (var PersonCount in SimulationResult.Population){
 			var Person=SimulationResult.Population[PersonCount];
-			if (Person.Alive(Time) ){
+			if (Person.Alive(Time)){
 				if (Person.HCV.CurrentlyInfected(Time)){
 					if (Person.HCV.Fibrosis.Value(Time)==4){
 						Total++;
@@ -1322,8 +1322,7 @@ function HCVDataExtractionObjects(){
 		var Total=0;
 		for (var PersonCount in SimulationResult.Population){
 			var Person=SimulationResult.Population[PersonCount];
-			if (Person.Alive(Time) ){
-				// Check if CurrentlyInjecting
+			if (Person.Alive(Time)){
 				if (Person.HCV.CurrentlyInfected(Time)){
 					if (Person.HCV.Fibrosis.Value(Time)==5){
 						Total++;
@@ -1361,7 +1360,7 @@ function HCVDataExtractionObjects(){
 		var Total=0;
 		for (var PersonCount in SimulationResult.Population){
 			var Person=SimulationResult.Population[PersonCount];
-			if (Person.Alive(Time) ){
+			if (Person.Alive(Time)){
 				if (Person.HCV.CurrentlyInfected(Time)){
 					/////// CHECK THE STATE IN THIS SECTION
 					
@@ -1404,7 +1403,7 @@ function HCVDataExtractionObjects(){
 		var Total=0;
 		for (var PersonCount in SimulationResult.Population){
 			var Person=SimulationResult.Population[PersonCount];
-			if (Person.Alive(Time) ){
+			if (Person.Alive(Time)){
 				if (Person.HCV.CurrentlyInfected(Time)){
 					/////// CHECK THE STATE IN THIS SECTION
 					
@@ -1549,7 +1548,7 @@ function HCVDataExtractionObjects(){
 			// determine if the person dies during this period
 			if (Person.Alive(Time)==true && Person.Alive(Time+1)==true){
 				// determine if the person is has ever had a HCV diagnosis by that point in time
-				if (Person.HCV.Diagnosed(Time)==1){
+				if (Person.HCV.Diagnosed.Value(Time)==1){
 					// determine if the person is in NSW
 					Total++;
 				}
@@ -1589,7 +1588,7 @@ function HCVDataExtractionObjects(){
 			// determine if the person dies during this period
 			if (Person.Alive(Time)==true && Person.Alive(Time+1)==true){
 				// determine if the person is has ever had a HCV diagnosis by that point in time
-				if (Person.HCV.Diagnosed(Time)==1){
+				if (Person.HCV.Diagnosed.Value(Time)==1){
 			// determine if the person dies during this period due to liver issues
 			
 			// determine if the person is in NSW
