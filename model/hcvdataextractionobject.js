@@ -1546,7 +1546,7 @@ function HCVDataExtractionObjects(){
 		for (var PersonCount in SimulationResult.Population){
 			var Person=SimulationResult.Population[PersonCount];
 			// determine if the person dies during this period
-			if (Person.Alive(Time)==true && Person.Alive(Time+1)==true){
+			if (Person.Alive(Time)==true && Person.Alive(Time+1)==false){
 				// determine if the person is has ever had a HCV diagnosis by that point in time
 				if (Person.HCV.Diagnosed.Value(Time)==1){
 					// determine if the person is in NSW
