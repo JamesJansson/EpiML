@@ -98,6 +98,13 @@ function  StochasticOptimisation(Settings){
 		console.log("Warning: a termination parameter was not set. This means that the algorithm will continue indefinitely");
 	}
 	
+	if (typeof(Settings.StoreSimOutput)!="undefined"){
+		this.StoreSimOutput=Settings.StoreSimOutput;
+	}
+	else{
+		this.StoreSimOutput=false;
+	}
+	
 	
 	
 	
@@ -105,6 +112,7 @@ function  StochasticOptimisation(Settings){
 	this.NumberOfParameters=0;
 	this.BestIndex=[];//Index of the best values from the CurrentVec array in each parameter
 	
+	this.CurrentSimOutput;// The output of the current simulation under consideration
 	this.SimOutput=[];//An array of the output of the current round of simulations
 	this.ErrorValues=[];//An array of the error of the current round of simulations
 	
@@ -155,6 +163,9 @@ StochasticOptimisation.prototype.Run= function (FunctionInput){
 	var TimerStart = new Date().getTime() / 1000;
 	var CurrentTime;
 	while (OptimisationComplete==false){
+		//Perform garbage collection at the end of each round
+		gc();//needs -expose-gc in js-flags
+		
 		// Run the simulation
 		this.DetailedErrorHistory[this.RoundCount]=[];
 		this.DetailedParameterHistory[this.RoundCount]=[];
@@ -167,8 +178,11 @@ StochasticOptimisation.prototype.Run= function (FunctionInput){
 			OptimistationProgress.RoundCount=this.RoundCount;
 			OptimistationProgress.SampleCount=this.SampleCount;
 			
-			this.SimOutput[this.SampleCount]=this.Function(FunctionInput, ParameterSet, OptimistationProgress);
-			this.ErrorValues[this.SampleCount]=this.ErrorFunction(this.SimOutput[this.SampleCount], this.Target, FunctionInput, OptimistationProgress);
+			this.CurrentSimOutput=this.Function(FunctionInput, ParameterSet, OptimistationProgress);
+			if (this.StoreSimOutput==true){
+				this.SimOutput[this.SampleCount]=this.CurrentSimOutput;
+			}
+			this.ErrorValues[this.SampleCount]=this.ErrorFunction(this.CurrentSimOutput, this.Target, FunctionInput, OptimistationProgress);
 			this.DetailedErrorHistory[this.RoundCount][this.SampleCount]=this.ErrorValues[this.SampleCount];
 			
 			// If the OptimisationProgress function is set
@@ -178,12 +192,14 @@ StochasticOptimisation.prototype.Run= function (FunctionInput){
 				var CurrentSimulationVals={};
 				CurrentSimulationVals.FunctionInput=FunctionInput;
 				CurrentSimulationVals.ParameterSet=ParameterSet;
-				CurrentSimulationVals.SimOutput=this.SimOutput[this.SampleCount];
+				CurrentSimulationVals.SimOutput=this.CurrentSimOutput;
 				CurrentSimulationVals.ErrorValues=this.ErrorValues[this.SampleCount];
 				
 				var AllSimulationVals={};
 				AllSimulationVals.Parameter=this.Parameter;
-				AllSimulationVals.SimOutputThisRound=this.SimOutput;
+				if (this.StoreSimOutput==true){
+					AllSimulationVals.SimOutputThisRound=this.SimOutput;
+				}
 				AllSimulationVals.ErrorValuesThisRound=this.ErrorValues;
 				AllSimulationVals.Target=this.Target;
 				AllSimulationVals.Storage=this.FunctionInput;
@@ -202,13 +218,15 @@ StochasticOptimisation.prototype.Run= function (FunctionInput){
 
 		// If the OptimisationProgress function is set
 		if (this.RunRoundProgressFunction==true){
-			var AllSimulationVals2={};
-			AllSimulationVals2.Parameter=this.Parameter;
-			AllSimulationVals2.SimOutputThisRound=this.SimOutput;
-			AllSimulationVals2.ErrorValuesThisRound=this.ErrorValues;
-			AllSimulationVals2.FunctionInput=this.FunctionInput;
+			var StoredSimulationInfo={};
+			StoredSimulationInfo.Parameter=this.Parameter;
+			if (this.StoreSimOutput==true){
+				StoredSimulationInfo.SimOutputThisRound=this.SimOutput;
+			}
+			StoredSimulationInfo.ErrorValuesThisRound=this.ErrorValues;
+			StoredSimulationInfo.FunctionInput=this.FunctionInput;
 			
-			this.RoundProgressFunction(this.RoundCount, this.Parameter, this.SimOutput, this.ErrorValues, FunctionInput);
+			this.RoundProgressFunction(this.RoundCount, StoredSimulationInfo, FunctionInput);
 		}
 		
 		// Storing optimisation results for later inspection/graphing
@@ -418,7 +436,7 @@ function TestStochasticOptimisation(){
 		PlotSomething={};
 		PlotSomething.Data=Data;
 		PlotSomething.Code="FixedAxisScatterPlot('#PlotHolder', Data,  'AAA', 'BBB', 0, 10, 0, 10);";
-		self.postMessage({Execute: PlotSomething});
+		//self.postMessage({Execute: PlotSomething});
 		
 		
 		//ScatterPlot('#PlotHolder', Data,  'AAA', 'BBB');

@@ -135,20 +135,7 @@ function EntryRateOptimisationExponential(TargetForThisOptimisation, EntryParams
 		}
 	};
 	
-	// EntryRateOptimisationSettings.RoundProgressFunction=function(RoundCount, Parameter, SimOutput, ErrorValues, FunctionInput){
-		// // Display the results to the console for every 100 simulations
-		// var ProgressString=RoundCount+": ";
-		
-		// var KeyCount=0, Key, MeanResult;
-		// console.log(Parameter);
-		// for (Key in Parameter){
-			// KeyCount++;
-			// ProgressString+=Key+": ";
-			// MeanResult=Mean(Parameter[Key].BestVec);
-			// ProgressString+=MeanResult+", ";
-		// }
-		// console.log(ProgressString);
-	// };
+
 	
 	
 	

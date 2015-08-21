@@ -1367,7 +1367,7 @@ function HCVDataExtractionObjects(){
 					
 					
 					if (Person.HCV.Fibrosis.Value(Time)==5){
-						//Total++;
+						Total++;
 					}
 				}
 			}

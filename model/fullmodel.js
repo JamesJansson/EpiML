@@ -325,6 +325,12 @@ function FullModel(FunctionInput){
 	var Time = Param.Time.StartDynamicModel;
 	while(Time < Param.Time.EndSimulation){
 		StepCount++;
+		//console.log("Memory usage: ");
+		//console.log(process.memoryUsage());
+		
+
+		
+		
 		// RunInterventions(Time); 
 	
 		
