@@ -294,6 +294,11 @@ StochasticOptimisation.prototype.GetBestParameterSet= function (ParameterNumber)
 };
 
 StochasticOptimisation.prototype.GetBestResultsThisRound= function (ParameterNumber){
+	if (this.StoreSimOutput==false){
+		throw "GetBestResultsThisRound can only be used if Settings.StoreSimOutput==true";
+	}
+	
+	
 	// Returns the results of the best run of .Function
 	if (typeof(ParameterNumber)=="undefined"){
 		ParameterNumber=0;// if the number is not set, assume the caller wants the very best parameter set.
