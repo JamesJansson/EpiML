@@ -642,6 +642,25 @@ ParameterGroup.prototype.AddOptimisationResults= function(ArrayOfOptimisedParam)
 	
 };
 
+ParameterGroup.prototype.DisplayParameters= function(){
+	var DispString="";
+	for (var Count in this.ParamArray){
+		var P=this.ParamArray[Count];
+		DispString+="=============================================================================\n";
+		DispString+="Name: " + P.ParameterID+"\n";
+		DispString+="Distribution type: " + P.DistributionType+"\n";
+		DispString+="Median: " + P.Median+"\n";
+		DispString+="SD: " + P.StandardError+"\n";
+		DispString+="Min: " + P.MinValue+"\n";
+		DispString+="Max: " + P.MaxValue+"\n";
+		DispString+="Description and reference: "+"\n";
+		DispString+=P.Description+"\n";
+		DispString+="\n";
+	}
+	console.log(DispString);
+};
+
+
 // var PGroup= new ParameterGroup("PGroup");
 // PGroup.Load("./data/parameters.json")
 // PGroup.CreateParameterPage("OtherContent");
