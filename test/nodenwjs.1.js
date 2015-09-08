@@ -1,9 +1,3 @@
-exports.aaa=3;
-
-console.log("Hello");
-aaa=1;
-
-
 function RunNodeNWJSConsole(){
 	// This function is designed to hand information 
 	
@@ -31,24 +25,9 @@ function RunNodeNWJSConsole(){
 
 
 function NodeNWJSInstance(Script){
-	// Spawn the Child Process
-	var spawn=require('child_process').spawn;
-	this.ChildProcess = spawn('node', [Script]);
-	
-	// Set up listeners 
-	
-	this.ChildProcess.stdout.on('data', stdoutHandler);
-	
-	this.ChildProcess.stderr.on
-	
-	// 	
+	this.child = require('child_process').exec(Script); 
 }
 
-NodeNWJSInstance.prototype.stdoutHandler=function (data){
-	
-}
-
-exports.aaa=3;
 
 
 NodeNWJSInstance.prototype.ConsoleHandler=function(error, stdout, stderr){
