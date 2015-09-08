@@ -5,8 +5,8 @@ function pjhvlkjhflkdsjhflakfj(a){
 
 exports.aaa=function(g){return pjhvlkjhflkdsjhflakfj(g);}
 console.log("this");
-for (var Count in global){
-	console.log(global[Count]);
+for (var Count in this){
+	console.log(this[Count]);
 }
 console.log("thisend");
 console.log(pjhvlkjhflkdsjhflakfj)
