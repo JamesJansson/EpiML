@@ -36,6 +36,7 @@ function SimSetup(WorkerData){
 	//In this section will be a message handler that allows calls
 	// Initialise (set data and parameters)
 	
+	console.log(window.performance.memory);
 	
 	console.log("Data passed to the simulation");
 	console.log(WorkerData);//This passes the data back to the console so we can look at it
@@ -52,9 +53,12 @@ function SimSetup(WorkerData){
 	MultithreadSimController.SetThreadStatusToSimNumber();
 	
 	
+		console.log(window.performance.memory);
+	
 	// Load up mortality data
 	MaleMortality=new MortalityCalculator(Data.Mortality.Male[1].Rates, Data.Mortality.Male[1].Year, Data.Mortality.Male[2].Rates, Data.Mortality.Male[2].Year);
 	FemaleMortality=new MortalityCalculator(Data.Mortality.Female[1].Rates, Data.Mortality.Female[1].Year, Data.Mortality.Female[2].Rates, Data.Mortality.Female[2].Year);
+	
 	
 	// Play around with the notifications structure
 	RestructureNotificationData();
