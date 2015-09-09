@@ -897,15 +897,15 @@ function OptSelectorHandler(WorkerData){
 	
 	// This is where we run the model with the best parameterisation
 	// Note that SimulationResults is deliberately global to allow subsequent functions to run on it before the thread is closed.
-	SimulationResults=OptimisationObject.RunOptimisedSim(FunctionInput);
+	var OptimisedOutput=OptimisationObject.RunSimOnOptimisedParam(FunctionInput);
 	// Get the error for this parameterisation
-	ReturnedResults.OptimisedSimError=OptimisationObject.OptimisedSimError;
+	ReturnedResults.OptimisedSimError=OptimisedOutput.Error;
 	// Create the data that is returned to the interface for graphing. 
-	ReturnedResults.DEOResultsArray=DEOGroup.GenerateGraphData(SimulationResults); 
+	ReturnedResults.DEOResultsArray=DEOGroup.GenerateGraphData(OptimisedOutput.SimOutput); 
 	
 	if (typeof(OptSelectorSettings.ExportSimulationOutput)!="undefined"){
 		if (OptSelectorSettings.ExportSimulationOutput==true){
-			ReturnedResults.OptimisedSimOutput=SimulationResults;
+			ReturnedResults.OptimisedSimOutput=OptimisedOutput.SimOutput;
 		}
 	}
 	

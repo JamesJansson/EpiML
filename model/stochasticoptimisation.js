@@ -11,6 +11,8 @@ function  StochasticOptimisation(Settings){
 	
 	this.Storage={};// Arbitrary storage that stochastic optimisation functions can use, as described by the user
 	
+	this.BestSimOutput;// This is used to store the best SimOutput of this current round
+		
 	this.RoundCount;
 	this.SampleCount;
 	
@@ -98,11 +100,17 @@ function  StochasticOptimisation(Settings){
 		console.log("Warning: a termination parameter was not set. This means that the algorithm will continue indefinitely");
 	}
 	
-	if (typeof(Settings.StoreSimOutput)!="undefined"){
-		this.StoreSimOutput=Settings.StoreSimOutput;
+	if (typeof(Settings.StoreBestSimOutput)!="undefined"){
+		this.StoreBestSimOutput=Settings.StoreBestSimOutput;
 	}
 	else{
-		this.StoreSimOutput=false;
+		this.StoreBestSimOutput=true;
+	}
+	if (typeof(Settings.StoreAllSimOutput)!="undefined"){
+		this.StoreAllSimOutput=Settings.StoreAllSimOutput;
+	}
+	else{
+		this.StoreAllSimOutput=false;
 	}
 	
 	
@@ -153,7 +161,7 @@ StochasticOptimisation.prototype.Run= function (FunctionInput){
 	
 	
 	var ParameterSet;
-	var OrderedIndex;
+	
 	
 	this.DetailedParameterHistory=[]
 
@@ -169,6 +177,8 @@ StochasticOptimisation.prototype.Run= function (FunctionInput){
 		// Run the simulation
 		this.DetailedErrorHistory[this.RoundCount]=[];
 		this.DetailedParameterHistory[this.RoundCount]=[];
+		
+		var BestErrorThisRound=Number.MAX_VALUE;
 		for (this.SampleCount=0; this.SampleCount<this.NumberOfSamplesPerRound; this.SampleCount++){
 			ParameterSet=this.GetParameterSet(this.SampleCount);
 			// Store this Parameter in the object
@@ -179,11 +189,25 @@ StochasticOptimisation.prototype.Run= function (FunctionInput){
 			OptimistationProgress.SampleCount=this.SampleCount;
 			
 			this.CurrentSimOutput=this.Function(FunctionInput, ParameterSet, OptimistationProgress);
-			if (this.StoreSimOutput==true){
+			if (this.StoreAllSimOutput==true){
 				this.SimOutput[this.SampleCount]=this.CurrentSimOutput;
 			}
-			this.ErrorValues[this.SampleCount]=this.ErrorFunction(this.CurrentSimOutput, this.Target, FunctionInput, OptimistationProgress);
-			this.DetailedErrorHistory[this.RoundCount][this.SampleCount]=this.ErrorValues[this.SampleCount];
+			if (this.StoreBestSimOutput==true){
+				this.BestSimOutput=this.CurrentSimOutput;
+			}
+			this.CurrentError=this.ErrorFunction(this.CurrentSimOutput, this.Target, FunctionInput, OptimistationProgress);
+			
+			if (this.CurrentError<BestErrorThisRound){
+				BestErrorThisRound=this.CurrentError;
+				if (this.StoreBestSimOutput==true){
+					this.BestSimOutput=this.CurrentSimOutput;
+				}
+			}
+			
+			
+			this.ErrorValues[this.SampleCount]=this.CurrentError;
+			
+			this.DetailedErrorHistory[this.RoundCount][this.SampleCount]=this.CurrentError;
 			
 			// If the OptimisationProgress function is set
 			if (this.RunSampleProgressFunction==true){
@@ -197,9 +221,6 @@ StochasticOptimisation.prototype.Run= function (FunctionInput){
 				
 				var AllSimulationVals={};
 				AllSimulationVals.Parameter=this.Parameter;
-				if (this.StoreSimOutput==true){
-					AllSimulationVals.SimOutputThisRound=this.SimOutput;
-				}
 				AllSimulationVals.ErrorValuesThisRound=this.ErrorValues;
 				AllSimulationVals.Target=this.Target;
 				AllSimulationVals.Storage=this.FunctionInput;
@@ -210,24 +231,23 @@ StochasticOptimisation.prototype.Run= function (FunctionInput){
 		
 		// Work out which of this simulations will be selected
 		// Sort by error level
-		OrderedIndex=SortIndex(this.ErrorValues);
+		var OrderedIndex=SortIndex(this.ErrorValues);
 		this.BestIndex=OrderedIndex.slice(0, Round(this.NumberOfSamplesPerRound*this.FractionToKeep));
 		for (var key in this.Parameter){
 			this.Parameter[key].SelectBestPoints(this.BestIndex);// set the BestPoints array to the best values of the simulation
 		}
+		
 
 		// If the OptimisationProgress function is set
 		if (this.RunRoundProgressFunction==true){
 			var StoredSimulationInfo={};
 			StoredSimulationInfo.Parameter=this.Parameter;
-			if (this.StoreSimOutput==true){
-				StoredSimulationInfo.SimOutputThisRound=this.SimOutput;
-			}
 			StoredSimulationInfo.ErrorValuesThisRound=this.ErrorValues;
 			StoredSimulationInfo.FunctionInput=this.FunctionInput;
 			
 			this.RoundProgressFunction(this.RoundCount, StoredSimulationInfo, FunctionInput);
 		}
+		
 		
 		// Storing optimisation results for later inspection/graphing
 		this.MeanError[this.RoundCount]=Mean(this.ErrorValues);
@@ -243,6 +263,8 @@ StochasticOptimisation.prototype.Run= function (FunctionInput){
 			OptimisationComplete=true;
 			this.ReasonForTermination="ReachedMaxTime";
 		}
+		
+		
 		
 		// Preparing variables for next round of simulations
 		if (OptimisationComplete==false){// we need to find more points for the next round of optimisation
@@ -266,7 +288,9 @@ StochasticOptimisation.prototype.Run= function (FunctionInput){
 	}
 
 	this.ParameterFinal=this.GetBestParameterSet();
-	this.OptimisedSimOutput=this.GetBestResultsThisRound();
+	if (this.StoreBestSimOutput==true || this.StoreAllSimOutput==true){
+		this.OptimisedSimOutput=this.BestSimOutput;
+	}
 };
 
 // Get a single value 
@@ -294,8 +318,8 @@ StochasticOptimisation.prototype.GetBestParameterSet= function (ParameterNumber)
 };
 
 StochasticOptimisation.prototype.GetBestResultsThisRound= function (ParameterNumber){
-	if (this.StoreSimOutput==false){
-		throw "GetBestResultsThisRound can only be used if Settings.StoreSimOutput==true";
+	if (this.StoreBestSimOutput==false && this.StoreAllSimOutput==false){
+		throw "GetBestResultsThisRound can only be used if Settings.StoreBestSimOutput==true or this.StoreAllSimOutput==true";
 	}
 	
 	
@@ -310,11 +334,12 @@ StochasticOptimisation.prototype.GetBestResultsThisRound= function (ParameterNum
 	return Results;
 };
 
-StochasticOptimisation.prototype.RunOptimisedSim= function (FunctionInput){
+StochasticOptimisation.prototype.RunSimOnOptimisedParam= function (FunctionInput){
 	// Returns the results of running the simulation with the best parameter
-	this.OptimisedSimOutput=this.Function(FunctionInput, this.ParameterFinal);
-	this.OptimisedSimError=this.ErrorFunction(this.OptimisedSimOutput, this.Target, FunctionInput);
-	return this.OptimisedSimOutput;
+	var ReturnResults={};
+	ReturnResults.SimOutput=this.Function(FunctionInput, this.ParameterFinal);
+	ReturnResults.Error=this.ErrorFunction(ReturnResults.SimOutput, this.Target, FunctionInput);
+	return ReturnResults;
 };
 
 StochasticOptimisation.prototype.Store= function (NameToStoreUnderInStorage, Data){
