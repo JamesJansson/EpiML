@@ -466,7 +466,7 @@ function HCVDataExtractionObjects(){
 	};
 	
 	
-	NewDEO.Optimisation.Weight=100;
+	NewDEO.Optimisation.Weight=1000;
 	
 	// Add the object to the array of all ODEOS
 	DEO.push(NewDEO);
