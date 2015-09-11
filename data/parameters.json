@@ -763,7 +763,7 @@
         "NumberOfSamples": 1,
         "Val": [],
         "MinValue": 0,
-        "MaxValue": 50000,
+        "MaxValue": 100000,
         "Description": "This is the maximium rate at which people become IDU, which happened around the late 1990s"
     },
     {
