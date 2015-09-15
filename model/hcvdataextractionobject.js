@@ -475,8 +475,8 @@ function HCVDataExtractionObjects(){
 	
 	
 	
-	for (var SexValue=0; SexValue<2; SexValue++){
-		if (SexValue==1){
+	for (var TempSexValue=0; TempSexValue<2; TempSexValue++){
+		if (TempSexValue==0){
 			var CurrentSexNotificationData=Data.MaleNotifications;
 			var SexName="Male";
 		}
@@ -484,13 +484,15 @@ function HCVDataExtractionObjects(){
 			var CurrentSexNotificationData=Data.FemaleNotifications;
 			var SexName="Female";
 		}
-		for (var Count in CurrentSexNotificationData.Table){
+		for (var Count in CurrentSexNotificationData.Age){
+			Count=Number(Count);
 			var TempHCVSexAgeNotification={};
 			TempHCVSexAgeNotification.Value=CurrentSexNotificationData.Table[Count];
 			TempHCVSexAgeNotification.Time=CurrentSexNotificationData.Year;
 			
 			var TempAgeLower=CurrentSexNotificationData.Age[Count];
 			var TempAgeUpper=CurrentSexNotificationData.Age[Count+1];
+			
 			
 			if (typeof(TempAgeUpper)=="undefined"){
 				TempAgeUpper=200;
@@ -506,18 +508,30 @@ function HCVDataExtractionObjects(){
 			NewDEO.XLabel="Year";
 			NewDEO.YLabel="Number of Notifications";
 			
+			
+			var SexValue=Number(TempSexValue);
+			
 			NewDEO.ResultFunction= function (SimulationResult, Time){
 				var Notifications=0;
+				var AgeLower=Number(TempAgeLower);
+				var AgeUpper=Number(TempAgeUpper);
+				
 				for (var PersonCount in SimulationResult.Population){
 					var Person=SimulationResult.Population[PersonCount];
 					// Determine date of diagnosis
 					var NotificationDate=Person.HCV.Diagnosed.FirstTimeOf(1);
-		
+					
 					// If the person actually is diagnosed
 					if (!isNaN(NotificationDate)){
 						if (Time<=NotificationDate && NotificationDate<Time+1){
 							if (Person.Sex==SexValue){
-								if (TempAgeLower<=Person.Age(Time) && Person.Age(Time) <TempAgeUpper){
+								console.log("Got into age");
+								console.log(Person.Age(NotificationDate));
+								console.log(AgeLower);
+								console.log(AgeUpper);
+								if (AgeLower<=Person.Age(NotificationDate) && Person.Age(NotificationDate)<AgeUpper){
+									
+									console.log("SUCCESS ++++++++++++++++++++++++++++++++");
 									Notifications++;
 								}
 							}
