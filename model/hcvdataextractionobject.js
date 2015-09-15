@@ -474,6 +474,34 @@ function HCVDataExtractionObjects(){
 	// This section deals with the number of notifications by age group
 	
 	
+	function CreateNotificationByAgeSexFunction(SexValue, LowerAge, UpperAge){
+		// not that this uses closures to limit the scope of LowerAge and UpperAge so that the function can be generalised
+		var FunctionHolder= function (SimulationResult, Time){
+			var Notifications=0;
+				for (var PersonCount in SimulationResult.Population){
+					var Person=SimulationResult.Population[PersonCount];
+					// Determine date of diagnosis
+					var NotificationDate=Person.HCV.Diagnosed.FirstTimeOf(1);
+					
+					// If the person actually is diagnosed
+					if (!isNaN(NotificationDate)){
+						if (Time<=NotificationDate && NotificationDate<Time+1){
+							if (Person.Sex==SexValue){
+								if (LowerAge<=Person.Age(NotificationDate) && Person.Age(NotificationDate)<UpperAge){
+									Notifications++;
+								}
+							}
+						}
+					}
+				}
+				Notifications=Notifications*Settings.SampleFactor;
+				return Notifications;
+		};
+		return FunctionHolder;
+	}
+	
+	
+	
 	
 	for (var TempSexValue=0; TempSexValue<2; TempSexValue++){
 		if (TempSexValue==0){
@@ -510,37 +538,10 @@ function HCVDataExtractionObjects(){
 			
 			
 			var SexValue=Number(TempSexValue);
+			var AgeLower=Number(TempAgeLower);
+			var AgeUpper=Number(TempAgeUpper);
 			
-			NewDEO.ResultFunction= function (SimulationResult, Time){
-				var Notifications=0;
-				var AgeLower=Number(TempAgeLower);
-				var AgeUpper=Number(TempAgeUpper);
-				
-				for (var PersonCount in SimulationResult.Population){
-					var Person=SimulationResult.Population[PersonCount];
-					// Determine date of diagnosis
-					var NotificationDate=Person.HCV.Diagnosed.FirstTimeOf(1);
-					
-					// If the person actually is diagnosed
-					if (!isNaN(NotificationDate)){
-						if (Time<=NotificationDate && NotificationDate<Time+1){
-							if (Person.Sex==SexValue){
-								console.log("Got into age");
-								console.log(Person.Age(NotificationDate));
-								console.log(AgeLower);
-								console.log(AgeUpper);
-								if (AgeLower<=Person.Age(NotificationDate) && Person.Age(NotificationDate)<AgeUpper){
-									
-									console.log("SUCCESS ++++++++++++++++++++++++++++++++");
-									Notifications++;
-								}
-							}
-						}
-					}
-				}
-				Notifications=Notifications*Settings.SampleFactor;
-				return Notifications;
-			};
+			NewDEO.ResultFunction= CreateNotificationByAgeSexFunction(TempSexValue, TempAgeLower, TempAgeUpper);
 			
 			DEO.push(NewDEO);
 		}
