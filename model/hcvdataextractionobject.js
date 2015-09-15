@@ -454,7 +454,7 @@ function HCVDataExtractionObjects(){
 			var Pen=SimulationResult.HCVDataDiagnosisResults[Count].Penalty;
 			TotalInsufficientInfected+=Pen.InsufficientInfectedToDiagnoseTotal;
 			// TotalInsufficientSymptomatic+=Pen.InsufficientSymptomaticDiagnosesTotal;
-			TotalPenalty+=Pen.InsufficientInfectedToDiagnoseTotal+Pen.InsufficientSymptomaticDiagnosesTotal;
+			TotalPenalty+=Pen.InsufficientInfectedToDiagnoseTotal;//+Pen.InsufficientSymptomaticDiagnosesTotal;
 		}
 		
 		console.log("Total penalty for notifications: "+TotalPenalty);
@@ -470,6 +470,68 @@ function HCVDataExtractionObjects(){
 	
 	// Add the object to the array of all ODEOS
 	DEO.push(NewDEO);
+	
+	// This section deals with the number of notifications by age group
+	
+	
+	
+	for (var SexValue=0; SexValue<2; SexValue++){
+		if (SexValue==1){
+			var CurrentSexNotificationData=Data.MaleNotifications;
+			var SexName="Male";
+		}
+		else{
+			var CurrentSexNotificationData=Data.FemaleNotifications;
+			var SexName="Female";
+		}
+		for (var Count in CurrentSexNotificationData.Table){
+			var TempHCVSexAgeNotification={};
+			TempHCVSexAgeNotification.Value=CurrentSexNotificationData.Table[Count];
+			TempHCVSexAgeNotification.Time=CurrentSexNotificationData.Year;
+			
+			var TempAgeLower=CurrentSexNotificationData.Age[Count];
+			var TempAgeUpper=CurrentSexNotificationData.Age[Count+1];
+			
+			if (typeof(TempAgeUpper)=="undefined"){
+				TempAgeUpper=200;
+			}
+			
+			NewDEO=new DataExtractionObject();
+	
+			// Load the data into the function 
+			NewDEO.SetData(TempHCVSexAgeNotification);
+			NewDEO.SetGraphTime(GraphTime);
+			NewDEO.Name="TotalNotificationsPlot"+SexName+TempAgeLower;
+			NewDEO.Title=SexName+" HCV Notifications "+TempAgeLower+"-"+TempAgeUpper;
+			NewDEO.XLabel="Year";
+			NewDEO.YLabel="Number of Notifications";
+			
+			NewDEO.ResultFunction= function (SimulationResult, Time){
+				var Notifications=0;
+				for (var PersonCount in SimulationResult.Population){
+					var Person=SimulationResult.Population[PersonCount];
+					// Determine date of diagnosis
+					var NotificationDate=Person.HCV.Diagnosed.FirstTimeOf(1);
+		
+					// If the person actually is diagnosed
+					if (!isNaN(NotificationDate)){
+						if (Time<=NotificationDate && NotificationDate<Time+1){
+							if (Person.Sex==SexValue){
+								if (TempAgeLower<=Person.Age(Time) && Person.Age(Time) <TempAgeUpper){
+									Notifications++;
+								}
+							}
+						}
+					}
+				}
+				Notifications=Notifications*Settings.SampleFactor;
+				return Notifications;
+			};
+			
+			DEO.push(NewDEO);
+		}
+	}
+	
 	
 	
 	
