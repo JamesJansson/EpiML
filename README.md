@@ -7,6 +7,7 @@ This model is currently under development.
 
 To run this model, download nw.js http://nwjs.io/ and open this package using it.
 
+Alternatively, to package this app as distributable, use https://github.com/nwjs/nw-builder
 
 
 
