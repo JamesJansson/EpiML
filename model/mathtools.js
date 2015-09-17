@@ -11,19 +11,21 @@ var MathToolsRunning=true;
 
 // Sum of an array or matrix
 function Sum(arr) {
-  var sum = 0;
+  var sumreturn = 0;// note that this starts as a number, but will become a vector if arr is a vector of equal lenght vectors
   var i = arr.length;
-  var tmp;
   while (--i >= 0){
-	if (typeof arr[i] == 'object'){
-		sum +=Sum(arr[i]);// look at all the sub elements
-	} else if (typeof arr[i] == 'number'){
-		sum += arr[i];
-	}else{
-		console.error("An error occured");throw "A non-array/non-number type was found using Sum.";
-	}
+	sumreturn = Add(sumreturn, arr[i]);
+	
+	
+	// if (typeof arr[i] == 'object'){
+	// 	sumreturn +=Sum(arr[i]);// look at all the sub elements
+	// } else if (typeof arr[i] == 'number'){
+	// 	sumreturn += arr[i];
+	// }else{
+	// 	console.error("An error occured");throw "A non-array/non-number type was found using Sum.";
+	// }
   }
-  return sum;
+  return sumreturn;
 }
 
 // Mean value of an array
@@ -35,7 +37,7 @@ function Mean(arr) {
 function Median(MInputVector){
 	var VectorCopy=SortByValue(MInputVector);
 
-	VecLength=VectorCopy.length;
+	var VecLength=VectorCopy.length;
 	if ((VecLength%2)==1){//odd number of elements
 		return VectorCopy[(VecLength-1)/2];//chose the middle value
 	}

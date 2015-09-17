@@ -16,7 +16,27 @@ function HCVDataExtractionObjects(){
 // ******************************************************************************************************
 // ******************************************************************************************************
 	// This section deals with the creation of summary statistics for ever injectors
+	
+	
+	NewDEO.CountType="Instantaneous";
+	NewDEO.Name="NumberEverInjectingDrugsTotal";
+	NewDEO.Title="Number of people ever injecting drugs (Total)";
+	NewDEO.XLabel="Year";
+	NewDEO.YLabel="Count";
+	var DataStruct={};
+	DataStruct.Time=Data.PWID.Year;
+	DataStruct.Value=0;// This starts as a number but becomes a vector when summing the first vector ti
+	for (){
+		DataStruct.Value+=Data.PWID.Ever.Male[AgeIndex];
+	}
+	
+	NewDEO.SetData(DataStruct);
+	NewDEO.SetGraphTime(GraphTime);
+	NewDEO.ResultFunction=EverInjectorByAgeFunction;
+	DEO.push(NewDEO);
 
+
+	// From this section onwards, the simulation determines the total number of injectors by age and sex
 	function CreateEverInjectorByAgeFunction(Sex, LowerAge, UpperAge){
 		// not that this uses closures to limit the scope of LowerAge and UpperAge so that the function can be generalised
 		var FunctionHolder= function (SimulationResult, Time){
