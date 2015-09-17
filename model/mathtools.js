@@ -15,8 +15,6 @@ function Sum(arr) {
   var i = arr.length;
   while (--i >= 0){
 	sumreturn = Add(sumreturn, arr[i]);
-	
-	
 	// if (typeof arr[i] == 'object'){
 	// 	sumreturn +=Sum(arr[i]);// look at all the sub elements
 	// } else if (typeof arr[i] == 'number'){

@@ -17,7 +17,7 @@ function HCVDataExtractionObjects(){
 // ******************************************************************************************************
 	// This section deals with the creation of summary statistics for ever injectors
 	
-	
+	var NewDEO=new DataExtractionObject();
 	NewDEO.CountType="Instantaneous";
 	NewDEO.Name="NumberEverInjectingDrugsTotal";
 	NewDEO.Title="Number of people ever injecting drugs (Total)";
@@ -26,13 +26,26 @@ function HCVDataExtractionObjects(){
 	var DataStruct={};
 	DataStruct.Time=Data.PWID.Year;
 	DataStruct.Value=0;// This starts as a number but becomes a vector when summing the first vector ti
-	for (){
-		DataStruct.Value+=Data.PWID.Ever.Male[AgeIndex];
-	}
+	var MaleEverIDUTotal=Sum(Data.PWID.Ever.Male);
+	var FemaleEverIDUTotal=Sum(Data.PWID.Ever.Male);
+	DataStruct.Value=Add(MaleEverIDUTotal, FemaleEverIDUTotal);
+
 	
 	NewDEO.SetData(DataStruct);
 	NewDEO.SetGraphTime(GraphTime);
-	NewDEO.ResultFunction=EverInjectorByAgeFunction;
+	NewDEO.ResultFunction=function (SimulationResult, Time){
+			var MatchCount=0;
+			for (var PersonCount in SimulationResult.Population){
+				var Person=SimulationResult.Population[PersonCount];
+				if (Person.Alive(Time)){
+					if (Person.IDU.EverInjectedAtTime(Time)){
+						MatchCount++;
+					}
+				}
+			}
+			MatchCount=MatchCount*Settings.SampleFactor;
+			return MatchCount;
+		};
 	DEO.push(NewDEO);
 
 
