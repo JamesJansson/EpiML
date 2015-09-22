@@ -49,6 +49,41 @@ function HCVDataExtractionObjects(){
 	DEO.push(NewDEO);
 
 
+	var NewDEO=new DataExtractionObject();
+	NewDEO.CountType="Instantaneous";
+	NewDEO.Name="NumberRecentlynjectingDrugsTotal";
+	NewDEO.Title="Number of people recently injecting drugs (Total)";
+	NewDEO.XLabel="Year";
+	NewDEO.YLabel="Count";
+	var DataStruct={};
+	DataStruct.Time=Data.PWID.Year;
+	DataStruct.Value=0;// This starts as a number but becomes a vector when summing the first vector ti
+	var MaleRecentIDUTotal=Sum(Data.PWID.Recent.Male);
+	var FemaleRecentIDUTotal=Sum(Data.PWID.Recent.Male);
+	DataStruct.Value=Add(MaleRecentIDUTotal, FemaleRecentIDUTotal);
+
+	
+	NewDEO.SetData(DataStruct);
+	NewDEO.SetGraphTime(GraphTime);
+	NewDEO.ResultFunction=function (SimulationResult, Time){
+			var MatchCount=0;
+			for (var PersonCount in SimulationResult.Population){
+				var Person=SimulationResult.Population[PersonCount];
+				if (Person.Alive(Time)){
+					if (Person.IDU.InjectedBetween(Time-1, Time)){
+						MatchCount++;
+					}
+				}
+			}
+			MatchCount=MatchCount*Settings.SampleFactor;
+			return MatchCount;
+		};
+	DEO.push(NewDEO);
+
+
+
+
+
 	// From this section onwards, the simulation determines the total number of injectors by age and sex
 	function CreateEverInjectorByAgeFunction(Sex, LowerAge, UpperAge){
 		// not that this uses closures to limit the scope of LowerAge and UpperAge so that the function can be generalised
