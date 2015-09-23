@@ -250,7 +250,20 @@ function CreateMigrants(Time){
 	 
 }
 
-
+function CreateMotherToChildCases(Population, Time){
+	for (var PCount in Population){
+		var Person=Population[PCount];
+		if (Person.Sex==1){
+			if (Person.Alive(time)==true){
+				if (PregnancyOccurs(Time, Person.Age(Time))){
+					var NewPerson=new PersonObject(YearOfBirth, Sex, Sexuality);
+					// NewPerson.MotherID=Person.ID;
+				}
+			}
+		}
+			
+	}
+}
 
 
 
@@ -368,7 +381,8 @@ function FullModel(FunctionInput){
     	// Timers.CreatePWID.Start();
 
 		var PWIDToAdd=CreatePWID(Param.IDU.Entry, Time, Param.TimeStep);
-		
+		// CreateMigrantHCVCases
+		// CreateMotherToChildCases
 		
 		// console.log("Outputting PWIDToAdd");
 		// console.log(PWIDToAdd);
