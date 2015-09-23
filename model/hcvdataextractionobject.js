@@ -10,14 +10,98 @@
 function HCVDataExtractionObjects(){
 	var GraphTime=AscendingArray(1970, 2020, 1);
 	var DEO=[];//Array of DataExtractionObject
+	var NewDEO;
 
+	// ******************************************************************************************************
+// ******************************************************************************************************
+// This section deals with the display of total notifications in the simulations
+	
+	// Add all male notifications together
+	var TotalMaleNotifications={};
+	TotalMaleNotifications.Time=Data.MaleNotifications.Year;
+	TotalMaleNotifications.Value=ZeroArray(Data.MaleNotifications.Year.length);
+	for (var Count in Data.MaleNotifications.Table){
+		TotalMaleNotifications.Value=Add(TotalMaleNotifications.Value, Data.MaleNotifications.Table[Count]);
+	}
+	// Add all female notifications together
+	var TotalFemaleNotifications={};
+	TotalFemaleNotifications.Time=Data.FemaleNotifications.Year;
+	TotalFemaleNotifications.Value=ZeroArray(Data.FemaleNotifications.Year.length);
+	for (var Count in Data.FemaleNotifications.Table){
+		TotalFemaleNotifications.Value=Add(TotalFemaleNotifications.Value, Data.FemaleNotifications.Table[Count]);
+	}
+	
+	// Add all notifications together
+	var TotalNotifications={};
+	TotalNotifications.Time=TotalMaleNotifications.Time;
+	TotalNotifications.Value=Add(TotalMaleNotifications.Value, TotalFemaleNotifications.Value);
+	
+	// Create a new object to extract homosexual identity from NSP
+	NewDEO=new DataExtractionObject();
+	
+	// Load the data into the function 
+	NewDEO.SetData(TotalNotifications);
+	NewDEO.SetGraphTime(GraphTime);
+	NewDEO.Name="TotalNotificationsPlot";
+	NewDEO.Title="Total HCV Notifications";
+	NewDEO.XLabel="Year";
+	NewDEO.YLabel="Number of Notifications";
+	
+	NewDEO.ResultFunction= function (SimulationResult, Time){
+		var Notifications=0;
+		for (var PersonCount in SimulationResult.Population){
+			var Person=SimulationResult.Population[PersonCount];
+			// Determine date of diagnosis
+			var NotificationDate=Person.HCV.Diagnosed.FirstTimeOf(1);
+
+			// If the person actually is diagnosed
+			if (!isNaN(NotificationDate)){
+				if (Time<=NotificationDate && NotificationDate<Time+1){
+					Notifications++;
+				}
+			}
+		}
+		Notifications=Notifications*Settings.SampleFactor;
+		return Notifications;
+	};
+	
+	NewDEO.ErrorFunction=function(TimeArray, DataArray, SimulationValueArray, SimulationResult){
+		// There is a value in the simulation results that indicates the shortfall in the number of notifications
+		// This value is calculated by age group
+		
+		// 
+		//console.log(SimulationResult);
+		
+		var TotalPenalty=0;
+		var TotalInsufficientInfected=0;
+		var TotalInsufficientSymptomatic=0;
+		for (var Count in SimulationResult.HCVDataDiagnosisResults){
+			var Pen=SimulationResult.HCVDataDiagnosisResults[Count].Penalty;
+			TotalInsufficientInfected+=Pen.InsufficientInfectedToDiagnoseTotal;
+			// TotalInsufficientSymptomatic+=Pen.InsufficientSymptomaticDiagnosesTotal;
+			TotalPenalty+=Pen.InsufficientInfectedToDiagnoseTotal;//+Pen.InsufficientSymptomaticDiagnosesTotal;
+		}
+		
+		console.log("Total penalty for notifications: "+TotalPenalty);
+		console.log("Penalty for InsufficientInfectedToDiagnose: "+TotalInsufficientInfected);
+		console.log("Penalty for InsufficientSymptomaticDiagnoses: "+TotalInsufficientSymptomatic);
+		console.log("Need to determine how much of a shortfall this is");
+		
+		return TotalPenalty*Settings.SampleFactor;
+	};
+	
+	
+	NewDEO.Optimisation.Weight=1000;
+	
+	// Add the object to the array of all ODEOS
+	DEO.push(NewDEO);
 	
 // ******************************************************************************************************
 // ******************************************************************************************************
 // ******************************************************************************************************
 	// This section deals with the creation of summary statistics for ever injectors
 	
-	var NewDEO=new DataExtractionObject();
+	NewDEO=new DataExtractionObject();
 	NewDEO.CountType="Instantaneous";
 	NewDEO.Name="NumberEverInjectingDrugsTotal";
 	NewDEO.Title="Number of people ever injecting drugs (Total)";
@@ -455,89 +539,7 @@ function HCVDataExtractionObjects(){
 	
 	
 // ******************************************************************************************************
-// ******************************************************************************************************
-// ******************************************************************************************************
-// This section deals with the display of total notifications in the simulations
-	
-	// Add all male notifications together
-	var TotalMaleNotifications={};
-	TotalMaleNotifications.Time=Data.MaleNotifications.Year;
-	TotalMaleNotifications.Value=ZeroArray(Data.MaleNotifications.Year.length);
-	for (var Count in Data.MaleNotifications.Table){
-		TotalMaleNotifications.Value=Add(TotalMaleNotifications.Value, Data.MaleNotifications.Table[Count]);
-	}
-	// Add all female notifications together
-	var TotalFemaleNotifications={};
-	TotalFemaleNotifications.Time=Data.FemaleNotifications.Year;
-	TotalFemaleNotifications.Value=ZeroArray(Data.FemaleNotifications.Year.length);
-	for (var Count in Data.FemaleNotifications.Table){
-		TotalFemaleNotifications.Value=Add(TotalFemaleNotifications.Value, Data.FemaleNotifications.Table[Count]);
-	}
-	
-	// Add all notifications together
-	var TotalNotifications={};
-	TotalNotifications.Time=TotalMaleNotifications.Time;
-	TotalNotifications.Value=Add(TotalMaleNotifications.Value, TotalFemaleNotifications.Value);
-	
-	// Create a new object to extract homosexual identity from NSP
-	NewDEO=new DataExtractionObject();
-	
-	// Load the data into the function 
-	NewDEO.SetData(TotalNotifications);
-	NewDEO.SetGraphTime(GraphTime);
-	NewDEO.Name="TotalNotificationsPlot";
-	NewDEO.Title="Total HCV Notifications";
-	NewDEO.XLabel="Year";
-	NewDEO.YLabel="Number of Notifications";
-	
-	NewDEO.ResultFunction= function (SimulationResult, Time){
-		var Notifications=0;
-		for (var PersonCount in SimulationResult.Population){
-			var Person=SimulationResult.Population[PersonCount];
-			// Determine date of diagnosis
-			var NotificationDate=Person.HCV.Diagnosed.FirstTimeOf(1);
 
-			// If the person actually is diagnosed
-			if (!isNaN(NotificationDate)){
-				if (Time<=NotificationDate && NotificationDate<Time+1){
-					Notifications++;
-				}
-			}
-		}
-		Notifications=Notifications*Settings.SampleFactor;
-		return Notifications;
-	};
-	
-	NewDEO.ErrorFunction=function(TimeArray, DataArray, SimulationValueArray, SimulationResult){
-		// There is a value in the simulation results that indicates the shortfall in the number of notifications
-		// This value is calculated by age group
-		
-		// 
-		//console.log(SimulationResult);
-		
-		var TotalPenalty=0;
-		var TotalInsufficientInfected=0;
-		var TotalInsufficientSymptomatic=0;
-		for (var Count in SimulationResult.HCVDataDiagnosisResults){
-			var Pen=SimulationResult.HCVDataDiagnosisResults[Count].Penalty;
-			TotalInsufficientInfected+=Pen.InsufficientInfectedToDiagnoseTotal;
-			// TotalInsufficientSymptomatic+=Pen.InsufficientSymptomaticDiagnosesTotal;
-			TotalPenalty+=Pen.InsufficientInfectedToDiagnoseTotal;//+Pen.InsufficientSymptomaticDiagnosesTotal;
-		}
-		
-		console.log("Total penalty for notifications: "+TotalPenalty);
-		console.log("Penalty for InsufficientInfectedToDiagnose: "+TotalInsufficientInfected);
-		console.log("Penalty for InsufficientSymptomaticDiagnoses: "+TotalInsufficientSymptomatic);
-		console.log("Need to determine how much of a shortfall this is");
-		
-		return TotalPenalty*Settings.SampleFactor;
-	};
-	
-	
-	NewDEO.Optimisation.Weight=1000;
-	
-	// Add the object to the array of all ODEOS
-	DEO.push(NewDEO);
 	
 	// This section deals with the number of notifications by age group
 	

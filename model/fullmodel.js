@@ -232,7 +232,21 @@ function FullModelTest(WorkerData){
 
 
 
-
+function CreateMigrants(){
+	var MigrantArray=[];
+	
+	var NumberOfMigrantsToAdd=2000*Settings.SampleFactor;
+	for (var Count=0; Count<NumberOfMigrantsToAdd; Count++){
+		// select age
+		
+		// select sex
+		
+		var PersonToAdd=new PersonObject(YearOfBirth, Sex, Sexuality);
+		
+		MigrantArray.push(PersonToAdd);
+	}
+	 
+}
 
 
 
