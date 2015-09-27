@@ -1180,18 +1180,18 @@
         "ArrayNumber": "63",
         "InterfaceID": "ParamHolder_63",
         "DistributionType": "normal",
-        "Median": 0.10119032639605406,
-        "StandardError": 0.01,
-        "Upper95Range": 0.12079032639605405,
-        "Lower95Range": 0.08159032639605407,
-        "CalculatedMedian": 0.10119032639605406,
+        "Median": 0.10168597326509629,
+        "StandardError": 0.003272700928495954,
+        "Upper95Range": 0.10810046708494836,
+        "Lower95Range": 0.09527147944524422,
+        "CalculatedMedian": 0.10168597326509629,
         "NumberOfSamples": 1,
         "Val": [
             0.10123607860261939
         ],
         "MinValue": 0,
         "MaxValue": 1,
-        "Description": "Using data from NSP surveys:\nSum(Data.NSP.SexId.Bisexual)/Sum(Data.NSP.SexId.Total);\n\n\nA note about this result: the ratios in the interface may add up to more or less than 1, however in the simulation, the total is always normalised. \n"
+        "Description": "Using data from NSP surveys:\nMean(Divide(Data.NSP.SexId.Bisexual,Data.NSP.SexId.Total))\n0.10168597326509629\n\nSampleStandardDeviation(Divide(Data.NSP.SexId.Bisexual,Data.NSP.SexId.Total))/Sqrt(Data.NSP.SexId.Total.length)\n0.003272700928495954\n\nA note about this result: the ratios in the interface may add up to more or less than 1, however in the simulation, the total is always normalised. \n"
     },
     {
         "ParameterID": "IDU.Sexuality.Heterosexual",
@@ -1199,18 +1199,18 @@
         "ArrayNumber": "64",
         "InterfaceID": "ParamHolder_64",
         "DistributionType": "normal",
-        "Median": 0.8455847195309157,
-        "StandardError": 0.01,
-        "Upper95Range": 0.8651847195309157,
-        "Lower95Range": 0.8259847195309158,
-        "CalculatedMedian": 0.8455847195309157,
+        "Median": 0.8441330759440854,
+        "StandardError": 0.005154381950208994,
+        "Upper95Range": 0.854235664566495,
+        "Lower95Range": 0.8340304873216757,
+        "CalculatedMedian": 0.8441330759440854,
         "NumberOfSamples": 1,
         "Val": [
             0.8500376535341442
         ],
         "MinValue": 0,
         "MaxValue": 1,
-        "Description": "Sum(Data.NSP.SexId.Heterosexual)/Sum(Data.NSP.SexId.Total)\n0.8455847195309157\n\nA note about this result: the ratios in the interface may add up to more or less than 1, however in the simulation, the total is always normalised. \n"
+        "Description": "Mean(Divide(Data.NSP.SexId.Heterosexual,Data.NSP.SexId.Total))\n0.8441330759440854\nSampleStandardDeviation(Divide(Data.NSP.SexId.Heterosexual,Data.NSP.SexId.Total))/Sqrt(Data.NSP.SexId.Total.length)\n0.005154381950208994\n\nA note about this result: the ratios in the interface may add up to more or less than 1, however in the simulation, the total is always normalised. \n"
     },
     {
         "ParameterID": "IDU.Sexuality.Homosexual",
@@ -1218,18 +1218,18 @@
         "ArrayNumber": "65",
         "InterfaceID": "ParamHolder_65",
         "DistributionType": "normal",
-        "Median": 0.05322495407303017,
-        "StandardError": 0.01,
-        "Upper95Range": 0.07282495407303016,
-        "Lower95Range": 0.03362495407303017,
-        "CalculatedMedian": 0.05322495407303017,
+        "Median": 0.054180950790818194,
+        "StandardError": 0.002641192345429296,
+        "Upper95Range": 0.05935768778785962,
+        "Lower95Range": 0.04900421379377677,
+        "CalculatedMedian": 0.054180950790818194,
         "NumberOfSamples": 1,
         "Val": [
             0.04379438427975628
         ],
         "MinValue": 0,
         "MaxValue": 1,
-        "Description": "Sum(Data.NSP.SexId.Homosexual)/Sum(Data.NSP.SexId.Total)\n0.05322495407303017\n\nA note about this result: the ratios in the interface may add up to more or less than 1, however in the simulation, the total is always normalised. \n\n"
+        "Description": "Mean(Divide(Data.NSP.SexId.Homosexual,Data.NSP.SexId.Total))\n0.054180950790818194\n\nSampleStandardDeviation(Divide(Data.NSP.SexId.Homosexual,Data.NSP.SexId.Total))/Sqrt(Data.NSP.SexId.Total.length)\n0.002641192345429296\n\nA note about this result: the ratios in the interface may add up to more or less than 1, however in the simulation, the total is always normalised. \n\n"
     },
     {
         "ParameterID": "IDU.Sharing.PriorToNSP",
