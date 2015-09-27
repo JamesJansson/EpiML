@@ -254,10 +254,31 @@ function CreateMotherToChildCases(Population, Time){
 	for (var PCount in Population){
 		var Person=Population[PCount];
 		if (Person.Sex==1){
-			if (Person.Alive(time)==true){
-				if (PregnancyOccurs(Time, Person.Age(Time))){
-					var NewPerson=new PersonObject(YearOfBirth, Sex, Sexuality);
-					// NewPerson.MotherID=Person.ID;
+			if (Person.HCV.CurrentlyInfected(Time)==true){
+				if (Person.Alive(Time)==true){
+					if (BirthRate.BirthOccurs(Person.Age(Time), Time, Param.TimeStep)){
+						if (Rand.Value()<Param.HCV.PTransmission.MotherToChild){
+							var TimeOfBirth=Time+Rand.Value()*Param.TimeStep;
+							
+							var Sex;
+							if (Rand.Value()<0.5){
+								Sex=0;
+							}
+							else{
+								Sex=1;
+							}
+							
+							var Sexuality=RandSampleWeighted([Param.IDU.Sexuality.Heterosexual, Param.IDU.Sexuality.Homosexual, Param.IDU.Sexuality.Bisexual], [1, 2,3]);
+							
+							var NewChild=new PersonObject(TimeOfBirth, Sex, Sexuality);
+							// NewPerson.MotherID=Person.ID;
+							// Set infection date to date of birth
+							// Set genotype to mothers genotype
+							NewChild.HCV.Infection(TimeOfBirth, Person.HCV.Genotype.Value(Time));
+							
+							Population.push(NewChild);
+						}
+					}
 				}
 			}
 		}
@@ -304,6 +325,8 @@ function FullModel(FunctionInput){
 	
 	// Set up some of the parameters
 	RegularInjectionTime=new RegularInjectionTimeObject();
+	
+	BirthRate=new BirthRateClass(Data.Fertility.Data, Data.Fertility.YoungestAge, Data.Fertility.OldestAge, Data.Fertility.StartYear, Data.Fertility.EndYear);
 	
 	
 	
@@ -380,9 +403,14 @@ function FullModel(FunctionInput){
 
     	// Timers.CreatePWID.Start();
 
-		var PWIDToAdd=CreatePWID(Param.IDU.Entry, Time, Param.TimeStep);
+		
 		// CreateMigrantHCVCases
-		// CreateMotherToChildCases
+		CreateMotherToChildCases(Person, Time);
+		
+		
+		
+		
+		var PWIDToAdd=CreatePWID(Param.IDU.Entry, Time, Param.TimeStep);
 		
 		// console.log("Outputting PWIDToAdd");
 		// console.log(PWIDToAdd);
@@ -505,7 +533,7 @@ function FullModel(FunctionInput){
 		
 		// HCV mortality
 		
-		Time += Param.TimeStep
+		Time += Param.TimeStep;
 	}
 	
 	// 

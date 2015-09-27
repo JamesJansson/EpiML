@@ -16,6 +16,8 @@ importScripts("person.js");
 importScripts("hcv.js");
 importScripts("idu.js");
 importScripts("hiv.js");
+importScripts("births.js");
+
 importScripts("assignpopulation.js");
 importScripts("assigninjectingpopulation.js");
 importScripts("extractresults.js");

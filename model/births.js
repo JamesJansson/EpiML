@@ -8,14 +8,14 @@ function BirthRateClass(Data, YoungestAge, OldestAge, StartYear, EndYear){
 	this.EndYear=EndYear;
 }
 
-BirthRateClass.prototype.BirthOccurs=function(Age, Year){
-	if (Rand.Value()<this.Probability(Age, Year)){
+BirthRateClass.prototype.BirthOccurs=function(Age, Year, StepSize){
+	if (Rand.Value()<this.Probability(Age, Year, StepSize)){
 		return true;
 	}
 	return false;
 };
 
-BirthRateClass.prototype.Probability=function(Age, Year){
+BirthRateClass.prototype.Probability=function(Age, Year, StepSize){
 	if (Age<this.YoungestAge){
 		return 0;
 	}
@@ -33,7 +33,11 @@ BirthRateClass.prototype.Probability=function(Age, Year){
 	var AgeIndex=Floor(Age-this.YoungestAge);
 	var YearIndex=Floor(Year-this.StartYear);
 
-	return this.Data[AgeIndex][YearIndex];
+	if (typeof(StepSize)==='undefined'){
+		var StepSize=1;
+	}
+
+	return this.Data[AgeIndex][YearIndex]/StepSize;
 	
 };
 
