@@ -22,6 +22,7 @@ function LoadDataFiles(){
 
 	DataFile.Assorted=new CSVFile('./data/assorteddata.csv');
 
+	DataFile.Fertility=new CSVFile('./data/fertility.csv');
 }
 
 
@@ -213,5 +214,11 @@ function ExtractDataFromFiles(){
 	Data.Incidence.NSP.RateUCI=DataFile.Assorted.GetRow(194, 1, 3);
 	Data.Incidence.NSP.RateUCI=Divide(Data.Incidence.NSP.RateLCI, 100);
 	
+	Data.Fertility={};
+	Data.Fertility.Data=DataFile.Fertility.GetValues(1, 35, 1, 39);
+	Data.Fertility.YoungestAge=15;
+	Data.Fertility.OldestAge=49;
+	Data.Fertility.StartYear=1975;
+	Data.Fertility.EndYear=2013;
 	
 }
