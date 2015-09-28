@@ -12,7 +12,7 @@
         "CalculatedMedian": 0.065,
         "NumberOfSamples": 1,
         "Val": [
-            0.08524501816346736
+            0.05775258656344182
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -31,7 +31,7 @@
         "CalculatedMedian": 0.075,
         "NumberOfSamples": 1,
         "Val": [
-            0.057566925593204865
+            0.08079169537293968
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -50,7 +50,7 @@
         "CalculatedMedian": 0.105,
         "NumberOfSamples": 1,
         "Val": [
-            0.1053500349950357
+            0.08584299311549888
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -69,7 +69,7 @@
         "CalculatedMedian": 0.08,
         "NumberOfSamples": 1,
         "Val": [
-            0.10828370783710935
+            0.07567575270081338
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -88,7 +88,7 @@
         "CalculatedMedian": 0.07,
         "NumberOfSamples": 1,
         "Val": [
-            0.09634769694888451
+            0.0680647161494516
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -107,7 +107,7 @@
         "CalculatedMedian": 0.3,
         "NumberOfSamples": 1,
         "Val": [
-            0.2885637114658635
+            0.4325269924654559
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -126,7 +126,7 @@
         "CalculatedMedian": 0.032665489,
         "NumberOfSamples": 1,
         "Val": [
-            0.028037652380262748
+            0.03407018739676725
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -145,7 +145,7 @@
         "CalculatedMedian": 0.028364043,
         "NumberOfSamples": 1,
         "Val": [
-            0.035644007273212736
+            0.024446220463494872
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -164,7 +164,7 @@
         "CalculatedMedian": 0.02,
         "NumberOfSamples": 1,
         "Val": [
-            0.09400911878820101
+            0.023451335288590575
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -183,7 +183,7 @@
         "CalculatedMedian": 0.591,
         "NumberOfSamples": 1,
         "Val": [
-            0.5933746586382059
+            0.6164791820856159
         ],
         "MinValue": "",
         "MaxValue": "",
@@ -202,7 +202,7 @@
         "CalculatedMedian": 0.54973822,
         "NumberOfSamples": 1,
         "Val": [
-            0.5054681875877998
+            0.5443738307543373
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -221,7 +221,7 @@
         "CalculatedMedian": 0.081151832,
         "NumberOfSamples": 1,
         "Val": [
-            0.08455163103119077
+            0.08503453727759228
         ],
         "MinValue": "",
         "MaxValue": "",
@@ -240,7 +240,7 @@
         "CalculatedMedian": 0.331588133,
         "NumberOfSamples": 1,
         "Val": [
-            0.2928650735812764
+            0.33052443629495426
         ],
         "MinValue": "",
         "MaxValue": "",
@@ -259,7 +259,7 @@
         "CalculatedMedian": 0.02617801,
         "NumberOfSamples": 1,
         "Val": [
-            0.02673210384869209
+            0.027113751620848447
         ],
         "MinValue": "",
         "MaxValue": "",
@@ -316,7 +316,7 @@
         "CalculatedMedian": 0.6,
         "NumberOfSamples": 1,
         "Val": [
-            0.6324730794043848
+            0.5909262786144471
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -335,7 +335,7 @@
         "CalculatedMedian": 0.5,
         "NumberOfSamples": 1,
         "Val": [
-            0.6389878387072663
+            0.3563159106064596
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -370,7 +370,9 @@
         "Lower95Range": 0.04650525306606121,
         "CalculatedMedian": 0.0624,
         "NumberOfSamples": 1,
-        "Val": [],
+        "Val": [
+            0.05941294905877683
+        ],
         "MinValue": 0,
         "MaxValue": 1,
         "Description": "Total calculation:\n13+30+4=47 babies infected\n275+441+37=753 infected mothers\nTotal rate of 0.0624 (95% CI 0.0451 to 0.0797)\n\n\"Thirteen children born to the 275 women with hepatitis C virus RNA acquired the infection and became RNA positive (transmission rate 5%, 95% confidence interval 2% to 7%)\", \nCalculations: Median 0.0472, Standard error of log: 0.3 \n\nResti et al, 1998, Mother to child transmission of hepatitis C virus: prospective study of risk factors and timing of infection in children born to women seronegative for HIV-1\nhttp://www.bmj.com/content/317/7156/437.1.full.pdf+html\n\n\n\"The vertical transmission rate was 6.7% (4.1–10.2) overall (n=441), and 3·8 times higher in HIV coinfected (n=22) than in HIV-negative women after adjustment for other factors (p=0.06).\"\nCalculations: Median 0.067, Standard error of log: 0.25 \n\nGibb et al., 2000, Mother-to-child transmission of hepatitis C virus: evidence for preventable peripartum transmission\nhttp://www.sciencedirect.com/science/article/pii/S0140673600026817\n\n\n3 babies of 31 HCV infected mothers became infected p=0.097\n1 of 6 babies infected form infected mothers\nTotal\n4 babies of 37 infected mothers\nOhto, 1994, Transmission of Hepatitis C virus from mothers to infants\nhttp://www.nejm.org/doi/pdf/10.1056/NEJM199403173301103"
@@ -388,7 +390,7 @@
         "CalculatedMedian": 1.9,
         "NumberOfSamples": 1,
         "Val": [
-            2.5154107067299623
+            3.064751393188025
         ],
         "MinValue": "",
         "MaxValue": "",
@@ -407,7 +409,7 @@
         "CalculatedMedian": 2.03,
         "NumberOfSamples": 1,
         "Val": [
-            2.1734401249217954
+            2.464462062027678
         ],
         "MinValue": "",
         "MaxValue": "",
@@ -426,7 +428,7 @@
         "CalculatedMedian": 1.47,
         "NumberOfSamples": 1,
         "Val": [
-            2.032614686571172
+            1.565438443362342
         ],
         "MinValue": "",
         "MaxValue": "",
@@ -445,7 +447,7 @@
         "CalculatedMedian": 0.425,
         "NumberOfSamples": 1,
         "Val": [
-            0.49747071258283937
+            0.455761927372205
         ],
         "MinValue": 0,
         "MaxValue": "",
@@ -464,7 +466,7 @@
         "CalculatedMedian": 0.358418367,
         "NumberOfSamples": 1,
         "Val": [
-            0.3301960175718127
+            0.3422349052470562
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -483,7 +485,7 @@
         "CalculatedMedian": 0.45,
         "NumberOfSamples": 1,
         "Val": [
-            0.43721881594968715
+            0.4551079917878231
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -502,7 +504,7 @@
         "CalculatedMedian": 0.74,
         "NumberOfSamples": 1,
         "Val": [
-            0.7205166952451955
+            0.7474453654739093
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -521,7 +523,7 @@
         "CalculatedMedian": 0.75,
         "NumberOfSamples": 1,
         "Val": [
-            0.7535311736997593
+            0.7472281549171105
         ],
         "MinValue": "",
         "MaxValue": "",
@@ -540,7 +542,7 @@
         "CalculatedMedian": 2.69,
         "NumberOfSamples": 1,
         "Val": [
-            2.871615422142772
+            2.862924161150795
         ],
         "MinValue": 0,
         "MaxValue": "",
@@ -559,7 +561,7 @@
         "CalculatedMedian": 2800,
         "NumberOfSamples": 1,
         "Val": [
-            2834.3075717036
+            2776.874281035575
         ],
         "MinValue": 0,
         "MaxValue": "",
@@ -578,7 +580,7 @@
         "CalculatedMedian": 1.5,
         "NumberOfSamples": 1,
         "Val": [
-            1.788512596162036
+            1.4294087532907724
         ],
         "MinValue": 1,
         "MaxValue": 2,
@@ -633,7 +635,7 @@
         "CalculatedMedian": 0.0277,
         "NumberOfSamples": 1,
         "Val": [
-            0.04722345759481498
+            0.01974838545284975
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -652,7 +654,7 @@
         "CalculatedMedian": 0.452,
         "NumberOfSamples": 1,
         "Val": [
-            0.48080491377268475
+            0.4437792931457477
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -671,7 +673,7 @@
         "CalculatedMedian": 0.067,
         "NumberOfSamples": 1,
         "Val": [
-            0.07250837588939735
+            0.0745918983788168
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -690,7 +692,7 @@
         "CalculatedMedian": 0.115,
         "NumberOfSamples": 1,
         "Val": [
-            0.11542010457775163
+            0.1478814633430703
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -709,7 +711,7 @@
         "CalculatedMedian": 0.337,
         "NumberOfSamples": 1,
         "Val": [
-            0.35180040984565114
+            0.34520782492584057
         ],
         "MinValue": "",
         "MaxValue": "",
@@ -813,7 +815,7 @@
         "CalculatedMedian": 0.0035,
         "NumberOfSamples": 1,
         "Val": [
-            0.004046243923901143
+            0.0016795105141497611
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -832,7 +834,7 @@
         "CalculatedMedian": 0.0122,
         "NumberOfSamples": 1,
         "Val": [
-            0.012240524844960807
+            0.00987431292237388
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -851,7 +853,7 @@
         "CalculatedMedian": 21,
         "NumberOfSamples": 1,
         "Val": [
-            21.037202321924745
+            20.176684500196167
         ],
         "MinValue": "",
         "MaxValue": "",
@@ -870,7 +872,7 @@
         "CalculatedMedian": 0.17,
         "NumberOfSamples": 1,
         "Val": [
-            0.17896521167638246
+            0.1604646081513921
         ],
         "MinValue": "",
         "MaxValue": "",
@@ -889,7 +891,7 @@
         "CalculatedMedian": 1.5,
         "NumberOfSamples": 1,
         "Val": [
-            2.354206786747165
+            0.611709478912472
         ],
         "MinValue": "",
         "MaxValue": "",
@@ -908,7 +910,7 @@
         "CalculatedMedian": 0.0322,
         "NumberOfSamples": 1,
         "Val": [
-            0.03796626557416609
+            0.03608215788180786
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -927,7 +929,7 @@
         "CalculatedMedian": 0.1736,
         "NumberOfSamples": 1,
         "Val": [
-            0.1612632193882689
+            0.15197600762150798
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -963,7 +965,7 @@
         "CalculatedMedian": 0.66,
         "NumberOfSamples": 1,
         "Val": [
-            0.7230340268876051
+            0.5960446236298645
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -1016,7 +1018,7 @@
         "CalculatedMedian": 0.36,
         "NumberOfSamples": 1,
         "Val": [
-            0.3925283957904941
+            0.37435848232727387
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -1035,7 +1037,7 @@
         "CalculatedMedian": 0.29,
         "NumberOfSamples": 1,
         "Val": [
-            0.41051525180669035
+            0.31275804396726814
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -1054,7 +1056,7 @@
         "CalculatedMedian": 0.35,
         "NumberOfSamples": 1,
         "Val": [
-            0.22855463771291992
+            0.3897757241872918
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -1073,7 +1075,7 @@
         "CalculatedMedian": 0.682,
         "NumberOfSamples": 1,
         "Val": [
-            0.7154199455505392
+            0.6519578303197819
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -1111,7 +1113,7 @@
         "CalculatedMedian": 0.224,
         "NumberOfSamples": 1,
         "Val": [
-            0.2248075508552287
+            0.24255807563194165
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -1130,7 +1132,7 @@
         "CalculatedMedian": 0.068,
         "NumberOfSamples": 1,
         "Val": [
-            0.012656023668637328
+            0.030230756488449924
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -1149,7 +1151,7 @@
         "CalculatedMedian": 0.749,
         "NumberOfSamples": 1,
         "Val": [
-            0.7519763671372415
+            0.7410634372239099
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -1168,7 +1170,7 @@
         "CalculatedMedian": 0.45,
         "NumberOfSamples": 1,
         "Val": [
-            0.3927918581205591
+            0.392085737176039
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -1187,7 +1189,7 @@
         "CalculatedMedian": 0.10168597326509629,
         "NumberOfSamples": 1,
         "Val": [
-            0.10123607860261939
+            0.09717141508201638
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -1206,7 +1208,7 @@
         "CalculatedMedian": 0.8441330759440854,
         "NumberOfSamples": 1,
         "Val": [
-            0.8500376535341442
+            0.8341216230710542
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -1225,7 +1227,7 @@
         "CalculatedMedian": 0.054180950790818194,
         "NumberOfSamples": 1,
         "Val": [
-            0.04379438427975628
+            0.05367417890424805
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -1244,7 +1246,7 @@
         "CalculatedMedian": 0.6,
         "NumberOfSamples": 1,
         "Val": [
-            0.6270695135479265
+            0.6507961307260095
         ],
         "MinValue": "",
         "MaxValue": "",
@@ -1282,7 +1284,7 @@
         "CalculatedMedian": 0.15,
         "NumberOfSamples": 1,
         "Val": [
-            0.16486546121784432
+            0.1798085298638258
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -1301,7 +1303,7 @@
         "CalculatedMedian": 0.3,
         "NumberOfSamples": 1,
         "Val": [
-            0.3055234835917041
+            0.2718705870463407
         ],
         "MinValue": 0,
         "MaxValue": 1,
@@ -1320,7 +1322,7 @@
         "CalculatedMedian": 0.59,
         "NumberOfSamples": 1,
         "Val": [
-            0.5680870879135509
+            0.5936424211253744
         ],
         "MinValue": 0,
         "MaxValue": 2,
@@ -1339,7 +1341,7 @@
         "CalculatedMedian": 0.19,
         "NumberOfSamples": 1,
         "Val": [
-            0.15683517166042915
+            0.27524898531283226
         ],
         "MinValue": "",
         "MaxValue": "",
@@ -1358,7 +1360,7 @@
         "CalculatedMedian": 0.21,
         "NumberOfSamples": 1,
         "Val": [
-            0.19682538201365177
+            0.2196708816054933
         ],
         "MinValue": "",
         "MaxValue": "",
@@ -1377,7 +1379,7 @@
         "CalculatedMedian": 0.06,
         "NumberOfSamples": 1,
         "Val": [
-            0.14004101859155027
+            0.07168367635588614
         ],
         "MinValue": "",
         "MaxValue": "",
@@ -1396,7 +1398,7 @@
         "CalculatedMedian": 0.35,
         "NumberOfSamples": 1,
         "Val": [
-            0.2917281039995533
+            0.3852866308720578
         ],
         "MinValue": "",
         "MaxValue": "",
@@ -1415,7 +1417,7 @@
         "CalculatedMedian": 0.18,
         "NumberOfSamples": 1,
         "Val": [
-            0.2601452155508196
+            0.18263092768438519
         ],
         "MinValue": "",
         "MaxValue": "",
@@ -1471,7 +1473,9 @@
         "Lower95Range": 0.022,
         "CalculatedMedian": 0.022,
         "NumberOfSamples": 1,
-        "Val": [],
+        "Val": [
+            0.022
+        ],
         "MinValue": "",
         "MaxValue": "",
         "Description": "Richters (2014), Sexual identity, sexual attraction and sexual experience: the Second Australian Study of Health and Relationships, Sexual Health\n"
@@ -1488,7 +1492,9 @@
         "Lower95Range": 0.963,
         "CalculatedMedian": 0.963,
         "NumberOfSamples": 1,
-        "Val": [],
+        "Val": [
+            0.963
+        ],
         "MinValue": "",
         "MaxValue": "",
         "Description": "Richters (2014), Sexual identity, sexual attraction and sexual experience: the Second Australian Study of Health and Relationships, Sexual Health\n"
@@ -1505,7 +1511,9 @@
         "Lower95Range": 0.012,
         "CalculatedMedian": 0.012,
         "NumberOfSamples": 1,
-        "Val": [],
+        "Val": [
+            0.012
+        ],
         "MinValue": "",
         "MaxValue": "",
         "Description": "Richters (2014), Sexual identity, sexual attraction and sexual experience: the Second Australian Study of Health and Relationships, Sexual Health\n"
@@ -1522,7 +1530,9 @@
         "Lower95Range": 0.013,
         "CalculatedMedian": 0.013,
         "NumberOfSamples": 1,
-        "Val": [],
+        "Val": [
+            0.013
+        ],
         "MinValue": "",
         "MaxValue": "",
         "Description": "Richters (2014), Sexual identity, sexual attraction and sexual experience: the Second Australian Study of Health and Relationships, Sexual Health\n"
@@ -1539,7 +1549,9 @@
         "Lower95Range": 0.967,
         "CalculatedMedian": 0.967,
         "NumberOfSamples": 1,
-        "Val": [],
+        "Val": [
+            0.967
+        ],
         "MinValue": "",
         "MaxValue": "",
         "Description": "Richters (2014), Sexual identity, sexual attraction and sexual experience: the Second Australian Study of Health and Relationships, Sexual Health"
@@ -1556,7 +1568,9 @@
         "Lower95Range": 0.019,
         "CalculatedMedian": 0.019,
         "NumberOfSamples": 1,
-        "Val": [],
+        "Val": [
+            0.019
+        ],
         "MinValue": "",
         "MaxValue": "",
         "Description": "Richters (2014), Sexual identity, sexual attraction and sexual experience: the Second Australian Study of Health and Relationships, Sexual Health\n"
