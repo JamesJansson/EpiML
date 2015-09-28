@@ -236,14 +236,26 @@ function CreateMigrants(Time){
 	var MigrantArray=[];
 	
 	var NumberOfMigrantsToAdd=2000*Settings.SampleFactor;
-	// 
+	// Age distribution by country 
+	// Prevalence by country
+	// Assume unifrom exposure by age in the population
+	// That is, a person who comes in to Australia has an even probability of of being infected across all ages
+	// the probability of it goes down by 75% after 1990
 	
 	for (var Count=0; Count<NumberOfMigrantsToAdd; Count++){
-		// select age
+		// Select age
 		
-		// select sex
+		// Select sex
+		
+		// Select sexuality 
+		var Sexuality=SexualitySelector.GeneralPopulation();
+		
 		
 		var PersonToAdd=new PersonObject(YearOfBirth, Sex, Sexuality);
+		
+		// create an HCV infection
+			
+			
 		
 		MigrantArray.push(PersonToAdd);
 	}
@@ -294,9 +306,15 @@ function CreateMotherToChildCases(Population, Time){
 
 
 
+Richters (2014), Sexual identity, sexual attraction and sexual experience: the Second Australian Study of Health and Relationships, Sexual Health
 
+Sexuality.GeneralPopulation.Male.Heterosexual
+Sexuality.GeneralPopulation.Male.Homosexual
+Sexuality.GeneralPopulation.Male.Bisexual
 
-
+Sexuality.GeneralPopulation.Female.Heterosexual
+Sexuality.GeneralPopulation.Female.Homosexual
+Sexuality.GeneralPopulation.Female.Bisexual
 
 
 
@@ -327,6 +345,11 @@ function FullModel(FunctionInput){
 	RegularInjectionTime=new RegularInjectionTimeObject();
 	
 	BirthRate=new BirthRateClass(Data.Fertility.Data, Data.Fertility.YoungestAge, Data.Fertility.OldestAge, Data.Fertility.StartYear, Data.Fertility.EndYear);
+	
+	
+	SexualitySelector={};
+	SexualitySelector.GeneralPopulation=new SexualitySelectorClass();
+	SexualitySelector.InjectingPopulation=new SexualitySelectorClass();
 	
 	
 	
