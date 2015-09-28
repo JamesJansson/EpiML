@@ -23,6 +23,8 @@ function PersonObject(YearOfBirth, Sex, Sexuality)//, YearOfObservation Param)
 	
 	this.Death=new DeathObject(this);
 	
+	this.Immigrant=false;
+	this.Nationality;
 	
 	//Location (in this case, there is only one location variable, it might represent state or a local area)
 	this.Location=new EventVector;
@@ -84,12 +86,36 @@ PersonObject.prototype.CalculateGeneralMortality= function (YearFromWhichToCalcu
 };
 
 	
+PersonObject.prototype.SetNationality= function (NationValue, Time){
+	this.Immigrant=true;
+	if (typeof(this.Nationality)=='undefined'){
+		this.Nationality=new EventVector();
+	}
+	this.Nationality.Set(NationValue, Time);
+};
+
+PersonObject.prototype.CurrentNationality= function (Time){
+	if(this.Immigrant==false){
+		return 0;// 0 is the Local 
+	}
+	return this.Nationality.Value(Time);
+};
+
+PersonObject.prototype.InCountry= function (Time){
+	if(this.CurrentNationality(Time)==0){
+		return true;// 0 is the Local 
+	}
+	return false;
+};
+
+
+
 
 
 
 
 PersonObject.prototype.StartInjecting= function (Time){
-	
+	throw "This shouldn't run at all.";
 	
 	
 };

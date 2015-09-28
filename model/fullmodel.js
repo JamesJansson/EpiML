@@ -261,7 +261,9 @@ function CreateMigrants(Time){
 		
 		var PersonToAdd=new PersonObject(TimeOfBirth, Sex, Sexuality);
 		
+		var NationValue=1;// some other country code
 		PersonToAdd.SetNationality(NationValue, TimeOfBirth);
+		NationValue=0;// in country
 		PersonToAdd.SetNationality(NationValue, TimeOfImmigration);
 		
 		
@@ -311,7 +313,6 @@ function CreateMotherToChildCases(Population, Time){
 				}
 			}
 		}
-			
 	}
 }
 
