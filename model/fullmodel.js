@@ -272,15 +272,15 @@ function CreateMotherToChildCases(Population, Time){
 						if (Rand.Value()<Param.HCV.PTransmission.MotherToChild){
 							var TimeOfBirth=Time+Rand.Value()*Param.TimeStep;
 							
-							var Sex;
+							var Sex, Sexuality;
 							if (Rand.Value()<0.5){
 								Sex=0;
+								Sexuality=SexualitySelector.GeneralPopulation.Male();
 							}
 							else{
 								Sex=1;
+								Sexuality=SexualitySelector.GeneralPopulation.Female();
 							}
-							
-							var Sexuality=RandSampleWeighted([Param.IDU.Sexuality.Heterosexual, Param.IDU.Sexuality.Homosexual, Param.IDU.Sexuality.Bisexual], [1, 2,3]);
 							
 							var NewChild=new PersonObject(TimeOfBirth, Sex, Sexuality);
 							// NewPerson.MotherID=Person.ID;
@@ -301,20 +301,17 @@ function CreateMotherToChildCases(Population, Time){
 
 
 
+function SexualitySelectorClass(Rate){
+	this.Heterosexual=Rate.Heterosexual;//1
+	this.Homosexual=Rate.Homosexual;//2
+	this.Bisexual=Rate.Bisexual;//3
+}
 
+SexualitySelectorClass.prototype.Select=function(){
+	var Sexuality=RandSampleWeighted([this.Heterosexual, this.Homosexual, this.Bisexual], [1,2,3]);
+	return Sexuality;
+};
 
-
-
-
-Richters (2014), Sexual identity, sexual attraction and sexual experience: the Second Australian Study of Health and Relationships, Sexual Health
-
-Sexuality.GeneralPopulation.Male.Heterosexual
-Sexuality.GeneralPopulation.Male.Homosexual
-Sexuality.GeneralPopulation.Male.Bisexual
-
-Sexuality.GeneralPopulation.Female.Heterosexual
-Sexuality.GeneralPopulation.Female.Homosexual
-Sexuality.GeneralPopulation.Female.Bisexual
 
 
 
@@ -348,8 +345,10 @@ function FullModel(FunctionInput){
 	
 	
 	SexualitySelector={};
-	SexualitySelector.GeneralPopulation=new SexualitySelectorClass();
-	SexualitySelector.InjectingPopulation=new SexualitySelectorClass();
+	SexualitySelector.GeneralPopulation={};
+	SexualitySelector.GeneralPopulation.Male=new SexualitySelectorClass(Param.Sexuality.GeneralPopulation.Male);
+	SexualitySelector.GeneralPopulation.Female=new SexualitySelectorClass(Param.Sexuality.GeneralPopulation.Female);
+	SexualitySelector.InjectingPopulation=new SexualitySelectorClass(Param.IDU.Sexuality);
 	
 	
 	
