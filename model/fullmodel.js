@@ -243,19 +243,36 @@ function CreateMigrants(Time){
 	// the probability of it goes down by 75% after 1990
 	
 	for (var Count=0; Count<NumberOfMigrantsToAdd; Count++){
-		// Select age
+		var Sex, Sexuality;
+		if (Rand.Value()<0.5){
+			Sex=0;
+			Sexuality=SexualitySelector.GeneralPopulation.Male();
+		}
+		else{
+			Sex=1;
+			Sexuality=SexualitySelector.GeneralPopulation.Female();
+		}
 		
-		// Select sex
+		// 
+		var AgeAtImmigration=40;
+		var TimeOfImmigration=Time+Rand.Value()*Param.TimeStep;
 		
-		// Select sexuality 
-		var Sexuality=SexualitySelector.GeneralPopulation();
+		var TimeOfBirth=TimeOfImmigration-AgeAtImmigration;
+		
+		var PersonToAdd=new PersonObject(TimeOfBirth, Sex, Sexuality);
+		
+		PersonToAdd.SetNationality(NationValue, TimeOfBirth);
+		PersonToAdd.SetNationality(NationValue, TimeOfImmigration);
 		
 		
-		var PersonToAdd=new PersonObject(YearOfBirth, Sex, Sexuality);
+		// Create an HCV infection
+		var AgeAtInfection=AgeAtImmigration*Rand.Value();
 		
-		// create an HCV infection
-			
-			
+		var TimeOfInfection=TimeOfBirth+AgeAtInfection;
+		
+		// Genotype
+		
+		PersonToAdd.HCV.Infection(TimeOfInfection);	
 		
 		MigrantArray.push(PersonToAdd);
 	}
