@@ -277,7 +277,7 @@ function CreateMigrantHCVCases(Population, Time){
 		
 		var Genotype=3;//
 		
-		PersonToAdd.HCV.Infection(Genotype);	
+		PersonToAdd.HCV.Infection(Time,Genotype);	
 		
 		Population.push(PersonToAdd);
 	}
