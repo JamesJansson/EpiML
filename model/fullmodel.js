@@ -296,10 +296,13 @@ function MigrantRateFunction(Time){
 	if (Index>=Data.GeneralPopulation.Year.length){
 		Index=Data.GeneralPopulation.Year.length-1;
 	}
-	var PropWithHCV=0.02;
-	return Round(PropWithHCV*Param.TimeStep*Data.GeneralPopulation.Migration[Index]/Settings.SampleFactor);
+	var PropWithHCV=0.005;//gives 25088 migrants intake that have HCV.
+	// "Of these, 88.7% were estimated to be through injecting drug use, 7.2% among migrants and 4.1% through other transmission routes. An estimated 264,000 (lower and upper limits of 206,000 and 318,000) people were HCV antibody positive in 2005."
+	// This should give around 19,000 migrants
+	// Razali 2007 Modelling the hepatitis C virus epidemic in Australia
 	
-	// get migration by age rate
+	
+	return Round(PropWithHCV*Param.TimeStep*Data.GeneralPopulation.Migration[Index]/Settings.SampleFactor);
 }
 
 function MigrantAgeFunction(){

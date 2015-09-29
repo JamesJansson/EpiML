@@ -77,8 +77,8 @@ function ExtractDataFromFiles(){
 	Data.GeneralPopulation.Year=DataFile.GeneralPopulation.GetColumn(0, 1, 43);
 	Data.GeneralPopulation.Size=DataFile.GeneralPopulation.GetColumn(1, 1, 43);
 	Data.GeneralPopulation.Births=DataFile.GeneralPopulation.GetColumn(2, 1, 43);
-	Data.GeneralPopulation.Migration=DataFile.GeneralPopulation.GetColumn(2, 1, 43);
-	Data.GeneralPopulation.Deaths=DataFile.GeneralPopulation.GetColumn(3, 1, 43);
+	Data.GeneralPopulation.Migration=DataFile.GeneralPopulation.GetColumn(3, 1, 43);
+	Data.GeneralPopulation.Deaths=DataFile.GeneralPopulation.GetColumn(4, 1, 43);
 
 
 	// Extract 
