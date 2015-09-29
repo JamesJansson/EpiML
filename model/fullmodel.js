@@ -261,6 +261,8 @@ function CreateMigrantHCVCases(Population, Time){
 		var TimeOfImmigration=Time+Rand.Value()*Param.TimeStep;
 		
 		var TimeOfBirth=TimeOfImmigration-AgeAtImmigration;
+		console.log(TimeOfBirth);
+		
 		
 		var PersonToAdd=new PersonObject(TimeOfBirth, Sex, Sexuality);
 		
@@ -275,9 +277,11 @@ function CreateMigrantHCVCases(Population, Time){
 		
 		var TimeOfInfection=TimeOfBirth+AgeAtInfection;
 		
-		var Genotype=3;//
+		var Genotype=1;//
 		
-		PersonToAdd.HCV.Infection(Time,Genotype);	
+		
+		// console.log('Time:'+Time+' TimeOfBirth:'+TimeOfBirth+'AgeAtInfection:'+AgeAtInfection);
+		PersonToAdd.HCV.Infection(TimeOfInfection,Genotype);	
 		
 		Population.push(PersonToAdd);
 	}
