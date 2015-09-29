@@ -35,6 +35,8 @@ function InitialiseEpiML(){
 	PGroup= new ParameterGroup("PGroup", Settings.NumberOfSimulations, "./data/parameters.json");
 	PGroup.Load();
 	PGroup.CreateParameterPage("ParamHolder");
+	
+	// Use the following command to get an example of what Param looks like to individual simulations
 	// Param=PGroup.ParameterSplit()[0];
 	
 	// Load data

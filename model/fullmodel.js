@@ -232,10 +232,10 @@ function FullModelTest(WorkerData){
 
 
 
-function CreateMigrants(Time){
-	var MigrantArray=[];
+function CreateMigrantHCVCases(Population, Time){
+	//var MigrantArray=[];
 	
-	var NumberOfMigrantsToAdd=2000*Settings.SampleFactor;
+	var NumberOfMigrantsToAdd=MigrantRateFunction(Time);
 	// Age distribution by country 
 	// Prevalence by country
 	// Assume unifrom exposure by age in the population
@@ -246,15 +246,15 @@ function CreateMigrants(Time){
 		var Sex, Sexuality;
 		if (Rand.Value()<0.5){
 			Sex=0;
-			Sexuality=SexualitySelector.GeneralPopulation.Male();
+			Sexuality=SexualitySelector.GeneralPopulation.Male.Select();
 		}
 		else{
 			Sex=1;
-			Sexuality=SexualitySelector.GeneralPopulation.Female();
+			Sexuality=SexualitySelector.GeneralPopulation.Female.Select();
 		}
 		
 		// 
-		var AgeAtImmigration=40;
+		var AgeAtImmigration=MigrantAgeFunction();
 		var TimeOfImmigration=Time+Rand.Value()*Param.TimeStep;
 		
 		var TimeOfBirth=TimeOfImmigration-AgeAtImmigration;
@@ -272,14 +272,44 @@ function CreateMigrants(Time){
 		
 		var TimeOfInfection=TimeOfBirth+AgeAtInfection;
 		
-		// Genotype
+		var Genotype=3;//
 		
-		PersonToAdd.HCV.Infection(TimeOfInfection);	
+		PersonToAdd.HCV.Infection(Genotype);	
 		
-		MigrantArray.push(PersonToAdd);
+		Population.push(PersonToAdd);
 	}
 	 
 }
+
+
+function MigrantRateFunction(Time){
+	var BaseYear=Data.GeneralPopulation.Year[0];
+	if (Time<BaseYear){
+		return 0;
+	}
+	
+	var Index=Floor(Time-BaseYear);
+	if (Index>=Data.GeneralPopulation.Year.length){
+		Index=Data.GeneralPopulation.Year.length-1;
+	}
+	var PropWithHCV=0.02;
+	return PropWithHCV*Param.TimeStep*Data.GeneralPopulation.Migration[Index]/Settings.SampleFactor;
+	
+	// get migration by age rate
+}
+
+function MigrantAgeFunction(){
+	var RateInPop=[64060,135270,166680,212480,400060,529630,512450,478990,495890,521250,485310,438830,446960,351080,283930,495320];
+	var AgeArray=[0,5,10,15,20,25,30,35,40,45,50,55,60,65,70,75];
+	
+	var Age=RandSampleWeighted(RateInPop, AgeArray);
+	Age+=Rand.Value()*5;// add a random value between 0 and 5 to evenly space 
+	return Age;
+}
+
+
+
+
 
 function CreateMotherToChildCases(Population, Time){
 	for (var PCount in Population){
@@ -294,11 +324,11 @@ function CreateMotherToChildCases(Population, Time){
 							var Sex, Sexuality;
 							if (Rand.Value()<0.5){
 								Sex=0;
-								Sexuality=SexualitySelector.GeneralPopulation.Male();
+								Sexuality=SexualitySelector.GeneralPopulation.Male.Select();
 							}
 							else{
 								Sex=1;
-								Sexuality=SexualitySelector.GeneralPopulation.Female();
+								Sexuality=SexualitySelector.GeneralPopulation.Female.Select();
 							}
 							
 							var NewChild=new PersonObject(TimeOfBirth, Sex, Sexuality);
@@ -329,7 +359,14 @@ SexualitySelectorClass.prototype.Select=function(){
 	var Sexuality=RandSampleWeighted([this.Heterosexual, this.Homosexual, this.Bisexual], [1,2,3]);
 	return Sexuality;
 };
-
+// Testing 
+// SexualitySelector={};
+// SexualitySelector.GeneralPopulation={};
+// SexualitySelector.GeneralPopulation.Male=new SexualitySelectorClass(Param.Sexuality.GeneralPopulation.Male);
+// SexualitySelector.GeneralPopulation.Female=new SexualitySelectorClass(Param.Sexuality.GeneralPopulation.Female);
+// SexualitySelector.InjectingPopulation=new SexualitySelectorClass(Param.IDU.Sexuality);
+// b=[0, 0, 0, 0];
+// for (i=1; i<10000;i++){Sexuality=SexualitySelector.GeneralPopulation.Male.Select();b[Sexuality]++}
 
 
 
@@ -444,7 +481,8 @@ function FullModel(FunctionInput){
     	// Timers.CreatePWID.Start();
 
 		
-		// CreateMigrantHCVCases
+		CreateMigrantHCVCases(Time);
+		
 		CreateMotherToChildCases(Person, Time);
 		
 		
