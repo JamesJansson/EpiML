@@ -296,7 +296,7 @@ function MigrantRateFunction(Time){
 		Index=Data.GeneralPopulation.Year.length-1;
 	}
 	var PropWithHCV=0.02;
-	return PropWithHCV*Param.TimeStep*Data.GeneralPopulation.Migration[Index]/Settings.SampleFactor;
+	return Round(PropWithHCV*Param.TimeStep*Data.GeneralPopulation.Migration[Index]/Settings.SampleFactor);
 	
 	// get migration by age rate
 }
@@ -484,7 +484,7 @@ function FullModel(FunctionInput){
     	// Timers.CreatePWID.Start();
 
 		
-		CreateMigrantHCVCases(Time);
+		CreateMigrantHCVCases(Person,Time);
 		
 		CreateMotherToChildCases(Person, Time);
 		
