@@ -1,7 +1,7 @@
 
 
 function StandardSettingsHCVOptimisation(){
-	HCVOptSelector.NumberOfRounds=50;
+	HCVOptSelector.NumberOfRounds=5;
 	HCVOptSelector.NumberOfSamplesPerRound=10;
 	// create a list of parameters to optimise to
 	HCVOptSelector.SelectDEOToOptimise("NumberEverInjectingDrugsMale14_20");
