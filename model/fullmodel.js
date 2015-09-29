@@ -236,6 +236,9 @@ function CreateMigrantHCVCases(Population, Time){
 	//var MigrantArray=[];
 	
 	var NumberOfMigrantsToAdd=MigrantRateFunction(Time);
+	console.log("Migrants added this step:"+NumberOfMigrantsToAdd);
+	
+	
 	// Age distribution by country 
 	// Prevalence by country
 	// Assume unifrom exposure by age in the population
@@ -278,7 +281,7 @@ function CreateMigrantHCVCases(Population, Time){
 		
 		Population.push(PersonToAdd);
 	}
-	 
+	
 }
 
 
