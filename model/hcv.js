@@ -99,6 +99,11 @@ HCVObject.prototype.Infection= function (TimeOfInfection, GenotypeValue){//, Age
 	// var OriginalGenotypeArray=DeepCopy(this.Genotype.Value(TimeOfInfection));// note that since this is an array, we need to copy it before we operate on it.
 	var OriginalGenotypeArray=this.Genotype.Value(TimeOfInfection);// we are not operating on this, so no need to copy
 
+	if (isNaN(OriginalGenotypeArray)){
+		console.error("Trace of problem.");
+		throw "It appears that the date of infection is prior to the date of birth of the individual."
+	}
+
 	// determine the potential new genotype	
 	var NewGenotypeArray=OriginalGenotypeArray.concat(GenotypeValue);;
 	

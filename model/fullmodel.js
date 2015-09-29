@@ -236,7 +236,7 @@ function CreateMigrantHCVCases(Population, Time){
 	//var MigrantArray=[];
 	
 	var NumberOfMigrantsToAdd=MigrantRateFunction(Time);
-	console.log("Migrants added this step:"+NumberOfMigrantsToAdd);
+	//console.log("Migrants added this step:"+NumberOfMigrantsToAdd);
 	
 	
 	// Age distribution by country 
@@ -261,12 +261,10 @@ function CreateMigrantHCVCases(Population, Time){
 		var TimeOfImmigration=Time+Rand.Value()*Param.TimeStep;
 		
 		var TimeOfBirth=TimeOfImmigration-AgeAtImmigration;
-		console.log(TimeOfBirth);
-		
-		
 		var PersonToAdd=new PersonObject(TimeOfBirth, Sex, Sexuality);
 		
 		var NationValue=1;// some other country code
+		
 		PersonToAdd.SetNationality(NationValue, TimeOfBirth);
 		NationValue=0;// in country
 		PersonToAdd.SetNationality(NationValue, TimeOfImmigration);
@@ -278,7 +276,6 @@ function CreateMigrantHCVCases(Population, Time){
 		var TimeOfInfection=TimeOfBirth+AgeAtInfection;
 		
 		var Genotype=1;//
-		
 		
 		// console.log('Time:'+Time+' TimeOfBirth:'+TimeOfBirth+'AgeAtInfection:'+AgeAtInfection);
 		PersonToAdd.HCV.Infection(TimeOfInfection,Genotype);	
