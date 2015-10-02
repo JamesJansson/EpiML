@@ -99,7 +99,7 @@ function HCVDataExtractionObjects(){
 // ******************************************************************************************************
 // ******************************************************************************************************
 // ******************************************************************************************************
-	// This section deals with the creation of summary statistics for ever injectors
+	// This section deals with the creation of summary statistics for total ever and recent injectors
 	
 	NewDEO=new DataExtractionObject();
 	NewDEO.CountType="Instantaneous";
@@ -135,7 +135,7 @@ function HCVDataExtractionObjects(){
 
 	var NewDEO=new DataExtractionObject();
 	NewDEO.CountType="Instantaneous";
-	NewDEO.Name="NumberRecentlynjectingDrugsTotal";
+	NewDEO.Name="NumberRecentlyInjectingDrugsTotal";
 	NewDEO.Title="Number of people recently injecting drugs (Total)";
 	NewDEO.XLabel="Year";
 	NewDEO.YLabel="Count";
@@ -168,161 +168,21 @@ function HCVDataExtractionObjects(){
 
 
 
-	// From this section onwards, the simulation determines the total number of injectors by age and sex
-	function CreateEverInjectorByAgeFunction(Sex, LowerAge, UpperAge){
-		// not that this uses closures to limit the scope of LowerAge and UpperAge so that the function can be generalised
-		var FunctionHolder= function (SimulationResult, Time){
-			var MatchCount=0;
-			for (var PersonCount in SimulationResult.Population){
-				var Person=SimulationResult.Population[PersonCount];
-				if (Person.Sex==Sex){
-					if (Person.Alive(Time)){
-						if (Person.IDU.EverInjectedAtTime(Time)){
-							if (LowerAge<=Person.Age(Time) && Person.Age(Time)<UpperAge){
-								MatchCount++;
-							}
-						}
-					}
-				}
-			}
-			MatchCount=MatchCount*Settings.SampleFactor;
-			return MatchCount;
-		};
-		return FunctionHolder;
-	}
 
 
-	for (var Sex=0; Sex<2; Sex++){
-		for (var AgeIndex in Data.PWID.AgeRange){
-			var LowerAge=Data.PWID.AgeRange[AgeIndex][0];
-			var UpperAge=Data.PWID.AgeRange[AgeIndex][1];
-			var EverInjectorByAgeFunction=CreateEverInjectorByAgeFunction(Sex, LowerAge, UpperAge);
-			
-			
-			var NewDEO=new DataExtractionObject();
-			NewDEO.CountType="Instantaneous";
-			// Name the Statistic and give labels
-			var SexText;
-			if (Sex==0){
-				SexText="Male"; 
-			}
-			else {
-				SexText="Female"; 
-			}
-			
-			var ObjectName="NumberEverInjectingDrugs"+SexText+LowerAge+"_"+UpperAge;
-			NewDEO.Name=ObjectName;
-			
-			NewDEO.Title="Number of people ever injecting drugs ("+SexText+", "+LowerAge+"-"+UpperAge+")";
-			
-			NewDEO.XLabel="Year";
-			NewDEO.YLabel="Count";
-			
-			// Load the data into the function 
-			var DataStruct={};
-			DataStruct.Time=Data.PWID.Year;
-			if (Sex==0){
-				DataStruct.Value=Data.PWID.Ever.Male[AgeIndex];
-			}
-			else {
-				DataStruct.Value=Data.PWID.Ever.Female[AgeIndex];
-			}
-			
-			NewDEO.SetData(DataStruct);
-			NewDEO.SetGraphTime(GraphTime);
-			NewDEO.ResultFunction=EverInjectorByAgeFunction;
-			
-			// Set optimisation
-			// NewDEO.Optimise=true;
-			// NewDEO.Optimisation.ProportionalError=true;
-			// NewDEO.Optimisation.Weight=10;
-			
-			// CReate a referenece that can be used to download the data in the future
-			eval(ObjectName+"=NewDEO;");
-			// Add the object to the array of all ODEOS
-			DEO.push(NewDEO);
-		}
-	}
-	
-// ******************************************************************************************************
-// ******************************************************************************************************
-// ******************************************************************************************************
-// This section deals with the creation of summary statistics for recent injectors
-
-	function CreateRecentInjectorByAgeFunction(Sex, LowerAge, UpperAge){
-		// not that this uses closures to limit the scope of LowerAge and UpperAge so that the function can be generalised
-		var FunctionHolder= function (SimulationResult, Time){
-			var MatchCount=0;
-			for (var PersonCount in SimulationResult.Population){
-				var Person=SimulationResult.Population[PersonCount];
-				if (Person.Sex==Sex){
-					if (Person.Alive(Time)){
-						if (Person.IDU.InjectedBetween(Time-1, Time)){
-							if (LowerAge<=Person.Age(Time) && Person.Age(Time)<UpperAge){
-								MatchCount++;
-							}
-						}
-					}
-				}
-			}
-			MatchCount=Multiply(MatchCount, Settings.SampleFactor);
-			return MatchCount;
-		};
-		return FunctionHolder;
-	}
 
 
-	for (var Sex=0; Sex<2; Sex++){
-		for (var AgeIndex in Data.PWID.AgeRange){
-			var LowerAge=Data.PWID.AgeRange[AgeIndex][0];
-			var UpperAge=Data.PWID.AgeRange[AgeIndex][1];
-			var RecentInjectorByAgeFunction=CreateRecentInjectorByAgeFunction(Sex, LowerAge, UpperAge);
-			
-			
-			var NewDEO=new DataExtractionObject();
-			NewDEO.CountType="Instantaneous";
-			// Name the Statistic and give labels
-			var SexText;
-			if (Sex==0){
-				SexText="Male"; 
-			}
-			else {
-				SexText="Female"; 
-			}
-			
-			var ObjectName="NumberRecentlyInjectingDrugs"+SexText+LowerAge+"_"+UpperAge;
-			NewDEO.Name=ObjectName;
-			
-			NewDEO.Title="Number of people recently injecting drugs ("+SexText+", "+LowerAge+"-"+UpperAge+")";
-			
-			NewDEO.XLabel="Year";
-			NewDEO.YLabel="Count";
-			
-			// Load the data into the function 
-			var DataStruct={};
-			DataStruct.Time=Data.PWID.Year;
-			if (Sex==0){
-				DataStruct.Value=Data.PWID.Recent.Male[AgeIndex];
-			}
-			else {
-				DataStruct.Value=Data.PWID.Recent.Female[AgeIndex];
-			}
-			
-			NewDEO.SetData(DataStruct);
-			NewDEO.SetGraphTime(GraphTime);
-			NewDEO.ResultFunction=RecentInjectorByAgeFunction;
-			
-			// Set optimisation
-			// NewDEO.Optimise=true;
-			// NewDEO.Optimisation.ProportionalError=true;
-			// NewDEO.Optimisation.Weight=10;
-			
-			// CReate a referenece that can be used to download the data in the future
-			eval(ObjectName+"=NewDEO;");
-			// Add the object to the array of all ODEOS
-			DEO.push(NewDEO);
-		}
-	}
+
+
+
+
+
+
+
+
+
+
+
 
 // ******************************************************************************************************
 // ******************************************************************************************************
@@ -538,85 +398,7 @@ function HCVDataExtractionObjects(){
 	
 	
 	
-// ******************************************************************************************************
 
-	
-	// This section deals with the number of notifications by age group
-	
-	
-	function CreateNotificationByAgeSexFunction(SexValue, LowerAge, UpperAge){
-		// not that this uses closures to limit the scope of LowerAge and UpperAge so that the function can be generalised
-		var FunctionHolder= function (SimulationResult, Time){
-			var Notifications=0;
-				for (var PersonCount in SimulationResult.Population){
-					var Person=SimulationResult.Population[PersonCount];
-					// Determine date of diagnosis
-					var NotificationDate=Person.HCV.Diagnosed.FirstTimeOf(1);
-					
-					// If the person actually is diagnosed
-					if (!isNaN(NotificationDate)){
-						if (Time<=NotificationDate && NotificationDate<Time+1){
-							if (Person.Sex==SexValue){
-								if (LowerAge<=Person.Age(NotificationDate) && Person.Age(NotificationDate)<UpperAge){
-									Notifications++;
-								}
-							}
-						}
-					}
-				}
-				Notifications=Notifications*Settings.SampleFactor;
-				return Notifications;
-		};
-		return FunctionHolder;
-	}
-	
-	
-	
-	
-	for (var TempSexValue=0; TempSexValue<2; TempSexValue++){
-		if (TempSexValue==0){
-			var CurrentSexNotificationData=Data.MaleNotifications;
-			var SexName="Male";
-		}
-		else{
-			var CurrentSexNotificationData=Data.FemaleNotifications;
-			var SexName="Female";
-		}
-		for (var Count in CurrentSexNotificationData.Age){
-			Count=Number(Count);
-			var TempHCVSexAgeNotification={};
-			TempHCVSexAgeNotification.Value=CurrentSexNotificationData.Table[Count];
-			TempHCVSexAgeNotification.Time=CurrentSexNotificationData.Year;
-			
-			var TempAgeLower=CurrentSexNotificationData.Age[Count];
-			var TempAgeUpper=CurrentSexNotificationData.Age[Count+1];
-			
-			
-			if (typeof(TempAgeUpper)=="undefined"){
-				TempAgeUpper=200;
-			}
-			
-			NewDEO=new DataExtractionObject();
-	
-			// Load the data into the function 
-			NewDEO.SetData(TempHCVSexAgeNotification);
-			NewDEO.SetGraphTime(GraphTime);
-			NewDEO.Name="TotalNotificationsPlot"+SexName+TempAgeLower;
-			NewDEO.Title=SexName+" HCV Notifications "+TempAgeLower+"-"+TempAgeUpper;
-			NewDEO.XLabel="Year";
-			NewDEO.YLabel="Number of Notifications";
-			
-			
-			var SexValue=Number(TempSexValue);
-			var AgeLower=Number(TempAgeLower);
-			var AgeUpper=Number(TempAgeUpper);
-			
-			NewDEO.ResultFunction= CreateNotificationByAgeSexFunction(TempSexValue, TempAgeLower, TempAgeUpper);
-			
-			DEO.push(NewDEO);
-		}
-	}
-	
 	
 	
 	
@@ -1918,6 +1700,259 @@ function HCVDataExtractionObjects(){
 	
 	
 	
+	
+	// ******************************************************************************************************
+
+	
+	// This section deals with the number of notifications by age group
+	
+	
+	function CreateNotificationByAgeSexFunction(SexValue, LowerAge, UpperAge){
+		// not that this uses closures to limit the scope of LowerAge and UpperAge so that the function can be generalised
+		var FunctionHolder= function (SimulationResult, Time){
+			var Notifications=0;
+				for (var PersonCount in SimulationResult.Population){
+					var Person=SimulationResult.Population[PersonCount];
+					// Determine date of diagnosis
+					var NotificationDate=Person.HCV.Diagnosed.FirstTimeOf(1);
+					
+					// If the person actually is diagnosed
+					if (!isNaN(NotificationDate)){
+						if (Time<=NotificationDate && NotificationDate<Time+1){
+							if (Person.Sex==SexValue){
+								if (LowerAge<=Person.Age(NotificationDate) && Person.Age(NotificationDate)<UpperAge){
+									Notifications++;
+								}
+							}
+						}
+					}
+				}
+				Notifications=Notifications*Settings.SampleFactor;
+				return Notifications;
+		};
+		return FunctionHolder;
+	}
+	
+	
+	
+	
+	for (var TempSexValue=0; TempSexValue<2; TempSexValue++){
+		if (TempSexValue==0){
+			var CurrentSexNotificationData=Data.MaleNotifications;
+			var SexName="Male";
+		}
+		else{
+			var CurrentSexNotificationData=Data.FemaleNotifications;
+			var SexName="Female";
+		}
+		for (var Count in CurrentSexNotificationData.Age){
+			Count=Number(Count);
+			var TempHCVSexAgeNotification={};
+			TempHCVSexAgeNotification.Value=CurrentSexNotificationData.Table[Count];
+			TempHCVSexAgeNotification.Time=CurrentSexNotificationData.Year;
+			
+			var TempAgeLower=CurrentSexNotificationData.Age[Count];
+			var TempAgeUpper=CurrentSexNotificationData.Age[Count+1];
+			
+			
+			if (typeof(TempAgeUpper)=="undefined"){
+				TempAgeUpper=200;
+			}
+			
+			NewDEO=new DataExtractionObject();
+	
+			// Load the data into the function 
+			NewDEO.SetData(TempHCVSexAgeNotification);
+			NewDEO.SetGraphTime(GraphTime);
+			NewDEO.Name="TotalNotificationsPlot"+SexName+TempAgeLower;
+			NewDEO.Title=SexName+" HCV Notifications "+TempAgeLower+"-"+TempAgeUpper;
+			NewDEO.XLabel="Year";
+			NewDEO.YLabel="Number of Notifications";
+			
+			
+			var SexValue=Number(TempSexValue);
+			var AgeLower=Number(TempAgeLower);
+			var AgeUpper=Number(TempAgeUpper);
+			
+			NewDEO.ResultFunction= CreateNotificationByAgeSexFunction(TempSexValue, TempAgeLower, TempAgeUpper);
+			
+			DEO.push(NewDEO);
+		}
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+// ******************************************************************************************************
+// ******************************************************************************************************
+// ******************************************************************************************************
+// This section deals with the creation of summary statistics for ever injectors
+
+
+	// From this section onwards, the simulation determines the total number of injectors by age and sex
+	function CreateEverInjectorByAgeFunction(Sex, LowerAge, UpperAge){
+		// not that this uses closures to limit the scope of LowerAge and UpperAge so that the function can be generalised
+		var FunctionHolder= function (SimulationResult, Time){
+			var MatchCount=0;
+			for (var PersonCount in SimulationResult.Population){
+				var Person=SimulationResult.Population[PersonCount];
+				if (Person.Sex==Sex){
+					if (Person.Alive(Time)){
+						if (Person.IDU.EverInjectedAtTime(Time)){
+							if (LowerAge<=Person.Age(Time) && Person.Age(Time)<UpperAge){
+								MatchCount++;
+							}
+						}
+					}
+				}
+			}
+			MatchCount=MatchCount*Settings.SampleFactor;
+			return MatchCount;
+		};
+		return FunctionHolder;
+	}
+
+
+	for (var Sex=0; Sex<2; Sex++){
+		for (var AgeIndex in Data.PWID.AgeRange){
+			var LowerAge=Data.PWID.AgeRange[AgeIndex][0];
+			var UpperAge=Data.PWID.AgeRange[AgeIndex][1];
+			var EverInjectorByAgeFunction=CreateEverInjectorByAgeFunction(Sex, LowerAge, UpperAge);
+			
+			
+			var NewDEO=new DataExtractionObject();
+			NewDEO.CountType="Instantaneous";
+			// Name the Statistic and give labels
+			var SexText;
+			if (Sex==0){
+				SexText="Male"; 
+			}
+			else {
+				SexText="Female"; 
+			}
+			
+			var ObjectName="NumberEverInjectingDrugs"+SexText+LowerAge+"_"+UpperAge;
+			NewDEO.Name=ObjectName;
+			
+			NewDEO.Title="Number of people ever injecting drugs ("+SexText+", "+LowerAge+"-"+UpperAge+")";
+			
+			NewDEO.XLabel="Year";
+			NewDEO.YLabel="Count";
+			
+			// Load the data into the function 
+			var DataStruct={};
+			DataStruct.Time=Data.PWID.Year;
+			if (Sex==0){
+				DataStruct.Value=Data.PWID.Ever.Male[AgeIndex];
+			}
+			else {
+				DataStruct.Value=Data.PWID.Ever.Female[AgeIndex];
+			}
+			
+			NewDEO.SetData(DataStruct);
+			NewDEO.SetGraphTime(GraphTime);
+			NewDEO.ResultFunction=EverInjectorByAgeFunction;
+			
+			// Set optimisation
+			// NewDEO.Optimise=true;
+			// NewDEO.Optimisation.ProportionalError=true;
+			// NewDEO.Optimisation.Weight=10;
+			
+			// CReate a referenece that can be used to download the data in the future
+			eval(ObjectName+"=NewDEO;");
+			// Add the object to the array of all ODEOS
+			DEO.push(NewDEO);
+		}
+	}
+	
+// ******************************************************************************************************
+// ******************************************************************************************************
+// ******************************************************************************************************
+// This section deals with the creation of summary statistics for recent injectors
+
+	function CreateRecentInjectorByAgeFunction(Sex, LowerAge, UpperAge){
+		// not that this uses closures to limit the scope of LowerAge and UpperAge so that the function can be generalised
+		var FunctionHolder= function (SimulationResult, Time){
+			var MatchCount=0;
+			for (var PersonCount in SimulationResult.Population){
+				var Person=SimulationResult.Population[PersonCount];
+				if (Person.Sex==Sex){
+					if (Person.Alive(Time)){
+						if (Person.IDU.InjectedBetween(Time-1, Time)){
+							if (LowerAge<=Person.Age(Time) && Person.Age(Time)<UpperAge){
+								MatchCount++;
+							}
+						}
+					}
+				}
+			}
+			MatchCount=Multiply(MatchCount, Settings.SampleFactor);
+			return MatchCount;
+		};
+		return FunctionHolder;
+	}
+
+
+	for (var Sex=0; Sex<2; Sex++){
+		for (var AgeIndex in Data.PWID.AgeRange){
+			var LowerAge=Data.PWID.AgeRange[AgeIndex][0];
+			var UpperAge=Data.PWID.AgeRange[AgeIndex][1];
+			var RecentInjectorByAgeFunction=CreateRecentInjectorByAgeFunction(Sex, LowerAge, UpperAge);
+			
+			
+			var NewDEO=new DataExtractionObject();
+			NewDEO.CountType="Instantaneous";
+			// Name the Statistic and give labels
+			var SexText;
+			if (Sex==0){
+				SexText="Male"; 
+			}
+			else {
+				SexText="Female"; 
+			}
+			
+			var ObjectName="NumberRecentlyInjectingDrugs"+SexText+LowerAge+"_"+UpperAge;
+			NewDEO.Name=ObjectName;
+			
+			NewDEO.Title="Number of people recently injecting drugs ("+SexText+", "+LowerAge+"-"+UpperAge+")";
+			
+			NewDEO.XLabel="Year";
+			NewDEO.YLabel="Count";
+			
+			// Load the data into the function 
+			var DataStruct={};
+			DataStruct.Time=Data.PWID.Year;
+			if (Sex==0){
+				DataStruct.Value=Data.PWID.Recent.Male[AgeIndex];
+			}
+			else {
+				DataStruct.Value=Data.PWID.Recent.Female[AgeIndex];
+			}
+			
+			NewDEO.SetData(DataStruct);
+			NewDEO.SetGraphTime(GraphTime);
+			NewDEO.ResultFunction=RecentInjectorByAgeFunction;
+			
+			// Set optimisation
+			// NewDEO.Optimise=true;
+			// NewDEO.Optimisation.ProportionalError=true;
+			// NewDEO.Optimisation.Weight=10;
+			
+			// CReate a referenece that can be used to download the data in the future
+			eval(ObjectName+"=NewDEO;");
+			// Add the object to the array of all ODEOS
+			DEO.push(NewDEO);
+		}
+	}
+
 	
 	
 	
