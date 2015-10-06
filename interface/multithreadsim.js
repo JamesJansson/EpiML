@@ -319,7 +319,7 @@ MultiThreadSimMessageHandler=function(e) {
 
 
 MultiThreadSim.prototype.Terminate=function() {//close down all workers
-	for (SimID=0; SimID<this.NoSims; SimID++){
+	for (var SimID=0; SimID<this.NoSims; SimID++){
 		this.Worker[SimID].terminate();
 		this.WorkerTerminated[SimID]=true;
 	}
