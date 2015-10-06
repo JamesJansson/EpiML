@@ -239,7 +239,14 @@ MultiThreadSim.prototype.StartNextSim=function() {
 	}
 }
 
-
+MultiThreadSim.prototype.Terminate=function() {//close down all workers
+	for (var SimID=0; SimID<this.NoSims; SimID++){
+		this.Worker[SimID].terminate();
+		this.WorkerTerminated[SimID]=true;
+	}
+	this.ThreadsOpen=true;
+	this.CurrentlyRunning==false;
+};
 
 
 
@@ -318,14 +325,7 @@ MultiThreadSimMessageHandler=function(e) {
 
 
 
-MultiThreadSim.prototype.Terminate=function() {//close down all workers
-	for (var SimID=0; SimID<this.NoSims; SimID++){
-		this.Worker[SimID].terminate();
-		this.WorkerTerminated[SimID]=true;
-	}
-	this.ThreadsOpen=true;
-	this.CurrentlyRunning==false;
-};
+
 
 
 
