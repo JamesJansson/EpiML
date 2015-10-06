@@ -32,7 +32,7 @@ self.onmessage = function (WorkerMessage) {
 	
 	eval("FunctionHolder="+WorkerMessage.data.FunctionToRun+";");
 	var SimResult=FunctionHolder(WorkerMessage.data);
-	var ResultWithFunctionsRemoved=DeepCopyData(SimResult);//functions crash the thread if passed back to the main thread
+	var ResultWithFunctionsRemoved=MTSDeepCopyData(SimResult);//functions crash the thread if passed back to the main thread
 	self.postMessage({WorkerMessage: WorkerMessage.data, Result: ResultWithFunctionsRemoved});//All simulation will end with this line
 };
 
@@ -94,3 +94,34 @@ MultithreadSimControllerObject.prototype.ThreadID=function(){
 MultithreadSimControllerObject.prototype.SimID=function(){
 	return this.WorkerMessage.data.SimID;
 };
+
+
+
+
+
+
+// Inspired by
+// http://james.padolsey.com/javascript/deep-copying-of-objects-and-arrays/
+
+function MTSDeepCopyData(obj) {// copies non-function data only
+    if (Object.prototype.toString.call(obj) === '[object Array]') {
+        var out = [], i = 0, len = obj.length;
+        for ( ; i < len; i++ ) {
+            out[i] = arguments.callee(obj[i]);
+        }
+        return out;
+    }
+	if (obj===null){// special case for null which thinks it is an object
+		return obj;
+	}
+    if (typeof obj === 'object') {
+        var out = {}, i;
+        for ( i in obj ) {
+            if (typeof obj[i] !== 'function') {
+            out[i] = arguments.callee(obj[i]);
+            }
+        }
+        return out;
+    }
+    return obj;
+}
