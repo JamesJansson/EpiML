@@ -3,7 +3,8 @@ if (typeof(importScripts)=='undefined'){
 }
 
 
-importScripts('./mathtools.js')
+//importScripts('./mathtools.js')
+importScripts('./importscripts2.js')
 
 var b=Add(3,4);
 
