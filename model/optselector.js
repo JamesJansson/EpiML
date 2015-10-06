@@ -345,7 +345,7 @@ OptSelector.prototype.ParamGroupUpdated=function(){
 };
 
 OptSelector.prototype.Start=function(){
-	// this is a special function that allows you to start the threads such that the profiler can be started
+	// this is a special function that allows you to start the threads such that an arbitrary function can be run
 	
 	this.SimulationHolder=new MultiThreadSim(this.ModelDirectory, this.Settings.NumberOfSimulations , this.Settings.NoThreads); //Common is the same between all sims
 	this.SimulationHolder.UseSimProgressBar=true;
