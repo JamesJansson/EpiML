@@ -39,7 +39,7 @@ function MultiThreadSim(FolderName, NoSims, NoThreads, TerminateOnFinish){
 	this.Worker=[];//An array of workers
 	this.NoSims=NoSims;
 	
-	this.ScriptName=this.FolderName+"/multithreadsimhandler.js";
+	this.ScriptName=this.FolderName+"/multithreadsimcontroller.js";
 	
 	
 	this.FunctionToRun=[];// the function to be run inside the new webworker
