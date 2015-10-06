@@ -253,7 +253,6 @@ function SortIndex(SNInputVector){
 
 
 function ApplyIndex(AIInputVector, AIIndex){
-	throw "function needs fixing to allow all lengths of AIIndex";
 	// Applies the index AIIndex to AIInputVector. Note that this function does not return the array, it simply operates on AIInputVector
 	if (AIInputVector.length!=AIIndex.length){
 		console.error("An error occured");throw("Arrays incorrect length");
