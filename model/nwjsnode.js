@@ -32,7 +32,7 @@ function RunNWJSNodeConsole(){
 
 function NWJSNodeInstance(Script){
 	// in this area we need to specify additional arguments
-	// e.g. max memory
+	// e.g. max memory into args of spawn('node', [args]);
 	
 	// Spawn the Child Process
 	var spawn=require('child_process').spawn;
