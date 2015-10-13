@@ -90,8 +90,8 @@ NWJSNodeInstance.prototype.ConsoleHandler=function(error, stdout, stderr){
     }
 }
 
-exports.RunNWJSNodeConsole;
-exports.NWJSNodeInstance;
+exports.Console=RunNWJSNodeConsole;
+exports.ChildProcess=NWJSNodeInstance;
 
 
 //var spawn = require('child_process').spawn;
