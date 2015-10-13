@@ -1,14 +1,14 @@
-exports.aaa=3;
-
-console.log("Hello");
-aaa=1;
+// This function is designed to hand information 
 
 
-function RunNodeNWJSConsole(){
-	// This function is designed to hand information 
+
+
+
+function RunNWJSNodeConsole(){
+	// the first thing that RunNodeNWJSConsole does is rename standard libraries to hand data back to the nw.js console nicely.
 	
 	
-	// Error functions display trace information
+	// Create an error function that displays trace information
 	console.error=function(funinput){console.warn(funinput); stack = new Error().stack;console.warn(stack);};
 	
 	// Create a secondary name for the console.log 
@@ -30,28 +30,49 @@ function RunNodeNWJSConsole(){
 }
 
 
-function NodeNWJSInstance(Script){
+function NWJSNodeInstance(Script){
+	// in this area we need to specify additional arguments
+	// e.g. max memory
+	
 	// Spawn the Child Process
 	var spawn=require('child_process').spawn;
 	this.ChildProcess = spawn('node', [Script]);
 	
 	// Set up listeners 
 	
-	this.ChildProcess.stdout.on('data', stdoutHandler);
+	this.ChildProcess.stdout.on('data', function (stdout){
+		// Split function output
+		var Splitstdout=stdout.split("/end~output/");
+		for (var Count in Splitstdout){
+			try {console.log(JSON.parse(Splitstdout[Count]));}// try parsing as JSON
+			catch (errormessage){console.log(Splitstdout[Count]);}
+		}
+	});
 	
-	this.ChildProcess.stderr.on
+	this.ChildProcess.stderr.on('data', function (data) {
+			console.log('There was an error: ' + data);
+		console.log('%c'+stderr, 'color: #FF0000');
+		if (error !== null) {
+			console.log('%c'+'exec error: '+error, 'color: #FF0000');
+		}
+	});
 	
 	// 	
 }
 
-NodeNWJSInstance.prototype.stdoutHandler=function (data){
-	
+NWJSNodeInstance.prototype.stdoutHandler=function (stdout){
+	// Split function output
+	var Splitstdout=stdout.split("/end~output/");
+	for (var Count in Splitstdout){
+		try {console.log(JSON.parse(Splitstdout[Count]));}// try parsing as JSON
+		catch (errormessage){console.log(Splitstdout[Count]);}
+	}
 }
 
-exports.aaa=3;
 
 
-NodeNWJSInstance.prototype.ConsoleHandler=function(error, stdout, stderr){
+
+NWJSNodeInstance.prototype.ConsoleHandler=function(error, stdout, stderr){
 	// Do some processing to see if it is a variable that can be displayed
 	
 	// Split function output
@@ -68,6 +89,10 @@ NodeNWJSInstance.prototype.ConsoleHandler=function(error, stdout, stderr){
         console.log('%c'+'exec error: '+error, 'color: #FF0000');
     }
 }
+
+exports.RunNWJSNodeConsole;
+exports.NWJSNodeInstance;
+
 
 //var spawn = require('child_process').spawn;
 // var child = spawn('node', ['./test/testchild.js'])
