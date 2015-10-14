@@ -9,7 +9,11 @@ function RunNWJSNodeConsole(){
 	
 	
 	// Create an error function that displays trace information
-	console.error=function(funinput){console.warn(funinput); stack = new Error().stack;console.warn(stack);};
+	console.error=function(funinput){
+		console.warn(funinput); 
+		var stack = new Error().stack;
+		console.warn(stack);
+	};
 	
 	// Create a secondary name for the console.log 
 	console.log2=console.log;
