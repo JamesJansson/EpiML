@@ -21,19 +21,24 @@ require('./nwjsnode.js').ConsoleSetup();
 //process.stdin.resume();
 
 // Listen for incoming data:
-process.on('message', function (data) {
+process.on('message', function (MessageString) {
+    var Message=JSON.parse(MessageString);
+    
+    console.log(Message);
+    
+    //if (Message.Instruction=='RunFunction'){}
     
     
+    console.error('Received data: ' + MessageString);
     
-    console.error('Received data: ' + data);
-    
-    console.log('Received data log: ' + data);
+    console.log('Received data log: ' + MessageString);
     
     console.log([12, 3, 5]);
     
-    process.send(data.toUpperCase(data));
+    process.send(MessageString.toUpperCase());
     
 });
+
 
 
 

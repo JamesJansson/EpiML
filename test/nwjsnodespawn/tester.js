@@ -3,3 +3,4 @@ var NSJSNodeChildProcess=require('./test/nwjsnodespawn/nwjsnode.js').ChildProces
 var TestChildProcess=new NSJSNodeChildProcess('./test/nwjsnodespawn/child.js');
 
 
+TestChildProcess.Messaging2()

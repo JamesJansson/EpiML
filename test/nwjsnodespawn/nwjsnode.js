@@ -57,10 +57,9 @@ function NWJSNodeInstance(Script){
 	
 	
 	this.Process.stdout.on('data', function (stdout){
-		// Split function output
-		//console.log(stdout.asciiSlice());
-		
+		// Convert output to human readable for
 		var asciistdout=stdout.asciiSlice();
+		// Split function output
 		var Splitstdout=asciistdout.split("/end~output/");
 		for (var Count in Splitstdout){
 			try {console.log(JSON.parse(Splitstdout[Count]));}// try parsing as JSON (to display as object)
@@ -88,7 +87,11 @@ NWJSNodeInstance.prototype.Messaging =function (){
 
 NWJSNodeInstance.prototype.Messaging2 =function (){
 	// this.Process.send('message', 'ThisFunction');
-	this.Process.send('message2', 'ThisFunction');
+	var c={};
+	c.a=3;
+	c.b=4;
+	console.log(JSON.stringify(c))
+	this.Process.send(JSON.stringify(c));
 	
 };
 
