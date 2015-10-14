@@ -4,8 +4,8 @@
 
 
 
-function RunNWJSNodeConsole(){
-	// the first thing that RunNodeNWJSConsole does is rename standard libraries to hand data back to the nw.js console nicely.
+function ConsoleSetup(){
+	// the first thing that RunNodeNWJSConsole does is rename standard functions to hand data back to the nw.js console nicely.
 	
 	
 	// Create an error function that displays trace information
@@ -37,14 +37,16 @@ function RunNWJSNodeConsole(){
 function NWJSNodeInstance(Script){
 	// in this area we need to specify additional arguments
 	// e.g. max memory into args of spawn('node', [args]);
+	var ChildProcessOptions={};
+	ChildProcessOptions.stdio=['ipc']; // turn on interprocess communications.
 	
 	// Spawn the Child Process
 	var spawn=require('child_process').spawn;
-	this.ChildProcess = spawn('node', [Script]);
+	this.Process = spawn('node', [Script], ChildProcessOptions);
 	
 	// Set up listeners 
 	
-	this.ChildProcess.stdout.on('data', function (stdout){
+	this.Process.stdout.on('data', function (stdout){
 		// Split function output
 		var Splitstdout=stdout.split("/end~output/");
 		for (var Count in Splitstdout){
@@ -53,49 +55,88 @@ function NWJSNodeInstance(Script){
 		}
 	});
 	
-	this.ChildProcess.stderr.on('data', function (data) {
-			console.log('There was an error: ' + data);
-		console.log('%c'+stderr, 'color: #FF0000');
-		if (error !== null) {
-			console.log('%c'+'exec error: '+error, 'color: #FF0000');
-		}
+	this.Process.stderr.on('data', function (data) {
+		console.log('%c'+'There was an error: ' + data, 'color: #FF0000');
+		console.log('%c'+data, 'color: #FF0000');
 	});
 	
 	// 	
-}
+};
 
-NWJSNodeInstance.prototype.stdoutHandler=function (stdout){
-	// Split function output
-	var Splitstdout=stdout.split("/end~output/");
-	for (var Count in Splitstdout){
-		try {console.log(JSON.parse(Splitstdout[Count]));}// try parsing as JSON
-		catch (errormessage){console.log(Splitstdout[Count]);}
-	}
-}
+NWJSNodeInstance.prototype.CallFunction =function (FunctionName, FunctionInput, CallBack){
+	this.Process.send('CallFunction', 'ThisFunction');
+};
 
+NWJSNodeInstance.prototype.Messaging =function (){
+	this.Process.send('message', 'ThisFunction');
+};
 
 
-
-NWJSNodeInstance.prototype.ConsoleHandler=function(error, stdout, stderr){
-	// Do some processing to see if it is a variable that can be displayed
-	
-	// Split function output
-	var Splitstdout=stdout.split("/end~output/");
-	
-	
-	for (var Count in Splitstdout){
-		try {console.log(JSON.parse(Splitstdout[Count]));}// try parsing as JSON
-		catch (errormessage){console.log(Splitstdout[Count]);}
-	}
-	
-    console.log('%c'+stderr, 'color: #FF0000');
-    if (error !== null) {
-        console.log('%c'+'exec error: '+error, 'color: #FF0000');
-    }
-}
-
-exports.Console=RunNWJSNodeConsole;
+exports.ConsoleSetup=ConsoleSetup;
 exports.ChildProcess=NWJSNodeInstance;
+
+
+// usage
+
+// NSWJSNodeChildProcess=require('./test/nwjsnode/nwjsnode.js').ChildProcess;
+// Child=new NSWJSNodeChildProcess('./test/nwjsnode/child.js');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// NWJSNodeInstance.prototype.stdoutHandler=function (stdout){
+// 	// Split function output
+// 	var Splitstdout=stdout.split("/end~output/");
+// 	for (var Count in Splitstdout){
+// 		try {console.log(JSON.parse(Splitstdout[Count]));}// try parsing as JSON
+// 		catch (errormessage){console.log(Splitstdout[Count]);}
+// 	}
+// }
+
+
+
+
+// NWJSNodeInstance.prototype.ConsoleHandler=function(error, stdout, stderr){
+// 	// Do some processing to see if it is a variable that can be displayed
+	
+// 	// Split function output
+// 	var Splitstdout=stdout.split("/end~output/");
+	
+	
+// 	for (var Count in Splitstdout){
+// 		try {console.log(JSON.parse(Splitstdout[Count]));}// try parsing as JSON
+// 		catch (errormessage){console.log(Splitstdout[Count]);}
+// 	}
+	
+//     console.log('%c'+stderr, 'color: #FF0000');
+//     if (error !== null) {
+//         console.log('%c'+'exec error: '+error, 'color: #FF0000');
+//     }
+// }
+
+
 
 
 //var spawn = require('child_process').spawn;
