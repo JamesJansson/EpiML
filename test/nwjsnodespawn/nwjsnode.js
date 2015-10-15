@@ -10,9 +10,8 @@ function ConsoleSetup(){
 	
 	// Create an error function that displays trace information
 	console.error=function(funinput){
-		console.warn(funinput); 
 		var stack = new Error().stack;
-		console.warn(stack);
+		console.warn(funinput +"\n"+stack);
 	};
 	
 	// Create a secondary name for the console.log 
@@ -49,6 +48,9 @@ function NWJSNodeInstance(Script){
 	this.Process.on('message', function(m) {
 		// Receive results from child process
 		console.log('received: ' + m);
+		
+		
+		console.log(m);
 		// Deternine what type of message it is
 		
 		
@@ -59,6 +61,9 @@ function NWJSNodeInstance(Script){
 	this.Process.stdout.on('data', function (stdout){
 		// Convert output to human readable for
 		var asciistdout=stdout.asciiSlice();
+		
+		console.log('%c'+asciistdout, 'color: #00FF00');
+		
 		// Split function output
 		var Splitstdout=asciistdout.split("/end~output/");
 		for (var Count in Splitstdout){
@@ -68,12 +73,18 @@ function NWJSNodeInstance(Script){
 	});
 	
 	this.Process.stderr.on('data', function (data) {
-		console.log('%c'+'There was an error: ' + data, 'color: #FF0000');
+		console.log('%c'+ data, 'color: #FF0000');
 		///console.log('%c'+data, 'color: #FF0000');
 	});
 	
 	// 	http://stackoverflow.com/questions/14332721/node-js-spawn-child-process-and-get-terminal-output-instantaneously
 };
+
+NWJSNodeInstance.prototype.Send =function (Message){
+	this.Process.send(Message);
+};
+
+
 
 NWJSNodeInstance.prototype.CallFunction =function (FunctionName, FunctionInput, CallBack){
 	this.Process.send('CallFunction', 'ThisFunction');
@@ -91,8 +102,7 @@ NWJSNodeInstance.prototype.Messaging2 =function (){
 	c.a=3;
 	c.b=4;
 	console.log(JSON.stringify(c))
-	this.Process.send(JSON.stringify(c));
-	
+	this.Process.send(JSON.stringify(c));	
 };
 
 
