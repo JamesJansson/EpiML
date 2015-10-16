@@ -1,15 +1,16 @@
 // Determine if running under node or a webworker
 if (typeof exports === 'undefined'){
-	var RunningNode = true;
+	var MultithreadSimControllerRunningNode = true;
 	} 
 else {
-	var RunningNode = false;
+	var MultithreadSimControllerRunningNode = false;
 }
 
+var MultithreadSimController;
 
-if (RunningNode==false){
+if (MultithreadSimControllerRunningNode==false){
 	importScripts("main.js"); // should include in it any function that could be called by multhreadsim
-	var MultithreadSimController;
+	
 	self.onmessage = function (WorkerMessage) {
 		var FunctionHolder;
 		
@@ -36,35 +37,49 @@ if (RunningNode==false){
 		eval("FunctionHolder="+WorkerMessage.data.FunctionToRun+";");
 		var SimResult=FunctionHolder(WorkerMessage.data);
 		var ResultWithFunctionsRemoved=MTSDeepCopyData(SimResult);//functions crash the thread if passed back to the main thread
-		self.postMessage({WorkerMessage: WorkerMessage.data, Result: ResultWithFunctionsRemoved});//All simulation will end with this line
-	};
+		var DataToSendBack={WorkerMessage: WorkerMessage.data, Result: ResultWithFunctionsRemoved};
+		self.postMessage(DataToSendBack);
+		};
 }
-else{// is running under node
+else{// is running under node.js
 	// Set up required node modules
 	// Allow importScripts to be used
 	importScripts=require('./importScripts.js').importScripts;
 	// make the console behave in the nw.js interface in a similar way to how it behaves with webworkers
 	require('./nwjsnode.js').ConsoleSetup();
+	importScripts("main.js"); // should include in it any function that could be called by multhreadsim
+	
 	
 	process.on('message', function (MessageString) {
-		var Message=JSON.parse(MessageString);
+		var FunctionHolder;
 		
-		console.log(Message);
+		MultithreadSimController=new MultithreadSimControllerObject(WorkerMessage);// this line should actually become global, possibly
 		
-		//if (Message.Instruction=='RunFunction'){}
+		console.log(WorkerMessage.data.FunctionToRun);
 		
-		
-		console.error('Received data: ' + MessageString);
-		
-		console.log('Received data log: ' + MessageString);
-		
-		console.log([12, 3, 5]);
-		
-		process.send(MessageString.toUpperCase());
+		if (typeof(WorkerMessage.data.AddMessageFunction)!='undefined'){
+			for (var MCount in WorkerMessage.data.AddMessageFunction){
+				// Generate a function that the program can use to send back information
+				var evalText=WorkerMessage.data.AddMessageFunction[MCount];
+				evalText+="=function(DataToSendBack){";
+				evalText+="var StructSendBack={};";
+				evalText+="StructSendBack.MessageFunctionName='"+WorkerMessage.data.AddMessageFunction[MCount]+"';";
+				evalText+="StructSendBack.Data=DataToSendBack;";
+				evalText+="self.postMessage(StructSendBack);}";
+	
+				eval(evalText);
+			}
+		}
+		else{
+			console.error("did not find any functions");	
+		}
+		eval("FunctionHolder="+WorkerMessage.data.FunctionToRun+";");
+		var SimResult=FunctionHolder(WorkerMessage.data);
+		var ResultWithFunctionsRemoved=MTSDeepCopyData(SimResult);//functions crash the thread if passed back to the main thread
+		var DataToSendBack={WorkerMessage: WorkerMessage.data, Result: ResultWithFunctionsRemoved};
+		process.send(DataToSendBack);
 		
 	});
-	
-	
 }
 
 
@@ -108,7 +123,13 @@ function MultithreadSimControllerObject(WorkerMessage){
 }
 
 MultithreadSimControllerObject.prototype.ThreadStatusText=function(StringForStatus){
-	self.postMessage({StatusText: StringForStatus, StatusTextID: this.WorkerMessage.data.ThreadID});
+	var ObjectToSend={StatusText: StringForStatus, StatusTextID: this.WorkerMessage.data.ThreadID};
+	if (MultithreadSimControllerRunningNode){
+		process.send(ObjectToSend);
+	}
+	else { // running in a webworker
+		self.postMessage(ObjectToSend);
+	}
 };
 
 MultithreadSimControllerObject.prototype.SetThreadStatusToSimNumber=function(){
