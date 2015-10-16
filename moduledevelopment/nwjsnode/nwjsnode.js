@@ -70,7 +70,7 @@ function DeepCopyData(obj) {// copies non-function data only
 
 
 function NWJSNodeInstance(Script, ChildProcessOptions){
-	// To use more memory, we need to create a package.json 
+	// To use more memory, we need to create a package.json in the folder where execution occurs 
 	//{
 	//	"js-flags": "-expose-gc -max-old-space-size=2047"
 	//}
