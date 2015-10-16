@@ -77,9 +77,9 @@ else{// is running under node.js
 		
 		eval("FunctionHolder="+WorkerMessage.data.FunctionToRun+";");
 		var SimResult=FunctionHolder(WorkerMessage.data);
-		var ResultWithFunctionsRemoved=MTSDeepCopyData(SimResult);//functions crash the thread if passed back to the main thread
-		var DataToSendBack={WorkerMessage: WorkerMessage.data, Result: ResultWithFunctionsRemoved};
-		process.send(DataToSendBack);
+		var ResultWithFunctionsStringified=MTSDeepCopyData(SimResult);//functions crash the thread if passed back to the main thread
+		var DataToSendBack={WorkerMessage: WorkerMessage.data, Result: ResultWithFunctionsStringified};
+		return process.send(DataToSendBack);
 		
 	});
 }
@@ -171,7 +171,7 @@ function MTSDeepCopyData(obj) {// copies non-function data only
         var out = {};
         for (var i in obj ) {
             if (typeof obj[i] !== 'function') {
-            out[i] = arguments.callee(obj[i]);
+                out[i] = arguments.callee(obj[i]);
             }
         }
         return out;
