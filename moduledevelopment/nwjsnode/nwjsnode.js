@@ -2,8 +2,8 @@
 // It allows data to be communicated easily to the child process and for output (such as errors, throws and console.logs)
 // to be displayed in the console in a similar way as one would expect under 
 
-// NSWJSNodeChildProcess=require('./test/nwjsnode/nwjsnode.js').ChildProcess;
-// Child=new NSWJSNodeChildProcess('./test/nwjsnode/child.js');
+// NSWJSNodeChildProcess=require('nwjsnode').ChildProcess;
+// Child=new NSWJSNodeChildProcess('./child.js');
 
 
 

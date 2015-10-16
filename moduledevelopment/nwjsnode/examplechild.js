@@ -1,10 +1,10 @@
 // process.stdin.resume();// Unpause the stdin stream:
-require('./nwjsnode.js').ConsoleSetup();
+require('nwjsnode').ConsoleSetup();
 
 // Listen for incoming data:
 process.on('message', function (Message) {
     console.log("Inside the child process");
-    console.log("Raw message recieved");
+    console.log("Raw (Message) recieved");
     console.log(Message);
     console.log("typeof(Message): "+typeof(Message));
     
