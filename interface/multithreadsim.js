@@ -39,6 +39,8 @@ function MultiThreadSim(FolderName, NoSims, NoThreads, TerminateOnFinish){
 	this.Worker=[];//An array of workers
 	this.NoSims=NoSims;
 	
+	this.UseNode=false;// set to false to use webworker
+	
 	this.ScriptName=this.FolderName+"/multithreadsimcontroller.js";
 	
 	
@@ -185,7 +187,10 @@ MultiThreadSim.prototype.Run=function(RunSettings){//FunctionName, Common, SimDa
 
 
 MultiThreadSim.prototype.StartNextSim=function() {
-
+	if (this.UseNode==true){
+		var NWJSNodeChildProcess=require('./model/nwjsnode.js').ChildProcess;
+	}
+	
 	var MoreSimsToRun=true;//flag to prevent continually trying to run more sims
 	while (this.NoThreadsCurrentlyRunning<this.NoThreads &&  MoreSimsToRun==true){//there are spare Threads available
 		if (this.SimsStarted<this.NoSims){//if there are sims that have yet to be started
@@ -202,15 +207,36 @@ MultiThreadSim.prototype.StartNextSim=function() {
 			
 			// the first time the simulation is run, we need to start up the workers
 			if (this.AllWorkersStarted==false){
-				this.Worker[SimID]= new Worker(this.ScriptName);
 				this.NoThreadsOpen++;
 				var BoundMessage=MultiThreadSimMessageHandler.bind(this);
+				
+				if (this.UseNode==true){
+					this.Worker[SimID]=new NWJSNodeChildProcess(this.ScriptName);
+				}
+				else { // use webworker
+					this.Worker[SimID]= new Worker(this.ScriptName);
+				}
 				this.Worker[SimID].onmessage = BoundMessage;
 			}
 			this.Worker[SimID].ThreadID=ThreadID;
 			this.Worker[SimID].SimID=SimID;
 			//Post message will soon become a handler for many commands, including starting the simulation, optimising the simulation, and requesting data
-			this.Worker[SimID].postMessage({ FunctionToRun: this.FunctionToRun, SimID: SimID, ThreadID: ThreadID, Common: this.Common, SimData: this.SimDataArray[SimID], AddMessageFunction: this.SimMessageFunctionArray});
+			var DataToSendToWorker={FunctionToRun: this.FunctionToRun, 
+				SimID: SimID, 
+				ThreadID: ThreadID, 
+				Common: this.Common, 
+				SimData: this.SimDataArray[SimID], 
+				AddMessageFunction: this.SimMessageFunctionArray};
+			
+			// Send instructions to workers
+			if (this.UseNode==true){
+				this.Worker[SimID].Process.send(DataToSendToWorker);
+			}
+			else { // use webworker
+				this.Worker[SimID].postMessage(DataToSendToWorker);
+			}
+			
+			
 		}
 		else{ //there are no more sims to run
 			MoreSimsToRun=false;

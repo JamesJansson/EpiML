@@ -1,9 +1,9 @@
 // Determine if running under node or a webworker
 if (typeof exports === 'undefined'){
-	var MultithreadSimControllerRunningNode = true;
+	var MultithreadSimControllerRunningNode = false;
 	} 
 else {
-	var MultithreadSimControllerRunningNode = false;
+	var MultithreadSimControllerRunningNode = true;
 }
 
 var MultithreadSimController;
@@ -34,6 +34,7 @@ if (MultithreadSimControllerRunningNode==false){
 		else{
 			console.error("did not find any functions");	
 		}
+		
 		eval("FunctionHolder="+WorkerMessage.data.FunctionToRun+";");
 		var SimResult=FunctionHolder(WorkerMessage.data);
 		var ResultWithFunctionsRemoved=MTSDeepCopyData(SimResult);//functions crash the thread if passed back to the main thread
@@ -65,7 +66,7 @@ else{// is running under node.js
 				evalText+="var StructSendBack={};";
 				evalText+="StructSendBack.MessageFunctionName='"+WorkerMessage.data.AddMessageFunction[MCount]+"';";
 				evalText+="StructSendBack.Data=DataToSendBack;";
-				evalText+="self.postMessage(StructSendBack);}";
+				evalText+="process.send(StructSendBack);}";
 	
 				eval(evalText);
 			}
@@ -73,6 +74,7 @@ else{// is running under node.js
 		else{
 			console.error("did not find any functions");	
 		}
+		
 		eval("FunctionHolder="+WorkerMessage.data.FunctionToRun+";");
 		var SimResult=FunctionHolder(WorkerMessage.data);
 		var ResultWithFunctionsRemoved=MTSDeepCopyData(SimResult);//functions crash the thread if passed back to the main thread

@@ -24,7 +24,7 @@ function ConsoleSetup(){
 		}
 		try{
 			// this is used to give a marker to the console on the side to know where to split
-			console.log2(JSON.stringify(funinput)+"/end~output/");
+			console.log2(JSON.stringify(funinput)+"\~nwjsnodeendoutput");
 		}
 		catch (erroroutput){// don't handle, simply do the console.log
 			console.error("Couldn't process console.log call");
@@ -43,15 +43,17 @@ function NWJSNodeInstance(Script){
 	var spawn=require('child_process').spawn;
 	this.Process = spawn('node', [Script], ChildProcessOptions);
 	
-	// Set up listeners 
+	this.onmessage;
 	
+	// Set up listeners 
 	this.Process.on('message', function(m) {
 		// Receive results from child process
-		console.log('received: ' + m);
-		
-		
-		console.log(m);
-		// Deternine what type of message it is
+		if (typeof(this.onmessage)=='undefined'){
+			console.log('%c'+'Message function not set up. Received: \n ' + m, 'color: #FF0000');
+		}
+		else {
+			this.onmessage(m);
+		}
 		
 		
 		
@@ -65,7 +67,7 @@ function NWJSNodeInstance(Script){
 		console.log('%c'+asciistdout, 'color: #00FF00');
 		
 		// Split function output
-		var Splitstdout=asciistdout.split("/end~output/");
+		var Splitstdout=asciistdout.split("\~nwjsnodeendoutput");
 		for (var Count in Splitstdout){
 			try {console.log(JSON.parse(Splitstdout[Count]));}// try parsing as JSON (to display as object)
 			catch (errormessage){console.log(Splitstdout[Count]);}//just display the output
@@ -144,7 +146,7 @@ exports.ChildProcess=NWJSNodeInstance;
 
 // NWJSNodeInstance.prototype.stdoutHandler=function (stdout){
 // 	// Split function output
-// 	var Splitstdout=stdout.split("/end~output/");
+// 	var Splitstdout=stdout.split("\~nwjsnodeendoutput");
 // 	for (var Count in Splitstdout){
 // 		try {console.log(JSON.parse(Splitstdout[Count]));}// try parsing as JSON
 // 		catch (errormessage){console.log(Splitstdout[Count]);}
@@ -158,7 +160,7 @@ exports.ChildProcess=NWJSNodeInstance;
 // 	// Do some processing to see if it is a variable that can be displayed
 	
 // 	// Split function output
-// 	var Splitstdout=stdout.split("/end~output/");
+// 	var Splitstdout=stdout.split("\~nwjsnodeendoutput");
 	
 	
 // 	for (var Count in Splitstdout){
