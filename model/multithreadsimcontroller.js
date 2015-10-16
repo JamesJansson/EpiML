@@ -45,9 +45,9 @@ if (MultithreadSimControllerRunningNode==false){
 else{// is running under node.js
 	// Set up required node modules
 	// Allow importScripts to be used
-	importScripts=require('./importScripts.js').importScripts;
+	importScripts=require('importScripts').importScripts;
 	// make the console behave in the nw.js interface in a similar way to how it behaves with webworkers
-	require('./nwjsnode.js').ConsoleSetup();
+	require('nwjsnode').ConsoleSetup();
 	importScripts("main.js"); // should include in it any function that could be called by multhreadsim
 	
 	
