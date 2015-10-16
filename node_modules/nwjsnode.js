@@ -69,15 +69,12 @@ function DeepCopyData(obj) {// copies non-function data only
 
 
 
-function NWJSNodeInstance(Script, ChildProcessOptions){
-	// To use more memory, we need to create a package.json in the folder where execution occurs 
-	//{
-	//	"js-flags": "-expose-gc -max-old-space-size=2047"
-	//}
+function NWJSNodeInstance(ScriptAndOtherArgs, ChildProcessOptions){
 	
-	
+	// ScriptAndOtherArgs: an array, first element is the script name. 
 	// in this area we need to specify additional arguments
-	// e.g. max memory into args of fork('node', [args]);
+	// e.g."js-flags": "-expose-gc -max-old-space-size=2047"
+	
 	if (typeof(ChildProcessOptions)=='undefined'){
 		var ChildProcessOptions={};
 	}
@@ -85,10 +82,9 @@ function NWJSNodeInstance(Script, ChildProcessOptions){
 	
 	// Spawn the Child Process
 	var spawn=require('child_process').spawn;
-	this.Process = spawn('node', [Script], ChildProcessOptions);
+	this.Process = spawn('node', ScriptAndOtherArgs, ChildProcessOptions);
 	
-	this.onmessage;
-	
+	this.onmessage;// a holder for a function to be called on the event of a messgae being returned.
 	
 	var NWJSNodeInstancePointer=this;
 	// Set up listeners 

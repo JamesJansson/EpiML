@@ -6,7 +6,7 @@ else {
 	var MultithreadSimControllerRunningNode = true;
 }
 
-var MultithreadSimController;
+var MultithreadSimController=NaN;
 
 if (MultithreadSimControllerRunningNode==false){
 	importScripts("main.js"); // should include in it any function that could be called by multhreadsim
@@ -14,6 +14,9 @@ if (MultithreadSimControllerRunningNode==false){
 	self.onmessage = function (WorkerMessage) {
 		var MTSMessage=WorkerMessage.data;
 		var FunctionHolder;
+		
+		console.log(WorkerMessage);
+		throw "stopping";
 		
 		MultithreadSimController=new MultithreadSimControllerObject(MTSMessage);// this line should actually become global, possibly
 		
@@ -27,6 +30,7 @@ if (MultithreadSimControllerRunningNode==false){
 				evalText+="var StructSendBack={};";
 				evalText+="StructSendBack.MessageFunctionName='"+MTSMessage.AddMessageFunction[MCount]+"';";
 				evalText+="StructSendBack.Data=DataToSendBack;";
+				evalText+="StructSendBack.SimID="+MultithreadSimController.SimID()+";";
 				evalText+="self.postMessage(StructSendBack);}";
 	
 				eval(evalText);
@@ -56,6 +60,10 @@ else{// is running under node.js
 		var MTSMessage=WorkerMessage;
 		var FunctionHolder;
 		
+		// console.log(WorkerMessage);
+		// throw "stopping";
+		
+		
 		MultithreadSimController=new MultithreadSimControllerObject(MTSMessage);// this line should actually become global, possibly
 		
 		console.log(MTSMessage.FunctionToRun);
@@ -68,6 +76,7 @@ else{// is running under node.js
 				evalText+="var StructSendBack={};";
 				evalText+="StructSendBack.MessageFunctionName='"+MTSMessage.AddMessageFunction[MCount]+"';";
 				evalText+="StructSendBack.Data=DataToSendBack;";
+				evalText+="StructSendBack.SimID="+MultithreadSimController.SimID()+";";
 				evalText+="process.send(StructSendBack);}";
 	
 				eval(evalText);

@@ -27,16 +27,9 @@ var IndigenousMaleMortality;
 var IndigenousFemaleMortality;
 
 
-
-
-//function SimSetup(WorkerData){
 function SimSetup(WorkerData){
-	// The purpose of this function is to create globals that will persis over multiple simulations
+	// The purpose of this function is to create globals that will persist over multiple simulations
 	
-	//In this section will be a message handler that allows calls
-	// Initialise (set data and parameters)
-	
-
 	
 	console.log("Data passed to the simulation");
 	console.log(WorkerData);//This passes the data back to the console so we can look at it
@@ -50,7 +43,9 @@ function SimSetup(WorkerData){
 	// Load the settings
 	Settings=WorkerData.Common.Settings;
 	
-	MultithreadSimController.SetThreadStatusToSimNumber();
+	//console.log(MultithreadSimController);
+	
+	//MultithreadSimController.SetThreadStatusToSimNumber();
 	
 	
 
