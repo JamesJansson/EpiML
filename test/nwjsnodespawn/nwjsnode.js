@@ -1,17 +1,21 @@
-// This function is designed to hand information 
+// This module is designed to be an analogue for a webworker under nw.js
+// It allows data to be communicated easily to the child process and for output (such as errors, throws and console.logs)
+// to be displayed in the console in a similar way as one would expect under 
 
+// NSWJSNodeChildProcess=require('./test/nwjsnode/nwjsnode.js').ChildProcess;
+// Child=new NSWJSNodeChildProcess('./test/nwjsnode/child.js');
 
 
 
 
 function ConsoleSetup(){
-	// the first thing that RunNodeNWJSConsole does is rename standard functions to hand data back to the nw.js console nicely.
-	
+	// This function is to be run first in the child process
+	// NWJSNode.ConsoleSetup renames standard functions to hand data back to the nw.js console nicely.
 	
 	// Create an error function that displays trace information
-	console.error=function(funinput){
+	console.error=function(errordisplayed){
 		var stack = new Error().stack;
-		console.warn(funinput +"\n"+stack);
+		console.warn(errordisplayed +"\n"+stack);
 	};
 	
 	// Create a secondary name for the console.log 
@@ -19,15 +23,20 @@ function ConsoleSetup(){
 	
 	// Respecify console log to be in the appropriate format
 	console.log=function(funinput){
-		if (typeof(funinput)==='function'||typeof(funinput)==='undefined'){
-			console.log2(funinput);
+		if (typeof(funinput)==='function'){
+			console.log2('"'+funinput+'"');
 		}
-		try{
-			// this is used to give a marker to the console on the side to know where to split
-			console.log2(JSON.stringify(funinput)+"\~nwjsnodeendoutput");
+		else if (typeof(funinput)==='undefined'){
+			console.log2('"undefined"');
 		}
-		catch (erroroutput){// don't handle, simply do the console.log
-			console.error("Couldn't process console.log call");
+		else{
+			try{
+				// this is used to give a marker to the console on the side to know where to split
+				console.log2(JSON.stringify(funinput)+"\~nwjsnodeendoutput");
+			}
+			catch (erroroutput){// don't handle, simply do the console.log
+				console.error("Couldn't process console.log call");
+			}
 		}
 	};
 }
@@ -82,30 +91,20 @@ function NWJSNodeInstance(Script){
 	// 	http://stackoverflow.com/questions/14332721/node-js-spawn-child-process-and-get-terminal-output-instantaneously
 };
 
-NWJSNodeInstance.prototype.Send =function (Message){
+NWJSNodeInstance.prototype.postMessage =function (Message){
+	// the message should be in the form of a structure that cna be converted to JSON
 	this.Process.send(Message);
 };
 
-
+NWJSNodeInstance.prototype.terminate =function (){
+	this.Process.kill('SIGKILL');// hard kill the process
+};
 
 NWJSNodeInstance.prototype.CallFunction =function (FunctionName, FunctionInput, CallBack){
 	this.Process.send('CallFunction', 'ThisFunction');
 };
 
-NWJSNodeInstance.prototype.Messaging =function (){
-	// this.Process.send('message', 'ThisFunction');
-	this.Process.send( 'ThisFunction');
-	
-};
 
-NWJSNodeInstance.prototype.Messaging2 =function (){
-	// this.Process.send('message', 'ThisFunction');
-	var c={};
-	c.a=3;
-	c.b=4;
-	console.log(JSON.stringify(c))
-	this.Process.send(JSON.stringify(c));	
-};
 
 
 
@@ -114,10 +113,23 @@ exports.ConsoleSetup=ConsoleSetup;
 exports.ChildProcess=NWJSNodeInstance;
 
 
+// NWJSNodeInstance.prototype.Messaging =function (){
+// 	// this.Process.send('message', 'ThisFunction');
+// 	this.Process.send( 'ThisFunction');
+	
+// };
+
+// NWJSNodeInstance.prototype.Messaging2 =function (){
+// 	// this.Process.send('message', 'ThisFunction');
+// 	var c={};
+// 	c.a=3;
+// 	c.b=4;
+// 	console.log(JSON.stringify(c))
+// 	this.Process.send(JSON.stringify(c));	
+// };
+
 // usage
 
-// NSWJSNodeChildProcess=require('./test/nwjsnode/nwjsnode.js').ChildProcess;
-// Child=new NSWJSNodeChildProcess('./test/nwjsnode/child.js');
 
 
 

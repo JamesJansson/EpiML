@@ -229,14 +229,7 @@ MultiThreadSim.prototype.StartNextSim=function() {
 				AddMessageFunction: this.SimMessageFunctionArray};
 			
 			// Send instructions to workers
-			if (this.UseNode==true){
-				this.Worker[SimID].Process.send(DataToSendToWorker);
-			}
-			else { // use webworker
-				this.Worker[SimID].postMessage(DataToSendToWorker);
-			}
-			
-			
+			this.Worker[SimID].postMessage(DataToSendToWorker);
 		}
 		else{ //there are no more sims to run
 			MoreSimsToRun=false;
