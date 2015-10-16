@@ -41,8 +41,10 @@ function MultiThreadSim(FolderName, NoSims, NoThreads, TerminateOnFinish){
 	
 	this.UseNode=false;// set to false to use webworker
 	
-	this.ScriptName=this.FolderName+"/multithreadsimcontroller.js";
+	this.ScriptName="multithreadsimcontroller.js";
 	
+	
+	console.log(this.ScriptName);
 	
 	this.FunctionToRun=[];// the function to be run inside the new webworker
 	
@@ -188,7 +190,7 @@ MultiThreadSim.prototype.Run=function(RunSettings){//FunctionName, Common, SimDa
 
 MultiThreadSim.prototype.StartNextSim=function() {
 	if (this.UseNode==true){
-		var NWJSNodeChildProcess=require('./model/nwjsnode.js').ChildProcess;
+		var NWJSNodeChildProcess=require('nwjsnode').ChildProcess;
 	}
 	
 	var MoreSimsToRun=true;//flag to prevent continually trying to run more sims
@@ -211,10 +213,13 @@ MultiThreadSim.prototype.StartNextSim=function() {
 				var BoundMessage=MultiThreadSimMessageHandler.bind(this);
 				
 				if (this.UseNode==true){
-					this.Worker[SimID]=new NWJSNodeChildProcess(this.ScriptName);
+					var ChildProcessOptions={};
+					ChildProcessOptions.cwd="./"+this.FolderName;
+					this.Worker[SimID]=new NWJSNodeChildProcess(this.ScriptName, ChildProcessOptions);
 				}
 				else { // use webworker
-					this.Worker[SimID]= new Worker(this.ScriptName);
+					var ScriptPath=this.FolderName+"/"+this.ScriptName;
+					this.Worker[SimID]= new Worker(ScriptPath);
 				}
 				this.Worker[SimID].onmessage = BoundMessage;
 			}
@@ -321,10 +326,10 @@ MultiThreadSimMessageHandler=function(e) {
 	// Collect up results from this simulation, try to run next simulation
 	if (typeof e.data.Result != 'undefined'){
 		this.NoThreadsCurrentlyRunning--;
-		var SimID=e.data.WorkerMessage.SimID;
+		var SimID=e.data.MTSMessage.SimID;
 		this.Result[SimID]=e.data.Result;//Store the results of the simulation
 		this.SimsComplete++;
-		var ThreadID=e.data.WorkerMessage.ThreadID;
+		var ThreadID=e.data.MTSMessage.ThreadID;
 		this.ThreadInUse[ThreadID]=false;
 		
 		if (this.TerminateOnFinish){

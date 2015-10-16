@@ -12,19 +12,20 @@ if (MultithreadSimControllerRunningNode==false){
 	importScripts("main.js"); // should include in it any function that could be called by multhreadsim
 	
 	self.onmessage = function (WorkerMessage) {
+		var MTSMessage=WorkerMessage.data;
 		var FunctionHolder;
 		
-		MultithreadSimController=new MultithreadSimControllerObject(WorkerMessage);// this line should actually become global, possibly
+		MultithreadSimController=new MultithreadSimControllerObject(MTSMessage);// this line should actually become global, possibly
 		
-		console.log(WorkerMessage.data.FunctionToRun);
+		console.log(MTSMessage.FunctionToRun);
 		
-		if (typeof(WorkerMessage.data.AddMessageFunction)!='undefined'){
-			for (var MCount in WorkerMessage.data.AddMessageFunction){
+		if (typeof(MTSMessage.AddMessageFunction)!='undefined'){
+			for (var MCount in MTSMessage.AddMessageFunction){
 				// Generate a function that the program can use to send back information
-				var evalText=WorkerMessage.data.AddMessageFunction[MCount];
+				var evalText=MTSMessage.AddMessageFunction[MCount];
 				evalText+="=function(DataToSendBack){";
 				evalText+="var StructSendBack={};";
-				evalText+="StructSendBack.MessageFunctionName='"+WorkerMessage.data.AddMessageFunction[MCount]+"';";
+				evalText+="StructSendBack.MessageFunctionName='"+MTSMessage.AddMessageFunction[MCount]+"';";
 				evalText+="StructSendBack.Data=DataToSendBack;";
 				evalText+="self.postMessage(StructSendBack);}";
 	
@@ -35,10 +36,10 @@ if (MultithreadSimControllerRunningNode==false){
 			console.error("did not find any functions");	
 		}
 		
-		eval("FunctionHolder="+WorkerMessage.data.FunctionToRun+";");
-		var SimResult=FunctionHolder(WorkerMessage.data);
+		eval("FunctionHolder="+MTSMessage.FunctionToRun+";");
+		var SimResult=FunctionHolder(MTSMessage);
 		var ResultWithFunctionsRemoved=MTSDeepCopyData(SimResult);//functions crash the thread if passed back to the main thread
-		var DataToSendBack={WorkerMessage: WorkerMessage.data, Result: ResultWithFunctionsRemoved};
+		var DataToSendBack={MTSMessage: MTSMessage, Result: ResultWithFunctionsRemoved};
 		self.postMessage(DataToSendBack);
 		};
 }
@@ -51,20 +52,21 @@ else{// is running under node.js
 	importScripts("main.js"); // should include in it any function that could be called by multhreadsim
 	
 	
-	process.on('message', function (MessageString) {
+	process.on('message', function (WorkerMessage) {
+		var MTSMessage=WorkerMessage;
 		var FunctionHolder;
 		
-		MultithreadSimController=new MultithreadSimControllerObject(WorkerMessage);// this line should actually become global, possibly
+		MultithreadSimController=new MultithreadSimControllerObject(MTSMessage);// this line should actually become global, possibly
 		
-		console.log(WorkerMessage.data.FunctionToRun);
+		console.log(MTSMessage.FunctionToRun);
 		
-		if (typeof(WorkerMessage.data.AddMessageFunction)!='undefined'){
-			for (var MCount in WorkerMessage.data.AddMessageFunction){
+		if (typeof(MTSMessage.AddMessageFunction)!='undefined'){
+			for (var MCount in MTSMessage.AddMessageFunction){
 				// Generate a function that the program can use to send back information
-				var evalText=WorkerMessage.data.AddMessageFunction[MCount];
+				var evalText=MTSMessage.AddMessageFunction[MCount];
 				evalText+="=function(DataToSendBack){";
 				evalText+="var StructSendBack={};";
-				evalText+="StructSendBack.MessageFunctionName='"+WorkerMessage.data.AddMessageFunction[MCount]+"';";
+				evalText+="StructSendBack.MessageFunctionName='"+MTSMessage.AddMessageFunction[MCount]+"';";
 				evalText+="StructSendBack.Data=DataToSendBack;";
 				evalText+="process.send(StructSendBack);}";
 	
@@ -75,10 +77,10 @@ else{// is running under node.js
 			console.error("did not find any functions");	
 		}
 		
-		eval("FunctionHolder="+WorkerMessage.data.FunctionToRun+";");
-		var SimResult=FunctionHolder(WorkerMessage.data);
+		eval("FunctionHolder="+MTSMessage.FunctionToRun+";");
+		var SimResult=FunctionHolder(MTSMessage);
 		var ResultWithFunctionsStringified=MTSDeepCopyData(SimResult);//functions crash the thread if passed back to the main thread
-		var DataToSendBack={WorkerMessage: WorkerMessage.data, Result: ResultWithFunctionsStringified};
+		var DataToSendBack={MTSMessage: MTSMessage, Result: ResultWithFunctionsStringified};
 		return process.send(DataToSendBack);
 		
 	});
@@ -120,12 +122,12 @@ function EvalText(data){
 
 
 // Create a holder that allows the simulations to draw on some of the higher level aspects of the multithreadsim
-function MultithreadSimControllerObject(WorkerMessage){
-	this.WorkerMessage=WorkerMessage;
+function MultithreadSimControllerObject(MTSMessage){
+	this.MTSMessage=MTSMessage;
 }
 
 MultithreadSimControllerObject.prototype.ThreadStatusText=function(StringForStatus){
-	var ObjectToSend={StatusText: StringForStatus, StatusTextID: this.WorkerMessage.data.ThreadID};
+	var ObjectToSend={StatusText: StringForStatus, StatusTextID: this.MTSMessage.ThreadID};
 	if (MultithreadSimControllerRunningNode){
 		process.send(ObjectToSend);
 	}
@@ -135,17 +137,17 @@ MultithreadSimControllerObject.prototype.ThreadStatusText=function(StringForStat
 };
 
 MultithreadSimControllerObject.prototype.SetThreadStatusToSimNumber=function(){
-	var StringForStatus="thread: "+this.WorkerMessage.data.ThreadID+" simID: "+this.WorkerMessage.data.SimID;
+	var StringForStatus="thread: "+this.MTSMessage.ThreadID+" simID: "+this.MTSMessage.SimID;
 	this.ThreadStatusText(StringForStatus);
 };
 
 MultithreadSimControllerObject.prototype.ThreadID=function(){
-	return this.WorkerMessage.data.ThreadID;
+	return this.MTSMessage.ThreadID;
 };
 
 
 MultithreadSimControllerObject.prototype.SimID=function(){
-	return this.WorkerMessage.data.SimID;
+	return this.MTSMessage.SimID;
 };
 
 
