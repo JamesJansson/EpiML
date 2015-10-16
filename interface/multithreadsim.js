@@ -292,26 +292,26 @@ MultiThreadSimMessageHandler=function(ReturnedMessage) {
 	// Receiving data from the Sim after a data request
 	console.log(ReturnedMessage)
 	// Messages to the StatusText
-	if (typeof ReturnedMessagedata.StatusText != 'undefined'){
+	if (typeof ReturnedMessage.StatusText != 'undefined'){
 		// Example usage: self.postMessage({StatusText: "hello", StatusTextID: 2});// two identifies that is using thread 2's display text
-		document.getElementById(this.StatusTextElementName+ReturnedMessagedata.StatusTextID).value=ReturnedMessagedata.StatusText;
+		document.getElementById(this.StatusTextElementName+ReturnedMessage.StatusTextID).value=ReturnedMessage.StatusText;
 	}
-	if (typeof ReturnedMessagedata.Console != 'undefined'){//used to pass structured data to the console
-		console.log(ReturnedMessagedata.Console);
+	if (typeof ReturnedMessage.Console != 'undefined'){//used to pass structured data to the console
+		console.log(ReturnedMessage.Console);
 		console.error("The use of this should be depreciated");
 	}
 	// Messages to the ProgressBar
-	if (typeof ReturnedMessagedata.ProgressBarValue != 'undefined'){
+	if (typeof ReturnedMessage.ProgressBarValue != 'undefined'){
 		if (this.UseWithinSimProgressBar==true){
-			document.getElementById(this.WithinSimProgressBarID+this.ThreadID).value=ReturnedMessagedata.ProgressBarValue;
+			document.getElementById(this.WithinSimProgressBarID+this.ThreadID).value=ReturnedMessage.ProgressBarValue;
 		}
 	}
 	
 	// Allow the function to run an arbitrary function
-	if (typeof ReturnedMessagedata.Execute != 'undefined'){
+	if (typeof ReturnedMessage.Execute != 'undefined'){
 		var FunctionToRun;
-		eval("FunctionToRun=function(Data){"+ReturnedMessagedata.Execute.Code+"};");
-		FunctionToRun(ReturnedMessagedata.Execute.Data);
+		eval("FunctionToRun=function(Data){"+ReturnedMessage.Execute.Code+"};");
+		FunctionToRun(ReturnedMessage.Execute.Data);
 		
 		//Example usage:
 		//SaySomething={};
@@ -322,21 +322,21 @@ MultiThreadSimMessageHandler=function(ReturnedMessage) {
 	
 	
 	// Handle message functions that get added to the system 
-	if (typeof(ReturnedMessagedata.MessageFunctionName) == 'string'){
+	if (typeof(ReturnedMessage.MessageFunctionName) == 'string'){
 		// Find the name in the array
-		var IndexToRun=this.SimMessageFunctionArray.indexOf(ReturnedMessagedata.MessageFunctionName);
+		var IndexToRun=this.SimMessageFunctionArray.indexOf(ReturnedMessage.MessageFunctionName);
 		// Execute the function
-		this.InterfaceMessageFunctionArray[IndexToRun](ReturnedMessagedata.Data, ReturnedMessagesrcElement.SimID, e);
+		this.InterfaceMessageFunctionArray[IndexToRun](ReturnedMessage.Data, ReturnedMessage.SimID, e);
 	}
 	
 	
 	// Collect up results from this simulation, try to run next simulation
-	if (typeof ReturnedMessagedata.Result != 'undefined'){
+	if (typeof ReturnedMessage.Result != 'undefined'){
 		this.NoThreadsCurrentlyRunning--;
-		var SimID=ReturnedMessagedata.MTSMessage.SimID;
-		this.Result[SimID]=ReturnedMessagedata.Result;//Store the results of the simulation
+		var SimID=ReturnedMessage.MTSMessage.SimID;
+		this.Result[SimID]=ReturnedMessage.Result;//Store the results of the simulation
 		this.SimsComplete++;
-		var ThreadID=ReturnedMessagedata.MTSMessage.ThreadID;
+		var ThreadID=ReturnedMessage.MTSMessage.ThreadID;
 		this.ThreadInUse[ThreadID]=false;
 		
 		if (this.TerminateOnFinish){
