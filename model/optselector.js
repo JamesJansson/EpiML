@@ -392,7 +392,7 @@ OptSelector.prototype.RunOptimisation=function (){
 	this.DetailedErrorHistoryByDEOGraphData=[];
 	
 	
-	// Add functions that are call on execution of functions inside the simulation
+	// Add functions that are called on execution of functions inside the simulation
 	var PointerToThis=this;
 	var RunProcessPushDetailedParameterHistory=function(ReturnedData, SimNumber, OtherMessageData){
 		PointerToThis.ProcessPushDetailedParameterHistory(ReturnedData, SimNumber, OtherMessageData);
