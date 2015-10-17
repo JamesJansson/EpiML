@@ -77,6 +77,7 @@ else{// is running under node.js
 				evalText+="StructSendBack.MessageFunctionName='"+MTSMessage.AddMessageFunction[MCount]+"';";
 				evalText+="StructSendBack.Data=DataToSendBack;";
 				evalText+="StructSendBack.SimID="+MultithreadSimController.SimID()+";";
+				evalText+="StructSendBack.MTSMessage=MTSMessage;";
 				evalText+="process.send(StructSendBack);}";
 	
 				eval(evalText);

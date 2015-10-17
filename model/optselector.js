@@ -393,6 +393,9 @@ OptSelector.prototype.RunOptimisation=function (){
 	
 	
 	// Add functions that are called on execution of functions inside the simulation
+	// The functions are defined in this way because writing
+	// this.SimulationHolder.AddMessageFunction("PushDetailedParameterHistory", this.ProcessPushDetailedParameterHistory);
+	// would not give access to the data and other functions in "this."
 	var PointerToThis=this;
 	var RunProcessPushDetailedParameterHistory=function(ReturnedData, SimNumber, OtherMessageData){
 		PointerToThis.ProcessPushDetailedParameterHistory(ReturnedData, SimNumber, OtherMessageData);
