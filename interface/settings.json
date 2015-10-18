@@ -1,0 +1,9 @@
+{
+    "NoThreads": "4",
+    "SampleFactor": 100,
+    "NumberOfSimulations": 4,
+    "HCVTreatmentScenario": "0",
+    "ModelNetwork": false,
+    "RecalculateParam": true,
+    "TerminateThreadOnSimCompletion": false
+}

@@ -1,0 +1,41 @@
+#menu ul {
+	list-style-type: none;
+	padding: 0;
+	margin: 0;
+	width: 220px;
+}
+#menu level1 {
+	text-decoration: none;
+	display: block;
+	padding: 5px 10px 5px 10px;
+	background-color: #acf;
+	color: #03a;
+	border: 1px solid #fff;
+}
+
+#menu level1:hover {
+	text-decoration: none;
+	display: block;
+	padding: 5px 10px 5px 10px;
+	background-color: #9bf;
+	color: #03a;
+	border: 1px solid #fff;
+}
+
+#menu level1:active {
+	text-decoration: none;
+	display: block;
+	padding: 5px 10px 5px 10px;
+	background-color: #79f;
+	color: #03a;
+	border: 1px solid #fff;
+}
+
+#menu level1:selected {
+	text-decoration: none;
+	display: block;
+	padding: 5px 10px 5px 10px;
+	background-color: #79f;
+	color: #03a;
+	border: 1px solid #fff;
+}

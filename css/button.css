@@ -1,0 +1,30 @@
+
+.SolidButton  {
+	margin-bottom:2px; 
+	margin-top:2px; 
+	margin-left:2px; 
+	margin-right:2px; 
+	padding: 5px 10px 5px 10px;
+	background-color: #acf;
+	color: #03a;
+	border: 2px solid #79f;
+	width: 150px;
+}
+
+.SolidButton:hover {
+	padding: 5px 10px 5px 10px;
+	background-color: #9bf;
+	color: #03a;
+}
+
+.SolidButton:active {
+	padding: 5px 10px 5px 10px;
+	background-color: #79f;
+	color: #03a;
+}
+
+.SolidButton:selected {
+	padding: 5px 10px 5px 10px;
+	background-color: #79f;
+	color: #03a;
+}

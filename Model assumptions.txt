@@ -1,0 +1,89 @@
+Discussion about model structure
+
+The fundamental assumption about this model that makes it different is two fold:
+1) The most important element of deciding the outcome of a hepatitis C infection is age. 
+2) The most important mode of transmission of hepatitis C in Australia is due to sexual partners sharing injecting equipment
+
+The individual based structure of the model allows age related calculations to be performed accurately, a limitation of non-individual based modelling. 
+Similarly, the sexual network modelling allows estimation of transmission speed in a way that is not possible in other models
+
+Looking at needle sharing, in people who inject drugs, 20% shared needles in the previous month. 
+Typically the needle was reused after a single person in 50-70% of cases.
+The sexual partner was by far the most to share equipment with. Of reported sharing people over 1995 to 2010
+Regular sexual partner 50.6%
+Casual sexual partner 5%
+Close friend 28%
+Acquaintance 11%
+Other 5.3% (which is likely to be family)
+
+
+
+Inspection of Table 1.2.8 of the NSP show that people who have been injecting less than 3 years have a substantially reduced probability of being HCV 
+For people who have been injecting more than 3 years, the likelihood of HCV antibody in people who haven't receptively shared in the last month is very close to the likelihood if they have shared in the last month.
+This suggests that people who have not receptively shared in the last month are not always safe injectors, simply that they are safe more often.
+In particular, those people who did not receptively share recently may have been receptively sharing at younger ages (due to power or age imbalance in relationships)
+This power imbalance is also played out in the much higher prevalence in young females who inject drugs.
+
+
+Given the low number of people who are who have never tested for HCV in the NSP population, it is expected that there are very few cases of undiagnosed HCV. 
+
+Additionally, HCV antibody prevalence is quite low (~50%). This includes people who have cleared HCV. The implication is that there are very few people who have an active HCV infection at any point in time. 
+
+Following treatment, there are substantial improvements to the histological outcomes of patients
+Brian L. Pearlman and Nomi Traub, (2011) Sustained Virologic Response to Antiviral Therapy for Chronic Hepatitis C Virus Infection: A Cure and So Much More
+10, 11, 46, 48, 53, 55
+
+Cirrohsis leading to HCC: "Patients with cirrhosis pretreatment are at a low but real risk of HCC after SVR."
+Start at Stage 2
+82% had improved fibrosis scores
+20% had nearly normal livers
+George SL (2009), Clinical, virologic, histologic, and biochemical outcomes after successful HCV therapy: a 5-year follow-up of 150 patients.
+
+"In 62% of patients, the last biopsy done showed normal or nearly normal histologic findings." Last biopsy was 5-6 years
+Marcellin P (1997) Long-term histologic improvement and loss of detectable intrahepatic HCV RNA in patients with chronic hepatitis C and sustained response to interferon-alpha therapy.
+
+
+Table 4
+In people who are treated at F2-F4 and are sustained responders, fibrosis stage reverses at −0.591 (−0.627;−0.550) steps per year.
+Sustained response only occurred in 31% of people in the F2-F4 categories. However this study included numerous observations of people who had treatments that weren't effective. 
+Sustained virologic response appears to be worse in treating people with cirrohsis
+Poynard 2002 Impact of pegylated interferon alfa-2b and ribavirin on liver fibrosis in patients with chronic hepatitis C
+
+Marcellin and Poynard agree: in 5-6 years, at -0.591 stages per year, an improvement of 3.25 stages
+
+Optimisation
+The optimisation is trying to minimise the error in the output as measured by various sources of data
+Parameters to optimise
+Probability of entering NSP per year while injecting - set? 
+Probability of leaving NSP
+Parameters that determine entry into the population
+Parameters that determine exit from  the population
+Parameters that determine transmission rate
+
+Data to optimise against
+AIHW ever injector by age
+AIHW injected in the last 12 month data
+Prevalence in the NSP population
+HCV notifications
+Median age in NSP group
+Median years IDU in NSP group
+Duration of injection in NSP group
+HCV risk of sharing with time? - maybe this will be hard set
+HCV antibody in NSP group
+HCV antibody by age in NSP group
+HCV antibody by duration of injection in NSP group
+
+
+
+
+Things to add to the simulation
+Treatment
+Injecting partner
+
+
+
+
+
+
+
+Following optimisation, the testing rate of the system is determined. This is a multivariate testing rate that is dependent on stage of infection, age 

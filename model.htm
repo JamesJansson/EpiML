@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>EpiML - HCV model</title>
+<meta http-equiv="x-ua-compatible" content="ie=edge" > <!-- To use the latest IE version in HTA apps http://stackoverflow.com/questions/19567887/javascript-version-in-hta -->
+
+<!-- Loading interface CSS -->
+<link rel="stylesheet" type="text/css" href="css/button.css">
+<link rel="stylesheet" type="text/css" href="css/menu.css">
+<link rel="stylesheet" type="text/css" href="css/mainarea.css">
+<link rel="stylesheet" type="text/css" href="css/parameter.css">
+<link rel="stylesheet" type="text/css" href="css/plot.css">
+
+<!-- Loading interface javascript -->
+<script type="text/javascript" src="interface/paramdisplay.js"></script>
+<script type="text/javascript" src="interface/initialise.js"></script>
+<script type="text/javascript" src="model/loaddata.js"></script>
+
+<script type="text/javascript" src="interface/jquery/jquery.js"></script>
+<script type="text/javascript" src="interface/jquery/jquery.flot.js"></script>
+<script type="text/javascript" src="interface/jquery/jquery.flot.axislabels.js"></script> <!-- http://www.pikemere.co.uk/blog/flot-tutorial-how-to-create-area-charts/ -->
+<script type="text/javascript" src="interface/jquery/jquery.flot.stack.js"></script>
+<script type="text/javascript" src="interface/jquery/jquery.flot.resize.js"></script>
+<script type="text/javascript" src="interface/jquery/jquery.flot.errorbars.js"></script>
+<script type="text/javascript" src="interface/jquery/jquery.flot.navigate.js"></script>
+
+<script type="text/javascript" src="interface/plotstyles.js"></script>
+<script type="text/javascript" src="interface/multithreadsim.js"></script>
+<script type="text/javascript" src="interface/papaparse/papaparse.js"></script>
+<script type="text/javascript" src="interface/json2.js"></script><!-- Required for use in internet explorer based browsers -->
+<script type="text/javascript" src="interface/blob/blob.js"></script>
+<script type="text/javascript" src="interface/filesaver/filesaver.js"></script>
+<script type="text/javascript" src="interface/html2canvas.js"></script>
+
+<!-- Custom interface libraries -->
+<script type="text/javascript" src="interface/csvtools.js"></script>
+<script type="text/javascript" src="interface/interfacebuttons.js"></script>
+<script type="text/javascript" src="interface/fullscreen.js"></script>
+<script type="text/javascript" src="interface/summarisesimulations.js"></script>
+
+<!-- Loading methods that are used in the model and interface -->
+<script type="text/javascript" src="model/eventvector.js"></script>
+<script type="text/javascript" src="model/mathtools.js"></script>
+<script type="text/javascript" src="model/deepcopy.js"></script>
+<script type="text/javascript" src="model/populationstatistics.js"></script>
+<script type="text/javascript" src="model/lcgrand.js"></script> <!-- no longer used - in mathtools now as Rand() random number generator to ensure platform independence -->
+<script type="text/javascript" src="model/parameter.js"></script>
+<script type="text/javascript" src="model/simulationbuttons.js"></script>
+<script type="text/javascript" src="model/stochasticoptimisation.js"></script>
+<script type="text/javascript" src="model/hcvtreatmentscenarios.js"></script>
+<script type="text/javascript" src="model/dataextractionobject.js"></script>
+<script type="text/javascript" src="model/optselector.js"></script>
+<script type="text/javascript" src="model/hcvdataextractionobject.js"></script>
+
+<!-- Loading model javascript -->
+<script type="text/javascript" src="model/person.js"></script>
+<script type="text/javascript" src="model/hcv.js"></script>
+<script type="text/javascript" src="model/hiv.js"></script>
+<script type="text/javascript" src="model/generalmortality.js"></script>
+
+
+<!-- Loading standard settings -->
+<script type="text/javascript" src="model/standardsettings.js"></script>
+
+
+<!-- Loading model javascript (to be deleted)-->
+<script type="text/javascript" src="model/assigninjectingpopulation.js"></script>
+
+
+
+
+<!-- Loading javascript specific to pages and their settings -->
+<script type="text/javascript" src="pages/pwidoptimisationplots.js"></script>
+
+
+
+<!-- Loading HCVTest stuff javascript -->
+<script type="text/javascript" src="model/hcvtest.js"></script>
+<script type="text/javascript" src="interface/tablemaker.js"></script>
+
+
+<!-- Loading testing functions (to be deleted) -->
+<script type="text/javascript" src="test/testmulticoresim.js"></script>
+<script type="text/javascript" src="test/testinggeneral.js"></script>
+
+
+</head>
+
+
+
+<body onload="InitialiseEpiML()">
+
+<img src="img/logo.png">
+
+<progress id="MainProgress" value="0.0" max="1"></progress>
+
+
+<div id="menu">
+<ul>
+<li><level1 id="HomeMenuItem"  		onclick="ShowMenu(HomeContent);"		>Home</level1></li>
+<li><level1 id="ParameterMenuItem" 	onclick="ShowMenu(ParameterContent);"	>Parameters</level1></li>
+<li><level1 id="OptimisationMenuItem" 	onclick="ShowMenu(OptimisationContent);">Optimisation</level1></li>
+<li><level1 id="HCVMenuItem" 		onclick="ShowMenu(HCVContent);"			>HCV</level1></li>
+<li><level1 id="DataMenuItem" 		onclick="ShowMenu(DataContent);"		>Data</level1></li>
+<li><level1 id="PlotsMenuItem" 		onclick="ShowMenu(PlotsContent);"		>Plots</level1></li>
+<li><level1 id="PWIDOptimisationPlotsMenuItem" 	onclick="ShowMenu(PWIDOptimisationPlotsContent);"		>PWID Optimisation</level1></li>
+<li><level1 id="MapsMenuItem" 		onclick="ShowMenu(MapsContent);"		>Maps</level1></li>
+<li><level1 id="SensitivityMenuItem"onclick="ShowMenu(SensitivityContent);"	>Sensitivity Analysis</level1></li>
+<li><level1 id="SettingsMenuItem" 	onclick="ShowMenu(SettingsContent);"	>Settings</level1></li>
+<li><level1 id="OtherMenuItem" 		onclick="ShowMenu(OtherContent);"		>Other</level1></li>
+<li><level1 id="HelpMenuItem" 		onclick="ShowMenu(HelpContent);"		>Help</level1></li>
+
+</ul>
+</div>
+
+<div id="MainArea">
+	<div id="HomeContent" class="Content">
+		<h1>Home</h1>
+		<p> This model is a work in progress. The results have not yet been confirmed. Please contact jjansson@kirby.unsw.edu.au for enquiries. </p>
+		
+		
+		<p> <b>Use existing optimisation (if it exists) </b> </p>
+		<input type="checkbox" onClick="FutureCheckBox=this.checked;">PWID Entry Optimisation<br>
+		<input type="checkbox" onClick="FutureCheckBox=this.checked;">PWID Progression and Exit<br>
+		<input type="checkbox" onClick="FutureCheckBox=this.checked;">PWID Intervention<br>
+		
+		<p>Run the simulation but keep sims alive to extract results from </p>
+		<div id="RunPersistentSimButton" class="SolidButton" onClick="RunPersistentSim();"> Run Notification Sim </div>
+		<div id="RunSimSetupButton" class="SolidButton" onClick="RunSimSetup();"> Run SimSetup </div>
+		<div id="RunFullModelTestButton" class="SolidButton" onClick="RunFullModelTest();"> Run FullModel test </div>
+		<div id="RunOptimisationButton" class="SolidButton" onClick="RunOptimiseFullModel();"> Run Optimisation </div>
+		
+		
+		<div id="RunSimButton" class="SolidButton" onClick="SimulationHolder.Terminate();"> Terminate simulation </div>
+		
+		
+		<p>Plot results</p>
+		<div id="PlotFibrosisButton" class="SolidButton" onClick="NotificationSimPlot();DxUDxSimPlot();"> Plot Fibrosis </div>
+		
+		<div id="PlotFibrosisButton" class="SolidButton" onClick="DownloadSimulationResults();"> Download Results </div>
+		
+		
+		<input type='text' id='StatusTextElement0' value=''><br>
+		<input type='text' id='StatusTextElement1' value=''><br>
+		<input type='text' id='StatusTextElement2' value=''><br>
+		<input type='text' id='StatusTextElement3' value=''><br>
+		<input type='text' id='StatusTextElement4' value=''><br>
+		<input type='text' id='StatusTextElement5' value=''><br>
+		<input type='text' id='StatusTextElement6' value=''><br>
+		<input type='text' id='StatusTextElement7' value=''><br>
+		
+		
+		
+		<div class="plot" id="plot1" >
+			<div class="fullscreenbox" id="plot1_fullscreenbox" >
+				<div class="fullscreenbutton" title="Fullscreen" id="plot1_fullscreenbutton" onclick="ToggleFullScreen('plot1_fullscreenbox');">&#10063</div>
+				<div class="downloadbutton" title="Download data" onclick="DownloadSummaryStatisticCSV(SimulationHolder.Result[0].AgeInfectedResult);plot1_data.Download();">&#x21E9;</div>
+				
+				<div class="plot_positioner">
+					<div id="plot1_placeholder" class="plot_placeholder"></div>
+				</div>
+				<div class="xlabel">Year</div>
+				<div class="ylabel"><div class="rotate">Number of cases</div></div>
+			</div>
+		</div>
+		
+		In future, we will have a "plotupdate" function, that replaces both the data download button, axes and the chart itself. 
+
+		<div id="HCVResultsTable"></div>		
+
+		<div class="plot-container">
+			<div id="DxUDxPlotHolder" class="plot_placeholder"></div>
+		</div>
+		<div id="DxUDxResultsTable"></div>
+		
+		<div id="nodetestbutton" class="SolidButton" onClick="var cp = require('child_process');var child=[];sim=0;child[sim] = cp.fork('./testworker.js');child[sim].on('message', function(m) {console.log('received: ' + m);});child[sim].send(sim);"> Run simulation </div>
+		
+		
+		
+
+		
+		
+		
+	</div>
+
+	<div id="ParameterContent" class="Content">
+		<h1>Parameters</h1>
+		<div id="ParamHolder"> </div>
+	</div>
+	
+	<div id="OptimisationContent" class="Content">
+		<h1>Optimisation</h1>
+		<div id="HCVOptSelectorHolder"> </div>
+	</div>
+	
+	
+	
+	<div id="HCVContent" class="Content">
+		<h1>HCV</h1>
+		
+		<p>HCV Treatment Scenario</p>
+			<select id="HCVTreatmentScenarioSelector" onchange="Settings.HCVTreatmentScenario=this.value;SaveSettings();UpdateHCVTreatmentScenarioSelector(this.value)">
+			</select>
+		<p>Description (note changes here are never saved)</p>
+		<textarea cols="100" rows="10" id="HCVTreatmentScenarioDescription"></textarea>
+		<p>Code (note changes here are never saved)</p>
+		<textarea cols="100" rows="20" id="HCVTreatmentScenarioCode"></textarea>
+		
+		<div id="HCVParamHolder"> 
+			
+			
+			
+		</div>
+	</div>
+	
+	<div id="DataContent" class="Content">
+		<h1>Data</h1>
+		The buttons below currently are only a testing are for the CSV read
+		<div class="SolidButton" onClick="LoadNotificationData();">Load Notification Data</div>
+		<div class="SolidButton" onClick="SummaryNotificationsCSV=new CSVFile('data/summarynotifications.csv');">OLD Load Notification Data</div>
+		<div class="SolidButton" onClick="SummaryNotificationsTable=SummaryNotificationsCSV.GetValues(2, 10, 1, 5); TimeAxis=[];for(i=0; i<5; i++){TimeAxis[i]=2008+i;}">Extract data</div>
+		<div class="SolidButton" onClick="StackedLinePlot('#NotificationPlotHolder', TimeAxis, SummaryNotificationsTable,  'Year','Number of notifications');">Line Plot</div>
+		<div class="SolidButton" onClick="StackedBarPlot('#NotificationPlotHolder', TimeAxis, SummaryNotificationsTable,  'Year','Number of notifications');">Bar Plot</div>
+		
+		
+		<div style="float:left; position:absolute; left:200px; top: 0px;">
+			<div class="plot-container">
+				<div id="NotificationPlotHolder" class="plot_placeholder"></div>
+			</div>
+		</div>
+	</div>
+	
+	<div id="PlotsContent" class="Content">
+		<h1>Plots</h1>
+		<div id="OptimisationPlotsHolder"> </div>
+	</div>
+	
+	
+	
+	
+	
+	<div id="PWIDOptimisationPlotsContent" class="Content">
+		<h1>PWID entry optimisation</h1>
+		<div>
+			<div class="plot" id="PWIDEntryPlot" style="position: absolute;left: 200px;"></div>
+			Age Range: <br>
+			<input type="checkbox" onClick="PWIDEntryPlotSettings.AgeRange[0]=this.checked;">14-20<br>
+			<input type="checkbox" onClick="PWIDEntryPlotSettings.AgeRange[1]=this.checked;">20-30<br>
+			<input type="checkbox" onClick="PWIDEntryPlotSettings.AgeRange[2]=this.checked;">30-40<br>
+			<input type="checkbox" onClick="PWIDEntryPlotSettings.AgeRange[3]=this.checked;">40+<br>
+			Sex: <br>
+			<input type="checkbox" onClick="PWIDEntryPlotSettings.Sex[0]=this.checked;">Male<br>
+			<input type="checkbox" onClick="PWIDEntryPlotSettings.Sex[1]=this.checked;">Female<br>
+			<div class="SolidButton" onClick="PlotPWIDEntryOptimisation(0);">Plot median</div><br>
+			<div class="SolidButton" onClick="PlotPWIDEntryOptimisation(1);">Plot mean</div><br>
+		</div>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div id="MapsContent" class="Content">
+		<h1>Maps</h1>
+		<p>Maps will be placed on this page.</p>
+	</div>	
+	<div id="SensitivityContent" class="Content">
+		<h1>Sensitivity Analysis</h1>
+		<p>The purpose of this section is to demonstrate the correlation between input parameters and output aggregate statistics.</p>
+		<p>The user will select the parameter to inspect and the result to compare with. Scatter plot will be produced, and a correlation plot will be superimposed.</p>
+		<p>There will also be the option to select an output and get a comparison of many different parameters to inspect. A cyclone plot will indicate the impact that the 95% range has on the outcome of the variable.</p>
+	</div>
+	
+	
+	<div id="SettingsContent" class="Content">
+		<h1>Settings</h1>
+		<form>
+			<p><b>Number of simulations to run</b></p>
+			<input type='text' id='NumberOfSimulationsTextbox' value='10' onchange="Settings.NumberOfSimulations=Number(this.value);SaveSettings();">
+			
+			
+			<p><b>Number of threads to use for simulations</b></p>
+			<select id="NoThreadsDropdown" onchange="Settings.NoThreads=this.value;SaveSettings();">
+				<option value=1>1</option>
+				<option value=2>2</option>
+				<option value=3>3</option>
+				<option value=4>4</option>
+				<option value=5>5</option>
+				<option value=6>6</option>
+				<option value=7>7</option>
+				<option value=8>8</option>
+			</select>
+			
+			<br>
+			<input id="RecalculateParamCheckbox" type="checkbox" onClick="Settings.RecalculateParam=this.checked;SaveSettings();">Recalculate parameters in the next simulation<br>
+		
+			<input id="TerminateThreadOnSimCompletionCheckbox" type="checkbox" onClick="Settings.TerminateThreadOnSimCompletion=this.checked;SaveSettings();">Terminate Thread On Sim Completion<br>
+		
+			
+			<p>Sample factor</p>
+			<p>Set to larger values to decrease run time. </p>
+			<p>Note: use of a value not equal to one makes the model incapable of modelling stochastic epidemic extinction accurately. </p>
+			<input type='text' id='SampleFactorTextbox' value='10' onchange="Settings.SampleFactor=Number(this.value);SaveSettings();">
+			
+			<p> Simulation seed </p>
+			<p> Setting the simulation seed allows a deterministic calculation to occur, to ensure replicability of results.</p>
+		</form>
+
+	</div>
+	
+	
+	<div id="OtherContent" class="Content">
+		
+		<p>"Testplot" (for testing)</p>
+		<div class="plot" id="testplot" ></div>
+		
+		
+		<p>Testing the multicoresim system</p>
+		<p>Warning: this process may occupy a large amount of RAM and CPU power</p>
+		<div id="HCVTestSimButton" 	class="SolidButton" onClick="TestMulticoreSim()"> Run simulation </div>
+		
+		<div id="HCVRunNotificationsButton" class="SolidButton" onClick="TestMulticoreSim()"> Run simulation </div>
+		
+		<div class="plot-container">
+			<div id="PlotHolder" class="plot_placeholder"></div>
+		</div>
+	
+		
+		<p>Fibrosis Progression</p>
+		
+		<p>Note the code for this section needs to be cleared out</p>
+		<div class="SolidButton" onClick="ToggleDisplay(this, 'HCVPlotArea');">Show plot</div>
+		<div class="HCVPlotArea" style="position:relative; display: none;">
+			<div id="HCVTestSimButton" 	class="SolidButton" onClick="HCVTest();"> Run simulation </div>
+			<div id="HCVTestPlotButton" class="SolidButton" onClick="HCVTestPlot();"> Plot result </div>
+			<div id="GeneralisedButtonForPlots" class="SolidButton" onClick="StackedLinePlot('#HCVTestPlotHolder', TimeAxis, SimResult[0].HCVTestResult, 'Time (years)','Number Of People');"> Plot result </div>
+			<div id="HCVResultsSection"  style="float:left; position:absolute; left:200px; top: 0px;">
+			
+				<div class="plot-container">
+					<div id="HCVTestPlotHolder" class="plot_placeholder"></div>
+				</div>
+			<div id="HCVResultsTable"></div>
+			</div>
+		</div>
+		
+		
+	</div>
+
+	<div id="HelpContent" class="Content">
+		<h1>Help</h1>
+		<p></p>
+		
+	</div>
+
+
+</div>
+
+
+
+<script>
+
+
+
+</script>
+<script type="text/javascript" src="interface/menu.js"></script>
+
+</body>
+</html>

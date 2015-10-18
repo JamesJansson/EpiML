@@ -1,0 +1,36 @@
+
+* {
+	font-family: Sans-serif;
+}
+
+h1{
+	margin: 0px;
+}
+
+
+progress[value] {
+position: absolute;
+	/* Reset the default appearance */
+	right: 0px;
+	width: 300px;
+	height: 20px;
+	right: 7px;
+}
+
+td {
+    border: 1px solid #cccccc;
+}
+
+#MainArea {
+	position: absolute;
+	left: 250px;
+    top: 100px;
+	right: 0px;
+}
+
+.Content{
+	position: absolute;
+	left: 0px;
+    top: 0px;
+	right: 0px;
+}

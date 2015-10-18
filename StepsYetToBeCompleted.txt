@@ -1,0 +1,70 @@
+Things that I want to achieve 
+Done Implement for females
+Done Implement the injecting across the multiple simulations
+Optimisation of becoming regular and exiting IDU population
+Adjust input values
+	Randomise by a certain amount
+	Increase by a factor for underreporting
+Get the count statistic to work across multiple simulations
+Get the parameter class to start accepting input values
+	Create a standard parameter class set up
+		HCV
+		HIV
+		ID
+		Treatment
+	Parameter class has an indicator that shows whether it has a 'values' vector or not
+	Single value parameters
+	Population distribution parameter
+		Used for times, viral load counts etc
+		Made up of two distribution parameters
+		Population mean
+		Standard deviation in the mean population estimates
+		Standard deviation of individuals in the population
+		Uncertainty in the individual uncertanty (optional)
+		Displays 
+			uncertainty of the mean
+			Range of population values of the median estimate (e.g. Interquartile range)
+		Standard types
+			Normal
+				Median
+				SD of Median uncertainty (normally distributed in log)
+				SD of population
+				SD of SD of population uncertainty
+			Exponential value distribution
+			Exponential probability distribution
+				Used to distribute times for constant probability events
+	Proportion - a special parameter class that distributes across categories, 
+		Each value in the proportion contains
+			Estimate
+			Uncertainty
+		contains an optional normalisation factor
+			Normalisation used for probabilities where the total must be equal to one or some fixed value
+			Non-normalisation is used for situations in which you want a count with a total e.g. total people in a group
+	Ratio factor - a special parameter class that copies all the properties of another distribution, but increases or decreases the mean by an amount
+	A downloader that prints out all the parameters with information 
+		Parameter type (e.g. normal, log normal)
+		SD etc
+		95% Uncertainty
+Scenario blender
+	Create a new parameter, e.g. a linear distribution
+	This represents a range of values e.g. SofosbuvirUseIntervention =0%-100%
+		Using a value like this, we can see what an intervention does to the results
+			e.g. test extract results CostOfOfSofosbuvir and QALY
+			Dividing one by the other, and plotting against intervention strength will show the cost effectiveness at what level of prescription
+HCV mortality
+	Fibrosis -> LF -> HCC
+	
+	
+Estimates desired for the enquiry
+	Number of people initiating IV drug use
+	Number of people stopping
+	Percentage stopping
+	Safe injecting changes
+	New HCV cases estimates
+	
+In PersonClass
+	For each value of interest
+		Update(Time, Person)
+			Each individual Update() conatins instructions for what must be updated 
+			Can be called recursively
+				Updating HCVInfection requires an update of 

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<p>This example starts up a file system to store persistent storage on the hard drive (for saving sims)</p>
+
+<p>The file is stored at C:\Users\USERNAME\AppData\Local\Google\Chrome\User Data\Default\File System</p>
+
+<p id="FileSystemTestButton">Click here to test file system (see console for output)</p>
+
+<p id="FileSystemButton">Click here to set up file system (see console for output)</p>
+
+
+<script>
+//Testing document specific scripts
+//Add button behaviour
+document.getElementById("FileSystemTestButton").addEventListener("click", FileSystemTest);
+document.getElementById("FileSystemButton").addEventListener("click", SimpleFileStorageInit);
+
+
+
+
+
+
+//File system specific code
+// This code was inspired by http://blog.teamtreehouse.com/building-an-html5-text-editor-with-the-filesystem-apis
+// and http://stackoverflow.com/questions/17164698/filesystem-api-not-working-in-chrome-v27-v29 
+
+
+// Create a global variable that will store a reference to the FileSystem.
+var filesystem = null;
+
+
+
+
+// Test that the file system works
+function FileSystemTest() {
+
+	// Handle vendor prefixes (allow all browsers to use window.requestFileSystem)
+	window.requestFileSystem = window.requestFileSystem || 
+                           window.webkitRequestFileSystem;
+
+	// Check for support.
+	if (window.requestFileSystem) {
+	  // FileSystem Supported
+	  console.log("File system support detected");
+	} else {
+	  // FileSystem Not Supported
+	  alert("Saving files is not supported in this browser.");
+	}
+}
+
+
+function onError () { console.log ('Error : ', arguments); }
+
+function SimpleFileStorageInit(){
+	FileSystemTest();
+	navigator.webkitPersistentStorage.requestQuota (1024*1024*1024, function(grantedBytes) {
+		  console.log ('requestQuota: ', arguments);
+		  requestFS(grantedBytes);
+		}, onError);
+
+	function requestFS(grantedBytes) {
+		console.log("Successfully called webkitPersistentStorage");
+		window.webkitRequestFileSystem(window.PERSISTENT, grantedBytes, function(fs) {
+			// Set the filesystem variable.
+			filesystem = fs;
+			console.log ('fs: ', arguments); 
+		}, onError);
+	}
+
+}
+
+
+
+
+
+
+
+</script>
+
+</body>
+</html>
