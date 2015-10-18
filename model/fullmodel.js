@@ -1,234 +1,105 @@
+// model.js is where the main functions are kept for the model
+
+//Specify files to be included in the simulation
+var DebugLoadingScripts=true;
+
+var Data={};
+
+var Param={};//This is the parameter holder for the simulation. It is global in scope and changes as optimisation and interventions adjust it
+var OriginalParam={}; // This is a space to store param 
+var OptimisedParam={};// This is the Param object which includes values for the optimised param 
+var InterventionParam={};// This is the 
+
+var Notifications;
+var RegularInjectionTime;
+
+var Settings={};
+
+
+console.error("A lot of these can/should go");
+var PP=[];//This is the global array that holds the population
+var SimID;//This value is a global, used to reference the correct simulation in the Param structure
+var PPNotification=[];
+
+var MaleMortality;
+var FemaleMortality;
+var IndigenousMaleMortality;
+var IndigenousFemaleMortality;
 
 
 var PostDataTreatmentFunction;// (Person[Array], Time, TimeStep)
 
-// Put the following into the console
-// RunSettings2={};
-// RunSettings2.FunctionName="RunFullModel";
-// RunSettings2.Common={};
-// RunSettings2.Common.HCVTretmentFunctionID=Settings.HCVTreatmentScenario;
-// RunSettings2.SimDataArray=[1];
-// SimulationHolder.Run(RunSettings2);
-
-
-
-
-// Put the following into the console
-// RunSettingsEval={};
-// RunSettingsEval.FunctionName="EvalText";
-// RunSettingsEval.Common="console.log(SimulationResults)";
-// RunSettingsEval.SimDataArray=[999];
-// HCVOptSelector.SimulationHolder.Run(RunSettingsEval);
-
-
-
-
-function CreateGlobalVariables(){
-	// Globals that need to be run before code will work
+function SimSetup(WorkerData){
+	// The purpose of this function is to create globals that will persist over multiple simulations
 	
+	console.log("Data passed to the simulation");
+	console.log(WorkerData);//This passes the data back to the console so we can look at it
+	// Rand.SetSeed();//note that this is an extremely important step to allow random numbers to be generated
+
+	
+	//Load the notification data
+	Data=WorkerData.Common.Data;
+	//Load the parameters data
+	var Param = WorkerData.SimData;
+	// Load the settings
+	Settings=WorkerData.Common.Settings;
+	
+	
+	// Load up mortality data
+	MaleMortality=new MortalityCalculator(Data.Mortality.Male[1].Rates, Data.Mortality.Male[1].Year, Data.Mortality.Male[2].Rates, Data.Mortality.Male[2].Year);
+	FemaleMortality=new MortalityCalculator(Data.Mortality.Female[1].Rates, Data.Mortality.Female[1].Year, Data.Mortality.Female[2].Rates, Data.Mortality.Female[2].Year);
+	
+	
+	// Play around with the notifications structure
+	Notifications=RestructureNotificationData(Data);
+	
+	
+	// Adjust data according to beliefs about inaccuracies 
+	AdjustDataForKnownBiases(Data,Param);
+	
+	
+	RegularInjectionTime=new RegularInjectionTimeObject(Param.IDU.BecomeRegularInjector.PTime);
+	
+	console.error("Here is the data structure");
+	console.log(Data);
+	return 0;
 }
 
-function FullModelTest(WorkerData){
 
-	throw "This throw is to prevent this function from executing.";
-	
-	
-	//InSimFunction("This is the message");throw "stopping";
-	
-	// This should go into the outer loop
+function AdjustDataForKnownBiases(Data, Param){
+	AdjustPWIDUnderReporting(Data, Param.IDU.AIHWDataFactor);//(Data, AdjustmentFactor);
+}
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	// Set up the optimisation
-	var DEOArray = HCVDataExtractionObjects();
-	
-	
-	
-	// This needs to be established by the optimisation 
-	
-	Param.HCV.PTransmission.IDU=0.15;
-	// Param.IDU.TransmissionP=0.15;
-	Param.IDU.NSP.P=0.3;
-	Param.IDU.RateOfCesssation=0.10;
-
-	Param.IDU.BecomeRegularInjector.P=0.50;
-
-	Param.IDU.Entry.PeakEntryPerYear=500;
-	Param.IDU.Entry.B=0.20;
-	Param.IDU.Entry.Logk2=0.3;
-	Param.IDU.Entry.Logk1=0.9;
-	
-	
-	Param.IDU.Sexuality.Heterosexual=0.85;
-	Param.IDU.Sexuality.Homosexual=0.077;
-	Param.IDU.Sexuality.Bisexual=0.06;
-	
-	
-	
-	console.error("The above is hard set and poorly defined");
-	
-	
-	// On the outside, when a calculation is performed, 
-	function TransferIndividualOptimisationResults(SimulationHolder){
-		function EnterDeeperLevel(SimObj, SummaryObject){
-			for (var ObjName in SimObj){
-				if (typeof(SimObj[ObjName])=="object"){
-					// if it is not created already make a new object in SummaryObject to put sub objects in
-					if (typeof(SummaryObject[ObjName])=="undefined"){
-						SummaryObject[ObjName]={};
-					}
-					EnterDeeperLevel(SimObj[ObjName], SummaryObject[ObjName]);
-				}
-				else if (typeof(SimObj[ObjName])=="number"){
-					// if it is not created alread make a new array in SummaryObject to put numbers in
-					if (typeof(SummaryObject[ObjName])=="undefined"){
-						SummaryObject[ObjName]=[];
-					}
-					SummaryObject[ObjName].push(SimObj[ObjName])
-				}
-			}
-		};
-		// Testing
-		//var A=[];
-		//A[0]={};
-		//A[0].B = 3;
-		//A[0].C = {};
-		//A[0].C.D = 5;
-		//A[0].C.E = 7;
-		//A[1] = {};
-		//A[1].B = 33;
-		//A[1].C = {};
-		//A[1].C.D = 55;
-		//A[1].C.E = 77;
-		//SumObj = {};
-		//EnterDeeperLevel(A[0], SumObj);
-		//EnterDeeperLevel(A[1], SumObj);
-		// For each sim
+function AdjustPWIDUnderReporting(Data, AdjustmentFactor){//Data, AdjustmentFactor){// This should occur prior to passing the data to the function
+	// FunctionInput.EntryParams.AIHWHouseholdSurveryUncertaintySD=0.1;// a value that gives variation in the result due to the small numbers
 		
-		var SummaryOfOptimisations={};
-		for (var OptCount in SimulationHolder.Results){
-			EnterDeeperLevel(SimulationHolder.Results[OptCount].OptimisedParam, SummaryObject);
-		}
-	}
-	console.error("The above code will transfered to the interface to transfer optimised parameters into the parameter interface.");
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	var FullModelTimer=new RecordingTimer("FullModelTimer");
-	FullModelTimer.Start();
-	// Run the full model
-	
-	
-	var FunctionInput={};
-	FunctionInput.Notifications=Notifications;
-	FunctionInput.EndSimulationTime=Param.Time.EndSimulation;
-	FunctionInput.Intervention=Intervention;
-	
-	
-	var FullModelResults=FullModel(FunctionInput);
-	FullModelTimer.Stop();
-	console.error("====================================");
-	FullModelTimer.Display();
+	// FunctionInput.EntryParams.AIHWHouseholdSurveryUnderstimate=1.2;
+	// FunctionInput.EntryParams.AIHWHouseholdSurveryUnderstimateLowerRange=1.0;
+	// FunctionInput.EntryParams.AIHWHouseholdSurveryUnderstimateUpperRange=1.4;
 
-	
-	var ErrorTimer=new RecordingTimer("ErrorTimer");
-	ErrorTimer.Start();
-	// Store a run for data as it would appear in the optimisation 
-	var TotalOptimisationError=FindTotalDEOErrorForOptimisation(DEOArray, FullModelResults);
-	console.error("The TotalOptimisationError is "+TotalOptimisationError);
-	ErrorTimer.Stop();
-	console.error("====================================");
-	ErrorTimer.Display();
-	
-	
-	
-	
-	
-	// Find the data for the full set in which there are data points
-	var TotalError=FindAllDEOError(DEOArray, FullModelResults);
-	
-	console.error("The total error is "+TotalError);
-	console.log(DEOArray);
-	
-	
-	// Generate graph data (external to the optimisation)
-	RunAllDEOGenerateGraphData(DEOArray, FullModelResults);
-	
-	
-	
-	
-	var ReturnResults={};
-	// Store a run for data as it would appear in the optimisation 
-	ReturnResults.DEOResultsArray=DEOArray;
-	
-	
-	ReturnResults.HCVDataDiagnosisResults=FullModelResults.HCVDataDiagnosisResults;
-	
-	
-	var StatsTime={};
-	StatsTime.StartTime=1980;
-	StatsTime.EndTime=2030;
-	StatsTime.StepSize=1;
-	
-	
-	var Person=FullModelResults.Population;
-	
-	ReturnResults.LivingWithHCVInfection=LivingWithHCVInfectionStats(Person, StatsTime);
-	ReturnResults.CurrentIDU=CurrentIDUStats(Person, StatsTime);
-	ReturnResults.EverIDU=EverIDUStats(Person, StatsTime);
-	ReturnResults.EverIDUHCVAntibody=EverIDUHCVAntibodyStats(Person, StatsTime);
-	ReturnResults.PWIDAge=PWIDAgeStats(Person, StatsTime);
-	
-	
-	
-	
-	
-	
-	// Rearrange the 
-	
-	
-	
-	
-	// console.log(SimulationHolder.Result[0].LivingWithHCVInfection.Count);
-	// console.log(SimulationHolder.Result[0].CurrentIDU.Count);
-	// console.log(SimulationHolder.Result[0].EverIDU.Count);
-	// console.log(SimulationHolder.Result[0].EverIDUHCVAntibody.Count);
-	// console.log(Divide(SimulationHolder.Result[0].EverIDUHCVAntibody.Count, SimulationHolder.Result[0].EverIDU.Count));
-	
-	
-	// Note: number of people living with HCV is somewhat lower thant the people who have ever IDU	
-	// console.log(Divide(SimulationHolder.Result[0].LivingWithHCVInfection.Count, SimulationHolder.Result[0].EverIDU.Count));
-	
-	// console.log(Person);
-
-	
-	return ReturnResults;
+	Data.PWID.Ever.Male=Multiply(Data.PWID.Ever.Male, AdjustmentFactor);
+	Data.PWID.Ever.Female=Multiply(Data.PWID.Ever.Female, AdjustmentFactor);
+	Data.PWID.Recent.Male=Multiply(Data.PWID.Recent.Male, AdjustmentFactor);
+	Data.PWID.Recent.Female=Multiply(Data.PWID.Recent.Female, AdjustmentFactor);
 }
 
 
-
-
+function RestructureNotificationData(Data){
+	
+	
+	// Notification data
+	Notifications={};
+	Notifications.Year=Data.MaleNotifications.Year;
+	Notifications.Age=Data.MaleNotifications.Age;
+	Notifications.Count=[];
+	Notifications.Count[0]=[];
+	Notifications.Count[0]=Data.MaleNotifications.Table;
+	Notifications.Count[1]=[];
+	Notifications.Count[1]=Data.FemaleNotifications.Table;
+	Notifications.FirstYearOfData=Notifications.Year[0];
+	Notifications.LastYearOfData=Notifications.Year[Notifications.Year.length-1];
+	return Notifications;
+}
 
 
 
@@ -378,6 +249,16 @@ SexualitySelectorClass.prototype.Select=function(){
 
 
 function FullModel(FunctionInput){ 
+	// Make a globalised Param
+	console.log(Param);
+	Param=FunctionInput.Param;
+	console.log(Param);
+	
+	// Set the random seed if is set. 
+	if (typeof(FunctionInput.RandSeed)!='undefined'){
+		Rand.SetSeed(FunctionInput.RandSeed);
+	}
+	
 	
 	// var Notifications=FunctionInput.Notifications;
 	// var EndSimulation=FunctionInput.EndSimulationTime;
@@ -400,8 +281,7 @@ function FullModel(FunctionInput){
 	// };
 	
 	
-	// Set up some of the parameters
-	RegularInjectionTime=new RegularInjectionTimeObject();
+
 	
 	BirthRate=new BirthRateClass(Data.Fertility.Data, Data.Fertility.YoungestAge, Data.Fertility.OldestAge, Data.Fertility.StartYear, Data.Fertility.EndYear);
 	

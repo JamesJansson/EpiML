@@ -111,7 +111,7 @@ function HCVDataExtractionObjects(){
 	DataStruct.Time=Data.PWID.Year;
 	DataStruct.Value=0;// This starts as a number but becomes a vector when summing the first vector ti
 	var MaleEverIDUTotal=Sum(Data.PWID.Ever.Male);
-	var FemaleEverIDUTotal=Sum(Data.PWID.Ever.Male);
+	var FemaleEverIDUTotal=Sum(Data.PWID.Ever.Female);
 	DataStruct.Value=Add(MaleEverIDUTotal, FemaleEverIDUTotal);
 
 	
@@ -143,7 +143,7 @@ function HCVDataExtractionObjects(){
 	DataStruct.Time=Data.PWID.Year;
 	DataStruct.Value=0;// This starts as a number but becomes a vector when summing the first vector ti
 	var MaleRecentIDUTotal=Sum(Data.PWID.Recent.Male);
-	var FemaleRecentIDUTotal=Sum(Data.PWID.Recent.Male);
+	var FemaleRecentIDUTotal=Sum(Data.PWID.Recent.Female);
 	DataStruct.Value=Add(MaleRecentIDUTotal, FemaleRecentIDUTotal);
 
 	

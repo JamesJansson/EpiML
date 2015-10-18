@@ -217,10 +217,10 @@ IDUObject.prototype.InjectedBetween= function (Time1, Time2){
 
 
 
-function RegularInjectionTimeObject(){//(RegularTimeP, RegularTimeT){
+function RegularInjectionTimeObject(PTime){//(RegularTimeP, RegularTimeT){
 	// This function and the associated interface parts are an unfortunate example of how I haven't programmed and nice way to do arrays of parameters
 
-	var PTime=Param.IDU.BecomeRegularInjector.PTime;//
+	//var PTime=Param.IDU.BecomeRegularInjector.PTime;//
 	this.P=[];
 	this.P[0]=PTime.LT1Week;
 	this.P[1]=PTime.LT6Months;

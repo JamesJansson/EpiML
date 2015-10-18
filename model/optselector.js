@@ -744,7 +744,6 @@ OptSelector.prototype.GenerateGraphColours=function (NumberOfSimulations){
 
 
 // This function is inside the model and is called 
-// Note that 
 function OptSelectorHandler(WorkerData){
 	// There are typically three main functions that the optimisation is handed 
 	// WorkerData.Common.Functions.PreOptimisationFunction
@@ -770,11 +769,11 @@ function OptSelectorHandler(WorkerData){
 		var PostOptimisationFunction=eval(Functions.PostOptimisationFunction);
 	}
 	
-	console.error("Note the below is very bad form for a simulation. This should be PRIVATE.");
-	Param=WorkerData.SimData.Param;
 	
 	var FunctionInput={};
-	FunctionInput.Param=WorkerData.SimData.Param;
+	FunctionInput.Param=WorkerData.SimData;
+	
+	
 	FunctionInput.ModelFunction=ModelFunction;
 	FunctionInput.PreOptimisationFunction=PreOptimisationFunction;
 	FunctionInput.PostOptimisationFunction=PostOptimisationFunction;
@@ -826,17 +825,15 @@ function OptSelectorHandler(WorkerData){
 	OptimisationSettings.Target=DEOOptimisationGroup;
 	
 	OptimisationSettings.Function=function(FunctionInput, ParameterSet){
-		
-		
+		console.log(FunctionInput);
 		// change Param according to the values listed in ParameterSet
 		for (var Identifier in ParameterSet){
 			// Param.Whatever.What=ParameterSet["Whatever.What"];
-			var EvalString="Param." + Identifier +"=ParameterSet['"+Identifier+"'];";
+			var EvalString="FunctionInput.Param." + Identifier +"=ParameterSet['"+Identifier+"'];";
 			eval(EvalString);	
 		}
 		
-		// Add .Notifcations, .EndSimulationTime, .Intervention, .Param  to FunctionInput
-		var ModelResults=ModelFunction(FunctionInput.Notifications, FunctionInput.EndSimulationTime, FunctionInput.Intervention);
+		var ModelResults=ModelFunction(FunctionInput);
 		return ModelResults;
 	};
 	
