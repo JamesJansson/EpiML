@@ -5,3 +5,8 @@ process.stdin.resume();
 process.stdin.on('data', function (data) {
     console.log('Received data: ' + data);
 });
+
+
+process.on('message', function (data) {
+    console.log('Received data2: ' + data);
+});

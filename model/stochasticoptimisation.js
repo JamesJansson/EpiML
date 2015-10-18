@@ -172,7 +172,7 @@ StochasticOptimisation.prototype.Run= function (FunctionInput){
 	var CurrentTime;
 	while (OptimisationComplete==false){
 		//Perform garbage collection at the end of each round
-		gc();//needs -expose-gc in js-flags
+		//gc();//needs -expose-gc in js-flags
 		
 		// Run the simulation
 		this.DetailedErrorHistory[this.RoundCount]=[];

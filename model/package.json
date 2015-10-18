@@ -1,0 +1,4 @@
+{
+	// note this does not work and should be deleted
+	"js-flags": "-expose-gc -max-old-space-size=6047"
+}

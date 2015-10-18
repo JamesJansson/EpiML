@@ -1,41 +1,100 @@
-importScripts("main.js"); // should include in it any function that could be called by multhreadsim
+// Determine if running under node or a webworker
+if (typeof exports === 'undefined'){
+	var MultithreadSimControllerRunningNode = false;
+	} 
+else {
+	var MultithreadSimControllerRunningNode = true;
+}
 
+var MultithreadSimController=NaN;
 
-var MultithreadSimController;
-
-
-self.onmessage = function (WorkerMessage) {
-	var FunctionHolder;
+if (MultithreadSimControllerRunningNode==false){
+	importScripts("main.js"); // should include in it any function that could be called by multhreadsim
 	
-	MultithreadSimController=new MultithreadSimControllerObject(WorkerMessage);
+	self.onmessage = function (WorkerMessage) {
+		var MTSMessage=WorkerMessage.data;
+		var FunctionHolder;
+		
+		console.log(WorkerMessage);
+		throw "stopping";
+		
+		MultithreadSimController=new MultithreadSimControllerObject(MTSMessage);// this line should actually become global, possibly
+		
+		console.log(MTSMessage.FunctionToRun);
+		
+		if (typeof(MTSMessage.AddMessageFunction)!='undefined'){
+			for (var MCount in MTSMessage.AddMessageFunction){
+				// Generate a function that the program can use to send back information
+				var evalText=MTSMessage.AddMessageFunction[MCount];
+				evalText+="=function(DataToSendBack){";
+				evalText+="var StructSendBack={};";
+				evalText+="StructSendBack.MessageFunctionName='"+MTSMessage.AddMessageFunction[MCount]+"';";
+				evalText+="StructSendBack.Data=DataToSendBack;";
+				evalText+="StructSendBack.SimID="+MultithreadSimController.SimID()+";";
+				evalText+="self.postMessage(StructSendBack);}";
 	
-	console.log(WorkerMessage.data.FunctionToRun);
-	
-	if (typeof(WorkerMessage.data.AddMessageFunction)!='undefined'){
-		for (var MCount in WorkerMessage.data.AddMessageFunction){
-			// Generate a function that the program can use to send back information
-			var evalText=WorkerMessage.data.AddMessageFunction[MCount];
-			evalText+="=function(DataToSendBack){";
-			evalText+="var StructSendBack={};";
-			evalText+="StructSendBack.MessageFunctionName='"+WorkerMessage.data.AddMessageFunction[MCount]+"';";
-			evalText+="StructSendBack.Data=DataToSendBack;";
-			evalText+="self.postMessage(StructSendBack);}";
-
-			eval(evalText);
+				eval(evalText);
+			}
 		}
-	}
-	else{
-		console.error("did not find any functions");	
-	}
+		else{
+			console.error("did not find any functions");	
+		}
+		
+		eval("FunctionHolder="+MTSMessage.FunctionToRun+";");
+		var SimResult=FunctionHolder(MTSMessage);
+		var ResultWithFunctionsRemoved=MTSDeepCopyData(SimResult);//functions crash the thread if passed back to the main thread
+		var DataToSendBack={MTSMessage: MTSMessage, Result: ResultWithFunctionsRemoved};
+		self.postMessage(DataToSendBack);
+		};
+}
+else{// is running under node.js
+	// Set up required node modules
+	// Allow importScripts to be used
+	importScripts=require('importScripts').importScripts;
+	// make the console behave in the nw.js interface in a similar way to how it behaves with webworkers
+	require('nwjsnode').ConsoleSetup();
+	importScripts("main.js"); // should include in it any function that could be called by multhreadsim
 	
 	
+	process.on('message', function (WorkerMessage) {
+		var MTSMessage=WorkerMessage;
+		var FunctionHolder;
+		
+		// console.log(WorkerMessage);
+		// throw "stopping";
+		
+		
+		MultithreadSimController=new MultithreadSimControllerObject(MTSMessage);// this line should actually become global, possibly
+		
+		console.log(MTSMessage.FunctionToRun);
+		
+		if (typeof(MTSMessage.AddMessageFunction)!='undefined'){
+			for (var MCount in MTSMessage.AddMessageFunction){
+				// Generate a function that the program can use to send back information
+				var evalText=MTSMessage.AddMessageFunction[MCount];
+				evalText+="=function(DataToSendBack){";
+				evalText+="var StructSendBack={};";
+				evalText+="StructSendBack.MessageFunctionName='"+MTSMessage.AddMessageFunction[MCount]+"';";
+				evalText+="StructSendBack.Data=DataToSendBack;";
+				evalText+="StructSendBack.SimID="+MultithreadSimController.SimID()+";";
+				evalText+="StructSendBack.MTSMessage=MTSMessage;";
+				evalText+="process.send(StructSendBack);}";
 	
-	eval("FunctionHolder="+WorkerMessage.data.FunctionToRun+";");
-	var SimResult=FunctionHolder(WorkerMessage.data);
-	var ResultWithFunctionsRemoved=MTSDeepCopyData(SimResult);//functions crash the thread if passed back to the main thread
-	self.postMessage({WorkerMessage: WorkerMessage.data, Result: ResultWithFunctionsRemoved});//All simulation will end with this line
-};
-
+				eval(evalText);
+			}
+		}
+		else{
+			console.error("did not find any functions");	
+		}
+		
+		eval("FunctionHolder="+MTSMessage.FunctionToRun+";");
+		var SimResult=FunctionHolder(MTSMessage);
+		var ResultWithFunctionsStringified=MTSDeepCopyData(SimResult);//functions crash the thread if passed back to the main thread
+		var DataToSendBack={MTSMessage: MTSMessage, Result: ResultWithFunctionsStringified};
+		return process.send(DataToSendBack);
+		
+	});
+}
 
 
 
@@ -73,26 +132,32 @@ function EvalText(data){
 
 
 // Create a holder that allows the simulations to draw on some of the higher level aspects of the multithreadsim
-function MultithreadSimControllerObject(WorkerMessage){
-	this.WorkerMessage=WorkerMessage;
+function MultithreadSimControllerObject(MTSMessage){
+	this.MTSMessage=MTSMessage;
 }
 
 MultithreadSimControllerObject.prototype.ThreadStatusText=function(StringForStatus){
-	self.postMessage({StatusText: StringForStatus, StatusTextID: this.WorkerMessage.data.ThreadID});
+	var ObjectToSend={StatusText: StringForStatus, StatusTextID: this.MTSMessage.ThreadID};
+	if (MultithreadSimControllerRunningNode){
+		process.send(ObjectToSend);
+	}
+	else { // running in a webworker
+		self.postMessage(ObjectToSend);
+	}
 };
 
 MultithreadSimControllerObject.prototype.SetThreadStatusToSimNumber=function(){
-	var StringForStatus="thread: "+this.WorkerMessage.data.ThreadID+" simID: "+this.WorkerMessage.data.SimID;
+	var StringForStatus="thread: "+this.MTSMessage.ThreadID+" simID: "+this.MTSMessage.SimID;
 	this.ThreadStatusText(StringForStatus);
 };
 
 MultithreadSimControllerObject.prototype.ThreadID=function(){
-	return this.WorkerMessage.data.ThreadID;
+	return this.MTSMessage.ThreadID;
 };
 
 
 MultithreadSimControllerObject.prototype.SimID=function(){
-	return this.WorkerMessage.data.SimID;
+	return this.MTSMessage.SimID;
 };
 
 
@@ -115,10 +180,10 @@ function MTSDeepCopyData(obj) {// copies non-function data only
 		return obj;
 	}
     if (typeof obj === 'object') {
-        var out = {}, i;
-        for ( i in obj ) {
+        var out = {};
+        for (var i in obj ) {
             if (typeof obj[i] !== 'function') {
-            out[i] = arguments.callee(obj[i]);
+                out[i] = arguments.callee(obj[i]);
             }
         }
         return out;
