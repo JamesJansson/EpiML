@@ -1,0 +1,10 @@
+{
+	"name": "EpiML",
+	"main": "model.htm", 
+	"window":{
+		"icon": "icon.png",
+		"toolbar": true,
+		"frame": true
+	},
+	"js-flags": "--expose-gc --max-old-space-size=2047"
+}

@@ -1,0 +1,1692 @@
+[
+    {
+        "ParameterID": "HCV.F0F1",
+        "ArrayName": "Param",
+        "ArrayNumber": "0",
+        "InterfaceID": "ParamHolder_0",
+        "DistributionType": "lognormal",
+        "Median": 0.065,
+        "StandardError": 0.18,
+        "Upper95Range": 0.09249802286852665,
+        "Lower95Range": 0.045676651986445826,
+        "CalculatedMedian": 0.065,
+        "NumberOfSamples": 1,
+        "Val": [
+            0.05775258656344182
+        ],
+        "MinValue": 0,
+        "MaxValue": 1,
+        "Description": "Table 4, Retrospective-prospective, Random Effects Model Meta-Regression\nHla-Hla Thein, 2008, Estimation of Stage-Specific Fibrosis Progression Rates in Chronic Hepatitis C Virus Infection: A Meta-Analysis and Meta-Regression"
+    },
+    {
+        "ParameterID": "HCV.F1F2",
+        "ArrayName": "Param",
+        "ArrayNumber": "1",
+        "InterfaceID": "ParamHolder_1",
+        "DistributionType": "lognormal",
+        "Median": 0.075,
+        "StandardError": 0.22,
+        "Upper95Range": 0.11543275048836145,
+        "Lower95Range": 0.04872967139916797,
+        "CalculatedMedian": 0.075,
+        "NumberOfSamples": 1,
+        "Val": [
+            0.08079169537293968
+        ],
+        "MinValue": 0,
+        "MaxValue": 1,
+        "Description": "Table 4, Retrospective-prospective, Random Effects Model Meta-Regression\nHla-Hla Thein, 2008, Estimation of Stage-Specific Fibrosis Progression Rates in Chronic Hepatitis C Virus Infection: A Meta-Analysis and Meta-Regression"
+    },
+    {
+        "ParameterID": "HCV.F2F3",
+        "ArrayName": "Param",
+        "ArrayNumber": "2",
+        "InterfaceID": "ParamHolder_2",
+        "DistributionType": "lognormal",
+        "Median": 0.105,
+        "StandardError": 0.23,
+        "Upper95Range": 0.1648045704093932,
+        "Lower95Range": 0.06689741657414384,
+        "CalculatedMedian": 0.105,
+        "NumberOfSamples": 1,
+        "Val": [
+            0.08584299311549888
+        ],
+        "MinValue": 0,
+        "MaxValue": 1,
+        "Description": "Table 4, Retrospective-prospective, Random Effects Model Meta-Regression\nHla-Hla Thein, 2008, Estimation of Stage-Specific Fibrosis Progression Rates in Chronic Hepatitis C Virus Infection: A Meta-Analysis and Meta-Regression"
+    },
+    {
+        "ParameterID": "HCV.F3F4",
+        "ArrayName": "Param",
+        "ArrayNumber": "3",
+        "InterfaceID": "ParamHolder_3",
+        "DistributionType": "lognormal",
+        "Median": 0.08,
+        "StandardError": 0.255,
+        "Upper95Range": 0.13187132475345717,
+        "Lower95Range": 0.04853215823807981,
+        "CalculatedMedian": 0.08,
+        "NumberOfSamples": 1,
+        "Val": [
+            0.07567575270081338
+        ],
+        "MinValue": 0,
+        "MaxValue": 1,
+        "Description": "Table 4, Retrospective-prospective, Random Effects Model Meta-Regression\nHla-Hla Thein, 2008, Estimation of Stage-Specific Fibrosis Progression Rates in Chronic Hepatitis C Virus Infection: A Meta-Analysis and Meta-Regression"
+    },
+    {
+        "ParameterID": "HCV.F4.PAt20Years.AlcoholGT50g",
+        "ArrayName": "Param",
+        "ArrayNumber": "4",
+        "InterfaceID": "ParamHolder_4",
+        "DistributionType": "normal",
+        "Median": 0.07,
+        "StandardError": 0.01,
+        "Upper95Range": 0.08960000000000001,
+        "Lower95Range": 0.05040000000000001,
+        "CalculatedMedian": 0.07,
+        "NumberOfSamples": 1,
+        "Val": [
+            0.0680647161494516
+        ],
+        "MinValue": 0,
+        "MaxValue": 1,
+        "Description": "It appears that the greatest risk for HCV infected individuals is the excess consumption of alcohol. \nThe probability of no Cirrohsis (F4) at 20 years following infection\n<50g/day 93% (SD 1)\n>50g/day 70% (SD 7)\nRef:\nPoynard et al. 2001 Rates and risk factors of liver fibrosis progression in patients with chronic hepatitis C "
+    },
+    {
+        "ParameterID": "HCV.F4.PAt20Years.AlcoholLT50g",
+        "ArrayName": "Param",
+        "ArrayNumber": "5",
+        "InterfaceID": "ParamHolder_5",
+        "DistributionType": "normal",
+        "Median": 0.3,
+        "StandardError": 0.07,
+        "Upper95Range": 0.43720000000000003,
+        "Lower95Range": 0.16279999999999997,
+        "CalculatedMedian": 0.3,
+        "NumberOfSamples": 1,
+        "Val": [
+            0.4325269924654559
+        ],
+        "MinValue": 0,
+        "MaxValue": 1,
+        "Description": "It appears that the greatest risk for HCV infected individuals is the excess consumption of alcohol. \nThe probability of no Cirrohsis (F4) at 20 years following infection\n<50g/day 93% (SD 1)\n>50g/day 70% (SD 7)\nRef:\nPoynard et al. 2001 Rates and risk factors of liver fibrosis progression in patients with chronic hepatitis C \n\n\nThe estimated prevalence of cirrhosis at 20 years after the infection was16%(14%-19%) for all studies,18%(15%-21%) for cross-sectional/retrospective studies, 7% (4%-14%) for retrospective-prospective studies, 18% (16%-21%) for studies conducted in clinical settings, and 7% (4%-12%) for studies conducted in nonclinical settings.\n\nThein, Estimation of Stage-Specific Fibrosis Progression..."
+    },
+    {
+        "ParameterID": "HCV.F4DeathP",
+        "ArrayName": "Param",
+        "ArrayNumber": "6",
+        "InterfaceID": "ParamHolder_6",
+        "DistributionType": "normal",
+        "Median": 0.032665489,
+        "StandardError": 0.003,
+        "Upper95Range": 0.038545489,
+        "Lower95Range": 0.026785489,
+        "CalculatedMedian": 0.032665489,
+        "NumberOfSamples": 1,
+        "Val": [
+            0.03407018739676725
+        ],
+        "MinValue": 0,
+        "MaxValue": 1,
+        "Description": "Degos et al 2000 Hepatitis C virus related cirrhosis: time to occurrence of hepatocellular carcinoma and death.\n\nOf the 416 patients, 60 developed HCC with a five year rate of 13.4% (95% confidence interval (CI) 9.0-17.8%) and 83 died (including 34 with HCC), with a five year death rate of 15.3% (95% CI 12.6-18.0%)\n\n5-year -> Annual probability\n15.3% -> 0.032665489\n12.6%  ->0.026575469\n18% -> 0.03891285\n\n"
+    },
+    {
+        "ParameterID": "HCV.F4HCCP",
+        "ArrayName": "Param",
+        "ArrayNumber": "7",
+        "InterfaceID": "ParamHolder_7",
+        "DistributionType": "normal",
+        "Median": 0.028364043,
+        "StandardError": 0.005,
+        "Upper95Range": 0.038164042999999995,
+        "Lower95Range": 0.018564043,
+        "CalculatedMedian": 0.028364043,
+        "NumberOfSamples": 1,
+        "Val": [
+            0.024446220463494872
+        ],
+        "MinValue": 0,
+        "MaxValue": 1,
+        "Description": "Degos et al 2000 Hepatitis C virus related cirrhosis: time to occurrence of hepatocellular carcinoma and death.\n\nOf the 416 patients, 60 developed HCC with a five year rate of 13.4% (95% confidence interval (CI) 9.0-17.8%) and 83 died (including 34 with HCC), with a five year death rate of 15.3% (95% CI 12.6-18.0%)\n\n5-year -> Annual probability\n13.4% -> 0.028364043\n9.0%  ->0.018685359\n17.8% -> 0.038444484\n"
+    },
+    {
+        "ParameterID": "HCV.F4LF",
+        "ArrayName": "Param",
+        "ArrayNumber": "8",
+        "InterfaceID": "ParamHolder_8",
+        "DistributionType": "lognormal",
+        "Median": 0.02,
+        "StandardError": 0.1,
+        "Upper95Range": 0.024330538106686322,
+        "Lower95Range": 0.01644024469356372,
+        "CalculatedMedian": 0.02,
+        "NumberOfSamples": 1,
+        "Val": [
+            0.023451335288590575
+        ],
+        "MinValue": 0,
+        "MaxValue": 1,
+        "Description": "IMPORTANT: THIS IS NOT REAL"
+    },
+    {
+        "ParameterID": "HCV.FibrosisReversalRate",
+        "ArrayName": "Param",
+        "ArrayNumber": "9",
+        "InterfaceID": "ParamHolder_9",
+        "DistributionType": "normal",
+        "Median": 0.591,
+        "StandardError": 0.019,
+        "Upper95Range": 0.6282399999999999,
+        "Lower95Range": 0.55376,
+        "CalculatedMedian": 0.591,
+        "NumberOfSamples": 1,
+        "Val": [
+            0.6164791820856159
+        ],
+        "MinValue": "",
+        "MaxValue": "",
+        "Description": "Table 4\nIn people who are treated at F2-F4 and are sustained responders, fibrosis stage reverses at −0.591 (−0.627;−0.550) steps per year.\nSustained response only occurred in 31% of people in the F2-F4 categories. However this study included numerous observations of people who had treatments that weren't effective. \nSustained virologic response appears to be worse in treating people with cirrohsis\nPoynard 2002 Impact of pegylated interferon alfa-2b and ribavirin on liver fibrosis in patients with chronic hepatitis C\n\nMarcellin and Poynard agree: in 5-6 years, at -0.591 stages per year, an improvement of 3.25 stages\n\n\"In 62% of patients, the last biopsy done showed normal or nearly normal histologic findings.\" Last biopsy was 5-6 years\nMarcellin P (1997) Long-term histologic improvement and loss of detectable intrahepatic HCV RNA in patients with chronic hepatitis C and sustained response to interferon-alpha therapy.\n\nCirrohsis leading to HCC: \"Patients with cirrhosis pretreatment are at a low but real risk of HCC after SVR.\"\nStart at Stage 2\n82% had improved fibrosis scores\n20% had nearly normal livers\nGeorge SL (2009), Clinical, virologic, histologic, and biochemical outcomes after successful HCV therapy: a 5-year follow-up of 150 patients."
+    },
+    {
+        "ParameterID": "HCV.GenotypePrevalence.1",
+        "ArrayName": "Param",
+        "ArrayNumber": "10",
+        "InterfaceID": "ParamHolder_10",
+        "DistributionType": "normal",
+        "Median": 0.54973822,
+        "StandardError": 0.05,
+        "Upper95Range": 0.64773822,
+        "Lower95Range": 0.4517382200000001,
+        "CalculatedMedian": 0.54973822,
+        "NumberOfSamples": 1,
+        "Val": [
+            0.5443738307543373
+        ],
+        "MinValue": 0,
+        "MaxValue": 1,
+        "Description": "Table 1, Dore et al. 2003, Epidemiology of hepatitis C virus infection in Australia\n\nGenotype prevalence\n1\t0.54973822\n2\t0.081151832\n3\t0.331588133\n4\t0.02617801\nMixed\t0.008726003\n\nNote: uncertainty in these percentages are formed by looking at the range of estimates for each genotype in the table.\n"
+    },
+    {
+        "ParameterID": "HCV.GenotypePrevalence.2",
+        "ArrayName": "Param",
+        "ArrayNumber": "11",
+        "InterfaceID": "ParamHolder_11",
+        "DistributionType": "normal",
+        "Median": 0.081151832,
+        "StandardError": 0.0081,
+        "Upper95Range": 0.097027832,
+        "Lower95Range": 0.06527583199999999,
+        "CalculatedMedian": 0.081151832,
+        "NumberOfSamples": 1,
+        "Val": [
+            0.08503453727759228
+        ],
+        "MinValue": "",
+        "MaxValue": "",
+        "Description": ""
+    },
+    {
+        "ParameterID": "HCV.GenotypePrevalence.3",
+        "ArrayName": "Param",
+        "ArrayNumber": "12",
+        "InterfaceID": "ParamHolder_12",
+        "DistributionType": "normal",
+        "Median": 0.331588133,
+        "StandardError": 0.033,
+        "Upper95Range": 0.396268133,
+        "Lower95Range": 0.266908133,
+        "CalculatedMedian": 0.331588133,
+        "NumberOfSamples": 1,
+        "Val": [
+            0.33052443629495426
+        ],
+        "MinValue": "",
+        "MaxValue": "",
+        "Description": ""
+    },
+    {
+        "ParameterID": "HCV.GenotypePrevalence.4",
+        "ArrayName": "Param",
+        "ArrayNumber": "13",
+        "InterfaceID": "ParamHolder_13",
+        "DistributionType": "normal",
+        "Median": 0.02617801,
+        "StandardError": 0.0026,
+        "Upper95Range": 0.031274010000000005,
+        "Lower95Range": 0.02108201,
+        "CalculatedMedian": 0.02617801,
+        "NumberOfSamples": 1,
+        "Val": [
+            0.027113751620848447
+        ],
+        "MinValue": "",
+        "MaxValue": "",
+        "Description": ""
+    },
+    {
+        "ParameterID": "HCV.GenotypePrevalence.5",
+        "ArrayName": "Param",
+        "ArrayNumber": "14",
+        "InterfaceID": "ParamHolder_14",
+        "DistributionType": "normal",
+        "Median": 0,
+        "StandardError": 0,
+        "Upper95Range": 0,
+        "Lower95Range": 0,
+        "CalculatedMedian": 0,
+        "NumberOfSamples": 1,
+        "Val": [
+            0
+        ],
+        "MinValue": "",
+        "MaxValue": "",
+        "Description": ""
+    },
+    {
+        "ParameterID": "HCV.GenotypePrevalence.6",
+        "ArrayName": "Param",
+        "ArrayNumber": "15",
+        "InterfaceID": "ParamHolder_15",
+        "DistributionType": "normal",
+        "Median": 0,
+        "StandardError": 0,
+        "Upper95Range": 0,
+        "Lower95Range": 0,
+        "CalculatedMedian": 0,
+        "NumberOfSamples": 1,
+        "Val": [
+            0
+        ],
+        "MinValue": "",
+        "MaxValue": "",
+        "Description": ""
+    },
+    {
+        "ParameterID": "HCV.InitialPrevalence",
+        "ArrayName": "Param",
+        "ArrayNumber": "16",
+        "InterfaceID": "ParamHolder_16",
+        "DistributionType": "normal",
+        "Median": 0.6,
+        "StandardError": 0.05,
+        "Upper95Range": 0.698,
+        "Lower95Range": 0.502,
+        "CalculatedMedian": 0.6,
+        "NumberOfSamples": 1,
+        "Val": [
+            0.5909262786144471
+        ],
+        "MinValue": 0,
+        "MaxValue": 1,
+        "Description": ""
+    },
+    {
+        "ParameterID": "HCV.PReinfectionProtected",
+        "ArrayName": "Param",
+        "ArrayNumber": "17",
+        "InterfaceID": "ParamHolder_17",
+        "DistributionType": "normal",
+        "Median": 0.5,
+        "StandardError": 0.2,
+        "Upper95Range": 0.892,
+        "Lower95Range": 0.10799999999999998,
+        "CalculatedMedian": 0.5,
+        "NumberOfSamples": 1,
+        "Val": [
+            0.3563159106064596
+        ],
+        "MinValue": 0,
+        "MaxValue": 1,
+        "Description": "Mehta, 2002 Lancet 359:1478  Reinfection 8.6/100 py -> 5.4/100 py\nGrebely, 2006 Hepat 44:1139 Reinfection 8.1/100 py -> 1.8/100 py\nMicallef, 2007 J Viral Hepat 14:413 \nAitken, 2008 Hepat 48:1746 \nOsburn, 2010 Gastro 138:315 \nCurrie, 2008 Drug Alc Dep 93:148\nBackmund, 2004 Clin Inf Dis 39:1540 \nGrebely, 2010 J Gastr Hepat 25:1281"
+    },
+    {
+        "ParameterID": "HCV.PTransmission.IDU",
+        "ArrayName": "Param",
+        "ArrayNumber": "18",
+        "InterfaceID": "ParamHolder_18",
+        "DistributionType": "optimisedsample",
+        "Median": null,
+        "StandardError": null,
+        "Upper95Range": null,
+        "Lower95Range": null,
+        "CalculatedMedian": null,
+        "NumberOfSamples": 1,
+        "Val": [],
+        "MinValue": 0,
+        "MaxValue": 1,
+        "Description": "This is an optimised parameter based on the outcome of the simualtion. \n\nEyeballed callibration 0.15"
+    },
+    {
+        "ParameterID": "HCV.PTransmission.MotherToChild",
+        "ArrayName": "PGroup.ParamArray",
+        "ArrayNumber": "19",
+        "InterfaceID": "ParamHolder_19",
+        "DistributionType": "lognormal",
+        "Median": 0.0624,
+        "StandardError": 0.15,
+        "Upper95Range": 0.083727315588819,
+        "Lower95Range": 0.04650525306606121,
+        "CalculatedMedian": 0.0624,
+        "NumberOfSamples": 1,
+        "Val": [
+            0.05941294905877683
+        ],
+        "MinValue": 0,
+        "MaxValue": 1,
+        "Description": "Total calculation:\n13+30+4=47 babies infected\n275+441+37=753 infected mothers\nTotal rate of 0.0624 (95% CI 0.0451 to 0.0797)\n\n\"Thirteen children born to the 275 women with hepatitis C virus RNA acquired the infection and became RNA positive (transmission rate 5%, 95% confidence interval 2% to 7%)\", \nCalculations: Median 0.0472, Standard error of log: 0.3 \n\nResti et al, 1998, Mother to child transmission of hepatitis C virus: prospective study of risk factors and timing of infection in children born to women seronegative for HIV-1\nhttp://www.bmj.com/content/317/7156/437.1.full.pdf+html\n\n\n\"The vertical transmission rate was 6.7% (4.1–10.2) overall (n=441), and 3·8 times higher in HIV coinfected (n=22) than in HIV-negative women after adjustment for other factors (p=0.06).\"\nCalculations: Median 0.067, Standard error of log: 0.25 \n\nGibb et al., 2000, Mother-to-child transmission of hepatitis C virus: evidence for preventable peripartum transmission\nhttp://www.sciencedirect.com/science/article/pii/S0140673600026817\n\n\n3 babies of 31 HCV infected mothers became infected p=0.097\n1 of 6 babies infected form infected mothers\nTotal\n4 babies of 37 infected mothers\nOhto, 1994, Transmission of Hepatitis C virus from mothers to infants\nhttp://www.nejm.org/doi/pdf/10.1056/NEJM199403173301103"
+    },
+    {
+        "ParameterID": "HCV.SpontaneousClearance.CCGenotypeHR",
+        "ArrayName": "Param",
+        "ArrayNumber": "20",
+        "InterfaceID": "ParamHolder_20",
+        "DistributionType": "lognormal",
+        "Median": 1.9,
+        "StandardError": 0.16,
+        "Upper95Range": 2.599850351283737,
+        "Lower95Range": 1.3885414590180072,
+        "CalculatedMedian": 1.9,
+        "NumberOfSamples": 1,
+        "Val": [
+            3.064751393188025
+        ],
+        "MinValue": "",
+        "MaxValue": "",
+        "Description": "According to Figure 3 of \nGrebely, J, The effects of female sex, viral genotype, and IL28B genotype on spontaneous clearance of acute hepatitis C virus infection. \nhttp://www.ncbi.nlm.nih.gov/pubmed/23908124"
+    },
+    {
+        "ParameterID": "HCV.SpontaneousClearance.FemaleHR",
+        "ArrayName": "Param",
+        "ArrayNumber": "21",
+        "InterfaceID": "ParamHolder_21",
+        "DistributionType": "lognormal",
+        "Median": 2.03,
+        "StandardError": 0.151,
+        "Upper95Range": 2.729165249575723,
+        "Lower95Range": 1.5099488756280466,
+        "CalculatedMedian": 2.03,
+        "NumberOfSamples": 1,
+        "Val": [
+            2.464462062027678
+        ],
+        "MinValue": "",
+        "MaxValue": "",
+        "Description": "According to Figure 3 of \nGrebely, J, The effects of female sex, viral genotype, and IL28B genotype on spontaneous clearance of acute hepatitis C virus infection. \nhttp://www.ncbi.nlm.nih.gov/pubmed/23908124"
+    },
+    {
+        "ParameterID": "HCV.SpontaneousClearance.Genotype1",
+        "ArrayName": "Param",
+        "ArrayNumber": "22",
+        "InterfaceID": "ParamHolder_22",
+        "DistributionType": "lognormal",
+        "Median": 1.47,
+        "StandardError": 0.19,
+        "Upper95Range": 2.133283625311131,
+        "Lower95Range": 1.0129454772732536,
+        "CalculatedMedian": 1.47,
+        "NumberOfSamples": 1,
+        "Val": [
+            1.565438443362342
+        ],
+        "MinValue": "",
+        "MaxValue": "",
+        "Description": "According to Figure 3 of \nGrebely, J, The effects of female sex, viral genotype, and IL28B genotype on spontaneous clearance of acute hepatitis C virus infection. \nhttp://www.ncbi.nlm.nih.gov/pubmed/23908124"
+    },
+    {
+        "ParameterID": "HCV.SpontaneousClearance.MedianTime",
+        "ArrayName": "Param",
+        "ArrayNumber": "23",
+        "InterfaceID": "ParamHolder_23",
+        "DistributionType": "normal",
+        "Median": 0.425,
+        "StandardError": 0.05,
+        "Upper95Range": 0.523,
+        "Lower95Range": 0.32699999999999996,
+        "CalculatedMedian": 0.425,
+        "NumberOfSamples": 1,
+        "Val": [
+            0.455761927372205
+        ],
+        "MinValue": 0,
+        "MaxValue": "",
+        "Description": "According to Figure 1A of \nGrebely, J, The effects of female sex, viral genotype, and IL28B genotype on spontaneous clearance of acute hepatitis C virus infection. \nhttp://www.ncbi.nlm.nih.gov/pubmed/23908124\n\nThe time by which 50% of people who would clear have cleared is 0.425 years.\n\nThe uncertainty in this parameter is not well known as yet."
+    },
+    {
+        "ParameterID": "HCV.SpontaneousClearance.p",
+        "ArrayName": "Param",
+        "ArrayNumber": "24",
+        "InterfaceID": "ParamHolder_24",
+        "DistributionType": "normal",
+        "Median": 0.358418367,
+        "StandardError": 0.026,
+        "Upper95Range": 0.409378367,
+        "Lower95Range": 0.307458367,
+        "CalculatedMedian": 0.358418367,
+        "NumberOfSamples": 1,
+        "Val": [
+            0.3422349052470562
+        ],
+        "MinValue": 0,
+        "MaxValue": 1,
+        "Description": "According to Figure 1A of \nGrebely, J, The effects of female sex, viral genotype, and IL28B genotype on spontaneous clearance of acute hepatitis C virus infection. \nhttp://www.ncbi.nlm.nih.gov/pubmed/23908124\n\nThe Kaplan-Meier estimator gives the probaility of persistent infection as 0.641581633 (95%CI 0.588010204-0.69005102). \n\nP of clearance is therefore 0.358418367 (95%CI 0.30994898-0.411989796)\n\n\nStandard error is hence set to 0.03.\n"
+    },
+    {
+        "ParameterID": "Haemophilia.HCV.Prevalence1973",
+        "ArrayName": "Param",
+        "ArrayNumber": "25",
+        "InterfaceID": "ParamHolder_25",
+        "DistributionType": "normal",
+        "Median": 0.45,
+        "StandardError": 0.0125,
+        "Upper95Range": 0.47450000000000003,
+        "Lower95Range": 0.4255,
+        "CalculatedMedian": 0.45,
+        "NumberOfSamples": 1,
+        "Val": [
+            0.4551079917878231
+        ],
+        "MinValue": 0,
+        "MaxValue": 1,
+        "Description": "Dore et al. 2003, Epidemiology of hepatitis C virus infection in Australia\n\nRetrospective testing of stored serum from two haemophilia centres in Melbourne demonstrated a HCV prevalence of 45% among people with haemophilia in 1973, rising to 74% by 1980 (Leslie et al., 1992). Similar retrospective testing of stored serum from IDUs presenting with acute hepatitis to Fairfield Hospital, Melbourne (Moaven et al., 1993) and IDUs attending a methadone maintenance clinic in Sydney (Freeman et al., 2000), demonstrated HCV prevalence of 70–84% in the early 1970s.\n....\nThis risk was highest for those people, such as male haemophiliacs, who received blood product transfusions from multiple donors: in 1990, an HCV prevalence of approximately 75% was reported among people with haemophilia in Melbourne (Williamson et al., 1990)."
+    },
+    {
+        "ParameterID": "Haemophilia.HCV.Prevalence1980",
+        "ArrayName": "Param",
+        "ArrayNumber": "26",
+        "InterfaceID": "ParamHolder_26",
+        "DistributionType": "normal",
+        "Median": 0.74,
+        "StandardError": 0.0125,
+        "Upper95Range": 0.7645,
+        "Lower95Range": 0.7155,
+        "CalculatedMedian": 0.74,
+        "NumberOfSamples": 1,
+        "Val": [
+            0.7474453654739093
+        ],
+        "MinValue": 0,
+        "MaxValue": 1,
+        "Description": "Dore et al. 2003, Epidemiology of hepatitis C virus infection in Australia\n\nRetrospective testing of stored serum from two haemophilia centres in Melbourne demonstrated a HCV prevalence of 45% among people with haemophilia in 1973, rising to 74% by 1980 (Leslie et al., 1992). Similar retrospective testing of stored serum from IDUs presenting with acute hepatitis to Fairfield Hospital, Melbourne (Moaven et al., 1993) and IDUs attending a methadone maintenance clinic in Sydney (Freeman et al., 2000), demonstrated HCV prevalence of 70–84% in the early 1970s.\n....\nThis risk was highest for those people, such as male haemophiliacs, who received blood product transfusions from multiple donors: in 1990, an HCV prevalence of approximately 75% was reported among people with haemophilia in Melbourne (Williamson et al., 1990)."
+    },
+    {
+        "ParameterID": "Haemophilia.HCV.Prevalence1990",
+        "ArrayName": "Param",
+        "ArrayNumber": "27",
+        "InterfaceID": "ParamHolder_27",
+        "DistributionType": "normal",
+        "Median": 0.75,
+        "StandardError": 0.0125,
+        "Upper95Range": 0.7745,
+        "Lower95Range": 0.7255,
+        "CalculatedMedian": 0.75,
+        "NumberOfSamples": 1,
+        "Val": [
+            0.7472281549171105
+        ],
+        "MinValue": "",
+        "MaxValue": "",
+        "Description": "Dore et al. 2003, Epidemiology of hepatitis C virus infection in Australia\n\nRetrospective testing of stored serum from two haemophilia centres in Melbourne demonstrated a HCV prevalence of 45% among people with haemophilia in 1973, rising to 74% by 1980 (Leslie et al., 1992). Similar retrospective testing of stored serum from IDUs presenting with acute hepatitis to Fairfield Hospital, Melbourne (Moaven et al., 1993) and IDUs attending a methadone maintenance clinic in Sydney (Freeman et al., 2000), demonstrated HCV prevalence of 70–84% in the early 1970s.\n....\nThis risk was highest for those people, such as male haemophiliacs, who received blood product transfusions from multiple donors: in 1990, an HCV prevalence of approximately 75% was reported among people with haemophilia in Melbourne (Williamson et al., 1990)."
+    },
+    {
+        "ParameterID": "Haemophilia.MortalityFactor",
+        "ArrayName": "Param",
+        "ArrayNumber": "28",
+        "InterfaceID": "ParamHolder_28",
+        "DistributionType": "lognormal",
+        "Median": 2.69,
+        "StandardError": 0.065,
+        "Upper95Range": 3.0554937309176555,
+        "Lower95Range": 2.3682260993632553,
+        "CalculatedMedian": 2.69,
+        "NumberOfSamples": 1,
+        "Val": [
+            2.862924161150795
+        ],
+        "MinValue": 0,
+        "MaxValue": "",
+        "Description": "Darby et al. 2007, Mortality rates, life expectancy, and causes of death in people with hemophilia A or B in the United Kingdom who were not infected with HIV\n\nDuring this period, it exceeded mortality in the general population by a factor of 2.69 (95% confidence interval [CI]: 2.37-3.05), and median life expectancy in severe hemophilia was 63 years."
+    },
+    {
+        "ParameterID": "Haemophilia.Total2013",
+        "ArrayName": "Param",
+        "ArrayNumber": "29",
+        "InterfaceID": "ParamHolder_29",
+        "DistributionType": "normal",
+        "Median": 2800,
+        "StandardError": 100,
+        "Upper95Range": 2996,
+        "Lower95Range": 2604,
+        "CalculatedMedian": 2800,
+        "NumberOfSamples": 1,
+        "Val": [
+            2776.874281035575
+        ],
+        "MinValue": 0,
+        "MaxValue": "",
+        "Description": "Not a great ref, but\nhttp://www.haemophilia.org.au/bleedingdisorders/fast-facts "
+    },
+    {
+        "ParameterID": "IDU.AIHWDataFactor",
+        "ArrayName": "Param",
+        "ArrayNumber": "30",
+        "InterfaceID": "ParamHolder_30",
+        "DistributionType": "uniform",
+        "Median": null,
+        "StandardError": null,
+        "Upper95Range": 1.95,
+        "Lower95Range": 1.05,
+        "CalculatedMedian": 1.5,
+        "NumberOfSamples": 1,
+        "Val": [
+            1.4294087532907724
+        ],
+        "MinValue": 1,
+        "MaxValue": 2,
+        "Description": "The purpose of this factor is to accomodate for concerns that the AIHW Household Drug Surveys fail to capture people who inject drugs accurately. This factor inflates the results slightly."
+    },
+    {
+        "ParameterID": "IDU.AIHWDataUncertaintySD",
+        "ArrayName": "Param",
+        "ArrayNumber": "31",
+        "InterfaceID": "ParamHolder_31",
+        "DistributionType": "normal",
+        "Median": 1700,
+        "StandardError": 0,
+        "Upper95Range": 1700,
+        "Lower95Range": 1700,
+        "CalculatedMedian": 1700,
+        "NumberOfSamples": 1,
+        "Val": [
+            1700
+        ],
+        "MinValue": "",
+        "MaxValue": "",
+        "Description": "The purpose of this variable is to adjust the data of AIHW results by a set amount to acknowledge the uncertainty in the data results. The results are given in percentages of increaments 0.1%. Being off by 0.1% across the size of the estimated population would result being off by an average of 1700. On rounding error alone, the error will be 1/4 of 1700. However, some results are out by over 50% (standard error 50%) on estimtes of 0.4%. As such, we have chosen uncertainty SD of 1700."
+    },
+    {
+        "ParameterID": "IDU.BecomeRegularInjector.P",
+        "ArrayName": "Param",
+        "ArrayNumber": "32",
+        "InterfaceID": "ParamHolder_32",
+        "DistributionType": "optimisedsample",
+        "Median": 0.36,
+        "StandardError": 0.01,
+        "Upper95Range": 0.37246693499505734,
+        "Lower95Range": 0.3455805665858183,
+        "CalculatedMedian": 0.3609927230871025,
+        "NumberOfSamples": 1,
+        "Val": [],
+        "MinValue": 0,
+        "MaxValue": 1,
+        "Description": "Overseas examples indicate a probability of 36% of becoming a regular user:\nGender Differences in Circumstances Surrounding First Injection Experience of Rural Injection Drug Users in the United States\nhttp://www.ncbi.nlm.nih.gov/pmc/articles/PMC3874445/\nTable 1"
+    },
+    {
+        "ParameterID": "IDU.BecomeRegularInjector.PTime.LT10Years",
+        "ArrayName": "Param",
+        "ArrayNumber": "33",
+        "InterfaceID": "ParamHolder_33",
+        "DistributionType": "normal",
+        "Median": 0.0277,
+        "StandardError": 0.02,
+        "Upper95Range": 0.0669,
+        "Lower95Range": -0.0115,
+        "CalculatedMedian": 0.0277,
+        "NumberOfSamples": 1,
+        "Val": [
+            0.01974838545284975
+        ],
+        "MinValue": 0,
+        "MaxValue": 1,
+        "Description": "Gender Differences in Circumstances Surrounding First Injection Experience of Rural Injection Drug Users in the United States\nhttp://www.ncbi.nlm.nih.gov/pmc/articles/PMC3874445/\nTable 1"
+    },
+    {
+        "ParameterID": "IDU.BecomeRegularInjector.PTime.LT1Week",
+        "ArrayName": "Param",
+        "ArrayNumber": "34",
+        "InterfaceID": "ParamHolder_34",
+        "DistributionType": "normal",
+        "Median": 0.452,
+        "StandardError": 0.02,
+        "Upper95Range": 0.4912,
+        "Lower95Range": 0.4128,
+        "CalculatedMedian": 0.452,
+        "NumberOfSamples": 1,
+        "Val": [
+            0.4437792931457477
+        ],
+        "MinValue": 0,
+        "MaxValue": 1,
+        "Description": "Gender Differences in Circumstances Surrounding First Injection Experience of Rural Injection Drug Users in the United States\nhttp://www.ncbi.nlm.nih.gov/pmc/articles/PMC3874445/\nTable 1"
+    },
+    {
+        "ParameterID": "IDU.BecomeRegularInjector.PTime.LT1Year",
+        "ArrayName": "Param",
+        "ArrayNumber": "35",
+        "InterfaceID": "ParamHolder_35",
+        "DistributionType": "normal",
+        "Median": 0.067,
+        "StandardError": 0.02,
+        "Upper95Range": 0.1062,
+        "Lower95Range": 0.027800000000000005,
+        "CalculatedMedian": 0.067,
+        "NumberOfSamples": 1,
+        "Val": [
+            0.0745918983788168
+        ],
+        "MinValue": 0,
+        "MaxValue": 1,
+        "Description": "Gender Differences in Circumstances Surrounding First Injection Experience of Rural Injection Drug Users in the United States\nhttp://www.ncbi.nlm.nih.gov/pmc/articles/PMC3874445/\nTable 1"
+    },
+    {
+        "ParameterID": "IDU.BecomeRegularInjector.PTime.LT5Years",
+        "ArrayName": "Param",
+        "ArrayNumber": "36",
+        "InterfaceID": "ParamHolder_36",
+        "DistributionType": "normal",
+        "Median": 0.115,
+        "StandardError": 0.02,
+        "Upper95Range": 0.1542,
+        "Lower95Range": 0.0758,
+        "CalculatedMedian": 0.115,
+        "NumberOfSamples": 1,
+        "Val": [
+            0.1478814633430703
+        ],
+        "MinValue": 0,
+        "MaxValue": 1,
+        "Description": "Gender Differences in Circumstances Surrounding First Injection Experience of Rural Injection Drug Users in the United States\nhttp://www.ncbi.nlm.nih.gov/pmc/articles/PMC3874445/\nTable 1"
+    },
+    {
+        "ParameterID": "IDU.BecomeRegularInjector.PTime.LT6Months",
+        "ArrayName": "Param",
+        "ArrayNumber": "37",
+        "InterfaceID": "ParamHolder_37",
+        "DistributionType": "normal",
+        "Median": 0.337,
+        "StandardError": 0.02,
+        "Upper95Range": 0.37620000000000003,
+        "Lower95Range": 0.2978,
+        "CalculatedMedian": 0.337,
+        "NumberOfSamples": 1,
+        "Val": [
+            0.34520782492584057
+        ],
+        "MinValue": "",
+        "MaxValue": "",
+        "Description": "Gender Differences in Circumstances Surrounding First Injection Experience of Rural Injection Drug Users in the United States\nhttp://www.ncbi.nlm.nih.gov/pmc/articles/PMC3874445/\nTable 1"
+    },
+    {
+        "ParameterID": "IDU.Entry.B",
+        "ArrayName": "PGroup.ParamArray",
+        "ArrayNumber": "38",
+        "InterfaceID": "ParamHolder_38",
+        "DistributionType": "optimisedsample",
+        "Median": null,
+        "StandardError": null,
+        "Upper95Range": null,
+        "Lower95Range": null,
+        "CalculatedMedian": null,
+        "NumberOfSamples": 1,
+        "Val": [],
+        "MinValue": 0,
+        "MaxValue": 1,
+        "Description": "This parameter indiactes the level of entry into the IDU population as a proprtion of the peak. e.g. as time goes to infinity, IDU.Entry.B=0.25 indicates that entry would be 25% of that at the peak. "
+    },
+    {
+        "ParameterID": "IDU.Entry.Logk1",
+        "ArrayName": "PGroup.ParamArray",
+        "ArrayNumber": "39",
+        "InterfaceID": "ParamHolder_39",
+        "DistributionType": "optimisedsample",
+        "Median": null,
+        "StandardError": null,
+        "Upper95Range": null,
+        "Lower95Range": null,
+        "CalculatedMedian": null,
+        "NumberOfSamples": 1,
+        "Val": [],
+        "MinValue": 0,
+        "MaxValue": 1,
+        "Description": "This parameter indicates how quickly the rate of entry into the injecting population declines towards zero going back in time. e.g., a setting of IDU.Entry.Logk1=0.9 indicates that one year before reaching the peak, entry into the injecting population was 90% of what it was at the peak. 2 years before that it was 0.9*0.9=0.81"
+    },
+    {
+        "ParameterID": "IDU.Entry.Logk2",
+        "ArrayName": "PGroup.ParamArray",
+        "ArrayNumber": "40",
+        "InterfaceID": "ParamHolder_40",
+        "DistributionType": "optimisedsample",
+        "Median": null,
+        "StandardError": null,
+        "Upper95Range": null,
+        "Lower95Range": null,
+        "CalculatedMedian": null,
+        "NumberOfSamples": 1,
+        "Val": [],
+        "MinValue": 0,
+        "MaxValue": 1,
+        "Description": "This parameter indicates how quickly the rate of entry into the injecting population declines towards the rate set by Entry.B. e.g., a setting of IDU.Entry.Logk2=0.3 indicates that after reaching the peak of entry into the IDU population, the entry rate declines 30% of the distance from the peak ot what the final level will be at IDU.Entry.B"
+    },
+    {
+        "ParameterID": "IDU.Entry.PeakEntryPerYear",
+        "ArrayName": "Param",
+        "ArrayNumber": "41",
+        "InterfaceID": "ParamHolder_41",
+        "DistributionType": "optimisedsample",
+        "Median": null,
+        "StandardError": null,
+        "Upper95Range": null,
+        "Lower95Range": null,
+        "CalculatedMedian": null,
+        "NumberOfSamples": 1,
+        "Val": [],
+        "MinValue": 0,
+        "MaxValue": 100000,
+        "Description": "This is the maximium rate at which people become IDU, which happened around the late 1990s"
+    },
+    {
+        "ParameterID": "IDU.Entry.YearPeakIDU",
+        "ArrayName": "Param",
+        "ArrayNumber": "42",
+        "InterfaceID": "ParamHolder_42",
+        "DistributionType": "optimisedsample",
+        "Median": 1999,
+        "StandardError": 0,
+        "Upper95Range": 1999,
+        "Lower95Range": 1999,
+        "CalculatedMedian": 1999,
+        "NumberOfSamples": 1,
+        "Val": [],
+        "MinValue": 1995,
+        "MaxValue": 2001,
+        "Description": ""
+    },
+    {
+        "ParameterID": "IDU.ExcessMortality.Female",
+        "ArrayName": "PGroup.ParamArray",
+        "ArrayNumber": "43",
+        "InterfaceID": "ParamHolder_43",
+        "DistributionType": "lognormal",
+        "Median": 0.0035,
+        "StandardError": 0.45,
+        "Upper95Range": 0.00845504215795959,
+        "Lower95Range": 0.0014488396120494595,
+        "CalculatedMedian": 0.0035,
+        "NumberOfSamples": 1,
+        "Val": [
+            0.0016795105141497611
+        ],
+        "MinValue": 0,
+        "MaxValue": 1,
+        "Description": "The value of this parameter is supposed to represent excess mortality due to drug related death in people under 35. Above this age, excess mortality decreases. This result is based on:\nStoove (2008) Mortality among injecting drug users in Melbourne: A 16-year follow-up of the Victorian Injecting Cohort Study (VICS) \nhttp://www.ncbi.nlm.nih.gov/pubmed/18434044\n\nFor calcualtions, see \"data/excelsheets/Additional mortality calculations.xlsx\""
+    },
+    {
+        "ParameterID": "IDU.ExcessMortality.Male",
+        "ArrayName": "PGroup.ParamArray",
+        "ArrayNumber": "44",
+        "InterfaceID": "ParamHolder_44",
+        "DistributionType": "lognormal",
+        "Median": 0.0122,
+        "StandardError": 0.22,
+        "Upper95Range": 0.018777060746106793,
+        "Lower95Range": 0.00792669321426466,
+        "CalculatedMedian": 0.0122,
+        "NumberOfSamples": 1,
+        "Val": [
+            0.00987431292237388
+        ],
+        "MinValue": 0,
+        "MaxValue": 1,
+        "Description": "The value of this parameter is supposed to represent excess mortality due to drug related death in people under 35. Above this age, excess mortality decreases. This result is based on:\nStoove (2008) Mortality among injecting drug users in Melbourne: A 16-year follow-up of the Victorian Injecting Cohort Study (VICS) \nhttp://www.ncbi.nlm.nih.gov/pubmed/18434044\n\nFor calcualtions, see \"data/excelsheets/Additional mortality calculations.xlsx\""
+    },
+    {
+        "ParameterID": "IDU.InjectionStartAge.Median",
+        "ArrayName": "Param",
+        "ArrayNumber": "45",
+        "InterfaceID": "ParamHolder_45",
+        "DistributionType": "lognormal",
+        "Median": 21,
+        "StandardError": 0.027450232,
+        "Upper95Range": 22.16079845169002,
+        "Lower95Range": 19.900005000332857,
+        "CalculatedMedian": 21,
+        "NumberOfSamples": 1,
+        "Val": [
+            20.176684500196167
+        ],
+        "MinValue": "",
+        "MaxValue": "",
+        "Description": "Year\tAverage age at first injection\n1995\t    20.7\n2001\t    20.2\n2004\t    21.7\n2007\t    21.3\n2010\t    21.1\n\nSD: 0.027450232\n\nTable 2.4 AIHW 2010\nhttp://www.aihw.gov.au/publication-detail/?id=32212254712\n\nKey findings from the 2012 IDRS: a survey of people who inject drugs \nhttp://ndarc.med.unsw.edu.au/resource/illicit-drug-reporting-system-idrs-national-report-2012; \n"
+    },
+    {
+        "ParameterID": "IDU.InjectionStartAge.SD",
+        "ArrayName": "Param",
+        "ArrayNumber": "46",
+        "InterfaceID": "ParamHolder_46",
+        "DistributionType": "lognormal",
+        "Median": 0.17,
+        "StandardError": 0.05,
+        "Upper95Range": 0.18750367346844635,
+        "Lower95Range": 0.15413031363816654,
+        "CalculatedMedian": 0.17,
+        "NumberOfSamples": 1,
+        "Val": [
+            0.1604646081513921
+        ],
+        "MinValue": "",
+        "MaxValue": "",
+        "Description": "Standard error of the log standard deviation with median start age gives\nlog(21)=3.044522437723423"
+    },
+    {
+        "ParameterID": "IDU.InjectionStartAge.SexDifference",
+        "ArrayName": "Param",
+        "ArrayNumber": "47",
+        "InterfaceID": "ParamHolder_47",
+        "DistributionType": "normal",
+        "Median": 1.5,
+        "StandardError": 0.75,
+        "Upper95Range": 2.9699999999999998,
+        "Lower95Range": 0.030000000000000027,
+        "CalculatedMedian": 1.5,
+        "NumberOfSamples": 1,
+        "Val": [
+            0.611709478912472
+        ],
+        "MinValue": "",
+        "MaxValue": "",
+        "Description": "This parameter allows the starting age to be slightly different based on the sex. It is generally assumed that females initiate injecting slightly earlier than males."
+    },
+    {
+        "ParameterID": "IDU.MSMUse.HIVNeg",
+        "ArrayName": "Param",
+        "ArrayNumber": "48",
+        "InterfaceID": "ParamHolder_48",
+        "DistributionType": "normal",
+        "Median": 0.0322,
+        "StandardError": 0.0051,
+        "Upper95Range": 0.042196,
+        "Lower95Range": 0.022204,
+        "CalculatedMedian": 0.0322,
+        "NumberOfSamples": 1,
+        "Val": [
+            0.03608215788180786
+        ],
+        "MinValue": 0,
+        "MaxValue": 1,
+        "Description": "Injecting behaviour in MSM (HIV positive and negative) Table 27\t\t\t\t\t\t\t\nRecent\t2009\t2010\t2011\t2012\t2013\tMean\tSD\nHIV-positive\t20.40%\t16.40%\t14.20%\t18.20%\t17.60%\t17.36%\t0.02286482\nHIV-negative\t4.00%\t3.40%\t2.70%\t2.90%\t3.10%\t3.22%\t0.005069517\nhttps://csrh.arts.unsw.edu.au/media/CSRHFile/GCPS.Sydney.2013.Report.pdf"
+    },
+    {
+        "ParameterID": "IDU.MSMUse.HIVPos",
+        "ArrayName": "Param",
+        "ArrayNumber": "49",
+        "InterfaceID": "ParamHolder_49",
+        "DistributionType": "normal",
+        "Median": 0.1736,
+        "StandardError": 0.0228,
+        "Upper95Range": 0.218288,
+        "Lower95Range": 0.128912,
+        "CalculatedMedian": 0.1736,
+        "NumberOfSamples": 1,
+        "Val": [
+            0.15197600762150798
+        ],
+        "MinValue": 0,
+        "MaxValue": 1,
+        "Description": "Injecting behaviour in MSM (HIV positive and negative) Table 27\t\t\t\t\t\t\t\nRecent\t2009\t2010\t2011\t2012\t2013\tMean\tSD\nHIV-positive\t20.40%\t16.40%\t14.20%\t18.20%\t17.60%\t17.36%\t0.02286482\nHIV-negative\t4.00%\t3.40%\t2.70%\t2.90%\t3.10%\t3.22%\t0.005069517\nhttps://csrh.arts.unsw.edu.au/media/CSRHFile/GCPS.Sydney.2013.Report.pdf"
+    },
+    {
+        "ParameterID": "IDU.NSP.P",
+        "ArrayName": "Param",
+        "ArrayNumber": "50",
+        "InterfaceID": "ParamHolder_50",
+        "DistributionType": "optimisedsample",
+        "Median": null,
+        "StandardError": null,
+        "Upper95Range": null,
+        "Lower95Range": null,
+        "CalculatedMedian": null,
+        "NumberOfSamples": 1,
+        "Val": [],
+        "MinValue": 0,
+        "MaxValue": 1,
+        "Description": "This is the annual probability of starting attendance at an NSP if currently a regular user of injecting drugs."
+    },
+    {
+        "ParameterID": "IDU.ProportionMale",
+        "ArrayName": "Param",
+        "ArrayNumber": "51",
+        "InterfaceID": "ParamHolder_51",
+        "DistributionType": "normal",
+        "Median": 0.66,
+        "StandardError": 0.05,
+        "Upper95Range": 0.758,
+        "Lower95Range": 0.562,
+        "CalculatedMedian": 0.66,
+        "NumberOfSamples": 1,
+        "Val": [
+            0.5960446236298645
+        ],
+        "MinValue": 0,
+        "MaxValue": 1,
+        "Description": ""
+    },
+    {
+        "ParameterID": "IDU.RateOfCeasingIrregularUse",
+        "ArrayName": "PGroup.ParamArray",
+        "ArrayNumber": "52",
+        "InterfaceID": "ParamHolder_52",
+        "DistributionType": "optimisedsample",
+        "Median": null,
+        "StandardError": null,
+        "Upper95Range": null,
+        "Lower95Range": null,
+        "CalculatedMedian": null,
+        "NumberOfSamples": 1,
+        "Val": [],
+        "MinValue": 0,
+        "MaxValue": 1,
+        "Description": ""
+    },
+    {
+        "ParameterID": "IDU.RateOfCessation",
+        "ArrayName": "Param",
+        "ArrayNumber": "53",
+        "InterfaceID": "ParamHolder_53",
+        "DistributionType": "optimisedsample",
+        "Median": null,
+        "StandardError": null,
+        "Upper95Range": null,
+        "Lower95Range": null,
+        "CalculatedMedian": null,
+        "NumberOfSamples": 1,
+        "Val": [],
+        "MinValue": 0,
+        "MaxValue": 1,
+        "Description": "An annual rate that is optimised in the simulation."
+    },
+    {
+        "ParameterID": "IDU.RelationshipDuration.Val0",
+        "ArrayName": "Param",
+        "ArrayNumber": "54",
+        "InterfaceID": "ParamHolder_54",
+        "DistributionType": "normal",
+        "Median": 0.36,
+        "StandardError": 0.05,
+        "Upper95Range": 0.45799999999999996,
+        "Lower95Range": 0.262,
+        "CalculatedMedian": 0.36,
+        "NumberOfSamples": 1,
+        "Val": [
+            0.37435848232727387
+        ],
+        "MinValue": 0,
+        "MaxValue": 1,
+        "Description": "Duration of relationship <1 year\nUsing Dyadic Data for a Network Analysis of HIV Infection and Risk Behaviors Among Injecting Drug Users\nAlan Neaigus, Samuel R. Friedman, Marjorie Goldstein, Gilbert Ildefonso, Richard Curtis, and Benny Jose\nTable 4, <1 year 36% 1-5 years 29% >5 Years 35%"
+    },
+    {
+        "ParameterID": "IDU.RelationshipDuration.Val1",
+        "ArrayName": "Param",
+        "ArrayNumber": "55",
+        "InterfaceID": "ParamHolder_55",
+        "DistributionType": "normal",
+        "Median": 0.29,
+        "StandardError": 0.05,
+        "Upper95Range": 0.388,
+        "Lower95Range": 0.19199999999999998,
+        "CalculatedMedian": 0.29,
+        "NumberOfSamples": 1,
+        "Val": [
+            0.31275804396726814
+        ],
+        "MinValue": 0,
+        "MaxValue": 1,
+        "Description": "Duration of relationship 1-5 years\nUsing Dyadic Data for a Network Analysis of HIV Infection and Risk Behaviors Among Injecting Drug Users\nAlan Neaigus, Samuel R. Friedman, Marjorie Goldstein, Gilbert Ildefonso, Richard Curtis, and Benny Jose\nTable 4, <1 year 36% 1-5 years 29% >5 Years 35%"
+    },
+    {
+        "ParameterID": "IDU.RelationshipDuration.Val2",
+        "ArrayName": "Param",
+        "ArrayNumber": "56",
+        "InterfaceID": "ParamHolder_56",
+        "DistributionType": "normal",
+        "Median": 0.35,
+        "StandardError": 0.05,
+        "Upper95Range": 0.44799999999999995,
+        "Lower95Range": 0.252,
+        "CalculatedMedian": 0.35,
+        "NumberOfSamples": 1,
+        "Val": [
+            0.3897757241872918
+        ],
+        "MinValue": 0,
+        "MaxValue": 1,
+        "Description": "Duration of relationship >5 years\nUsing Dyadic Data for a Network Analysis of HIV Infection and Risk Behaviors Among Injecting Drug Users\nAlan Neaigus, Samuel R. Friedman, Marjorie Goldstein, Gilbert Ildefonso, Richard Curtis, and Benny Jose\nTable 4, <1 year 36% 1-5 years 29% >5 Years 35%"
+    },
+    {
+        "ParameterID": "IDU.Sex.AnyLastMonth",
+        "ArrayName": "Param",
+        "ArrayNumber": "57",
+        "InterfaceID": "ParamHolder_57",
+        "DistributionType": "normal",
+        "Median": 0.682,
+        "StandardError": 0.047,
+        "Upper95Range": 0.77412,
+        "Lower95Range": 0.5898800000000001,
+        "CalculatedMedian": 0.682,
+        "NumberOfSamples": 1,
+        "Val": [
+            0.6519578303197819
+        ],
+        "MinValue": 0,
+        "MaxValue": 1,
+        "Description": "From the NSP report 1995-2010. There does not seem to be any trend in relationship seeking. \n\nCalculations can be found in nspintimatepartner.xlsx\n\nSex last month (%)\n68.2%\nStandard deviation 0.046756668\n\nOf people who had sex\tSD\nOnly sex with a regular partner\t\n74.9%\t0.012921987\nOnly sex with non-regular partner\t\n22.4%\t0.022388323\nSex with both regular and non-regular partner\t\n6.8%\t0.031168392"
+    },
+    {
+        "ParameterID": "IDU.Sex.FirstInjectionHadSexualPartner",
+        "ArrayName": "Param",
+        "ArrayNumber": "58",
+        "InterfaceID": "ParamHolder_58",
+        "DistributionType": "normal",
+        "Median": null,
+        "StandardError": null,
+        "Upper95Range": null,
+        "Lower95Range": null,
+        "CalculatedMedian": null,
+        "NumberOfSamples": 1,
+        "Val": [
+            0
+        ],
+        "MinValue": "",
+        "MaxValue": "",
+        "Description": "Gender Differences in Circumstances Surrounding First Injection Experience of Rural Injection Drug Users in the United States\nhttp://www.ncbi.nlm.nih.gov/pmc/articles/PMC3874445/\nTable 1\n7% of men had partner present, 36% of women had partner present"
+    },
+    {
+        "ParameterID": "IDU.Sex.OtherLastMonth",
+        "ArrayName": "Param",
+        "ArrayNumber": "59",
+        "InterfaceID": "ParamHolder_59",
+        "DistributionType": "normal",
+        "Median": 0.224,
+        "StandardError": 0.0223,
+        "Upper95Range": 0.267708,
+        "Lower95Range": 0.180292,
+        "CalculatedMedian": 0.224,
+        "NumberOfSamples": 1,
+        "Val": [
+            0.24255807563194165
+        ],
+        "MinValue": 0,
+        "MaxValue": 1,
+        "Description": "From the NSP report 1995-2010. There does not seem to be any trend in relationship seeking. \n\nCalculations can be found in nspintimatepartner.xlsx\n\nSex last month (%)\n68.2%\nStandard deviation 0.046756668\n\nOf people who had sex\tSD\nOnly sex with a regular partner\t\n74.9%\t0.012921987\nOnly sex with non-regular partner\t\n22.4%\t0.022388323\nSex with both regular and non-regular partner\t\n6.8%\t0.031168392"
+    },
+    {
+        "ParameterID": "IDU.Sex.RegularAndOtherLastMonth",
+        "ArrayName": "Param",
+        "ArrayNumber": "60",
+        "InterfaceID": "ParamHolder_60",
+        "DistributionType": "normal",
+        "Median": 0.068,
+        "StandardError": 0.031,
+        "Upper95Range": 0.12876,
+        "Lower95Range": 0.007240000000000003,
+        "CalculatedMedian": 0.068,
+        "NumberOfSamples": 1,
+        "Val": [
+            0.030230756488449924
+        ],
+        "MinValue": 0,
+        "MaxValue": 1,
+        "Description": "From the NSP report 1995-2010. There does not seem to be any trend in relationship seeking. \n\nCalculations can be found in nspintimatepartner.xlsx\n\nSex last month (%)\n68.2%\nStandard deviation 0.046756668\n\nOf people who had sex\tSD\nOnly sex with a regular partner\t\n74.9%\t0.012921987\nOnly sex with non-regular partner\t\n22.4%\t0.022388323\nSex with both regular and non-regular partner\t\n6.8%\t0.031168392"
+    },
+    {
+        "ParameterID": "IDU.Sex.RegularLastMonth",
+        "ArrayName": "Param",
+        "ArrayNumber": "61",
+        "InterfaceID": "ParamHolder_61",
+        "DistributionType": "normal",
+        "Median": 0.749,
+        "StandardError": 0.0129,
+        "Upper95Range": 0.774284,
+        "Lower95Range": 0.723716,
+        "CalculatedMedian": 0.749,
+        "NumberOfSamples": 1,
+        "Val": [
+            0.7410634372239099
+        ],
+        "MinValue": 0,
+        "MaxValue": 1,
+        "Description": "From the NSP report 1995-2010. There does not seem to be any trend in relationship seeking. \n\nCalculations can be found in nspintimatepartner.xlsx\n\nSex last month (%)\n68.2%\nStandard deviation 0.046756668\n\nOf people who had sex\tSD\nOnly sex with a regular partner\t\n74.9%\t0.012921987\nOnly sex with non-regular partner\t\n22.4%\t0.022388323\nSex with both regular and non-regular partner\t\n6.8%\t0.031168392"
+    },
+    {
+        "ParameterID": "IDU.Sex.RegularPartnerInjects",
+        "ArrayName": "Param",
+        "ArrayNumber": "62",
+        "InterfaceID": "ParamHolder_62",
+        "DistributionType": "normal",
+        "Median": 0.45,
+        "StandardError": 0.05,
+        "Upper95Range": 0.548,
+        "Lower95Range": 0.352,
+        "CalculatedMedian": 0.45,
+        "NumberOfSamples": 1,
+        "Val": [
+            0.392085737176039
+        ],
+        "MinValue": 0,
+        "MaxValue": 1,
+        "Description": "http://www.tandfonline.com/doi/pdf/10.1080/09540128908260235\nTable 6 and 7\n\nAbout 50% of sexual partners a non-injectors. The proportion of people who have any sexual partners and regular partners line up quite well with the ANSP Survey\n\nTable 7\nTime 1: 32/(32+36)= 47%\nTime 2: 21/(21+31)= 40%\n"
+    },
+    {
+        "ParameterID": "IDU.Sexuality.Bisexual",
+        "ArrayName": "Param",
+        "ArrayNumber": "63",
+        "InterfaceID": "ParamHolder_63",
+        "DistributionType": "normal",
+        "Median": 0.10168597326509629,
+        "StandardError": 0.003272700928495954,
+        "Upper95Range": 0.10810046708494836,
+        "Lower95Range": 0.09527147944524422,
+        "CalculatedMedian": 0.10168597326509629,
+        "NumberOfSamples": 1,
+        "Val": [
+            0.09717141508201638
+        ],
+        "MinValue": 0,
+        "MaxValue": 1,
+        "Description": "Using data from NSP surveys:\nMean(Divide(Data.NSP.SexId.Bisexual,Data.NSP.SexId.Total))\n0.10168597326509629\n\nSampleStandardDeviation(Divide(Data.NSP.SexId.Bisexual,Data.NSP.SexId.Total))/Sqrt(Data.NSP.SexId.Total.length)\n0.003272700928495954\n\nA note about this result: the ratios in the interface may add up to more or less than 1, however in the simulation, the total is always normalised. \n"
+    },
+    {
+        "ParameterID": "IDU.Sexuality.Heterosexual",
+        "ArrayName": "Param",
+        "ArrayNumber": "64",
+        "InterfaceID": "ParamHolder_64",
+        "DistributionType": "normal",
+        "Median": 0.8441330759440854,
+        "StandardError": 0.005154381950208994,
+        "Upper95Range": 0.854235664566495,
+        "Lower95Range": 0.8340304873216757,
+        "CalculatedMedian": 0.8441330759440854,
+        "NumberOfSamples": 1,
+        "Val": [
+            0.8341216230710542
+        ],
+        "MinValue": 0,
+        "MaxValue": 1,
+        "Description": "Mean(Divide(Data.NSP.SexId.Heterosexual,Data.NSP.SexId.Total))\n0.8441330759440854\nSampleStandardDeviation(Divide(Data.NSP.SexId.Heterosexual,Data.NSP.SexId.Total))/Sqrt(Data.NSP.SexId.Total.length)\n0.005154381950208994\n\nA note about this result: the ratios in the interface may add up to more or less than 1, however in the simulation, the total is always normalised. \n"
+    },
+    {
+        "ParameterID": "IDU.Sexuality.Homosexual",
+        "ArrayName": "Param",
+        "ArrayNumber": "65",
+        "InterfaceID": "ParamHolder_65",
+        "DistributionType": "normal",
+        "Median": 0.054180950790818194,
+        "StandardError": 0.002641192345429296,
+        "Upper95Range": 0.05935768778785962,
+        "Lower95Range": 0.04900421379377677,
+        "CalculatedMedian": 0.054180950790818194,
+        "NumberOfSamples": 1,
+        "Val": [
+            0.05367417890424805
+        ],
+        "MinValue": 0,
+        "MaxValue": 1,
+        "Description": "Mean(Divide(Data.NSP.SexId.Homosexual,Data.NSP.SexId.Total))\n0.054180950790818194\n\nSampleStandardDeviation(Divide(Data.NSP.SexId.Homosexual,Data.NSP.SexId.Total))/Sqrt(Data.NSP.SexId.Total.length)\n0.002641192345429296\n\nA note about this result: the ratios in the interface may add up to more or less than 1, however in the simulation, the total is always normalised. \n\n"
+    },
+    {
+        "ParameterID": "IDU.Sharing.PriorToNSP",
+        "ArrayName": "PGroup.ParamArray",
+        "ArrayNumber": "66",
+        "InterfaceID": "ParamHolder_66",
+        "DistributionType": "normal",
+        "Median": 0.6,
+        "StandardError": 0.08,
+        "Upper95Range": 0.7567999999999999,
+        "Lower95Range": 0.4432,
+        "CalculatedMedian": 0.6,
+        "NumberOfSamples": 1,
+        "Val": [
+            0.6507961307260095
+        ],
+        "MinValue": "",
+        "MaxValue": "",
+        "Description": "This is a rate of receptive sharing in the past year, for people who have not used NSP\n\nFrom Measuring harm reduction: the effects of needle and syringe exchange programs and methadone maintenance on the ecology of HIV:\n\nhttp://www.geo.hunter.cuny.edu/~dgreimer/TEMPALSKI/Drucker.pdf  \n\nWalters et al.,1994\n5644 San Francisco Drug detox and street recruited\n1986-1992 Percent using NSEP at least 25 times in previous year increased from 14% in 1989 to 28% in 1992. \nDecrease in sharing from 66%, in 1987 to 36% in 1992 for full study population. In multivariate analysis, greater use of NSEP associated with less sharing.\n\nWatters JK, Estilo MJ, Clark GL, Lorvick J: Syringe and needle exchange as HIV/AIDS prevention for injection drug users. JAMA 1994, 271:115-120.\n\n\nKeene et al 1993 [25]\n328 Wales IDU using and not using NSEP.\n1990-1991 NSEP users and nonusers had similar rates of ever sharing syringes, \n18\"6, of users shared syringes in past year compared to 52% of nonusers. \n\nKeene J, Stimson GV, Jones S, Parry-Langdon N: Evaluation of syringe-exchange for HIV prevention among injecting drug users in rural and urban areas of Wales. Addiction 1993, 88:10631070. "
+    },
+    {
+        "ParameterID": "IDU.Sharing.Rate18",
+        "ArrayName": "Param",
+        "ArrayNumber": "67",
+        "InterfaceID": "ParamHolder_67",
+        "DistributionType": "normal",
+        "Median": null,
+        "StandardError": null,
+        "Upper95Range": null,
+        "Lower95Range": null,
+        "CalculatedMedian": null,
+        "NumberOfSamples": 1,
+        "Val": [
+            0
+        ],
+        "MinValue": "",
+        "MaxValue": "",
+        "Description": ""
+    },
+    {
+        "ParameterID": "IDU.Sharing.RatePost1997",
+        "ArrayName": "PGroup.ParamArray",
+        "ArrayNumber": "68",
+        "InterfaceID": "ParamHolder_68",
+        "DistributionType": "normal",
+        "Median": 0.15,
+        "StandardError": 0.03,
+        "Upper95Range": 0.20879999999999999,
+        "Lower95Range": 0.0912,
+        "CalculatedMedian": 0.15,
+        "NumberOfSamples": 1,
+        "Val": [
+            0.1798085298638258
+        ],
+        "MinValue": 0,
+        "MaxValue": 1,
+        "Description": "Based on calculations form the ANSP Survey, the rate prior to 1997 is ~30%, and post 1997 is ~15%. See \"Receptive Sharing Risk.xlsx\" for calculations."
+    },
+    {
+        "ParameterID": "IDU.Sharing.RatePre1997",
+        "ArrayName": "PGroup.ParamArray",
+        "ArrayNumber": "69",
+        "InterfaceID": "ParamHolder_69",
+        "DistributionType": "normal",
+        "Median": 0.3,
+        "StandardError": 0.03,
+        "Upper95Range": 0.3588,
+        "Lower95Range": 0.2412,
+        "CalculatedMedian": 0.3,
+        "NumberOfSamples": 1,
+        "Val": [
+            0.2718705870463407
+        ],
+        "MinValue": 0,
+        "MaxValue": 1,
+        "Description": "Based on calculations form the ANSP Survey, the rate prior to 1997 is ~30%, and post 1997 is ~15%. See \"Receptive Sharing Risk.xlsx\" for calculations."
+    },
+    {
+        "ParameterID": "IDU.Sharing.RelativeRiskAge18to40",
+        "ArrayName": "Param",
+        "ArrayNumber": "70",
+        "InterfaceID": "ParamHolder_70",
+        "DistributionType": "normal",
+        "Median": 0.59,
+        "StandardError": 0.05,
+        "Upper95Range": 0.688,
+        "Lower95Range": 0.492,
+        "CalculatedMedian": 0.59,
+        "NumberOfSamples": 1,
+        "Val": [
+            0.5936424211253744
+        ],
+        "MinValue": 0,
+        "MaxValue": 2,
+        "Description": "This parameter indicates the relative risk by age of receptively sharing needles going from the age of 18 to the age of 40. It is based off:\nThe relationship between age and risky injecting behaviours among a sample of Australian people who inject drugs.\nhttp://www.ncbi.nlm.nih.gov/pubmed/23664499\n\nCalculations related to this figure can be found in the file \"Receptive sharing risk.xlsx\"\n\nNote that the upper limit of 2 is because theoretically the rate of sharing could go up with age, although it is unlikely. \n\nThe per year risk ratio is\n0.976905102\n\nThe per year probability of stopping injecting is \n0.023094898\n\nThese values are calculated in the model (once, hopefully)."
+    },
+    {
+        "ParameterID": "IDU.Use.Daily",
+        "ArrayName": "Param",
+        "ArrayNumber": "71",
+        "InterfaceID": "ParamHolder_71",
+        "DistributionType": "normal",
+        "Median": 0.19,
+        "StandardError": 0.05,
+        "Upper95Range": 0.28800000000000003,
+        "Lower95Range": 0.092,
+        "CalculatedMedian": 0.19,
+        "NumberOfSamples": 1,
+        "Val": [
+            0.27524898531283226
+        ],
+        "MinValue": "",
+        "MaxValue": "",
+        "Description": "Table 11.4\nhttp://www.aihw.gov.au/WorkArea/DownloadAsset.aspx?id=10737421314\n"
+    },
+    {
+        "ParameterID": "IDU.Use.Daily2or3Times",
+        "ArrayName": "Param",
+        "ArrayNumber": "72",
+        "InterfaceID": "ParamHolder_72",
+        "DistributionType": "normal",
+        "Median": 0.21,
+        "StandardError": 0.05,
+        "Upper95Range": 0.308,
+        "Lower95Range": 0.11199999999999999,
+        "CalculatedMedian": 0.21,
+        "NumberOfSamples": 1,
+        "Val": [
+            0.2196708816054933
+        ],
+        "MinValue": "",
+        "MaxValue": "",
+        "Description": "Table 11.4\nhttp://www.aihw.gov.au/WorkArea/DownloadAsset.aspx?id=10737421314\n"
+    },
+    {
+        "ParameterID": "IDU.Use.DailyMore3",
+        "ArrayName": "Param",
+        "ArrayNumber": "73",
+        "InterfaceID": "ParamHolder_73",
+        "DistributionType": "normal",
+        "Median": 0.06,
+        "StandardError": 0.05,
+        "Upper95Range": 0.158,
+        "Lower95Range": -0.038000000000000006,
+        "CalculatedMedian": 0.06,
+        "NumberOfSamples": 1,
+        "Val": [
+            0.07168367635588614
+        ],
+        "MinValue": "",
+        "MaxValue": "",
+        "Description": "Table 11.4\nhttp://www.aihw.gov.au/WorkArea/DownloadAsset.aspx?id=10737421314\n"
+    },
+    {
+        "ParameterID": "IDU.Use.MoreThanWeekly",
+        "ArrayName": "Param",
+        "ArrayNumber": "74",
+        "InterfaceID": "ParamHolder_74",
+        "DistributionType": "normal",
+        "Median": 0.35,
+        "StandardError": 0.05,
+        "Upper95Range": 0.44799999999999995,
+        "Lower95Range": 0.252,
+        "CalculatedMedian": 0.35,
+        "NumberOfSamples": 1,
+        "Val": [
+            0.3852866308720578
+        ],
+        "MinValue": "",
+        "MaxValue": "",
+        "Description": "Table 11.4\nhttp://www.aihw.gov.au/WorkArea/DownloadAsset.aspx?id=10737421314\n"
+    },
+    {
+        "ParameterID": "IDU.Use.WeeklyToMonthly",
+        "ArrayName": "Param",
+        "ArrayNumber": "75",
+        "InterfaceID": "ParamHolder_75",
+        "DistributionType": "normal",
+        "Median": 0.18,
+        "StandardError": 0.05,
+        "Upper95Range": 0.278,
+        "Lower95Range": 0.08199999999999999,
+        "CalculatedMedian": 0.18,
+        "NumberOfSamples": 1,
+        "Val": [
+            0.18263092768438519
+        ],
+        "MinValue": "",
+        "MaxValue": "",
+        "Description": "Table 11.4\nhttp://www.aihw.gov.au/WorkArea/DownloadAsset.aspx?id=10737421314\n"
+    },
+    {
+        "ParameterID": "Prison.Females",
+        "ArrayName": "Param",
+        "ArrayNumber": "76",
+        "InterfaceID": "ParamHolder_76",
+        "DistributionType": "normal",
+        "Median": 0.4,
+        "StandardError": 0,
+        "Upper95Range": 0.4,
+        "Lower95Range": 0.4,
+        "CalculatedMedian": 0.4,
+        "NumberOfSamples": 1,
+        "Val": [
+            0.4
+        ],
+        "MinValue": 0,
+        "MaxValue": 1,
+        "Description": "Ref 1: Key findings from the 2012 IDRS: a survey of people who inject drugs \n"
+    },
+    {
+        "ParameterID": "Prison.Males",
+        "ArrayName": "Param",
+        "ArrayNumber": "77",
+        "InterfaceID": "ParamHolder_77",
+        "DistributionType": "normal",
+        "Median": 0.63,
+        "StandardError": 0,
+        "Upper95Range": 0.63,
+        "Lower95Range": 0.63,
+        "CalculatedMedian": 0.63,
+        "NumberOfSamples": 1,
+        "Val": [
+            0.63
+        ],
+        "MinValue": 0,
+        "MaxValue": 1,
+        "Description": "Ref 1: Key findings from the 2012 IDRS: a survey of people who inject drugs \n"
+    },
+    {
+        "ParameterID": "Sexuality.GeneralPopulation.Female.Bisexual",
+        "ArrayName": "PGroup.ParamArray",
+        "ArrayNumber": "78",
+        "InterfaceID": "ParamHolder_78",
+        "DistributionType": "normal",
+        "Median": 0.022,
+        "StandardError": 0,
+        "Upper95Range": 0.022,
+        "Lower95Range": 0.022,
+        "CalculatedMedian": 0.022,
+        "NumberOfSamples": 1,
+        "Val": [
+            0.022
+        ],
+        "MinValue": "",
+        "MaxValue": "",
+        "Description": "Richters (2014), Sexual identity, sexual attraction and sexual experience: the Second Australian Study of Health and Relationships, Sexual Health\n"
+    },
+    {
+        "ParameterID": "Sexuality.GeneralPopulation.Female.Heterosexual",
+        "ArrayName": "PGroup.ParamArray",
+        "ArrayNumber": "79",
+        "InterfaceID": "ParamHolder_79",
+        "DistributionType": "normal",
+        "Median": 0.963,
+        "StandardError": 0,
+        "Upper95Range": 0.963,
+        "Lower95Range": 0.963,
+        "CalculatedMedian": 0.963,
+        "NumberOfSamples": 1,
+        "Val": [
+            0.963
+        ],
+        "MinValue": "",
+        "MaxValue": "",
+        "Description": "Richters (2014), Sexual identity, sexual attraction and sexual experience: the Second Australian Study of Health and Relationships, Sexual Health\n"
+    },
+    {
+        "ParameterID": "Sexuality.GeneralPopulation.Female.Homosexual",
+        "ArrayName": "PGroup.ParamArray",
+        "ArrayNumber": "80",
+        "InterfaceID": "ParamHolder_80",
+        "DistributionType": "normal",
+        "Median": 0.012,
+        "StandardError": 0,
+        "Upper95Range": 0.012,
+        "Lower95Range": 0.012,
+        "CalculatedMedian": 0.012,
+        "NumberOfSamples": 1,
+        "Val": [
+            0.012
+        ],
+        "MinValue": "",
+        "MaxValue": "",
+        "Description": "Richters (2014), Sexual identity, sexual attraction and sexual experience: the Second Australian Study of Health and Relationships, Sexual Health\n"
+    },
+    {
+        "ParameterID": "Sexuality.GeneralPopulation.Male.Bisexual",
+        "ArrayName": "PGroup.ParamArray",
+        "ArrayNumber": "81",
+        "InterfaceID": "ParamHolder_81",
+        "DistributionType": "normal",
+        "Median": 0.013,
+        "StandardError": 0,
+        "Upper95Range": 0.013,
+        "Lower95Range": 0.013,
+        "CalculatedMedian": 0.013,
+        "NumberOfSamples": 1,
+        "Val": [
+            0.013
+        ],
+        "MinValue": "",
+        "MaxValue": "",
+        "Description": "Richters (2014), Sexual identity, sexual attraction and sexual experience: the Second Australian Study of Health and Relationships, Sexual Health\n"
+    },
+    {
+        "ParameterID": "Sexuality.GeneralPopulation.Male.Heterosexual",
+        "ArrayName": "PGroup.ParamArray",
+        "ArrayNumber": "82",
+        "InterfaceID": "ParamHolder_82",
+        "DistributionType": "normal",
+        "Median": 0.967,
+        "StandardError": 0,
+        "Upper95Range": 0.967,
+        "Lower95Range": 0.967,
+        "CalculatedMedian": 0.967,
+        "NumberOfSamples": 1,
+        "Val": [
+            0.967
+        ],
+        "MinValue": "",
+        "MaxValue": "",
+        "Description": "Richters (2014), Sexual identity, sexual attraction and sexual experience: the Second Australian Study of Health and Relationships, Sexual Health"
+    },
+    {
+        "ParameterID": "Sexuality.GeneralPopulation.Male.Homosexual",
+        "ArrayName": "PGroup.ParamArray",
+        "ArrayNumber": "83",
+        "InterfaceID": "ParamHolder_83",
+        "DistributionType": "normal",
+        "Median": 0.019,
+        "StandardError": 0,
+        "Upper95Range": 0.019,
+        "Lower95Range": 0.019,
+        "CalculatedMedian": 0.019,
+        "NumberOfSamples": 1,
+        "Val": [
+            0.019
+        ],
+        "MinValue": "",
+        "MaxValue": "",
+        "Description": "Richters (2014), Sexual identity, sexual attraction and sexual experience: the Second Australian Study of Health and Relationships, Sexual Health\n"
+    },
+    {
+        "ParameterID": "Time.DurationToAverageOver",
+        "ArrayName": "Param",
+        "ArrayNumber": "84",
+        "InterfaceID": "ParamHolder_84",
+        "DistributionType": "normal",
+        "Median": 5,
+        "StandardError": 0,
+        "Upper95Range": 5,
+        "Lower95Range": 5,
+        "CalculatedMedian": 5,
+        "NumberOfSamples": 1,
+        "Val": [
+            5
+        ],
+        "MinValue": "",
+        "MaxValue": "",
+        "Description": ""
+    },
+    {
+        "ParameterID": "Time.EndSimulation",
+        "ArrayName": "Param",
+        "ArrayNumber": "85",
+        "InterfaceID": "ParamHolder_85",
+        "DistributionType": "normal",
+        "Median": 2020,
+        "StandardError": 0,
+        "Upper95Range": 2020,
+        "Lower95Range": 2020,
+        "CalculatedMedian": 2020,
+        "NumberOfSamples": 1,
+        "Val": [
+            2020
+        ],
+        "MinValue": "",
+        "MaxValue": "",
+        "Description": ""
+    },
+    {
+        "ParameterID": "Time.EndTreatmentData",
+        "ArrayName": "Param",
+        "ArrayNumber": "86",
+        "InterfaceID": "ParamHolder_86",
+        "DistributionType": "normal",
+        "Median": 2013,
+        "StandardError": 0,
+        "Upper95Range": 2013,
+        "Lower95Range": 2013,
+        "CalculatedMedian": 2013,
+        "NumberOfSamples": 1,
+        "Val": [
+            2013
+        ],
+        "MinValue": "",
+        "MaxValue": "",
+        "Description": ""
+    },
+    {
+        "ParameterID": "Time.StartDynamicModel",
+        "ArrayName": "Param",
+        "ArrayNumber": "87",
+        "InterfaceID": "ParamHolder_87",
+        "DistributionType": "normal",
+        "Median": 1980,
+        "StandardError": 0,
+        "Upper95Range": 1980,
+        "Lower95Range": 1980,
+        "CalculatedMedian": 1980,
+        "NumberOfSamples": 1,
+        "Val": [
+            1980
+        ],
+        "MinValue": "",
+        "MaxValue": "",
+        "Description": ""
+    },
+    {
+        "ParameterID": "Time.StartNonDynamicModel",
+        "ArrayName": "Param",
+        "ArrayNumber": "88",
+        "InterfaceID": "ParamHolder_88",
+        "DistributionType": "normal",
+        "Median": 1960,
+        "StandardError": 0,
+        "Upper95Range": 1960,
+        "Lower95Range": 1960,
+        "CalculatedMedian": 1960,
+        "NumberOfSamples": 1,
+        "Val": [
+            1960
+        ],
+        "MinValue": "",
+        "MaxValue": "",
+        "Description": ""
+    },
+    {
+        "ParameterID": "TimeStep",
+        "ArrayName": "Param",
+        "ArrayNumber": "89",
+        "InterfaceID": "ParamHolder_89",
+        "DistributionType": "normal",
+        "Median": 0.1,
+        "StandardError": 0,
+        "Upper95Range": 0.1,
+        "Lower95Range": 0.1,
+        "CalculatedMedian": 0.1,
+        "NumberOfSamples": 1,
+        "Val": [
+            0.1
+        ],
+        "MinValue": 0,
+        "MaxValue": 1,
+        "Description": "The time step is variable to allow the model to be checked for sensitivity to time step selection."
+    }
+]

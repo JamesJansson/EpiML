@@ -1,0 +1,178 @@
+
+
+.plot-container {
+	box-sizing: border-box;
+	width: 850px;
+	height: 450px;
+	padding: 20px 15px 15px 15px;
+	margin: 15px auto 30px auto;
+	border: 1px solid #ddd;
+	background: #fff;
+	background: linear-gradient(#f6f6f6 0, #fff 50px);
+	background: -o-linear-gradient(#f6f6f6 0, #fff 50px);
+	background: -ms-linear-gradient(#f6f6f6 0, #fff 50px);
+	background: -moz-linear-gradient(#f6f6f6 0, #fff 50px);
+	background: -webkit-linear-gradient(#f6f6f6 0, #fff 50px);
+	box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+	-o-box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+	-ms-box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+	-moz-box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+	-webkit-box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+}
+
+
+
+
+
+
+.plot_positioner{/* note: plot positioner refuses to work and is probably unnecessary*/
+	position: absolute;
+	
+	width: 95%;
+	width: calc(100% - 2em);
+	height: 80%;
+	height: calc(100% - 4em);
+	right: 0em;
+	top: 2em;
+	
+}
+
+.plot_placeholder {
+	/*width: 100%;
+	height: 100%;
+	top:20%;
+	font-size: 14px;
+	line-height: 1.2em;*/
+	
+	/*width: calc(100% - 1em);
+	height: calc(100% - 3em);
+	height: 90%;
+	
+	top: 3em;*/
+	
+	
+	
+	width: 100%;
+	height: 100%;
+	
+	
+	font-size: 14px;
+	line-height: 1.2em;
+}
+
+.rotate {
+             filter:  progid:DXImageTransform.Microsoft.BasicImage(rotation=0.083);  /* IE6,IE7 */
+         -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=0.083)"; /* IE8 */
+     -moz-transform: rotate(-90.0deg);  /* FF3.5+ */
+      -ms-transform: rotate(-90.0deg);  /* IE9+ */
+       -o-transform: rotate(-90.0deg);  /* Opera 10.5 */
+  -webkit-transform: rotate(-90.0deg);  /* Safari 3.1+, Chrome */
+          transform: rotate(-90.0deg);  /* Standard */
+}
+
+
+
+.legend table {
+	border-spacing: 5px;
+}
+
+
+
+
+div.plot {
+
+    margin: 5px;
+    padding: 5px;
+    border: 1px solid #999999;
+
+    width: 500px;
+	height: 400px;
+    
+    position: relative;
+	float: left;
+}
+
+div.plot plotarea {
+    display: inline;
+	width: 100%;
+	height: 100%;
+    margin: 5px;
+}
+
+.downloadbutton {
+	color: #dddddd;
+	position: absolute;
+	right: 1.2em; /*0.5em; */
+	top: 0; /*calc(100% - 1.5em); */
+	font-size:200%;
+	font-weight: 900;
+	
+	cursor: pointer;
+	-webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.downloadbutton:hover {
+	color: #000000;
+}
+
+
+
+.ylabel {
+white-space: nowrap; 
+	word-wrap:none;
+	text-align: center;
+	
+	width: 100%;
+	color: #000000;
+	position: absolute;
+	left: 5%;
+	left: calc(-50% + 1em);
+	top: 50%; 
+}
+
+.xlabel {
+	text-align: center;
+	color: #000000;
+	position: absolute;
+	left: 10%; 
+	width:80%;
+	top: calc(100% - 1.5em);
+}
+
+
+.fullscreenbox{
+	width: 100%;
+	height: 100%;
+}
+
+.fullscreenbutton{
+	color: #dddddd;
+	position: absolute;
+	right: 0.2em; 
+	top: 0; /*calc(100% - 1.5em);*/
+	font-size:200%;
+	font-weight: 900;
+
+	
+	cursor: pointer;
+	-webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+.fullscreenbutton:hover {
+	color: #000000;
+}
+
+
+
+
+
+
