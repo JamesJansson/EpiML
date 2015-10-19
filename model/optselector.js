@@ -705,15 +705,16 @@ OptSelector.prototype.PostSimulationRunFunction=function (){
 	
 	// Get all parameter results
 	this.OptimisationResults.Parameters={};
-	for (var PCount in this.ParamGroup){
-		var PID=this.ParamGroup[PCount].ID;
-		var Values=this.ParamGroup[PCount].Val;
+	for (var PCount in this.ParamGroup.ParamArray){
+		console.log();
+		var PID=this.ParamGroup.ParamArray[PCount].ParameterID;
+		var Values=this.ParamGroup.ParamArray[PCount].Val;
 		this.OptimisationResults.Parameters[PID]=Values;
 	}
 	
 	// Save the optimisation results
 	
-	this.SaveOptimisatonResult('./Data/OptimisationResults.json');
+	this.SaveOptimisationResult('./Data/OptimisationResults.json');
 	// this.SimulationHolder.Result.OptimisedParameter
 	
 	// this.ParamGroup.AddOptimisationResults
@@ -754,8 +755,9 @@ OptSelector.prototype.SaveOptimisationResult=function (FileName){
 	OptimisationFile.OptimisedParameters=this.OptimisationResults.OptimisedParameters;
 	OptimisationFile.Parameters=this.OptimisationResults.Parameters;
 	
+	console.log(OptimisationFile);
 	
-	var OptJSONString=JSON.stringify(this.ParamArray, null, 4);//gives 4 spaces between elements
+	var OptJSONString=JSON.stringify(OptimisationFile, null, 4);//gives 4 spaces between elements
 	var fs=require('fs');
 	fs.writeFile(FileName, OptJSONString , function(err) {
 		if(err) {
