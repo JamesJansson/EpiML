@@ -24,7 +24,6 @@ gui.App.setCrashDumpDir("./crashdump");
 
 function InitialiseEpiML(){
 	
-	TestingPageRequirements();	
 	
 	// Load settings
 	LoadSettingsFiles();
@@ -63,14 +62,6 @@ function InitialiseEpiML(){
 
 	
 	console.log("EpiML initialised")
-}
-
-function TestingPageRequirements(){
-	//Testing the required elements for EpiML
-	//Web workers
-	if(typeof(Worker) == "undefined") {
-		alert("Webworkers are not supported in this browser. EpiML requires webworkers to run. Try upgrading your browser");
-	}
 }
 
 
