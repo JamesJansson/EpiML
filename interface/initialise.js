@@ -42,9 +42,7 @@ function InitialiseEpiML(){
 	LoadDataFiles();
 	ExtractDataFromFiles();
 	
-	// Create the DataExtractionObject
-	HCVDEOGroup=new DataExtractionObjectGroup("RandomGroup");
-	HCVDEOGroup.AddDEO(HCVDataExtractionObjects());
+
 	
 	// Load the optimisation interface
 	var Functions={};
@@ -60,6 +58,14 @@ function InitialiseEpiML(){
 	
 	HCVOptSelector=new OptSelector('HCVOptSelector', 'HCVOptSelectorHolder', Functions, PGroup, 'HCVDataExtractionObjects',  Settings, ModelDirectory, Common);
 
+	
+	// Load the regular model
+	
+	
+	
+	
+	
+	
 	
 	console.log("EpiML initialised")
 }
