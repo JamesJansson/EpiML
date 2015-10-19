@@ -77,7 +77,7 @@ function OptSelector(Name, DivID, Functions, PointerToParamGroup, DEOArrayFuncti
 	this.OptParamArray=[];
 	this.ParamToOptimise=[];// is used for selecting whether the optimisation occurs or not
 	this.ArrayOfOptimisedSimOutput=[];
-	this.OptimisationResults={}};
+	this.OptimisationResults={};
 	
 	
 	this.ImportParam();
