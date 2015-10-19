@@ -401,7 +401,7 @@ ParameterPage.prototype.AddNewParameter= function(){
 
 ParameterPage.prototype.SaveParameters= function(OptionalFileName){
 	// Press save on all the buttons
-	for (Key in this.ParamArray){
+	for (var Key in this.ParamArray){
 		this.ParamArray[Key].Save();//Update all parameters because changing the HTML forces it to a normal distr. option.
 	}
 	
@@ -431,6 +431,7 @@ ParameterPage.prototype.SaveParameters= function(OptionalFileName){
 		FileName=OptionalFileName;
 	}
 	
+	var fs=require('fs');
 	fs.writeFile(FileName, ParamJSONString , function(err) {
 		if(err) {
 			alert("There was an error writing to the "+FileName+ " file. See console for details.");
@@ -440,7 +441,7 @@ ParameterPage.prototype.SaveParameters= function(OptionalFileName){
 };
 
 ParameterPage.prototype.UpdateArrayPositions= function(){
-	for (Key in this.ParamArray){
+	for (var Key in this.ParamArray){
 		this.ParamArray[Key].ArrayNumber=Key;
 		this.ParamArray[Key].SetInterfaceID(this.InterfaceHolder);
 	}
@@ -635,11 +636,25 @@ ParameterGroup.prototype.CreateOptimisationStructure=function(ArrayOfParamNameTo
 	return OptimisationObject;
 };
 
+ParameterGroup.prototype.GetParameter= function(ParameterID){
+	for (var PCount in this.ParamArray){
+		if (this.ParamArray[PCount].ParameterID==ParameterID){
+			return this.ParamArray[PCount];
+		}
+	}
+	return 0;
+}
+
 ParameterGroup.prototype.AddOptimisationResults= function(ArrayOfOptimisedParam){
-	
+	for (var ParamName in ArrayOfOptimisedParam){
+		// Find the result in the array
+		
+		// if the parameter does not exist
+		throw "A parameter by that name could not be found";
+	}
 	
 	// update the interface to show the mean and 95% ranges, be lazy and update the whole thing
-	
+	this.Save();
 };
 
 ParameterGroup.prototype.DisplayParameters= function(){
@@ -659,6 +674,10 @@ ParameterGroup.prototype.DisplayParameters= function(){
 	}
 	console.log(DispString);
 };
+
+
+
+
 
 
 // var PGroup= new ParameterGroup("PGroup");
