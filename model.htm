@@ -118,11 +118,18 @@
 		<h1>Home</h1>
 		<p> This model is a work in progress. The results have not yet been confirmed. Please contact jjansson@kirby.unsw.edu.au for enquiries. </p>
 		
+		<p><b>Simulation Status</b></p>
+		<input type='text' id='StatusTextElement0' value=''><br>
+		<input type='text' id='StatusTextElement1' value=''><br>
+		<input type='text' id='StatusTextElement2' value=''><br>
+		<input type='text' id='StatusTextElement3' value=''><br>
+		<input type='text' id='StatusTextElement4' value=''><br>
+		<input type='text' id='StatusTextElement5' value=''><br>
+		<input type='text' id='StatusTextElement6' value=''><br>
+		<input type='text' id='StatusTextElement7' value=''><br>
 		
-		<p> <b>Use existing optimisation (if it exists) </b> </p>
-		<input type="checkbox" onClick="FutureCheckBox=this.checked;">PWID Entry Optimisation<br>
-		<input type="checkbox" onClick="FutureCheckBox=this.checked;">PWID Progression and Exit<br>
-		<input type="checkbox" onClick="FutureCheckBox=this.checked;">PWID Intervention<br>
+		
+		
 		
 		<p>Run the simulation but keep sims alive to extract results from </p>
 		<div id="RunPersistentSimButton" class="SolidButton" onClick="RunPersistentSim();"> Run Notification Sim </div>
@@ -140,24 +147,12 @@
 		<div id="PlotFibrosisButton" class="SolidButton" onClick="DownloadSimulationResults();"> Download Results </div>
 		
 		
-		<input type='text' id='StatusTextElement0' value=''><br>
-		<input type='text' id='StatusTextElement1' value=''><br>
-		<input type='text' id='StatusTextElement2' value=''><br>
-		<input type='text' id='StatusTextElement3' value=''><br>
-		<input type='text' id='StatusTextElement4' value=''><br>
-		<input type='text' id='StatusTextElement5' value=''><br>
-		<input type='text' id='StatusTextElement6' value=''><br>
-		<input type='text' id='StatusTextElement7' value=''><br>
-		
-		
-		
 
-		<div id="HCVResultsTable"></div>		
+		
+		
+		
+	
 
-		<div class="plot-container">
-			<div id="DxUDxPlotHolder" class="plot_placeholder"></div>
-		</div>
-		<div id="DxUDxResultsTable"></div>
 		
 		
 
@@ -324,7 +319,7 @@
 				<div class="plot-container">
 					<div id="HCVTestPlotHolder" class="plot_placeholder"></div>
 				</div>
-			<div id="HCVResultsTable"></div>
+
 			</div>
 		</div>
 		
