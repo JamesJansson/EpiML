@@ -151,20 +151,6 @@
 		
 		
 		
-		<div class="plot" id="plot1" >
-			<div class="fullscreenbox" id="plot1_fullscreenbox" >
-				<div class="fullscreenbutton" title="Fullscreen" id="plot1_fullscreenbutton" onclick="ToggleFullScreen('plot1_fullscreenbox');">&#10063</div>
-				<div class="downloadbutton" title="Download data" onclick="DownloadSummaryStatisticCSV(SimulationHolder.Result[0].AgeInfectedResult);plot1_data.Download();">&#x21E9;</div>
-				
-				<div class="plot_positioner">
-					<div id="plot1_placeholder" class="plot_placeholder"></div>
-				</div>
-				<div class="xlabel">Year</div>
-				<div class="ylabel"><div class="rotate">Number of cases</div></div>
-			</div>
-		</div>
-		
-		In future, we will have a "plotupdate" function, that replaces both the data download button, axes and the chart itself. 
 
 		<div id="HCVResultsTable"></div>		
 
@@ -172,9 +158,6 @@
 			<div id="DxUDxPlotHolder" class="plot_placeholder"></div>
 		</div>
 		<div id="DxUDxResultsTable"></div>
-		
-		<div id="nodetestbutton" class="SolidButton" onClick="var cp = require('child_process');var child=[];sim=0;child[sim] = cp.fork('./testworker.js');child[sim].on('message', function(m) {console.log('received: ' + m);});child[sim].send(sim);"> Run simulation </div>
-		
 		
 		
 
