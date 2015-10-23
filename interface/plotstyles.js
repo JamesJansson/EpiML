@@ -2,8 +2,7 @@
 // Requires:
 // flot plotting library to work
 // Papaparse for the download button to work
-// Requires 
-// also requires the morris.js library to work
+
 
 
 function GeneralPlot(Settings){
