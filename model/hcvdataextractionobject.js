@@ -10,10 +10,43 @@
 function HCVDataExtractionObjects(){
 	var GraphTime=AscendingArray(1970, 2020, 1);
 	var DEO=[];//Array of DataExtractionObject
-	var NewDEO;
+	
+	var NSPErrorWeight=50;
 
 	DEO.push(HCVDEONotificationsTotal(GraphTime));
 	DEO.push(HCVDEOEverInjectingDrugsTotal(GraphTime));
+	DEO.push(HCVDEORecentInjectingDrugsTotal(GraphTime));
+	DEO.push(HCVDEORecentlyBecameInjector(GraphTime));
+	DEO.push(HCVDEONSPParticipants(GraphTime));
+	DEO.push(HCVDEOHeterosexualNSPProp(GraphTime));
+	DEO.push(HCVDEOHomosexualNSPProp(GraphTime));
+	DEO.push(HCVDEOBisexualNSPProp(GraphTime));
+	DEO.push(HCVDEOTotalInfectedPlot(GraphTime));
+	DEO.push(HCVDEONSPHCVAntibodyProp(GraphTime, NSPErrorWeight));
+	DEO=DEO.concat(HCVDEONSPHCVAntibodyPropByAgeAndSex(GraphTime, NSPErrorWeight));
+	DEO.push(HCVDEOPropIDUInfectedPlot(GraphTime));
+	DEO.push(HCVDEOPropNSPCurrentMethdone(GraphTime));
+	DEO.push(HCVDEOPropNSPPreviousMethdone(GraphTime));
+	DEO.push(HCVDEOPropNSPNeverMethdone(GraphTime));
+	DEO=DEO.concat(HCVDEOFibrosis(GraphTime));
+	DEO.push(HCVDEOHCVTransplants(GraphTime));
+	DEO.push(HCVDEOHCVTreatment(GraphTime));
+	DEO.push(HCVDEONumNSWHCVWithDecomp(GraphTime));
+	DEO.push(HCVDEONumNSWHCVWithDecompAdmitted(GraphTime));
+	DEO.push(HCVDEONSWHCCDiagnoses(GraphTime));
+	DEO.push(HCVDEONSWHCVMortalityAllCause(GraphTime));
+	DEO.push(HCVDEONSWHCVMortalityLiver(GraphTime));
+	DEO.push(HCVDEOIncidenceHITSC(GraphTime));
+	DEO.push(HCVDEOIncidenceNSP(GraphTime));
+	DEO.push(HCVDEOIncidenceGeneral(GraphTime));
+	DEO=DEO.concat(HCVDEONotificationsByAgeAndSex(GraphTime));
+	DEO=DEO.concat(HCVDEOEverInjectorsByAgeAndSex(GraphTime));
+	DEO=DEO.concat(HCVDEORecentInjectorsByAgeAndSex(GraphTime));
+
+	
+	
+	// for each element 
+	// .SetGraphTime(GraphTime);
 
 	return DEO;//Array of DataExtractionObject
 }
@@ -380,7 +413,7 @@ function HCVDEOBisexualNSPProp(GraphTime){
 
 
 
-function HCVTotalInfectedPlot(GraphTime){
+function HCVDEOTotalInfectedPlot(GraphTime){
 	// Display of infections (no data)
 	NewDEO=new DataExtractionObject();
 	
@@ -418,14 +451,15 @@ function HCVTotalInfectedPlot(GraphTime){
 	// ******************************************************************************************************
 	// ******************************************************************************************************
 	// HCV prevalence in IDU - HCV prevalence in NSP users
-	
-	var NSPErrorWeight=50;
-	
-	NewDEO=new DataExtractionObject();
+
+
+
+function HCVDEONSPHCVAntibodyProp(GraphTime, NSPErrorWeight){
+	var NewDEO=new DataExtractionObject();
 	// Load the data into the function 
 	var DataStruct={};
 	DataStruct.Time=Data.NSP.Year;
-	DataStruct.Value=Data.NSP.HCVAntiBody.Total.Proportion;// NSP HCV antibody prevalence !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	DataStruct.Value=Data.NSP.HCVAntiBody.Total.Proportion;// NSP HCV antibody prevalence
 	NewDEO.SetData(DataStruct);
 	NewDEO.SetGraphTime(GraphTime);
 	NewDEO.Name="NSPHCVAntibodyProp";
@@ -467,17 +501,19 @@ function HCVTotalInfectedPlot(GraphTime){
 	};
 	NewDEO.Optimisation.Weight=NSPErrorWeight;
 	
+	return NewDEO;
+}
+
+
+
 	
-	// Add the object to the array of all ODEOS
-	DEO.push(NewDEO);
-	
-	
-	
+function HCVDEONSPHCVAntibodyPropByAgeAndSex(GraphTime, NSPErrorWeight){
 	// ******************************************************************************************************
-	// HCV prevalence in NSP by age and sex
+	// Returns an array of HCV prevalence in NSP by age and sex
+	var DEO=[];
 	
 	// Males under 25
-	NewDEO=new DataExtractionObject();
+	var NewDEO=new DataExtractionObject();
 	// Load the data into the function 
 	var DataStruct={};
 	DataStruct.Time=Data.NSP.Year;
@@ -631,8 +667,6 @@ function HCVTotalInfectedPlot(GraphTime){
 	NewDEO.Optimisation.Weight=NSPErrorWeight;
 	// Add the object to the array of all ODEOS
 	DEO.push(NewDEO);
-	
-	
 	
 	
 	// Females under 25
@@ -790,13 +824,16 @@ function HCVTotalInfectedPlot(GraphTime){
 	// Add the object to the array of all ODEOS
 	DEO.push(NewDEO);
 	
-	// ******************************************************************************************************
-	// ******************************************************************************************************
-	// ******************************************************************************************************
-	// HCV prevalence in all IDU 
-	
-	// Display of infections (no data)
-	NewDEO=new DataExtractionObject();
+	return DEO;
+}
+
+
+
+
+
+function HCVDEOPropIDUInfectedPlot(GraphTime){
+	// HCV prevalence in all IDU - Display of infections (no data)
+	var NewDEO=new DataExtractionObject();
 	
 	var EmptyData={};
 	EmptyData.Value=[];
@@ -834,37 +871,13 @@ function HCVTotalInfectedPlot(GraphTime){
 		// This value is calculated by age group
 		return 0;
 	};
-	// Add the object to the array of all ODEOS
-	DEO.push(NewDEO);
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	// ******************************************************************************************************
-	// ******************************************************************************************************
-	// ******************************************************************************************************
+	return NewDEO;
+}
+
+function HCVDEOPropNSPCurrentMethdone(GraphTime){
 	// NSP in methadone maintenance
 	
-	NewDEO=new DataExtractionObject();
+	var NewDEO=new DataExtractionObject();
 	
 	// Load the data into the function 
 	var DataStruct={};
@@ -899,20 +912,17 @@ function HCVTotalInfectedPlot(GraphTime){
 		return 0;
 	};
 	console.log("Not currently extracting");
-	
-	
-	// Set optimisation
-	
+
 	NewDEO.Optimisation.ProportionalError=true;
 	
 	// Add the object to the array of all ODEOS
-	DEO.push(NewDEO);
+	return NewDEO;
+}
 	
 	
-	
-	
+function HCVDEOPropNSPPreviousMethdone(GraphTime){
 	// Proportion previously 
-	NewDEO=new DataExtractionObject();
+	var NewDEO=new DataExtractionObject();
 	
 	// Load the data into the function 
 	var DataStruct={};
@@ -946,20 +956,17 @@ function HCVTotalInfectedPlot(GraphTime){
 		
 		return 0;
 	};
-	console.log("Not currently extracting");
-	
-	
+	console.error("Not currently extracting");
 	// Set optimisation
-	
 	NewDEO.Optimisation.ProportionalError=true;
 	
 	// Add the object to the array of all ODEOS
-	DEO.push(NewDEO);
+	return NewDEO;
+}
 	
-	
-	
+function HCVDEOPropNSPNeverMethdone(GraphTime){
 	// Proportion never 
-	NewDEO=new DataExtractionObject();
+	var NewDEO=new DataExtractionObject();
 	
 	// Load the data into the function 
 	var DataStruct={};
@@ -990,18 +997,15 @@ function HCVTotalInfectedPlot(GraphTime){
 			}
 		}
 		
-		
 		return 0;
 	};
-	console.log("Not currently extracting");
-	
+	console.error("Not currently extracting");
 	// Set optimisation
-	
 	NewDEO.Optimisation.ProportionalError=true;
 	
 	// Add the object to the array of all ODEOS
-	DEO.push(NewDEO);
-	
+	return NewDEO;
+}	
 	
 	
 	
@@ -1009,7 +1013,8 @@ function HCVTotalInfectedPlot(GraphTime){
 	// ******************************************************************************************************
 	// ******************************************************************************************************
 	// Fibrosis staging in all PLHCV
-	
+function HCVDEOFibrosis(GraphTime){	
+	var DEO=[];
 	// F0
 	NewDEO=new DataExtractionObject();
 	
@@ -1083,6 +1088,7 @@ function HCVTotalInfectedPlot(GraphTime){
 	// Add the object to the array of all ODEOS
 	DEO.push(NewDEO);	
 	
+	
 	// F2
 	NewDEO=new DataExtractionObject();
 	
@@ -1118,6 +1124,7 @@ function HCVTotalInfectedPlot(GraphTime){
 	};
 	// Add the object to the array of all ODEOS
 	DEO.push(NewDEO);
+	
 	
 	// F3
 	NewDEO=new DataExtractionObject();
@@ -1193,7 +1200,6 @@ function HCVTotalInfectedPlot(GraphTime){
 	DEO.push(NewDEO);
 	
 	
-	
 	// Liver failure
 	NewDEO=new DataExtractionObject();
 	
@@ -1230,10 +1236,83 @@ function HCVTotalInfectedPlot(GraphTime){
 	// Add the object to the array of all ODEOS
 	DEO.push(NewDEO);
 	
+	return DEO;
+}	
+
+
+
+	
+function HCVDEOHCVTransplants(GraphTime){	
+	// Transplants
+	var NewDEO=new DataExtractionObject();
+	
+	var DataStruct={};
+	DataStruct.Time=Data.Transplants.Time;
+	DataStruct.Value=Data.Transplants.HCV;
+	NewDEO.SetData(DataStruct);
+	
+	// Load the data into the function 
+	NewDEO.SetGraphTime(GraphTime);
+	NewDEO.Name="HCVTransplants";
+	NewDEO.Title="Transplants in people with an HCV infection";
+	NewDEO.XLabel="Year";
+	NewDEO.YLabel="Number of people";
+	
+	NewDEO.ResultFunction= function (SimulationResult, Time){
+		var Total=0;
+		for (var PersonCount in SimulationResult.Population){
+			var Person=SimulationResult.Population[PersonCount];
+			
+			// determine if the person had a transplant during the period
+		}
+		return Total*Settings.SampleFactor;
+	};
+	
+	// Add the object to the array of all ODEOS
+	return NewDEO;
+}
 	
 	
+	
+	
+function HCVDEOHCVTreatment(GraphTime){	
+	// Treatment
+	var NewDEO=new DataExtractionObject();
+	
+	var DataStruct={};
+	DataStruct.Time=Data.HCVTreatment.Time;
+	DataStruct.Value=Data.HCVTreatment.Count;
+	NewDEO.SetData(DataStruct);
+	
+	// Load the data into the function 
+	NewDEO.SetGraphTime(GraphTime);
+	NewDEO.Name="HCVTreatment";
+	NewDEO.Title="Treatment for HCV";
+	NewDEO.XLabel="Year";
+	NewDEO.YLabel="Number of people";
+	
+	NewDEO.ResultFunction= function (SimulationResult, Time){
+		var Total=0;
+		for (var PersonCount in SimulationResult.Population){
+			var Person=SimulationResult.Population[PersonCount];
+			if (Person.Alive(Time) ){
+				
+			}
+			// determine if the person initiated treatment during the period
+		}
+		return Total*Settings.SampleFactor;
+	};
+	
+	// Add the object to the array of all ODEOS
+	return NewDEO;
+}
+	
+	
+	
+	
+function HCVDEONumNSWHCVWithDecomp(GraphTime){
 	// NSW Decompensted Cirrhosis
-	NewDEO=new DataExtractionObject();
+	var NewDEO=new DataExtractionObject();
 	
 	var DataStruct={};
 	DataStruct.Time=Data.NSW.DecompenstedCirrhosis.Diagnosed.Time;
@@ -1269,12 +1348,13 @@ function HCVTotalInfectedPlot(GraphTime){
 	};
 	
 	// Add the object to the array of all ODEOS
-	DEO.push(NewDEO);
+	return NewDEO;
+}
+
 	
 	
 	
-	
-	
+function HCVDEONumNSWHCVWithDecompAdmitted(GraphTime){
 	// NSW Decompensted Cirrhosis admitted to hospital
 	NewDEO=new DataExtractionObject();
 	
@@ -1309,78 +1389,15 @@ function HCVTotalInfectedPlot(GraphTime){
 		return Total*Settings.SampleFactor;
 	};
 	
-	// Add the object to the array of all ODEOS
-	DEO.push(NewDEO);
+	return NewDEO;
+}		
+
+
+
 	
-	
-	
-	// Transplants
-	NewDEO=new DataExtractionObject();
-	
-	var DataStruct={};
-	DataStruct.Time=Data.Transplants.Time;
-	DataStruct.Value=Data.Transplants.HCV;
-	NewDEO.SetData(DataStruct);
-	
-	// Load the data into the function 
-	NewDEO.SetGraphTime(GraphTime);
-	NewDEO.Name="HCVTransplants";
-	NewDEO.Title="Transplants in people with an HCV infection";
-	NewDEO.XLabel="Year";
-	NewDEO.YLabel="Number of people";
-	
-	NewDEO.ResultFunction= function (SimulationResult, Time){
-		var Total=0;
-		for (var PersonCount in SimulationResult.Population){
-			var Person=SimulationResult.Population[PersonCount];
-			
-			// determine if the person had a transplant during the period
-		}
-		return Total*Settings.SampleFactor;
-	};
-	
-	// Add the object to the array of all ODEOS
-	DEO.push(NewDEO);
-	
-	
-	
-	
-	// Treatment
-	NewDEO=new DataExtractionObject();
-	
-	var DataStruct={};
-	DataStruct.Time=Data.HCVTreatment.Time;
-	DataStruct.Value=Data.HCVTreatment.Count;
-	NewDEO.SetData(DataStruct);
-	
-	// Load the data into the function 
-	NewDEO.SetGraphTime(GraphTime);
-	NewDEO.Name="HCVTreatment";
-	NewDEO.Title="Treatment for HCV";
-	NewDEO.XLabel="Year";
-	NewDEO.YLabel="Number of people";
-	
-	NewDEO.ResultFunction= function (SimulationResult, Time){
-		var Total=0;
-		for (var PersonCount in SimulationResult.Population){
-			var Person=SimulationResult.Population[PersonCount];
-			if (Person.Alive(Time) ){
-				
-			}
-			// determine if the person initiated treatment during the period
-		}
-		return Total*Settings.SampleFactor;
-	};
-	
-	// Add the object to the array of all ODEOS
-	DEO.push(NewDEO);
-	
-	
-	
-	
-	
+function HCVDEONSWHCCDiagnoses(GraphTime){	
 	// NSW HCC diagnoses
-	NewDEO=new DataExtractionObject();
+	var NewDEO=new DataExtractionObject();
 	
 	var DataStruct={};
 	DataStruct.Time=Data.NSW.HCVHCCDiagnoses.Time;
@@ -1412,13 +1429,15 @@ function HCVTotalInfectedPlot(GraphTime){
 		return Total*Settings.SampleFactor*PropNSW;
 	};
 	
-	// Add the object to the array of all ODEOS
-	DEO.push(NewDEO);
-	
-	
-	
+	return NewDEO;
+}
+
+
+
+
+function HCVDEONSWHCVMortalityAllCause(GraphTime){	
 	// NSW HCV mortality
-	NewDEO=new DataExtractionObject();
+	var NewDEO=new DataExtractionObject();
 	
 	var DataStruct={};
 	DataStruct.Time=Data.NSW.HCVMortality.AllCause.Time;
@@ -1450,15 +1469,15 @@ function HCVTotalInfectedPlot(GraphTime){
 		return Total*Settings.SampleFactor*PropNSW;
 	};
 	
-	// Add the object to the array of all ODEOS
-	DEO.push(NewDEO);
-	
-	
-	
-	
-	
+	return NewDEO;
+}
+
+
+
+
+function HCVDEONSWHCVMortalityLiver(GraphTime){	
 	// NSW HCV liver mortality
-	NewDEO=new DataExtractionObject();
+	var NewDEO=new DataExtractionObject();
 	
 	var DataStruct={};
 	DataStruct.Time=Data.NSW.HCVMortality.Liver.Time;
@@ -1491,17 +1510,15 @@ function HCVTotalInfectedPlot(GraphTime){
 		return Total*Settings.SampleFactor*PropNSW;
 	};
 	
-	// Add the object to the array of all ODEOS
-	DEO.push(NewDEO);
+	return NewDEO;
+}	
 	
 	
 	
-	
-	// ******************************************************************************************************
-	// ******************************************************************************************************
-	// ******************************************************************************************************
+
+function HCVDEOIncidenceHITSC(GraphTime){	
 	// Incidence HITS-C
-	NewDEO=new DataExtractionObject();
+	var NewDEO=new DataExtractionObject();
 	
 	var DataStruct={};
 	DataStruct.Time=Data.Incidence.HITSC.Time;
@@ -1555,12 +1572,11 @@ function HCVTotalInfectedPlot(GraphTime){
 	
 	NewDEO.Optimisation.Weight=5;
 	
-	// Add the object to the array of all ODEOS
-	DEO.push(NewDEO);
+	return NewDEO;
+}
 	
 	
-	
-	
+function HCVDEOIncidenceNSP(GraphTime){		
 	// Incidence NSP
 	NewDEO=new DataExtractionObject();
 	
@@ -1625,10 +1641,11 @@ function HCVTotalInfectedPlot(GraphTime){
 		return TotalError;
 	};
 	NewDEO.Optimisation.Weight=5;
-	// Add the object to the array of all ODEOS
-	DEO.push(NewDEO);
 	
-	
+	return NewDEO;
+}	
+
+function HCVDEOIncidenceGeneral(GraphTime){	
 	// Incidence NSP (not fit)
 	NewDEO=new DataExtractionObject();
 	NewDEO.SetGraphTime(GraphTime);
@@ -1655,19 +1672,14 @@ function HCVTotalInfectedPlot(GraphTime){
 	};
 	
 	// Add the object to the array of all ODEOS
-	DEO.push(NewDEO);
-	
-	
-	
-	
-	
-	
-	
-	// ******************************************************************************************************
+	return NewDEO;
+}
 
 	
-	// This section deals with the number of notifications by age group
 	
+
+function HCVDEONotificationsByAgeAndSex(GraphTime){	
+	// This section deals with the number of notifications by age group returns an array of these DEOs
 	
 	function CreateNotificationByAgeSexFunction(SexValue, LowerAge, UpperAge){
 		// not that this uses closures to limit the scope of LowerAge and UpperAge so that the function can be generalised
@@ -1696,7 +1708,7 @@ function HCVTotalInfectedPlot(GraphTime){
 	}
 	
 	
-	
+	var DEO=[];
 	
 	for (var TempSexValue=0; TempSexValue<2; TempSexValue++){
 		if (TempSexValue==0){
@@ -1731,31 +1743,19 @@ function HCVTotalInfectedPlot(GraphTime){
 			NewDEO.XLabel="Year";
 			NewDEO.YLabel="Number of Notifications";
 			
-			
-			var SexValue=Number(TempSexValue);
-			var AgeLower=Number(TempAgeLower);
-			var AgeUpper=Number(TempAgeUpper);
-			
+			// Set the result function using the function above.
 			NewDEO.ResultFunction= CreateNotificationByAgeSexFunction(TempSexValue, TempAgeLower, TempAgeUpper);
 			
 			DEO.push(NewDEO);
 		}
 	}
+	return DEO;
+}	
 	
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-
-// ******************************************************************************************************
-// ******************************************************************************************************
-// ******************************************************************************************************
+function HCVDEOEverInjectorsByAgeAndSex(GraphTime){	
 // This section deals with the creation of summary statistics for ever injectors
 
 
@@ -1782,7 +1782,7 @@ function HCVTotalInfectedPlot(GraphTime){
 		return FunctionHolder;
 	}
 
-
+	var DEO=[];
 	for (var Sex=0; Sex<2; Sex++){
 		for (var AgeIndex in Data.PWID.AgeRange){
 			var LowerAge=Data.PWID.AgeRange[AgeIndex][0];
@@ -1834,10 +1834,13 @@ function HCVTotalInfectedPlot(GraphTime){
 			DEO.push(NewDEO);
 		}
 	}
-	
-// ******************************************************************************************************
-// ******************************************************************************************************
-// ******************************************************************************************************
+	return DEO;
+}
+
+
+
+
+function HCVDEORecentInjectorsByAgeAndSex(GraphTime){	
 // This section deals with the creation of summary statistics for recent injectors
 
 	function CreateRecentInjectorByAgeFunction(Sex, LowerAge, UpperAge){
@@ -1862,7 +1865,7 @@ function HCVTotalInfectedPlot(GraphTime){
 		return FunctionHolder;
 	}
 
-
+	var DEO;
 	for (var Sex=0; Sex<2; Sex++){
 		for (var AgeIndex in Data.PWID.AgeRange){
 			var LowerAge=Data.PWID.AgeRange[AgeIndex][0];
@@ -1914,8 +1917,8 @@ function HCVTotalInfectedPlot(GraphTime){
 			DEO.push(NewDEO);
 		}
 	}
-
-	
+	return DEO;
+}
 	
 	
 	
