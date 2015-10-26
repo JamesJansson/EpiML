@@ -1,9 +1,4 @@
-// Elements to optimise to
-// TotalNotificationsPlot
-// NSPHCVAntibodyProp
-// IncidenceHITSC
-//
-
+// Note that this function is easier to edit in Notepad++ because functions can be collapsed
 
 
 // This function is run internally in each instance of the model
@@ -13,36 +8,58 @@ function HCVDataExtractionObjects(){
 	
 	var NSPErrorWeight=50;
 
+	// Population sizes
 	DEO.push(HCVDEO_NotificationsTotal(GraphTime));
 	DEO.push(HCVDEO_EverInjectingDrugsTotal(GraphTime));
 	DEO.push(HCVDEO_RecentInjectingDrugsTotal(GraphTime));
+	
+	// HCV infected population size
+	DEO.push(HCVDEO_TotalActiveInfectionPlot(GraphTime));
+	DEO.push(HCVDEO_NSPHCVAntibodyProp(GraphTime, NSPErrorWeight));
+	DEO.push(HCVDEO_PropIDUInfectedPlot(GraphTime));
+	
+	// Disease stages
+	DEO=DEO.concat(HCVDEO_Fibrosis(GraphTime));
+	DEO.push(HCVDEO_HCCDiagnoses(GraphTime));
+	
+	// Entry into the population	
 	DEO.push(HCVDEO_RecentlyBecameInjector(GraphTime));
+	
+	// Incidence
+	DEO.push(HCVDEO_IncidenceHITSC(GraphTime));
+	DEO.push(HCVDEO_IncidenceNSP(GraphTime));
+	DEO.push(HCVDEO_IncidenceGeneral(GraphTime));
+	
+	// NSP size and demographics	
 	DEO.push(HCVDEO_NSPParticipants(GraphTime));
 	DEO.push(HCVDEO_HeterosexualNSPProp(GraphTime));
 	DEO.push(HCVDEO_HomosexualNSPProp(GraphTime));
 	DEO.push(HCVDEO_BisexualNSPProp(GraphTime));
-	DEO.push(HCVDEO_TotalInfectedPlot(GraphTime));
-	DEO.push(HCVDEO_NSPHCVAntibodyProp(GraphTime, NSPErrorWeight));
-	DEO=DEO.concat(HCVDEO_NSPHCVAntibodyPropByAgeAndSex(GraphTime, NSPErrorWeight));
-	DEO.push(HCVDEO_PropIDUInfectedPlot(GraphTime));
+	
+	// Drug treatment
 	DEO.push(HCVDEO_PropNSPCurrentMethdone(GraphTime));
 	DEO.push(HCVDEO_PropNSPPreviousMethdone(GraphTime));
 	DEO.push(HCVDEO_PropNSPNeverMethdone(GraphTime));
-	DEO=DEO.concat(HCVDEO_Fibrosis(GraphTime));
+	
+	// Transplants
 	DEO.push(HCVDEO_HCVTransplants(GraphTime));
+	
+	// Treatement
 	DEO.push(HCVDEO_HCVTreatment(GraphTime));
+	
+	// NSW based data
 	DEO.push(HCVDEO_NumNSWHCVWithDecomp(GraphTime));
 	DEO.push(HCVDEO_NumNSWHCVWithDecompAdmitted(GraphTime));
 	DEO.push(HCVDEO_NSWHCCDiagnoses(GraphTime));
 	DEO.push(HCVDEO_NSWHCVMortalityAllCause(GraphTime));
 	DEO.push(HCVDEO_NSWHCVMortalityLiver(GraphTime));
-	DEO.push(HCVDEO_IncidenceHITSC(GraphTime));
-	DEO.push(HCVDEO_IncidenceNSP(GraphTime));
-	DEO.push(HCVDEO_IncidenceGeneral(GraphTime));
+	
+	// Age and sex based extractions (for detailed analysis)
+	DEO=DEO.concat(HCVDEO_NSPHCVAntibodyPropByAgeAndSex(GraphTime, NSPErrorWeight));
 	DEO=DEO.concat(HCVDEO_NotificationsByAgeAndSex(GraphTime));
 	DEO=DEO.concat(HCVDEO_EverInjectorsByAgeAndSex(GraphTime));
 	DEO=DEO.concat(HCVDEO_RecentInjectorsByAgeAndSex(GraphTime));
-
+	
 	
 	
 	// for each element 
@@ -413,7 +430,7 @@ function HCVDEO_BisexualNSPProp(GraphTime){
 
 
 
-function HCVDEO_TotalInfectedPlot(GraphTime){
+function HCVDEO_TotalActiveInfectionPlot(GraphTime){
 	// Display of infections (no data)
 	NewDEO=new DataExtractionObject();
 	
@@ -424,7 +441,7 @@ function HCVDEO_TotalInfectedPlot(GraphTime){
 	// Load the data into the function 
 	NewDEO.SetData(EmptyData);
 	NewDEO.SetGraphTime(GraphTime);
-	NewDEO.Name="TotalInfectedPlot";
+	NewDEO.Name="TotalActiveInfectionPlot";
 	NewDEO.Title="Total People Living with Active HCV Infection";
 	NewDEO.XLabel="Year";
 	NewDEO.YLabel="Number of people";
@@ -830,7 +847,6 @@ function HCVDEO_NSPHCVAntibodyPropByAgeAndSex(GraphTime, NSPErrorWeight){
 
 
 
-
 function HCVDEO_PropIDUInfectedPlot(GraphTime){
 	// HCV prevalence in all IDU - Display of infections (no data)
 	var NewDEO=new DataExtractionObject();
@@ -873,6 +889,9 @@ function HCVDEO_PropIDUInfectedPlot(GraphTime){
 	};
 	return NewDEO;
 }
+
+
+
 
 function HCVDEO_PropNSPCurrentMethdone(GraphTime){
 	// NSP in methadone maintenance
@@ -918,6 +937,8 @@ function HCVDEO_PropNSPCurrentMethdone(GraphTime){
 	// Add the object to the array of all ODEOS
 	return NewDEO;
 }
+
+
 	
 	
 function HCVDEO_PropNSPPreviousMethdone(GraphTime){
@@ -963,7 +984,10 @@ function HCVDEO_PropNSPPreviousMethdone(GraphTime){
 	// Add the object to the array of all ODEOS
 	return NewDEO;
 }
-	
+
+
+
+
 function HCVDEO_PropNSPNeverMethdone(GraphTime){
 	// Proportion never 
 	var NewDEO=new DataExtractionObject();
@@ -1409,7 +1433,7 @@ function HCVDEO_NSWHCCDiagnoses(GraphTime){
 	NewDEO.Name="NSWHCCDiagnoses";
 	NewDEO.Title="HCC diagnoses of people with HCV in NSW";
 	NewDEO.XLabel="Year";
-	NewDEO.YLabel="Number of people";
+	NewDEO.YLabel="Number of HCV cases (NSW)";
 	
 	NewDEO.ResultFunction= function (SimulationResult, Time){
 		var Total=0;
@@ -1427,6 +1451,38 @@ function HCVDEO_NSWHCCDiagnoses(GraphTime){
 		var PropNSW=Sum(Data.StateNotifications.Table[1])/Sum(Data.StateNotifications.Table);
 		
 		return Total*Settings.SampleFactor*PropNSW;
+	};
+	
+	return NewDEO;
+}
+
+
+
+
+function HCVDEO_HCCDiagnoses(GraphTime){	
+	// NSW HCC diagnoses
+	var NewDEO=new DataExtractionObject();
+	
+	// Load the data into the function 
+	NewDEO.SetGraphTime(GraphTime);
+	NewDEO.Name="HCCDiagnoses";
+	NewDEO.Title="HCC diagnoses of people with HCV (Total)";
+	NewDEO.XLabel="Year";
+	NewDEO.YLabel="Number of HCV cases";
+	
+	NewDEO.ResultFunction= function (SimulationResult, Time){
+		var Total=0;
+		for (var PersonCount in SimulationResult.Population){
+			var Person=SimulationResult.Population[PersonCount];
+			// determine if the person is currently alive
+			if (Person.Alive(Time) ){
+				// determine if the person is diagnosed with HCC during the period
+				if (Person.HCV.HCC.Value(Time)==1){
+					Total++;
+				}
+			}
+		}
+		return Total*Settings.SampleFactor;
 	};
 	
 	return NewDEO;
@@ -1576,6 +1632,8 @@ function HCVDEO_IncidenceHITSC(GraphTime){
 }
 	
 	
+	
+	
 function HCVDEO_IncidenceNSP(GraphTime){		
 	// Incidence NSP
 	NewDEO=new DataExtractionObject();
@@ -1644,6 +1702,9 @@ function HCVDEO_IncidenceNSP(GraphTime){
 	
 	return NewDEO;
 }	
+
+
+
 
 function HCVDEO_IncidenceGeneral(GraphTime){	
 	// Incidence NSP (not fit)
@@ -1842,7 +1903,8 @@ function HCVDEO_EverInjectorsByAgeAndSex(GraphTime){
 
 function HCVDEO_RecentInjectorsByAgeAndSex(GraphTime){	
 // This section deals with the creation of summary statistics for recent injectors
-
+	var DEO=[];
+	
 	function CreateRecentInjectorByAgeFunction(Sex, LowerAge, UpperAge){
 		// not that this uses closures to limit the scope of LowerAge and UpperAge so that the function can be generalised
 		var FunctionHolder= function (SimulationResult, Time){
