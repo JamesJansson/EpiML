@@ -159,7 +159,7 @@ DeathObject.prototype.YearsOfLifeLost= function (){
 };
 
 
-DeathObject.prototype.Add=function (TypeOfDeath, Time){
+DeathObject.prototype.Set=function (TypeOfDeath, Time){
 	this.Data[TypeOfDeath]=Time;
 	// Calculate the earliest time again
 	this.CalculateEarliest();
