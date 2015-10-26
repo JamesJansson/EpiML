@@ -177,9 +177,6 @@ DeathObject.prototype.CalculateEarliest=function (){
 	var Cause;
 	for (var d in this.Data){
 		if (this.Data[d]<EarliestTime){
-			console.log(this.Data[d]);
-			console.log(d);
-			
 			EarliestTime=this.Data[d];
 			Cause=d;
 		}
