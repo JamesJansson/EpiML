@@ -167,11 +167,11 @@ function HCVSymptomaticDiagnosis(Person, AgeStructureArray, Time, TimeStep ){
 			if (CurrentPerson.HCV.UndiagnosedHCC() || CurrentPerson.HCV.UndiagnosedDecompensatedCirrhosis()){
 				var TimeUntilDiagnosis=TimeUntilEvent(Param.HCV.SyptomaticTesting);
 				if (TimeUntilDiagnosis<TimeStep){// if the testing occurs during this step
-						CurrentPerson.HCV.Diagnose(Time+TimeUntilDiagnosis);
-						
-						// Add the person to the numbers of people diagnosed due to symptoms
-						var SexIndex=CurrentPerson.Sex;
-						AgeList[SexIndex].push(CurrentPerson.Age(Time));
+					CurrentPerson.HCV.Diagnose(Time+TimeUntilDiagnosis);
+					
+					// Add the person to the numbers of people diagnosed due to symptoms
+					var SexIndex=CurrentPerson.Sex;
+					AgeList[SexIndex].push(CurrentPerson.Age(Time));
 				
 				}
 			}
