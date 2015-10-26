@@ -42,7 +42,7 @@ function MultiThreadSim(FolderName, NoSims, NoThreads, TerminateOnFinish){
 	this.UseNode=true;// set to false to use webworker
 	this.NodeArgs=[];
 	this.NodeArgs.push("--expose-gc");
-	this.NodeArgs.push("-max-old-space-size=6047");
+	this.NodeArgs.push("--max-old-space-size=6047");
 	
 	
 	

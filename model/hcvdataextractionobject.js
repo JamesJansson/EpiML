@@ -23,7 +23,8 @@ function HCVDataExtractionObjects(){
 	DEO.push(HCVDEO_HCCDiagnoses(GraphTime));
 	
 	// Death
-	
+	DEO.push(HCVDEO_HCVMortalityAllCause(GraphTime));
+	DEO.push(HCVDEO_HCVMortalityLiver(GraphTime));
 	
 	
 	// Entry into the population	
@@ -1592,7 +1593,10 @@ function HCVDEO_HCVMortalityLiver(GraphTime){
 				// determine if the person is has ever had a HCV diagnosis by that point in time
 				if (Person.HCV.Diagnosed.Value(Time)==1){
 					// determine if the person dies during this period due to liver issues
-					
+					var DeathCause=Person.Death.Cause();
+					if (DeathCause=='LF'||DeathCause=='HCV'){
+						Total++;
+					}
 				}
 			}
 		}
@@ -1630,7 +1634,10 @@ function HCVDEO_NSWHCVMortalityLiver(GraphTime){
 				// determine if the person is has ever had a HCV diagnosis by that point in time
 				if (Person.HCV.Diagnosed.Value(Time)==1){
 					// determine if the person dies during this period due to liver issues
-					
+					var DeathCause=Person.Death.Cause();
+					if (DeathCause=='LF'||DeathCause=='HCV'){
+						Total++;
+					}
 					// determine if the person is in NSW
 				}
 			}
