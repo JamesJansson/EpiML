@@ -22,6 +22,10 @@ function HCVDataExtractionObjects(){
 	DEO=DEO.concat(HCVDEO_Fibrosis(GraphTime));
 	DEO.push(HCVDEO_HCCDiagnoses(GraphTime));
 	
+	// Death
+	
+	
+	
 	// Entry into the population	
 	DEO.push(HCVDEO_RecentlyBecameInjector(GraphTime));
 	
@@ -1491,6 +1495,38 @@ function HCVDEO_HCCDiagnoses(GraphTime){
 
 
 
+function HCVDEO_HCVMortalityAllCause(GraphTime){	
+	// NSW HCV mortality
+	var NewDEO=new DataExtractionObject();
+	
+	// Load the data into the function 
+	NewDEO.SetGraphTime(GraphTime);
+	NewDEO.Name="HCVMortalityAllCause";
+	NewDEO.Title="All cause mortality of people with HCV diagnosis (Total)";
+	NewDEO.XLabel="Year";
+	NewDEO.YLabel="Number of people";
+	
+	NewDEO.ResultFunction= function (SimulationResult, Time){
+		var Total=0;
+		for (var PersonCount in SimulationResult.Population){
+			var Person=SimulationResult.Population[PersonCount];
+			// determine if the person dies during this period
+			if (Person.Alive(Time)==true && Person.Alive(Time+1)==false){
+				// determine if the person is has ever had a HCV diagnosis by that point in time
+				if (Person.HCV.Diagnosed.Value(Time)==1){
+					Total++;
+				}
+			}
+		}
+		return Total*Settings.SampleFactor;
+	};
+	
+	return NewDEO;
+}
+
+
+
+
 function HCVDEO_NSWHCVMortalityAllCause(GraphTime){	
 	// NSW HCV mortality
 	var NewDEO=new DataExtractionObject();
@@ -1531,6 +1567,44 @@ function HCVDEO_NSWHCVMortalityAllCause(GraphTime){
 
 
 
+function HCVDEO_HCVMortalityLiver(GraphTime){	
+	// NSW HCV liver mortality
+	var NewDEO=new DataExtractionObject();
+	
+	var DataStruct={};
+	DataStruct.Time=Data.NSW.HCVMortality.Liver.Time;
+	DataStruct.Value=Data.NSW.HCVMortality.Liver.Count;
+	NewDEO.SetData(DataStruct);
+	
+	// Load the data into the function 
+	NewDEO.SetGraphTime(GraphTime);
+	NewDEO.Name="HCVMortalityLiver";
+	NewDEO.Title="Liver mortality of people with HCV diagnosis in (Total)";
+	NewDEO.XLabel="Year";
+	NewDEO.YLabel="Number of people";
+	
+	NewDEO.ResultFunction= function (SimulationResult, Time){
+		var Total=0;
+		for (var PersonCount in SimulationResult.Population){
+			var Person=SimulationResult.Population[PersonCount];
+			// determine if the person dies during this period
+			if (Person.Alive(Time)==true && Person.Alive(Time+1)==false){
+				// determine if the person is has ever had a HCV diagnosis by that point in time
+				if (Person.HCV.Diagnosed.Value(Time)==1){
+					// determine if the person dies during this period due to liver issues
+					
+				}
+			}
+		}
+		return Total*Settings.SampleFactor;
+	};
+	
+	return NewDEO;
+}	
+
+
+
+
 function HCVDEO_NSWHCVMortalityLiver(GraphTime){	
 	// NSW HCV liver mortality
 	var NewDEO=new DataExtractionObject();
@@ -1552,12 +1626,12 @@ function HCVDEO_NSWHCVMortalityLiver(GraphTime){
 		for (var PersonCount in SimulationResult.Population){
 			var Person=SimulationResult.Population[PersonCount];
 			// determine if the person dies during this period
-			if (Person.Alive(Time)==true && Person.Alive(Time+1)==true){
+			if (Person.Alive(Time)==true && Person.Alive(Time+1)==false){
 				// determine if the person is has ever had a HCV diagnosis by that point in time
 				if (Person.HCV.Diagnosed.Value(Time)==1){
-			// determine if the person dies during this period due to liver issues
-			
-			// determine if the person is in NSW
+					// determine if the person dies during this period due to liver issues
+					
+					// determine if the person is in NSW
 				}
 			}
 		}

@@ -127,31 +127,64 @@ PersonObject.prototype.StartInjecting= function (Time){
 
 
 function DeathObject(PersonPointer){
+	this.Data={};
+	this.Data.General=1E9;
 	
-	this.General=1E9;
-	this.IDU=1E9;
-	this.HCV=1E9;
-	this.HCC=1E9;
-	this.LF=1E9;
-	this.HIV=1E9;
+	
+	
+	// this.General=1E9;
+	// this.IDU=1E9;
+	// this.HCV=1E9;
+	// this.HCC=1E9;
+	// this.LF=1E9;
+	// this.HIV=1E9;
 }
 
-DeathObject.prototype.Year= function (){
-	// This is a general function that describes the difference between general death date and 
-	// the earliest non-general death date.
-	return Math.min(this.General, this.IDU, this.HCV, this.HCC, this.LF, this.HIV);
-};
+// DeathObject.prototype.Year= function (){
+// 	// This is a general function that describes the difference between general death date and 
+// 	// the earliest non-general death date.
+// 	return Math.min(this.General, this.IDU, this.HCV, this.HCC, this.LF, this.HIV);
+// };
 
 
 
 DeathObject.prototype.YearsOfLifeLost= function (){
 	// This is a general function that describes the difference between general death date and 
 	// the earliest non-general death date.
-	return this.General-Math.min(this.General, this.IDU, this.HCV, this.HCC, this.LF, this.HIV);
+	// return this.General-Math.min(this.General, this.IDU, this.HCV, this.HCC, this.LF, this.HIV);
+
+	return this.Data.General-this.Time();
 };
 
 
+DeathObject.prototype.Add=function (TypeOfDeath, Time){
+	this.Data[TypeOfDeath]=Time;
+}
 
+DeathObject.prototype.Time=function (TypeOfDeath){
+	if (typeof(TypeOfDeath)=='undefined'){// Not providing the function with a death type will return the earliest time of death, i.e. THE cause of death
+		var EarliestTime=1E10;
+		for (var d in this.Data){
+			if (this.Data[d]<EarliestTime){
+				EarliestTime=this.Data[d];
+			}
+		}
+		return EarliestTime;
+	}
+	return this.Data[TypeOfDeath]; // If the type of death is specified
+}
+
+DeathObject.prototype.Cause=function (){
+	var EarliestTime=1E10;
+	var Cause;
+	for (var d in this.Data){
+		if (this.Data[d]<EarliestTime){
+			EarliestTime=this.Data[d];
+			Cause=d;
+		}
+	}
+	return Cause;
+}
 
 
 //-----------------------------------------------------------------
