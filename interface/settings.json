@@ -1,6 +1,6 @@
 {
     "NoThreads": "1",
-    "SampleFactor": 5,
+    "SampleFactor": 10,
     "NumberOfSimulations": 1,
     "HCVTreatmentScenario": "0",
     "ModelNetwork": false,
