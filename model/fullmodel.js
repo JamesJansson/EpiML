@@ -546,6 +546,7 @@ function InitialDistribution() {
 		Time += Param.TimeStep
 	}
 	
+	console.log("Optimising initial HCV levels");
 	SetInitialHCVLevels(Person);
 	//InitialiseNetwork(Person, Param.Time.StartDynamicModel);// we only need it to be a correct network at the end of this period because this is the start of the dynamic period
 	
