@@ -42,7 +42,7 @@ function MultiThreadSim(FolderName, NoSims, NoThreads, TerminateOnFinish){
 	this.UseNode=true;// set to false to use webworker
 	this.NodeArgs=[];
 	this.NodeArgs.push("--expose-gc");
-	this.NodeArgs.push("--max-old-space-size=6047");
+	this.NodeArgs.push("--max-old-space-size=12000");
 	
 	
 	
@@ -220,8 +220,8 @@ MultiThreadSim.prototype.StartNextSim=function() {
 				if (this.UseNode==true){
 					var ChildProcessOptions={};
 					ChildProcessOptions.cwd="./"+this.FolderName;// set the directory for where the model is
-					var ScriptAndOtherArgs=[this.ScriptName];
-					ScriptAndOtherArgs=ScriptAndOtherArgs.concat(this.NodeArgs);
+					var ScriptAndOtherArgs=this.NodeArgs;
+					ScriptAndOtherArgs.push(this.ScriptName);// note that the script must go at the end, after the args
 					this.Worker[SimID]=new NWJSNodeChildProcess(ScriptAndOtherArgs, ChildProcessOptions);
 				}
 				else { // use webworker
