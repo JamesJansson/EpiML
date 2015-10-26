@@ -185,7 +185,7 @@ HCVObject.prototype.Infection= function (TimeOfInfection, GenotypeValue){//, Age
 			//Determine time until death
 			Time=TimeUntilEvent(Param.HCV.F4DeathP);
 			var DateHCVDeath=DateF4+Time;
-			this.Person.Death.HCV=DateHCVDeath;
+			this.Person.Death.Set('HCV', DateHCVDeath);
 
 			
 			// Also look at
@@ -227,7 +227,7 @@ HCVObject.prototype.L4ToHCCTime= function (Param){
 
 
 HCVObject.prototype.Diagnose= function (Time){
-	if (Time<this.Person.Death.Year()){// Make sure that the diagnosis date is prior to death. Otherwise it is not discovered
+	if (Time<this.Person.Death.Time()){// Make sure that the diagnosis date is prior to death. Otherwise it is not discovered
 		this.Diagnosed.Set(1, Time);
 	}
 	// Below here we put further information, such as
@@ -308,22 +308,20 @@ HCVObject.prototype.Treatment= function (TimeOfTreatment, TreatmentType){
 		}
 		
 		// Remove HCV related future death
-		if (YearBelowF4<this.Person.Death.HCV){
-			this.Person.Death.HCV=1E9;
+		if (YearBelowF4<this.Person.Death.Time('HCV')){
+			this.Person.Death.Reset('HCV');
 		}
-		if (YearBelowF4<this.Person.Death.LF){
-			this.Person.Death.LF=1E9;
+		if (YearBelowF4<this.Person.Death.Time('LF')){
+			this.Person.Death.Reset('LF');
 		}
 		
 		// Remove HCV related future HCC
-		if (this.HCC.Next(YearBelowF4)==1){
+		if (this.HCC.Next(YearBelowF4)==1){// find the next case of HCC after going below F4
 			this.HCC.DeleteFutureEvents(YearBelowF4);// this should remove future cases of HCC
-			if (YearBelowF4<this.Person.Death.HCC){
-				this.Person.Death.HCC=1E9;
+			if (YearBelowF4<this.Person.Death.Time('HCC')){
+				this.Person.Death.Reset('HCC');
 			}
 		}
-		// Remove HCV related future liver disease advancement
-		//this.LF.DeleteFutureEvents(Year);
 	}
 }
 
@@ -373,18 +371,18 @@ HCVObject.prototype.Clearance= function (TimeOfClearance){
 	}
 	
 	// Remove HCV related future death
-	if (TimeOfBeingBelowF4<this.Person.Death.HCV){
-		this.Person.Death.HCV=1E9;
+	if (TimeOfBeingBelowF4<this.Person.Death.Time('HCV')){
+		this.Person.Death.Reset('HCV');
 	}
-	if (TimeOfBeingBelowF4<this.Person.Death.LF){
-		this.Person.Death.LF=1E9;
+	if (TimeOfBeingBelowF4<this.Person.Death.Time('LF')){
+		this.Person.Death.Reset('LF');
 	}
 	
 	// Remove HCV related future HCC
 	if (this.HCC.Next(TimeOfBeingBelowF4)==1){
 		this.HCC.DeleteFutureEvents(TimeOfBeingBelowF4);// this should remove future cases of HCC
-		if (TimeOfBeingBelowF4<this.Person.Death.HCC){
-			this.Person.Death.HCC=1E9;
+		if (TimeOfBeingBelowF4<this.Person.Death.Time('HCC')){
+			this.Person.Death.Reset('HCC');
 		}
 	}
 	

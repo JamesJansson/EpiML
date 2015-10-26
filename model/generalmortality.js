@@ -48,7 +48,7 @@ function MortalityCalculator(MortalityProbabilityArray1, Year1, MortalityProbabi
 	}
 }
 
-MortalityCalculator.prototype.YearOfDeath= function(YearOfBirth, Year, SMR){
+MortalityCalculator.prototype.TimeOfDeath= function(YearOfBirth, Year, SMR){
 	// This function determines the year of death of someone 
 	// Year, in this case, is the date at which to calculate mortality from
 	
@@ -145,7 +145,7 @@ function MortalityCalculatorTEST(){
 		
 		var TimerStart = new Date().getTime() / 1000;
 		for (var ind=0; ind<10000; ind++){// For each element in the array
-			MaleMortality.YearOfDeath(1985.1, 2014.8);
+			MaleMortality.TimeOfDeath(1985.1, 2014.8);
 		}
 		var TimerFinish = new Date().getTime() / 1000;
 		var TotalTime=TimerFinish -TimerStart;

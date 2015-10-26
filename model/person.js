@@ -63,25 +63,25 @@ function PersonObject(YearOfBirth, Sex, Sexuality)//, YearOfObservation Param)
 	
 }
 
-PersonObject.prototype.Age= function (Year){//using prototyping for speed
-	return Year-this.YearOfBirth;
+PersonObject.prototype.Age= function (Time){//using prototyping for speed
+	return Time-this.YearOfBirth;
 };
 
-PersonObject.prototype.Alive = function (Year){//using prototyping for speed
-	if (this.YearOfBirth<=Year && Year <= this.Death.Year()){
+PersonObject.prototype.Alive = function (Time){//using prototyping for speed
+	if (this.YearOfBirth<=Time && Time <= this.Death.Time()){
 		return true;
 	}
 	//else
 	return false;
 };
 
-PersonObject.prototype.CalculateGeneralMortality= function (YearFromWhichToCalculateMortality, SMR){//, MaleMortality, FemaleMortality){
+PersonObject.prototype.CalculateGeneralMortality= function (TimeFromWhichToCalculateMortality, SMR){//, MaleMortality, FemaleMortality){
 	// if this.Sex==0 && this.Aboriginal==false
 	if (this.Sex==0){
-		this.Death.General=MaleMortality.YearOfDeath(this.YearOfBirth, YearFromWhichToCalculateMortality, SMR);
+		this.Death.Set('General', MaleMortality.TimeOfDeath(this.YearOfBirth, TimeFromWhichToCalculateMortality, SMR))
 	}
 	else {
-		this.Death.General=FemaleMortality.YearOfDeath(this.YearOfBirth, YearFromWhichToCalculateMortality, SMR);
+		this.Death.Set('General', FemaleMortality.TimeOfDeath(this.YearOfBirth, TimeFromWhichToCalculateMortality, SMR));
 	}
 };
 
@@ -128,8 +128,10 @@ PersonObject.prototype.StartInjecting= function (Time){
 
 function DeathObject(PersonPointer){
 	this.Data={};
-	this.Data.General=1E9;
 	
+	this.Data.General=1E9;
+	this.Earliest=1E9;
+	this.EarliestCause='';
 	
 	
 	// this.General=1E9;
@@ -159,32 +161,57 @@ DeathObject.prototype.YearsOfLifeLost= function (){
 
 DeathObject.prototype.Add=function (TypeOfDeath, Time){
 	this.Data[TypeOfDeath]=Time;
-}
+	// Calculate the earliest time again
+	this.CalculateEarliest();
+};
 
-DeathObject.prototype.Time=function (TypeOfDeath){
-	if (typeof(TypeOfDeath)=='undefined'){// Not providing the function with a death type will return the earliest time of death, i.e. THE cause of death
-		var EarliestTime=1E10;
-		for (var d in this.Data){
-			if (this.Data[d]<EarliestTime){
-				EarliestTime=this.Data[d];
-			}
-		}
-		return EarliestTime;
-	}
-	return this.Data[TypeOfDeath]; // If the type of death is specified
-}
+DeathObject.prototype.Reset=function (TypeOfDeath){
+	this.Data[TypeOfDeath]=1e9;
+	// Calculate the earliest time again
+	this.CalculateEarliest();
+};
 
-DeathObject.prototype.Cause=function (){
+
+DeathObject.prototype.CalculateEarliest=function (){
 	var EarliestTime=1E10;
 	var Cause;
 	for (var d in this.Data){
 		if (this.Data[d]<EarliestTime){
+			console.log(this.Data[d]);
+			console.log(d);
+			
 			EarliestTime=this.Data[d];
 			Cause=d;
 		}
 	}
-	return Cause;
-}
+	if  (EarliestTime>1E9){
+		EarliestTime=1E9;
+	}
+	this.EarliestCause=Cause;
+	this.Earliest=EarliestTime;
+};
+
+
+
+
+DeathObject.prototype.Time=function (TypeOfDeath){
+	if (typeof(TypeOfDeath)=='undefined'){// Not providing the function with a death type will return the earliest time of death, i.e. THE cause of death
+		return this.Earliest;
+	}
+	// else if the type of death is specified
+	if (typeof(this.Data[TypeOfDeath])=='undefined'){// if the death type cannot be found
+		return 1e9;
+	}
+	return this.Data[TypeOfDeath]; 
+};
+
+DeathObject.prototype.Cause=function (){
+	return this.EarliestCause;
+};
+
+
+
+
 
 
 //-----------------------------------------------------------------

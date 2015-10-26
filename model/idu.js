@@ -113,7 +113,7 @@ IDUObject.prototype.StartInjecting= function (Time){
 		}
 		var TimeOfIDUDeath=Time+TimeUntilEvent(ExcessMortality);
 		if (TimeOfIDUDeath<TimeOfStoppingInjecting){//if time of drug related death occurs prior to 
-			this.Person.Death.IDU=TimeOfIDUDeath;
+			this.Person.Death.Set('IDU', TimeOfIDUDeath);
 		}
 	}
 	else {
