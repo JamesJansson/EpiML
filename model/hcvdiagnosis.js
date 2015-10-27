@@ -10,6 +10,8 @@ function HCVDataDiagnosis(Person, Notifications, Time, TimeStep){
 	var DiagnosedSymptomatic=HCVSymptomaticDiagnosis(Person, Notifications.Age, Time, TimeStep);
 	ReturnData.DiagnosedSymptomatic=DiagnosedSymptomatic;
 	
+	ReturnData.SymptomaticDiagnoses=Sum(Add(DiagnosedSymptomatic.Count[0], DiagnosedSymptomatic.Count[1]));
+	
 	// Reduce Data diagnosis by the symptomatic diagnosis numbers
 
 	
@@ -68,12 +70,13 @@ function HCVDataDiagnosis(Person, Notifications, Time, TimeStep){
 		//ReturnData.HCVAsymptomaticTestingRateForThisStep=SumOfRemainingToBeDiagnosed/RandomisedUndiagnosedHCV.length;
 		
 		// Non-symptomatic diagnoses
-		ReturnData.NonsymptomaticDiagnoses=SumOfRemainingToBeDiagnosed;
+		ReturnData.SumOfRemainingToBeDiagnosedThisStep=SumOfRemainingToBeDiagnosed;
 		// Total undiagnosed in this step
 		ReturnData.Undiagnosed=RandomisedUndiagnosedHCV.length;
 		
 		
 		// Choose the next person in the list
+		var NonsymptomaticDiagnoses=0;
 		var UndiagCount=0;
 		while (UndiagCount<RandomisedUndiagnosedHCV.length && SumOfRemainingToBeDiagnosed>0){// while the people have been fully explored
 			
@@ -99,10 +102,11 @@ function HCVDataDiagnosis(Person, Notifications, Time, TimeStep){
 				// reduce remaining to be diagnosed
 				RemainingToBeDiagnosed[SexIndex][AgeIndex]--; 
 				SumOfRemainingToBeDiagnosed--;
+				NonsymptomaticDiagnoses++;
 			}
 			UndiagCount++;
 		}
-		
+		ReturnData.NonsymptomaticDiagnoses=NonsymptomaticDiagnoses;
 		// if there are people yet to be diagnosed in this step, return the penalty. Zero penalty if a-ok. 
 		
 		ReturnData.Penalty.InsufficientInfectedToDiagnose=RemainingToBeDiagnosed;

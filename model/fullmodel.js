@@ -522,10 +522,31 @@ function FullModel(FunctionInput){
 	
 	// Summarise the HCVDataDiagnosisResults in to results by 
 	
+	console.log("HCVDataDiagnosisResults");
 	
+	var SymptomaticArray=[];
+	var NonsymptomaticArray=[];
+	for (var DDYear=1995; DDYear<2015; DDYear++){
+		var Symp=0;
+		var NonSymp=0;
+		
+		for (var DD in HCVDataDiagnosisResults){
+			if (HCVDataDiagnosisResults[DD].Time>=DDYear && HCVDataDiagnosisResults[DD].Time<DDYear+1){
+				Symp+=HCVDataDiagnosisResults[DD].SymptomaticDiagnoses;
+				NonSymp+=HCVDataDiagnosisResults[DD].NonsymptomaticDiagnoses;
+			}
+		}
+		SymptomaticArray.push(Symp)
+		NonsymptomaticArray.push(NonSymp)
+	}
 	
+		
+	console.log(HCVDataDiagnosisResults);
+	console.log("-----------");
+	console.log(SymptomaticArray);
+	console.log(NonsymptomaticArray);
 	
-	
+	console.log("-----------");
 	
 	DetermineAverageInjectingDuration(Person);
 	
