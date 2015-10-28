@@ -127,8 +127,9 @@ function GeneralPlot(Settings){
 	this.InnerHTMLForPlot="";
 	this.InnerHTMLForPlot+="    <div class='fullscreenbox' id='"+this.ID+"_fullscreenbox' >\n";
 	this.InnerHTMLForPlot+="        <div class='plot_title' >"+this.Title+"</div>\n";
-	this.InnerHTMLForPlot+="        <div class='fullscreenbutton' title='Fullscreen' id='"+this.ID+"_fullscreenbutton' onclick=\"ToggleFullScreen('"+this.ID+"_fullscreenbox');\">&#10063</div>\n";
+	this.InnerHTMLForPlot+="        <div class='saveimagebutton' title='Save image' onclick='"+this.Name+".SaveImage();'>&#x2357</div>\n";
 	this.InnerHTMLForPlot+=DownloadButtonHTML;
+	this.InnerHTMLForPlot+="        <div class='fullscreenbutton' title='Fullscreen' id='"+this.ID+"_fullscreenbutton' onclick=\"ToggleFullScreen('"+this.ID+"_fullscreenbox');\">&#10063</div>\n";
 	this.InnerHTMLForPlot+="        <div class='plot_positioner'>\n";
 	this.InnerHTMLForPlot+="             <div id='"+this.ID+"_placeholder' class='plot_placeholder'></div>\n";
 	this.InnerHTMLForPlot+="        </div>\n";
@@ -159,6 +160,12 @@ GeneralPlot.prototype.Download= function (){//using prototyping for speed
 	return this.Data.Download();
 };
 
+GeneralPlot.prototype.SaveImage= function (){//using prototyping for speed
+
+
+
+	return 0;
+};
 
 
 // Example code

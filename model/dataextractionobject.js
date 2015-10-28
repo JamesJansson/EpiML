@@ -383,38 +383,38 @@ function RunAllDEOGenerateGraphData(ODEOArray, SimulationResult){
 }
 	
 
-// This function is run outside the simulation after all optimisations have occurred (i.e. this is summarising all results). 
-function SummariseAllDEO(ResultsBySim){
-	// ResultsBySim[Sim].DEOArray[SpecificStatCount]
-	var DEOResultsBySim=[];
-	for (var SimCount in ResultsBySim){
-		DEOResultsBySim[SimCount]=ResultsBySim[SimCount].DEOResultsArray;
-	}
-	// DEOResultsBySim[SimCount][SpecificStatCount]
-	var DEOArrayByStat=Transpose(DEOResultsBySim);
+// // This function is run outside the simulation after all optimisations have occurred (i.e. this is summarising all results). 
+// function SummariseAllDEO(ResultsBySim){
+// 	// ResultsBySim[Sim].DEOArray[SpecificStatCount]
+// 	var DEOResultsBySim=[];
+// 	for (var SimCount in ResultsBySim){
+// 		DEOResultsBySim[SimCount]=ResultsBySim[SimCount].DEOResultsArray;
+// 	}
+// 	// DEOResultsBySim[SimCount][SpecificStatCount]
+// 	var DEOArrayByStat=Transpose(DEOResultsBySim);
 	
-	console.log(DEOArrayByStat);
-	// Transpose to get at all the .DEOArray results
-	//var ResultsByStat=TransposeArrObj(ResultsBySim);
-	// ResultsByStat.DEOArray[Sim][SpecificStatCount]
-	//var OptimisationArrayBySim=ResultsByStat.DEOArray;// Choose to operate only on the Optimisation results
-	// OptimisationStatArray[Sim][SpecificStatCount]
-	//var DEOArrayByStat=Transpose(OptimisationArrayBySim);// Stat count is an array
-	//OptimisationStatArray[SpecificStatCount][Sim]
+// 	console.log(DEOArrayByStat);
+// 	// Transpose to get at all the .DEOArray results
+// 	//var ResultsByStat=TransposeArrObj(ResultsBySim);
+// 	// ResultsByStat.DEOArray[Sim][SpecificStatCount]
+// 	//var OptimisationArrayBySim=ResultsByStat.DEOArray;// Choose to operate only on the Optimisation results
+// 	// OptimisationStatArray[Sim][SpecificStatCount]
+// 	//var DEOArrayByStat=Transpose(OptimisationArrayBySim);// Stat count is an array
+// 	//OptimisationStatArray[SpecificStatCount][Sim]
 	
-	var SummarisedDEOArray=[];
-	for (var SpecificStatCount in DEOArrayByStat){
-		SummarisedDEOArray[SpecificStatCount]= new DataExtractionObject();
-		SummarisedDEOArray[SpecificStatCount].SummariseMultipleSimulations(DEOArrayByStat[SpecificStatCount]);
-		// Draw the graph, but wait until the above has processed
-		var GraphInterfaceID="OptimisationPlot"+SpecificStatCount;
-		SummarisedDEOArray[SpecificStatCount].DrawGraph(GraphInterfaceID);
-	}
+// 	var SummarisedDEOArray=[];
+// 	for (var SpecificStatCount in DEOArrayByStat){
+// 		SummarisedDEOArray[SpecificStatCount]= new DataExtractionObject();
+// 		SummarisedDEOArray[SpecificStatCount].SummariseMultipleSimulations(DEOArrayByStat[SpecificStatCount]);
+// 		// Draw the graph, but wait until the above has processed
+// 		var GraphInterfaceID="OptimisationPlot"+SpecificStatCount;
+// 		SummarisedDEOArray[SpecificStatCount].DrawGraph(GraphInterfaceID);
+// 	}
 	
-	return SummarisedDEOArray;
-}
-// Set up the plots page
-// for (var i=0; i<100; i++){document.getElementById("OptimisatoinPlotsHolder").innerHTML+='<div class="plot" id="OptimisationPlot'+i+'" ></div>';}
+// 	return SummarisedDEOArray;
+// }
+// // Set up the plots page
+// // for (var i=0; i<100; i++){document.getElementById("OptimisatoinPlotsHolder").innerHTML+='<div class="plot" id="OptimisationPlot'+i+'" ></div>';}
 
 
 
