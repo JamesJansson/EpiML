@@ -692,13 +692,13 @@ OptSelector.prototype.GraphDetailedErrorHistoryByDEO=function (){
 
 OptSelector.prototype.PostSimulationRunFunction=function (){
 
-	// Summarise DEO Results
+	// Summarise Simulation DEO Results
 	this.DEOGroup.Summarise(this.SimulationHolder.Result);
 	
 	// plot the results
-	this.DEOGroup.GraphAll(this.DEOResultsPlotID);
+	this.DrawDEOPlots();
 
-	// this
+	// Summarise optimisated parameters
 	this.SummariseOptimisationResult();
 	
 	this.PushToParamGroup(this.OptimisationResults.OptimisedParameters);
@@ -798,9 +798,14 @@ OptSelector.prototype.PushToParamGroup=function (SummarisedResult){
 
 
 OptSelector.prototype.DrawDEOPlots=function (){
-	this.DEOGroup.Summarise(this.SimulationHolder.Result);
+	// this.DEOGroup.Summarise(this.SimulationHolder.Result);
 	
-	this.DEOGroup.GraphAll(this.DEOResultsPlotID);
+	// this.DEOGroup.GraphAll(this.DEOResultsPlotID);
+	for (var Counter in this.DEOGroup.DEOArray){
+		var InterfaceID=this.DEOResultsPlotID+Counter;
+		var GlobalObjectID=this.Name+".DEOGroup.DEOArray["+Counter+"]";
+		this.DEOGroup.DEOArray[Counter].DrawGraph(GlobalObjectID, InterfaceID);
+	}
 };
 
 

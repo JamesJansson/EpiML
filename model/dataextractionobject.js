@@ -196,7 +196,7 @@ DataExtractionObject.prototype.SummariseMultipleSimulations=function(ArrayOfResu
 		
 };
 
-DataExtractionObject.prototype.DrawGraph=function(GraphInterfaceID){
+DataExtractionObject.prototype.DrawGraph=function(ThisObjectsGlobalID, GraphInterfaceID){
 
 	
 	// function to extract	data into the correct form
@@ -211,11 +211,12 @@ DataExtractionObject.prototype.DrawGraph=function(GraphInterfaceID){
 	
 
 	var PlotSettings={};
-	PlotSettings.Name=this.Name;
+	//PlotSettings.Name=this.Name;
 	PlotSettings.Title=this.Title;
 	PlotSettings.XLabel=this.XLabel;
 	PlotSettings.YLabel=this.YLabel;
-	PlotSettings.ID=GraphInterfaceID;
+	PlotSettings.ObjectID=ThisObjectsGlobalID+".GraphObject";
+	PlotSettings.InterfaceID=GraphInterfaceID;
 	
 	
 	PlotSettings.PlotFunction=function(PlotPlaceholder, PlotData){
@@ -228,7 +229,9 @@ DataExtractionObject.prototype.DrawGraph=function(GraphInterfaceID){
 	PlotSettings.PlotData.Result=StructureForGraph95CI(this.MultiSimResultSummary);
 
 	PlotSettings.Data=[];
-	PlotSettings.Data.Download=function (){console.log('This runs when the button is pushed');};
+	PlotSettings.Data.Download=function (){
+		console.log('This runs when the button is pushed');
+	};
 
 	this.GraphObject=new GeneralPlot(PlotSettings);// this must be global
 	this.GraphObject.Draw();
@@ -335,7 +338,7 @@ DataExtractionObjectGroup.prototype.Summarise=function(ResultsBySim){
 
 DataExtractionObjectGroup.prototype.GraphAll=function(GraphInterfaceID){
 	// Draw the graph, but wait until the above has processed
-
+	throw "This is not supposed to be used, as the references don't get transferred properly.";
 	var SpecificStatCount=0;
 	for (var SpecificStatRef in this.DEOArray){
 		console.log(GraphInterfaceID+SpecificStatCount);

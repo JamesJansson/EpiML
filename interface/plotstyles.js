@@ -7,36 +7,37 @@
 
 function GeneralPlot(Settings){
 	// The settings has the following format:
-	// .ID = the ID of the container to put the graph into. Should be a unique ID on the page. Required
+	// .InterfaceID = the ID of the container to put the graph into. Should be a unique ID on the page. Required
 	// .xAxisLabel
 	// .yAxisLabel
-	// .Data
-	// 
+	// .Data = the data object associated with the graph. Required if you want to use the download button to call .Data.Download()
+	// .ObjectID = the name of this GeneralPlot in global scope. Required
 	// DownloadSummaryStatisticCSV(SimulationHolder.Result[0].AgeInfectedResult);
 	
 	// "Value "
 	
 	// Check that there are any ID names that are taken
-	//console.error("Using '"+Settings.ID+"' as an ID for the plot creates a parameter '" + PrexistingID + "' that already exists.";
+	//console.error("Using '"+Settings.InterfaceID+"' as an ID for the plot creates a parameter '" + PrexistingID + "' that already exists.";
 	
 	// Store information associated with this plot
 	
+	console.log(Settings)
 	
-	// ID
-	if (typeof(Settings.ID)!='undefined'){
-		this.ID=Settings.ID;
+	// InterfaceID
+	if (typeof(Settings.InterfaceID)!='undefined'){
+		this.InterfaceID=Settings.InterfaceID;
 	}
 	else {
-		throw "In order to use the GeneralPlot function, you must set the Settings.ID value to the name of the div element you wish to place the plot into.";
+		throw "In order to use the GeneralPlot function, you must set the Settings.InterfaceID value to the name of the div element you wish to place the plot into.";
 	}
-	this.PlotPlaceholder="#"+Settings.ID+"_placeholder";
+	this.PlotPlaceholder="#"+Settings.InterfaceID+"_placeholder";
 	
-	
-	if (typeof(Settings.Name)!='undefined'){
-		this.Name=Settings.Name;
+		
+	if (typeof(Settings.ObjectID)!='undefined'){
+		this.ObjectID=Settings.ObjectID;
 	}
 	else {
-		throw "In order to use the GeneralPlot function, you must set the Settings.Name value to the string of the name of the variable that represents this object, such that HTML can be constructed around this object.";
+		throw "In order to use the GeneralPlot function, you must set the Settings.ObjectID value to the string of the name of the variable that represents this object, such that HTML can be constructed around this object.";
 	}
 			
 	this.PlotFunction=Settings.PlotFunction;// should have the format function(PlotPlaceholder, PlotData){}
@@ -48,7 +49,7 @@ function GeneralPlot(Settings){
 	// }
 	this.PlotData=Settings.PlotData;// A structure that can contain anything that is needed to graph
 	// note: PlotData contains an array of Plot[] that each contain:
-	// .X (or .Category) .Y .Upper .Lower .Name
+	// .X (or .Category) .Y .Upper .Lower .ObjectID
 	
 	// PlotData contains
 	// .XMin .XMax .YMin .YMax
@@ -61,7 +62,7 @@ function GeneralPlot(Settings){
 		
 		// If the .Data hads a function called "Download", create a button that allows the download of Data
 		if (typeof(this.Data.Download)=='function'){
-			DownloadButtonHTML="        <div class='downloadbutton' title='Download data' onclick='"+this.Name+".Download();'>&#x21E9;</div>\n";
+			DownloadButtonHTML="        <div class='downloadbutton' title='Download data' onclick='"+this.ObjectID+".Download();'>&#x21E9;</div>\n";
 		}
 	}
 
@@ -88,7 +89,7 @@ function GeneralPlot(Settings){
 		
 		// Drop down: PlotStyle
 		//      PlotFunction (on selection 
-		// Drop down: X value, .Name .Values
+		// Drop down: X value, .ObjectID .Values
 		// Drop down: Plot 1
 		//     Drop down: Y value
 		//     Drop down: Display uncertainty (none), 
@@ -125,13 +126,13 @@ function GeneralPlot(Settings){
 			
 	// Build HTML
 	this.InnerHTMLForPlot="";
-	this.InnerHTMLForPlot+="    <div class='fullscreenbox' id='"+this.ID+"_fullscreenbox' >\n";
+	this.InnerHTMLForPlot+="    <div class='fullscreenbox' id='"+this.InterfaceID+"_fullscreenbox' >\n";
 	this.InnerHTMLForPlot+="        <div class='plot_title' >"+this.Title+"</div>\n";
-	this.InnerHTMLForPlot+="        <div class='saveimagebutton' title='Save image' onclick='"+this.Name+".SaveImage();'>&#x2357</div>\n";
+	this.InnerHTMLForPlot+="        <div class='saveimagebutton' title='Save image' onclick='"+this.ObjectID+".SaveImage();'>&#x2357</div>\n";
 	this.InnerHTMLForPlot+=DownloadButtonHTML;
-	this.InnerHTMLForPlot+="        <div class='fullscreenbutton' title='Fullscreen' id='"+this.ID+"_fullscreenbutton' onclick=\"ToggleFullScreen('"+this.ID+"_fullscreenbox');\">&#10063</div>\n";
+	this.InnerHTMLForPlot+="        <div class='fullscreenbutton' title='Fullscreen' id='"+this.ObjectID+"_fullscreenbutton' onclick=\"ToggleFullScreen('"+this.ID+"_fullscreenbox');\">&#10063</div>\n";
 	this.InnerHTMLForPlot+="        <div class='plot_positioner'>\n";
-	this.InnerHTMLForPlot+="             <div id='"+this.ID+"_placeholder' class='plot_placeholder'></div>\n";
+	this.InnerHTMLForPlot+="             <div id='"+this.InterfaceID+"_placeholder' class='plot_placeholder'></div>\n";
 	this.InnerHTMLForPlot+="        </div>\n";
 	this.InnerHTMLForPlot+="        <div class='xlabel'>"+this.XLabel+"</div>\n";
 	this.InnerHTMLForPlot+="        <div class='ylabel'><div class='rotate'>"+this.YLabel+"</div></div>\n";
@@ -148,7 +149,7 @@ function GeneralPlot(Settings){
 
 
 GeneralPlot.prototype.Draw= function (){//using prototyping for speed
-	document.getElementById(this.ID).innerHTML=this.InnerHTMLForPlot;
+	document.getElementById(this.InterfaceID).innerHTML=this.InnerHTMLForPlot;
 	this.Update();
 };
 
