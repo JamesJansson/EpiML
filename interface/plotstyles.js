@@ -32,6 +32,7 @@ function GeneralPlot(Settings){
 	}
 	this.PlotPlaceholder="#"+Settings.InterfaceID+"_placeholder";
 	
+	this.InterfaceObject=document.getElementById(this.PlotPlaceholder);
 		
 	if (typeof(Settings.ObjectID)!='undefined'){
 		this.ObjectID=Settings.ObjectID;
@@ -164,6 +165,20 @@ GeneralPlot.prototype.Download= function (){//using prototyping for speed
 GeneralPlot.prototype.SaveImage= function (){//using prototyping for speed
 
 
+	html2canvas(this.InterfaceObject, {
+		onrendered: function(canvas) {
+			//document.body.appendChild(canvas);
+			var imgdatalink = canvas.toDataURL("image/png");// get the URL of the canvas data
+			link = document.createElement('a');
+			link.href = imgdatalink ;
+			console.log(imgdatalink);
+			
+			link.download = 'Download.png';
+			document.body.appendChild(link);
+			link.click();
+		}
+	});
+	
 
 	return 0;
 };
