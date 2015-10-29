@@ -32,8 +32,7 @@ function GeneralPlot(Settings){
 	}
 	this.PlotPlaceholder="#"+Settings.InterfaceID+"_placeholder";
 	
-	this.InterfaceObject=document.getElementById(this.PlotPlaceholder);
-		
+	// Object ID
 	if (typeof(Settings.ObjectID)!='undefined'){
 		this.ObjectID=Settings.ObjectID;
 	}
@@ -131,7 +130,7 @@ function GeneralPlot(Settings){
 	this.InnerHTMLForPlot+="        <div class='plot_title' >"+this.Title+"</div>\n";
 	this.InnerHTMLForPlot+="        <div class='saveimagebutton' title='Save image' onclick='"+this.ObjectID+".SaveImage();'>&#x2357</div>\n";
 	this.InnerHTMLForPlot+=DownloadButtonHTML;
-	this.InnerHTMLForPlot+="        <div class='fullscreenbutton' title='Fullscreen' id='"+this.ObjectID+"_fullscreenbutton' onclick=\"ToggleFullScreen('"+this.ID+"_fullscreenbox');\">&#10063</div>\n";
+	this.InnerHTMLForPlot+="        <div class='fullscreenbutton' title='Fullscreen' id='"+this.ObjectID+"_fullscreenbutton' onclick=\"ToggleFullScreen('"+this.InterfaceID+"_fullscreenbox');\">&#10063</div>\n";
 	this.InnerHTMLForPlot+="        <div class='plot_positioner'>\n";
 	this.InnerHTMLForPlot+="             <div id='"+this.InterfaceID+"_placeholder' class='plot_placeholder'></div>\n";
 	this.InnerHTMLForPlot+="        </div>\n";
@@ -163,21 +162,122 @@ GeneralPlot.prototype.Download= function (){//using prototyping for speed
 };
 
 GeneralPlot.prototype.SaveImage= function (){//using prototyping for speed
+	// var InterfaceObject=document.getElementById(this.InterfaceID+"_fullscreenbox");
+	var InterfaceObject=document.getElementById(this.InterfaceID);
 
 
-	html2canvas(this.InterfaceObject, {
-		onrendered: function(canvas) {
-			//document.body.appendChild(canvas);
-			var imgdatalink = canvas.toDataURL("image/png");// get the URL of the canvas data
-			link = document.createElement('a');
-			link.href = imgdatalink ;
-			console.log(imgdatalink);
+
+	// this is based off the following gist: https://gist.github.com/rdtsc/5074753e163397f3d247
+	// usage
+	//NWJSHTMLToPNG=require(NWJSHTMLToPNG);
+	
+	
+	
+	function CaptureAndSave(InterfaceObject, NameWithoutExtension) {
+		var gui = require('nw.gui');
+		var win = gui.Window.get();
+		var fs  = require('fs');
+		
+		function CaptureRegion(rect, callback, format) {
 			
-			link.download = 'Download.png';
-			document.body.appendChild(link);
-			link.click();
+			win.capturePage(function(data) {
+				var img = new Image();
+			
+				img.onload = function() {
+				var canvas = document.createElement('canvas');
+			
+				canvas.width  = rect.width;
+				canvas.height = rect.height;
+			
+				
+			
+				canvas.getContext('2d').drawImage(img, -rect.left, -rect.top);
+				callback(canvas.toDataURL('image/' + format));
+				};
+			
+				img.src = data;
+			}, 'png'); // Ensure JPEG compression happens only once, if ever.
 		}
-	});
+		function dumpBase64(data, filename, callback) {
+			data = data.substr(data.indexOf(',') + 1);
+			
+			fs.writeFile(filename, data, 'base64', callback);
+		}
+		
+		var bounds = InterfaceObject.getBoundingClientRect();
+		
+		var filename = NameWithoutExtension+'.png';
+		var imageFmt = 'png';
+		
+		CaptureRegion(bounds, function(data) {
+			dumpBase64(data, filename, function(error) {
+				if(error) throw error;
+			});
+		}, imageFmt);
+	}
+
+	//var target = document.getElementById('HCVOptSelectorHolder_DEOResultsPlot_0');
+	var FileNameWOExt=this.Title;
+	if (FileNameWOExt.length==0){
+		FileNameWOExt=untitled
+	}
+	
+	
+	CaptureAndSave(InterfaceObject, FileNameWOExt);
+
+
+
+
+
+
+
+
+	// console.log(InterfaceObject);
+
+	// //InterfaceObject=document.body;
+
+	// html2canvas(InterfaceObject, {
+	// 	onrendered: function(canvas) {
+	// 		var fs = require('fs');
+			
+	// 		console.log(canvas.length);
+			
+	// 		//document.body.appendChild(canvas);
+	// 		var imgdatalink = canvas.toDataURL("image/png");// get the URL of the canvas data
+			
+	// 		var data = imgdatalink.replace(/^data:image\/\w+;base64,/, "");
+	// 		var buf = new Buffer(data, 'base64');
+	// 		fs.writeFile('image.png', buf);
+			
+	// 		InterfaceObject.appendChild(canvas);
+			
+			
+	// 		var imgdata=imgdatalink.split(',')[1];// split off the URL section and keep data
+	// 		var DecodedImg = window.atob(imgdata);
+			
+	// 		var name='./woah.png';
+	// 		var imgFileData = new Buffer(DecodedImg, encoding='base64');
+			
+	// 		console.log(imgdatalink);
+	// 		console.log(imgdata);
+			
+	// 		fs.writeFile(name, imgFileData, function(err) {
+	// 			if(err) {
+	// 				console.log(err);
+	// 			} else {
+	// 				console.log("The file was saved!");
+	// 			}
+	// 		});
+			
+	// 		// link = document.createElement('a');
+	// 		// link.href = imgdatalink ;
+	// 		// console.log(imgdatalink);
+			
+	// 		// link.download = 'Download.png';
+	// 		// document.body.appendChild(link);
+	// 		// link.click();
+	// 	}
+	// });
 	
 
 	return 0;
