@@ -1,6 +1,7 @@
 {
 	"name": "EpiML",
 	"main": "model.htm", 
+	"node-main": "node-main.js",
 	"window":{
 		"icon": "icon.png",
 		"toolbar": true,
