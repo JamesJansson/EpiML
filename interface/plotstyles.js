@@ -206,7 +206,7 @@ GeneralPlot.prototype.SaveImage= function (){//using prototyping for speed
 		
 		var bounds = InterfaceObject.getBoundingClientRect();
 		
-		var filename = NameWithoutExtension+'.png';
+		var filename = './results/'+NameWithoutExtension+'.png';
 		var imageFmt = 'png';
 		
 		CaptureRegion(bounds, function(data) {
@@ -219,7 +219,7 @@ GeneralPlot.prototype.SaveImage= function (){//using prototyping for speed
 	//var target = document.getElementById('HCVOptSelectorHolder_DEOResultsPlot_0');
 	var FileNameWOExt=this.Title;
 	if (FileNameWOExt.length==0){
-		FileNameWOExt=untitled
+		FileNameWOExt='untitled';
 	}
 	
 	
