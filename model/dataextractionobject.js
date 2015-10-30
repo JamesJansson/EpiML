@@ -228,8 +228,11 @@ DataExtractionObject.prototype.DrawGraph=function(ThisObjectsGlobalID, GraphInte
 	PlotSettings.PlotData.Data=StructureForGraph95CI(this.MultiSimDataSummary);
 	PlotSettings.PlotData.Result=StructureForGraph95CI(this.MultiSimResultSummary);
 
-	PlotSettings.Data=[];
-	PlotSettings.Data.Download=function (){
+	PlotSettings.DataSource=this;
+	// this is passed as Data so that it can be inspected from the point of view of the object 
+	// It is also passed such that Download() can be called by the interface  
+	
+	PlotSettings.DataSource.Download=function (){
 		console.log('This runs when the button is pushed');
 	};
 
@@ -237,7 +240,12 @@ DataExtractionObject.prototype.DrawGraph=function(ThisObjectsGlobalID, GraphInte
 	this.GraphObject.Draw();
 };
 
-
+DataExtractionObject.prototype.Download=function(){
+	this.Graph.Data.Time;
+	
+	this.MultiSimResult;
+	DownloadObjectAsCSV(Object);
+}
 
 
 function DataExtractionObjectGroup(Name){

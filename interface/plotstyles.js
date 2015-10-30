@@ -58,10 +58,10 @@ function GeneralPlot(Settings){
 	// The .Data element can be used for selecting new graphing options in the graphing panel, and to allow data to be downloaded
 	var DownloadButtonHTML="";//by default blank if the download data function does not exist
 	if (typeof(Settings.Data)!='undefined'){
-		this.Data=Settings.Data;
+		this.DataSource=Settings.DataSource;
 		
-		// If the .Data hads a function called "Download", create a button that allows the download of Data
-		if (typeof(this.Data.Download)=='function'){
+		// If the .DataSource hads a function called "Download", create a button that allows the download of Data
+		if (typeof(this.DataSource.Download)=='function'){
 			DownloadButtonHTML="        <div class='downloadbutton' title='Download data' onclick='"+this.ObjectID+".Download();'>&#x21E9;</div>\n";
 		}
 	}
@@ -158,7 +158,7 @@ GeneralPlot.prototype.Update= function (){//using prototyping for speed
 };
 
 GeneralPlot.prototype.Download= function (){//using prototyping for speed
-	return this.Data.Download();
+	return this.DataSource.Download();
 };
 
 GeneralPlot.prototype.SaveImage= function (){//using prototyping for speed
@@ -311,8 +311,8 @@ GeneralPlot.prototype.SaveImage= function (){//using prototyping for speed
 // PlotSettings.XLabel="Year";
 // PlotSettings.YLabel="Number";
 
-// PlotSettings.Data=[];
-// PlotSettings.Data.Download=function (){console.log('This runs when the button is pushed')};
+// PlotSettings.DataSource=[];
+// PlotSettings.DataSource.Download=function (){console.log('This runs when the button is pushed')};
 
 // var PlotObjectName=new GeneralPlot(PlotSettings);
 // PlotObjectName.Draw();
