@@ -227,4 +227,23 @@ DownloadableCSV.prototype.Download=function(){
 	}
 };
 
-
+function DownloadObjectAsCSV(Object, FileName){
+	var StructureToParse={};
+	StructureToParse.fields=[];
+	StructureToParse.data=[];
+	
+	for (var FieldID in Object){
+		StructureToParse.fields.push(FieldID);
+		StructureToParse.data.push(Object[FieldID]);
+	}
+	
+	var csv = Papa.unparse(StructureToParse);
+	var blob = new Blob([csv], {type: "text/plain;charset=utf-8"});
+	if (typeof(FileName) == 'undefined'){
+		saveAs(blob, "data.csv");
+	}
+	else{
+		saveAs(blob, FileName);
+	}
+	
+}
