@@ -1,84 +1,84 @@
 {
     "Name": "./Data/OptimisationResults.json",
-    "Date": "2015-10-28T15:44:39.618Z",
+    "Date": "2015-11-02T06:27:29.517Z",
     "Seeds": [],
     "OptimisedParameters": {
         "HCV.PTransmission.IDU": [
-            0.5384723723400384
+            0.050488676177337766
         ],
         "HCV.SyptomaticTesting": [
-            0.9282377252820879
+            0.4508275354746729
         ],
         "IDU.BecomeRegularInjector.P": [
-            0.3713701118249446
+            0.08480266970582306
         ],
         "IDU.Entry.B": [
-            0.6072229503188282
+            0.17739371792413294
         ],
         "IDU.Entry.Logk1": [
-            0.3864144601393491
+            0.8872084014583379
         ],
         "IDU.Entry.Logk2": [
-            0.4982324468437582
+            0.02919980906881392
         ],
         "IDU.Entry.PeakEntryPerYear": [
-            35370.31498271972
+            47804.77446038276
         ],
         "IDU.Entry.YearPeakIDU": [
-            2000.3396949148737
+            1995.1069748229347
         ],
         "IDU.NSP.P": [
-            0.8114613548386842
+            0.6536025137174875
         ],
         "IDU.RateOfCeasingIrregularUse": [
-            0.43391000875271857
+            0.65053153433837
         ],
         "IDU.RateOfCessation": [
-            0.6461198155302554
+            0.8161725897807628
         ]
     },
     "Parameters": {
         "HCV.F0F1": [
-            0.06315080638386777
+            0.08651557442115775
         ],
         "HCV.F1F2": [
-            0.06706337115058834
+            0.08508394432199308
         ],
         "HCV.F2F3": [
-            0.10945624050872316
+            0.05838864095367344
         ],
         "HCV.F3F4": [
-            0.08602474288682288
+            0.09093226311435632
         ],
         "HCV.F4.PAt20Years.AlcoholGT50g": [
-            0.07226003287166922
+            0.05210093089348365
         ],
         "HCV.F4.PAt20Years.AlcoholLT50g": [
-            0.260365939047544
+            0.285375004606298
         ],
         "HCV.F4DeathP": [
-            0.031471631938813735
+            0.031002271547687726
         ],
         "HCV.F4HCCP": [
-            0.028760991215618984
+            0.025041863191387972
         ],
         "HCV.F4LF": [
-            0.018969371118123815
+            0.019194666866843325
         ],
         "HCV.FibrosisReversalRate": [
-            0.5998239784807091
+            0.5838450507939994
         ],
         "HCV.GenotypePrevalence.1": [
-            0.4993193199937638
+            0.5371006604037672
         ],
         "HCV.GenotypePrevalence.2": [
-            0.0900693065396107
+            0.08749337530181422
         ],
         "HCV.GenotypePrevalence.3": [
-            0.28242549962543284
+            0.3844707231380812
         ],
         "HCV.GenotypePrevalence.4": [
-            0.027464498091754056
+            0.02611237805757517
         ],
         "HCV.GenotypePrevalence.5": [
             0
@@ -87,187 +87,187 @@
             0
         ],
         "HCV.InitialPrevalence": [
-            0.5946671153776574
+            0.5383309638883015
         ],
         "HCV.PReinfectionProtected": [
-            0.20648432696414237
+            0.43749311936351226
         ],
         "HCV.PTransmission.IDU": [
-            0.5384723723400384
+            0.050488676177337766
         ],
         "HCV.PTransmission.MotherToChild": [
-            0.0690903922406839
+            0.06128922928650939
         ],
         "HCV.SpontaneousClearance.CCGenotypeHR": [
-            1.76590046918919
+            2.167007872099418
         ],
         "HCV.SpontaneousClearance.FemaleHR": [
-            2.568920925981682
+            2.2689780594864732
         ],
         "HCV.SpontaneousClearance.Genotype1": [
-            1.6942780885021786
+            1.428791442540676
         ],
         "HCV.SpontaneousClearance.MedianTime": [
-            0.419311898679658
+            0.45931932164623335
         ],
         "HCV.SpontaneousClearance.p": [
-            0.3341349866201119
+            0.33119088830594845
         ],
         "HCV.SyptomaticTesting": [
-            0.9282377252820879
+            0.4508275354746729
         ],
         "Haemophilia.HCV.Prevalence1973": [
-            0.4665250686229863
+            0.46536486838370555
         ],
         "Haemophilia.HCV.Prevalence1980": [
-            0.7463288246345026
+            0.7354795310224171
         ],
         "Haemophilia.HCV.Prevalence1990": [
-            0.7791177427326038
+            0.7436661783584065
         ],
         "Haemophilia.MortalityFactor": [
-            2.6651151135388575
+            2.7122336970441174
         ],
         "Haemophilia.Total2013": [
-            2878.192057847636
+            2643.839513438916
         ],
         "IDU.AIHWDataFactor": [
-            1.0925752227194607
+            1.5666875136084855
         ],
         "IDU.AIHWDataUncertaintySD": [
             1700
         ],
         "IDU.BecomeRegularInjector.P": [
-            0.3713701118249446
+            0.08480266970582306
         ],
         "IDU.BecomeRegularInjector.PTime.LT10Years": [
-            0.0018018265402987357
+            0.031970697179583486
         ],
         "IDU.BecomeRegularInjector.PTime.LT1Week": [
-            0.4469648172305737
+            0.4259788218422462
         ],
         "IDU.BecomeRegularInjector.PTime.LT1Year": [
-            0.08417903082690147
+            0.026625175141968403
         ],
         "IDU.BecomeRegularInjector.PTime.LT5Years": [
-            0.09113794742047567
+            0.1158815694914197
         ],
         "IDU.BecomeRegularInjector.PTime.LT6Months": [
-            0.28188931796169153
+            0.31837087678002873
         ],
         "IDU.Entry.B": [
-            0.6072229503188282
+            0.17739371792413294
         ],
         "IDU.Entry.Logk1": [
-            0.3864144601393491
+            0.8872084014583379
         ],
         "IDU.Entry.Logk2": [
-            0.4982324468437582
+            0.02919980906881392
         ],
         "IDU.Entry.PeakEntryPerYear": [
-            35370.31498271972
+            47804.77446038276
         ],
         "IDU.Entry.YearPeakIDU": [
-            2000.3396949148737
+            1995.1069748229347
         ],
         "IDU.ExcessMortality.Female": [
-            0.003320936555565781
+            0.0029394140344367607
         ],
         "IDU.ExcessMortality.Male": [
-            0.009706936508603955
+            0.012231356151059861
         ],
         "IDU.InjectionStartAge.Median": [
-            21.752703780732762
+            20.21680660699906
         ],
         "IDU.InjectionStartAge.SD": [
-            0.171126429749638
+            0.18407039673355333
         ],
         "IDU.InjectionStartAge.SexDifference": [
-            2.377261494564534
+            1.6807662582973695
         ],
         "IDU.MSMUse.HIVNeg": [
-            0.03466340774379633
+            0.017827106189881356
         ],
         "IDU.MSMUse.HIVPos": [
-            0.18205328064152662
+            0.18505316449662276
         ],
         "IDU.NSP.P": [
-            0.8114613548386842
+            0.6536025137174875
         ],
         "IDU.ProportionMale": [
-            0.6409794238589834
+            0.650775594412009
         ],
         "IDU.RateOfCeasingIrregularUse": [
-            0.43391000875271857
+            0.65053153433837
         ],
         "IDU.RateOfCessation": [
-            0.6461198155302554
+            0.8161725897807628
         ],
         "IDU.RelationshipDuration.Val0": [
-            0.295190057780413
+            0.2389421276320009
         ],
         "IDU.RelationshipDuration.Val1": [
-            0.26587135378927984
+            0.24079960289717822
         ],
         "IDU.RelationshipDuration.Val2": [
-            0.34329201519523617
+            0.3412636017211351
         ],
         "IDU.Sex.AnyLastMonth": [
-            0.7035567077771827
+            0.6746527429063873
         ],
         "IDU.Sex.FirstInjectionHadSexualPartner": [
             0
         ],
         "IDU.Sex.OtherLastMonth": [
-            0.19204180931846473
+            0.21554345916654505
         ],
         "IDU.Sex.RegularAndOtherLastMonth": [
-            0.043573588140390404
+            0.03808334057101724
         ],
         "IDU.Sex.RegularLastMonth": [
-            0.7400926698214988
+            0.7377792962160106
         ],
         "IDU.Sex.RegularPartnerInjects": [
-            0.42707211403975553
+            0.47827332032700576
         ],
         "IDU.Sexuality.Bisexual": [
-            0.09485149366237705
+            0.10407095129231758
         ],
         "IDU.Sexuality.Heterosexual": [
-            0.8461068581662399
+            0.8470860366203465
         ],
         "IDU.Sexuality.Homosexual": [
-            0.05168338111047844
+            0.05164550180574544
         ],
         "IDU.Sharing.PriorToNSP": [
-            0.5831964394529431
+            0.7227510504829339
         ],
         "IDU.Sharing.Rate18": [
             0
         ],
         "IDU.Sharing.RatePost1997": [
-            0.14125740273246418
+            0.19498962148207827
         ],
         "IDU.Sharing.RatePre1997": [
-            0.3047962822799313
+            0.293750448332924
         ],
         "IDU.Sharing.RelativeRiskAge18to40": [
-            0.5503371257698618
+            0.6281098533664909
         ],
         "IDU.Use.Daily": [
-            0.18587439397166242
+            0.22564215065302012
         ],
         "IDU.Use.Daily2or3Times": [
-            0.23495246295259048
+            0.222529912218028
         ],
         "IDU.Use.DailyMore3": [
-            0.02492316525318647
+            0.08054701463548372
         ],
         "IDU.Use.MoreThanWeekly": [
-            0.3888993245500516
+            0.3658338817255678
         ],
         "IDU.Use.WeeklyToMonthly": [
-            0.23947486041540883
+            0.15645658258988954
         ],
         "Prison.Females": [
             0.4

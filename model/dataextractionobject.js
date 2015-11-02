@@ -232,19 +232,53 @@ DataExtractionObject.prototype.DrawGraph=function(ThisObjectsGlobalID, GraphInte
 	// this is passed as Data so that it can be inspected from the point of view of the object 
 	// It is also passed such that Download() can be called by the interface  
 	
-	PlotSettings.DataSource.Download=function (){
-		console.log('This runs when the button is pushed');
-	};
+	// This section is no longer used as we now rely on the .Download prototype in the object
+	// PlotSettings.DataSource.Download=function (){
+	// 	console.log('This runs when the button is pushed');
+	// };
 
 	this.GraphObject=new GeneralPlot(PlotSettings);// this must be global
 	this.GraphObject.Draw();
 };
 
 DataExtractionObject.prototype.Download=function(){
-	this.Graph.Data.Time;
+	var Object={};
+	// Create the first column
+	Object['Details']=[];
+	Object['Details'].push('Title');
+	Object['Details'].push(this.Title);
+	Object['Details'].push('XLabel');
+	Object['Details'].push(this.XLabel);
+	Object['Details'].push('YLabel');
+	Object['Details'].push(this.YLabel);
+
+	Object.Result=[];//Create an empty column
+	Object.Time_Result=this.MultiSimResultSummary.Time;
+	Object.Median_Result=this.MultiSimResultSummary.Median;
+	Object.Lower95Percentile_Result=this.MultiSimResultSummary.Lower95Percentile;
+	Object.Upper95Percentile_Result=this.MultiSimResultSummary.Upper95Percentile;
 	
-	this.MultiSimResult;
-	DownloadObjectAsCSV(Object);
+	Object.Data=[];//Create an empty column
+	Object.Time_Data=this.MultiSimDataSummary.Time;
+	Object.Median_Data=this.MultiSimDataSummary.Median;
+	Object.Lower95Percentile_Data=this.MultiSimDataSummary.Lower95Percentile;
+	Object.Upper95Percentile_Data=this.MultiSimDataSummary.Upper95Percentile;
+	
+	Object.ResultBySimulation=[];//Create an empty column
+	Object.Time_ResultBySimulation=this.MultiSimResult[0].Time;
+	for (var Count in this.MultiSimResult){
+		var HeaderName='Result['+Count+']';
+		Object[HeaderName]=this.MultiSimResult[Count].Value;
+	}
+	
+	Object.DataBySimulation=[];//Create an empty column
+	Object.Time_DataBySimulation=this.MultiSimData[0].Time;
+	for (var Count in this.MultiSimData){
+		var HeaderName='Data['+Count+']';
+		Object[HeaderName]=this.MultiSimData[Count].Value;
+	}
+	console.log(Object);
+	DownloadObjectAsCSV(Object, this.Title+'.csv');
 }
 
 

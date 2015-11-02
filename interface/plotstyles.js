@@ -57,7 +57,7 @@ function GeneralPlot(Settings){
 	
 	// The .Data element can be used for selecting new graphing options in the graphing panel, and to allow data to be downloaded
 	var DownloadButtonHTML="";//by default blank if the download data function does not exist
-	if (typeof(Settings.Data)!='undefined'){
+	if (typeof(Settings.DataSource)!='undefined'){
 		this.DataSource=Settings.DataSource;
 		
 		// If the .DataSource hads a function called "Download", create a button that allows the download of Data
