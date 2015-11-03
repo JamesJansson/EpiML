@@ -1,7 +1,7 @@
 {
-    "NoThreads": "1",
+    "NoThreads": "2",
     "SampleFactor": 1000,
-    "NumberOfSimulations": 1,
+    "NumberOfSimulations": 4,
     "HCVTreatmentScenario": "0",
     "ModelNetwork": false,
     "RecalculateParam": true,
