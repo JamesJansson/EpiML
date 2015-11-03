@@ -103,7 +103,6 @@
 <li><level1 id="HCVMenuItem" 		onclick="ShowMenu(HCVContent);"			>HCV</level1></li>
 <li><level1 id="DataMenuItem" 		onclick="ShowMenu(DataContent);"		>Data</level1></li>
 <li><level1 id="PlotsMenuItem" 		onclick="ShowMenu(PlotsContent);"		>Plots</level1></li>
-<li><level1 id="PWIDOptimisationPlotsMenuItem" 	onclick="ShowMenu(PWIDOptimisationPlotsContent);"		>PWID Optimisation</level1></li>
 <li><level1 id="MapsMenuItem" 		onclick="ShowMenu(MapsContent);"		>Maps</level1></li>
 <li><level1 id="SensitivityMenuItem"onclick="ShowMenu(SensitivityContent);"	>Sensitivity Analysis</level1></li>
 <li><level1 id="SettingsMenuItem" 	onclick="ShowMenu(SettingsContent);"	>Settings</level1></li>
@@ -217,22 +216,7 @@
 	
 	
 	
-	<div id="PWIDOptimisationPlotsContent" class="Content">
-		<h1>PWID entry optimisation</h1>
-		<div>
-			<div class="plot" id="PWIDEntryPlot" style="position: absolute;left: 200px;"></div>
-			Age Range: <br>
-			<input type="checkbox" onClick="PWIDEntryPlotSettings.AgeRange[0]=this.checked;">14-20<br>
-			<input type="checkbox" onClick="PWIDEntryPlotSettings.AgeRange[1]=this.checked;">20-30<br>
-			<input type="checkbox" onClick="PWIDEntryPlotSettings.AgeRange[2]=this.checked;">30-40<br>
-			<input type="checkbox" onClick="PWIDEntryPlotSettings.AgeRange[3]=this.checked;">40+<br>
-			Sex: <br>
-			<input type="checkbox" onClick="PWIDEntryPlotSettings.Sex[0]=this.checked;">Male<br>
-			<input type="checkbox" onClick="PWIDEntryPlotSettings.Sex[1]=this.checked;">Female<br>
-			<div class="SolidButton" onClick="PlotPWIDEntryOptimisation(0);">Plot median</div><br>
-			<div class="SolidButton" onClick="PlotPWIDEntryOptimisation(1);">Plot mean</div><br>
-		</div>
-	</div>
+
 	
 	
 	
