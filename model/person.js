@@ -1,5 +1,6 @@
 // This file describes the person object. It requires:
-// * mortality
+// * Mortality.TimeOfDeath functions
+// * EventVector
 
 
 function PersonObject(YearOfBirth, Sex, Sexuality)//, YearOfObservation Param)
@@ -16,12 +17,11 @@ function PersonObject(YearOfBirth, Sex, Sexuality)//, YearOfObservation Param)
 		this.Sexuality=Sexuality;
 	}
 	
-	
 	this.YearOfBirth=YearOfBirth;
 	
-
-	
 	this.Death=new DeathObject(this);
+	
+	this.Indigenous=false;
 	
 	this.Immigrant=false;
 	this.Nationality;
@@ -32,8 +32,6 @@ function PersonObject(YearOfBirth, Sex, Sexuality)//, YearOfObservation Param)
 	//Alcohol
 	this.Alcohol=1E9;//Date of alcoholism (increases linearly with time, probability 
 	
-	
-	
 	this.HCV = new HCVObject(this);//may need to declare this in function to reduce the size of the memory footprint
 	
 	this.HIV = new HIVObject();
@@ -42,10 +40,8 @@ function PersonObject(YearOfBirth, Sex, Sexuality)//, YearOfObservation Param)
 	
 	this.Haemophilia=0;
 	
-	
 	this.SexualPartner=new EventVector;
 	this.SexualPartner.Set(0, this.YearOfBirth);// no sexual partners at birth
-	
 	
 	this.SexualPartnerRegularID=new EventVector;
 	this.SexualPartnerOtherID=new EventVector;
@@ -57,8 +53,6 @@ function PersonObject(YearOfBirth, Sex, Sexuality)//, YearOfObservation Param)
 	//QALY 
 	//this.QualityCalculation=function(time){(this.HCV, this.IDU, this.HIV, this.Age, time);}//
 	//this.QALY(this.HCV, this.IDU, this.HIV, this.Age)//
-	
-	//Simulate general mortality
 	
 	
 }
@@ -108,22 +102,6 @@ PersonObject.prototype.InCountry= function (Time){
 	return false;
 };
 
-
-
-
-
-
-
-PersonObject.prototype.StartInjecting= function (Time){
-	throw "This shouldn't run at all.";
-	
-	
-};
-
-// PersonObject.prototype.HCVInfection= function (YearOfInfection, Genotype, HCVParam) {
-	// var Alcohol=0;
-	// this.HCV.Infection(YearOfInfection, Genotype, this.Age(YearOfInfection), this.Sex, this.Alcohol, HCVParam );
-// }
 
 
 function DeathObject(PersonPointer){
@@ -189,8 +167,6 @@ DeathObject.prototype.CalculateEarliest=function (){
 };
 
 
-
-
 DeathObject.prototype.Time=function (TypeOfDeath){
 	if (typeof(TypeOfDeath)=='undefined'){// Not providing the function with a death type will return the earliest time of death, i.e. THE cause of death
 		return this.Earliest;
@@ -205,16 +181,6 @@ DeathObject.prototype.Time=function (TypeOfDeath){
 DeathObject.prototype.Cause=function (){
 	return this.EarliestCause;
 };
-
-
-
-
-
-
-//-----------------------------------------------------------------
-//
-//
-
 
 
 
