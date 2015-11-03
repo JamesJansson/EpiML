@@ -686,10 +686,6 @@ OptSelector.prototype.GraphDetailedErrorHistoryByDEO=function (){
 
 
 
-
-
-
-
 OptSelector.prototype.PostSimulationRunFunction=function (){
 
 	// Summarise Simulation DEO Results
@@ -714,7 +710,7 @@ OptSelector.prototype.PostSimulationRunFunction=function (){
 	
 	// Save the optimisation results
 	
-	this.SaveOptimisationResult('./Data/OptimisationResults.json');
+	this.SaveOptimisationResult('./data/optimisationeesults.json');
 	// this.SimulationHolder.Result.OptimisedParameter
 	
 	// this.ParamGroup.AddOptimisationResults

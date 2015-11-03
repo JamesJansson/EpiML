@@ -138,13 +138,7 @@ function GeneralPlot(Settings){
 	this.InnerHTMLForPlot+="        <div class='ylabel'><div class='rotate'>"+this.YLabel+"</div></div>\n";
 	this.InnerHTMLForPlot+="    </div>\n";
 	
-	// Create plot
-	
-	// .Update() //Only updates plot
-	
-	// .Download(){
-		//this.DownloadFunction(this.DownloadData);
-	//}
+
 }
 
 

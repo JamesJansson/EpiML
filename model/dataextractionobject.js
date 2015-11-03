@@ -34,7 +34,7 @@ function DataExtractionObject(){
 	this.Graph.Result.Time;// uses the range of times specified to show the full activity of the model
 	this.Graph.Result.Value;
 	
-	this.Optimise=false;// is a flag used to determine if the object will be optimised or not
+	// this.Optimise=false;// is a flag used to determine if the object will be optimised or not
 	this.Optimisation={};
 	this.Optimisation.Weight=1;// Set to 1 by standard, but can be set higher or lower to more heavily weight certain parameters higher or lower
 	this.Optimisation.ProportionalError=false;// Sets error to a function that is proportional to the data given
@@ -50,17 +50,16 @@ function DataExtractionObject(){
 	//this.ErrorFunction;// specifies how the error is determined. 
 	// A custom error function can be set using DEOName.ErrorFunction=function() 
 	
-	// The following sections are used to summarise multiple simulations
 	
+	// Interface variables
+	// The following sections are used to summarise multiple simulations
 	this.MultiSimResult=[];
 	this.MultiSimData=[];
 	
 	this.MultiSimResultGraph;
 	this.MultiSimDataGraph;
 	
-	
-	this.GraphObject;
-	this.DownloadData;
+	this.GraphObject;// object of the graph in the interface
 }
 
 DataExtractionObject.prototype.SetData=function(Data){// SimulationResult.Population
@@ -124,10 +123,9 @@ DataExtractionObject.prototype.GenerateGraphData=function(SimulationResult){
 	}
 };
 
+
 DataExtractionObject.prototype.SummariseMultipleSimulations=function(ArrayOfResults){
 	// ArrayOfResult[Sim].Data, ArrayOfResult[Sim].Result
-	
-	
 	var FirstResult=ArrayOfResults[0];
 	if (typeof(FirstResult.Name)!="undefined"){
 		this.Name=FirstResult.Name;
@@ -145,12 +143,10 @@ DataExtractionObject.prototype.SummariseMultipleSimulations=function(ArrayOfResu
 		this.YLabel=FirstResult.YLabel;
 	}
 	
-	
 	// ArrayOfResults[Sim].Graph.Data.Time[Time];
 	// ArrayOfResults[Sim].Graph.Data.Value[Time];
 	// ArrayOfResults[Sim].Graph.Result.Time[Time];
 	// ArrayOfResults[Sim].Graph.Result.Value[Time];
-	
 	
 	// Take ArrayOfResults, sort into data/sim results
 	for (var SimCount in ArrayOfResults){
@@ -166,8 +162,6 @@ DataExtractionObject.prototype.SummariseMultipleSimulations=function(ArrayOfResu
 	// MultiSimData.Y[Time][Sim];
 	
 	function PerformSummaryStats(Input){
-
-		
 		var NumSims=Input.length;
 		var NumTimes=Input[0].Time.length;
 		
@@ -187,18 +181,15 @@ DataExtractionObject.prototype.SummariseMultipleSimulations=function(ArrayOfResu
 			SummaryStat.Upper95Percentile[TimeCount]=Percentile(SummaryStat.Value[TimeCount], 97.5);
 			SummaryStat.Lower95Percentile[TimeCount]=Percentile(SummaryStat.Value[TimeCount], 2.5);
 		}
-
 		return SummaryStat;
 	}
 	
 	this.MultiSimDataSummary=PerformSummaryStats(this.MultiSimData);
 	this.MultiSimResultSummary=PerformSummaryStats(this.MultiSimResult);
-		
 };
 
-DataExtractionObject.prototype.DrawGraph=function(ThisObjectsGlobalID, GraphInterfaceID){
 
-	
+DataExtractionObject.prototype.DrawGraph=function(ThisObjectsGlobalID, GraphInterfaceID){
 	// function to extract	data into the correct form
 	var StructureForGraph95CI=function(InputStat){
 		var ReturnObject={};
@@ -209,7 +200,6 @@ DataExtractionObject.prototype.DrawGraph=function(ThisObjectsGlobalID, GraphInte
 		return ReturnObject;
 	};
 	
-
 	var PlotSettings={};
 	//PlotSettings.Name=this.Name;
 	PlotSettings.Title=this.Title;
@@ -217,7 +207,6 @@ DataExtractionObject.prototype.DrawGraph=function(ThisObjectsGlobalID, GraphInte
 	PlotSettings.YLabel=this.YLabel;
 	PlotSettings.ObjectID=ThisObjectsGlobalID+".GraphObject";
 	PlotSettings.InterfaceID=GraphInterfaceID;
-	
 	
 	PlotSettings.PlotFunction=function(PlotPlaceholder, PlotData){
 		return OptimisationPlot(PlotPlaceholder, PlotData.Data, PlotData.Result);
@@ -230,16 +219,12 @@ DataExtractionObject.prototype.DrawGraph=function(ThisObjectsGlobalID, GraphInte
 
 	PlotSettings.DataSource=this;
 	// this is passed as Data so that it can be inspected from the point of view of the object 
-	// It is also passed such that Download() can be called by the interface  
+	// It is also passed such that the prototype this.Download() can be called by the interface  
 	
-	// This section is no longer used as we now rely on the .Download prototype in the object
-	// PlotSettings.DataSource.Download=function (){
-	// 	console.log('This runs when the button is pushed');
-	// };
-
 	this.GraphObject=new GeneralPlot(PlotSettings);// this must be global
 	this.GraphObject.Draw();
 };
+
 
 DataExtractionObject.prototype.Download=function(){
 	var Object={};
@@ -288,6 +273,7 @@ function DataExtractionObjectGroup(Name){
 	this.GraphInterfaceID="";
 }
 
+
 DataExtractionObjectGroup.prototype.AddDEO=function(DEOToAdd){
 	// this function can either add a single DEO or an array of DEO
 	// It takes a DEO or an array of DEOs as an argument
@@ -303,6 +289,7 @@ DataExtractionObjectGroup.prototype.AddDEO=function(DEOToAdd){
 	}
 };
 
+
 DataExtractionObjectGroup.prototype.TotalError=function(SimulationResult){
 	var ErrorSum=0;
 	for (var DEOCount in this.DEOArray){
@@ -317,6 +304,7 @@ DataExtractionObjectGroup.prototype.TotalError=function(SimulationResult){
 	return ErrorSum;
 };
 
+
 DataExtractionObjectGroup.prototype.ErrorArray=function(){
 	// Calling this gives and array of all the errors present in the group
 	// This function should be called after the TotalError function is called
@@ -328,8 +316,6 @@ DataExtractionObjectGroup.prototype.ErrorArray=function(){
 };
 
 
-
-
 DataExtractionObjectGroup.prototype.GenerateGraphData=function(SimulationResult){
 	for (var DEOCount in this.DEOArray){
 	    this.DEOArray[DEOCount].GenerateGraphData(SimulationResult);
@@ -337,7 +323,9 @@ DataExtractionObjectGroup.prototype.GenerateGraphData=function(SimulationResult)
 	return this.DEOArray;
 };
 
+
 DataExtractionObjectGroup.prototype.Summarise=function(ResultsBySim){
+	// Transform the structure into something easier to use.
 	// ResultsBySim[Sim].DEOArray[SpecificStatCount]
 	var DEOResultsBySim=[];
 	for (var SimCount in ResultsBySim){
@@ -368,9 +356,6 @@ DataExtractionObjectGroup.prototype.Summarise=function(ResultsBySim){
 				
 				throw "The arrays appear to not be aligned in terms of their names. Please make sure that the same DEOArray is being used in the interface summary algorithms as in the model.";
 			}
-
-			
-			
 			this.DEOArray[SpecificStatCount].SummariseMultipleSimulations(DEOArrayByStat[SpecificStatCount]);
 		}
 	}
@@ -393,73 +378,3 @@ DataExtractionObjectGroup.prototype.GraphAll=function(GraphInterfaceID){
 DataExtractionObjectGroup.prototype.CreatePlotHolders=function(GraphInterfaceID){
 	
 };
-
-
-
-
-
-
-function FindAllDEOError(DEOArray, SimulationResult){
-	var ErrorSum=0;
-	for (var DEOCount in DEOArray){
-	    ErrorSum+=DEOArray[DEOCount].FindError(SimulationResult);
-		console.log(ErrorSum);
-	}
-	return ErrorSum;
-}
-
-function FindTotalDEOErrorForOptimisation(DEOArray, SimulationResult){
-	var ErrorSum=0;
-	for (var DEOCount in DEOArray){
-		if (DEOArray[DEOCount].Optimise==true){
-	    	ErrorSum+=DEOArray[DEOCount].FindError(SimulationResult);
-		}
-	}
-	return ErrorSum;
-}
-
-
-
-	
-function RunAllDEOGenerateGraphData(ODEOArray, SimulationResult){
-	for (var ODEOCount in ODEOArray){
-	    ODEOArray[ODEOCount].GenerateGraphData(SimulationResult);
-	}
-}
-	
-
-// // This function is run outside the simulation after all optimisations have occurred (i.e. this is summarising all results). 
-// function SummariseAllDEO(ResultsBySim){
-// 	// ResultsBySim[Sim].DEOArray[SpecificStatCount]
-// 	var DEOResultsBySim=[];
-// 	for (var SimCount in ResultsBySim){
-// 		DEOResultsBySim[SimCount]=ResultsBySim[SimCount].DEOResultsArray;
-// 	}
-// 	// DEOResultsBySim[SimCount][SpecificStatCount]
-// 	var DEOArrayByStat=Transpose(DEOResultsBySim);
-	
-// 	console.log(DEOArrayByStat);
-// 	// Transpose to get at all the .DEOArray results
-// 	//var ResultsByStat=TransposeArrObj(ResultsBySim);
-// 	// ResultsByStat.DEOArray[Sim][SpecificStatCount]
-// 	//var OptimisationArrayBySim=ResultsByStat.DEOArray;// Choose to operate only on the Optimisation results
-// 	// OptimisationStatArray[Sim][SpecificStatCount]
-// 	//var DEOArrayByStat=Transpose(OptimisationArrayBySim);// Stat count is an array
-// 	//OptimisationStatArray[SpecificStatCount][Sim]
-	
-// 	var SummarisedDEOArray=[];
-// 	for (var SpecificStatCount in DEOArrayByStat){
-// 		SummarisedDEOArray[SpecificStatCount]= new DataExtractionObject();
-// 		SummarisedDEOArray[SpecificStatCount].SummariseMultipleSimulations(DEOArrayByStat[SpecificStatCount]);
-// 		// Draw the graph, but wait until the above has processed
-// 		var GraphInterfaceID="OptimisationPlot"+SpecificStatCount;
-// 		SummarisedDEOArray[SpecificStatCount].DrawGraph(GraphInterfaceID);
-// 	}
-	
-// 	return SummarisedDEOArray;
-// }
-// // Set up the plots page
-// // for (var i=0; i<100; i++){document.getElementById("OptimisatoinPlotsHolder").innerHTML+='<div class="plot" id="OptimisationPlot'+i+'" ></div>';}
-
-
-

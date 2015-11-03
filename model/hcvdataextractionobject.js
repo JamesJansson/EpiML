@@ -268,7 +268,6 @@ function HCVDEO_RecentlyBecameInjector(GraphTime){
 	};
 	
 	// Set optimisation
-	NewDEO.Optimise=false;
 	NewDEO.Optimisation.ProportionalError=false;
 	
 	// Add the object to the array of all ODEOS
