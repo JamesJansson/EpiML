@@ -9,8 +9,6 @@ function PersonObject(YearOfBirth, Sex, Sexuality)//, YearOfObservation Param)
 	this.Active=0;// status variable
 	//Sex
 	this.Sex=Sex;
-	//Alive
-	//this.AliveStatus=1;// status variable
 	
 	this.Sexuality=1;// 1= heterosexual, 2= homosexual, 3= bisexual 
 	if (typeof(Sexuality)!="undefined"){

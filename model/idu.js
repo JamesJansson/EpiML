@@ -212,12 +212,9 @@ IDUObject.prototype.InjectedBetween= function (Time1, Time2){
 };
 
 
-
-
-
-
-
 function RegularInjectionTimeObject(PTime){//(RegularTimeP, RegularTimeT){
+	// This gives a custom distribution of time until regular injection
+	
 	// This function and the associated interface parts are an unfortunate example of how I haven't programmed and nice way to do arrays of parameters
 
 	//var PTime=Param.IDU.BecomeRegularInjector.PTime;//
@@ -238,6 +235,7 @@ function RegularInjectionTimeObject(PTime){//(RegularTimeP, RegularTimeT){
 	this.MaxTime[3]=5;
 	this.MaxTime[4]=10;
 }
+
 
 RegularInjectionTimeObject.prototype.Time=function(){
 	var ProbToUse=Rand.Value();

@@ -1,4 +1,6 @@
-// Developed by James Jansson
+// Developed by James Jansson, 2015. 
+// Released under MIT License.
+// For use in academic publication, please contact 
 // Requires:
 // flot plotting library to work
 // Papaparse for the download button to work
@@ -12,16 +14,11 @@ function GeneralPlot(Settings){
 	// .yAxisLabel
 	// .Data = the data object associated with the graph. Required if you want to use the download button to call .Data.Download()
 	// .ObjectID = the name of this GeneralPlot in global scope. Required
-	// DownloadSummaryStatisticCSV(SimulationHolder.Result[0].AgeInfectedResult);
-	
-	// "Value "
-	
+
 	// Check that there are any ID names that are taken
-	//console.error("Using '"+Settings.InterfaceID+"' as an ID for the plot creates a parameter '" + PrexistingID + "' that already exists.";
+	//console.error("Using '"+Settings.InterfaceID+"' as an ID for this plot creates a parameter '" + PrexistingID + "' that already exists.";
 	
 	// Store information associated with this plot
-	
-	console.log(Settings)
 	
 	// InterfaceID
 	if (typeof(Settings.InterfaceID)!='undefined'){
@@ -86,7 +83,7 @@ function GeneralPlot(Settings){
 		// PossibleYValues
 		// PossibleYValuesUncertainties
 		
-		
+		// Future elements
 		// Drop down: PlotStyle
 		//      PlotFunction (on selection 
 		// Drop down: X value, .ObjectID .Values
@@ -95,8 +92,6 @@ function GeneralPlot(Settings){
 		//     Drop down: Display uncertainty (none), 
 		//     Lower un
 		//     Can only plot this if the X value name exists in the parameter 
-		
-		
 		
 		
 		// Need to work out if we are going to force coupling of values or not, I say yes
