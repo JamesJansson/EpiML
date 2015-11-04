@@ -318,6 +318,7 @@ DataExtractionObjectGroup.prototype.ErrorArray=function(){
 
 DataExtractionObjectGroup.prototype.GenerateGraphData=function(SimulationResult){
 	for (var DEOCount in this.DEOArray){
+		console.log("Generating graph data for "+this.DEOArray[DEOCount].Name);
 	    this.DEOArray[DEOCount].GenerateGraphData(SimulationResult);
 	}
 	return this.DEOArray;
