@@ -1,0 +1,315 @@
+{
+    "Name": "./data/optimisationeesults.json",
+    "Date": "2015-11-03T23:46:44.500Z",
+    "Seeds": [],
+    "OptimisedParameters": {
+        "HCV.PTransmission.IDU": [
+            0.7517869768384383
+        ],
+        "HCV.SyptomaticTesting": [
+            0.10220874599586749
+        ],
+        "IDU.BecomeRegularInjector.P": [
+            0.6037447652296496
+        ],
+        "IDU.Entry.B": [
+            0.7810954168057536
+        ],
+        "IDU.Entry.Logk1": [
+            0.9784905895627929
+        ],
+        "IDU.Entry.Logk2": [
+            0.7571349678649306
+        ],
+        "IDU.Entry.PeakEntryPerYear": [
+            34077.91809100196
+        ],
+        "IDU.Entry.YearPeakIDU": [
+            1998.6050239570347
+        ],
+        "IDU.NSP.P": [
+            0.38082230845037685
+        ],
+        "IDU.RateOfCeasingIrregularUse": [
+            0.1270538929521197
+        ],
+        "IDU.RateOfCessation": [
+            0.15544923158048918
+        ]
+    },
+    "Parameters": {
+        "HCV.F0F1": [
+            0.04676086940321515
+        ],
+        "HCV.F1F2": [
+            0.08141927293286533
+        ],
+        "HCV.F2F3": [
+            0.14299948930696266
+        ],
+        "HCV.F3F4": [
+            0.050577003662507176
+        ],
+        "HCV.F4.PAt20Years.AlcoholGT50g": [
+            0.06653477362627774
+        ],
+        "HCV.F4.PAt20Years.AlcoholLT50g": [
+            0.3117994487173092
+        ],
+        "HCV.F4DeathP": [
+            0.0339816709865297
+        ],
+        "HCV.F4HCCP": [
+            0.03862936219744224
+        ],
+        "HCV.F4LF": [
+            0.02305613137352213
+        ],
+        "HCV.FibrosisReversalRate": [
+            0.5747863835863859
+        ],
+        "HCV.GenotypePrevalence.1": [
+            0.5562269168558422
+        ],
+        "HCV.GenotypePrevalence.2": [
+            0.07487240295116651
+        ],
+        "HCV.GenotypePrevalence.3": [
+            0.31018306202231355
+        ],
+        "HCV.GenotypePrevalence.4": [
+            0.025423003397640313
+        ],
+        "HCV.GenotypePrevalence.5": [
+            0
+        ],
+        "HCV.GenotypePrevalence.6": [
+            0
+        ],
+        "HCV.InitialPrevalence": [
+            0.5826565677383108
+        ],
+        "HCV.PReinfectionProtected": [
+            0.4730947755994068
+        ],
+        "HCV.PTransmission.IDU": [
+            0.7517869768384383
+        ],
+        "HCV.PTransmission.MotherToChild": [
+            0.07972252316648532
+        ],
+        "HCV.SpontaneousClearance.CCGenotypeHR": [
+            1.841072549323376
+        ],
+        "HCV.SpontaneousClearance.FemaleHR": [
+            1.3413906370885018
+        ],
+        "HCV.SpontaneousClearance.Genotype1": [
+            1.6682848070408154
+        ],
+        "HCV.SpontaneousClearance.MedianTime": [
+            0.40881484482374225
+        ],
+        "HCV.SpontaneousClearance.p": [
+            0.3505766330122114
+        ],
+        "HCV.SyptomaticTesting": [
+            0.10220874599586749
+        ],
+        "Haemophilia.HCV.Prevalence1973": [
+            0.4299615234147306
+        ],
+        "Haemophilia.HCV.Prevalence1980": [
+            0.7599466127720943
+        ],
+        "Haemophilia.HCV.Prevalence1990": [
+            0.7567331609451057
+        ],
+        "Haemophilia.MortalityFactor": [
+            3.106631998946098
+        ],
+        "Haemophilia.Total2013": [
+            2797.1593000984967
+        ],
+        "IDU.AIHWDataFactor": [
+            1.7733014514669776
+        ],
+        "IDU.AIHWDataUncertaintySD": [
+            1700
+        ],
+        "IDU.BecomeRegularInjector.P": [
+            0.6037447652296496
+        ],
+        "IDU.BecomeRegularInjector.PTime.LT10Years": [
+            0.02571139723590972
+        ],
+        "IDU.BecomeRegularInjector.PTime.LT1Week": [
+            0.437442288499846
+        ],
+        "IDU.BecomeRegularInjector.PTime.LT1Year": [
+            0.10415487541045396
+        ],
+        "IDU.BecomeRegularInjector.PTime.LT5Years": [
+            0.10365154949519786
+        ],
+        "IDU.BecomeRegularInjector.PTime.LT6Months": [
+            0.27250878500290443
+        ],
+        "IDU.Entry.B": [
+            0.7810954168057536
+        ],
+        "IDU.Entry.Logk1": [
+            0.9784905895627929
+        ],
+        "IDU.Entry.Logk2": [
+            0.7571349678649306
+        ],
+        "IDU.Entry.PeakEntryPerYear": [
+            34077.91809100196
+        ],
+        "IDU.Entry.YearPeakIDU": [
+            1998.6050239570347
+        ],
+        "IDU.ExcessMortality.Female": [
+            0.004062736854885613
+        ],
+        "IDU.ExcessMortality.Male": [
+            0.015497588663797806
+        ],
+        "IDU.InjectionStartAge.Median": [
+            20.55569961636391
+        ],
+        "IDU.InjectionStartAge.SD": [
+            0.18552111918614786
+        ],
+        "IDU.InjectionStartAge.SexDifference": [
+            1.3433783152466945
+        ],
+        "IDU.MSMUse.HIVNeg": [
+            0.03209885549455408
+        ],
+        "IDU.MSMUse.HIVPos": [
+            0.1170478469726936
+        ],
+        "IDU.NSP.P": [
+            0.38082230845037685
+        ],
+        "IDU.ProportionMale": [
+            0.5934477505471222
+        ],
+        "IDU.RateOfCeasingIrregularUse": [
+            0.1270538929521197
+        ],
+        "IDU.RateOfCessation": [
+            0.15544923158048918
+        ],
+        "IDU.RelationshipDuration.Val0": [
+            0.4355414520867228
+        ],
+        "IDU.RelationshipDuration.Val1": [
+            0.32116086670890087
+        ],
+        "IDU.RelationshipDuration.Val2": [
+            0.3254836660388581
+        ],
+        "IDU.Sex.AnyLastMonth": [
+            0.614775055879599
+        ],
+        "IDU.Sex.FirstInjectionHadSexualPartner": [
+            0
+        ],
+        "IDU.Sex.OtherLastMonth": [
+            0.1726649757076374
+        ],
+        "IDU.Sex.RegularAndOtherLastMonth": [
+            0.05707915862339966
+        ],
+        "IDU.Sex.RegularLastMonth": [
+            0.749667371571118
+        ],
+        "IDU.Sex.RegularPartnerInjects": [
+            0.46385708743425635
+        ],
+        "IDU.Sexuality.Bisexual": [
+            0.10105423844792236
+        ],
+        "IDU.Sexuality.Heterosexual": [
+            0.8525410307879665
+        ],
+        "IDU.Sexuality.Homosexual": [
+            0.054686598034972486
+        ],
+        "IDU.Sharing.PriorToNSP": [
+            0.5097888209794714
+        ],
+        "IDU.Sharing.Rate18": [
+            0
+        ],
+        "IDU.Sharing.RatePost1997": [
+            0.19669823242145168
+        ],
+        "IDU.Sharing.RatePre1997": [
+            0.30650005362942034
+        ],
+        "IDU.Sharing.RelativeRiskAge18to40": [
+            0.695504980612642
+        ],
+        "IDU.Use.Daily": [
+            0.1428533680929177
+        ],
+        "IDU.Use.Daily2or3Times": [
+            0.19909298201659345
+        ],
+        "IDU.Use.DailyMore3": [
+            0.17216189339877647
+        ],
+        "IDU.Use.MoreThanWeekly": [
+            0.443030365373632
+        ],
+        "IDU.Use.WeeklyToMonthly": [
+            0.20233159936995118
+        ],
+        "Prison.Females": [
+            0.4
+        ],
+        "Prison.Males": [
+            0.63
+        ],
+        "Sexuality.GeneralPopulation.Female.Bisexual": [
+            0.022
+        ],
+        "Sexuality.GeneralPopulation.Female.Heterosexual": [
+            0.963
+        ],
+        "Sexuality.GeneralPopulation.Female.Homosexual": [
+            0.012
+        ],
+        "Sexuality.GeneralPopulation.Male.Bisexual": [
+            0.013
+        ],
+        "Sexuality.GeneralPopulation.Male.Heterosexual": [
+            0.967
+        ],
+        "Sexuality.GeneralPopulation.Male.Homosexual": [
+            0.019
+        ],
+        "Time.DurationToAverageOver": [
+            5
+        ],
+        "Time.EndSimulation": [
+            2020
+        ],
+        "Time.EndTreatmentData": [
+            2013
+        ],
+        "Time.StartDynamicModel": [
+            1980
+        ],
+        "Time.StartNonDynamicModel": [
+            1960
+        ],
+        "TimeStep": [
+            0.1
+        ]
+    }
+}

@@ -113,7 +113,7 @@ IDUObject.prototype.StartInjecting= function (Time){
 		}
 		var TimeOfIDUDeath=Time+TimeUntilEvent(ExcessMortality);
 		if (TimeOfIDUDeath<TimeOfStoppingInjecting){//if time of drug related death occurs prior to 
-			this.Person.Death.IDU=TimeOfIDUDeath;
+			this.Person.Death.Set('IDU', TimeOfIDUDeath);
 		}
 	}
 	else {
@@ -212,15 +212,12 @@ IDUObject.prototype.InjectedBetween= function (Time1, Time2){
 };
 
 
-
-
-
-
-
-function RegularInjectionTimeObject(){//(RegularTimeP, RegularTimeT){
+function RegularInjectionTimeObject(PTime){//(RegularTimeP, RegularTimeT){
+	// This gives a custom distribution of time until regular injection
+	
 	// This function and the associated interface parts are an unfortunate example of how I haven't programmed and nice way to do arrays of parameters
 
-	var PTime=Param.IDU.BecomeRegularInjector.PTime;//
+	//var PTime=Param.IDU.BecomeRegularInjector.PTime;//
 	this.P=[];
 	this.P[0]=PTime.LT1Week;
 	this.P[1]=PTime.LT6Months;
@@ -238,6 +235,7 @@ function RegularInjectionTimeObject(){//(RegularTimeP, RegularTimeT){
 	this.MaxTime[3]=5;
 	this.MaxTime[4]=10;
 }
+
 
 RegularInjectionTimeObject.prototype.Time=function(){
 	var ProbToUse=Rand.Value();

@@ -228,7 +228,7 @@ StochasticOptimisation.prototype.Run= function (FunctionInput){
 			}
 		}
 		
-		console.error("Select best points");
+		console.log("Select best points");
 		
 		// Work out which of this simulations will be selected
 		// Sort by error level
@@ -238,7 +238,7 @@ StochasticOptimisation.prototype.Run= function (FunctionInput){
 			this.Parameter[key].SelectBestPoints(this.BestIndex);// set the BestPoints array to the best values of the simulation
 		}
 		
-		console.error("Round progress functipon");
+		console.log("Round progress functipon");
 
 		// If the OptimisationProgress function is set
 		if (this.RunRoundProgressFunction==true){
@@ -250,7 +250,7 @@ StochasticOptimisation.prototype.Run= function (FunctionInput){
 			this.RoundProgressFunction(this.RoundCount, StoredSimulationInfo, FunctionInput);
 		}
 		
-		console.error("Storing");
+		console.log("Storing");
 		
 		// Storing optimisation results for later inspection/graphing
 		this.MeanError[this.RoundCount]=Mean(this.ErrorValues);
@@ -267,10 +267,11 @@ StochasticOptimisation.prototype.Run= function (FunctionInput){
 			this.ReasonForTermination="ReachedMaxTime";
 		}
 		
-		console.error("Got to before selecting next round");
+		console.log("Got to before selecting next round");
 		
 		// Preparing variables for next round of simulations
 		if (OptimisationComplete==false){// we need to find more points for the next round of optimisation
+		
 			//Randomly select the next points
 			var NextPointIndex=[];
 			for (var key in this.BestIndex){
@@ -288,7 +289,6 @@ StochasticOptimisation.prototype.Run= function (FunctionInput){
 			}
 			this.RoundCount++;
 		}
-		console.log(NextPointIndex);
 	}
 
 	this.ParameterFinal=this.GetBestParameterSet();

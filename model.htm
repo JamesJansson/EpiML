@@ -103,7 +103,6 @@
 <li><level1 id="HCVMenuItem" 		onclick="ShowMenu(HCVContent);"			>HCV</level1></li>
 <li><level1 id="DataMenuItem" 		onclick="ShowMenu(DataContent);"		>Data</level1></li>
 <li><level1 id="PlotsMenuItem" 		onclick="ShowMenu(PlotsContent);"		>Plots</level1></li>
-<li><level1 id="PWIDOptimisationPlotsMenuItem" 	onclick="ShowMenu(PWIDOptimisationPlotsContent);"		>PWID Optimisation</level1></li>
 <li><level1 id="MapsMenuItem" 		onclick="ShowMenu(MapsContent);"		>Maps</level1></li>
 <li><level1 id="SensitivityMenuItem"onclick="ShowMenu(SensitivityContent);"	>Sensitivity Analysis</level1></li>
 <li><level1 id="SettingsMenuItem" 	onclick="ShowMenu(SettingsContent);"	>Settings</level1></li>
@@ -116,13 +115,20 @@
 <div id="MainArea">
 	<div id="HomeContent" class="Content">
 		<h1>Home</h1>
-		<p> This model is a work in progress. The results have not yet been confirmed. Please contact jjansson@kirby.unsw.edu.au for enquiries. </p>
+		<p> This model is a work in progress. The results have not yet been confirmed. Please contact  for enquiries. </p>
+		
+		<p><b>Simulation Status</b></p>
+		<input type='text' id='StatusTextElement0' value=''><br>
+		<input type='text' id='StatusTextElement1' value=''><br>
+		<input type='text' id='StatusTextElement2' value=''><br>
+		<input type='text' id='StatusTextElement3' value=''><br>
+		<input type='text' id='StatusTextElement4' value=''><br>
+		<input type='text' id='StatusTextElement5' value=''><br>
+		<input type='text' id='StatusTextElement6' value=''><br>
+		<input type='text' id='StatusTextElement7' value=''><br>
 		
 		
-		<p> <b>Use existing optimisation (if it exists) </b> </p>
-		<input type="checkbox" onClick="FutureCheckBox=this.checked;">PWID Entry Optimisation<br>
-		<input type="checkbox" onClick="FutureCheckBox=this.checked;">PWID Progression and Exit<br>
-		<input type="checkbox" onClick="FutureCheckBox=this.checked;">PWID Intervention<br>
+		
 		
 		<p>Run the simulation but keep sims alive to extract results from </p>
 		<div id="RunPersistentSimButton" class="SolidButton" onClick="RunPersistentSim();"> Run Notification Sim </div>
@@ -140,41 +146,12 @@
 		<div id="PlotFibrosisButton" class="SolidButton" onClick="DownloadSimulationResults();"> Download Results </div>
 		
 		
-		<input type='text' id='StatusTextElement0' value=''><br>
-		<input type='text' id='StatusTextElement1' value=''><br>
-		<input type='text' id='StatusTextElement2' value=''><br>
-		<input type='text' id='StatusTextElement3' value=''><br>
-		<input type='text' id='StatusTextElement4' value=''><br>
-		<input type='text' id='StatusTextElement5' value=''><br>
-		<input type='text' id='StatusTextElement6' value=''><br>
-		<input type='text' id='StatusTextElement7' value=''><br>
-		
-		
-		
-		<div class="plot" id="plot1" >
-			<div class="fullscreenbox" id="plot1_fullscreenbox" >
-				<div class="fullscreenbutton" title="Fullscreen" id="plot1_fullscreenbutton" onclick="ToggleFullScreen('plot1_fullscreenbox');">&#10063</div>
-				<div class="downloadbutton" title="Download data" onclick="DownloadSummaryStatisticCSV(SimulationHolder.Result[0].AgeInfectedResult);plot1_data.Download();">&#x21E9;</div>
-				
-				<div class="plot_positioner">
-					<div id="plot1_placeholder" class="plot_placeholder"></div>
-				</div>
-				<div class="xlabel">Year</div>
-				<div class="ylabel"><div class="rotate">Number of cases</div></div>
-			</div>
-		</div>
-		
-		In future, we will have a "plotupdate" function, that replaces both the data download button, axes and the chart itself. 
 
-		<div id="HCVResultsTable"></div>		
+		
+		
+		
+	
 
-		<div class="plot-container">
-			<div id="DxUDxPlotHolder" class="plot_placeholder"></div>
-		</div>
-		<div id="DxUDxResultsTable"></div>
-		
-		<div id="nodetestbutton" class="SolidButton" onClick="var cp = require('child_process');var child=[];sim=0;child[sim] = cp.fork('./testworker.js');child[sim].on('message', function(m) {console.log('received: ' + m);});child[sim].send(sim);"> Run simulation </div>
-		
 		
 		
 
@@ -239,22 +216,7 @@
 	
 	
 	
-	<div id="PWIDOptimisationPlotsContent" class="Content">
-		<h1>PWID entry optimisation</h1>
-		<div>
-			<div class="plot" id="PWIDEntryPlot" style="position: absolute;left: 200px;"></div>
-			Age Range: <br>
-			<input type="checkbox" onClick="PWIDEntryPlotSettings.AgeRange[0]=this.checked;">14-20<br>
-			<input type="checkbox" onClick="PWIDEntryPlotSettings.AgeRange[1]=this.checked;">20-30<br>
-			<input type="checkbox" onClick="PWIDEntryPlotSettings.AgeRange[2]=this.checked;">30-40<br>
-			<input type="checkbox" onClick="PWIDEntryPlotSettings.AgeRange[3]=this.checked;">40+<br>
-			Sex: <br>
-			<input type="checkbox" onClick="PWIDEntryPlotSettings.Sex[0]=this.checked;">Male<br>
-			<input type="checkbox" onClick="PWIDEntryPlotSettings.Sex[1]=this.checked;">Female<br>
-			<div class="SolidButton" onClick="PlotPWIDEntryOptimisation(0);">Plot median</div><br>
-			<div class="SolidButton" onClick="PlotPWIDEntryOptimisation(1);">Plot mean</div><br>
-		</div>
-	</div>
+
 	
 	
 	
@@ -341,7 +303,7 @@
 				<div class="plot-container">
 					<div id="HCVTestPlotHolder" class="plot_placeholder"></div>
 				</div>
-			<div id="HCVResultsTable"></div>
+
 			</div>
 		</div>
 		

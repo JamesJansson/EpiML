@@ -227,4 +227,54 @@ DownloadableCSV.prototype.Download=function(){
 	}
 };
 
-
+function DownloadObjectAsCSV(Object, FileName){
+	
+	function TransposeForCSV(DataMatrix){
+		// Below we check for the longest length, they should be the same length but just in case
+		var VecLength=0;
+		for (var A in DataMatrix){
+			if (DataMatrix[A].length>VecLength){
+				VecLength=DataMatrix[A].length;
+			}
+		}
+		
+		// transpose the matrix
+		var TDataMatrix=[];
+		for (var row=0; row<VecLength; row++){// each row of the CSVMatrix
+			TDataMatrix[row]=[];
+			for (var column=0; column<DataMatrix.length; column++){// each column
+				if (typeof(DataMatrix[column][row])!="undefined"){
+					TDataMatrix[row][column]=DataMatrix[column][row];
+				}
+				else{
+					TDataMatrix[row][column]="";
+				}
+			}
+		}
+		return TDataMatrix;
+	}	
+	
+	
+	// This function is designed to take a relatively simply structured object with a label-array structure
+	var StructureToParse={};
+	StructureToParse.data=[];
+	if (Object instanceof Array){
+		StructureToParse.data=Object;
+	}
+	else {// label the columns with field name
+		StructureToParse.fields=[];
+		for (var FieldID in Object){
+			StructureToParse.fields.push(FieldID);
+			StructureToParse.data.push(Object[FieldID]);
+		}
+	}
+	StructureToParse.data=TransposeForCSV(StructureToParse.data);
+	var csv = Papa.unparse(StructureToParse);
+	var blob = new Blob([csv], {type: "text/plain;charset=utf-8"});
+	if (typeof(FileName) == 'undefined'){
+		saveAs(blob, "data.csv");
+	}
+	else{
+		saveAs(blob, FileName);
+	}	
+}

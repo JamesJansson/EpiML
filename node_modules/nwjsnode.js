@@ -69,7 +69,7 @@ function DeepCopyData(obj) {// copies non-function data only
 
 
 
-function NWJSNodeInstance(ScriptAndOtherArgs, ChildProcessOptions){
+function NWJSNodeChildProcess(ScriptAndOtherArgs, ChildProcessOptions){
 	
 	// ScriptAndOtherArgs: an array, first element is the script name. 
 	// in this area we need to specify additional arguments
@@ -86,15 +86,15 @@ function NWJSNodeInstance(ScriptAndOtherArgs, ChildProcessOptions){
 	
 	this.onmessage;// a holder for a function to be called on the event of a messgae being returned.
 	
-	var NWJSNodeInstancePointer=this;
+	var NWJSNodeChildProcessPointer=this;
 	// Set up listeners 
 	this.Process.on('message', function(m) {
 		// Receive results from child process
-		if (typeof(NWJSNodeInstancePointer.onmessage)=='undefined'){
+		if (typeof(NWJSNodeChildProcessPointer.onmessage)=='undefined'){
 			console.log('%c'+'Message function not set up. Received: \n ' + m, 'color: #FF0000');
 		}
 		else {
-			NWJSNodeInstancePointer.onmessage(m);
+			NWJSNodeChildProcessPointer.onmessage(m);
 		}
 	});
 	
@@ -123,16 +123,16 @@ function NWJSNodeInstance(ScriptAndOtherArgs, ChildProcessOptions){
 	// 	http://stackoverflow.com/questions/14332721/node-js-spawn-child-process-and-get-terminal-output-instantaneously
 };
 
-NWJSNodeInstance.prototype.postMessage =function (Message){
+NWJSNodeChildProcess.prototype.postMessage =function (Message){
 	// the message should be in the form of a structure that cna be converted to JSON
 	this.Process.send(Message);
 };
 
-NWJSNodeInstance.prototype.terminate =function (){
+NWJSNodeChildProcess.prototype.terminate =function (){
 	this.Process.kill('SIGKILL');// hard kill the process
 };
 
-NWJSNodeInstance.prototype.CallFunction =function (FunctionName, FunctionInput, CallBack){
+NWJSNodeChildProcess.prototype.CallFunction =function (FunctionName, FunctionInput, CallBack){
 	this.Process.send('CallFunction', 'ThisFunction');
 };
 
@@ -142,16 +142,16 @@ NWJSNodeInstance.prototype.CallFunction =function (FunctionName, FunctionInput, 
 
 
 exports.ConsoleSetup=ConsoleSetup;
-exports.ChildProcess=NWJSNodeInstance;
+exports.ChildProcess=NWJSNodeChildProcess;
 
 
-// NWJSNodeInstance.prototype.Messaging =function (){
+// NWJSNodeChildProcess.prototype.Messaging =function (){
 // 	// this.Process.send('message', 'ThisFunction');
 // 	this.Process.send( 'ThisFunction');
 	
 // };
 
-// NWJSNodeInstance.prototype.Messaging2 =function (){
+// NWJSNodeChildProcess.prototype.Messaging2 =function (){
 // 	// this.Process.send('message', 'ThisFunction');
 // 	var c={};
 // 	c.a=3;
@@ -188,7 +188,7 @@ exports.ChildProcess=NWJSNodeInstance;
 
 
 
-// NWJSNodeInstance.prototype.stdoutHandler=function (stdout){
+// NWJSNodeChildProcess.prototype.stdoutHandler=function (stdout){
 // 	// Split function output
 // 	var Splitstdout=stdout.split("\~nwjsnodeendoutput");
 // 	for (var Count in Splitstdout){
@@ -200,7 +200,7 @@ exports.ChildProcess=NWJSNodeInstance;
 
 
 
-// NWJSNodeInstance.prototype.ConsoleHandler=function(error, stdout, stderr){
+// NWJSNodeChildProcess.prototype.ConsoleHandler=function(error, stdout, stderr){
 // 	// Do some processing to see if it is a variable that can be displayed
 	
 // 	// Split function output

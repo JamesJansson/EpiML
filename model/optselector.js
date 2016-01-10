@@ -77,6 +77,8 @@ function OptSelector(Name, DivID, Functions, PointerToParamGroup, DEOArrayFuncti
 	this.OptParamArray=[];
 	this.ParamToOptimise=[];// is used for selecting whether the optimisation occurs or not
 	this.ArrayOfOptimisedSimOutput=[];
+	this.OptimisationResults={};
+	
 	
 	this.ImportParam();
 	
@@ -137,6 +139,8 @@ function OptSelector(Name, DivID, Functions, PointerToParamGroup, DEOArrayFuncti
 	this.GenerateGraphColours(Settings.NoSims);
 	
 	this.ExportSimulationOutput=false;
+	
+	
 	
 	// the information is sent to the worker, the worker finds the 
 
@@ -682,26 +686,106 @@ OptSelector.prototype.GraphDetailedErrorHistoryByDEO=function (){
 
 
 
-
-
-
-
 OptSelector.prototype.PostSimulationRunFunction=function (){
 
-	// Summarise DEO Results
+	// Summarise Simulation DEO Results
 	this.DEOGroup.Summarise(this.SimulationHolder.Result);
 	
 	// plot the results
-	this.DEOGroup.GraphAll(this.DEOResultsPlotID);
+	this.DrawDEOPlots();
 
+	// Summarise optimisated parameters
+	this.SummariseOptimisationResult();
+	
+	this.PushToParamGroup(this.OptimisationResults.OptimisedParameters);
+	
+	// Get all parameter results
+	this.OptimisationResults.Parameters={};
+	for (var PCount in this.ParamGroup.ParamArray){
+		console.log();
+		var PID=this.ParamGroup.ParamArray[PCount].ParameterID;
+		var Values=this.ParamGroup.ParamArray[PCount].Val;
+		this.OptimisationResults.Parameters[PID]=Values;
+	}
+	
+	// Save the optimisation results
+	
+	this.SaveOptimisationResult('./data/optimisationeesults.json');
+	// this.SimulationHolder.Result.OptimisedParameter
+	
+	// this.ParamGroup.AddOptimisationResults
 };
 
 
 
-OptSelector.prototype.PushToParamGroup=function (){
+
+
+OptSelector.prototype.SummariseOptimisationResult=function (){
+	var OptimisationResult=this.SimulationHolder.Result;
+	
+	var SummarisedResult={};
+	
+	for (var SimCount in OptimisationResult){
+		var ThisResult=OptimisationResult[SimCount].OptimisedParameter;
+		for (var ParamName in ThisResult){
+			if (typeof(SummarisedResult[ParamName])=='undefined'){
+				SummarisedResult[ParamName]=[];
+			}
+			SummarisedResult[ParamName].push(ThisResult[ParamName]);
+		}
+	}
+	
+	this.OptimisationResults.Seeds=[];
+	this.OptimisationResults.OptimisedParameters=SummarisedResult;
+	
+	
+	console.log(SummarisedResult);
+
+};
+
+OptSelector.prototype.SaveOptimisationResult=function (FileName){
+	var OptimisationFile={};
+	OptimisationFile.Name=FileName;
+	OptimisationFile.Date=new Date();
+	OptimisationFile.Seeds=this.OptimisationResults.Seeds;
+	OptimisationFile.OptimisedParameters=this.OptimisationResults.OptimisedParameters;
+	OptimisationFile.Parameters=this.OptimisationResults.Parameters;
+	
+	console.log(OptimisationFile);
+	
+	var OptJSONString=JSON.stringify(OptimisationFile, null, 4);//gives 4 spaces between elements
+	var fs=require('fs');
+	fs.writeFile(FileName, OptJSONString , function(err) {
+		if(err) {
+			alert("There was an error writing to the "+FileName+ " file. See console for details.");
+			console.log(err);
+		}
+	});
+};
+
+
+OptSelector.prototype.LoadOptimisationResult=function (FileName){
+	// Load file
+	//PushToParamGroup(OptimisationFile.Parameters)
+};
+
+
+
+OptSelector.prototype.PushToParamGroup=function (SummarisedResult){
 	// Takes array of optimised results
 	// pushes to the paramgroup
 	// Saves the results to file Param.Save 
+	// this.ParamGroup
+	for (var ID in SummarisedResult){
+		try {
+			var Parameter=this.ParamGroup.GetParameter(ID);
+			Parameter.Val=SummarisedResult[ID];
+		}
+		catch(e){
+			console.log("There was a problem finding the paramter.");
+		}
+		
+	}
 };
 
 
@@ -710,9 +794,14 @@ OptSelector.prototype.PushToParamGroup=function (){
 
 
 OptSelector.prototype.DrawDEOPlots=function (){
-	this.DEOGroup.Summarise(this.SimulationHolder.Result);
+	// this.DEOGroup.Summarise(this.SimulationHolder.Result);
 	
-	this.DEOGroup.GraphAll(this.DEOResultsPlotID);
+	// this.DEOGroup.GraphAll(this.DEOResultsPlotID);
+	for (var Counter in this.DEOGroup.DEOArray){
+		var InterfaceID=this.DEOResultsPlotID+Counter;
+		var GlobalObjectID=this.Name+".DEOGroup.DEOArray["+Counter+"]";
+		this.DEOGroup.DEOArray[Counter].DrawGraph(GlobalObjectID, InterfaceID);
+	}
 };
 
 
@@ -744,7 +833,6 @@ OptSelector.prototype.GenerateGraphColours=function (NumberOfSimulations){
 
 
 // This function is inside the model and is called 
-// Note that 
 function OptSelectorHandler(WorkerData){
 	// There are typically three main functions that the optimisation is handed 
 	// WorkerData.Common.Functions.PreOptimisationFunction
@@ -770,11 +858,11 @@ function OptSelectorHandler(WorkerData){
 		var PostOptimisationFunction=eval(Functions.PostOptimisationFunction);
 	}
 	
-	console.error("Note the below is very bad form for a simulation. This should be PRIVATE.");
-	Param=WorkerData.SimData.Param;
 	
 	var FunctionInput={};
-	FunctionInput.Param=WorkerData.SimData.Param;
+	FunctionInput.Param=WorkerData.SimData;
+	
+	
 	FunctionInput.ModelFunction=ModelFunction;
 	FunctionInput.PreOptimisationFunction=PreOptimisationFunction;
 	FunctionInput.PostOptimisationFunction=PostOptimisationFunction;
@@ -826,17 +914,15 @@ function OptSelectorHandler(WorkerData){
 	OptimisationSettings.Target=DEOOptimisationGroup;
 	
 	OptimisationSettings.Function=function(FunctionInput, ParameterSet){
-		
-		
+		console.log(FunctionInput);
 		// change Param according to the values listed in ParameterSet
 		for (var Identifier in ParameterSet){
 			// Param.Whatever.What=ParameterSet["Whatever.What"];
-			var EvalString="Param." + Identifier +"=ParameterSet['"+Identifier+"'];";
+			var EvalString="FunctionInput.Param." + Identifier +"=ParameterSet['"+Identifier+"'];";
 			eval(EvalString);	
 		}
 		
-		// Add .Notifcations, .EndSimulationTime, .Intervention, .Param  to FunctionInput
-		var ModelResults=ModelFunction(FunctionInput.Notifications, FunctionInput.EndSimulationTime, FunctionInput.Intervention);
+		var ModelResults=ModelFunction(FunctionInput);
 		return ModelResults;
 	};
 	

@@ -23,9 +23,6 @@ var gui = require('nw.gui');
 gui.App.setCrashDumpDir("./crashdump");
 
 function InitialiseEpiML(){
-	
-	TestingPageRequirements();	
-	
 	// Load settings
 	LoadSettingsFiles();
 
@@ -43,39 +40,25 @@ function InitialiseEpiML(){
 	LoadDataFiles();
 	ExtractDataFromFiles();
 	
-	// Create the DataExtractionObject
-	HCVDEOGroup=new DataExtractionObjectGroup("RandomGroup");
-	HCVDEOGroup.AddDEO(HCVDataExtractionObjects());
-	
 	// Load the optimisation interface
 	var Functions={};
 	Functions.ModelFunction="FullModel";
 	Functions.PreOptimisationFunction="SimSetup";
-	Functions.PostOptimisationFunction="Math.random";
-	Functions.FunctionToRunOnCompletion="Math.random";
+	Functions.PostOptimisationFunction="Math.random";// Just a random function to show that this is an option
+	Functions.FunctionToRunOnCompletion="Math.random";// Just a random function to show that this is an option
 	
 	var Common={};
 	Common.Data=Data;
 	
 	// OptSelector(Name, DivID, Functions, PointerToParamGroup, DEOArrayFunctionName, Settings, ModelDirectory, Common)
-	
 	HCVOptSelector=new OptSelector('HCVOptSelector', 'HCVOptSelectorHolder', Functions, PGroup, 'HCVDataExtractionObjects',  Settings, ModelDirectory, Common);
 
-	
 	console.log("EpiML initialised")
-}
-
-function TestingPageRequirements(){
-	//Testing the required elements for EpiML
-	//Web workers
-	if(typeof(Worker) == "undefined") {
-		alert("Webworkers are not supported in this browser. EpiML requires webworkers to run. Try upgrading your browser");
-	}
 }
 
 
 function LoadSettingsFiles(){
-	//Load settings/settings.json
+	//Load data/settings.json
 	//if // the settings file exists
 	// load the settings file
 	
@@ -94,9 +77,10 @@ function LoadSettingsFiles(){
 	// Set up the HCV Treatment Scenarios
 	SetupHCVTreatmentScenarioSelector();
 	
-	// Set up settings options
+	// Set up settings options in the interface
 	var CheckboxValue;
 
+	// Terminate check box
 	if (typeof(Settings.TerminateThreadOnSimCompletion)!="undefined"){
 		CheckboxValue=Settings.TerminateThreadOnSimCompletion;
 	}
@@ -105,6 +89,7 @@ function LoadSettingsFiles(){
 	}
 	document.getElementById('TerminateThreadOnSimCompletionCheckbox').checked=CheckboxValue;
 	
+	// Recalculate check box
 	if (typeof(Settings.RecalculateParam)!="undefined"){
 		CheckboxValue=Settings.RecalculateParam;
 	}
@@ -118,52 +103,11 @@ function LoadSettingsFiles(){
 	document.getElementById("NoThreadsDropdown").value=Settings.NoThreads;
 	document.getElementById("SampleFactorTextbox").value=Settings.SampleFactor;
 
-	
-	
-	// fs.readFile("./interface/settings.json", 'utf8', function (err, data) {
-	// 	if (err){
-	// 		console.error("The ./interface/settings.json file could not be loaded. Using default values. Error: ");
-	// 		console.log(err);
-	// 		// Use default values
-	// 		Settings.NoThreads=1;// number of cores to use at a time
-	// 		Settings.SampleFactor=10;// This value is the number of people each person in the simulation represents. Probably a good idea to set this to 1, 10 or 100
-	// 	}
-	// 	else{
-	// 		Settings = JSON.parse(data);
-	// 	}
-		
-	// 	// Set up the HCV Treatment Scenarios
-	// 	SetupHCVTreatmentScenarioSelector();
-		
-	// 	// Set up settings options
-	// 	var CheckboxValue;
-
-	// 	if (typeof(Settings.TerminateThreadOnSimCompletion)!="undefined"){
-	// 		CheckboxValue=Settings.TerminateThreadOnSimCompletion;
-	// 	}
-	// 	else {
-	// 		CheckboxValue=false;
-	// 	}
-	// 	document.getElementById('TerminateThreadOnSimCompletionCheckbox').checked=CheckboxValue;
-		
-	// 	if (typeof(Settings.RecalculateParam)!="undefined"){
-	// 		CheckboxValue=Settings.RecalculateParam;
-	// 	}
-	// 	else {
-	// 		CheckboxValue=false;
-	// 	}
-	// 	document.getElementById('RecalculateParamCheckbox').checked=CheckboxValue;
-		
-	// 	console.error("Note: all the below should have checking and defaults implemented as above.");		
-	// 	document.getElementById("NumberOfSimulationsTextbox").value=Settings.NumberOfSimulations;
-	// 	document.getElementById("NoThreadsDropdown").value=Settings.NoThreads;
-	// 	document.getElementById("SampleFactorTextbox").value=Settings.SampleFactor;
-	// });
 }
+
 
 function SaveSettings(){
 	var SettingsJSONString=JSON.stringify(Settings, null, 4);//gives 4 spaces between elements
-	//var blob = new Blob([SettingsJSONString], {type: "text/plain;charset=utf-8"});
 	
 	fs.writeFile("./interface/settings.json", SettingsJSONString , function(err) {
 		if(err) {
@@ -172,8 +116,6 @@ function SaveSettings(){
 		}
 	});
 }
-
-
 
 
 function SetupHCVTreatmentScenarioSelector(){

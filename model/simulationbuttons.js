@@ -360,44 +360,4 @@ function NotificationSimPlot(){
 
 
 
-function DxUDxSimPlot(){
-	// Get the relevant data
-	SimulationHolder.Result[0];
-	
-	DxUDxArray=SimulationHolder.Result[0].DiagnosisCount.Count;
-	TimeAxis=SimulationHolder.Result[0].DiagnosisCount.Time;
-	
-	// convert to a form that plot will accept
-	PlotData=PlotStyles_ConvertDataToLinePlot(TimeAxis, DxUDxArray);
-	//Set up plot appearance // http://www.pikemere.co.uk/blog/flot-tutorial-how-to-create-area-charts/ 
-	PlotSettings={xaxis: {
-					axisLabel: 'Time (years)',
-					axisLabelUseCanvas: true,
-					axisLabelFontSizePixels: 12,
-					axisLabelFontFamily: 'Verdana, Arial, Helvetica, Tahoma, sans-serif',
-					axisLabelPadding: 5,
-					tickLength: 0
-				},
-				yaxis: {
-					min: 0,
-					axisLabel: 'Number of people',
-					axisLabelUseCanvas: true,
-					axisLabelFontSizePixels: 12,
-					axisLabelFontFamily: 'Verdana, Arial, Helvetica, Tahoma, sans-serif',
-					axisLabelPadding: 5
-				},
-				series: {
-					lines: {
-						show: true,
-						fill: true
-					},
-					stack: true
-				}
-			};
-	
-	//plot of DxUDxPlotHolder
-	$.plot("#DxUDxPlotHolder", PlotData, PlotSettings);
-
-}
-
 

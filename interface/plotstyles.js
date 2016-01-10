@@ -1,43 +1,40 @@
-// Developed by James Jansson
+// Developed by James Jansson, 2015. 
+// Released under MIT License.
+// For use in academic publication, please contact 
 // Requires:
 // flot plotting library to work
 // Papaparse for the download button to work
-// Requires 
-// also requires the morris.js library to work
+
 
 
 function GeneralPlot(Settings){
 	// The settings has the following format:
-	// .ID = the ID of the container to put the graph into. Should be a unique ID on the page. Required
+	// .InterfaceID = the ID of the container to put the graph into. Should be a unique ID on the page. Required
 	// .xAxisLabel
 	// .yAxisLabel
-	// .Data
-	// 
-	// DownloadSummaryStatisticCSV(SimulationHolder.Result[0].AgeInfectedResult);
-	
-	// "Value "
-	
+	// .Data = the data object associated with the graph. Required if you want to use the download button to call .Data.Download()
+	// .ObjectID = the name of this GeneralPlot in global scope. Required
+
 	// Check that there are any ID names that are taken
-	//console.error("Using '"+Settings.ID+"' as an ID for the plot creates a parameter '" + PrexistingID + "' that already exists.";
+	//console.error("Using '"+Settings.InterfaceID+"' as an ID for this plot creates a parameter '" + PrexistingID + "' that already exists.";
 	
 	// Store information associated with this plot
 	
-	
-	// ID
-	if (typeof(Settings.ID)!='undefined'){
-		this.ID=Settings.ID;
+	// InterfaceID
+	if (typeof(Settings.InterfaceID)!='undefined'){
+		this.InterfaceID=Settings.InterfaceID;
 	}
 	else {
-		throw "In order to use the GeneralPlot function, you must set the Settings.ID value to the name of the div element you wish to place the plot into.";
+		throw "In order to use the GeneralPlot function, you must set the Settings.InterfaceID value to the name of the div element you wish to place the plot into.";
 	}
-	this.PlotPlaceholder="#"+Settings.ID+"_placeholder";
+	this.PlotPlaceholder="#"+Settings.InterfaceID+"_placeholder";
 	
-	
-	if (typeof(Settings.Name)!='undefined'){
-		this.Name=Settings.Name;
+	// Object ID
+	if (typeof(Settings.ObjectID)!='undefined'){
+		this.ObjectID=Settings.ObjectID;
 	}
 	else {
-		throw "In order to use the GeneralPlot function, you must set the Settings.Name value to the string of the name of the variable that represents this object, such that HTML can be constructed around this object.";
+		throw "In order to use the GeneralPlot function, you must set the Settings.ObjectID value to the string of the name of the variable that represents this object, such that HTML can be constructed around this object.";
 	}
 			
 	this.PlotFunction=Settings.PlotFunction;// should have the format function(PlotPlaceholder, PlotData){}
@@ -49,7 +46,7 @@ function GeneralPlot(Settings){
 	// }
 	this.PlotData=Settings.PlotData;// A structure that can contain anything that is needed to graph
 	// note: PlotData contains an array of Plot[] that each contain:
-	// .X (or .Category) .Y .Upper .Lower .Name
+	// .X (or .Category) .Y .Upper .Lower .ObjectID
 	
 	// PlotData contains
 	// .XMin .XMax .YMin .YMax
@@ -57,12 +54,12 @@ function GeneralPlot(Settings){
 	
 	// The .Data element can be used for selecting new graphing options in the graphing panel, and to allow data to be downloaded
 	var DownloadButtonHTML="";//by default blank if the download data function does not exist
-	if (typeof(Settings.Data)!='undefined'){
-		this.Data=Settings.Data;
+	if (typeof(Settings.DataSource)!='undefined'){
+		this.DataSource=Settings.DataSource;
 		
-		// If the .Data hads a function called "Download", create a button that allows the download of Data
-		if (typeof(this.Data.Download)=='function'){
-			DownloadButtonHTML="        <div class='downloadbutton' title='Download data' onclick='"+this.Name+".Download();'>&#x21E9;</div>\n";
+		// If the .DataSource hads a function called "Download", create a button that allows the download of Data
+		if (typeof(this.DataSource.Download)=='function'){
+			DownloadButtonHTML="        <div class='downloadbutton' title='Download data' onclick='"+this.ObjectID+".Download();'>&#x21E9;</div>\n";
 		}
 	}
 
@@ -86,17 +83,15 @@ function GeneralPlot(Settings){
 		// PossibleYValues
 		// PossibleYValuesUncertainties
 		
-		
+		// Future elements
 		// Drop down: PlotStyle
 		//      PlotFunction (on selection 
-		// Drop down: X value, .Name .Values
+		// Drop down: X value, .ObjectID .Values
 		// Drop down: Plot 1
 		//     Drop down: Y value
 		//     Drop down: Display uncertainty (none), 
 		//     Lower un
 		//     Can only plot this if the X value name exists in the parameter 
-		
-		
 		
 		
 		// Need to work out if we are going to force coupling of values or not, I say yes
@@ -126,29 +121,24 @@ function GeneralPlot(Settings){
 			
 	// Build HTML
 	this.InnerHTMLForPlot="";
-	this.InnerHTMLForPlot+="    <div class='fullscreenbox' id='"+this.ID+"_fullscreenbox' >\n";
+	this.InnerHTMLForPlot+="    <div class='fullscreenbox' id='"+this.InterfaceID+"_fullscreenbox' >\n";
 	this.InnerHTMLForPlot+="        <div class='plot_title' >"+this.Title+"</div>\n";
-	this.InnerHTMLForPlot+="        <div class='fullscreenbutton' title='Fullscreen' id='"+this.ID+"_fullscreenbutton' onclick=\"ToggleFullScreen('"+this.ID+"_fullscreenbox');\">&#10063</div>\n";
+	this.InnerHTMLForPlot+="        <div class='saveimagebutton' title='Save image' onclick='"+this.ObjectID+".SaveImage();'>&#x2357</div>\n";
 	this.InnerHTMLForPlot+=DownloadButtonHTML;
+	this.InnerHTMLForPlot+="        <div class='fullscreenbutton' title='Fullscreen' id='"+this.ObjectID+"_fullscreenbutton' onclick=\"ToggleFullScreen('"+this.InterfaceID+"_fullscreenbox');\">&#10063</div>\n";
 	this.InnerHTMLForPlot+="        <div class='plot_positioner'>\n";
-	this.InnerHTMLForPlot+="             <div id='"+this.ID+"_placeholder' class='plot_placeholder'></div>\n";
+	this.InnerHTMLForPlot+="             <div id='"+this.InterfaceID+"_placeholder' class='plot_placeholder'></div>\n";
 	this.InnerHTMLForPlot+="        </div>\n";
 	this.InnerHTMLForPlot+="        <div class='xlabel'>"+this.XLabel+"</div>\n";
 	this.InnerHTMLForPlot+="        <div class='ylabel'><div class='rotate'>"+this.YLabel+"</div></div>\n";
 	this.InnerHTMLForPlot+="    </div>\n";
 	
-	// Create plot
-	
-	// .Update() //Only updates plot
-	
-	// .Download(){
-		//this.DownloadFunction(this.DownloadData);
-	//}
+
 }
 
 
 GeneralPlot.prototype.Draw= function (){//using prototyping for speed
-	document.getElementById(this.ID).innerHTML=this.InnerHTMLForPlot;
+	document.getElementById(this.InterfaceID).innerHTML=this.InnerHTMLForPlot;
 	this.Update();
 };
 
@@ -157,9 +147,130 @@ GeneralPlot.prototype.Update= function (){//using prototyping for speed
 };
 
 GeneralPlot.prototype.Download= function (){//using prototyping for speed
-	return this.Data.Download();
+	return this.DataSource.Download();
 };
 
+GeneralPlot.prototype.SaveImage= function (){//using prototyping for speed
+	// var InterfaceObject=document.getElementById(this.InterfaceID+"_fullscreenbox");
+	var InterfaceObject=document.getElementById(this.InterfaceID);
+
+
+
+	// this is based off the following gist: https://gist.github.com/rdtsc/5074753e163397f3d247
+	// usage
+	//NWJSHTMLToPNG=require(NWJSHTMLToPNG);
+	
+	
+	
+	function CaptureAndSave(InterfaceObject, NameWithoutExtension) {
+		var gui = require('nw.gui');
+		var win = gui.Window.get();
+		var fs  = require('fs');
+		
+		function CaptureRegion(rect, callback, format) {
+			
+			win.capturePage(function(data) {
+				var img = new Image();
+			
+				img.onload = function() {
+				var canvas = document.createElement('canvas');
+			
+				canvas.width  = rect.width;
+				canvas.height = rect.height;
+			
+				
+			
+				canvas.getContext('2d').drawImage(img, -rect.left, -rect.top);
+				callback(canvas.toDataURL('image/' + format));
+				};
+			
+				img.src = data;
+			}, 'png'); // Ensure JPEG compression happens only once, if ever.
+		}
+		function dumpBase64(data, filename, callback) {
+			data = data.substr(data.indexOf(',') + 1);
+			
+			fs.writeFile(filename, data, 'base64', callback);
+		}
+		
+		var bounds = InterfaceObject.getBoundingClientRect();
+		
+		var filename = './results/'+NameWithoutExtension+'.png';
+		var imageFmt = 'png';
+		
+		CaptureRegion(bounds, function(data) {
+			dumpBase64(data, filename, function(error) {
+				if(error) throw error;
+			});
+		}, imageFmt);
+	}
+
+	//var target = document.getElementById('HCVOptSelectorHolder_DEOResultsPlot_0');
+	var FileNameWOExt=this.Title;
+	if (FileNameWOExt.length==0){
+		FileNameWOExt='untitled';
+	}
+	
+	
+	CaptureAndSave(InterfaceObject, FileNameWOExt);
+
+
+
+
+
+
+
+
+	// console.log(InterfaceObject);
+
+	// //InterfaceObject=document.body;
+
+	// html2canvas(InterfaceObject, {
+	// 	onrendered: function(canvas) {
+	// 		var fs = require('fs');
+			
+	// 		console.log(canvas.length);
+			
+	// 		//document.body.appendChild(canvas);
+	// 		var imgdatalink = canvas.toDataURL("image/png");// get the URL of the canvas data
+			
+	// 		var data = imgdatalink.replace(/^data:image\/\w+;base64,/, "");
+	// 		var buf = new Buffer(data, 'base64');
+	// 		fs.writeFile('image.png', buf);
+			
+	// 		InterfaceObject.appendChild(canvas);
+			
+			
+	// 		var imgdata=imgdatalink.split(',')[1];// split off the URL section and keep data
+	// 		var DecodedImg = window.atob(imgdata);
+			
+	// 		var name='./woah.png';
+	// 		var imgFileData = new Buffer(DecodedImg, encoding='base64');
+			
+	// 		console.log(imgdatalink);
+	// 		console.log(imgdata);
+			
+	// 		fs.writeFile(name, imgFileData, function(err) {
+	// 			if(err) {
+	// 				console.log(err);
+	// 			} else {
+	// 				console.log("The file was saved!");
+	// 			}
+	// 		});
+			
+	// 		// link = document.createElement('a');
+	// 		// link.href = imgdatalink ;
+	// 		// console.log(imgdatalink);
+			
+	// 		// link.download = 'Download.png';
+	// 		// document.body.appendChild(link);
+	// 		// link.click();
+	// 	}
+	// });
+	
+
+	return 0;
+};
 
 
 // Example code
@@ -189,8 +300,8 @@ GeneralPlot.prototype.Download= function (){//using prototyping for speed
 // PlotSettings.XLabel="Year";
 // PlotSettings.YLabel="Number";
 
-// PlotSettings.Data=[];
-// PlotSettings.Data.Download=function (){console.log('This runs when the button is pushed')};
+// PlotSettings.DataSource=[];
+// PlotSettings.DataSource.Download=function (){console.log('This runs when the button is pushed')};
 
 // var PlotObjectName=new GeneralPlot(PlotSettings);
 // PlotObjectName.Draw();
@@ -458,112 +569,3 @@ function OptimisationPlot(PlotHolderName, OriginalData, OptimisedResults){
 
 
 
-
-// All of the content below this line will be deleted
-
-MorrisSettings={
-  // ID of the element in which to draw the chart.
-  element: 'plot1_plotarea',
-  // Chart data records -- each entry in this array corresponds to a point on
-  // the chart.
-  data: [
-    { year: '2008', value: 20 },
-    { year: '2009', value: 10 },
-    { year: '2010', value: 5 },
-    { year: '2011', value: 5 },
-    { year: '2012', value: 20 }
-  ],
-  // The name of the data record attribute that contains x-values.
-  xkey: 'year',
-  // A list of names of data record attributes that contain y-values.
-  ykeys: ['value'],
-  // Labels for the ykeys -- will be displayed when you hover over the
-  // chart.
-  labels: ['Value']
-}
-
-
-function MorrisScatterPlot(Settings){
-	// Example usage
-	
-
-	// Put the data into a format that the download function can understand
-	
-	// change default behaviour
-	if (typeof Settings.parseTime==="undefined"){
-		Settings.parseTime=false;// this allows the x axis to be an arbitrary number, not just a date
-	}
-	
-	// take the current element, replace the contents with x axis label, y axis label, download button and plotting region
-	var SettingsCopy=SetUpPlotArea(Settings);
-	
-	// make the settings work for scatter
-	SettingsCopy.lineWidth=0;
-	
-	
-	// parse the Settings into the morris.js
-	return Morris.Line(SettingsCopy);// return the object representing the plot to be editted later, e.g.
-	// Using graph=ScatterPlot(settings); graph.setData(SomeObjectContainingData);
-}
-
-function SetUpPlotArea(Settings){
-	// The purpose of this section is to make 
-
-
-
-	// take the current element, replace the contents with x axis label, y axis label, download button and plotting region
-	var PlottingAreaID=Settings.element;
-
-	var ContentString="";
-	
-	
-	
-	
-	// use papaparse to convert from JSON to csv
-	if (typeof Morris==="undefined"){
-		console.error("This library requires morris.js to run");
-	}
-	
-
-	
-	
-	if(typeof Papa==="undefined"){
-		console.log("If PapaParse.js is not included, a download button for the data cannot be included");
-	}	
-	else{
-		//var csvdata = Papa.unparse([
-		//{
-		//	"Column 1": "foo",
-		//	"Column 2": "bar"
-		//},
-		//{
-		//	"Column 1": "abc",
-		//	"Column 2": "def"
-		//}
-		//]);
-		var csvdata = Papa.unparse(Settings.data);
-		var DownloadDataString="var blob = new Blob([this.csvdata], {type: 'text/plain;charset=utf-8'});saveAs(blob, 'plotdata.csv');";
-		
-		//create and position the download object
-		ContentString=ContentString+"<downloadbutton href='"+DownloadDataString+"'>\21E9</downloadbutton>";
-		
-		//var blob = new Blob([this.csvdata], {type: "text/plain;charset=utf-8"});
-		//saveAs(blob, "plotdata.csv");
-	}
-	
-	// x axis
-	ContentString=ContentString+"<xAxisLabel>"+Settings.xAxisLabel+"</xAxisLabel>";
-	// y axis
-	ContentString=ContentString+"<yAxisLabel>"+Settings.yAxisLabel+"</yAxisLabel>";
-	// plotting area
-	
-	
-	// Put it into the HTML
-	document.getElementById(PlottingAreaID).innerHTML=ContentString;
-	
-	var SettingsCopy=JSON.parse(JSON.stringify(Settings));
-	SettingsCopy.element=SettingsCopy.element+"sub";// add this to the name of the element such that the correct area is addressed
-	return SettingsCopy;
-}
-
-//convert data
